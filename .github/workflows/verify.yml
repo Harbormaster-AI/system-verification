@@ -113,7 +113,7 @@ jobs:
 
     needs: spring-build
 
-    uses: complexmathguy/verify/.github/workflows/spring-runtime-verification.yml@master
+    uses: .github/workflows/spring-runtime-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -150,7 +150,7 @@ jobs:
 
     if: ${{ contains(fromJSON('["go","golang"]'), inputs.technology) }}
 
-    uses: verify/.github/workflows/go-build-verification.yml
+    uses: .github/workflows/go-build-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -166,7 +166,7 @@ jobs:
 
     needs: go-build
 
-    uses: verify/.github/workflows/go-runtime-verification.yml
+    uses: .github/workflows/go-runtime-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
