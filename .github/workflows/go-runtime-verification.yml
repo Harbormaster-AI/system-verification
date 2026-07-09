@@ -1,0 +1,302 @@
+name: Spring Boot Runtime Verification
+
+on:
+
+  workflow_call:
+
+    inputs:
+
+      runner:
+        description: GitHub runner label
+        required: false
+        default: self-hosted
+        type: string
+
+      resultUrl:
+        description: URL to post verification results
+        required: false
+        default: "http://localhost:3000"
+        type: string
+
+      actionToCall:
+        description: action to call when posting to URL
+        required: false
+        default: "updateVerificationProgress"
+        type: string
+
+      branch:
+        description: Branch to checkout
+        required: false
+        default: ""
+        type: string
+
+      certificationIdentifier:
+        required: true
+        type: string
+
+      appName:
+        required: true
+        type: string
+
+env:
+  RESULT_URL: ${{ inputs.resultUrl }}
+  ACTION_TO_CALL: ${{ inputs.actionToCall }}
+  CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
+  APP_NAME: ${{ inputs.appName }}
+
+
+jobs:
+
+  runtime-verification:
+
+    runs-on: ${{ inputs.runner }}
+
+    steps:
+
+      ###########################################################################
+      #   Checkout source
+      ###########################################################################
+
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+        with:
+          ref: ${{ inputs.branch }}
+
+        ###########################################################################
+        #   Download pre-built artifact
+        ###########################################################################
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: packaged-application
+
+      - name: Show JAR Files
+
+        shell: bash
+
+        run: |
+          
+          find -name "*.jar"
+
+      ###########################################################################
+      #   Announce start of runtime verification
+      ###########################################################################
+
+      - name: Runtime Verification Starting
+
+        shell: bash
+
+        run: |
+          
+          source .github/actions/common/report.sh
+          
+          post_pass \
+                        "RUNTIME" \
+                        "STARTING_RUNTIME" \
+                        0 \
+                        "Runtime verification starting..." \
+                        "" 
+
+      ###########################################################################
+      #   Locate the JAR.
+      ###########################################################################
+
+      - name: Verify Artifact
+
+        shell: bash
+
+        run: |
+          
+          source .github/actions/common/report.sh
+
+          PACKAGE=$(find  \
+              -type f \
+              -name "*.jar" \
+              ! -name "*.original" \
+              ! -name "*-plain.jar" \
+              ! -name "*sources.jar" \
+              ! -name "*javadoc.jar" \
+              | head -1)
+          
+          if [ -z "$PACKAGE" ]; then
+          
+              post_fail \
+                  "RUNTIME" \
+                  "VERIFY_ARTIFACT" \
+                  0 \
+                  "No application artifact found." \
+                  "VERIFY_ARTIFACT: Unable to locate downloaded jar."
+          
+              post_terminate_runtime "RUNTIME"
+          
+          fi
+          
+          post_pass \
+              "RUNTIME" \
+              "VERIFY_ARTIFACT" \
+              10 \
+              "Artifact located." \
+              "VERIFY_ARTIFACT: $(basename "$JAR")"    
+
+      ###########################################################################
+      #   Launch Spring Boot
+      ###########################################################################
+
+      - name: Start Application
+
+        shell: bash
+
+        run: |
+          
+          source .github/actions/common/report.sh
+
+          PACKAGE=$(find  \
+              -type f \
+              -name "*.jar" \
+              ! -name "*.original" \
+              ! -name "*-plain.jar" \
+              ! -name "*sources.jar" \
+              ! -name "*javadoc.jar" \
+              | head -1)
+          
+          ###########################################################################
+          # declare as env var to use in later steps
+          ###########################################################################          
+          echo "PACKAGE=${PACKAGE}" >> "$GITHUB_ENV"
+          
+          echo "Starting $PACKAGE"
+  
+          java -jar "$PACKAGE" > runtime.log 2>&1 &
+          APP_PID=$!
+          
+          echo "APP_PID=${APP_PID}" >> "$GITHUB_ENV"
+          
+          sleep 5
+          
+          if ps -p "${APP_PID}" > /dev/null 2>&1; then
+          
+              post_pass \
+                  "RUNTIME" \
+                  "START_APPLICATION" \
+                  30 \
+                  "Application started." \
+                  "START_APPLICATION: PID ${APP_PID}"
+          
+          else
+          
+              post_fail \
+                  "RUNTIME" \
+                  "START_APPLICATION" \
+                  0 \
+                  "Application failed to start." \
+                  "$(tail -20 runtime.log)"
+          
+              post_terminate_runtime
+          
+          fi
+
+      ###########################################################################
+      #   Wait Until Spring Boot starts
+      ###########################################################################
+
+      - name: Wait For Startup
+
+        shell: bash
+
+        run: |
+          
+          source .github/actions/common/report.sh
+
+          post_pass \
+              "RUNTIME" \
+              "WAITING_FOR_APP" \
+              0 \
+              "Waiting for system to start." \
+              ""
+          
+          for i in {1..60}; do
+          
+              if curl -fs http://localhost:8080/actuator/health >/dev/null; then
+          
+                  post_pass \
+                      "RUNTIME" \
+                      "APPLICATION_STARTED" \
+                      30 \
+                      "Application started successfully." \
+                      "Spring Boot is accepting requests."
+          
+                  exit 0
+          
+              fi
+          
+              sleep 2
+          
+          done
+          
+          MESSAGE=$(tail -20 runtime.log | tr '\n' ' ')
+          
+          post_fail \
+              "RUNTIME" \
+              "APPLICATION_STARTED" \
+              0 \
+              "Application failed to start." \
+              "${MESSAGE}"
+          
+          post_terminate_runtime "RUNTIME"
+
+
+      ###############################################################################
+      # Smoke Test
+      ###############################################################################
+
+      - name: Smoke Test
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+          RESPONSE=$(curl \
+              --silent \
+              --write-out "%{http_code}" \
+              --output smoke.out \
+              http://localhost:8080/)
+
+          if [ "$RESPONSE" = "200" ]; then
+
+              post_pass \
+                  "RUNTIME" \
+                  "SMOKE_TEST" \
+                  30 \
+                  "Smoke test passed." \
+                  "$(cat smoke.out)"
+
+          else
+
+              DETAILS=$(cat smoke.out)
+
+              post_fail \
+                  "RUNTIME" \
+                  "SMOKE_TEST" \
+                  0 \
+                  "Smoke test failed." \
+                  "SMOKE_TEST: HTTP ${RESPONSE}. ${DETAILS}"
+
+              post_terminate_runtime
+
+          fi
+          
+      ###############################################################################
+      # Terminate Verification
+      ###############################################################################
+
+      - name: Terminate Verification
+
+        shell: bash
+
+        run: |
+          source .github/actions/common/report.sh
+      
+          post_terminate_runtime false
