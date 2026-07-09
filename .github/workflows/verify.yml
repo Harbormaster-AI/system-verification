@@ -1,0 +1,200 @@
+name: Harbormaster Verification
+
+on:
+  workflow_dispatch:
+
+    inputs:
+
+      technology:
+        description: Technology to verify (spring, django, axon, etc.)
+        required: true
+        type: string
+
+      runner:
+        description: GitHub runner
+        required: false
+        default: ubuntu-latest
+        type: string
+
+      resultUrl:
+        description: URL to post certification progress
+        required: false
+        default: "http://localhost:3000"
+        type: string
+
+      actionToCall:
+        description: action to call when posting to URL
+        required: true
+        default: "updateSystemVerificationProgress"
+        type: string
+
+      branch:
+        description: Branch to checkout
+        required: true
+        default: ""
+        type: string
+
+      certificationIdentifier:
+        description: Certification Identifier
+        required: true
+        type: string
+
+      appName:
+        description: Application Name
+        required: true
+        type: string
+
+      dockerHost:
+        description: Docker registry host
+        required: false
+        default: ""
+        type: string
+
+      dockerOrg:
+        description: Docker organization
+        required: false
+        default: ""
+        type: string
+
+      dockerRepository:
+        description: Docker repository
+        required: false
+        default: ""
+        type: string
+
+      dockerUsername:
+        description: Docker username
+        required: false
+        default: ""
+        type: string
+
+      dockerPassword:
+        description: Docker password
+        required: false
+        default: ""
+        type: string
+
+      dockerTag:
+        description: Docker image tag
+        required: false
+        default: latest
+        type: string
+
+env:
+  RESULT_URL: ${{ inputs.resultUrl }}
+  ACTION_TO_CALL: ${{ inputs.actionToCall }}
+  CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
+  APP_NAME: ${{ inputs.appName }}
+
+###############################################################################
+# Spring Boot
+###############################################################################
+
+jobs:
+
+
+  spring-build:
+
+    if: ${{ contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) }}
+
+    uses: complexmathguy/verify/.github/workflows/spring-build-verification.yml@master
+
+    with:
+      runner: ${{ inputs.runner }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      branch: ${{ inputs.branch }}
+      certificationIdentifier: ${{ inputs.certificationIdentifier }}
+      appName: ${{ inputs.appName }}
+
+  spring-runtime:
+
+    if: ${{ contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) }}
+
+    needs: spring-build
+
+    uses: complexmathguy/verify/.github/workflows/spring-runtime-verification.yml@master
+
+    with:
+      runner: ${{ inputs.runner }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      branch: ${{ inputs.branch }}
+      certificationIdentifier: ${{ inputs.certificationIdentifier }}
+      appName: ${{ inputs.appName }}
+
+  spring-delivery:
+
+    if: ${{ contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) }}
+
+    needs: spring-runtime
+
+    uses: complexmathguy/verify/.github/workflows/spring-delivery-verification.yml@master
+
+    with:
+      runner: ${{ inputs.runner }}
+      branch: ${{ inputs.branch }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
+      appName:                   ${{ inputs.appName }}
+      dockerHost:                ${{ inputs.dockerHost }}
+      dockerOrg:                 ${{ inputs.dockerOrg }}
+      dockerRepository:          ${{ inputs.dockerRepository }}
+      dockerUsername:            ${{ inputs.dockerUsername }}
+      dockerPassword:            ${{ inputs.dockerPassword }}
+      dockerTag:                 ${{ inputs.dockerTag }}
+
+
+  go-build:
+
+    if: ${{ contains(fromJSON('["go","golang"]'), inputs.technology) }}
+
+    uses: verify/.github/workflows/go-build-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      branch: ${{ inputs.branch }}
+      certificationIdentifier: ${{ inputs.certificationIdentifier }}
+      appName: ${{ inputs.appName }}
+
+  go-runtime:
+
+    if: ${{ contains(fromJSON('["go","golang"]'), inputs.technology) }}
+
+    needs: go-build
+
+    uses: verify/.github/workflows/go-runtime-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      branch: ${{ inputs.branch }}
+      certificationIdentifier: ${{ inputs.certificationIdentifier }}
+      appName: ${{ inputs.appName }}
+
+  go-delivery:
+
+    if: ${{ contains(fromJSON('["go","golang"]'), inputs.technology) }}
+
+
+    needs: go-runtime
+
+    uses: verify/.github/workflows/go-delivery-verification.yml@
+
+    with:
+      runner: ${{ inputs.runner }}
+      branch: ${{ inputs.branch }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
+      appName:                   ${{ inputs.appName }}
+      dockerHost:                ${{ inputs.dockerHost }}
+      dockerOrg:                 ${{ inputs.dockerOrg }}
+      dockerRepository:          ${{ inputs.dockerRepository }}
+      dockerUsername:            ${{ inputs.dockerUsername }}
+      dockerPassword:            ${{ inputs.dockerPassword }}
+      dockerTag:                 ${{ inputs.dockerTag }}
