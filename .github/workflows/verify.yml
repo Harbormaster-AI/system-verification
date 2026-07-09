@@ -97,7 +97,7 @@ jobs:
 
     if: ${{ contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) }}
 
-    uses: complexmathguy/verify/.github/workflows/spring-build-verification.yml@master
+    uses: ./.github/workflows/spring-build-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -113,7 +113,7 @@ jobs:
 
     needs: spring-build
 
-    uses: .github/workflows/spring-runtime-verification.yml
+    uses: ./.github/workflows/spring-runtime-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -129,7 +129,7 @@ jobs:
 
     needs: spring-runtime
 
-    uses: complexmathguy/verify/.github/workflows/spring-delivery-verification.yml@master
+    uses: ./.github/workflows/spring-delivery-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -150,7 +150,7 @@ jobs:
 
     if: ${{ contains(fromJSON('["go","golang"]'), inputs.technology) }}
 
-    uses: .github/workflows/go-build-verification.yml
+    uses: ./.github/workflows/go-build-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -166,7 +166,7 @@ jobs:
 
     needs: go-build
 
-    uses: .github/workflows/go-runtime-verification.yml
+    uses: ./.github/workflows/go-runtime-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -183,7 +183,7 @@ jobs:
 
     needs: go-runtime
 
-    uses: verify/.github/workflows/go-delivery-verification.yml@
+    uses: ./.github/workflows/go-delivery-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
