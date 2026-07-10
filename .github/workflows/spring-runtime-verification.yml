@@ -79,6 +79,51 @@ jobs:
           
           find -name "*.jar"
 
+      ####################################################################
+      # Determine Java Version
+      ####################################################################
+
+      - name: Determine Java Version
+
+        shell: bash
+
+        run: |
+
+          ####################################################################
+          # Default Java Version
+          ####################################################################
+
+          JAVA_VERSION=11
+
+          ####################################################################
+          # Maven
+          ####################################################################
+
+          if [ "$BUILD_SYSTEM" = "gradle" ]; then
+
+            JAVA_VERSION=11
+
+          fi
+
+          echo "JAVA_VERSION=${JAVA_VERSION}" >> "$GITHUB_ENV"
+
+          echo "Using Java ${JAVA_VERSION}"
+
+      ###############################################################################
+      # Set up and verify the Java version
+      ###############################################################################
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Verify Java Version
+        run: |
+          java -version
+          javac -version
+
       ###########################################################################
       #   Announce start of runtime verification
       ###########################################################################

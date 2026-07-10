@@ -161,7 +161,7 @@ jobs:
           echo "Using Java ${JAVA_VERSION}"
 
       ###############################################################################
-      # Set up the Java version
+      # Set up and verify the Java version
       ###############################################################################
 
       - name: Setup Java
@@ -169,6 +169,11 @@ jobs:
         with:
           distribution: temurin
           java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Verify Java Version
+        run: |
+          java -version
+          javac -version
 
       ###############################################################################
       # Expected Files
