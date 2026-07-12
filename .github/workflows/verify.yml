@@ -63,6 +63,17 @@ on:
         required: true
         type: string
 
+      languageName:
+        description: The core language  of the system
+        required: false
+        default: ""
+        type: string
+
+      languageVersion:
+        description: The core language version of the system
+        required: true
+        type: string
+
       dockerHost:
         description: Docker registry host
         required: false
@@ -125,6 +136,8 @@ jobs:
       branch: ${{ inputs.branch }}
       certificationIdentifier: ${{ inputs.certificationIdentifier }}
       appName: ${{ inputs.appName }}
+      languageName: ${{ inputs.languageName }}
+      languageVersion: ${{ inputs.languageVersion }}
 
   spring-runtime:
 
@@ -141,6 +154,7 @@ jobs:
       branch: ${{ inputs.branch }}
       certificationIdentifier: ${{ inputs.certificationIdentifier }}
       appName: ${{ inputs.appName }}
+      languageVersion: ${{ inputs.appName }}
 
   spring-delivery:
 

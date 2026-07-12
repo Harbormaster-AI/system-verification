@@ -38,6 +38,12 @@ on:
         required: true
         type: string
 
+      languageVersion:
+        description: The core language version of the system
+        required: false
+        default: "11"
+        type: string
+
 env:
   RESULT_URL: ${{ inputs.resultUrl }}
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
@@ -93,7 +99,7 @@ jobs:
           # Default Java Version
           ####################################################################
 
-          JAVA_VERSION=11
+          JAVA_VERSION=${{ inputs.languageVersion }}
 
           ####################################################################
           # Maven
@@ -101,7 +107,7 @@ jobs:
 
           if [ "$BUILD_SYSTEM" = "gradle" ]; then
 
-            JAVA_VERSION=11
+            JAVA_VERSION=${{ inputs.languageVersion }}
 
           fi
 
