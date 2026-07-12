@@ -1,4 +1,6 @@
 name: Harbormaster Verification
+run-name: >
+  Verify ${{ inputs.projectName }} ( ${{ inputs.blueprintName }} - ${{ inputs.modelName }} )
 
 on:
   workflow_dispatch:
@@ -31,6 +33,23 @@ on:
       branch:
         description: Branch to checkout
         required: true
+        default: ""
+        type: string
+
+      projectName:
+        description: Name of project verifying
+        required: false
+        default: ""
+        type: string
+
+      blueprintName:
+        description: Name of blueprint directly or indirectly being verified
+        required: true
+        type: string
+
+      modelName:
+        description: Name of model involved in the outcome of a system being  verified
+        required: false
         default: ""
         type: string
 
