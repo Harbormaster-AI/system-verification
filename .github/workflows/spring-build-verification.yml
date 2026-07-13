@@ -130,6 +130,7 @@ jobs:
               echo "BUILD_SYSTEM=maven" >> $GITHUB_ENV
               echo "BUILD_DIRECTORY=target" >> $GITHUB_ENV
               BUILD_DIRECTORY="target"
+          
           elif [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
 
               echo "BUILD_SYSTEM=gradle" >> $GITHUB_ENV
@@ -164,7 +165,7 @@ jobs:
 
           if [ "$BUILD_SYSTEM" = "gradle" ]; then
 
-            JAVA_VERSION==${{ inputs.languageVersion }}
+            JAVA_VERSION=${{ inputs.languageVersion }}
 
           fi
 
@@ -282,10 +283,8 @@ jobs:
           ###########################################################################
           echo "Current directory:"
           pwd
-          find . -maxdepth 3
-          find . -name "*.java"
-  
-          if find src/main/java -name "*.java" | grep -q .; then
+          
+          if [ -n "$(find src/main/java -type f -name '*.java' -print -quit)" ]; then
           
               SCORE=$((SCORE + 3))
           
