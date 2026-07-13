@@ -225,7 +225,7 @@ jobs:
           echo "Starting $PACKAGE"
 
           export JAVA_TOOL_OPTIONS="-Xmx4g"
-          
+  
           java -Ddebug -jar "$PACKAGE" > runtime.log 2>&1 &
           APP_PID=$!
           
@@ -293,7 +293,7 @@ jobs:
           
           done
           
-          MESSAGE=$(tail -20 runtime.log | tr '\n' ' ')
+          MESSAGE=$(tail -200 runtime.log | tr '\n' ' ')
           
           post_fail \
               "RUNTIME" \
