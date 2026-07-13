@@ -280,7 +280,23 @@ jobs:
           ###########################################################################
           # Java Sources
           ###########################################################################
+          echo "Current directory:"
+          pwd
           
+          echo
+          
+          echo "Tree:"
+          find . | head -100
+          
+          echo
+          
+          echo "Java:"
+          find . -name "*.java"
+          
+          pwd
+          find . -maxdepth 3
+          find . -name "*.java"
+  
           if find src/main/java -name "*.java" | grep -q .; then
           
               SCORE=$((SCORE + 3))
