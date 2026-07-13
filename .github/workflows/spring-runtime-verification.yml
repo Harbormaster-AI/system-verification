@@ -223,8 +223,10 @@ jobs:
           echo "PACKAGE=${PACKAGE}" >> "$GITHUB_ENV"
           
           echo "Starting $PACKAGE"
+
+          export JAVA_TOOL_OPTIONS="-Xmx4g"
   
-          java -jar "$PACKAGE" > runtime.log 2>&1 &
+          java -jar -Ddebug "$PACKAGE" > runtime.log 2>&1 &
           APP_PID=$!
           
           echo "APP_PID=${APP_PID}" >> "$GITHUB_ENV"
@@ -291,7 +293,9 @@ jobs:
           
           done
           
-          MESSAGE=$(tail -20 runtime.log | tr '\n' ' ')
+          MESSAGE=$(tail -200 runtime.log | tr '\n' ' ')
+          
+          grep -n "Exception\|Caused by\|ERROR" runtime.log | head -20
           
           post_fail \
               "RUNTIME" \
