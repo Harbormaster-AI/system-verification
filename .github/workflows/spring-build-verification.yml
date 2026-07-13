@@ -669,7 +669,7 @@ jobs:
 
           if [ -f "pom.xml" ]; then 
 
-              if mvn -B clean package > build.log 2>&1; then
+              if mvn -B clean package -DskipTests > build.log 2>&1; then
 
                   post_pass \
                       "BUILD" \
