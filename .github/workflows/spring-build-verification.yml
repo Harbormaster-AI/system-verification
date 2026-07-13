@@ -43,7 +43,13 @@ on:
       languageVersion:
         description: The core language version of the system
         required: false
-        default: "11"
+        default: ""
+        type: string
+
+      languageName:
+        description: The core language of the system
+        required: false
+        default: ""
         type: string
 
 env:

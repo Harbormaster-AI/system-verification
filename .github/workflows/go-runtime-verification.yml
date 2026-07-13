@@ -38,6 +38,17 @@ on:
         required: true
         type: string
 
+      languageName:
+        description: The core language  of the system
+        required: false
+        default: ""
+        type: string
+
+      languageVersion:
+        description: The core language version of the system
+        required: true
+        type: string
+
 env:
   RESULT_URL: ${{ inputs.resultUrl }}
   ACTION_TO_CALL: ${{ inputs.actionToCall }}

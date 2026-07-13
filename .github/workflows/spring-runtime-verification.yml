@@ -44,6 +44,12 @@ on:
         default: "11"
         type: string
 
+      languageName:
+        description: The core language of the system
+        required: false
+        default: "11"
+        type: string
+
 env:
   RESULT_URL: ${{ inputs.resultUrl }}
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
