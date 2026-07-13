@@ -225,13 +225,13 @@ jobs:
           echo "Starting $PACKAGE"
 
           export JAVA_TOOL_OPTIONS="-Xmx4g"
-  
-          java -jar -Ddebug "$PACKAGE" > runtime.log 2>&1 &
+          
+          java -Ddebug -jar "$PACKAGE" > runtime.log 2>&1 &
           APP_PID=$!
           
           echo "APP_PID=${APP_PID}" >> "$GITHUB_ENV"
           
-          sleep 5
+          sleep 30
           
           if ps -p "${APP_PID}" > /dev/null 2>&1; then
           
@@ -266,6 +266,13 @@ jobs:
         run: |
           
           source .github/actions/common/report.sh
+
+          post_pass \
+              "RUNTIME" \
+              "WAITING_FOR_APP" \
+              0 \
+              "Waiting for system to start." \
+              ""
           
           for i in {1..60}; do
           
@@ -286,9 +293,7 @@ jobs:
           
           done
           
-          MESSAGE=$(tail -200 runtime.log | tr '\n' ' ')
-          
-          grep -n "Exception\|Caused by\|ERROR" runtime.log | head -20
+          MESSAGE=$(tail -20 runtime.log | tr '\n' ' ')
           
           post_fail \
               "RUNTIME" \
@@ -297,7 +302,7 @@ jobs:
               "Application failed to start." \
               "${MESSAGE}"
           
-          post_terminate_runtime "RUNTIME"
+          post_terminate_runtime
 
 
       ###############################################################################
