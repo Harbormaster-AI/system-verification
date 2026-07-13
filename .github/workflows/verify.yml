@@ -1,6 +1,6 @@
 name: Harbormaster Verification
 run-name: >
-  Verify ${{ inputs.projectName }} ( ${{ inputs.blueprintName }} - ${{ inputs.modelName }} )
+  Verification ${{ inputs.projectName }} ( ${{ inputs.blueprintName }} - ${{ inputs.modelName }} )
 
 on:
   workflow_dispatch:
