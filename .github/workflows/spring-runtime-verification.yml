@@ -266,13 +266,6 @@ jobs:
         run: |
           
           source .github/actions/common/report.sh
-
-          post_pass \
-              "RUNTIME" \
-              "WAITING_FOR_APP" \
-              0 \
-              "Waiting for system to start." \
-              ""
           
           for i in {1..60}; do
           
