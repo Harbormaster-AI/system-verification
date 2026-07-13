@@ -466,7 +466,11 @@ jobs:
 
               echo "Detected Maven project."
 
+              mvn validate -e
+  
               mvn -B validate > build-validation.log 2>&1
+          
+              tail -10 build-validation.log
   
               if [ $? -eq 0 ]; then
 
