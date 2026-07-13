@@ -192,6 +192,7 @@ jobs:
       branch: ${{ inputs.branch }}
       certificationIdentifier: ${{ inputs.certificationIdentifier }}
       appName: ${{ inputs.appName }}
+      languageVersion: ${{ inputs.languageVersion }}
 
   go-runtime:
 
@@ -208,6 +209,7 @@ jobs:
       branch: ${{ inputs.branch }}
       certificationIdentifier: ${{ inputs.certificationIdentifier }}
       appName: ${{ inputs.appName }}
+      languageVersion: ${{ inputs.languageVersion }}
 
   go-delivery:
 
