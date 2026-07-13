@@ -282,18 +282,6 @@ jobs:
           ###########################################################################
           echo "Current directory:"
           pwd
-          
-          echo
-          
-          echo "Tree:"
-          find . | head -100
-          
-          echo
-          
-          echo "Java:"
-          find . -name "*.java"
-          
-          pwd
           find . -maxdepth 3
           find . -name "*.java"
   
