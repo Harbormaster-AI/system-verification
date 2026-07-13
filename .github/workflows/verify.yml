@@ -154,7 +154,7 @@ jobs:
       branch: ${{ inputs.branch }}
       certificationIdentifier: ${{ inputs.certificationIdentifier }}
       appName: ${{ inputs.appName }}
-      languageVersion: ${{ inputs.appName }}
+      languageVersion: ${{ inputs.languageVersion }}
 
   spring-delivery:
 
