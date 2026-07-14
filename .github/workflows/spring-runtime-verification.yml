@@ -63,6 +63,25 @@ jobs:
 
     runs-on: ${{ inputs.runner }}
 
+    services:
+
+      mysql:
+
+        image: mysql:8.4
+
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: harbormaster
+
+        ports:
+          - 3306:3306
+
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5      
+
     steps:
 
       ###########################################################################
@@ -216,6 +235,16 @@ jobs:
               ! -name "*sources.jar" \
               ! -name "*javadoc.jar" \
               | head -1)
+
+          until mysqladmin ping \
+            -h127.0.0.1 \
+            -uroot \
+            -proot \
+            --silent
+            do
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
           
           ###########################################################################
           # declare as env var to use in later steps
@@ -226,7 +255,14 @@ jobs:
 
           export JAVA_TOOL_OPTIONS="-Xmx4g"
   
-          java -Ddebug -jar "$PACKAGE" > runtime.log 2>&1 &
+          java 
+            -Ddebug -jar \
+            -Dspring.datasource.url=jdbc:mysql://localhost:3306/harbormaster \
+            -Dspring.datasource.username=root \
+            -Dspring.datasource.password=root \
+            -Dspring.jpa.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect \
+            -Dspring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver \
+            "$PACKAGE" > runtime.log 2>&1 &
           APP_PID=$!
           
           echo "APP_PID=${APP_PID}" >> "$GITHUB_ENV"
