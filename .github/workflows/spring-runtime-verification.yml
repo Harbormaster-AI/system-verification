@@ -255,7 +255,7 @@ jobs:
 
           export JAVA_TOOL_OPTIONS="-Xmx4g"
   
-          java 
+          java \
             -Ddebug  \
             -Dspring.datasource.url=jdbc:mysql://localhost:3306/harbormaster \
             -Dspring.datasource.username=root \
