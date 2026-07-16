@@ -36,6 +36,11 @@ on:
         default: ""
         type: string
 
+      gitHubToken:
+        description: Token to securely access APIs and other capabilities on behalf of the caller
+        required: true
+        type: string
+
       projectName:
         description: Name of project verifying
         required: false
@@ -167,6 +172,7 @@ jobs:
     with:
       runner: ${{ inputs.runner }}
       branch: ${{ inputs.branch }}
+      gitHubToken: ${{ inputs.gitHubToken }}
       resultUrl: ${{ inputs.resultUrl }}
       actionToCall: ${{ inputs.actionToCall }}
       certificationIdentifier:   ${{ inputs.certificationIdentifier }}
