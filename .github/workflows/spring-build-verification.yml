@@ -835,7 +835,7 @@ jobs:
           name: packaged-application
           path: |
             target/*.jar
-            build/libs/*.jar
+          retention-days: 1
             
 
       ###############################################################################
