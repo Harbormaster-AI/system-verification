@@ -1,4 +1,4 @@
-name: Spring Boot Runtime Verification
+name: Go Runtime Verification
 
 on:
 
@@ -74,21 +74,24 @@ jobs:
         with:
           ref: ${{ inputs.branch }}
 
-        ###########################################################################
-        #   Download pre-built artifact
-        ###########################################################################
+      ###########################################################################
+      #   Download pre-built artifact
+      ###########################################################################
 
-      - uses: actions/download-artifact@v4
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
         with:
           name: packaged-application
+          path: bin
 
-      - name: Show JAR Files
+      - name: Show Build Artifacts
 
         shell: bash
 
         run: |
           
-          find -name "*.jar"
+          echo "Contents of bin/:"
+          ls -la bin
 
       ###########################################################################
       #   Announce start of runtime verification
@@ -110,7 +113,7 @@ jobs:
                         "" 
 
       ###########################################################################
-      #   Locate the JAR.
+      #   Locate the executable.
       ###########################################################################
 
       - name: Verify Artifact
@@ -121,37 +124,32 @@ jobs:
           
           source .github/actions/common/report.sh
 
-          PACKAGE=$(find  \
-              -type f \
-              -name "*.jar" \
-              ! -name "*.original" \
-              ! -name "*-plain.jar" \
-              ! -name "*sources.jar" \
-              ! -name "*javadoc.jar" \
-              | head -1)
+          PACKAGE="bin/${APP_NAME}"
           
-          if [ -z "$PACKAGE" ]; then
+          if [ ! -f "$PACKAGE" ]; then
           
               post_fail \
                   "RUNTIME" \
                   "VERIFY_ARTIFACT" \
                   0 \
                   "No application artifact found." \
-                  "VERIFY_ARTIFACT: Unable to locate downloaded jar."
+                  "VERIFY_ARTIFACT: Unable to locate downloaded executable at ${PACKAGE}."
           
-              post_terminate_runtime "RUNTIME"
+              post_terminate_runtime
           
           fi
+
+          echo "PACKAGE=${PACKAGE}" >> "$GITHUB_ENV"
           
           post_pass \
               "RUNTIME" \
               "VERIFY_ARTIFACT" \
               10 \
               "Artifact located." \
-              "VERIFY_ARTIFACT: $(basename "$JAR")"    
+              "VERIFY_ARTIFACT: $(basename "$PACKAGE")"    
 
       ###########################################################################
-      #   Launch Spring Boot
+      #   Launch Go application
       ###########################################################################
 
       - name: Start Application
@@ -162,14 +160,7 @@ jobs:
           
           source .github/actions/common/report.sh
 
-          PACKAGE=$(find  \
-              -type f \
-              -name "*.jar" \
-              ! -name "*.original" \
-              ! -name "*-plain.jar" \
-              ! -name "*sources.jar" \
-              ! -name "*javadoc.jar" \
-              | head -1)
+          PACKAGE="bin/${APP_NAME}"
           
           ###########################################################################
           # declare as env var to use in later steps
@@ -177,8 +168,10 @@ jobs:
           echo "PACKAGE=${PACKAGE}" >> "$GITHUB_ENV"
           
           echo "Starting $PACKAGE"
+
+          chmod +x "$PACKAGE"
   
-          java -jar "$PACKAGE" > runtime.log 2>&1 &
+          "$PACKAGE" > runtime.log 2>&1 &
           APP_PID=$!
           
           echo "APP_PID=${APP_PID}" >> "$GITHUB_ENV"
@@ -208,7 +201,7 @@ jobs:
           fi
 
       ###########################################################################
-      #   Wait Until Spring Boot starts
+      #   Wait until Go application starts
       ###########################################################################
 
       - name: Wait For Startup
@@ -228,14 +221,14 @@ jobs:
           
           for i in {1..60}; do
           
-              if curl -fs http://localhost:8080/actuator/health >/dev/null; then
+              if curl -fs http://localhost:8080/health >/dev/null; then
           
                   post_pass \
                       "RUNTIME" \
                       "APPLICATION_STARTED" \
                       30 \
                       "Application started successfully." \
-                      "Spring Boot is accepting requests."
+                      "Go application health endpoint is accepting requests."
           
                   exit 0
           

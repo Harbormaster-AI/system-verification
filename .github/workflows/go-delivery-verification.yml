@@ -1,4 +1,4 @@
-name: Spring Boot Delivery Verification
+name: Go Delivery Verification
 
 on:
 
@@ -128,10 +128,11 @@ jobs:
       #   Download pre-built artifact
       ###########################################################################
 
-      - uses: actions/download-artifact@v4
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
         with:
           name: packaged-application
-
+          path: bin
 
       ###############################################################################
       # Verify Dockerfile
@@ -377,14 +378,14 @@ jobs:
           
           for i in {1..30}; do
           
-              if curl -fs http://localhost:8080/actuator/health >/dev/null; then
+              if curl -fs http://localhost:8080/health >/dev/null; then
           
                   post_pass \
                       "DELIVERY" \
                       "CONTAINER_HEALTH" \
                       15 \
                       "Container health check passed." \
-                      "CONTAINER_HEALTH: Application reported UP."
+                      "CONTAINER_HEALTH: Go application health endpoint is accepting requests."
           
                   exit 0
           

@@ -1,4 +1,4 @@
-name: Spring Boot Build Verification
+name: Go Build Verification
 
 on:
 
@@ -50,7 +50,6 @@ on:
         description: The core language version of the system
         required: true
         type: string
-
 
 env:
   RESULT_URL: ${{ inputs.resultUrl }}
@@ -114,10 +113,11 @@ jobs:
           
           fi
 
-        ###########################################################################
-        #   Determine if maven or gradle is in use
-        ###########################################################################
-      - name: Determine Build System
+      ###########################################################################
+      # Determine Go Module
+      ###########################################################################
+
+      - name: Determine Go Module
 
         shell: bash
 
@@ -125,62 +125,65 @@ jobs:
 
           source .github/actions/common/report.sh
           
-          if [ -f "pom.xml" ]; then
+          if [ -f "go.mod" ]; then
 
-              echo "BUILD_SYSTEM=maven" >> $GITHUB_ENV
-              echo "BUILD_DIRECTORY=target" >> $GITHUB_ENV
-              BUILD_DIRECTORY="target"
-          elif [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
+              echo "BUILD_DIRECTORY=bin" >> $GITHUB_ENV
+              echo "BINARY_NAME=${APP_NAME}" >> $GITHUB_ENV
 
-              echo "BUILD_SYSTEM=gradle" >> $GITHUB_ENV
-              echo "BUILD_DIRECTORY=build/libs" >> $GITHUB_ENV
-              BUILD_DIRECTORY="build/libs"
-                      
           else
 
-              echo "Unknown build system."
+              post_fail \
+                  "BUILD" \
+                  "GO_MODULE" \
+                  0 \
+                  "No go.mod found. This does not appear to be a Go module."
+
               post_terminate_build
 
           fi
+
       ####################################################################
-      # Determine Java Version
+      # Determine Go Version
       ####################################################################
 
-      - name: Determine Java Version
+      - name: Determine Go Version
 
         shell: bash
 
         run: |
 
           ####################################################################
-          # Default Java Version
+          # Default Go Version
           ####################################################################
 
-          JAVA_VERSION=17
+          GO_VERSION="${{ inputs.languageVersion }}"
 
           ####################################################################
-          # Maven
+          # Read version from go.mod (e.g. "go 1.22")
           ####################################################################
 
-          if [ "$BUILD_SYSTEM" = "gradle" ]; then
+          if [ -f "go.mod" ]; then
 
-            JAVA_VERSION=11
+              PARSED_VERSION=$(grep -E '^go [0-9]+\.[0-9]+(\.[0-9]+)?' go.mod | head -1 | awk '{print $2}')
+
+              if [ -n "${PARSED_VERSION}" ]; then
+                  GO_VERSION="${PARSED_VERSION}"
+              fi
 
           fi
 
-          echo "JAVA_VERSION=${JAVA_VERSION}" >> "$GITHUB_ENV"
+          echo "GO_VERSION=${GO_VERSION}" >> "$GITHUB_ENV"
 
-          echo "Using Java ${JAVA_VERSION}"
+          echo "Using Go ${GO_VERSION}"
 
       ###############################################################################
-      # Set up the Java version
+      # Set up Go
       ###############################################################################
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
         with:
-          distribution: temurin
-          java-version: ${{ env.JAVA_VERSION }}
+          go-version: ${{ env.GO_VERSION }}
 
       ###############################################################################
       # Expected Files
@@ -197,10 +200,10 @@ jobs:
           SCORE=0
           
           ###########################################################################
-          # Build File
+          # Module File (go.mod)
           ###########################################################################
           
-          if [[ -f pom.xml || -f build.gradle || -f build.gradle.kts ]]; then
+          if [ -f go.mod ]; then
           
               SCORE=$((SCORE + 3))
           
@@ -208,7 +211,7 @@ jobs:
                   "BUILD" \
                   "BUILD_FILE" \
                   3 \
-                  "Build file located."
+                  "go.mod located."
           
           else
           
@@ -216,7 +219,7 @@ jobs:
                   "BUILD" \
                   "BUILD_FILE" \
                   0 \
-                  "No pom.xml, build.gradle or build.gradle.kts found."
+                  "No go.mod found."
           
           fi
           
@@ -245,54 +248,50 @@ jobs:
           fi
           
           ###########################################################################
-          # Spring Boot Configuration
+          # Dependency Checksums (go.sum)
           ###########################################################################
           
-          if [[ \
-              -f src/main/resources/application.properties || \
-              -f src/main/resources/application.yml || \
-              -f src/main/resources/application.yaml \
-             ]]; then
+          if [ -f go.sum ]; then
           
               SCORE=$((SCORE + 2))
           
               post_pass \
                   "BUILD" \
-                  "SPRING_CONFIGURATION" \
+                  "GO_SUM" \
                   2 \
-                  "Spring Boot configuration located."
+                  "go.sum located."
           
           else
           
               post_fail \
                   "BUILD" \
-                  "SPRING_CONFIGURATION" \
+                  "GO_SUM" \
                   0 \
-                  "No Spring Boot configuration found."
+                  "No go.sum found."
           
           fi
           
           ###########################################################################
-          # Java Sources
+          # Go Sources
           ###########################################################################
           
-          if find src/main/java -name "*.java" | grep -q .; then
-          
+          if find . -name "*.go" | grep -q .; then
+
               SCORE=$((SCORE + 3))
-          
+
               post_pass \
                   "BUILD" \
-                  "JAVA_SOURCE" \
+                  "GO_SOURCE" \
                   3 \
-                  "Java source files located."
+                  "Go source files located."
           
           else
           
               post_fail \
                   "BUILD" \
-                  "JAVA_SOURCE" \
+                  "GO_SOURCE" \
                   0 \
-                  "No Java source files found."
+                  "No Go source files found."
           
           fi
           
@@ -322,98 +321,98 @@ jobs:
           SCORE=0
 
           ###########################################################################
-          # src/main/java
+          # Main entry point (cmd/ or root main.go)
           ###########################################################################
 
-          if find . -type d -path "*/src/main/java" | grep -q .; then
+          if [ -f main.go ] || find . -name "main.go" | grep -q .; then
 
               SCORE=$((SCORE + 6))
 
               post_pass \
                   "BUILD" \
-                  "SRC_MAIN_JAVA" \
+                  "GO_MAIN" \
                   6 \
-                  "src/main/java directory exists."
+                  "Go main entry point located."
 
           else
 
               post_fail \
                   "BUILD" \
-                  "SRC_MAIN_JAVA" \
+                  "GO_MAIN" \
                   0 \
-                  "Missing mandatory src/main/java directory."
+                  "Missing main.go."
 
           fi
 
           ###########################################################################
-          # src/main/resources
+          # Go source tree
           ###########################################################################
 
-          if find . -type d -path "*/src/main/resources" | grep -q .; then
+          if find . -name "*.go" | grep -q .; then
 
               SCORE=$((SCORE + 2))
 
               post_pass \
                   "BUILD" \
-                  "SRC_MAIN_RESOURCES" \
+                  "GO_SOURCE_TREE" \
                   2 \
-                  "src/main/resources directory exists."
+                  "Go source tree exists."
 
           else
 
               post_fail \
                   "BUILD" \
-                  "SRC_MAIN_RESOURCES" \
+                  "GO_SOURCE_TREE" \
                   0 \
-                  "Missing src/main/resources directory."
+                  "No Go source files found."
 
           fi
 
           ###########################################################################
-          # src/test
+          # Go tests
           ###########################################################################
 
-          if find . -type d -path "*/src/test" | grep -q .; then
+          if find . -name "*_test.go" | grep -q .; then
 
               SCORE=$((SCORE + 1))
 
               post_pass \
                   "BUILD" \
-                  "SRC_TEST" \
+                  "GO_TEST" \
                   1 \
-                  "src/test directory exists."
+                  "Go test files located."
 
           else
 
               post_fail \
                   "BUILD" \
-                  "SRC_TEST" \
+                  "GO_TEST" \
                   0 \
-                  "Missing src/test directory."
+                  "No Go test files found."
 
           fi
 
           ###########################################################################
-          # src/main/kotlin (optional)
+          # internal/ or pkg/ (optional)
           ###########################################################################
 
-          if find . -type d -path "*/src/main/kotlin" | grep -q .; then
+          if [ -d internal ] || [ -d pkg ]; then
 
               SCORE=$((SCORE + 1))
 
               post_pass \
                   "BUILD" \
-                  "SRC_MAIN_KOTLIN" \
+                  "GO_PACKAGES" \
                   1 \
-                  "src/main/kotlin directory exists."
+                  "internal/ or pkg/ directory exists."
 
           else
 
               post_warning \
                   "BUILD" \
-                  "SRC_MAIN_KOTLIN" \
+                  "GO_PACKAGES" \
                   0 \
-                  "Optional Kotlin source directory not found."
+                  "Optional internal/ or pkg/ directory not found."
 
           fi
 
@@ -450,90 +449,26 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          ###########################################################################
-          # Maven Project
-          ###########################################################################
+          echo "Detected Go module."
 
-          if [ -f "pom.xml" ]; then
+          if go mod download > build-validation.log 2>&1; then
 
-              echo "Detected Maven project."
-
-              mvn -B validate > build-validation.log 2>&1
-  
-              if [ $? -eq 0 ]; then
-
-                  post_pass \
-                      "BUILD" \
-                      "MAVEN_VALIDATE" \
-                      10 \
-                      "Maven validate completed successfully."
-
-              else
-                 
-                  tail -10 build-validation.log
-          
-                  MESSAGE=$(tail -10 build-validation.log | tr '\n' ' ')
-                  post_fail \
-                      "BUILD" \
-                      "MAVEN_VALIDATE" \
-                      0 \
-                       "${MESSAGE}"
-
-                  post_terminate_build
-
-              fi
-
-          ###########################################################################
-          # Gradle Project
-          ###########################################################################
-
-          elif [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
-
-              echo "Detected Gradle project."
-
-              if [ -f "./gradlew" ]; then
-
-                  chmod +x ./gradlew
-
-                  BUILD_CMD="./gradlew"
-
-              else
-
-                  BUILD_CMD="gradle"
-
-              fi
-
-              if ${BUILD_CMD} help --scan; then
-
-                  post_pass \
-                      "BUILD" \
-                      "GRADLE_VALIDATE" \
-                      10 \
-                      "Gradle validation completed successfully."
-
-              else
-
-                  post_fail \
-                      "BUILD" \
-                      "GRADLE_VALIDATE" \
-                      0 \
-                      "Gradle validation failed."
-
-                  post_terminate_build
-
-              fi
-
-          ###########################################################################
-          # Unknown Build System
-          ###########################################################################
+              post_pass \
+                  "BUILD" \
+                  "GO_MOD_DOWNLOAD" \
+                  10 \
+                  "Go module download completed successfully."
 
           else
 
+              tail -10 build-validation.log
+
+              MESSAGE=$(tail -10 build-validation.log | tr '\n' ' ')
               post_fail \
                   "BUILD" \
-                  "BUILD_VALIDATION" \
+                  "GO_MOD_DOWNLOAD" \
                   0 \
-                  "Unable to determine build system."
+                  "${MESSAGE}"
 
               post_terminate_build
 
@@ -551,89 +486,25 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          ###########################################################################
-          # Maven
-          ###########################################################################
+          echo "Verifying Go module dependencies."
 
-          if [ -f "pom.xml" ]; then
+          if go mod verify > dependency-validation.log 2>&1; then
 
-              echo "Detected Maven project."
-
-              if mvn -B dependency:analyze > dependency-validation.log 2>&1; then
-
-                  post_pass \
-                      "BUILD" \
-                      "MAVEN_DEPENDENCY_ANALYZE" \
-                      10 \
-                      "Dependency analysis completed successfully."
-
-              else
-
-                  MESSAGE=$(tail -20 dependency-validation.log | tr '\n' ' ')
-
-                  post_fail \
-                      "BUILD" \
-                      "MAVEN_DEPENDENCY_ANALYZE" \
-                      0 \
-                      "${MESSAGE}"
-
-                  post_terminate_build
-
-              fi
-
-          ###########################################################################
-          # Gradle
-          ###########################################################################
-
-          elif [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
-
-              echo "Detected Gradle project."
-
-              if [ -f "./gradlew" ]; then
-
-                  chmod +x ./gradlew
-                  BUILD_CMD="./gradlew"
-              else
-                  BUILD_CMD="gradle"
-              fi
-
-              ${BUILD_CMD} \
-                  --write-verification-metadata sha256 \
-                  help > dependency-validation.log 2>&1
-
-              if [ $? -eq 0 ]; then
-
-                  post_pass \
-                      "BUILD" \
-                      "GRADLE_DEPENDENCY_VERIFY" \
-                      10 \
-                      "Dependency verification completed successfully."
-
-              else
-
-                  MESSAGE=$(tail -20 dependency-validation.log | tr '\n' ' ')
-
-                  post_fail \
-                      "BUILD" \
-                      "GRADLE_DEPENDENCY_VERIFY" \
-                      0 \
-                      "${MESSAGE}"
-
-                  post_terminate_build
-
-              fi
-
-          ###########################################################################
-          # Unknown Build System
-          ###########################################################################
+              post_pass \
+                  "BUILD" \
+                  "GO_MOD_VERIFY" \
+                  10 \
+                  "Go module verification completed successfully."
 
           else
 
+              MESSAGE=$(tail -20 dependency-validation.log | tr '\n' ' ')
+
               post_fail \
                   "BUILD" \
-                  "DEPENDENCY_VALIDATION" \
+                  "GO_MOD_VERIFY" \
                   0 \
-                  "Unable to determine build system."
+                  "${MESSAGE}"
 
               post_terminate_build
 
@@ -651,76 +522,32 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          ###########################################################################
-          # Maven
-          ###########################################################################
+          mkdir -p "${BUILD_DIRECTORY}"
 
-          if [ -f "pom.xml" ]; then 
+          BUILD_PACKAGE="."
 
-              if mvn -B clean package > build.log 2>&1; then
+          if [ ! -f main.go ] && find . -name "main.go" | grep -q .; then
+              MAIN_DIR=$(find . -name "main.go" | head -1 | xargs dirname)
+              BUILD_PACKAGE="./${MAIN_DIR}"
+          fi
 
-                  post_pass \
-                      "BUILD" \
-                      "MAVEN_PACKAGE" \
-                      40 \
-                      "Application built successfully."
+          if go build -o "${BUILD_DIRECTORY}/${BINARY_NAME}" "${BUILD_PACKAGE}" > build.log 2>&1; then
 
-              else
-
-                  MESSAGE=$(tail -20 build.log | tr '\n' ' ')
-
-                  post_fail \
-                      "BUILD" \
-                      "MAVEN_PACKAGE" \
-                      0 \
-                      "${MESSAGE}"
-
-                  post_terminate_build
-
-              fi
-
-          ###########################################################################
-          # Gradle
-          ###########################################################################
-
-          elif [ -f "build.gradle" ] || [ -f "build.gradle.kts" ]; then
-
-              if [ -f "./gradlew" ]; then
-                  chmod +x ./gradlew
-                  BUILD_CMD="./gradlew"
-              else
-                  BUILD_CMD="gradle"
-              fi
-
-              if ${BUILD_CMD} build > build.log 2>&1; then          
-
-                  post_pass \
-                      "BUILD" \
-                      "GRADLE_BUILD" \
-                      40 \
-                      "Application built successfully."
-
-              else
-
-                  MESSAGE=$(tail -20 build.log | tr '\n' ' ')
-
-                  post_fail \
-                      "BUILD" \
-                      "GRADLE_BUILD" \
-                      0 \
-                      "${MESSAGE}"
-
-                  post_terminate_build
-
-              fi
+              post_pass \
+                  "BUILD" \
+                  "GO_BUILD" \
+                  40 \
+                  "Application built successfully."
 
           else
 
+              MESSAGE=$(tail -20 build.log | tr '\n' ' ')
+
               post_fail \
                   "BUILD" \
-                  "EXECUTE_BUILD" \
+                  "GO_BUILD" \
                   0 \
-                  "Unable to determine build system."
+                  "${MESSAGE}"
 
               post_terminate_build
 
@@ -750,14 +577,7 @@ jobs:
           echo "${BUILD_DIRECTORY} does not exist."
           fi
 
-          PACKAGE=$(find "${BUILD_DIRECTORY}" \
-              -type f \
-              -name "*.jar" \
-              ! -name "*.original" \
-              ! -name "*-plain.jar" \
-              ! -name "*sources.jar" \
-              ! -name "*javadoc.jar" \
-              | head -1)
+          PACKAGE="${BUILD_DIRECTORY}/${BINARY_NAME}"
           
           ###########################################################################
           # declare as env var to use in later steps
@@ -769,14 +589,14 @@ jobs:
           # Validate Package Exists
           ###########################################################################
 
-          if [ -z "$PACKAGE" ]; then
+          if [ ! -f "$PACKAGE" ]; then
 
               post_fail \
                   "BUILD" \
                   "PACKAGE_VALIDATION" \
                   0 \
                   "No packaged artifact found." \
-                  "PACKAGE_VALIDATION: No JAR file exists in the expected output directory."
+                  "PACKAGE_VALIDATION: No executable exists in ${BUILD_DIRECTORY}/."
               
               post_terminate_build
 
@@ -821,10 +641,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: packaged-application
-          path: |
-            target/*.jar
-            build/libs/*.jar
-            
+          path: bin/
+          if-no-files-found: error
 
       ###############################################################################
       # Terminate Verification
