@@ -81,7 +81,7 @@ env:
   APP_NAME:                     ${{ inputs.appName }}
 
   REGISTRY_HOST:                ${{ inputs.dockerHost }}
-  REGISTRY_ORG:                ${{ inputs.dockerOrg }}
+  REGISTRY_ORG:                 ${{ inputs.dockerOrg }}
   REGISTRY_REPOSITORY:          ${{ inputs.dockerRepository }}
   REGISTRY_USERNAME:            ${{ inputs.dockerUsername }}
   REGISTRY_PASSWORD:            ${{ inputs.dockerPassword }}
@@ -262,11 +262,11 @@ jobs:
         run: |
           
           source .github/actions/common/report.sh
-                             
+          
           echo "Running docker build..."
-                    
+          
           docker build --progress=plain -t "${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}" .
-                    
+          
           if [ $? -eq 0 ]; then
           
               post_pass \
@@ -427,18 +427,18 @@ jobs:
               15 \
               "Docker image published successfully." \
               "PUBLISH_IMAGE: ${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}"
-    
+          
           else
-            
+          
             post_fail \
               "DELIVERY" \
               "PUBLISH_IMAGE" \
               0 \
               "Docker image publication failed." \
               "PUBLISH_IMAGE: Unable to push ${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}"
-        
+          
               post_terminate_delivery
-      
+          
             fi
 
 
@@ -449,7 +449,7 @@ jobs:
       - name: Store Docker Image
 
         run: |
-        
+          
           if [ "${{ inputs.saveDockerImage }}" = "TRUE" ]; then
             docker save ${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}:latest -o ${APP_NAME}.tar
           fi

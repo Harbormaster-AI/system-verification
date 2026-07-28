@@ -62,6 +62,27 @@ jobs:
 
     runs-on: ${{ inputs.runner }}
 
+    services:
+
+      mysql:
+
+        image: mysql:8.4
+
+        env:
+
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: harbormaster
+
+        ports:
+
+          - 3306:3306
+
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
 
       ###########################################################################
@@ -149,6 +170,97 @@ jobs:
               "VERIFY_ARTIFACT: $(basename "$PACKAGE")"    
 
       ###########################################################################
+      #   Wait for MySQL service
+      ###########################################################################
+
+      - name: Install MySQL Client
+
+        if: runner.os == 'Linux'
+
+        run: |
+          
+          if ! command -v mysqladmin >/dev/null 2>&1; then
+              sudo apt-get update
+              sudo apt-get install -y default-mysql-client
+          fi
+
+      - name: Wait For MySQL
+
+        shell: bash
+
+        run: |
+          
+          source .github/actions/common/report.sh
+
+          post_pass \
+              "RUNTIME" \
+              "WAITING_FOR_MYSQL" \
+              0 \
+              "Waiting for MySQL to start." \
+              ""
+
+          for i in {1..30}; do
+
+              if mysqladmin ping -h 127.0.0.1 -P 3306 -uroot -proot --silent 2>/dev/null; then
+
+                  post_pass \
+                      "RUNTIME" \
+                      "MYSQL_READY" \
+                      10 \
+                      "MySQL is ready." \
+                      "MySQL service is accepting connections."
+
+                  exit 0
+
+              fi
+
+              sleep 2
+
+          done
+
+          post_fail \
+              "RUNTIME" \
+              "MYSQL_READY" \
+              0 \
+              "MySQL failed to start." \
+              "MySQL service did not respond to mysqladmin ping within 60 seconds."
+
+          post_terminate_runtime
+
+      ###########################################################################
+      #   Configure database connection for the application
+      #   (Workflow owns DB settings — same idea as Spring -D parameters.
+      #    Do not edit the project's .env file.)
+      ###########################################################################
+
+      - name: Configure Database Environment
+
+        shell: bash
+
+        run: |
+          
+          source .github/actions/common/report.sh
+
+          {
+              echo "DB_USER_NAME=root"
+              echo "DB_PASSWORD=root"
+              echo "DB_NAME=harbormaster"
+              echo "DB_HOST=127.0.0.1"
+              echo "DB_PORT=3306"
+              echo "DB_TYPE=mysql"
+              echo "DB_ARGS=charset=utf8&parseTime=True&loc=Local"
+              echo "DB_DISABLE_FK_CONSTRAINTS=true"
+              echo "APP_PORT=8080"
+          } >> "$GITHUB_ENV"
+
+          post_pass \
+              "RUNTIME" \
+              "CONFIGURE_DATABASE" \
+              10 \
+              "Database environment configured." \
+              "Runtime workflow set DB connection via environment variables (not by editing .env)."
+
+      ###########################################################################
       #   Launch Go application
       ###########################################################################
 
@@ -170,7 +282,20 @@ jobs:
           echo "Starting $PACKAGE"
 
           chmod +x "$PACKAGE"
-  
+
+          ###########################################################################
+          # Pass DB settings to the process (godotenv does not override existing env)
+          ###########################################################################
+          export DB_USER_NAME="${DB_USER_NAME}"
+          export DB_PASSWORD="${DB_PASSWORD}"
+          export DB_NAME="${DB_NAME}"
+          export DB_HOST="${DB_HOST}"
+          export DB_PORT="${DB_PORT}"
+          export DB_TYPE="${DB_TYPE}"
+          export DB_ARGS="${DB_ARGS}"
+          export DB_DISABLE_FK_CONSTRAINTS="${DB_DISABLE_FK_CONSTRAINTS}"
+          export APP_PORT="${APP_PORT}"
+          
           "$PACKAGE" > runtime.log 2>&1 &
           APP_PID=$!
           
@@ -291,7 +416,7 @@ jobs:
               post_terminate_runtime
 
           fi
-          
+
       ###############################################################################
       # Terminate Verification
       ###############################################################################
@@ -302,5 +427,5 @@ jobs:
 
         run: |
           source .github/actions/common/report.sh
-      
+          
           post_terminate_runtime false

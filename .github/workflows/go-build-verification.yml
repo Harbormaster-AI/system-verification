@@ -51,6 +51,7 @@ on:
         required: true
         type: string
 
+
 env:
   RESULT_URL: ${{ inputs.resultUrl }}
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
@@ -124,21 +125,31 @@ jobs:
         run: |
 
           source .github/actions/common/report.sh
-          
+
+          echo "BUILD_DIRECTORY=bin" >> "$GITHUB_ENV"
+          echo "BINARY_NAME=${APP_NAME}" >> "$GITHUB_ENV"
+
           if [ -f "go.mod" ]; then
 
-              echo "BUILD_DIRECTORY=bin" >> $GITHUB_ENV
-              echo "BINARY_NAME=${APP_NAME}" >> $GITHUB_ENV
+              echo "NEED_GO_MOD_INIT=false" >> "$GITHUB_ENV"
+
+              post_pass \
+                  "BUILD" \
+                  "GO_MODULE" \
+                  5 \
+                  "go.mod found." \
+                  "Using existing Go module file."
 
           else
 
-              post_fail \
+              echo "NEED_GO_MOD_INIT=true" >> "$GITHUB_ENV"
+
+              post_pass \
                   "BUILD" \
                   "GO_MODULE" \
-                  0 \
-                  "No go.mod found. This does not appear to be a Go module."
-
-              post_terminate_build
+                  5 \
+                  "go.mod not found. Will create during build." \
+                  "HarborMaster does not generate go.mod. Verification will run go mod init."
 
           fi
 
@@ -156,7 +167,7 @@ jobs:
           # Default Go Version
           ####################################################################
 
-          GO_VERSION="${{ inputs.languageVersion }}"
+          GO_VERSION="${{ inputs.languageVersion }}""
 
           ####################################################################
           # Read version from go.mod (e.g. "go 1.22")
@@ -184,6 +195,70 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
+
+      ###############################################################################
+      # Ensure Go Module (create go.mod if HarborMaster did not provide one)
+      ###############################################################################
+
+      - name: Ensure Go Module
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+          if [ "${NEED_GO_MOD_INIT}" = "true" ]; then
+
+              echo "Creating go.mod with: go mod init ${APP_NAME}"
+
+              if ! go mod init "${APP_NAME}" > go-mod-init.log 2>&1; then
+
+                  MESSAGE=$(tail -20 go-mod-init.log | tr '\n' ' ')
+
+                  post_fail \
+                      "BUILD" \
+                      "GO_MOD_INIT" \
+                      0 \
+                      "Failed to create go.mod." \
+                      "${MESSAGE}"
+
+                  post_terminate_build
+
+              fi
+
+              if ! go mod tidy > go-mod-tidy.log 2>&1; then
+
+                  MESSAGE=$(tail -20 go-mod-tidy.log | tr '\n' ' ')
+
+                  post_fail \
+                      "BUILD" \
+                      "GO_MOD_TIDY" \
+                      0 \
+                      "Failed to resolve Go module dependencies." \
+                      "${MESSAGE}"
+
+                  post_terminate_build
+
+              fi
+
+              post_pass \
+                  "BUILD" \
+                  "GO_MOD_INIT" \
+                  10 \
+                  "go.mod created successfully." \
+                  "Ran go mod init ${APP_NAME} and go mod tidy."
+
+          else
+
+              post_pass \
+                  "BUILD" \
+                  "GO_MOD_INIT" \
+                  10 \
+                  "go.mod already present." \
+                  "Skipped go mod init."
+
+          fi
 
       ###############################################################################
       # Expected Files
@@ -597,7 +672,7 @@ jobs:
                   0 \
                   "No packaged artifact found." \
                   "PACKAGE_VALIDATION: No executable exists in ${BUILD_DIRECTORY}/."
-              
+          
               post_terminate_build
 
           fi
@@ -632,7 +707,7 @@ jobs:
               20 \
               "Packaged artifact successfully validated." \
               "PACKAGE_VALIDATION: ${FILE_NAME} (${FILE_SIZE} bytes) was successfully created."
-          
+
       ###############################################################################
       # Upload Packages - to be used by subsequent validation workflows
       ###############################################################################
