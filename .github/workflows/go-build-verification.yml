@@ -167,7 +167,7 @@ jobs:
           # Default Go Version
           ####################################################################
 
-          GO_VERSION="${{ inputs.languageVersion }}""
+          GO_VERSION="${{ inputs.languageVersion }}"
 
           ####################################################################
           # Read version from go.mod (e.g. "go 1.22")
