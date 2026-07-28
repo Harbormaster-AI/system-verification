@@ -210,6 +210,10 @@ jobs:
 
           if [ "${NEED_GO_MOD_INIT}" = "true" ]; then
 
+              echo "changing to directory ${APP_NAME}" 
+              cd ${APP_NAME}
+              ls -la
+          
               echo "Creating go.mod with: go mod init ${APP_NAME}"
 
               if ! go mod init "${APP_NAME}" > go-mod-init.log 2>&1; then
