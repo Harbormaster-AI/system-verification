@@ -209,6 +209,8 @@ jobs:
           source .github/actions/common/report.sh
 
           if [ "${NEED_GO_MOD_INIT}" = "true" ]; then
+
+              ls -la
           
               echo "Creating go.mod with: go mod init ${APP_NAME}"
 
