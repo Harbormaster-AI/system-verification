@@ -201,7 +201,6 @@ jobs:
       ###############################################################################
 
       - name: Ensure Go Module
-        working-directory: ${{ env.APP_NAME }}
 
         shell: bash
 
@@ -213,7 +212,7 @@ jobs:
 
               ls -la
               echo "changing to directory ${APP_NAME}" 
-              # cd ${APP_NAME}
+              cd ${APP_NAME}
               # ls -la
           
               echo "Creating go.mod with: go mod init ${APP_NAME}"
@@ -279,7 +278,6 @@ jobs:
       ###############################################################################
 
       - name: Expected Files
-        working-directory: ${{ env.APP_NAME }}
 
         shell: bash
 
@@ -289,9 +287,7 @@ jobs:
           
           SCORE=0
           
-          echo "PWD=$(pwd)"
-          echo "Listing current directory:"
-          ls -la
+          cd ${APP_NAME}
   
           echo "Searching for go.mod..."
           find . -name go.mod
@@ -408,7 +404,7 @@ jobs:
       ###############################################################################
 
       - name: Directory Structure
-        working-directory: ${{ env.APP_NAME }}
+        
 
         shell: bash
 
@@ -418,6 +414,8 @@ jobs:
 
           SCORE=0
 
+          cd ${APP_NAME}
+  
           ###########################################################################
           # Main entry point (cmd/ or root main.go)
           ###########################################################################
@@ -540,7 +538,7 @@ jobs:
       ###############################################################################
 
       - name: Build Validation
-        working-directory: ${{ env.APP_NAME }}
+        
 
         shell: bash
 
@@ -550,6 +548,8 @@ jobs:
 
           echo "Detected Go module."
 
+          cd ${APP_NAME}
+          
           if go mod download > build-validation.log 2>&1; then
 
               post_pass \
@@ -578,7 +578,7 @@ jobs:
       ###############################################################################
 
       - name: Dependency Validation
-        working-directory: ${{ env.APP_NAME }}
+        
 
         shell: bash
 
@@ -588,6 +588,8 @@ jobs:
 
           echo "Verifying Go module dependencies."
 
+          cd ${APP_NAME}
+          
           if go mod verify > dependency-validation.log 2>&1; then
 
               post_pass \
@@ -615,7 +617,7 @@ jobs:
       ###############################################################################
 
       - name: Execute Build
-        working-directory: ${{ env.APP_NAME }}
+        
 
         shell: bash
 
@@ -623,6 +625,8 @@ jobs:
 
           source .github/actions/common/report.sh
 
+          cd ${APP_NAME}
+  
           mkdir -p "${BUILD_DIRECTORY}"
 
           BUILD_PACKAGE="."
@@ -659,13 +663,14 @@ jobs:
       ###############################################################################
 
       - name: Validate Package
-        working-directory: ${{ env.APP_NAME }}
 
         shell: bash
 
         run: |
 
           source .github/actions/common/report.sh
+
+          cd ${APP_NAME}
           
           echo "PWD=$(pwd)"
           echo "BUILD_DIRECTORY='${BUILD_DIRECTORY}'"
