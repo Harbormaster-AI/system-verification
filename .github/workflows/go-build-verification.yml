@@ -248,7 +248,12 @@ jobs:
               fi
               
               
+              echo "PWD=$(pwd)"
+              echo "Listing current directory:"
               ls -la
+  
+              echo "Searching for go.mod..."
+              find . -name go.mod
               
               post_pass \
                   "BUILD" \
@@ -281,6 +286,13 @@ jobs:
           source .github/actions/common/report.sh
           
           SCORE=0
+          
+          echo "PWD=$(pwd)"
+          echo "Listing current directory:"
+          ls -la
+  
+          echo "Searching for go.mod..."
+          find . -name go.mod
           
           ###########################################################################
           # Module File (go.mod)
