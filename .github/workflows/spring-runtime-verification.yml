@@ -257,6 +257,7 @@ jobs:
   
           java \
             -Ddebug  \
+            -Dserver.port=8080
             -Dspring.datasource.url=jdbc:mysql://localhost:3306/harbormaster \
             -Dspring.datasource.username=root \
             -Dspring.datasource.password=root \
