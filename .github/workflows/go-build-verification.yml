@@ -317,7 +317,7 @@ jobs:
           fi
           
           ###########################################################################
-          # Dockerfile
+          # Dockerfile 
           ###########################################################################
           
           if [[ -f Dockerfile ]]; then
@@ -626,6 +626,7 @@ jobs:
           source .github/actions/common/report.sh
 
           cd ${APP_NAME}
+          ls -la
   
           mkdir -p "${BUILD_DIRECTORY}"
 
@@ -671,6 +672,7 @@ jobs:
           source .github/actions/common/report.sh
 
           cd ${APP_NAME}
+          ls -la
           
           echo "PWD=$(pwd)"
           echo "BUILD_DIRECTORY='${BUILD_DIRECTORY}'"
