@@ -615,7 +615,9 @@ jobs:
       ###############################################################################
       # Execute Build
       ###############################################################################
+
       - name: Execute Build
+
 
         shell: bash
 
@@ -629,11 +631,6 @@ jobs:
           mkdir -p "${BUILD_DIRECTORY}"
 
           BUILD_PACKAGE="."
-
-        #  if [ ! -f main.go ] && find . -name "main.go" | grep -q .; then
-        #      MAIN_DIR=$(find . -name "main.go" | head -1 | xargs dirname)
-        #      BUILD_PACKAGE="./${MAIN_DIR}"
-        #  fi
 
           if go build -o "${BUILD_DIRECTORY}/${BINARY_NAME}" "${BUILD_PACKAGE}" > build.log 2>&1; then
 
