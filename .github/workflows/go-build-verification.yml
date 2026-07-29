@@ -201,6 +201,7 @@ jobs:
       ###############################################################################
 
       - name: Ensure Go Module
+        working-directory: ${{ env.APP_NAME }}
 
         shell: bash
 
@@ -212,8 +213,8 @@ jobs:
 
               ls -la
               echo "changing to directory ${APP_NAME}" 
-              cd ${APP_NAME}
-              ls -la
+              # cd ${APP_NAME}
+              # ls -la
           
               echo "Creating go.mod with: go mod init ${APP_NAME}"
 
@@ -278,6 +279,7 @@ jobs:
       ###############################################################################
 
       - name: Expected Files
+        working-directory: ${{ env.APP_NAME }}
 
         shell: bash
 
@@ -406,6 +408,7 @@ jobs:
       ###############################################################################
 
       - name: Directory Structure
+        working-directory: ${{ env.APP_NAME }}
 
         shell: bash
 
@@ -537,6 +540,7 @@ jobs:
       ###############################################################################
 
       - name: Build Validation
+        working-directory: ${{ env.APP_NAME }}
 
         shell: bash
 
@@ -574,6 +578,7 @@ jobs:
       ###############################################################################
 
       - name: Dependency Validation
+        working-directory: ${{ env.APP_NAME }}
 
         shell: bash
 
@@ -610,6 +615,7 @@ jobs:
       ###############################################################################
 
       - name: Execute Build
+        working-directory: ${{ env.APP_NAME }}
 
         shell: bash
 
@@ -653,6 +659,7 @@ jobs:
       ###############################################################################
 
       - name: Validate Package
+        working-directory: ${{ env.APP_NAME }}
 
         shell: bash
 
@@ -734,9 +741,10 @@ jobs:
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
+
         with:
           name: packaged-application
-          path: bin/
+          path: ${{ env.APP_NAME }}/bin/
           if-no-files-found: error
 
       ###############################################################################
