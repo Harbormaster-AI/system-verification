@@ -1,0 +1,23 @@
+pipeline {
+    agent { docker { image 'Jenkinsfile_Docker_App_Image()' } }
+    stages {
+        stage('install') {
+            steps {
+
+                sh go get github.com/gorilla/mux 
+                sh go get -u gorm.io/gorm
+                sh go get -u gorm.io/driver/mysql
+                sh go get github.com/joho/godotenv
+            }
+            
+        stage('build') {
+            steps {
+                sh go mod init WealthManagementongolang
+                sh go mod tidy
+                sh go build
+                sh go test WealthManagementongolang/internal/test
+                sh cd terraform && chmod 777 terraform.sh && ./terraform.sh install
+            }
+        }
+    }
+}

@@ -1,0 +1,40 @@
+image: golang:latest
+
+services:
+- postgres:latest
+
+variables:
+  POSTGRES_USERNAME: "root"
+  POSTGRES_PASSWORD: "letmein2"
+  POSTGRES_DB: "WealthManagementongolangDB"
+  REPO_NAME: gitlab.com//
+  GOPATH: $CI_PROJECT_DIR/.go
+
+  cache:
+    paths:
+      - .go/pkg/mod/
+
+stages:
+  - build-and-test
+
+before_script:
+
+    - go get github.com/gorilla/mux 
+    - go get -u gorm.io/gorm
+    - go get -u gorm.io/driver/mysql
+    - go get github.com/joho/godotenv
+
+build:
+  stage: build-and-test
+  script:
+    - go mod init WealthManagementongolang   
+    - go mod tidy   
+    - go build   
+    - go test WealthManagementongolang/internal/test   
+    - cd terraform && chmod 777 terraform.sh && ./terraform.sh install
+
+
+  artifacts:
+    paths:
+      - WealthManagementongolangbinary
+      

@@ -1,0 +1,9 @@
+gitRepo:
+  gitProvider: 
+  path: /WealthManagement-on-golang
+  DockerUserName: tylertravismya
+  DockerPassword: 69Cutlass
+  DockerOrgName: theharbormaster
+  DockerRepo: WealthManagement-on-golang
+  DockerHost: docker.io
+  DockerTag: latest
