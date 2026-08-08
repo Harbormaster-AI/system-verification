@@ -1,0 +1,39 @@
+version: 0.2
+env:
+  variables:
+
+phases:
+  install:
+    runtime-versions:
+        golang: 1.15  
+    commands:
+
+
+      - go get github.com/gorilla/mux  
+      - go get -u gorm.io/gorm 
+      - go get -u gorm.io/driver/mysql 
+      - go get github.com/joho/godotenv 
+    finally:
+      - echo Install phase complete...
+  build:
+    commands:
+      - go mod init WealthManagementongolang 
+      - go mod tidy 
+      - go build 
+      - go test WealthManagementongolang/internal/test 
+  post_build:
+    commands:
+      - echo Building Docker Image...
+      - cd ${CODEBUILD_SRC_DIR}
+      - docker login --username tylertravismya --password 69cutlass
+      - docker build -t theharbormaster/WealthManagement-on-golang:latest .
+      - docker push theharbormaster/WealthManagement-on-golang:latest 
+
+      - echo running terraform with an installation first
+      - cd terraform && chmod 777 terraform.sh && ./terraform.sh install
+
+artifacts:
+artifacts:
+  files:
+    - app
+    - buildspec.yml

@@ -1,0 +1,16 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo initializing...
+  displayName: 'Initializing...'
+- script: go get github.com/gorilla/mux 
+- script: go get -u gorm.io/gorm
+- script: go get -u gorm.io/driver/mysql
+- script: go get github.com/joho/godotenv
+- script: echo building...
+- script: go mod init WealthManagementongolang
+- script: go mod tidy
+- script: go build
+- script: go test WealthManagementongolang/internal/test
+-script: cd terraform && chmod 777 terraform.sh && ./terraform.sh install

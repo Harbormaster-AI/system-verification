@@ -1,0 +1,30 @@
+#Travis_Dist_Declaration()
+
+#Travis_Language_Declaration()
+
+#Travis_Cache_Declaration()
+
+#Travis_Git_Declaration()
+
+#Travis_EnvVar_Declarations()
+
+#Travis_Before_Install()
+
+install: 
+  - "echo -e \"machine github.com\\n  login $GITHUB_TOKEN\" > ~/.netrc"
+  - "git lfs pull"
+
+    - go get github.com/gorilla/mux  
+    - go get -u gorm.io/gorm 
+    - go get -u gorm.io/driver/mysql 
+    - go get github.com/joho/godotenv 
+
+script: 
+    - go mod init WealthManagementongolang 
+    - go mod tidy 
+    - go build 
+    - go test WealthManagementongolang/internal/test 
+    - cd terraform && chmod 777 terraform.sh && ./terraform.sh install
+
+#Travis_Services()
+  
