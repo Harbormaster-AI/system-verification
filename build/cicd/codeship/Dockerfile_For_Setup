@@ -1,0 +1,28 @@
+FROM maven:3
+
+# update and install dos2unix
+RUN apt-get update --fix-missing && \
+apt-get install -y dos2unix
+
+# assign vars for Git
+RUN export EMAIL=xxxx.xxxxxxxxx@xxxxxxxx.com
+RUN export GIT_AUTHOR_NAME=Harbormaster Dev Team
+RUN export GIT_COMMITTER_NAME=Turnstone National Bank
+      
+
+RUN go get github.com/gorilla/mux  
+RUN go get -u gorm.io/gorm 
+RUN go get -u gorm.io/driver/mysql 
+RUN go get github.com/joho/godotenv 
+
+# copy it all to gitRoot directory
+COPY . /gitRoot
+
+# ensure unix formatted
+RUN dos2unix /gitRoot/projectbuild.sh
+RUN dos2unix /gitRoot/terraform.sh
+
+# ensure executable
+RUN chmod 777 /gitRoot/projectbuild.sh
+RUN chmod 777 /gitRoot/terraform.sh
+
