@@ -1,0 +1,34 @@
+
+image: golang
+
+pipelines:
+  default:
+  - step:
+      name: install dependencies and building WealthManagementongolang 
+      script:
+
+        - go get github.com/gorilla/mux 
+        - go get -u gorm.io/gorm
+        - go get -u gorm.io/driver/mysql
+        - go get github.com/joho/godotenv
+        - go mod init WealthManagementongolang
+        - go mod tidy
+        - go build
+        - go test WealthManagementongolang/internal/test
+        - cd terraform && chmod 777 terraform.sh && ./terraform.sh install
+      caches:
+          - gomodules #cache is defined in the definitions section 
+      services:
+          - postgres
+
+definitions:
+  caches:
+    gomodules: vendor/gomodules
+  services:
+    postgres:
+      image: postgres
+      environment:
+        POSTGRES_DB: WealthManagementongolangDB
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: letmein2      
+
