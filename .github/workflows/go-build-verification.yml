@@ -143,7 +143,35 @@ jobs:
           echo "BUILD_DIRECTORY=bin" >> "$GITHUB_ENV"
           echo "BINARY_NAME=${APP_NAME}" >> "$GITHUB_ENV"
 
-          if [ -f "go.mod" ]; then
+          # HarborMaster may place sources under ./${APP_NAME} or at repo root.
+          if [ -d "${APP_NAME}" ] && { [ -f "${APP_NAME}/main.go" ] || [ -f "${APP_NAME}/go.mod" ] || [ -d "${APP_NAME}/internal" ]; }; then
+              APP_DIR="${APP_NAME}"
+          elif [ -f "main.go" ] || [ -f "go.mod" ] || [ -d "internal" ]; then
+              APP_DIR="."
+          else
+              post_fail \
+                  "BUILD" \
+                  "GO_MODULE" \
+                  0 \
+                  "Could not locate Go application sources." \
+                  "Expected ./${APP_NAME} or Go sources at repository root."
+              post_terminate_build
+          fi
+
+          # Module path for go mod init. Root layouts often import "demo/..." etc.
+          MODULE_NAME="${APP_NAME}"
+          if [ "${APP_DIR}" = "." ]; then
+              INFERRED=$(grep -RhoE '"[a-zA-Z0-9._-]+/internal/' --include='*.go' . 2>/dev/null | head -1 | sed -E 's/^"([^/]+)\/.*/\1/' || true)
+              if [ -n "${INFERRED}" ]; then
+                  MODULE_NAME="${INFERRED}"
+              fi
+          fi
+
+          echo "APP_DIR=${APP_DIR}" >> "$GITHUB_ENV"
+          echo "MODULE_NAME=${MODULE_NAME}" >> "$GITHUB_ENV"
+          echo "Resolved APP_DIR=${APP_DIR}, MODULE_NAME=${MODULE_NAME}"
+
+          if [ -f "${APP_DIR}/go.mod" ]; then
 
               echo "NEED_GO_MOD_INIT=false" >> "$GITHUB_ENV"
 
@@ -211,7 +239,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
-
+          cache: false
       ###############################################################################
       # Ensure Go Module (create go.mod if HarborMaster did not provide one)
       ###############################################################################
@@ -227,13 +255,12 @@ jobs:
           if [ "${NEED_GO_MOD_INIT}" = "true" ]; then
 
               ls -la
-              echo "changing to directory ${APP_NAME}" 
-              cd ${APP_NAME}
-              # ls -la
+              echo "Using application directory ${APP_DIR} (module ${MODULE_NAME})"
+              cd "${APP_DIR}"
           
-              echo "Creating go.mod with: go mod init ${APP_NAME}"
+              echo "Creating go.mod with: go mod init ${MODULE_NAME}"
 
-              if ! go mod init "${APP_NAME}" > go-mod-init.log 2>&1; then
+              if ! go mod init "${MODULE_NAME}" > go-mod-init.log 2>&1; then
 
                   MESSAGE=$(tail -20 go-mod-init.log | tr '\n' ' ')
 
@@ -277,11 +304,11 @@ jobs:
                   "GO_MOD_INIT" \
                   0 \
                   "go.mod created successfully." \
-                  "Ran go mod init ${APP_NAME} and go mod tidy."
+                  "Ran go mod init ${MODULE_NAME} and go mod tidy."
 
           else
 
-              # Informative only — scoring for go.mod happens in Expected Files
+              # Informative only - scoring for go.mod happens in Expected Files
               post_pass \
                   "BUILD" \
                   "GO_MOD_INIT" \
@@ -305,7 +332,7 @@ jobs:
           
           SCORE=0
           
-          cd ${APP_NAME}
+          cd "${APP_DIR}"
   
           echo "Searching for go.mod..."
           find . -name go.mod
@@ -432,7 +459,7 @@ jobs:
 
           SCORE=0
 
-          cd ${APP_NAME}
+          cd "${APP_DIR}"
   
           ###########################################################################
           # Main entry point (cmd/ or root main.go)
@@ -566,7 +593,7 @@ jobs:
 
           echo "Detected Go module."
 
-          cd ${APP_NAME}
+          cd "${APP_DIR}"
           
           if go mod download > build-validation.log 2>&1; then
 
@@ -606,7 +633,7 @@ jobs:
 
           echo "Verifying Go module dependencies."
 
-          cd ${APP_NAME}
+          cd "${APP_DIR}"
           
           if go mod verify > dependency-validation.log 2>&1; then
 
@@ -643,7 +670,7 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          cd ${APP_NAME}
+          cd "${APP_DIR}"
           ls -la
   
           mkdir -p "${BUILD_DIRECTORY}"
@@ -684,7 +711,7 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          cd ${APP_NAME}
+          cd "${APP_DIR}"
           ls -la
           
           echo "PWD=$(pwd)"
@@ -764,7 +791,7 @@ jobs:
 
         with:
           name: packaged-application
-          path: ${{ env.APP_NAME }}/bin/
+          path: ${{ env.APP_DIR }}/bin/
           if-no-files-found: error
 
       ###############################################################################

@@ -59,6 +59,7 @@ resource "kubernetes_deployment_v1" "app_master" {
             container_port = 8080
           }
 
+          # Spring Boot datasource (ignored by non-Spring apps)
           env {
             name  = "SPRING_DATASOURCE_URL"
             value = "jdbc:mysql://127.0.0.1:3306/harbormaster"
@@ -77,6 +78,57 @@ resource "kubernetes_deployment_v1" "app_master" {
           env {
             name  = "SPRING_DATASOURCE_DRIVER_CLASS_NAME"
             value = "com.mysql.cj.jdbc.Driver"
+          }
+
+          # Go / generic DB settings (ignored by Spring apps)
+          env {
+            name  = "APP_PORT"
+            value = "8080"
+          }
+
+          env {
+            name  = "SERVER_PORT"
+            value = "8080"
+          }
+
+          env {
+            name  = "DB_USER_NAME"
+            value = "root"
+          }
+
+          env {
+            name  = "DB_PASSWORD"
+            value = "root"
+          }
+
+          env {
+            name  = "DB_NAME"
+            value = "harbormaster"
+          }
+
+          env {
+            name  = "DB_HOST"
+            value = "127.0.0.1"
+          }
+
+          env {
+            name  = "DB_PORT"
+            value = "3306"
+          }
+
+          env {
+            name  = "DB_TYPE"
+            value = "mysql"
+          }
+
+          env {
+            name  = "DB_ARGS"
+            value = "charset=utf8&parseTime=True&loc=Local"
+          }
+
+          env {
+            name  = "DB_DISABLE_FK_CONSTRAINTS"
+            value = "true"
           }
 
           resources {

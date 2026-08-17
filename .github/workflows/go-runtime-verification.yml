@@ -78,7 +78,7 @@ jobs:
           - 3306:3306
 
         options: >-
-          --health-cmd="mysqladmin ping -h localhost -proot"
+          --health-cmd="mysqladmin ping -h localhost -uroot -proot"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -275,13 +275,29 @@ jobs:
               echo "APP_PORT=8080"
           } >> "$GITHUB_ENV"
 
+          # Generated Go apps call godotenv.Load() and fatal if .env is missing.
+          # Create a workflow-owned .env; existing process env still wins for overrides.
+          cat > .env <<'EOF'
+          APP_PORT=8080
+          DB_USER_NAME=root
+          DB_PASSWORD=root
+          DB_NAME=harbormaster
+          DB_HOST=127.0.0.1
+          DB_PORT=3306
+          DB_TYPE=mysql
+          DB_ARGS=charset=utf8&parseTime=True&loc=Local
+          DB_DISABLE_FK_CONSTRAINTS=true
+          EOF
+          # Remove leading spaces from heredoc lines
+          sed -i 's/^[[:space:]]*//' .env
+
           # Informative setup step — do not add to score (max runtime score is 100)
           post_pass \
               "RUNTIME" \
               "CONFIGURE_DATABASE" \
               0 \
               "Database environment configured." \
-              "Runtime workflow set DB connection via environment variables (not by editing .env)."
+              "Runtime workflow set DB connection via environment variables (not by editing project secrets)."
 
       ###########################################################################
       #   Launch Go application
