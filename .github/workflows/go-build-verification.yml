@@ -257,7 +257,7 @@ jobs:
               echo "Searching for go.mod..."
               find . -name go.mod
               
-	      # Informative only — scoring for go.mod happens in Expected Files
+              # Informative only - scoring for go.mod happens in Expected Files
               post_pass \
                   "BUILD" \
                   "GO_MOD_INIT" \
