@@ -138,7 +138,8 @@ jobs:
           path: .verification-terraform
           sparse-checkout: |
             terraform
-          token: ${{ inputs.gitHubToken }}
+          # Use default GITHUB_TOKEN. inputs.gitHubToken often fails auth here
+          # ("could not read Username") when empty/invalid; same-repo checkout does not need a PAT.
 
       ###########################################################################
       # Deploy to Cloud (Terraform / AWS)
