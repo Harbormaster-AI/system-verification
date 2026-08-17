@@ -1,0 +1,203 @@
+name: Cloud Verification
+
+on:
+
+  workflow_call:
+
+    inputs:
+
+      runner:
+        description: GitHub runner label
+        required: false
+        default: self-hosted
+        type: string
+
+      resultUrl:
+        description: URL to post verification results
+        required: false
+        default: "http://localhost:3000"
+        type: string
+
+      actionToCall:
+        description: action to call when posting to URL
+        required: false
+        default: "updateVerificationProgress"
+        type: string
+
+      branch:
+        description: Branch to checkout
+        required: false
+        default: ""
+        type: string
+
+      gitHubToken:
+        description: Token to securely access APIs and other capabilities on behalf of the caller
+        required: true
+        default: ""
+        type: string
+
+      certificationIdentifier:
+        required: true
+        type: string
+
+      appName:
+        required: true
+        type: string
+
+      dockerOrg:
+        description: Docker organization
+        required: false
+        default: ""
+        type: string
+
+      dockerRepository:
+        description: Docker repository
+        required: false
+        default: ""
+        type: string
+
+      dockerTag:
+        description: Docker image tag
+        required: false
+        default: latest
+        type: string
+
+      awsAccessKey:
+        description: AWS access key (used when secret is unavailable)
+        required: false
+        default: ""
+        type: string
+
+      awsSecretKey:
+        description: AWS secret key (used when secret is unavailable)
+        required: false
+        default: ""
+        type: string
+
+      awsRegion:
+        description: AWS region (used when secret is unavailable)
+        required: false
+        default: ""
+        type: string
+
+env:
+  RESULT_URL:                   ${{ inputs.resultUrl }}
+  ACTION_TO_CALL:               ${{ inputs.actionToCall }}
+  CERTIFICATION_IDENTIFIER:     ${{ inputs.certificationIdentifier }}
+  APP_NAME:                     ${{ inputs.appName }}
+
+jobs:
+
+  cloud-verification:
+
+    runs-on: ${{ inputs.runner }}
+
+    steps:
+
+      ###########################################################################
+      #   Checkout source
+      ###########################################################################
+
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+        with:
+          ref: ${{ inputs.branch }}
+
+      ###########################################################################
+      # Load verification-managed Terraform (creates small EKS).
+      # App terraform only looks up an existing cluster.
+      ###########################################################################
+
+      - name: Checkout Verification Terraform
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.sha }}
+          path: .verification-terraform
+          sparse-checkout: |
+            terraform
+          token: ${{ inputs.gitHubToken }}
+
+      ###########################################################################
+      # Deploy to Cloud (Terraform / AWS)
+      ###########################################################################
+
+      - name: Deploy to Cloud
+
+        shell: bash
+        timeout-minutes: 45
+
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID != '' && secrets.AWS_ACCESS_KEY_ID || inputs.awsAccessKey }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY != '' && secrets.AWS_SECRET_ACCESS_KEY || inputs.awsSecretKey }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION != '' && secrets.AWS_DEFAULT_REGION || inputs.awsRegion }}
+          CLUSTER_NAME: hm-${{ github.run_id }}
+          APP_IMAGE: ${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}
+
+        run: |
+          source .github/actions/common/report.sh
+
+          post_pass \
+              "CLOUD" \
+              "DEPLOY_TO_CLOUD_START" \
+              0 \
+              "Deploying to cloud with Terraform..." \
+              ""
+
+          if [ -z "${AWS_ACCESS_KEY_ID}" ] || [ -z "${AWS_SECRET_ACCESS_KEY}" ] || [ -z "${AWS_DEFAULT_REGION}" ]; then
+              post_fail \
+                  "CLOUD" \
+                  "DEPLOY_TO_CLOUD" \
+                  0 \
+                  "AWS credentials or region are missing." \
+                  "Set AWS secrets (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION) or pass awsAccessKey/awsSecretKey/awsRegion inputs."
+              post_terminate_cloud
+          fi
+
+          if [ -d .verification-terraform/terraform ]; then
+              rm -rf terraform
+              cp -a .verification-terraform/terraform ./terraform
+          fi
+
+          if [ ! -d terraform ]; then
+              post_fail \
+                  "CLOUD" \
+                  "DEPLOY_TO_CLOUD" \
+                  0 \
+                  "Terraform directory not found." \
+                  "Expected verification Terraform overlay or ./terraform in the checked-out project."
+              post_terminate_cloud
+          fi
+
+          cd terraform && chmod 777 terraform.sh && ./terraform.sh install
+
+          post_pass \
+              "CLOUD" \
+              "DEPLOY_TO_CLOUD" \
+              20 \
+              "Terraform cloud deploy completed." \
+              "DEPLOY_TO_CLOUD: cluster ${CLUSTER_NAME}"
+
+      ###############################################################################
+      # Terminate Verification
+      ###############################################################################
+
+      - name: Delete Verification Branch
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -L \
+            -X DELETE \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ inputs.gitHubToken  }}" \
+            https://api.github.com/repos/${{ github.repository }}/git/refs/heads/${{ inputs.branch  }}
+
+      - name: Terminate Verification
+        shell: bash
+
+        run: |
+          source .github/actions/common/report.sh
+          
+          post_terminate_cloud false

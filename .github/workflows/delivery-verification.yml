@@ -1,4 +1,4 @@
-name: Spring Boot Delivery Verification
+name: Delivery Verification
 
 on:
 
@@ -32,7 +32,7 @@ on:
 
       gitHubToken:
         description: Token to securely access APIs and other capabilities on behalf of the caller
-        required: true
+        required: false
         default: ""
         type: string
 
@@ -80,6 +80,12 @@ on:
         default: latest
         type: string
 
+      deployToCloud:
+        description: When false, delivery deletes the verification branch at the end
+        required: false
+        default: true
+        type: boolean
+
 env:
   RESULT_URL:                   ${{ inputs.resultUrl }}
   ACTION_TO_CALL:               ${{ inputs.actionToCall }}
@@ -87,7 +93,7 @@ env:
   APP_NAME:                     ${{ inputs.appName }}
 
   REGISTRY_HOST:                ${{ inputs.dockerHost }}
-  REGISTRY_ORG:                ${{ inputs.dockerOrg }}
+  REGISTRY_ORG:                 ${{ inputs.dockerOrg }}
   REGISTRY_REPOSITORY:          ${{ inputs.dockerRepository }}
   REGISTRY_USERNAME:            ${{ inputs.dockerUsername }}
   REGISTRY_PASSWORD:            ${{ inputs.dockerPassword }}
@@ -355,7 +361,7 @@ jobs:
           fi
 
       ###############################################################################
-      # Wait for MySQL (required by Spring Boot app in container)
+      # Wait for MySQL
       ###############################################################################
 
       - name: Wait For MySQL
@@ -406,8 +412,8 @@ jobs:
           
           source .github/actions/common/report.sh
           
-          # Container must reach GitHub Actions MySQL service on the host.
-          # Pass DB settings the same way runtime does (workflow owns credentials).
+          # Language-agnostic container start.
+          # Spring apps can use DB env vars; other stacks ignore them.
           docker run -d --name ${APP_NAME} -p 8080:8080 \
             --add-host=host.docker.internal:host-gateway \
             -e SERVER_PORT=8080 \
@@ -454,7 +460,9 @@ jobs:
           
           for i in {1..90}; do
           
-              if curl -fs http://localhost:8080/actuator/health >/dev/null; then
+              # Support Spring (/actuator/health) and Go (/health) without language branching.
+              if curl -fs http://localhost:8080/actuator/health >/dev/null \
+                 || curl -fs http://localhost:8080/health >/dev/null; then
           
                   post_pass \
                       "DELIVERY" \
@@ -538,6 +546,8 @@ jobs:
 
           path: ${{ env.APP_NAME }}.tar
 
+          if-no-files-found: ignore
+
       ###############################################################################
       # Cleanup
       ###############################################################################
@@ -579,19 +589,21 @@ jobs:
 
 
       ###############################################################################
-      # Terminate Verification
+      # Delete verification branch only when cloud deploy is skipped
       ###############################################################################
 
       - name: Delete Verification Branch
-        if: always()
+        if: ${{ always() && inputs.deployToCloud == false }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl -L \
-            -X DELETE \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ inputs.gitHubToken  }}" \
-            https://api.github.com/repos/${{ github.repository }}/git/refs/heads/${{ inputs.branch  }}
+          if [ -n "${{ inputs.branch }}" ] && [ -n "${{ inputs.gitHubToken }}" ]; then
+            curl -L \
+              -X DELETE \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer ${{ inputs.gitHubToken }}" \
+              https://api.github.com/repos/${{ github.repository }}/git/refs/heads/${{ inputs.branch }}
+          fi
 
       ###############################################################################
       # Terminate Verification

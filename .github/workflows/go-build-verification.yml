@@ -133,10 +133,11 @@ jobs:
 
               echo "NEED_GO_MOD_INIT=false" >> "$GITHUB_ENV"
 
+              # Informative only — do not add to score (max build score is 100)
               post_pass \
                   "BUILD" \
                   "GO_MODULE" \
-                  5 \
+                  0 \
                   "go.mod found." \
                   "Using existing Go module file."
 
@@ -144,10 +145,11 @@ jobs:
 
               echo "NEED_GO_MOD_INIT=true" >> "$GITHUB_ENV"
 
+              # Informative only — do not add to score (max build score is 100)
               post_pass \
                   "BUILD" \
                   "GO_MODULE" \
-                  5 \
+                  0 \
                   "go.mod not found. Will create during build." \
                   "HarborMaster does not generate go.mod. Verification will run go mod init."
 
@@ -255,19 +257,21 @@ jobs:
               echo "Searching for go.mod..."
               find . -name go.mod
               
+	      # Informative only — scoring for go.mod happens in Expected Files
               post_pass \
                   "BUILD" \
                   "GO_MOD_INIT" \
-                  10 \
+                  0 \
                   "go.mod created successfully." \
                   "Ran go mod init ${APP_NAME} and go mod tidy."
 
           else
 
+              # Informative only — scoring for go.mod happens in Expected Files
               post_pass \
                   "BUILD" \
                   "GO_MOD_INIT" \
-                  10 \
+                  0 \
                   "go.mod already present." \
                   "Skipped go mod init."
 

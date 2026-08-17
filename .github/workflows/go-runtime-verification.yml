@@ -203,10 +203,11 @@ jobs:
 
               if mysqladmin ping -h 127.0.0.1 -P 3306 -uroot -proot --silent 2>/dev/null; then
 
+                  # Informative setup step — do not add to score (max runtime score is 100)
                   post_pass \
                       "RUNTIME" \
                       "MYSQL_READY" \
-                      10 \
+                      0 \
                       "MySQL is ready." \
                       "MySQL service is accepting connections."
 
@@ -253,10 +254,11 @@ jobs:
               echo "APP_PORT=8080"
           } >> "$GITHUB_ENV"
 
+          # Informative setup step — do not add to score (max runtime score is 100)
           post_pass \
               "RUNTIME" \
               "CONFIGURE_DATABASE" \
-              10 \
+              0 \
               "Database environment configured." \
               "Runtime workflow set DB connection via environment variables (not by editing .env)."
 

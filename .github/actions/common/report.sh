@@ -14,35 +14,41 @@ post_result() {
     local DETAIL="$6"
     local TERMINATE="${7:-false}"
 
-    RESPONSE_FILE="${RUNNER_TEMP}/response.txt"
-
+    # Keep HarborMaster payloads bounded (preserved from master).
     MAX=5000
+    if [ ${#DETAIL} -gt $MAX ]; then
+        DETAIL="${DETAIL:0:$MAX}"
+    fi
 
-if [ ${#DETAIL} -gt $MAX ]; then
-    DETAIL="${DETAIL:0:$MAX}"
-fi
+    RESPONSE_FILE="${RUNNER_TEMP}/response.txt"
+    : > "${RESPONSE_FILE}"
 
+    # Do not use `curl ... || echo 000` — on connect failure curl already
+    # writes http_code 000, and appending makes 000000. Never let reporting
+    # fail the job (workflows run with bash -e).
     HTTP_STATUS=$(
-    curl \
-        --silent \
-        --fail-with-body \
-        --write-out "%{http_code}" \
-        --output "${RESPONSE_FILE}" \
-        -X POST "${RESULT_URL}/${ACTION_TO_CALL}" \
-        --data-urlencode "certificationIdentifier=${CERTIFICATION_IDENTIFIER}" \
-        --data-urlencode "tier=${TIER}" \
-        --data-urlencode "step=${STEP}" \
-        --data-urlencode "status=${STATUS}" \
-        --data-urlencode "score=${SCORE}" \
-        --data-urlencode "message=${MESSAGE}" \
-        --data-urlencode "detail=${DETAIL}" \
-        --data-urlencode "application=${APP_NAME}" \
-        --data-urlencode "terminate=${TERMINATE}"
+        curl \
+            --silent \
+            --fail-with-body \
+            --write-out "%{http_code}" \
+            --output "${RESPONSE_FILE}" \
+            -X POST "${RESULT_URL}/${ACTION_TO_CALL}" \
+            --data-urlencode "certificationIdentifier=${CERTIFICATION_IDENTIFIER}" \
+            --data-urlencode "tier=${TIER}" \
+            --data-urlencode "step=${STEP}" \
+            --data-urlencode "status=${STATUS}" \
+            --data-urlencode "score=${SCORE}" \
+            --data-urlencode "message=${MESSAGE}" \
+            --data-urlencode "detail=${DETAIL}" \
+            --data-urlencode "application=${APP_NAME}" \
+            --data-urlencode "terminate=${TERMINATE}" \
+        || true
     )
+    HTTP_STATUS="${HTTP_STATUS:-000}"
 
     echo "Harbormaster returned HTTP ${HTTP_STATUS}"
     echo "Response:"
-    cat "${RESPONSE_FILE}"
+    cat "${RESPONSE_FILE}" 2>/dev/null || true
     rm -f "${RESPONSE_FILE}"
 
     if [ "${HTTP_STATUS}" != "200" ]; then
@@ -96,7 +102,7 @@ post_terminate_build() {
         "" \
         "true"
 
-    if [ "$EXIT_WORKFLOW" = "truth" ]; then
+    if [ "$EXIT_WORKFLOW" = "true" ]; then
         exit 1
     fi
 }
@@ -114,7 +120,7 @@ post_terminate_runtime() {
         "" \
         "true"
 
-    if [ "$EXIT_WORKFLOW" = "truth" ]; then
+    if [ "$EXIT_WORKFLOW" = "true" ]; then
         exit 1
     fi
 }
@@ -132,7 +138,25 @@ post_terminate_delivery() {
         "" \
         "true"
 
-    if [ "$EXIT_WORKFLOW" = "truth" ]; then
+    if [ "$EXIT_WORKFLOW" = "true" ]; then
+        exit 1
+    fi
+}
+
+post_terminate_cloud() {
+
+    local EXIT_WORKFLOW="${1:-true}"
+
+    post_result \
+        "CLOUD" \
+        "" \
+        "" \
+        0 \
+        "" \
+        "" \
+        "true"
+
+    if [ "$EXIT_WORKFLOW" = "true" ]; then
         exit 1
     fi
 }
