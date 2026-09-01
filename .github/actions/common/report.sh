@@ -16,6 +16,12 @@ post_result() {
 
     RESPONSE_FILE="${RUNNER_TEMP}/response.txt"
 
+    MAX=5000
+
+if [ ${#DETAIL} -gt $MAX ]; then
+    DETAIL="${DETAIL:0:$MAX}"
+fi
+
     HTTP_STATUS=$(
     curl \
         --silent \
