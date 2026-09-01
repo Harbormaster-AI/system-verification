@@ -73,8 +73,8 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: harbormaster
 
-        ports:
-          - 3307:3306
+#        ports:
+#          - 3306:3306
 
         options: >-
           --health-cmd="mysqladmin ping -h localhost -proot"
@@ -237,7 +237,7 @@ jobs:
               | head -1)
 
           until mysqladmin ping \
-            -h127.0.0.1 \
+            -hmysql \
             -uroot \
             -proot \
             --silent
@@ -258,7 +258,7 @@ jobs:
           java \
             -Ddebug  \
             -Dserver.port=8080 \
-            -Dspring.datasource.url=jdbc:mysql://localhost:3307/harbormaster \
+            -Dspring.datasource.url=jdbc:mysql://mysql:3306/harbormaster \
             -Dspring.datasource.username=root \
             -Dspring.datasource.password=root \
             -Dspring.jpa.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect \
