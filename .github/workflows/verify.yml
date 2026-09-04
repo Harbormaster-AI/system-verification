@@ -239,3 +239,19 @@ jobs:
       dockerUsername:            ${{ inputs.dockerUsername }}
       dockerPassword:            ${{ inputs.dockerPassword }}
       dockerTag:                 ${{ inputs.dockerTag }}
+
+
+  go-build:
+
+    if: ${{ contains(fromJSON('["angular"]'), inputs.technology) }}
+
+    uses: ./.github/workflows/angular-build-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      branch: ${{ inputs.branch }}
+      certificationIdentifier: ${{ inputs.certificationIdentifier }}
+      appName: ${{ inputs.appName }}
+      languageVersion: ${{ inputs.languageVersion }}
