@@ -241,7 +241,7 @@ jobs:
       dockerTag:                 ${{ inputs.dockerTag }}
 
 
-  go-build:
+  angular-build:
 
     if: ${{ contains(fromJSON('["angular"]'), inputs.technology) }}
 
