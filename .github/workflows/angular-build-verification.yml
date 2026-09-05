@@ -150,7 +150,6 @@ jobs:
 
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: npm
 
 
       ###############################################################################
@@ -675,6 +674,8 @@ jobs:
 
           if npm run build > build.log 2>&1; then
 
+              cat build.log
+              
               post_pass \
                   "BUILD" \
                   "ANGULAR_BUILD" \
@@ -683,6 +684,8 @@ jobs:
 
           else
 
+              cat build.log
+  
               MESSAGE=$(tail -30 build.log | tr '\n' ' ')
 
               post_fail \
