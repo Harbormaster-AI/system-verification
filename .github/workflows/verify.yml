@@ -8,7 +8,7 @@ on:
     inputs:
 
       technology:
-        description: Technology to verify (spring, django, axon, etc.)
+        description: Technology to verify (spring, go, angular, etc.)
         required: true
         type: string
 
