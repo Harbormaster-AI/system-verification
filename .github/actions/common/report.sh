@@ -40,13 +40,28 @@ fi
         --data-urlencode "terminate=${TERMINATE}"
     )
 
+    CURL_EXIT=$?
+
+    set -e
+
+    echo "curl exit code: ${CURL_EXIT}"
     echo "Harbormaster returned HTTP ${HTTP_STATUS}"
-    echo "Response:"
-    cat "${RESPONSE_FILE}"
-    rm -f "${RESPONSE_FILE}"
+
+    if [ -f "${RESPONSE_FILE}" ]; then
+        echo "Response:"
+        cat "${RESPONSE_FILE}"
+        rm -f "${RESPONSE_FILE}"
+    fi
+
+    if [ "$CURL_EXIT" -ne 0 ]; then
+        echo "WARNING: Unable to report result to Harbormaster."
+        echo "curl exit code: ${CURL_EXIT}"
+        return 0
+    fi
 
     if [ "${HTTP_STATUS}" != "200" ]; then
-        echo "Failed to update Harbormaster."
+        echo "WARNING: Harbormaster returned HTTP ${HTTP_STATUS}."
+        return 0
     fi
 }
 
