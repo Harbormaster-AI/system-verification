@@ -14,30 +14,42 @@ post_result() {
     local DETAIL="$6"
     local TERMINATE="${7:-false}"
 
-    RESPONSE_FILE="${RUNNER_TEMP}/response.txt"
+    local RESPONSE_FILE="${RUNNER_TEMP}/response.txt"
+    local MAX=5000
 
-    MAX=5000
+    if [ ${#DETAIL} -gt $MAX ]; then
+        DETAIL="${DETAIL:0:$MAX}"
+    fi
 
-if [ ${#DETAIL} -gt $MAX ]; then
-    DETAIL="${DETAIL:0:$MAX}"
-fi
+    echo "Reporting result to Harbormaster..."
+    echo "URL: ${RESULT_URL}/${ACTION_TO_CALL}"
+    echo "Tier: ${TIER}"
+    echo "Step: ${STEP}"
+    echo "Status: ${STATUS}"
+
+    local HTTP_STATUS
+    local CURL_EXIT
+
+    set +e
 
     HTTP_STATUS=$(
-    curl \
-        --silent \
-        --fail-with-body \
-        --write-out "%{http_code}" \
-        --output "${RESPONSE_FILE}" \
-        -X POST "${RESULT_URL}/${ACTION_TO_CALL}" \
-        --data-urlencode "certificationIdentifier=${CERTIFICATION_IDENTIFIER}" \
-        --data-urlencode "tier=${TIER}" \
-        --data-urlencode "step=${STEP}" \
-        --data-urlencode "status=${STATUS}" \
-        --data-urlencode "score=${SCORE}" \
-        --data-urlencode "message=${MESSAGE}" \
-        --data-urlencode "detail=${DETAIL}" \
-        --data-urlencode "application=${APP_NAME}" \
-        --data-urlencode "terminate=${TERMINATE}"
+        curl \
+            --silent \
+            --show-error \
+            --write-out "%{http_code}" \
+            --output "${RESPONSE_FILE}" \
+            --connect-timeout 10 \
+            --max-time 30 \
+            -X POST "${RESULT_URL}/${ACTION_TO_CALL}" \
+            --data-urlencode "certificationIdentifier=${CERTIFICATION_IDENTIFIER}" \
+            --data-urlencode "tier=${TIER}" \
+            --data-urlencode "step=${STEP}" \
+            --data-urlencode "status=${STATUS}" \
+            --data-urlencode "score=${SCORE}" \
+            --data-urlencode "message=${MESSAGE}" \
+            --data-urlencode "detail=${DETAIL}" \
+            --data-urlencode "application=${APP_NAME}" \
+            --data-urlencode "terminate=${TERMINATE}"
     )
 
     CURL_EXIT=$?
@@ -63,6 +75,8 @@ fi
         echo "WARNING: Harbormaster returned HTTP ${HTTP_STATUS}."
         return 0
     fi
+
+    echo "Result successfully reported to Harbormaster."
 }
 
 post_pass() {
