@@ -642,8 +642,9 @@ jobs:
 
           else
 
-              MESSAGE=$(tail -20 build.log | tr '\n' ' ')
-
+              MESSAGE=$(tail -30 build.log | tr '\n' ' ')
+              echo ${MESSAGE}
+          
               post_fail \
                   "BUILD" \
                   "GO_BUILD" \
