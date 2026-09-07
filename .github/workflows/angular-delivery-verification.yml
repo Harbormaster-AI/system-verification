@@ -1,0 +1,324 @@
+name: Angular Delivery Verification
+
+on:
+
+  workflow_call:
+
+    inputs:
+
+      runner:
+        description: GitHub runner label
+        required: false
+        default: self-hosted
+        type: string
+
+      resultUrl:
+        description: URL to post verification results
+        required: false
+        default: "http://localhost:3000"
+        type: string
+
+      actionToCall:
+        description: action to call when posting to URL
+        required: false
+        default: "updateVerificationProgress"
+        type: string
+
+      branch:
+        description: Branch to checkout
+        required: false
+        default: ""
+        type: string
+
+      certificationIdentifier:
+        required: true
+        type: string
+
+      appName:
+        required: true
+        type: string
+
+
+env:
+
+  RESULT_URL: ${{ inputs.resultUrl }}
+  ACTION_TO_CALL: ${{ inputs.actionToCall }}
+  CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
+  APP_NAME: ${{ inputs.appName }}
+
+
+jobs:
+
+  delivery-verification:
+
+    runs-on: ${{ inputs.runner }}
+
+    steps:
+
+      ###########################################################################
+      # Checkout source
+      ###########################################################################
+
+      - name: Checkout Source
+
+        uses: actions/checkout@v4
+
+        with:
+          ref: ${{ inputs.branch }}
+
+
+      ###########################################################################
+      # Download the artifact produced by Angular Build Verification
+      #
+      # IMPORTANT:
+      # This is the artifact that already passed build verification.
+      #
+      # Do NOT run npm install.
+      # Do NOT run npm run build.
+      ###########################################################################
+
+      - name: Download Build Artifact
+
+        uses: actions/download-artifact@v4
+
+        with:
+          name: packaged-application
+          path: packaged-application
+
+
+      ###########################################################################
+      # Verify that the packaged application exists
+      ###########################################################################
+
+      - name: Verify Packaged Application
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+          if [ ! -d "packaged-application" ]; then
+
+            post_fail \
+              "DELIVERY" \
+              "VERIFY_PACKAGE" \
+              0 \
+              "Angular packaged application was not found." \
+              "VERIFY_PACKAGE: packaged-application directory does not exist."
+
+            post_terminate_delivery "DELIVERY"
+
+          fi
+
+          FILE_COUNT=$(find packaged-application -type f | wc -l)
+
+          if [ "$FILE_COUNT" -eq 0 ]; then
+
+            post_fail \
+              "DELIVERY" \
+              "VERIFY_PACKAGE" \
+              0 \
+              "Angular packaged application is empty." \
+              "VERIFY_PACKAGE: No files found."
+
+            post_terminate_delivery "DELIVERY"
+
+          fi
+
+          post_pass \
+            "DELIVERY" \
+            "VERIFY_PACKAGE" \
+            20 \
+            "Angular packaged application verified." \
+            "VERIFY_PACKAGE: ${FILE_COUNT} files found."
+
+
+      ###########################################################################
+      # Verify Angular entry point
+      ###########################################################################
+
+      - name: Verify Angular Entry Point
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+          INDEX_FILE=$(find packaged-application \
+            -type f \
+            -name "index.html" \
+            | head -1)
+
+          if [ -z "$INDEX_FILE" ]; then
+
+            post_fail \
+              "DELIVERY" \
+              "VERIFY_ENTRY_POINT" \
+              0 \
+              "Angular index.html was not found." \
+              "VERIFY_ENTRY_POINT: index.html missing."
+
+            post_terminate_delivery "DELIVERY"
+
+          fi
+
+          if [ ! -s "$INDEX_FILE" ]; then
+
+            post_fail \
+              "DELIVERY" \
+              "VERIFY_ENTRY_POINT" \
+              0 \
+              "Angular index.html is empty." \
+              "VERIFY_ENTRY_POINT: ${INDEX_FILE}"
+
+            post_terminate_delivery "DELIVERY"
+
+          fi
+
+          echo "INDEX_FILE=${INDEX_FILE}" >> "$GITHUB_ENV"
+
+          post_pass \
+            "DELIVERY" \
+            "VERIFY_ENTRY_POINT" \
+            20 \
+            "Angular application entry point verified." \
+            "VERIFY_ENTRY_POINT: ${INDEX_FILE}"
+
+
+      ###########################################################################
+      # Verify JavaScript assets
+      ###########################################################################
+
+      - name: Verify JavaScript Assets
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+          JS_COUNT=$(find packaged-application \
+            -type f \
+            -name "*.js" \
+            | wc -l)
+
+          if [ "$JS_COUNT" -eq 0 ]; then
+
+            post_fail \
+              "DELIVERY" \
+              "VERIFY_JAVASCRIPT" \
+              0 \
+              "No Angular JavaScript assets were found." \
+              "VERIFY_JAVASCRIPT: No .js files found."
+
+            post_terminate_delivery "DELIVERY"
+
+          fi
+
+          post_pass \
+            "DELIVERY" \
+            "VERIFY_JAVASCRIPT" \
+            15 \
+            "Angular JavaScript assets verified." \
+            "VERIFY_JAVASCRIPT: ${JS_COUNT} JavaScript files found."
+
+
+      ###########################################################################
+      # Verify CSS assets
+      ###########################################################################
+
+      - name: Verify CSS Assets
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+          CSS_COUNT=$(find packaged-application \
+            -type f \
+            -name "*.css" \
+            | wc -l)
+
+          if [ "$CSS_COUNT" -eq 0 ]; then
+
+            post_warning \
+              "DELIVERY" \
+              "VERIFY_CSS" \
+              0 \
+              "No Angular CSS assets were found." \
+              "VERIFY_CSS: No .css files found."
+
+          else
+
+            post_pass \
+              "DELIVERY" \
+              "VERIFY_CSS" \
+              10 \
+              "Angular CSS assets verified." \
+              "VERIFY_CSS: ${CSS_COUNT} CSS files found."
+
+          fi
+
+
+      ###########################################################################
+      # Display final package contents
+      ###########################################################################
+
+      - name: Inspect Delivery Package
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+          echo "Angular delivery package:"
+          echo ""
+
+          find packaged-application \
+            -type f \
+            | sort
+
+
+      ###########################################################################
+      # Create final delivery artifact
+      #
+      # This is deliberately a NEW artifact. The source artifact remains
+      # packaged-application and represents the output of build verification.
+      #
+      # The delivery artifact represents the verified deliverable.
+      ###########################################################################
+
+      - name: Upload Delivery Artifact
+
+        uses: actions/upload-artifact@v4
+
+        with:
+          name: verified-application
+          path: packaged-application
+          retention-days: 1
+
+
+      ###########################################################################
+      # Delivery verification complete
+      ###########################################################################
+
+      - name: Delivery Verification Complete
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+          post_pass \
+            "DELIVERY" \
+            "DELIVERY_VERIFIED" \
+            35 \
+            "Angular application delivery verification completed successfully." \
+            "DELIVERY_VERIFIED: packaged-application validated and published as verified-application."
+
+          post_terminate_delivery false
