@@ -270,3 +270,26 @@ jobs:
       branch: ${{ inputs.branch }}
       certificationIdentifier: ${{ inputs.certificationIdentifier }}
       appName: ${{ inputs.appName }}
+
+  angular-delivery:
+
+    if: ${{ contains(fromJSON('["angular"]'), inputs.technology) }}
+
+
+    needs: angular-runtime
+
+    uses: ./.github/workflows/angular-delivery-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      branch: ${{ inputs.branch }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
+      appName:                   ${{ inputs.appName }}
+      dockerHost:                ${{ inputs.dockerHost }}
+      dockerOrg:                 ${{ inputs.dockerOrg }}
+      dockerRepository:          ${{ inputs.dockerRepository }}
+      dockerUsername:            ${{ inputs.dockerUsername }}
+      dockerPassword:            ${{ inputs.dockerPassword }}
+      dockerTag:                 ${{ inputs.dockerTag }}
