@@ -132,7 +132,7 @@ jobs:
 
     if: ${{ contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) }}
 
-    uses: ./.github/workflows/spring-build-verification.yml
+    uses: ./.github/workflows/spring/spring-build-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -150,7 +150,7 @@ jobs:
 
     needs: spring-build
 
-    uses: ./.github/workflows/spring-runtime-verification.yml
+    uses: ./.github/workflows/spring/spring-runtime-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -167,7 +167,7 @@ jobs:
 
     needs: spring-runtime
 
-    uses: ./.github/workflows/spring-delivery-verification.yml
+    uses: ./.github/workflows/spring/spring-delivery-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -189,7 +189,7 @@ jobs:
 
     if: ${{ contains(fromJSON('["go","golang"]'), inputs.technology) }}
 
-    uses: ./.github/workflows/go-build-verification.yml
+    uses: ./.github/workflows/go/go-build-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -206,7 +206,7 @@ jobs:
 
     needs: go-build
 
-    uses: ./.github/workflows/go-runtime-verification.yml
+    uses: ./.github/workflows/go/go-runtime-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -224,7 +224,7 @@ jobs:
 
     needs: go-runtime
 
-    uses: ./.github/workflows/go-delivery-verification.yml
+    uses: ./.github/workflows/go/go-delivery-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -245,7 +245,24 @@ jobs:
 
     if: ${{ contains(fromJSON('["angular"]'), inputs.technology) }}
 
-    uses: ./.github/workflows/angular-build-verification.yml
+    uses: ./.github/workflows/angular/angular-build-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      branch: ${{ inputs.branch }}
+      certificationIdentifier: ${{ inputs.certificationIdentifier }}
+      appName: ${{ inputs.appName }}
+      languageVersion: ${{ inputs.languageVersion }}
+
+  angular-runtime:
+
+    if: ${{ contains(fromJSON('["angular"]'), inputs.technology) }}
+
+    needs: angular-build
+
+    uses: ./.github/workflows/angular/angular-runtime-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
