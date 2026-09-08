@@ -93,7 +93,7 @@ env:
   ACTION_TO_CALL:               ${{ inputs.actionToCall }}
   CERTIFICATION_IDENTIFIER:     ${{ inputs.certificationIdentifier }}
   APP_NAME:                     ${{ inputs.appName }}
-  APP_DIRECTORY:                packaged-application/${{ inputs.appName }}
+  APP_DIRECTORY:                ${{ inputs.appName }}
 
   REGISTRY_HOST:                ${{ inputs.dockerHost }}
   REGISTRY_ORG:                 ${{ inputs.dockerOrg }}
@@ -162,10 +162,9 @@ jobs:
       # Verify Django Application Artifact
       #
       # Build Verification uploads the generated application directory itself
-      # as packaged-application.
+      # as the name of the application.
       #
       # Example:
-      #   packaged-application/
       #       bankingsystem/
       #           manage.py
       #           requirements.txt
