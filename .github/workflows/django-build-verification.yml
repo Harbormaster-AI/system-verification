@@ -73,7 +73,7 @@ jobs:
       - name: Verify Checkout
         shell: bash
         run: |
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
           if [ -d ".git" ]; then
               post_pass "BUILD" "CHECKOUT_SOURCE" 0 "Repository checked out successfully."
@@ -137,7 +137,7 @@ jobs:
         shell: bash
         working-directory: ${{ env.APP_DIRECTORY }}
         run: |
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           SCORE=0
 
           if [ -f "manage.py" ]; then
@@ -198,7 +198,7 @@ jobs:
         shell: bash
         working-directory: ${{ env.APP_DIRECTORY }}
         run: |
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           SCORE=0
 
           if [ -d "mainsite" ]; then
@@ -265,7 +265,7 @@ jobs:
         shell: bash
         working-directory: ${{ env.APP_DIRECTORY }}
         run: |
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           SCORE=0
 
           if python --version > python-version.log 2>&1; then
@@ -292,7 +292,7 @@ jobs:
         shell: bash
         working-directory: ${{ env.APP_DIRECTORY }}
         run: |
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
           if [ ! -f "requirements.txt" ]; then
               post_fail "BUILD" "REQUIREMENTS_TXT" 0 "requirements.txt not found."
@@ -316,7 +316,7 @@ jobs:
         shell: bash
         working-directory: ${{ env.APP_DIRECTORY }}
         run: |
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
           if python manage.py check > build.log 2>&1; then
               cat build.log
@@ -337,7 +337,7 @@ jobs:
       - name: Prepare Build Artifact
         shell: bash
         run: |
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
     
           if [ -f "${APP_DIRECTORY}/manage.py" ]; then
               FILE_COUNT=$(find "${APP_DIRECTORY}" -type f | wc -l)
@@ -374,5 +374,5 @@ jobs:
       - name: Terminate Verification
         shell: bash
         run: |
-            source .github/actions/common/report.sh
+            source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
             post_terminate_build false
