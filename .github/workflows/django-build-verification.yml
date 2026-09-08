@@ -115,10 +115,27 @@ jobs:
           python -m pip --version
 
       ###############################################################################
+      # Determine Application Directory
+      ###############################################################################
+      - name: Determine Application Directory
+        shell: bash
+        run: |
+          APP_DIRECTORY="${{ inputs.appName }}"
+          echo "APP_DIRECTORY=${APP_DIRECTORY}" >> "$GITHUB_ENV"
+          
+          if [ -d "$APP_DIRECTORY" ]; then
+              echo "Application directory: $APP_DIRECTORY"
+          else
+              echo "Application directory not found: $APP_DIRECTORY"
+              exit 1
+          fi
+
+      ###############################################################################
       # Expected Files
       ###############################################################################
       - name: Expected Files
         shell: bash
+        working-directory: ${{ env.APP_DIRECTORY }}
         run: |
           source .github/actions/common/report.sh
           SCORE=0
@@ -179,6 +196,7 @@ jobs:
       ###############################################################################
       - name: Directory Structure
         shell: bash
+        working-directory: ${{ env.APP_DIRECTORY }}
         run: |
           source .github/actions/common/report.sh
           SCORE=0
@@ -245,6 +263,7 @@ jobs:
       ###############################################################################
       - name: Django Configuration Validation
         shell: bash
+        working-directory: ${{ env.APP_DIRECTORY }}
         run: |
           source .github/actions/common/report.sh
           SCORE=0
@@ -271,6 +290,7 @@ jobs:
       ###############################################################################
       - name: Dependency Validation
         shell: bash
+        working-directory: ${{ env.APP_DIRECTORY }}
         run: |
           source .github/actions/common/report.sh
 
@@ -294,6 +314,7 @@ jobs:
       ###############################################################################
       - name: Execute Build
         shell: bash
+        working-directory: ${{ env.APP_DIRECTORY }}
         run: |
           source .github/actions/common/report.sh
 
@@ -316,26 +337,26 @@ jobs:
       - name: Prepare Build Artifact
         shell: bash
         run: |
-            source .github/actions/common/report.sh
-          
-            rm -rf packaged-application
-            mkdir -p packaged-application
-          
-            cp -R . packaged-application/
-          
-            rm -rf packaged-application/.git
-            rm -rf packaged-application/.github
-            rm -rf packaged-application/packaged-application
-            
-            if [ -f "packaged-application/manage.py" ]; then
-                FILE_COUNT=$(find packaged-application -type f | wc -l)
-                TOTAL_SIZE=$(du -sh packaged-application | cut -f1)
-            
-                post_pass "BUILD" "BUILD_ARTIFACT" 20 "Django application artifact successfully prepared." "BUILD_ARTIFACT: ${FILE_COUNT} files (${TOTAL_SIZE})."
-            else
-                post_fail "BUILD" "BUILD_ARTIFACT" 0 "Django build artifact does not contain manage.py."
-                post_terminate_build
-            fi
+          source .github/actions/common/report.sh
+    
+          if [ -f "${APP_DIRECTORY}/manage.py" ]; then
+              FILE_COUNT=$(find "${APP_DIRECTORY}" -type f | wc -l)
+              TOTAL_SIZE=$(du -sh "${APP_DIRECTORY}" | cut -f1)
+    
+              post_pass \
+                "BUILD" \
+                "BUILD_ARTIFACT" \
+                20 \
+                "Django application artifact successfully prepared." \
+                "BUILD_ARTIFACT: ${FILE_COUNT} files (${TOTAL_SIZE})."
+          else
+              post_fail \
+                "BUILD" \
+                "BUILD_ARTIFACT" \
+                0 \
+                "Django build artifact does not contain manage.py."
+              post_terminate_build
+          fi
 
       ###############################################################################
       # Upload Django Build Artifact
@@ -344,7 +365,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: packaged-application
-          path: packaged-application
+          path: ${{ env.APP_DIRECTORY }}
           retention-days: 1
 
       ###############################################################################
