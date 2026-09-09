@@ -96,20 +96,23 @@ env:
 jobs:
   cloud-verification:
     runs-on: ${{ inputs.runner }}
+    permissions:
+      contents: read
 
     steps:
       ###########################################################################
-      # Checkout the application to verify (its terraform/ and terraform.sh).
+      # Checkout app branch (terraform/ lives here).
       ###########################################################################
       - name: Checkout Source
         uses: actions/checkout@v4
         with:
           repository: ${{ inputs.repository != '' && inputs.repository || github.repository }}
           ref: ${{ inputs.branch }}
-          token: ${{ inputs.gitHubToken != '' && inputs.gitHubToken || github.token }}
+          # Same-repo → GITHUB_TOKEN. External repo → gitHubToken input.
+          token: ${{ inputs.repository != '' && inputs.gitHubToken || github.token }}
 
       ###########################################################################
-      # Always use report.sh from this verification workflow commit (not app branch).
+      # report.sh from verification workflow commit (not from app branch).
       ###########################################################################
       - name: Overlay verification report.sh
         uses: actions/checkout@v4
@@ -129,8 +132,7 @@ jobs:
           chmod +x .github/actions/common/report.sh
 
       ###########################################################################
-      # Deploy using the app repo's terraform/terraform.sh (init/validate/plan/apply).
-      # Destroy is manual — not run by this workflow.
+      # Run app terraform/terraform.sh (destroy is manual).
       ###########################################################################
       - name: Deploy to Cloud
         shell: bash
