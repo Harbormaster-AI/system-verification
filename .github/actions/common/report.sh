@@ -27,6 +27,7 @@ post_result() {
     echo "Step: ${STEP}"
     echo "Status: ${STATUS}"
     echo "Message: ${MESSAGE}"
+    echo "Detail: ${DETAIL}"
 
     local HTTP_STATUS
     local CURL_EXIT
