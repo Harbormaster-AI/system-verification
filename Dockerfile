@@ -1,4 +1,5 @@
-FROM eclipse-temurin:11-jre-alpine
+# # bug: app is Java 17 (class file 61); temurin:11 only supports up to 55 and fails container health
+FROM eclipse-temurin:17-jre-alpine
 
 LABEL org.opencontainers.image.vendor="Harbormaster"
 LABEL org.opencontainers.image.title="banking-backend"
