@@ -36,6 +36,12 @@ on:
         default: ""
         type: string
 
+      repository:
+        description: "App repo (owner/name). Empty = this repo / temp verification branch."
+        required: false
+        default: ""
+        type: string
+
       gitHubToken:
         description: Token to securely access APIs and other capabilities on behalf of the caller
         required: true
@@ -259,6 +265,7 @@ jobs:
 
     with:
       runner: ${{ inputs.runner }}
+      repository: ${{ inputs.repository }}
       branch: ${{ inputs.branch }}
       gitHubToken: ${{ inputs.gitHubToken }}
       resultUrl: ${{ inputs.resultUrl }}
