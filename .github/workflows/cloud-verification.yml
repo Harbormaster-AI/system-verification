@@ -176,7 +176,8 @@ jobs:
 
           cd terraform
           chmod +x terraform.sh
-          ./terraform.sh install
+          # -E keeps AWS_*/TF_VAR_* for plan; sudo covers apt/usr/local if script lacks it
+          sudo -E ./terraform.sh install
 
           post_pass \
             "CLOUD" \
