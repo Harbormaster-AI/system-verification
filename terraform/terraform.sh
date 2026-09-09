@@ -17,17 +17,18 @@ TERRAFORM_URL="https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/${T
 
 if [[ "${1:-}" == "install" ]]; then
 
+    # # bug: generated script used apt-get / unzip without sudo; fails on GHA ubuntu-latest
     echo "Updating apt package index..."
-    apt-get update
+    sudo apt-get update
 
     echo "Installing required packages..."
-    apt-get install -y curl unzip
+    sudo apt-get install -y curl unzip
 
     echo "Downloading Terraform ${TERRAFORM_VERSION}..."
     curl -fsSLO "${TERRAFORM_URL}"
 
     echo "Installing Terraform ${TERRAFORM_VERSION}..."
-    unzip -o "${TERRAFORM_ZIP}" -d /usr/local/bin/
+    sudo unzip -o "${TERRAFORM_ZIP}" -d /usr/local/bin/
 
     echo "Cleaning up..."
     rm -f "${TERRAFORM_ZIP}"
@@ -63,11 +64,15 @@ terraform validate
 # Create Terraform plan
 # ============================================================
 
+# # bug: generated used -var aws-access-key= / aws-secret-key= (wrong names + empty);
+# cloud workflow already exports TF_VAR_aws_access_key / TF_VAR_aws_secret_key / AWS_*.
+# Prefer env AWS_* so plan does not overwrite secrets with empty CLI -var.
 echo "Creating Terraform plan..."
 terraform plan \
     -input=false \
-    
--var aws-access-key= -var aws-secret-key= -var region=us-east-2 \
+    -var="aws_access_key=${AWS_ACCESS_KEY_ID:?AWS_ACCESS_KEY_ID is required}" \
+    -var="aws_secret_key=${AWS_SECRET_ACCESS_KEY:?AWS_SECRET_ACCESS_KEY is required}" \
+    -var="region=${AWS_DEFAULT_REGION:-us-east-2}" \
     -out=terraform.plan
 
 
