@@ -561,7 +561,7 @@ jobs:
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
           ###########################################################################
-          # Install dependencies exactly as locked
+          # Install Ruby dependencies
           ###########################################################################
 
           if bundle install --jobs 4 --retry 3 \
@@ -606,6 +606,7 @@ jobs:
           if bundle exec rails runner "puts Rails.application.class.name" \
               > rails-application.log 2>&1; then
 
+              cat rails-application.log
               post_pass \
                   "BUILD" \
                   "RAILS_INIT" \
@@ -614,6 +615,7 @@ jobs:
 
           else
 
+              cat rails-application.log
               MESSAGE=$(tail -20 rails-application.log | tr '\n' ' ')
 
               post_fail \
