@@ -74,6 +74,22 @@ jobs:
 
 
       ###########################################################################
+      # Setup Ruby
+      #
+      # The runtime verification executes the pre-built Rails application.
+      # Ruby/Bundler must therefore be available on the verification runner.
+      ###########################################################################
+
+      - name: Setup Ruby
+
+        uses: ruby/setup-ruby@v1
+
+        with:
+          ruby-version: '3.4'
+          bundler-cache: false
+
+
+      ###########################################################################
       # Download pre-built Rails artifact
       #
       # IMPORTANT:
