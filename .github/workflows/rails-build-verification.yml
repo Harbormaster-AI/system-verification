@@ -571,12 +571,15 @@ jobs:
           ###############################################################################
 
           mkdir -p vendor/bundle
-
+  
           if bundle config set --local path vendor/bundle && \
              bundle install --jobs 4 --retry 3 \
                > dependency-validation.log 2>&1; then
 
+              bundle info rails
               cat dependency-validation.log
+          
+              ls -la vendor/bundle/ruby/3.4.0/gems/ | grep '^.*rails-'
           
               post_pass \
                   "BUILD" \
