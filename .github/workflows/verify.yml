@@ -368,7 +368,7 @@ jobs:
 
   rails-runtime:
 
-    if: ${{ contains(fromJSON('["rails"]'), inputs.technology) }}
+    if: ${{ contains(fromJSON('["rails","rubyonrails"]'), inputs.technology) }}
 
     needs: rails-build
 
