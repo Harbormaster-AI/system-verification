@@ -880,6 +880,23 @@ jobs:
               20 \
               "Rails application successfully validated." \
               "BUILD_ARTIFACT: ${FILE_COUNT} files (${TOTAL_SIZE})."
+          
+          echo "=== VERIFYING ARTIFACT CONTENTS ==="
+  
+          echo "--- Bundler config ---"
+          cat .bundle/config
+          
+          echo "--- Rails gem ---"
+          bundle info rails
+          
+          echo "--- Rails gem directory ---"
+          find vendor/bundle -type d -name "rails-8.1.3.1" -print
+          
+          echo "--- vendor/bundle size ---"
+          du -sh vendor/bundle
+          
+          echo "--- vendor/bundle file count ---"
+          find vendor/bundle -type f | wc -l
 
 
       ###############################################################################

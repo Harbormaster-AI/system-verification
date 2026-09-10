@@ -140,6 +140,22 @@ jobs:
 
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
 
+          echo "=== DOWNLOADED ARTIFACT ==="
+          
+          pwd
+          
+          echo "--- Application directories ---"
+          find . -maxdepth 3 -type d | sort
+          
+          echo "--- Bundler config ---"
+          find . -path "*/.bundle/config" -print
+          
+          echo "--- Rails gem ---"
+          find . -type d -name "rails-8.1.3.1" -print
+          
+          echo "--- vendor/bundle ---"
+          find . -maxdepth 5 -type d -path "*/vendor/bundle" -print
+          
           echo "Runtime artifact:"
           find "${RAILS_APP_DIRECTORY}" -maxdepth 5 -type f | sort
 
