@@ -352,7 +352,7 @@ jobs:
 
   rails-build:
 
-    if: ${{ contains(fromJSON('["rails"]'), inputs.technology) }}
+    if: ${{ contains(fromJSON('["rails","rubyonrails"]'), inputs.technology) }}
 
     uses: ./.github/workflows/rails-build-verification.yml
 
