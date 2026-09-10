@@ -333,10 +333,9 @@ jobs:
             0 \
             "Rails application artifact validation complete (${SCORE}/10)."
 
-
-      ###########################################################################
-      # Verify Rails application
-      ###########################################################################
+      ################################################################
+      ## Verify Rails Application
+      ################################################################
 
       - name: Verify Rails Application
 
@@ -348,7 +347,7 @@ jobs:
 
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
 
-          bundle exec rails runner \
+          ruby bin/rails runner \
             "puts 'Rails application initialized successfully.'"
 
           if [ $? -eq 0 ]; then
@@ -373,7 +372,6 @@ jobs:
 
           fi
 
-
       ###########################################################################
       # Start Rails application
       #
@@ -394,7 +392,7 @@ jobs:
           echo "Starting Ruby on Rails application from:"
           echo "${GITHUB_WORKSPACE}/${RAILS_APP_DIRECTORY}"
 
-          bundle exec rails server \
+          ruby bin/rails server \
             --binding=127.0.0.1 \
             --port=3000 \
             > runtime.log 2>&1 &
@@ -426,7 +424,6 @@ jobs:
             post_terminate_runtime "RUNTIME"
 
           fi
-
 
       ###########################################################################
       # Wait for application

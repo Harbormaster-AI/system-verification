@@ -556,25 +556,38 @@ jobs:
 
         shell: bash
         working-directory: ${{ env.RAILS_APP_DIRECTORY }}
+
         run: |
 
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
-          ###########################################################################
-          # Install Ruby dependencies
-          ###########################################################################
+          ###############################################################################
+          # Install Ruby dependencies into the application artifact
+          #
+          # IMPORTANT:
+          # Gems are installed under vendor/bundle so that they are included
+          # in the packaged-application artifact and are available during
+          # Runtime Verification.
+          ###############################################################################
 
-          if bundle install --jobs 4 --retry 3 \
-              > dependency-validation.log 2>&1; then
+          mkdir -p vendor/bundle
 
+          if bundle config set --local path vendor/bundle && \
+             bundle install --jobs 4 --retry 3 \
+               > dependency-validation.log 2>&1; then
+
+              cat dependency-validation.log
+          
               post_pass \
                   "BUILD" \
                   "BUNDLE_DEPENDENCY_INSTALL" \
                   10 \
-                  "Ruby dependency installation completed successfully."
+                  "Ruby dependencies installed successfully into the application artifact."
 
           else
 
+              cat dependency-validation.log
+          
               MESSAGE=$(tail -20 dependency-validation.log | tr '\n' ' ')
 
               post_fail \
@@ -812,7 +825,18 @@ jobs:
               fi
 
           done
+          
+          if [ ! -d "vendor/bundle" ]; then
+            
+            post_fail \
+              "BUILD" \
+              "BUILD_ARTIFACT" \
+              0 \
+              "Bundled Ruby dependencies not found in application artifact."
 
+            post_terminate_build
+  
+          fi          
 
           ###########################################################################
           # Non-empty application
