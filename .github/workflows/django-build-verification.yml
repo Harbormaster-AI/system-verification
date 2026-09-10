@@ -48,6 +48,7 @@ env:
   CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
   APP_NAME: ${{ inputs.appName }}
 
+
 jobs:
   build-verification:
     runs-on: ${{ inputs.runner }}

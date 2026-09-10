@@ -58,7 +58,7 @@ env:
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
   CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
   APP_NAME: ${{ inputs.appName }}
-
+  RAILS_APP_DIRECTORY: ${{ inputs.appName }}
 
 jobs:
 
@@ -83,7 +83,7 @@ jobs:
       ###############################################################################
 
       - name: Make report.sh executable
-        run: chmod +x .github/actions/common/report.sh
+        run: chmod +x ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
 
       ###############################################################################
@@ -96,7 +96,7 @@ jobs:
 
         run: |
 
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
           if [ -d ".git" ]; then
 
@@ -167,18 +167,39 @@ jobs:
           gem --version
           bundle --version
 
+      ###############################################################################
+      # Determine Rails Application Directory
+      ###############################################################################
+      - name: Determine Rails Application Directory
+
+        shell: bash
+
+        run: |
+          
+          RAILS_APP_DIRECTORY="${{ inputs.appName }}"
+          
+          if [ ! -d "$RAILS_APP_DIRECTORY" ]; then
+          
+              echo "Rails application directory not found: $RAILS_APP_DIRECTORY"
+              exit 1
+          
+          fi
+          
+          echo "RAILS_APP_DIRECTORY=${RAILS_APP_DIRECTORY}" >> "$GITHUB_ENV"
+          
+          echo "Rails application directory: ${RAILS_APP_DIRECTORY}"
 
       ###############################################################################
       # Expected Files
       ###############################################################################
 
       - name: Expected Files
-
+        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
         shell: bash
 
         run: |
 
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
           SCORE=0
 
@@ -351,10 +372,10 @@ jobs:
       - name: Directory Structure
 
         shell: bash
-
+        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
         run: |
 
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
           SCORE=0
 
@@ -559,10 +580,10 @@ jobs:
       - name: Rails Configuration Validation
 
         shell: bash
-
+        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
         run: |
 
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
           ###########################################################################
           # Rails Application Initialization
@@ -628,10 +649,10 @@ jobs:
       - name: Dependency Validation
 
         shell: bash
-
+        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
         run: |
 
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
 
           ###########################################################################
@@ -686,10 +707,10 @@ jobs:
       - name: Database Configuration Validation
 
         shell: bash
-
+        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
         run: |
 
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
 
           ###########################################################################
@@ -754,10 +775,10 @@ jobs:
       - name: Execute Rails Validation
 
         shell: bash
-
+        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
         run: |
 
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
 
           ###########################################################################
@@ -799,10 +820,10 @@ jobs:
       - name: Validate Build Artifact
 
         shell: bash
-
+        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
         run: |
 
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
 
           ###########################################################################
@@ -887,7 +908,7 @@ jobs:
 
         with:
           name: packaged-application
-          path: .
+          path: ${{ env.RAILS_APP_DIRECTORY }}
           retention-days: 1
 
 
@@ -901,6 +922,6 @@ jobs:
 
         run: |
 
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
           post_terminate_build false
