@@ -209,12 +209,12 @@ jobs:
 
           if [ -f "Gemfile" ]; then
 
-              SCORE=$((SCORE + 2))
+              SCORE=$((SCORE + 4))
 
               post_pass \
                   "BUILD" \
                   "GEMFILE" \
-                  2 \
+                  4 \
                   "Gemfile located."
 
           else
@@ -229,42 +229,17 @@ jobs:
 
 
           ###########################################################################
-          # Gemfile.lock
-          ###########################################################################
-
-          if [ -f "Gemfile.lock" ]; then
-
-              SCORE=$((SCORE + 2))
-
-              post_pass \
-                  "BUILD" \
-                  "GEMFILE_LOCK" \
-                  2 \
-                  "Gemfile.lock located."
-
-          else
-
-              post_fail \
-                  "BUILD" \
-                  "GEMFILE_LOCK" \
-                  0 \
-                  "Gemfile.lock not found."
-
-          fi
-
-
-          ###########################################################################
           # Application
           ###########################################################################
 
           if [ -f "config/application.rb" ]; then
 
-              SCORE=$((SCORE + 1))
+              SCORE=$((SCORE + 2))
 
               post_pass \
                   "BUILD" \
                   "APPLICATION_RB" \
-                  1 \
+                  2 \
                   "Rails application configuration located."
 
           else
@@ -284,12 +259,12 @@ jobs:
 
           if [ -f "config/environment.rb" ]; then
 
-              SCORE=$((SCORE + 1))
+              SCORE=$((SCORE + 2))
 
               post_pass \
                   "BUILD" \
                   "ENVIRONMENT_RB" \
-                  1 \
+                  2 \
                   "Rails environment located."
 
           else
@@ -574,75 +549,6 @@ jobs:
 
 
       ###############################################################################
-      # Rails Configuration Validation
-      ###############################################################################
-
-      - name: Rails Configuration Validation
-
-        shell: bash
-        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
-        run: |
-
-          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
-
-          ###########################################################################
-          # Rails Application Initialization
-          ###########################################################################
-
-          if bundle exec rails runner "puts Rails.application.class.name" \
-              > rails-application.log 2>&1; then
-
-              post_pass \
-                  "BUILD" \
-                  "RAILS_CONFIGURATION" \
-                  5 \
-                  "Rails application initialized successfully."
-
-          else
-
-              MESSAGE=$(tail -20 rails-application.log | tr '\n' ' ')
-
-              post_fail \
-                  "BUILD" \
-                  "RAILS_CONFIGURATION" \
-                  0 \
-                  "${MESSAGE}"
-
-              post_terminate_build
-
-          fi
-
-
-          ###########################################################################
-          # Rails Version
-          ###########################################################################
-
-          if bundle exec rails --version > rails-version.log 2>&1; then
-
-              cat rails-version.log
-
-              post_pass \
-                  "BUILD" \
-                  "RAILS_VERSION" \
-                  5 \
-                  "Rails is available."
-
-          else
-
-              MESSAGE=$(tail -20 rails-version.log | tr '\n' ' ')
-
-              post_fail \
-                  "BUILD" \
-                  "RAILS_VERSION" \
-                  0 \
-                  "${MESSAGE}"
-
-              post_terminate_build
-
-          fi
-
-
-      ###############################################################################
       # Dependency Validation
       ###############################################################################
 
@@ -692,6 +598,73 @@ jobs:
               post_fail \
                   "BUILD" \
                   "BUNDLE_DEPENDENCY_INSTALL" \
+                  0 \
+                  "${MESSAGE}"
+
+              post_terminate_build
+
+          fi
+
+      ###############################################################################
+      # Rails Configuration Validation
+      ###############################################################################
+
+      - name: Rails Configuration Validation
+
+        shell: bash
+        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
+        run: |
+
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
+
+          ###########################################################################
+          # Rails Application Initialization
+          ###########################################################################
+
+          if bundle exec rails runner "puts Rails.application.class.name" \
+              > rails-application.log 2>&1; then
+
+              post_pass \
+                  "BUILD" \
+                  "RAILS_INIT" \
+                  5 \
+                  "Rails application initialized successfully."
+
+          else
+
+              MESSAGE=$(tail -20 rails-application.log | tr '\n' ' ')
+
+              post_fail \
+                  "BUILD" \
+                  "RAILS_INIT" \
+                  0 \
+                  "${MESSAGE}"
+
+              post_terminate_build
+
+          fi
+
+          ###########################################################################
+          # Rails Version
+          ###########################################################################
+
+          if bundle exec rails --version > rails-version.log 2>&1; then
+
+              cat rails-version.log
+
+              post_pass \
+                  "BUILD" \
+                  "RAILS_VERSION" \
+                  5 \
+                  "Rails is available."
+
+          else
+
+              MESSAGE=$(tail -20 rails-version.log | tr '\n' ' ')
+
+              post_fail \
+                  "BUILD" \
+                  "RAILS_VERSION" \
                   0 \
                   "${MESSAGE}"
 
