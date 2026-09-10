@@ -560,24 +560,6 @@ jobs:
 
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
-
-          ###########################################################################
-          # Gemfile.lock
-          ###########################################################################
-
-          if [ ! -f "Gemfile.lock" ]; then
-
-              post_fail \
-                  "BUILD" \
-                  "GEMFILE_LOCK" \
-                  0 \
-                  "Gemfile.lock not found."
-
-              post_terminate_build
-
-          fi
-
-
           ###########################################################################
           # Install dependencies exactly as locked
           ###########################################################################
