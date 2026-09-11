@@ -65,13 +65,12 @@ jobs:
       # application metadata.
       ###########################################################################
 
-      - name: Checkout Source
-
+      - name: Checkout Verification Scripts
         uses: actions/checkout@v4
-
         with:
-          ref: ${{ inputs.branch }}
-
+          sparse-checkout: |
+            .github/actions/common
+          sparse-checkout-cone-mode: true
 
       ###############################################################################
       # Determine Ruby Version
