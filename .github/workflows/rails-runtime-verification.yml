@@ -47,7 +47,6 @@ env:
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
   CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
   APP_NAME: ${{ inputs.appName }}
-  RAILS_APP_DIRECTORY: ${{ inputs.appName }}
 
 
 jobs:
@@ -123,7 +122,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: packaged-application
- #         path: ${{ env.RAILS_APP_DIRECTORY }}
+
 
 
       ###########################################################################
@@ -181,8 +180,6 @@ jobs:
       - name: Verify Artifact
 
         shell: bash
-
-        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
 
         run: |
 
@@ -372,8 +369,6 @@ jobs:
 
         shell: bash
 
-        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
-
         run: |
 
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
@@ -414,14 +409,12 @@ jobs:
 
         shell: bash
 
-        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
-
         run: |
 
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
 
           echo "Starting Ruby on Rails application from:"
-          echo "${GITHUB_WORKSPACE}/${RAILS_APP_DIRECTORY}"
+          echo "${GITHUB_WORKSPACE}"
 
           ruby bin/rails server \
             --binding=127.0.0.1 \
@@ -560,8 +553,6 @@ jobs:
       - name: Verify Rails Runtime
 
         shell: bash
-
-        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
 
         run: |
 
