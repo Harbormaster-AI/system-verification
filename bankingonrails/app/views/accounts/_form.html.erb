@@ -1,0 +1,78 @@
+<%= form_with model: @account, local: true do |form| %>
+ 
+  <% if @account.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@account.errors.count, "error") %> prohibited
+        this account from being saved:
+      </h2>
+      <ul>
+        <% @account.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :accountNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :accountNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :iban, { class: 'form-label'} %><br>
+	<%= form.text_field :iban, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :accountName, { class: 'form-label'} %><br>
+	<%= form.text_field :accountName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :currency, { class: 'form-label'} %><br>
+	<%= form.text_field :currency, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :openedOn, { class: 'form-label'} %><br>
+    <%= form.date_field :openedOn, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :closedOn, { class: 'form-label'} %><br>
+    <%= form.date_field :closedOn, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :AccountType, { class: 'form-label'} %><br>
+   <%= form.select :AccountType, Account.AccountTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :OwnershipType, { class: 'form-label'} %><br>
+   <%= form.select :OwnershipType, Account.OwnershipTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, Account.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

@@ -1,0 +1,47 @@
+<div class="title text-center">
+  List of ExternalAccounts
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">name</th>
+			<th style="text-align:center">iban</th>
+			<th style="text-align:center">accountNumber</th>
+			<th style="text-align:center">bic</th>
+			<th style="text-align:center">bankName</th>
+			<th style="text-align:center">country</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @externalAccounts.each do |externalAccount| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= externalAccount.name %>
+			</td>
+			<td style="text-align:center">
+	  			<%= externalAccount.iban %>
+			</td>
+			<td style="text-align:center">
+	  			<%= externalAccount.accountNumber %>
+			</td>
+			<td style="text-align:center">
+	  			<%= externalAccount.bic %>
+			</td>
+			<td style="text-align:center">
+	  			<%= externalAccount.bankName %>
+			</td>
+			<td style="text-align:center">
+	  			<%= externalAccount.country %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_externalAccount_path(externalAccount), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', externalAccount_path(externalAccount), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New ExternalAccount', new_externalAccount_path, :method => :get, :class => "btn btn-success btn-sm" %>

@@ -1,0 +1,70 @@
+<%= form_with model: @transaction, local: true do |form| %>
+ 
+  <% if @transaction.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@transaction.errors.count, "error") %> prohibited
+        this transaction from being saved:
+      </h2>
+      <ul>
+        <% @transaction.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :bookingDate, { class: 'form-label'} %><br>
+    <%= form.date_field :bookingDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :valueDate, { class: 'form-label'} %><br>
+    <%= form.date_field :valueDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :amount, { class: 'form-label'} %><br>
+	<%= form.text_field :amount, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :description, { class: 'form-label'} %><br>
+	<%= form.text_field :description, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Direction, { class: 'form-label'} %><br>
+   <%= form.select :Direction, Transaction.Directions.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :TransactionType, { class: 'form-label'} %><br>
+   <%= form.select :TransactionType, Transaction.TransactionTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, Transaction.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Channel, { class: 'form-label'} %><br>
+   <%= form.select :Channel, Transaction.Channels.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

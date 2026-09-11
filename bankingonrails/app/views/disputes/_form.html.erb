@@ -1,0 +1,50 @@
+<%= form_with model: @dispute, local: true do |form| %>
+ 
+  <% if @dispute.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@dispute.errors.count, "error") %> prohibited
+        this dispute from being saved:
+      </h2>
+      <ul>
+        <% @dispute.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :disputeReference, { class: 'form-label'} %><br>
+	<%= form.text_field :disputeReference, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :raisedOn, { class: 'form-label'} %><br>
+    <%= form.date_field :raisedOn, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :reason, { class: 'form-label'} %><br>
+	<%= form.text_field :reason, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, Dispute.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

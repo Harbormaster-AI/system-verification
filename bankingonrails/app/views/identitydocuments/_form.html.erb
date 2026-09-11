@@ -1,0 +1,44 @@
+<%= form_with model: @identityDocument, local: true do |form| %>
+ 
+  <% if @identityDocument.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@identityDocument.errors.count, "error") %> prohibited
+        this identityDocument from being saved:
+      </h2>
+      <ul>
+        <% @identityDocument.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :documentNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :documentNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :issuingCountry, { class: 'form-label'} %><br>
+	<%= form.text_field :issuingCountry, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :expirationDate, { class: 'form-label'} %><br>
+    <%= form.date_field :expirationDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :DocumentType, { class: 'form-label'} %><br>
+   <%= form.select :DocumentType, IdentityDocument.DocumentTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

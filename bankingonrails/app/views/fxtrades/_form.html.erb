@@ -1,0 +1,66 @@
+<%= form_with model: @fXTrade, local: true do |form| %>
+ 
+  <% if @fXTrade.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@fXTrade.errors.count, "error") %> prohibited
+        this fXTrade from being saved:
+      </h2>
+      <ul>
+        <% @fXTrade.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :tradeReference, { class: 'form-label'} %><br>
+	<%= form.text_field :tradeReference, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :tradeDate, { class: 'form-label'} %><br>
+    <%= form.date_field :tradeDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :settlementDate, { class: 'form-label'} %><br>
+    <%= form.date_field :settlementDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :amountSold, { class: 'form-label'} %><br>
+	<%= form.text_field :amountSold, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :amountBought, { class: 'form-label'} %><br>
+	<%= form.text_field :amountBought, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :rate, { class: 'form-label'} %><br>
+	<%= form.text_field :rate, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, FXTrade.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

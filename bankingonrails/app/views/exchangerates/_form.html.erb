@@ -1,0 +1,50 @@
+<%= form_with model: @exchangeRate, local: true do |form| %>
+ 
+  <% if @exchangeRate.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@exchangeRate.errors.count, "error") %> prohibited
+        this exchangeRate from being saved:
+      </h2>
+      <ul>
+        <% @exchangeRate.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :baseCurrency, { class: 'form-label'} %><br>
+	<%= form.text_field :baseCurrency, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :counterCurrency, { class: 'form-label'} %><br>
+	<%= form.text_field :counterCurrency, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :rate, { class: 'form-label'} %><br>
+	<%= form.text_field :rate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :asOf, { class: 'form-label'} %><br>
+    <%= form.date_field :asOf, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :source, { class: 'form-label'} %><br>
+	<%= form.text_field :source, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

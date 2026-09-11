@@ -1,0 +1,50 @@
+<%= form_with model: @loanPayment, local: true do |form| %>
+ 
+  <% if @loanPayment.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@loanPayment.errors.count, "error") %> prohibited
+        this loanPayment from being saved:
+      </h2>
+      <ul>
+        <% @loanPayment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :paymentReference, { class: 'form-label'} %><br>
+	<%= form.text_field :paymentReference, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :amount, { class: 'form-label'} %><br>
+	<%= form.text_field :amount, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :paymentDate, { class: 'form-label'} %><br>
+    <%= form.date_field :paymentDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Method, { class: 'form-label'} %><br>
+   <%= form.select :Method, LoanPayment.Methods.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, LoanPayment.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

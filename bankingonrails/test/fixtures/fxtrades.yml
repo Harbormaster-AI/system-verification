@@ -1,0 +1,22 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of fXTrade found in  bankingonrails/test/controllers
+
+one:
+  tradeReference: test string for tradeReference
+  tradeDate: 2020-10-15
+  settlementDate: 2020-10-15
+  amountSold: "test value"
+  amountBought: "test value"
+  rate: "test value"
+  Status: 0
+
+two:
+  tradeReference: test string for tradeReference
+  tradeDate: 2020-10-15
+  settlementDate: 2020-10-15
+  amountSold: "test value"
+  amountBought: "test value"
+  rate: "test value"
+  Status: 0
+
+
