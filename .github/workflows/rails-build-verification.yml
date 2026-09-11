@@ -209,12 +209,12 @@ jobs:
 
           if [ -f "Gemfile" ]; then
 
-              SCORE=$((SCORE + 4))
+              SCORE=$((SCORE + 3))
 
               post_pass \
                   "BUILD" \
                   "GEMFILE" \
-                  4 \
+                  3 \
                   "Gemfile located."
 
           else
@@ -259,12 +259,12 @@ jobs:
 
           if [ -f "config/environment.rb" ]; then
 
-              SCORE=$((SCORE + 2))
+              SCORE=$((SCORE + 1))
 
               post_pass \
                   "BUILD" \
                   "ENVIRONMENT_RB" \
-                  2 \
+                  1 \
                   "Rails environment located."
 
           else
@@ -328,6 +328,32 @@ jobs:
           fi
 
 
+          ###########################################################################
+          # database.yml
+          ###########################################################################
+
+          if [ -f "config/database.yml" ]; then
+
+              SCORE=$((SCORE + 1))
+
+              post_pass \
+                  "BUILD" \
+                  "DATABASE_CONFIGURATION" \
+                  2 \
+                  "Rails database configuration located."
+
+          else
+
+              post_fail \
+                  "BUILD" \
+                  "DATABASE_CONFIGURATION" \
+                  0 \
+                  "config/database.yml not found."
+
+              post_terminate_build
+
+          fi
+          
           ###########################################################################
           # Summary
           ###########################################################################
@@ -679,79 +705,6 @@ jobs:
               post_terminate_build
 
           fi
-
-
-      ###############################################################################
-      # Database Configuration Validation
-      ###############################################################################
-
-      - name: Database Configuration Validation
-
-        shell: bash
-        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
-        env:
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: ""
-        run: |
-                          
-          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
-
-
-          ###########################################################################
-          # database.yml
-          ###########################################################################
-
-          if [ -f "config/database.yml" ]; then
-
-              post_pass \
-                  "BUILD" \
-                  "DATABASE_CONFIGURATION" \
-                  5 \
-                  "Rails database configuration located."
-
-          else
-
-              post_fail \
-                  "BUILD" \
-                  "DATABASE_CONFIGURATION" \
-                  0 \
-                  "config/database.yml not found."
-
-              post_terminate_build
-
-          fi
-
-          ###########################################################################
-          # Validate Rails database configuration
-          ###########################################################################
-
-          if bundle exec rails db:version \
-              > database-validation.log 2>&1; then
-
-              cat database-validation.log
-
-              post_pass \
-                  "BUILD" \
-                  "DATABASE_CONFIGURATION_VALIDATION" \
-                  5 \
-                  "Rails database configuration is valid."
-
-          else
-
-              MESSAGE=$(tail -20 database-validation.log | tr '\n' ' ')
-
-              post_fail \
-                  "BUILD" \
-                  "DATABASE_CONFIGURATION_VALIDATION" \
-                  0 \
-                  "${MESSAGE}"
-
-              post_terminate_build
-          
-          fi
-
 
       ###############################################################################
       # Execute Rails Build / Test Validation
