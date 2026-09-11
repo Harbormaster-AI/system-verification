@@ -577,20 +577,16 @@ jobs:
                > dependency-validation.log 2>&1; then
 
               bundle info rails
+          
               cat dependency-validation.log
           
-              ls -la vendor/bundle/ruby/3.4.0/gems/ | grep '^.*rails-'
-
-              echo "=== BUNDLER CONFIG FILES ==="
+              echo "=== BUNDLER CONFIG ==="
+              cat .bundle/config
               
-              find . -maxdepth 3 -type f -path "*/.bundle/config" -print
-              
-              echo "=== .bundle DIRECTORIES ==="
-              
-              find . -maxdepth 3 -type d -name ".bundle" -print
-              
-              echo "=== BUNDLER CONFIG LIST ==="
-              
+              echo "=== PostgreSQL GEM ==="
+              find vendor/bundle -type d -name "pg-*" -print
+                          
+              echo "=== BUNDLER CONFIG LIST ==="              
               bundle config list
               
               post_pass \
@@ -693,8 +689,13 @@ jobs:
 
         shell: bash
         working-directory: ${{ env.RAILS_APP_DIRECTORY }}
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ""
         run: |
-
+                          
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
 
@@ -721,7 +722,6 @@ jobs:
               post_terminate_build
 
           fi
-
 
           ###########################################################################
           # Validate Rails database configuration

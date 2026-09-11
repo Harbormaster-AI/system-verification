@@ -361,6 +361,23 @@ jobs:
             0 \
             "Rails application artifact validation complete (${SCORE}/10)."
 
+      ###########################################################################
+      # Configure PostgreSQL runtime
+      ###########################################################################
+
+      - name: Configure PostgreSQL Runtime
+
+        shell: bash
+
+        run: |
+          
+          echo "RAILS_ENV=harbormaster_test" >> "$GITHUB_ENV"
+          echo "PGHOST=127.0.0.1" >> "$GITHUB_ENV"
+          echo "PGPORT=5432" >> "$GITHUB_ENV"
+          echo "PGUSER=postgres" >> "$GITHUB_ENV"
+          echo "PGPASSWORD=postgres" >> "$GITHUB_ENV"
+          echo "PGDATABASE=rails_test" >> "$GITHUB_ENV"
+
       ################################################################
       ## Verify Rails Application
       ################################################################
@@ -396,6 +413,78 @@ jobs:
 
             post_terminate_runtime "RUNTIME"
 
+          fi
+
+      ###########################################################################
+      # Verify PostgreSQL runtime dependency
+      #
+      # Runtime verification uses PostgreSQL as the standardized database
+      # environment for executing the generated Rails application.
+      #
+      # This is intentionally NOT part of Build Verification.
+      ###########################################################################
+
+      - name: Verify PostgreSQL Runtime
+
+        shell: bash
+
+        run: |
+          
+          source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
+          
+          echo "Verifying PostgreSQL runtime dependency..."
+          
+          #######################################################################
+          # Verify pg gem
+          #######################################################################
+          
+          if bundle info pg > pg-info.log 2>&1; then
+          
+            echo "PostgreSQL adapter (pg) is available."
+          
+            cat pg-info.log
+          
+          else
+          
+            post_fail \
+              "RUNTIME" \
+              "VERIFY_POSTGRESQL" \
+              0 \
+              "PostgreSQL adapter (pg) is not available." \
+              "$(cat pg-info.log)"
+          
+            post_terminate_runtime "RUNTIME"
+          
+          fi
+          
+          #######################################################################
+          # Verify Rails database connectivity
+          #######################################################################
+          
+          if bundle exec rails runner \
+              'ActiveRecord::Base.connection.execute("SELECT 1")' \
+              > postgres-connection.log 2>&1; then
+          
+            echo "Rails successfully connected to PostgreSQL."
+          
+            post_pass \
+              "RUNTIME" \
+              "VERIFY_POSTGRESQL" \
+              10 \
+              "PostgreSQL runtime database connection verified." \
+              "VERIFY_POSTGRESQL: Rails successfully connected to PostgreSQL."
+          
+          else
+          
+            post_fail \
+              "RUNTIME" \
+              "VERIFY_POSTGRESQL" \
+              0 \
+              "Rails failed to connect to PostgreSQL." \
+              "$(cat postgres-connection.log)"
+          
+            post_terminate_runtime "RUNTIME"
+          
           fi
 
       ###########################################################################
