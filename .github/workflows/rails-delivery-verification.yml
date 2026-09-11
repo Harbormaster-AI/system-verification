@@ -525,7 +525,8 @@ jobs:
             sleep 2
           done
           
-          LOG=$(docker logs "${APP_NAME}" 2>&1 | tail -20 | tr '\n' ' ')
+          LOG=$(docker logs "${APP_NAME}" 2>&1 | tail -30 | tr '\n' ' ')
+          cat ${LOG}
           
           post_fail \
             "DEPLOYMENT" \
