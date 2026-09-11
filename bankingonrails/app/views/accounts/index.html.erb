@@ -1,0 +1,59 @@
+<div class="title text-center">
+  List of Accounts
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">accountNumber</th>
+			<th style="text-align:center">iban</th>
+			<th style="text-align:center">accountName</th>
+			<th style="text-align:center">currency</th>
+			<th style="text-align:center">openedOn</th>
+			<th style="text-align:center">closedOn</th>
+			<th style="text-align:center">AccountType</th>
+			<th style="text-align:center">OwnershipType</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @accounts.each do |account| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= account.accountNumber %>
+			</td>
+			<td style="text-align:center">
+	  			<%= account.iban %>
+			</td>
+			<td style="text-align:center">
+	  			<%= account.accountName %>
+			</td>
+			<td style="text-align:center">
+	  			<%= account.currency %>
+			</td>
+			<td style="text-align:center">
+	  			<%= account.openedOn %>
+			</td>
+			<td style="text-align:center">
+	  			<%= account.closedOn %>
+			</td>
+			<td style="text-align:center">
+	  			<%= account.AccountType %>
+			</td>
+			<td style="text-align:center">
+	  			<%= account.OwnershipType %>
+			</td>
+			<td style="text-align:center">
+	  			<%= account.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_account_path(account), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', account_path(account), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New Account', new_account_path, :method => :get, :class => "btn btn-success btn-sm" %>

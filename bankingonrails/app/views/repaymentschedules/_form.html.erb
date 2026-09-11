@@ -1,0 +1,54 @@
+<%= form_with model: @repaymentSchedule, local: true do |form| %>
+ 
+  <% if @repaymentSchedule.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@repaymentSchedule.errors.count, "error") %> prohibited
+        this repaymentSchedule from being saved:
+      </h2>
+      <ul>
+        <% @repaymentSchedule.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :installmentNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :installmentNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :dueDate, { class: 'form-label'} %><br>
+    <%= form.date_field :dueDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :principalDue, { class: 'form-label'} %><br>
+	<%= form.text_field :principalDue, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :interestDue, { class: 'form-label'} %><br>
+	<%= form.text_field :interestDue, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :totalDue, { class: 'form-label'} %><br>
+	<%= form.text_field :totalDue, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, RepaymentSchedule.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

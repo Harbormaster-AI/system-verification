@@ -1,0 +1,22 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of paymentCard found in  bankingonrails/test/controllers
+
+one:
+  cardNumber: "test value"
+  embossedName: test string for embossedName
+  expiryMonth: 100
+  expiryYear: 100
+  CardType: 0
+  CardStatus: 0
+  Network: 0
+
+two:
+  cardNumber: "test value"
+  embossedName: test string for embossedName
+  expiryMonth: 100
+  expiryYear: 100
+  CardType: 0
+  CardStatus: 0
+  Network: 0
+
+

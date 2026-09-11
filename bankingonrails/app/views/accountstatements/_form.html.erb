@@ -1,0 +1,52 @@
+<%= form_with model: @accountStatement, local: true do |form| %>
+ 
+  <% if @accountStatement.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@accountStatement.errors.count, "error") %> prohibited
+        this accountStatement from being saved:
+      </h2>
+      <ul>
+        <% @accountStatement.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :statementNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :statementNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :periodStart, { class: 'form-label'} %><br>
+    <%= form.date_field :periodStart, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :periodEnd, { class: 'form-label'} %><br>
+    <%= form.date_field :periodEnd, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :openingBalance, { class: 'form-label'} %><br>
+	<%= form.text_field :openingBalance, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :closingBalance, { class: 'form-label'} %><br>
+	<%= form.text_field :closingBalance, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :DeliveryMethod, { class: 'form-label'} %><br>
+   <%= form.select :DeliveryMethod, AccountStatement.DeliveryMethods.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

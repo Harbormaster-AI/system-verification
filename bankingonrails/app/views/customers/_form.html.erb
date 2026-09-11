@@ -1,0 +1,88 @@
+<%= form_with model: @customer, local: true do |form| %>
+ 
+  <% if @customer.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@customer.errors.count, "error") %> prohibited
+        this customer from being saved:
+      </h2>
+      <ul>
+        <% @customer.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :firstName, { class: 'form-label'} %><br>
+	<%= form.text_field :firstName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :lastName, { class: 'form-label'} %><br>
+	<%= form.text_field :lastName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :legalName, { class: 'form-label'} %><br>
+	<%= form.text_field :legalName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :dateOfBirth, { class: 'form-label'} %><br>
+    <%= form.date_field :dateOfBirth, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :taxId, { class: 'form-label'} %><br>
+	<%= form.text_field :taxId, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :email, { class: 'form-label'} %><br>
+	<%= form.text_field :email, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :phone, { class: 'form-label'} %><br>
+	<%= form.text_field :phone, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :address, { class: 'form-label'} %><br>
+	<%= form.text_field :address, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :CustomerType, { class: 'form-label'} %><br>
+   <%= form.select :CustomerType, Customer.CustomerTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :RiskRating, { class: 'form-label'} %><br>
+   <%= form.select :RiskRating, Customer.RiskRatings.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :KycStatus, { class: 'form-label'} %><br>
+   <%= form.select :KycStatus, Customer.KycStatuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>
