@@ -580,7 +580,19 @@ jobs:
               cat dependency-validation.log
           
               ls -la vendor/bundle/ruby/3.4.0/gems/ | grep '^.*rails-'
-          
+
+              echo "=== BUNDLER CONFIG FILES ==="
+              
+              find . -maxdepth 3 -type f -path "*/.bundle/config" -print
+              
+              echo "=== .bundle DIRECTORIES ==="
+              
+              find . -maxdepth 3 -type d -name ".bundle" -print
+              
+              echo "=== BUNDLER CONFIG LIST ==="
+              
+              bundle config list
+              
               post_pass \
                   "BUILD" \
                   "BUNDLE_DEPENDENCY_INSTALL" \
@@ -898,6 +910,18 @@ jobs:
           echo "--- vendor/bundle file count ---"
           find vendor/bundle -type f | wc -l
 
+        - name: Verify Packaged Application
+          working-directory: ${{ env.RAILS_APP_DIRECTORY }}
+          run: |
+            echo "===== PACKAGE ROOT ====="
+            pwd
+            
+            echo "===== BUNDLER CONFIG ====="
+            ls -la .bundle 2>/dev/null || true
+            cat .bundle/config 2>/dev/null || true
+            
+            echo "===== VENDOR BUNDLE ====="
+            find vendor/bundle -maxdepth 4 -type d | sort | head -50
 
       ###############################################################################
       # Upload Rails Build Artifact
