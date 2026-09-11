@@ -56,21 +56,6 @@ jobs:
     steps:
 
       ###########################################################################
-      # Checkout source
-      #
-      # We need the repository because the runtime verification uses the
-      # application's configuration and reporting infrastructure.
-      ###########################################################################
-
-      - name: Checkout Source
-
-        uses: actions/checkout@v4
-
-        with:
-          ref: ${{ inputs.branch }}
-
-
-      ###########################################################################
       # Download pre-built Django artifact
       #
       # IMPORTANT:
