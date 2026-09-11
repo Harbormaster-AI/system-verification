@@ -40,8 +40,8 @@ post_result() {
             --show-error \
             --write-out "%{http_code}" \
             --output "${RESPONSE_FILE}" \
-            --connect-timeout 10 \
-            --max-time 30 \
+            --connect-timeout 5 \
+            --max-time 10 \
             -X POST "${RESULT_URL}/${ACTION_TO_CALL}" \
             --data-urlencode "certificationIdentifier=${CERTIFICATION_IDENTIFIER}" \
             --data-urlencode "tier=${TIER}" \
