@@ -391,6 +391,14 @@ jobs:
 
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
 
+          echo "=== RUNTIME DATABASE CONFIG ==="
+          pwd
+          ls -l config/database.yml
+          cat config/database.yml
+          
+          echo "=== RAILS ENV ==="
+          echo "RAILS_ENV=${RAILS_ENV}"
+          
           ruby bin/rails runner \
             "puts 'Rails application initialized successfully.'"
 
