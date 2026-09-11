@@ -377,6 +377,7 @@ jobs:
           echo "PGUSER=postgres" >> "$GITHUB_ENV"
           echo "PGPASSWORD=postgres" >> "$GITHUB_ENV"
           echo "PGDATABASE=rails_test" >> "$GITHUB_ENV"
+          echo "SECRET_KEY_BASE=$(ruby -rsecurerandom -e 'puts SecureRandom.hex(64)')" >> "$GITHUB_ENV"
 
       ################################################################
       ## Verify Rails Application
