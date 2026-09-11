@@ -121,11 +121,10 @@ jobs:
       ###########################################################################
 
       - name: Download Build Artifact
-
         uses: actions/download-artifact@v4
-
         with:
           name: packaged-application
+ #         path: ${{ env.RAILS_APP_DIRECTORY }}
 
 
       ###########################################################################
