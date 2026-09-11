@@ -862,7 +862,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: packaged-application
-#          path: ${{ env.RAILS_APP_DIRECTORY }}
+          path: ${{ env.RAILS_APP_DIRECTORY }}
           include-hidden-files: true
           retention-days: 1
 
