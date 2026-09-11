@@ -153,10 +153,6 @@ jobs:
           
           echo "--- vendor/bundle ---"
           find . -maxdepth 5 -type d -path "*/vendor/bundle" -print
-          
-          echo "Runtime artifact:"
-          find "${RAILS_APP_DIRECTORY}" -maxdepth 5 -type f | sort
-
 
       ###########################################################################
       # Announce runtime verification
