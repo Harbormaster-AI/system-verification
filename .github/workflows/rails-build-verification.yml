@@ -910,6 +910,7 @@ jobs:
         with:
           name: packaged-application
           path: ${{ env.RAILS_APP_DIRECTORY }}
+          include-hidden-files: true
           retention-days: 1
 
 
