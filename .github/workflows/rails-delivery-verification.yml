@@ -496,47 +496,44 @@ jobs:
       ###########################################################################
 
       - name: Verify Container Health
-
         shell: bash
-
         run: |
-
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
-
+          
           for i in {1..30}; do
-
+          
             HTTP_STATUS=$(curl \
               --silent \
               --output /dev/null \
               --write-out "%{http_code}" \
-              http://localhost:8080/)
-
+              http://localhost:8080/ \
+              || true)
+          
+            echo "Health check ${i}/30: HTTP ${HTTP_STATUS}"
+          
             if [ "$HTTP_STATUS" != "000" ]; then
-
               post_pass \
                 "DEPLOYMENT" \
                 "CONTAINER_HEALTH" \
                 15 \
                 "Ruby on Rails container health check passed." \
                 "CONTAINER_HEALTH: http://localhost:8080/ responded with HTTP ${HTTP_STATUS}."
-
+          
               exit 0
-
             fi
-
+          
             sleep 2
-
           done
-
-          LOG=$(docker logs ${APP_NAME} 2>&1 | tail -20 | tr '\n' ' ')
-
+          
+          LOG=$(docker logs "${APP_NAME}" 2>&1 | tail -20 | tr '\n' ' ')
+          
           post_fail \
             "DEPLOYMENT" \
             "CONTAINER_HEALTH" \
             0 \
             "Ruby on Rails container failed health check." \
             "${LOG}"
-
+          
           post_terminate_delivery
 
 
