@@ -381,3 +381,27 @@ jobs:
       branch: ${{ inputs.branch }}
       certificationIdentifier: ${{ inputs.certificationIdentifier }}
       appName: ${{ inputs.appName }}
+
+  rails-delivery:
+
+    if: ${{ contains(fromJSON('["rails","rubyonrails"]'), inputs.technology) }}
+
+
+    needs: rails-runtime
+
+    uses: ./.github/workflows/rails-delivery-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      branch: ${{ inputs.branch }}
+      gitHubToken: ${{ inputs.gitHubToken }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
+      appName:                   ${{ inputs.appName }}
+      dockerHost:                ${{ inputs.dockerHost }}
+      dockerOrg:                 ${{ inputs.dockerOrg }}
+      dockerRepository:          ${{ inputs.dockerRepository }}
+      dockerUsername:            ${{ inputs.dockerUsername }}
+      dockerPassword:            ${{ inputs.dockerPassword }}
+      dockerTag:                 ${{ inputs.dockerTag }}
