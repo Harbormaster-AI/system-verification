@@ -1,0 +1,55 @@
+<div class="title text-center">
+  List of FundsTransfers
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">transferReference</th>
+			<th style="text-align:center">amount</th>
+			<th style="text-align:center">requestedDate</th>
+			<th style="text-align:center">executionDate</th>
+			<th style="text-align:center">purpose</th>
+			<th style="text-align:center">feeAmount</th>
+			<th style="text-align:center">Method</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @fundsTransfers.each do |fundsTransfer| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= fundsTransfer.transferReference %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fundsTransfer.amount %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fundsTransfer.requestedDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fundsTransfer.executionDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fundsTransfer.purpose %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fundsTransfer.feeAmount %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fundsTransfer.Method %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fundsTransfer.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_fundsTransfer_path(fundsTransfer), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', fundsTransfer_path(fundsTransfer), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New FundsTransfer', new_fundsTransfer_path, :method => :get, :class => "btn btn-success btn-sm" %>

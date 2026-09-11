@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of bankingProduct found in  bankingonrails/test/controllers
+
+one:
+  productCode: test string for productCode
+  name: test string for name
+  description: test string for description
+  ProductCategory: 0
+
+two:
+  productCode: test string for productCode
+  name: test string for name
+  description: test string for description
+  ProductCategory: 0
+
+

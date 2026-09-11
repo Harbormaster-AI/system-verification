@@ -1,0 +1,90 @@
+<%= form_with model: @loanAccount, local: true do |form| %>
+ 
+  <% if @loanAccount.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@loanAccount.errors.count, "error") %> prohibited
+        this loanAccount from being saved:
+      </h2>
+      <ul>
+        <% @loanAccount.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :loanNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :loanNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :principalAmount, { class: 'form-label'} %><br>
+	<%= form.text_field :principalAmount, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :outstandingPrincipal, { class: 'form-label'} %><br>
+	<%= form.text_field :outstandingPrincipal, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :interestRate, { class: 'form-label'} %><br>
+	<%= form.text_field :interestRate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :originationDate, { class: 'form-label'} %><br>
+    <%= form.date_field :originationDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :maturityDate, { class: 'form-label'} %><br>
+    <%= form.date_field :maturityDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :paymentDayOfMonth, { class: 'form-label'} %><br>
+	<%= form.text_field :paymentDayOfMonth, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :currency, { class: 'form-label'} %><br>
+	<%= form.text_field :currency, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :LoanType, { class: 'form-label'} %><br>
+   <%= form.select :LoanType, LoanAccount.LoanTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :RateType, { class: 'form-label'} %><br>
+   <%= form.select :RateType, LoanAccount.RateTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Compounding, { class: 'form-label'} %><br>
+   <%= form.select :Compounding, LoanAccount.Compoundings.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, LoanAccount.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

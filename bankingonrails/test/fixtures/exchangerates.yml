@@ -1,0 +1,18 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of exchangeRate found in  bankingonrails/test/controllers
+
+one:
+  baseCurrency: test string for baseCurrency
+  counterCurrency: test string for counterCurrency
+  rate: "test value"
+  asOf: 2020-10-15
+  source: test string for source
+
+two:
+  baseCurrency: test string for baseCurrency
+  counterCurrency: test string for counterCurrency
+  rate: "test value"
+  asOf: 2020-10-15
+  source: test string for source
+
+

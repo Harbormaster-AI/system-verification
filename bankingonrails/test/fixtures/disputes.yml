@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of dispute found in  bankingonrails/test/controllers
+
+one:
+  disputeReference: test string for disputeReference
+  raisedOn: 2020-10-15
+  reason: test string for reason
+  Status: 0
+
+two:
+  disputeReference: test string for disputeReference
+  raisedOn: 2020-10-15
+  reason: test string for reason
+  Status: 0
+
+

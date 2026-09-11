@@ -1,0 +1,40 @@
+<%= form_with model: @screeningResult, local: true do |form| %>
+ 
+  <% if @screeningResult.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@screeningResult.errors.count, "error") %> prohibited
+        this screeningResult from being saved:
+      </h2>
+      <ul>
+        <% @screeningResult.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :screeningDate, { class: 'form-label'} %><br>
+    <%= form.date_field :screeningDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :provider, { class: 'form-label'} %><br>
+	<%= form.text_field :provider, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Outcome, { class: 'form-label'} %><br>
+   <%= form.select :Outcome, ScreeningResult.Outcomes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

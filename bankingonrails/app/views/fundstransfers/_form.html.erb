@@ -1,0 +1,68 @@
+<%= form_with model: @fundsTransfer, local: true do |form| %>
+ 
+  <% if @fundsTransfer.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@fundsTransfer.errors.count, "error") %> prohibited
+        this fundsTransfer from being saved:
+      </h2>
+      <ul>
+        <% @fundsTransfer.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :transferReference, { class: 'form-label'} %><br>
+	<%= form.text_field :transferReference, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :amount, { class: 'form-label'} %><br>
+	<%= form.text_field :amount, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :requestedDate, { class: 'form-label'} %><br>
+    <%= form.date_field :requestedDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :executionDate, { class: 'form-label'} %><br>
+    <%= form.date_field :executionDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :purpose, { class: 'form-label'} %><br>
+	<%= form.text_field :purpose, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :feeAmount, { class: 'form-label'} %><br>
+	<%= form.text_field :feeAmount, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Method, { class: 'form-label'} %><br>
+   <%= form.select :Method, FundsTransfer.Methods.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, FundsTransfer.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

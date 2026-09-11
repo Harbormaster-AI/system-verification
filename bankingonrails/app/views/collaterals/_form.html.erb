@@ -1,0 +1,44 @@
+<%= form_with model: @collateral, local: true do |form| %>
+ 
+  <% if @collateral.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@collateral.errors.count, "error") %> prohibited
+        this collateral from being saved:
+      </h2>
+      <ul>
+        <% @collateral.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :appraisedValue, { class: 'form-label'} %><br>
+	<%= form.text_field :appraisedValue, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :description, { class: 'form-label'} %><br>
+	<%= form.text_field :description, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :location, { class: 'form-label'} %><br>
+	<%= form.text_field :location, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :CollateralType, { class: 'form-label'} %><br>
+   <%= form.select :CollateralType, Collateral.CollateralTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

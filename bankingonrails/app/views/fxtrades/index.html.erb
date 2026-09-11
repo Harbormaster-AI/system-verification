@@ -1,0 +1,51 @@
+<div class="title text-center">
+  List of FXTrades
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">tradeReference</th>
+			<th style="text-align:center">tradeDate</th>
+			<th style="text-align:center">settlementDate</th>
+			<th style="text-align:center">amountSold</th>
+			<th style="text-align:center">amountBought</th>
+			<th style="text-align:center">rate</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @fXTrades.each do |fXTrade| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= fXTrade.tradeReference %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fXTrade.tradeDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fXTrade.settlementDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fXTrade.amountSold %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fXTrade.amountBought %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fXTrade.rate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= fXTrade.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_fXTrade_path(fXTrade), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', fXTrade_path(fXTrade), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New FXTrade', new_fXTrade_path, :method => :get, :class => "btn btn-success btn-sm" %>

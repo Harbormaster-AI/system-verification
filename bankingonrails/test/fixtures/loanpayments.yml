@@ -1,0 +1,18 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of loanPayment found in  bankingonrails/test/controllers
+
+one:
+  paymentReference: test string for paymentReference
+  amount: "test value"
+  paymentDate: 2020-10-15
+  Method: 0
+  Status: 0
+
+two:
+  paymentReference: test string for paymentReference
+  amount: "test value"
+  paymentDate: 2020-10-15
+  Method: 0
+  Status: 0
+
+

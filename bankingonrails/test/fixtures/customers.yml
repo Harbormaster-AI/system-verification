@@ -1,0 +1,30 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of customer found in  bankingonrails/test/controllers
+
+one:
+  firstName: test string for firstName
+  lastName: test string for lastName
+  legalName: test string for legalName
+  dateOfBirth: 2020-10-15
+  taxId: test string for taxId
+  email: test string for email
+  phone: test string for phone
+  address: "test value"
+  CustomerType: 0
+  RiskRating: 0
+  KycStatus: 0
+
+two:
+  firstName: test string for firstName
+  lastName: test string for lastName
+  legalName: test string for legalName
+  dateOfBirth: 2020-10-15
+  taxId: test string for taxId
+  email: test string for email
+  phone: test string for phone
+  address: "test value"
+  CustomerType: 0
+  RiskRating: 0
+  KycStatus: 0
+
+

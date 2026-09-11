@@ -1,0 +1,46 @@
+<%= form_with model: @feeCharge, local: true do |form| %>
+ 
+  <% if @feeCharge.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@feeCharge.errors.count, "error") %> prohibited
+        this feeCharge from being saved:
+      </h2>
+      <ul>
+        <% @feeCharge.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :feeCode, { class: 'form-label'} %><br>
+	<%= form.text_field :feeCode, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :amount, { class: 'form-label'} %><br>
+	<%= form.text_field :amount, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :appliedOn, { class: 'form-label'} %><br>
+    <%= form.date_field :appliedOn, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :FeeType, { class: 'form-label'} %><br>
+   <%= form.select :FeeType, FeeCharge.FeeTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>
