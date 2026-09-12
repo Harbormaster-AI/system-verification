@@ -405,3 +405,59 @@ jobs:
       dockerUsername:            ${{ inputs.dockerUsername }}
       dockerPassword:            ${{ inputs.dockerPassword }}
       dockerTag:                 ${{ inputs.dockerTag }}
+
+  apollo-build:
+
+    if: ${{ contains(fromJSON('["ApolloGraphQL","Apollo"]'), inputs.technology) }}
+
+    uses: ./.github/workflows/apollo-build-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      branch: ${{ inputs.branch }}
+      certificationIdentifier: ${{ inputs.certificationIdentifier }}
+      appName: ${{ inputs.appName }}
+      languageName: ${{ inputs.languageName }}
+      languageVersion: ${{ inputs.languageVersion }}
+
+  apollo-runtime:
+
+    if: ${{ contains(fromJSON('["ApolloGraphQL","Apollo"]'), inputs.technology) }}
+
+    needs: apollo-build
+
+    uses: ./.github/workflows/apollo-runtime-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      branch: ${{ inputs.branch }}
+      certificationIdentifier: ${{ inputs.certificationIdentifier }}
+      appName: ${{ inputs.appName }}
+
+  apollo-delivery:
+
+    if: ${{ contains(fromJSON('["ApolloGraphQL","Apollo"]'), inputs.technology) }}
+
+
+    needs: apollo-runtime
+
+    uses: ./.github/workflows/apollo-delivery-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      branch: ${{ inputs.branch }}
+      gitHubToken: ${{ inputs.gitHubToken }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
+      appName:                   ${{ inputs.appName }}
+      dockerHost:                ${{ inputs.dockerHost }}
+      dockerOrg:                 ${{ inputs.dockerOrg }}
+      dockerRepository:          ${{ inputs.dockerRepository }}
+      dockerUsername:            ${{ inputs.dockerUsername }}
+      dockerPassword:            ${{ inputs.dockerPassword }}
+      dockerTag:                 ${{ inputs.dockerTag }}
