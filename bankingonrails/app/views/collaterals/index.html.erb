@@ -1,0 +1,39 @@
+<div class="title text-center">
+  List of Collaterals
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">appraisedValue</th>
+			<th style="text-align:center">description</th>
+			<th style="text-align:center">location</th>
+			<th style="text-align:center">CollateralType</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @collaterals.each do |collateral| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= collateral.appraisedValue %>
+			</td>
+			<td style="text-align:center">
+	  			<%= collateral.description %>
+			</td>
+			<td style="text-align:center">
+	  			<%= collateral.location %>
+			</td>
+			<td style="text-align:center">
+	  			<%= collateral.CollateralType %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_collateral_path(collateral), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', collateral_path(collateral), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New Collateral', new_collateral_path, :method => :get, :class => "btn btn-success btn-sm" %>

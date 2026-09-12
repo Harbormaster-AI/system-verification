@@ -1,0 +1,54 @@
+<%= form_with model: @branch, local: true do |form| %>
+ 
+  <% if @branch.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@branch.errors.count, "error") %> prohibited
+        this branch from being saved:
+      </h2>
+      <ul>
+        <% @branch.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :branchCode, { class: 'form-label'} %><br>
+	<%= form.text_field :branchCode, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :address, { class: 'form-label'} %><br>
+	<%= form.text_field :address, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :phone, { class: 'form-label'} %><br>
+	<%= form.text_field :phone, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :openingHours, { class: 'form-label'} %><br>
+	<%= form.text_field :openingHours, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

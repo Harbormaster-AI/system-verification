@@ -1,0 +1,42 @@
+<%= form_with model: @thirdPartyProvider, local: true do |form| %>
+ 
+  <% if @thirdPartyProvider.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@thirdPartyProvider.errors.count, "error") %> prohibited
+        this thirdPartyProvider from being saved:
+      </h2>
+      <ul>
+        <% @thirdPartyProvider.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :registrationId, { class: 'form-label'} %><br>
+	<%= form.text_field :registrationId, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :website, { class: 'form-label'} %><br>
+	<%= form.text_field :website, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

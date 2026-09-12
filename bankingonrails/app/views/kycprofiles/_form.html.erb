@@ -1,0 +1,46 @@
+<%= form_with model: @kycProfile, local: true do |form| %>
+ 
+  <% if @kycProfile.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@kycProfile.errors.count, "error") %> prohibited
+        this kycProfile from being saved:
+      </h2>
+      <ul>
+        <% @kycProfile.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :profileId, { class: 'form-label'} %><br>
+	<%= form.text_field :profileId, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :lastReviewedOn, { class: 'form-label'} %><br>
+    <%= form.date_field :lastReviewedOn, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, KycProfile.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

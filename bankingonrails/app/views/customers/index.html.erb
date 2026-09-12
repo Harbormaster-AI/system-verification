@@ -1,0 +1,67 @@
+<div class="title text-center">
+  List of Customers
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">firstName</th>
+			<th style="text-align:center">lastName</th>
+			<th style="text-align:center">legalName</th>
+			<th style="text-align:center">dateOfBirth</th>
+			<th style="text-align:center">taxId</th>
+			<th style="text-align:center">email</th>
+			<th style="text-align:center">phone</th>
+			<th style="text-align:center">address</th>
+			<th style="text-align:center">CustomerType</th>
+			<th style="text-align:center">RiskRating</th>
+			<th style="text-align:center">KycStatus</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @customers.each do |customer| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= customer.firstName %>
+			</td>
+			<td style="text-align:center">
+	  			<%= customer.lastName %>
+			</td>
+			<td style="text-align:center">
+	  			<%= customer.legalName %>
+			</td>
+			<td style="text-align:center">
+	  			<%= customer.dateOfBirth %>
+			</td>
+			<td style="text-align:center">
+	  			<%= customer.taxId %>
+			</td>
+			<td style="text-align:center">
+	  			<%= customer.email %>
+			</td>
+			<td style="text-align:center">
+	  			<%= customer.phone %>
+			</td>
+			<td style="text-align:center">
+	  			<%= customer.address %>
+			</td>
+			<td style="text-align:center">
+	  			<%= customer.CustomerType %>
+			</td>
+			<td style="text-align:center">
+	  			<%= customer.RiskRating %>
+			</td>
+			<td style="text-align:center">
+	  			<%= customer.KycStatus %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_customer_path(customer), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', customer_path(customer), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New Customer', new_customer_path, :method => :get, :class => "btn btn-success btn-sm" %>

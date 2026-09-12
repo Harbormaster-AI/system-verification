@@ -1,0 +1,20 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of externalAccount found in  bankingonrails/test/controllers
+
+one:
+  name: test string for name
+  iban: "test value"
+  accountNumber: "test value"
+  bic: "test value"
+  bankName: test string for bankName
+  country: test string for country
+
+two:
+  name: test string for name
+  iban: "test value"
+  accountNumber: "test value"
+  bic: "test value"
+  bankName: test string for bankName
+  country: test string for country
+
+

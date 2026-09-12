@@ -1,0 +1,39 @@
+<div class="title text-center">
+  List of BankingProducts
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">productCode</th>
+			<th style="text-align:center">name</th>
+			<th style="text-align:center">description</th>
+			<th style="text-align:center">ProductCategory</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @bankingProducts.each do |bankingProduct| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= bankingProduct.productCode %>
+			</td>
+			<td style="text-align:center">
+	  			<%= bankingProduct.name %>
+			</td>
+			<td style="text-align:center">
+	  			<%= bankingProduct.description %>
+			</td>
+			<td style="text-align:center">
+	  			<%= bankingProduct.ProductCategory %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_bankingProduct_path(bankingProduct), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', bankingProduct_path(bankingProduct), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New BankingProduct', new_bankingProduct_path, :method => :get, :class => "btn btn-success btn-sm" %>

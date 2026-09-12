@@ -1,0 +1,43 @@
+<div class="title text-center">
+  List of LoanPayments
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">paymentReference</th>
+			<th style="text-align:center">amount</th>
+			<th style="text-align:center">paymentDate</th>
+			<th style="text-align:center">Method</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @loanPayments.each do |loanPayment| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= loanPayment.paymentReference %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanPayment.amount %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanPayment.paymentDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanPayment.Method %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanPayment.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_loanPayment_path(loanPayment), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', loanPayment_path(loanPayment), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New LoanPayment', new_loanPayment_path, :method => :get, :class => "btn btn-success btn-sm" %>

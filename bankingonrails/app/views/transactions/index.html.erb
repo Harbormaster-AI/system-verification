@@ -1,0 +1,55 @@
+<div class="title text-center">
+  List of Transactions
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">bookingDate</th>
+			<th style="text-align:center">valueDate</th>
+			<th style="text-align:center">amount</th>
+			<th style="text-align:center">description</th>
+			<th style="text-align:center">Direction</th>
+			<th style="text-align:center">TransactionType</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center">Channel</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @transactions.each do |transaction| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= transaction.bookingDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= transaction.valueDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= transaction.amount %>
+			</td>
+			<td style="text-align:center">
+	  			<%= transaction.description %>
+			</td>
+			<td style="text-align:center">
+	  			<%= transaction.Direction %>
+			</td>
+			<td style="text-align:center">
+	  			<%= transaction.TransactionType %>
+			</td>
+			<td style="text-align:center">
+	  			<%= transaction.Status %>
+			</td>
+			<td style="text-align:center">
+	  			<%= transaction.Channel %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_transaction_path(transaction), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', transaction_path(transaction), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New Transaction', new_transaction_path, :method => :get, :class => "btn btn-success btn-sm" %>
