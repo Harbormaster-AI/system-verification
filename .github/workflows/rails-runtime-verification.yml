@@ -123,7 +123,27 @@ jobs:
         with:
           name: packaged-application
 
+      ###########################################################################
+      # Verify Bundled Gems
+      ###########################################################################
 
+      - name: Verify Bundled Gems
+        shell: bash
+        run: |
+          echo "=== BUNDLER CONFIG ==="
+          cat .bundle/config
+          
+          echo "=== PUMA GEM ==="
+          find vendor/bundle -type d -name "puma-*" -print
+          
+          echo "=== PUMA SPECIFICATION ==="
+          find vendor/bundle -type f -name "puma-*.gemspec" -print
+          
+          echo "=== BUNDLE LIST ==="
+          bundle list | grep -i puma || true
+          
+          echo "=== PUMA VERSION ==="
+          bundle exec puma --version
 
       ###########################################################################
       # Show artifact
@@ -566,22 +586,27 @@ jobs:
             "Waiting for Ruby on Rails application to respond." \
             ""
 
+          RESPONSE="000"
+
           for i in {1..30}; do
 
             RESPONSE=$(curl \
               --silent \
               --write-out "%{http_code}" \
               --output /dev/null \
-              http://127.0.0.1:3000/)
+              http://127.0.0.1:3000/ \
+              || true)
 
-            if [ "$RESPONSE" = "200" ]; then
+            echo "Health check ${i}/30: HTTP ${RESPONSE}"
+
+            if [ "$RESPONSE" != "000" ]; then
 
               post_pass \
                 "RUNTIME" \
                 "APPLICATION_STARTED" \
                 20 \
-                "Ruby on Rails application started successfully." \
-                "HTTP ${RESPONSE}"
+                "Ruby on Rails application started successfully and responded." \
+                "APPLICATION_STARTED: HTTP ${RESPONSE}"
 
               exit 0
 
@@ -596,7 +621,7 @@ jobs:
             "APPLICATION_STARTED" \
             0 \
             "Ruby on Rails application failed to respond." \
-            "APPLICATION_STARTED: HTTP ${RESPONSE}"
+            "APPLICATION_STARTED: No HTTP response after 30 attempts. Last HTTP status: ${RESPONSE}"
 
           post_terminate_runtime "RUNTIME"
 

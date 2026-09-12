@@ -170,6 +170,28 @@ jobs:
             "Ruby on Rails deployment verification starting..." \
             ""
 
+      ###########################################################################
+      # Verify Bundled Gems
+      ###########################################################################
+
+      - name: Verify Bundled Gems
+        shell: bash
+        run: |
+          echo "=== BUNDLER CONFIG ==="
+          cat .bundle/config
+          
+          echo "=== PUMA GEM ==="
+          find vendor/bundle -type d -name "puma-*" -print
+          
+          echo "=== PUMA SPECIFICATION ==="
+          find vendor/bundle -type f -name "puma-*.gemspec" -print
+          
+          echo "=== BUNDLE LIST ==="
+          bundle list | grep -i puma || true
+          
+          echo "=== PUMA VERSION ==="
+          bundle exec puma --version
+
 
       ###########################################################################
       # Show downloaded artifact
