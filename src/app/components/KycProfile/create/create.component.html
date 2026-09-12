@@ -1,0 +1,85 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<mat-form-field appearance="outline">
+								<mat-label>profileId</mat-label>
+								<input matInput ngDefaultControl placeholder="profileId" name="kycProfile.profileId" [(ngModel)]="kycProfile.profileId">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>lastReviewedOn</mat-label>
+								<input matInput ngDefaultControl [matDatepicker]="picker" placeholder="lastReviewedOn" name="kycProfile.lastReviewedOn" [(ngModel)]="kycProfile.lastReviewedOn">
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<mat-datepicker #picker></mat-datepicker>
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																																																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Customer</mat-label>
+					<mat-select placeholder="Customer"  [(ngModel)]="kycProfile.Customer">
+						@for (customer of customers; track customer.customerId) {
+							<mat-option name="kycProfile.Customer" ngDefaultControl
+							            [value]="customer.customerId">
+								{{customer.firstName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																																							<mat-form-field appearance="outline">
+					<mat-label>IdentityDocuments</mat-label>
+					<mat-select placeholder="IdentityDocuments" multiple [(ngModel)]="kycProfile.IdentityDocuments">
+						@for (identityDocument of identityDocuments; track identityDocument.identityDocumentId) {
+							<mat-option name="kycProfile.IdentityDocuments" ngDefaultControl
+							            [value]="identityDocument.identityDocumentId">
+								{{identityDocument.documentNumber}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																																							<mat-form-field appearance="outline">
+					<mat-label>RiskAssessments</mat-label>
+					<mat-select placeholder="RiskAssessments" multiple [(ngModel)]="kycProfile.RiskAssessments">
+						@for (riskAssessment of riskAssessments; track riskAssessment.riskAssessmentId) {
+							<mat-option name="kycProfile.RiskAssessments" ngDefaultControl
+							            [value]="riskAssessment.riskAssessmentId">
+								{{riskAssessment.score}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																																							<mat-form-field appearance="outline">
+					<mat-label>Screenings</mat-label>
+					<mat-select placeholder="Screenings" multiple [(ngModel)]="kycProfile.Screenings">
+						@for (screeningResult of screeningResults; track screeningResult.screeningResultId) {
+							<mat-option name="kycProfile.Screenings" ngDefaultControl
+							            [value]="screeningResult.screeningResultId">
+								{{screeningResult.screeningDate}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																									<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="kycProfile.Status" [(ngModel)]="kycProfile.Status">
+							@for (KycStatus of KycStatuss; track KycStatus) {
+								<mat-option ngDefaultControl [value]="KycStatus">
+									{{KycStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																						 																							 																										 																										 																										 																										 																							 										<button
+				(click)="addKycProfile(kycProfile.profileId, kycProfile.lastReviewedOn, kycProfile.Customer, kycProfile.IdentityDocuments, kycProfile.RiskAssessments, kycProfile.Screenings, kycProfile.Status)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->
