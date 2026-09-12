@@ -144,6 +144,8 @@ jobs:
           
           echo "=== PUMA VERSION ==="
           bundle exec puma --version
+          
+          find vendor/bundle/ruby/3.4.0 -type f \( -name puma -o -name pumactl \) -print
 
       ###########################################################################
       # Show artifact
