@@ -1,0 +1,47 @@
+<div class="title text-center">
+  List of RepaymentSchedules
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">installmentNumber</th>
+			<th style="text-align:center">dueDate</th>
+			<th style="text-align:center">principalDue</th>
+			<th style="text-align:center">interestDue</th>
+			<th style="text-align:center">totalDue</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @repaymentSchedules.each do |repaymentSchedule| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= repaymentSchedule.installmentNumber %>
+			</td>
+			<td style="text-align:center">
+	  			<%= repaymentSchedule.dueDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= repaymentSchedule.principalDue %>
+			</td>
+			<td style="text-align:center">
+	  			<%= repaymentSchedule.interestDue %>
+			</td>
+			<td style="text-align:center">
+	  			<%= repaymentSchedule.totalDue %>
+			</td>
+			<td style="text-align:center">
+	  			<%= repaymentSchedule.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_repaymentSchedule_path(repaymentSchedule), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', repaymentSchedule_path(repaymentSchedule), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New RepaymentSchedule', new_repaymentSchedule_path, :method => :get, :class => "btn btn-success btn-sm" %>

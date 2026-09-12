@@ -1,0 +1,50 @@
+<%= form_with model: @bankingProduct, local: true do |form| %>
+ 
+  <% if @bankingProduct.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@bankingProduct.errors.count, "error") %> prohibited
+        this bankingProduct from being saved:
+      </h2>
+      <ul>
+        <% @bankingProduct.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :productCode, { class: 'form-label'} %><br>
+	<%= form.text_field :productCode, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :description, { class: 'form-label'} %><br>
+	<%= form.text_field :description, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :ProductCategory, { class: 'form-label'} %><br>
+   <%= form.select :ProductCategory, BankingProduct.ProductCategorys.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

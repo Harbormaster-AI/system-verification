@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+    	<title>bankingonrails</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+	    <%= csrf_meta_tags %>
+    	<%= csp_meta_tag %>
+	
+	    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+  	</head>
+
+	<body>
+	
+	  	<div class="jumbotron text-center">
+			<h1>bankingonrails</h1>
+  		</div>
+ 
+    	<div class="container">
+	   	
+	   		<div class="row">
+	    
+	     		<div class="col-lg-2">
+		   			<%= button_to 'Banks', banks_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Branchs', branchs_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ATMs', aTMs_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Customers', customers_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'KycProfiles', kycProfiles_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'IdentityDocuments', identityDocuments_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'RiskAssessments', riskAssessments_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ScreeningResults', screeningResults_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'BankingProducts', bankingProducts_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Accounts', accounts_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AccountStatements', accountStatements_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Transactions', transactions_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ExternalAccounts', externalAccounts_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'FundsTransfers', fundsTransfers_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'StandingInstructions', standingInstructions_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'PaymentCards', paymentCards_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'LoanAccounts', loanAccounts_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'RepaymentSchedules', repaymentSchedules_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'LoanPayments', loanPayments_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Collaterals', collaterals_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'FeeCharges', feeCharges_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ExchangeRates', exchangeRates_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'FXTrades', fXTrades_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Disputes', disputes_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Consents', consents_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ThirdPartyProviders', thirdPartyProviders_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+	     		</div>
+
+        		<!-- Page Content -->
+        		<div class="col-lg-10">
+					<%= yield %>
+        		</div>
+
+      		</div>   
+		
+		</div>
+		
+  </body>
+
+</html>

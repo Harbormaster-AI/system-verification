@@ -1,0 +1,43 @@
+<div class="title text-center">
+  List of StandingInstructions
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">instructionId</th>
+			<th style="text-align:center">amount</th>
+			<th style="text-align:center">nextExecutionDate</th>
+			<th style="text-align:center">Frequency</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @standingInstructions.each do |standingInstruction| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= standingInstruction.instructionId %>
+			</td>
+			<td style="text-align:center">
+	  			<%= standingInstruction.amount %>
+			</td>
+			<td style="text-align:center">
+	  			<%= standingInstruction.nextExecutionDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= standingInstruction.Frequency %>
+			</td>
+			<td style="text-align:center">
+	  			<%= standingInstruction.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_standingInstruction_path(standingInstruction), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', standingInstruction_path(standingInstruction), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New StandingInstruction', new_standingInstruction_path, :method => :get, :class => "btn btn-success btn-sm" %>

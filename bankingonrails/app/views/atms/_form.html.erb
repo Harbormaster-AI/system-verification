@@ -1,0 +1,40 @@
+<%= form_with model: @aTM, local: true do |form| %>
+ 
+  <% if @aTM.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@aTM.errors.count, "error") %> prohibited
+        this aTM from being saved:
+      </h2>
+      <ul>
+        <% @aTM.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :terminalId, { class: 'form-label'} %><br>
+	<%= form.text_field :terminalId, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :location, { class: 'form-label'} %><br>
+	<%= form.text_field :location, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, ATM.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

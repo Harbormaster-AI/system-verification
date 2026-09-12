@@ -1,0 +1,47 @@
+<div class="title text-center">
+  List of AccountStatements
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">statementNumber</th>
+			<th style="text-align:center">periodStart</th>
+			<th style="text-align:center">periodEnd</th>
+			<th style="text-align:center">openingBalance</th>
+			<th style="text-align:center">closingBalance</th>
+			<th style="text-align:center">DeliveryMethod</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @accountStatements.each do |accountStatement| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= accountStatement.statementNumber %>
+			</td>
+			<td style="text-align:center">
+	  			<%= accountStatement.periodStart %>
+			</td>
+			<td style="text-align:center">
+	  			<%= accountStatement.periodEnd %>
+			</td>
+			<td style="text-align:center">
+	  			<%= accountStatement.openingBalance %>
+			</td>
+			<td style="text-align:center">
+	  			<%= accountStatement.closingBalance %>
+			</td>
+			<td style="text-align:center">
+	  			<%= accountStatement.DeliveryMethod %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_accountStatement_path(accountStatement), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', accountStatement_path(accountStatement), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New AccountStatement', new_accountStatement_path, :method => :get, :class => "btn btn-success btn-sm" %>

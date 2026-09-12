@@ -1,0 +1,71 @@
+<div class="title text-center">
+  List of LoanAccounts
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">loanNumber</th>
+			<th style="text-align:center">principalAmount</th>
+			<th style="text-align:center">outstandingPrincipal</th>
+			<th style="text-align:center">interestRate</th>
+			<th style="text-align:center">originationDate</th>
+			<th style="text-align:center">maturityDate</th>
+			<th style="text-align:center">paymentDayOfMonth</th>
+			<th style="text-align:center">currency</th>
+			<th style="text-align:center">LoanType</th>
+			<th style="text-align:center">RateType</th>
+			<th style="text-align:center">Compounding</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @loanAccounts.each do |loanAccount| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= loanAccount.loanNumber %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanAccount.principalAmount %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanAccount.outstandingPrincipal %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanAccount.interestRate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanAccount.originationDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanAccount.maturityDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanAccount.paymentDayOfMonth %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanAccount.currency %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanAccount.LoanType %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanAccount.RateType %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanAccount.Compounding %>
+			</td>
+			<td style="text-align:center">
+	  			<%= loanAccount.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_loanAccount_path(loanAccount), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', loanAccount_path(loanAccount), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New LoanAccount', new_loanAccount_path, :method => :get, :class => "btn btn-success btn-sm" %>

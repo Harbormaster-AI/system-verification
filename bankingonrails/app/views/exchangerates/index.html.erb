@@ -1,0 +1,43 @@
+<div class="title text-center">
+  List of ExchangeRates
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">baseCurrency</th>
+			<th style="text-align:center">counterCurrency</th>
+			<th style="text-align:center">rate</th>
+			<th style="text-align:center">asOf</th>
+			<th style="text-align:center">source</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @exchangeRates.each do |exchangeRate| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= exchangeRate.baseCurrency %>
+			</td>
+			<td style="text-align:center">
+	  			<%= exchangeRate.counterCurrency %>
+			</td>
+			<td style="text-align:center">
+	  			<%= exchangeRate.rate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= exchangeRate.asOf %>
+			</td>
+			<td style="text-align:center">
+	  			<%= exchangeRate.source %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_exchangeRate_path(exchangeRate), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', exchangeRate_path(exchangeRate), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New ExchangeRate', new_exchangeRate_path, :method => :get, :class => "btn btn-success btn-sm" %>

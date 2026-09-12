@@ -1,0 +1,18 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of standingInstruction found in  bankingonrails/test/controllers
+
+one:
+  instructionId: test string for instructionId
+  amount: "test value"
+  nextExecutionDate: 2020-10-15
+  Frequency: 0
+  Status: 0
+
+two:
+  instructionId: test string for instructionId
+  amount: "test value"
+  nextExecutionDate: 2020-10-15
+  Frequency: 0
+  Status: 0
+
+
