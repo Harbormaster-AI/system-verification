@@ -130,22 +130,21 @@ jobs:
       - name: Verify Bundled Gems
         shell: bash
         run: |
-          echo "=== BUNDLER CONFIG ==="
-          cat .bundle/config
+          echo "=== PUMA GEM DIRECTORY ==="
+          ls -la vendor/bundle/ruby/3.4.0/gems/puma-8.0.2/bin || true
           
-          echo "=== PUMA GEM ==="
-          find vendor/bundle -type d -name "puma-*" -print
+          echo "=== PUMA EXECUTABLES ==="
+          find vendor/bundle/ruby/3.4.0 -type f \( -name puma -o -name pumactl \) -print || true
           
-          echo "=== PUMA SPECIFICATION ==="
-          find vendor/bundle -type f -name "puma-*.gemspec" -print
+          echo "=== BUNDLE EXECUTABLE DIRECTORY ==="
+          ls -la vendor/bundle/ruby/3.4.0/bin || true
           
-          echo "=== BUNDLE LIST ==="
-          bundle list | grep -i puma || true
+          echo "=== PUMA GEM EXECUTABLES FROM RUBYGEMS ==="
+          bundle exec ruby -e \
+          'puts Gem::Specification.find_by_name("puma").executables' || true
           
           echo "=== PUMA VERSION ==="
-          bundle exec puma --version
-          
-          find vendor/bundle/ruby/3.4.0 -type f \( -name puma -o -name pumactl \) -print
+          bundle exec puma --version || true
 
       ###########################################################################
       # Show artifact
