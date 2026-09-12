@@ -389,7 +389,7 @@ jobs:
 
           if [ -d "src" ]; then
 
-              SCORE=$((SCORE + 3)
+              SCORE=$((SCORE + 3))
 
               post_pass \
                   "BUILD" \
