@@ -1,0 +1,33 @@
+{
+    "name": "django",
+    "options": [
+      {
+        "name": "superUserId",
+        "value": "admin",
+        "required": "true",
+        "description": "super user id",
+        "type": "input"
+      },
+      {
+        "name": "superUserPassword",
+        "value": "letmein2",
+        "required": "true",
+        "description": "super user password",
+        "type": "input"
+      },
+      {
+        "name": "superUserEmail",
+        "value": "xxx@xxx.com",
+        "required": "true",
+        "description": "super user email",
+        "type": "input"
+      },
+      {
+        "name": "port",
+        "value": "8080",
+        "required": "true",
+        "description": "super user email",
+        "type": "input"
+      }
+    ]
+}
