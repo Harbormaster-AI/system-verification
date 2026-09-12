@@ -1,0 +1,35 @@
+<div class="title text-center">
+  List of RiskAssessments
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">score</th>
+			<th style="text-align:center">assessedOn</th>
+			<th style="text-align:center">Rating</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @riskAssessments.each do |riskAssessment| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= riskAssessment.score %>
+			</td>
+			<td style="text-align:center">
+	  			<%= riskAssessment.assessedOn %>
+			</td>
+			<td style="text-align:center">
+	  			<%= riskAssessment.Rating %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_riskAssessment_path(riskAssessment), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', riskAssessment_path(riskAssessment), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New RiskAssessment', new_riskAssessment_path, :method => :get, :class => "btn btn-success btn-sm" %>

@@ -1,0 +1,62 @@
+<%= form_with model: @paymentCard, local: true do |form| %>
+ 
+  <% if @paymentCard.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@paymentCard.errors.count, "error") %> prohibited
+        this paymentCard from being saved:
+      </h2>
+      <ul>
+        <% @paymentCard.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :cardNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :cardNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :embossedName, { class: 'form-label'} %><br>
+	<%= form.text_field :embossedName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :expiryMonth, { class: 'form-label'} %><br>
+	<%= form.text_field :expiryMonth, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :expiryYear, { class: 'form-label'} %><br>
+	<%= form.text_field :expiryYear, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :CardType, { class: 'form-label'} %><br>
+   <%= form.select :CardType, PaymentCard.CardTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :CardStatus, { class: 'form-label'} %><br>
+   <%= form.select :CardStatus, PaymentCard.CardStatuss.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Network, { class: 'form-label'} %><br>
+   <%= form.select :Network, PaymentCard.Networks.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

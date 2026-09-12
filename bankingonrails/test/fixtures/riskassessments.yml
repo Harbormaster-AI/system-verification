@@ -1,0 +1,14 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of riskAssessment found in  bankingonrails/test/controllers
+
+one:
+  score: 100
+  assessedOn: 2020-10-15
+  Rating: 0
+
+two:
+  score: 100
+  assessedOn: 2020-10-15
+  Rating: 0
+
+

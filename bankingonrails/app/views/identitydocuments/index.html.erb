@@ -1,0 +1,39 @@
+<div class="title text-center">
+  List of IdentityDocuments
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">documentNumber</th>
+			<th style="text-align:center">issuingCountry</th>
+			<th style="text-align:center">expirationDate</th>
+			<th style="text-align:center">DocumentType</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @identityDocuments.each do |identityDocument| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= identityDocument.documentNumber %>
+			</td>
+			<td style="text-align:center">
+	  			<%= identityDocument.issuingCountry %>
+			</td>
+			<td style="text-align:center">
+	  			<%= identityDocument.expirationDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= identityDocument.DocumentType %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_identityDocument_path(identityDocument), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', identityDocument_path(identityDocument), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New IdentityDocument', new_identityDocument_path, :method => :get, :class => "btn btn-success btn-sm" %>

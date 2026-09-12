@@ -1,0 +1,39 @@
+<div class="title text-center">
+  List of Disputes
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">disputeReference</th>
+			<th style="text-align:center">raisedOn</th>
+			<th style="text-align:center">reason</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @disputes.each do |dispute| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= dispute.disputeReference %>
+			</td>
+			<td style="text-align:center">
+	  			<%= dispute.raisedOn %>
+			</td>
+			<td style="text-align:center">
+	  			<%= dispute.reason %>
+			</td>
+			<td style="text-align:center">
+	  			<%= dispute.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_dispute_path(dispute), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', dispute_path(dispute), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New Dispute', new_dispute_path, :method => :get, :class => "btn btn-success btn-sm" %>

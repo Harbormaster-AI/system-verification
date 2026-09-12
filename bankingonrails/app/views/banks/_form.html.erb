@@ -1,0 +1,64 @@
+<%= form_with model: @bank, local: true do |form| %>
+ 
+  <% if @bank.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@bank.errors.count, "error") %> prohibited
+        this bank from being saved:
+      </h2>
+      <ul>
+        <% @bank.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :legalName, { class: 'form-label'} %><br>
+	<%= form.text_field :legalName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :swiftBic, { class: 'form-label'} %><br>
+	<%= form.text_field :swiftBic, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :headquartersCountry, { class: 'form-label'} %><br>
+	<%= form.text_field :headquartersCountry, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :website, { class: 'form-label'} %><br>
+	<%= form.text_field :website, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

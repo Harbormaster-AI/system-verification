@@ -1,0 +1,39 @@
+<div class="title text-center">
+  List of Consents
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">grantedOn</th>
+			<th style="text-align:center">expiresOn</th>
+			<th style="text-align:center">ConsentType</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @consents.each do |consent| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= consent.grantedOn %>
+			</td>
+			<td style="text-align:center">
+	  			<%= consent.expiresOn %>
+			</td>
+			<td style="text-align:center">
+	  			<%= consent.ConsentType %>
+			</td>
+			<td style="text-align:center">
+	  			<%= consent.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_consent_path(consent), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', consent_path(consent), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New Consent', new_consent_path, :method => :get, :class => "btn btn-success btn-sm" %>

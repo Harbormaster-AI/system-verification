@@ -1,0 +1,50 @@
+<%= form_with model: @standingInstruction, local: true do |form| %>
+ 
+  <% if @standingInstruction.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@standingInstruction.errors.count, "error") %> prohibited
+        this standingInstruction from being saved:
+      </h2>
+      <ul>
+        <% @standingInstruction.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :instructionId, { class: 'form-label'} %><br>
+	<%= form.text_field :instructionId, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :amount, { class: 'form-label'} %><br>
+	<%= form.text_field :amount, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :nextExecutionDate, { class: 'form-label'} %><br>
+    <%= form.date_field :nextExecutionDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Frequency, { class: 'form-label'} %><br>
+   <%= form.select :Frequency, StandingInstruction.Frequencys.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, StandingInstruction.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

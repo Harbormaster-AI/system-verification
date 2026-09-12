@@ -1,0 +1,54 @@
+<%= form_with model: @externalAccount, local: true do |form| %>
+ 
+  <% if @externalAccount.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@externalAccount.errors.count, "error") %> prohibited
+        this externalAccount from being saved:
+      </h2>
+      <ul>
+        <% @externalAccount.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :iban, { class: 'form-label'} %><br>
+	<%= form.text_field :iban, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :accountNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :accountNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :bic, { class: 'form-label'} %><br>
+	<%= form.text_field :bic, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :bankName, { class: 'form-label'} %><br>
+	<%= form.text_field :bankName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :country, { class: 'form-label'} %><br>
+	<%= form.text_field :country, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>
