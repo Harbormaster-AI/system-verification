@@ -1,0 +1,59 @@
+{
+    "name": "Apollo GraphQL",
+    "shortName": "Apollo",
+    "summary": "From a domain model, generate simple to robust APIs queryable with Apollo GraphQL",
+    "description": "Apollo GraphQL delivers the most value when it serves as a unified, schema-driven API layer that aggregates data from multiple services, databases, or domains and exposes it efficiently to web, mobile, and enterprise applications.",
+    "iconUrl": "blueprints/apollo-blueprint-header-image.png",
+    "infoPageUrl": "https://harbormaster.net/apollo.blueprint/",
+    "version": "1.2",
+    "appType": "restfulapi",
+    "type": "FirstClass",
+    "releaseStatus": "production",
+    "techSourceType": "commercial",
+    "derivedFrom": "nodejs",
+    "majorTechnology" : "ApolloGraphQL",
+    "supportsDocker": "true",
+    "supportsKubernetes": "true",
+    "published": "true",
+    "category": "integration",
+    "designPattern": "Facade",
+    "architectureStyle": "APIFirst",
+    "useCases": "Federated Enterprise, Marketplace, Customer 360, Portal, Banking, Insurance Claims, Supply Chain, Operations Dashboard, CQRS for Event-Sourced Systems",
+    "primaryVendor": "Apollo GraphQL",
+    "architecturePreviewUrl": "blueprints/architecture.diagrams/apollo-graphql-blueprint-system-diagram.png",
+    "metadata": "Federation, Subgraphs, Supergraph, Angular, React, Microservices, BFF, OAuth2, JWT, Subscriptions, Real-Time, Caching, Apollo Gateway, Apollo Router, Production Ready",
+    "languages": {
+      "language": [
+        {
+          "name": "nodejs",
+          "version": "22.22.3"
+        },
+        {
+          "name": "javascript"
+        },
+        {
+          "name": "typescript"
+        }
+      ]
+    },
+    "techStack": {
+      "techStackComponents": [
+        {
+          "tech": "ApolloGraphQL",
+          "description": "Apollo GraphQL framework",
+          "appLayerType": "business"
+        },
+        {
+          "tech": "Angular",
+          "description": "Typescript front end library",
+          "appLayerType": "frontend"
+        },
+        {
+          "tech": "SQLite",
+          "description": "A lightweight serverless SQL database",
+          "appLayerType": "data"
+        }
+      ]
+    }
+
+}
