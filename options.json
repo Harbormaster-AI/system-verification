@@ -1,0 +1,48 @@
+ {
+    "name": "apollo",
+    "options": [
+      {
+        "name": "service",
+        "value": "",
+        "required": "true",
+        "description": "the name of your service created online by the Apollo Engine (service:YOUR_SERVICE_NAME:THE_TOKEN)",
+        "type": "input"
+      },
+      {
+        "name": "engine-api-key",
+        "value": "",
+        "required": "true",
+        "description": "secret credentials to communicate with an Apollo server instance",
+        "type": "input"
+      },
+      {
+        "name": "pageSize",
+        "value": "20",
+        "required": "true",
+        "description": "Size of page for pagination",
+        "type": "input"
+      },
+      {
+        "name": "clientType",
+        "value": "react",
+        "selections": "react,angular",
+        "required": "true",
+        "description": "client type",
+        "type": "select"
+      },
+      {
+        "name": "includeClient",
+        "value": "true",
+        "required": "true",
+        "description": "",
+        "type": "checkbox"
+      },
+      {
+        "name": "cacheInMemory",
+        "value": "true",
+        "required": "true",
+        "description": "",
+        "type": "checkbox"
+      }
+    ]
+  }
