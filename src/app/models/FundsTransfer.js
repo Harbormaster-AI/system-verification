@@ -1,0 +1,32 @@
+
+// Define collection and schema for FundsTransfer
+export interface FundsTransfer {
+    transferReference:
+	type : string
+    amount:
+	type : Money
+    requestedDate:
+	type : Date
+    executionDate:
+	type : Date
+    purpose:
+	type : string
+    feeAmount:
+	type : Money
+    SourceAccount:
+	type : Schema.Types.ObjectId
+    DestinationAccount:
+	type : Schema.Types.ObjectId
+    ExternalBeneficiary:
+	type : Schema.Types.ObjectId
+    InitiatedBy:
+	type : Schema.Types.ObjectId
+    Transactions:
+ 	type : [{ type: Schema.Types.ObjectId, ref: 'Transaction' }]
+    Method:
+ 	type : String
+    Status:
+ 	type : String
+#
+    collection: 'fundsTransfers'
+}

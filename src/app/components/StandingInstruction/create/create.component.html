@@ -1,0 +1,78 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<mat-form-field appearance="outline">
+								<mat-label>instructionId</mat-label>
+								<input matInput ngDefaultControl placeholder="instructionId" name="standingInstruction.instructionId" [(ngModel)]="standingInstruction.instructionId">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>amount</mat-label>
+								<input matInput ngDefaultControl placeholder="amount" name="standingInstruction.amount" [(ngModel)]="standingInstruction.amount">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>nextExecutionDate</mat-label>
+								<input matInput ngDefaultControl [matDatepicker]="picker" placeholder="nextExecutionDate" name="standingInstruction.nextExecutionDate" [(ngModel)]="standingInstruction.nextExecutionDate">
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<mat-datepicker #picker></mat-datepicker>
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																																																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Account</mat-label>
+					<mat-select placeholder="Account"  [(ngModel)]="standingInstruction.Account">
+						@for (account of accounts; track account.accountId) {
+							<mat-option name="standingInstruction.Account" ngDefaultControl
+							            [value]="account.accountId">
+								{{account.accountName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Beneficiary</mat-label>
+					<mat-select placeholder="Beneficiary"  [(ngModel)]="standingInstruction.Beneficiary">
+						@for (externalAccount of externalAccounts; track externalAccount.externalAccountId) {
+							<mat-option name="standingInstruction.Beneficiary" ngDefaultControl
+							            [value]="externalAccount.externalAccountId">
+								{{externalAccount.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																									<mat-form-field appearance="outline">
+						<mat-label>Frequency</mat-label>
+						<mat-select placeholder="Frequency" name="standingInstruction.Frequency" [(ngModel)]="standingInstruction.Frequency">
+							@for (StandingInstructionFrequency of StandingInstructionFrequencys; track StandingInstructionFrequency) {
+								<mat-option ngDefaultControl [value]="StandingInstructionFrequency">
+									{{StandingInstructionFrequency}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																																									<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="standingInstruction.Status" [(ngModel)]="standingInstruction.Status">
+							@for (StandingInstructionStatus of StandingInstructionStatuss; track StandingInstructionStatus) {
+								<mat-option ngDefaultControl [value]="StandingInstructionStatus">
+									{{StandingInstructionStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																						 																							 																							 																										 																										 																							 																							 										<button
+				(click)="addStandingInstruction(standingInstruction.instructionId, standingInstruction.amount, standingInstruction.nextExecutionDate, standingInstruction.Account, standingInstruction.Beneficiary, standingInstruction.Frequency, standingInstruction.Status)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

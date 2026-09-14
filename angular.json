@@ -1,0 +1,99 @@
+{
+"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+"version": 1,
+"cli": {
+"analytics": false
+}
+"newProjectRoot": "projects",
+
+"projects": {
+"assigned": {
+"root": "",
+"sourceRoot": "src",
+"projectType": "application",
+"prefix": "app",
+
+"schematics": {
+"@schematics/angular:component": {
+"style": "css"
+}
+},
+
+"architect": {
+"build": {
+"builder": "@angular/build:application",
+
+"options": {
+"outputPath": "dist/assigned",
+"index": "src/index.html",
+"browser": "src/main.ts",
+"tsConfig": "src/tsconfig.app.json",
+
+"assets": [
+{
+"glob": "**/*",
+"input": "public"
+}
+],
+
+"styles": [
+"node_modules/bootstrap/dist/css/bootstrap.min.css",
+"src/styles.css"
+],
+
+"scripts": []
+},
+
+"configurations": {
+"production": {
+"optimization": true,
+"sourceMap": false,
+"extractLicenses": true,
+
+"budgets": [
+{
+"type": "initial",
+"maximumWarning": "2mb",
+"maximumError": "5mb"
+}
+]
+},
+
+"development": {
+"optimization": false,
+"extractLicenses": false,
+"sourceMap": true
+}
+},
+
+"defaultConfiguration": "production"
+},
+
+"serve": {
+"builder": "@angular-devkit/build-angular:dev-server",
+
+"configurations": {
+"production": {
+"buildTarget": "assigned:build:production"
+},
+
+"development": {
+"buildTarget": "assigned:build:development"
+}
+},
+
+"defaultConfiguration": "development"
+},
+
+"extract-i18n": {
+"builder": "@angular-devkit/build-angular:extract-i18n",
+
+"options": {
+"buildTarget": "assigned:build"
+}
+}
+}
+}
+},
+
+}
