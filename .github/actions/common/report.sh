@@ -34,6 +34,9 @@ post_result() {
 
     set +e
 
+    # Do not use `curl ... || echo 000` — on connect failure curl already
+    # writes http_code 000, and appending makes 000000. Never let reporting
+    # fail the job (workflows run with bash -e).
     HTTP_STATUS=$(
         curl \
             --silent \
@@ -127,7 +130,7 @@ post_terminate_build() {
         "" \
         "true"
 
-    if [ "$EXIT_WORKFLOW" = "truth" ]; then
+    if [ "$EXIT_WORKFLOW" = "true" ]; then
         exit 1
     fi
 }
@@ -145,7 +148,7 @@ post_terminate_runtime() {
         "" \
         "true"
 
-    if [ "$EXIT_WORKFLOW" = "truth" ]; then
+    if [ "$EXIT_WORKFLOW" = "true" ]; then
         exit 1
     fi
 }
@@ -163,7 +166,25 @@ post_terminate_delivery() {
         "" \
         "true"
 
-    if [ "$EXIT_WORKFLOW" = "truth" ]; then
+    if [ "$EXIT_WORKFLOW" = "true" ]; then
+        exit 1
+    fi
+}
+
+post_terminate_cloud() {
+
+    local EXIT_WORKFLOW="${1:-true}"
+
+    post_result \
+        "CLOUD" \
+        "" \
+        "" \
+        0 \
+        "" \
+        "" \
+        "true"
+
+    if [ "$EXIT_WORKFLOW" = "true" ]; then
         exit 1
     fi
 }
