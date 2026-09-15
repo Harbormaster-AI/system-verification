@@ -1,0 +1,48 @@
+<%= form_with model: @commandDefinition, local: true do |form| %>
+ 
+  <% if @commandDefinition.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@commandDefinition.errors.count, "error") %> prohibited
+        this commandDefinition from being saved:
+      </h2>
+      <ul>
+        <% @commandDefinition.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :requestSchemaUri, { class: 'form-label'} %><br>
+	<%= form.text_field :requestSchemaUri, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :responseSchemaUri, { class: 'form-label'} %><br>
+	<%= form.text_field :responseSchemaUri, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :timeoutSeconds, { class: 'form-label'} %><br>
+	<%= form.text_field :timeoutSeconds, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

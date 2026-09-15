@@ -1,0 +1,2 @@
+module CommandDefinitionHelper
+end

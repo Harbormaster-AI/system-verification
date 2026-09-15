@@ -1,0 +1,39 @@
+<div class="title text-center">
+  List of ApiKeys
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">keyId</th>
+			<th style="text-align:center">hashedSecret</th>
+			<th style="text-align:center">createdAt</th>
+			<th style="text-align:center">lastUsedAt</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @apiKeys.each do |apiKey| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= apiKey.keyId %>
+			</td>
+			<td style="text-align:center">
+	  			<%= apiKey.hashedSecret %>
+			</td>
+			<td style="text-align:center">
+	  			<%= apiKey.createdAt %>
+			</td>
+			<td style="text-align:center">
+	  			<%= apiKey.lastUsedAt %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_apiKey_path(apiKey), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', apiKey_path(apiKey), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New ApiKey', new_apiKey_path, :method => :get, :class => "btn btn-success btn-sm" %>

@@ -1,0 +1,20 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of ioTDevice found in  iotonrails/test/controllers
+
+one:
+  deviceId: "test value"
+  serialNumber: test string for serialNumber
+  lastSeen: 2020-10-15
+  firmwareVersion: "test value"
+  Status: 0
+  PowerSource: 0
+
+two:
+  deviceId: "test value"
+  serialNumber: test string for serialNumber
+  lastSeen: 2020-10-15
+  firmwareVersion: "test value"
+  Status: 0
+  PowerSource: 0
+
+

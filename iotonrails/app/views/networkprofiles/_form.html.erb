@@ -1,0 +1,48 @@
+<%= form_with model: @networkProfile, local: true do |form| %>
+ 
+  <% if @networkProfile.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@networkProfile.errors.count, "error") %> prohibited
+        this networkProfile from being saved:
+      </h2>
+      <ul>
+        <% @networkProfile.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :profileName, { class: 'form-label'} %><br>
+	<%= form.text_field :profileName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :ssid, { class: 'form-label'} %><br>
+	<%= form.text_field :ssid, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :apn, { class: 'form-label'} %><br>
+	<%= form.text_field :apn, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :ConnectivityType, { class: 'form-label'} %><br>
+   <%= form.select :ConnectivityType, NetworkProfile.ConnectivityTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

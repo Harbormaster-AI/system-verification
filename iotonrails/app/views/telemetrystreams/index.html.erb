@@ -1,0 +1,35 @@
+<div class="title text-center">
+  List of TelemetryStreams
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">streamName</th>
+			<th style="text-align:center">retentionDays</th>
+			<th style="text-align:center">Qos</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @telemetryStreams.each do |telemetryStream| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= telemetryStream.streamName %>
+			</td>
+			<td style="text-align:center">
+	  			<%= telemetryStream.retentionDays %>
+			</td>
+			<td style="text-align:center">
+	  			<%= telemetryStream.Qos %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_telemetryStream_path(telemetryStream), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', telemetryStream_path(telemetryStream), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New TelemetryStream', new_telemetryStream_path, :method => :get, :class => "btn btn-success btn-sm" %>

@@ -1,0 +1,39 @@
+<div class="title text-center">
+  List of FirmwareReleases
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">version</th>
+			<th style="text-align:center">releaseDate</th>
+			<th style="text-align:center">releaseNotes</th>
+			<th style="text-align:center">checksum</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @firmwareReleases.each do |firmwareRelease| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= firmwareRelease.version %>
+			</td>
+			<td style="text-align:center">
+	  			<%= firmwareRelease.releaseDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= firmwareRelease.releaseNotes %>
+			</td>
+			<td style="text-align:center">
+	  			<%= firmwareRelease.checksum %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_firmwareRelease_path(firmwareRelease), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', firmwareRelease_path(firmwareRelease), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New FirmwareRelease', new_firmwareRelease_path, :method => :get, :class => "btn btn-success btn-sm" %>

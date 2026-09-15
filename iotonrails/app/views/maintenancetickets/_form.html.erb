@@ -1,0 +1,50 @@
+<%= form_with model: @maintenanceTicket, local: true do |form| %>
+ 
+  <% if @maintenanceTicket.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@maintenanceTicket.errors.count, "error") %> prohibited
+        this maintenanceTicket from being saved:
+      </h2>
+      <ul>
+        <% @maintenanceTicket.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :ticketNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :ticketNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :openedAt, { class: 'form-label'} %><br>
+    <%= form.time_field :openedAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :closedAt, { class: 'form-label'} %><br>
+    <%= form.time_field :closedAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Priority, { class: 'form-label'} %><br>
+   <%= form.select :Priority, MaintenanceTicket.Prioritys.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, MaintenanceTicket.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

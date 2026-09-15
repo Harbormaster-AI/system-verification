@@ -1,0 +1,48 @@
+<%= form_with model: @usageRecord, local: true do |form| %>
+ 
+  <% if @usageRecord.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@usageRecord.errors.count, "error") %> prohibited
+        this usageRecord from being saved:
+      </h2>
+      <ul>
+        <% @usageRecord.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :periodStart, { class: 'form-label'} %><br>
+    <%= form.date_field :periodStart, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :periodEnd, { class: 'form-label'} %><br>
+    <%= form.date_field :periodEnd, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :messagesSent, { class: 'form-label'} %><br>
+	<%= form.text_field :messagesSent, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :dataVolumeMB, { class: 'form-label'} %><br>
+	<%= form.text_field :dataVolumeMB, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

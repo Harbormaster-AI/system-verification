@@ -1,0 +1,39 @@
+<div class="title text-center">
+  List of Alerts
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">raisedAt</th>
+			<th style="text-align:center">clearedAt</th>
+			<th style="text-align:center">message</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @alerts.each do |alert| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= alert.raisedAt %>
+			</td>
+			<td style="text-align:center">
+	  			<%= alert.clearedAt %>
+			</td>
+			<td style="text-align:center">
+	  			<%= alert.message %>
+			</td>
+			<td style="text-align:center">
+	  			<%= alert.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_alert_path(alert), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', alert_path(alert), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New Alert', new_alert_path, :method => :get, :class => "btn btn-success btn-sm" %>

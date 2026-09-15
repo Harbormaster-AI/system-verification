@@ -1,0 +1,40 @@
+<%= form_with model: @telemetrySchema, local: true do |form| %>
+ 
+  <% if @telemetrySchema.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@telemetrySchema.errors.count, "error") %> prohibited
+        this telemetrySchema from being saved:
+      </h2>
+      <ul>
+        <% @telemetrySchema.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :schemaId, { class: 'form-label'} %><br>
+	<%= form.text_field :schemaId, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :schemaUri, { class: 'form-label'} %><br>
+	<%= form.text_field :schemaUri, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Encoding, { class: 'form-label'} %><br>
+   <%= form.select :Encoding, TelemetrySchema.Encodings.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

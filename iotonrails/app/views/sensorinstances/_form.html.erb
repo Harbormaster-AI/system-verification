@@ -1,0 +1,46 @@
+<%= form_with model: @sensorInstance, local: true do |form| %>
+ 
+  <% if @sensorInstance.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@sensorInstance.errors.count, "error") %> prohibited
+        this sensorInstance from being saved:
+      </h2>
+      <ul>
+        <% @sensorInstance.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :unit, { class: 'form-label'} %><br>
+	<%= form.text_field :unit, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :samplingIntervalMs, { class: 'form-label'} %><br>
+	<%= form.text_field :samplingIntervalMs, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :SensorType, { class: 'form-label'} %><br>
+   <%= form.select :SensorType, SensorInstance.SensorTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

@@ -1,0 +1,47 @@
+<div class="title text-center">
+  List of IoTDevices
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">deviceId</th>
+			<th style="text-align:center">serialNumber</th>
+			<th style="text-align:center">lastSeen</th>
+			<th style="text-align:center">firmwareVersion</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center">PowerSource</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @ioTDevices.each do |ioTDevice| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= ioTDevice.deviceId %>
+			</td>
+			<td style="text-align:center">
+	  			<%= ioTDevice.serialNumber %>
+			</td>
+			<td style="text-align:center">
+	  			<%= ioTDevice.lastSeen %>
+			</td>
+			<td style="text-align:center">
+	  			<%= ioTDevice.firmwareVersion %>
+			</td>
+			<td style="text-align:center">
+	  			<%= ioTDevice.Status %>
+			</td>
+			<td style="text-align:center">
+	  			<%= ioTDevice.PowerSource %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_ioTDevice_path(ioTDevice), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', ioTDevice_path(ioTDevice), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New IoTDevice', new_ioTDevice_path, :method => :get, :class => "btn btn-success btn-sm" %>

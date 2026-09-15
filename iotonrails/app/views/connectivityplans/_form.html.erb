@@ -1,0 +1,42 @@
+<%= form_with model: @connectivityPlan, local: true do |form| %>
+ 
+  <% if @connectivityPlan.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@connectivityPlan.errors.count, "error") %> prohibited
+        this connectivityPlan from being saved:
+      </h2>
+      <ul>
+        <% @connectivityPlan.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :dataCapMB, { class: 'form-label'} %><br>
+	<%= form.text_field :dataCapMB, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :billingCycleDays, { class: 'form-label'} %><br>
+	<%= form.text_field :billingCycleDays, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

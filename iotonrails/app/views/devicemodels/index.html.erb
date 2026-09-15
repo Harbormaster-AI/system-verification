@@ -1,0 +1,43 @@
+<div class="title text-center">
+  List of DeviceModels
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+			<th style="text-align:center">name</th>
+			<th style="text-align:center">modelNumber</th>
+			<th style="text-align:center">hardwareRevision</th>
+			<th style="text-align:center">SupportedConnectivity</th>
+			<th style="text-align:center">DefaultTelemetryEncoding</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @deviceModels.each do |deviceModel| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= deviceModel.name %>
+			</td>
+			<td style="text-align:center">
+	  			<%= deviceModel.modelNumber %>
+			</td>
+			<td style="text-align:center">
+	  			<%= deviceModel.hardwareRevision %>
+			</td>
+			<td style="text-align:center">
+	  			<%= deviceModel.SupportedConnectivity %>
+			</td>
+			<td style="text-align:center">
+	  			<%= deviceModel.DefaultTelemetryEncoding %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_deviceModel_path(deviceModel), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', deviceModel_path(deviceModel), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New DeviceModel', new_deviceModel_path, :method => :get, :class => "btn btn-success btn-sm" %>

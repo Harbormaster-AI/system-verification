@@ -1,0 +1,48 @@
+<%= form_with model: @provisioningRecord, local: true do |form| %>
+ 
+  <% if @provisioningRecord.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@provisioningRecord.errors.count, "error") %> prohibited
+        this provisioningRecord from being saved:
+      </h2>
+      <ul>
+        <% @provisioningRecord.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :enrolledAt, { class: 'form-label'} %><br>
+    <%= form.time_field :enrolledAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :provisioningService, { class: 'form-label'} %><br>
+	<%= form.text_field :provisioningService, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Method, { class: 'form-label'} %><br>
+   <%= form.select :Method, ProvisioningRecord.Methods.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, ProvisioningRecord.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

@@ -1,0 +1,48 @@
+<%= form_with model: @gateway, local: true do |form| %>
+ 
+  <% if @gateway.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@gateway.errors.count, "error") %> prohibited
+        this gateway from being saved:
+      </h2>
+      <ul>
+        <% @gateway.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :softwareVersion, { class: 'form-label'} %><br>
+	<%= form.text_field :softwareVersion, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, Gateway.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>
