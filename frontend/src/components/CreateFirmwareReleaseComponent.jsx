@@ -1,0 +1,127 @@
+import React, { Component } from 'react'
+import FirmwareReleaseService from '../services/FirmwareReleaseService';
+
+class CreateFirmwareReleaseComponent extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            // step 2
+            id: this.props.match.params.id,
+                version: '',
+                releaseDate: '',
+                releaseNotes: '',
+                checksum: ''
+        }
+        this.changeversionHandler = this.changeversionHandler.bind(this);
+        this.changereleaseDateHandler = this.changereleaseDateHandler.bind(this);
+        this.changereleaseNotesHandler = this.changereleaseNotesHandler.bind(this);
+        this.changechecksumHandler = this.changechecksumHandler.bind(this);
+    }
+
+    // step 3
+    componentDidMount(){
+
+        // step 4
+        if(this.state.id === '_add'){
+            return
+        }else{
+            FirmwareReleaseService.getFirmwareReleaseById(this.state.id).then( (res) =>{
+                let firmwareRelease = res.data;
+                this.setState({
+                    version: firmwareRelease.version,
+                    releaseDate: firmwareRelease.releaseDate,
+                    releaseNotes: firmwareRelease.releaseNotes,
+                    checksum: firmwareRelease.checksum
+                });
+            });
+        }        
+    }
+    saveOrUpdateFirmwareRelease = (e) => {
+        e.preventDefault();
+        let firmwareRelease = {
+                firmwareReleaseId: this.state.id,
+                version: this.state.version,
+                releaseDate: this.state.releaseDate,
+                releaseNotes: this.state.releaseNotes,
+                checksum: this.state.checksum
+            };
+        console.log('firmwareRelease => ' + JSON.stringify(firmwareRelease));
+
+        // step 5
+        if(this.state.id === '_add'){
+            firmwareRelease.firmwareReleaseId=''
+            FirmwareReleaseService.createFirmwareRelease(firmwareRelease).then(res =>{
+                this.props.history.push('/firmwareReleases');
+            });
+        }else{
+            FirmwareReleaseService.updateFirmwareRelease(firmwareRelease).then( res => {
+                this.props.history.push('/firmwareReleases');
+            });
+        }
+    }
+    
+    changeversionHandler= (event) => {
+        this.setState({version: event.target.value});
+    }
+    changereleaseDateHandler= (event) => {
+        this.setState({releaseDate: event.target.value});
+    }
+    changereleaseNotesHandler= (event) => {
+        this.setState({releaseNotes: event.target.value});
+    }
+    changechecksumHandler= (event) => {
+        this.setState({checksum: event.target.value});
+    }
+
+    cancel(){
+        this.props.history.push('/firmwareReleases');
+    }
+
+    getTitle(){
+        if(this.state.id === '_add'){
+            return <h3 className="text-center">Add FirmwareRelease</h3>
+        }else{
+            return <h3 className="text-center">Update FirmwareRelease</h3>
+        }
+    }
+    render() {
+        return (
+            <div>
+                <br></br>
+                   <div className = "container">
+                        <div className = "row">
+                            <div className = "card col-md-6 offset-md-3 offset-md-3">
+                                {
+                                    this.getTitle()
+                                }
+                                <div className = "card-body">
+                                    <form>
+                                        <div className = "form-group">
+                                            <label> version:&emsp; </label>
+                                                <input placeholder="version" name="version" className="form-control" value={this.state.version} onChange={this.changeversionHandler}/>
+
+                                            <label> releaseDate:&emsp; </label>
+                                                <input type="date" placeholder="releaseDate" name="releaseDate" className="form-control" value={this.state.releaseDate} onChange={this.changereleaseDateHandler}/>
+
+                                            <label> releaseNotes:&emsp; </label>
+                                                <input placeholder="releaseNotes" name="releaseNotes" className="form-control" value={this.state.releaseNotes} onChange={this.changereleaseNotesHandler}/>
+
+                                            <label> checksum:&emsp; </label>
+                                                <input placeholder="checksum" name="checksum" className="form-control" value={this.state.checksum} onChange={this.changechecksumHandler}/>
+
+                                        </div>
+
+                                        <button className="btn btn-outline-success" onClick={this.saveOrUpdateFirmwareRelease}>Save</button>
+                                        <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
+            </div>
+        )
+    }
+}
+
+export default CreateFirmwareReleaseComponent
