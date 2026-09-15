@@ -1,0 +1,2 @@
+module SoftwareUpdateCampaignHelper
+end

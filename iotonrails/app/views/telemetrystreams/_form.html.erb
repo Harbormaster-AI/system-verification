@@ -1,0 +1,49 @@
+$generateAppStats.applyMetaDataTagWithCount( "Form View", "Display entity data as a form." )
+<%= form_with model: @telemetryStream, local: true do |form| %>
+ 
+  <% if @telemetryStream.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@telemetryStream.errors.count, "error") %> prohibited
+        this telemetryStream from being saved:
+      </h2>
+      <ul>
+        <% @telemetryStream.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :streamName, { class: 'form-label'} %><br>
+	<%= form.text_field :streamName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :retentionDays, { class: 'form-label'} %><br>
+	<%= form.text_field :retentionDays, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Qos, { class: 'form-label'} %><br>
+   <%= form.select :Qos, TelemetryStream.Qoss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

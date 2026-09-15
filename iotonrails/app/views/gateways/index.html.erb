@@ -1,0 +1,32 @@
+<div class="title text-center">
+  List of Gateways
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">softwareVersion</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @gateways.each do |gateway| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= gateway.softwareVersion %>
+			</td>
+			<td style="text-align:center">
+	  			<%= gateway.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_gateway_path(gateway), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', gateway_path(gateway), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New Gateway', new_gateway_path, :method => :get, :class => "btn btn-success btn-sm" %>

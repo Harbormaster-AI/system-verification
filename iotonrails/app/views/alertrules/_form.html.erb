@@ -1,0 +1,45 @@
+$generateAppStats.applyMetaDataTagWithCount( "Form View", "Display entity data as a form." )
+<%= form_with model: @alertRule, local: true do |form| %>
+ 
+  <% if @alertRule.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@alertRule.errors.count, "error") %> prohibited
+        this alertRule from being saved:
+      </h2>
+      <ul>
+        <% @alertRule.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :expression, { class: 'form-label'} %><br>
+	<%= form.text_field :expression, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Severity, { class: 'form-label'} %><br>
+   <%= form.select :Severity, AlertRule.Severitys.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

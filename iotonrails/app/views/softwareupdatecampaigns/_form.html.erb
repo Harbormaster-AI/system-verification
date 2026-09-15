@@ -1,0 +1,49 @@
+$generateAppStats.applyMetaDataTagWithCount( "Form View", "Display entity data as a form." )
+<%= form_with model: @softwareUpdateCampaign, local: true do |form| %>
+ 
+  <% if @softwareUpdateCampaign.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@softwareUpdateCampaign.errors.count, "error") %> prohibited
+        this softwareUpdateCampaign from being saved:
+      </h2>
+      <ul>
+        <% @softwareUpdateCampaign.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :campaignCode, { class: 'form-label'} %><br>
+	<%= form.text_field :campaignCode, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :scheduledStart, { class: 'form-label'} %><br>
+    <%= form.time_field :scheduledStart, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :scheduledEnd, { class: 'form-label'} %><br>
+    <%= form.time_field :scheduledEnd, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, SoftwareUpdateCampaign.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

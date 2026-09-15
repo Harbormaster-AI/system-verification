@@ -1,0 +1,45 @@
+$generateAppStats.applyMetaDataTagWithCount( "Form View", "Display entity data as a form." )
+<%= form_with model: @edgeApplication, local: true do |form| %>
+ 
+  <% if @edgeApplication.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@edgeApplication.errors.count, "error") %> prohibited
+        this edgeApplication from being saved:
+      </h2>
+      <ul>
+        <% @edgeApplication.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :version, { class: 'form-label'} %><br>
+	<%= form.text_field :version, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :image, { class: 'form-label'} %><br>
+	<%= form.text_field :image, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, EdgeApplication.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>
