@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+    	<title>iotonrails</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+	    <%= csrf_meta_tags %>
+    	<%= csp_meta_tag %>
+	
+	    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+  	</head>
+
+	<body>
+	
+	  	<div class="jumbotron text-center">
+			<h1>iotonrails</h1>
+  		</div>
+ 
+    	<div class="container">
+	   	
+	   		<div class="row">
+	    
+	     		<div class="col-lg-2">
+		   			<%= button_to 'DeviceVendors', deviceVendors_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'HardwareModules', hardwareModules_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'DeviceModels', deviceModels_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'FirmwareReleases', firmwareReleases_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'IoTDevices', ioTDevices_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'SensorInstances', sensorInstances_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ActuatorInstances', actuatorInstances_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'TelemetrySchemas', telemetrySchemas_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'TelemetryStreams', telemetryStreams_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'CommandDefinitions', commandDefinitions_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'CommandInvocations', commandInvocations_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AlertRules', alertRules_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Alerts', alerts_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Tenants', tenants_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'TenantUsers', tenantUsers_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Sites', sites_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Buildings', buildings_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Floors', floors_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Rooms', rooms_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Gateways', gateways_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'EdgeApplications', edgeApplications_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'NetworkProfiles', networkProfiles_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'SimCards', simCards_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ConnectivityPlans', connectivityPlans_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'MessagingEndpoints', messagingEndpoints_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AccessPolicys', accessPolicys_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ApiKeys', apiKeys_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'DeviceCertificates', deviceCertificates_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ProvisioningRecords', provisioningRecords_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'DigitalTwins', digitalTwins_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'TwinTemplates', twinTemplates_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'TwinChangeEvents', twinChangeEvents_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'MaintenanceTickets', maintenanceTickets_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'DataRetentionPolicys', dataRetentionPolicys_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'SoftwareUpdateCampaigns', softwareUpdateCampaigns_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'SoftwareUpdateExecutions', softwareUpdateExecutions_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'DeviceGroups', deviceGroups_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'UsageRecords', usageRecords_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+	     		</div>
+
+        		<!-- Page Content -->
+        		<div class="col-lg-10">
+					<%= yield %>
+        		</div>
+
+      		</div>   
+		
+		</div>
+		
+  </body>
+
+</html>

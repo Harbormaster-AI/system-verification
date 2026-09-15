@@ -1,0 +1,2 @@
+module EdgeApplicationHelper
+end

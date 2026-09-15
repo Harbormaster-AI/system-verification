@@ -1,0 +1,47 @@
+
+<%= form_with model: @tenantUser, local: true do |form| %>
+ 
+  <% if @tenantUser.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@tenantUser.errors.count, "error") %> prohibited
+        this tenantUser from being saved:
+      </h2>
+      <ul>
+        <% @tenantUser.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :firstName, { class: 'form-label'} %><br>
+	<%= form.text_field :firstName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :lastName, { class: 'form-label'} %><br>
+	<%= form.text_field :lastName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :email, { class: 'form-label'} %><br>
+	<%= form.text_field :email, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Role, { class: 'form-label'} %><br>
+   <%= form.select :Role, TenantUser.Roles.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

@@ -1,0 +1,49 @@
+
+<%= form_with model: @simCard, local: true do |form| %>
+ 
+  <% if @simCard.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@simCard.errors.count, "error") %> prohibited
+        this simCard from being saved:
+      </h2>
+      <ul>
+        <% @simCard.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :iccid, { class: 'form-label'} %><br>
+	<%= form.text_field :iccid, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :imsi, { class: 'form-label'} %><br>
+	<%= form.text_field :imsi, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :carrier, { class: 'form-label'} %><br>
+	<%= form.text_field :carrier, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, SimCard.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

@@ -1,0 +1,45 @@
+
+<%= form_with model: @accessPolicy, local: true do |form| %>
+ 
+  <% if @accessPolicy.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@accessPolicy.errors.count, "error") %> prohibited
+        this accessPolicy from being saved:
+      </h2>
+      <ul>
+        <% @accessPolicy.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :scope, { class: 'form-label'} %><br>
+	<%= form.text_field :scope, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :expiresAt, { class: 'form-label'} %><br>
+    <%= form.time_field :expiresAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

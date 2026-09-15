@@ -1,0 +1,41 @@
+
+<%= form_with model: @twinChangeEvent, local: true do |form| %>
+ 
+  <% if @twinChangeEvent.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@twinChangeEvent.errors.count, "error") %> prohibited
+        this twinChangeEvent from being saved:
+      </h2>
+      <ul>
+        <% @twinChangeEvent.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :eventId, { class: 'form-label'} %><br>
+	<%= form.text_field :eventId, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :occurredAt, { class: 'form-label'} %><br>
+    <%= form.time_field :occurredAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :ChangeType, { class: 'form-label'} %><br>
+   <%= form.select :ChangeType, TwinChangeEvent.ChangeTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

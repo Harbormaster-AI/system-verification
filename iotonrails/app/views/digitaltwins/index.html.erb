@@ -1,0 +1,40 @@
+<div class="title text-center">
+  List of DigitalTwins
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">twinId</th>
+			<th style="text-align:center">desiredStateVersion</th>
+			<th style="text-align:center">reportedStateVersion</th>
+			<th style="text-align:center">lastSyncAt</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @digitalTwins.each do |digitalTwin| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= digitalTwin.twinId %>
+			</td>
+			<td style="text-align:center">
+	  			<%= digitalTwin.desiredStateVersion %>
+			</td>
+			<td style="text-align:center">
+	  			<%= digitalTwin.reportedStateVersion %>
+			</td>
+			<td style="text-align:center">
+	  			<%= digitalTwin.lastSyncAt %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_digitalTwin_path(digitalTwin), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', digitalTwin_path(digitalTwin), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New DigitalTwin', new_digitalTwin_path, :method => :get, :class => "btn btn-success btn-sm" %>

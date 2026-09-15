@@ -1,0 +1,51 @@
+
+<%= form_with model: @digitalTwin, local: true do |form| %>
+ 
+  <% if @digitalTwin.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@digitalTwin.errors.count, "error") %> prohibited
+        this digitalTwin from being saved:
+      </h2>
+      <ul>
+        <% @digitalTwin.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :twinId, { class: 'form-label'} %><br>
+	<%= form.text_field :twinId, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :desiredStateVersion, { class: 'form-label'} %><br>
+	<%= form.text_field :desiredStateVersion, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :reportedStateVersion, { class: 'form-label'} %><br>
+	<%= form.text_field :reportedStateVersion, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :lastSyncAt, { class: 'form-label'} %><br>
+    <%= form.time_field :lastSyncAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

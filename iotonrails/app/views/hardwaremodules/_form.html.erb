@@ -1,0 +1,41 @@
+
+<%= form_with model: @hardwareModule, local: true do |form| %>
+ 
+  <% if @hardwareModule.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@hardwareModule.errors.count, "error") %> prohibited
+        this hardwareModule from being saved:
+      </h2>
+      <ul>
+        <% @hardwareModule.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :moduleCode, { class: 'form-label'} %><br>
+	<%= form.text_field :moduleCode, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :datasheetUri, { class: 'form-label'} %><br>
+	<%= form.text_field :datasheetUri, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :ModuleType, { class: 'form-label'} %><br>
+   <%= form.select :ModuleType, HardwareModule.ModuleTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

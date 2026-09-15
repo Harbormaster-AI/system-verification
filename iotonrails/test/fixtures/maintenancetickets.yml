@@ -1,0 +1,18 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of maintenanceTicket found in  iotonrails/test/controllers
+
+one:
+  ticketNumber: test string for ticketNumber
+  openedAt: 2020-10-15
+  closedAt: 2020-10-15
+  Priority: 0
+  Status: 0
+
+two:
+  ticketNumber: test string for ticketNumber
+  openedAt: 2020-10-15
+  closedAt: 2020-10-15
+  Priority: 0
+  Status: 0
+
+

@@ -1,0 +1,28 @@
+<div class="title text-center">
+  List of Buildings
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">name</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @buildings.each do |building| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= building.name %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_building_path(building), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', building_path(building), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New Building', new_building_path, :method => :get, :class => "btn btn-success btn-sm" %>

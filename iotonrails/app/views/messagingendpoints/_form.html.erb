@@ -1,0 +1,47 @@
+
+<%= form_with model: @messagingEndpoint, local: true do |form| %>
+ 
+  <% if @messagingEndpoint.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@messagingEndpoint.errors.count, "error") %> prohibited
+        this messagingEndpoint from being saved:
+      </h2>
+      <ul>
+        <% @messagingEndpoint.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :host, { class: 'form-label'} %><br>
+	<%= form.text_field :host, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :port, { class: 'form-label'} %><br>
+	<%= form.text_field :port, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.check_box :secure, {class: "form-check-input"} %>
+    <%= form.label :secure, { class: 'form-label'} %><br>	
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Protocol, { class: 'form-label'} %><br>
+   <%= form.select :Protocol, MessagingEndpoint.Protocols.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

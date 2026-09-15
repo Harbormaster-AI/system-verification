@@ -1,0 +1,36 @@
+<div class="title text-center">
+  List of HardwareModules
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">moduleCode</th>
+			<th style="text-align:center">datasheetUri</th>
+			<th style="text-align:center">ModuleType</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @hardwareModules.each do |hardwareModule| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= hardwareModule.moduleCode %>
+			</td>
+			<td style="text-align:center">
+	  			<%= hardwareModule.datasheetUri %>
+			</td>
+			<td style="text-align:center">
+	  			<%= hardwareModule.ModuleType %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_hardwareModule_path(hardwareModule), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', hardwareModule_path(hardwareModule), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New HardwareModule', new_hardwareModule_path, :method => :get, :class => "btn btn-success btn-sm" %>

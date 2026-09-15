@@ -1,0 +1,47 @@
+
+<%= form_with model: @alert, local: true do |form| %>
+ 
+  <% if @alert.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@alert.errors.count, "error") %> prohibited
+        this alert from being saved:
+      </h2>
+      <ul>
+        <% @alert.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :raisedAt, { class: 'form-label'} %><br>
+    <%= form.time_field :raisedAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :clearedAt, { class: 'form-label'} %><br>
+    <%= form.time_field :clearedAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :message, { class: 'form-label'} %><br>
+	<%= form.text_field :message, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, Alert.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

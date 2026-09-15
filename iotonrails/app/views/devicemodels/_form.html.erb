@@ -1,0 +1,57 @@
+
+<%= form_with model: @deviceModel, local: true do |form| %>
+ 
+  <% if @deviceModel.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@deviceModel.errors.count, "error") %> prohibited
+        this deviceModel from being saved:
+      </h2>
+      <ul>
+        <% @deviceModel.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :modelNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :modelNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :hardwareRevision, { class: 'form-label'} %><br>
+	<%= form.text_field :hardwareRevision, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :SupportedConnectivity, { class: 'form-label'} %><br>
+   <%= form.select :SupportedConnectivity, DeviceModel.SupportedConnectivitys.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :DefaultTelemetryEncoding, { class: 'form-label'} %><br>
+   <%= form.select :DefaultTelemetryEncoding, DeviceModel.DefaultTelemetryEncodings.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

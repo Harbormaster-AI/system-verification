@@ -1,0 +1,41 @@
+
+<%= form_with model: @twinTemplate, local: true do |form| %>
+ 
+  <% if @twinTemplate.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@twinTemplate.errors.count, "error") %> prohibited
+        this twinTemplate from being saved:
+      </h2>
+      <ul>
+        <% @twinTemplate.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :schemaUri, { class: 'form-label'} %><br>
+	<%= form.text_field :schemaUri, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :version, { class: 'form-label'} %><br>
+	<%= form.text_field :version, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

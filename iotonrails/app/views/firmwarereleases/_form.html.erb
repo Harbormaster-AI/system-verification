@@ -1,0 +1,45 @@
+
+<%= form_with model: @firmwareRelease, local: true do |form| %>
+ 
+  <% if @firmwareRelease.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@firmwareRelease.errors.count, "error") %> prohibited
+        this firmwareRelease from being saved:
+      </h2>
+      <ul>
+        <% @firmwareRelease.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :version, { class: 'form-label'} %><br>
+	<%= form.text_field :version, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :releaseDate, { class: 'form-label'} %><br>
+    <%= form.date_field :releaseDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :releaseNotes, { class: 'form-label'} %><br>
+	<%= form.text_field :releaseNotes, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :checksum, { class: 'form-label'} %><br>
+	<%= form.text_field :checksum, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

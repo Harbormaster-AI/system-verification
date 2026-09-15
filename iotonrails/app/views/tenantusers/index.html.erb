@@ -1,0 +1,40 @@
+<div class="title text-center">
+  List of TenantUsers
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">firstName</th>
+			<th style="text-align:center">lastName</th>
+			<th style="text-align:center">email</th>
+			<th style="text-align:center">Role</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @tenantUsers.each do |tenantUser| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= tenantUser.firstName %>
+			</td>
+			<td style="text-align:center">
+	  			<%= tenantUser.lastName %>
+			</td>
+			<td style="text-align:center">
+	  			<%= tenantUser.email %>
+			</td>
+			<td style="text-align:center">
+	  			<%= tenantUser.Role %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_tenantUser_path(tenantUser), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', tenantUser_path(tenantUser), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New TenantUser', new_tenantUser_path, :method => :get, :class => "btn btn-success btn-sm" %>

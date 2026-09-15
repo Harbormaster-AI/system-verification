@@ -1,0 +1,43 @@
+
+<%= form_with model: @actuatorInstance, local: true do |form| %>
+ 
+  <% if @actuatorInstance.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@actuatorInstance.errors.count, "error") %> prohibited
+        this actuatorInstance from being saved:
+      </h2>
+      <ul>
+        <% @actuatorInstance.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :commandTopic, { class: 'form-label'} %><br>
+	<%= form.text_field :commandTopic, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :ActuatorType, { class: 'form-label'} %><br>
+   <%= form.select :ActuatorType, ActuatorInstance.ActuatorTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

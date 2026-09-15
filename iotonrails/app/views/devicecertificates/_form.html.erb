@@ -1,0 +1,51 @@
+
+<%= form_with model: @deviceCertificate, local: true do |form| %>
+ 
+  <% if @deviceCertificate.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@deviceCertificate.errors.count, "error") %> prohibited
+        this deviceCertificate from being saved:
+      </h2>
+      <ul>
+        <% @deviceCertificate.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :serialNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :serialNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :notBefore, { class: 'form-label'} %><br>
+    <%= form.time_field :notBefore, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :notAfter, { class: 'form-label'} %><br>
+    <%= form.time_field :notAfter, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :fingerprint, { class: 'form-label'} %><br>
+	<%= form.text_field :fingerprint, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :CertificateType, { class: 'form-label'} %><br>
+   <%= form.select :CertificateType, DeviceCertificate.CertificateTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>
