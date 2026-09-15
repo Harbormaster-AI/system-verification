@@ -1,0 +1,40 @@
+<div class="title text-center">
+  List of SoftwareUpdateCampaigns
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">campaignCode</th>
+			<th style="text-align:center">scheduledStart</th>
+			<th style="text-align:center">scheduledEnd</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @softwareUpdateCampaigns.each do |softwareUpdateCampaign| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= softwareUpdateCampaign.campaignCode %>
+			</td>
+			<td style="text-align:center">
+	  			<%= softwareUpdateCampaign.scheduledStart %>
+			</td>
+			<td style="text-align:center">
+	  			<%= softwareUpdateCampaign.scheduledEnd %>
+			</td>
+			<td style="text-align:center">
+	  			<%= softwareUpdateCampaign.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_softwareUpdateCampaign_path(softwareUpdateCampaign), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', softwareUpdateCampaign_path(softwareUpdateCampaign), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New SoftwareUpdateCampaign', new_softwareUpdateCampaign_path, :method => :get, :class => "btn btn-success btn-sm" %>

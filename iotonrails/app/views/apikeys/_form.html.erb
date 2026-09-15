@@ -1,0 +1,45 @@
+$generateAppStats.applyMetaDataTagWithCount( "Form View", "Display entity data as a form." )
+<%= form_with model: @apiKey, local: true do |form| %>
+ 
+  <% if @apiKey.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@apiKey.errors.count, "error") %> prohibited
+        this apiKey from being saved:
+      </h2>
+      <ul>
+        <% @apiKey.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :keyId, { class: 'form-label'} %><br>
+	<%= form.text_field :keyId, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :hashedSecret, { class: 'form-label'} %><br>
+	<%= form.text_field :hashedSecret, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :createdAt, { class: 'form-label'} %><br>
+    <%= form.time_field :createdAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :lastUsedAt, { class: 'form-label'} %><br>
+    <%= form.time_field :lastUsedAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

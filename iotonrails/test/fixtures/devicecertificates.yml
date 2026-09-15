@@ -1,0 +1,18 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of deviceCertificate found in  iotonrails/test/controllers
+
+one:
+  serialNumber: test string for serialNumber
+  notBefore: 2020-10-15
+  notAfter: 2020-10-15
+  fingerprint: test string for fingerprint
+  CertificateType: 0
+
+two:
+  serialNumber: test string for serialNumber
+  notBefore: 2020-10-15
+  notAfter: 2020-10-15
+  fingerprint: test string for fingerprint
+  CertificateType: 0
+
+

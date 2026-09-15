@@ -1,0 +1,44 @@
+<div class="title text-center">
+  List of MaintenanceTickets
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">ticketNumber</th>
+			<th style="text-align:center">openedAt</th>
+			<th style="text-align:center">closedAt</th>
+			<th style="text-align:center">Priority</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @maintenanceTickets.each do |maintenanceTicket| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= maintenanceTicket.ticketNumber %>
+			</td>
+			<td style="text-align:center">
+	  			<%= maintenanceTicket.openedAt %>
+			</td>
+			<td style="text-align:center">
+	  			<%= maintenanceTicket.closedAt %>
+			</td>
+			<td style="text-align:center">
+	  			<%= maintenanceTicket.Priority %>
+			</td>
+			<td style="text-align:center">
+	  			<%= maintenanceTicket.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_maintenanceTicket_path(maintenanceTicket), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', maintenanceTicket_path(maintenanceTicket), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New MaintenanceTicket', new_maintenanceTicket_path, :method => :get, :class => "btn btn-success btn-sm" %>

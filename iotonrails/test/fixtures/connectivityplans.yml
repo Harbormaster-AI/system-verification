@@ -1,0 +1,14 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of connectivityPlan found in  iotonrails/test/controllers
+
+one:
+  name: test string for name
+  dataCapMB: 100
+  billingCycleDays: 100
+
+two:
+  name: test string for name
+  dataCapMB: 100
+  billingCycleDays: 100
+
+

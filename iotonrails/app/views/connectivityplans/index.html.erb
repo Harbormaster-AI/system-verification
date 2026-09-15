@@ -1,0 +1,36 @@
+<div class="title text-center">
+  List of ConnectivityPlans
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">name</th>
+			<th style="text-align:center">dataCapMB</th>
+			<th style="text-align:center">billingCycleDays</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @connectivityPlans.each do |connectivityPlan| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= connectivityPlan.name %>
+			</td>
+			<td style="text-align:center">
+	  			<%= connectivityPlan.dataCapMB %>
+			</td>
+			<td style="text-align:center">
+	  			<%= connectivityPlan.billingCycleDays %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_connectivityPlan_path(connectivityPlan), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', connectivityPlan_path(connectivityPlan), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New ConnectivityPlan', new_connectivityPlan_path, :method => :get, :class => "btn btn-success btn-sm" %>

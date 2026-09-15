@@ -1,0 +1,2 @@
+module NetworkProfileHelper
+end

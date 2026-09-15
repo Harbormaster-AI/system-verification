@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of simCard found in  iotonrails/test/controllers
+
+one:
+  iccid: test string for iccid
+  imsi: test string for imsi
+  carrier: test string for carrier
+  Status: 0
+
+two:
+  iccid: test string for iccid
+  imsi: test string for imsi
+  carrier: test string for carrier
+  Status: 0
+
+

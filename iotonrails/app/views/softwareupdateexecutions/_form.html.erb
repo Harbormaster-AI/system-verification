@@ -1,0 +1,43 @@
+$generateAppStats.applyMetaDataTagWithCount( "Form View", "Display entity data as a form." )
+<%= form_with model: @softwareUpdateExecution, local: true do |form| %>
+ 
+  <% if @softwareUpdateExecution.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@softwareUpdateExecution.errors.count, "error") %> prohibited
+        this softwareUpdateExecution from being saved:
+      </h2>
+      <ul>
+        <% @softwareUpdateExecution.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :startedAt, { class: 'form-label'} %><br>
+    <%= form.time_field :startedAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :completedAt, { class: 'form-label'} %><br>
+    <%= form.time_field :completedAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, SoftwareUpdateExecution.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>
