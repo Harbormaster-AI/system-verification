@@ -1,0 +1,40 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>keyId</mat-label>
+								<input matInput ngDefaultControl placeholder="keyId" name="apiKey.keyId" [(ngModel)]="apiKey.keyId">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>hashedSecret</mat-label>
+								<input matInput ngDefaultControl placeholder="hashedSecret" name="apiKey.hashedSecret" [(ngModel)]="apiKey.hashedSecret">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<ngb-timepicker [(ngModel)]="apiKey.createdAt" class="form-control" name="apiKey.createdAt" #apiKey.createdAt ></ngb-timepicker>
+																																																																	<p>
+					 																																																																															<ngb-timepicker [(ngModel)]="apiKey.lastUsedAt" class="form-control" name="apiKey.lastUsedAt" #apiKey.lastUsedAt ></ngb-timepicker>
+																																																																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>AccessPolicy</mat-label>
+					<mat-select placeholder="AccessPolicy"   [compareWith]="compareFn"  [(ngModel)]="apiKey.AccessPolicy">
+						@for (accessPolicy of accessPolicys; track accessPolicy.accessPolicyId) {
+							<mat-option name="apiKey.AccessPolicy" ngDefaultControl
+							            [value]="accessPolicy.accessPolicyId">
+								{{accessPolicy.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																 						 																	 						 																	 						 																	 						 																				 						 										<button
+				(click)="updateApiKey(apiKey.keyId, apiKey.hashedSecret, apiKey.createdAt, apiKey.lastUsedAt, apiKey.AccessPolicy)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

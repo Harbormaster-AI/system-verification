@@ -1,0 +1,75 @@
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">MessagingEndpoint List</h5>
+
+    <a
+            [routerLink]="['/createMessagingEndpoint']"
+            class="btn btn-primary btn-sm">
+        Create MessagingEndpoint
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered table-sm">
+        <thead>
+        <tr class="table-dark text-center">
+                                    <th scope="col">host</th>
+                        <th scope="col">port</th>
+                        <th scope="col">secure</th>
+                        <th scope="col">Protocol</th>
+                        <th scope="col" colspan="2">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @for (messagingEndpoint of messagingEndpoints; track messagingEndpoint.messagingEndpointId) {
+            <tr
+                    class="text-center">
+
+                                <td class="align-middle">
+                    {{ messagingEndpoint.host }}
+                </td>
+                                <td class="align-middle">
+                    {{ messagingEndpoint.port }}
+                </td>
+                                <td class="align-middle">
+                    {{ messagingEndpoint.secure }}
+                </td>
+                                <td class="align-middle">
+                    {{ messagingEndpoint.Protocol }}
+                </td>
+                
+                <td class="align-middle">
+                    <a
+                            [routerLink]="['/loadMessagingEndpoint', messagingEndpoint.messagingEndpointId]"
+                            class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+                </td>
+
+                <td class="align-middle">
+                    <button
+                            type="button"
+                            (click)="deleteMessagingEndpoint(messagingEndpoint.messagingEndpointId)"
+                            class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+        }
+
+        
+        @if (messagingEndpoints?.length === 0) {
+            <tr>
+                <td
+                        colspan="6"
+                        class="text-center">
+                    No messagingEndpoints found.
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,79 @@
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">MaintenanceTicket List</h5>
+
+    <a
+            [routerLink]="['/createMaintenanceTicket']"
+            class="btn btn-primary btn-sm">
+        Create MaintenanceTicket
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered table-sm">
+        <thead>
+        <tr class="table-dark text-center">
+                                    <th scope="col">ticketNumber</th>
+                        <th scope="col">openedAt</th>
+                        <th scope="col">closedAt</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Status</th>
+                        <th scope="col" colspan="2">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @for (maintenanceTicket of maintenanceTickets; track maintenanceTicket.maintenanceTicketId) {
+            <tr
+                    class="text-center">
+
+                                <td class="align-middle">
+                    {{ maintenanceTicket.ticketNumber }}
+                </td>
+                                <td class="align-middle">
+                    {{ maintenanceTicket.openedAt }}
+                </td>
+                                <td class="align-middle">
+                    {{ maintenanceTicket.closedAt }}
+                </td>
+                                <td class="align-middle">
+                    {{ maintenanceTicket.Priority }}
+                </td>
+                                <td class="align-middle">
+                    {{ maintenanceTicket.Status }}
+                </td>
+                
+                <td class="align-middle">
+                    <a
+                            [routerLink]="['/loadMaintenanceTicket', maintenanceTicket.maintenanceTicketId]"
+                            class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+                </td>
+
+                <td class="align-middle">
+                    <button
+                            type="button"
+                            (click)="deleteMaintenanceTicket(maintenanceTicket.maintenanceTicketId)"
+                            class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+        }
+
+        
+        @if (maintenanceTickets?.length === 0) {
+            <tr>
+                <td
+                        colspan="7"
+                        class="text-center">
+                    No maintenanceTickets found.
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>

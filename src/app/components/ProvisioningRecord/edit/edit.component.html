@@ -1,0 +1,78 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<ngb-timepicker [(ngModel)]="provisioningRecord.enrolledAt" class="form-control" name="provisioningRecord.enrolledAt" #provisioningRecord.enrolledAt ></ngb-timepicker>
+																																																																	<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>provisioningService</mat-label>
+								<input matInput ngDefaultControl placeholder="provisioningService" name="provisioningRecord.provisioningService" [(ngModel)]="provisioningRecord.provisioningService">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Device</mat-label>
+					<mat-select placeholder="Device"   [compareWith]="compareFn"  [(ngModel)]="provisioningRecord.Device">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="provisioningRecord.Device" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Certificate</mat-label>
+					<mat-select placeholder="Certificate"   [compareWith]="compareFn"  [(ngModel)]="provisioningRecord.Certificate">
+						@for (deviceCertificate of deviceCertificates; track deviceCertificate.deviceCertificateId) {
+							<mat-option name="provisioningRecord.Certificate" ngDefaultControl
+							            [value]="deviceCertificate.deviceCertificateId">
+								{{deviceCertificate.serialNumber}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Tenant</mat-label>
+					<mat-select placeholder="Tenant"   [compareWith]="compareFn"  [(ngModel)]="provisioningRecord.Tenant">
+						@for (tenant of tenants; track tenant.tenantId) {
+							<mat-option name="provisioningRecord.Tenant" ngDefaultControl
+							            [value]="tenant.tenantId">
+								{{tenant.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>Method</mat-label>
+						<mat-select placeholder="Method" name="provisioningRecord.Method" [(ngModel)]="provisioningRecord.Method">
+							@for (ProvisioningMethod of ProvisioningMethods; track ProvisioningMethod) {
+								<mat-option ngDefaultControl [value]="ProvisioningMethod">
+									{{ProvisioningMethod}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="provisioningRecord.Status" [(ngModel)]="provisioningRecord.Status">
+							@for (ProvisioningStatus of ProvisioningStatuss; track ProvisioningStatus) {
+								<mat-option ngDefaultControl [value]="ProvisioningStatus">
+									{{ProvisioningStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																				 						 																				 						 																				 						 																	 						 																	 						 										<button
+				(click)="updateProvisioningRecord(provisioningRecord.enrolledAt, provisioningRecord.provisioningService, provisioningRecord.Device, provisioningRecord.Certificate, provisioningRecord.Tenant, provisioningRecord.Method, provisioningRecord.Status)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

@@ -1,0 +1,83 @@
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">IoTDevice List</h5>
+
+    <a
+            [routerLink]="['/createIoTDevice']"
+            class="btn btn-primary btn-sm">
+        Create IoTDevice
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered table-sm">
+        <thead>
+        <tr class="table-dark text-center">
+                                    <th scope="col">deviceId</th>
+                        <th scope="col">serialNumber</th>
+                        <th scope="col">lastSeen</th>
+                        <th scope="col">firmwareVersion</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">PowerSource</th>
+                        <th scope="col" colspan="2">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+            <tr
+                    class="text-center">
+
+                                <td class="align-middle">
+                    {{ ioTDevice.deviceId }}
+                </td>
+                                <td class="align-middle">
+                    {{ ioTDevice.serialNumber }}
+                </td>
+                                <td class="align-middle">
+                    {{ ioTDevice.lastSeen }}
+                </td>
+                                <td class="align-middle">
+                    {{ ioTDevice.firmwareVersion }}
+                </td>
+                                <td class="align-middle">
+                    {{ ioTDevice.Status }}
+                </td>
+                                <td class="align-middle">
+                    {{ ioTDevice.PowerSource }}
+                </td>
+                
+                <td class="align-middle">
+                    <a
+                            [routerLink]="['/loadIoTDevice', ioTDevice.ioTDeviceId]"
+                            class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+                </td>
+
+                <td class="align-middle">
+                    <button
+                            type="button"
+                            (click)="deleteIoTDevice(ioTDevice.ioTDeviceId)"
+                            class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+        }
+
+        
+        @if (ioTDevices?.length === 0) {
+            <tr>
+                <td
+                        colspan="8"
+                        class="text-center">
+                    No ioTDevices found.
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>

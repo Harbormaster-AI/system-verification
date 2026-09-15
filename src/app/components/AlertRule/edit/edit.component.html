@@ -1,0 +1,71 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="alertRule.name" [(ngModel)]="alertRule.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>expression</mat-label>
+								<input matInput ngDefaultControl placeholder="expression" name="alertRule.expression" [(ngModel)]="alertRule.expression">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Tenant</mat-label>
+					<mat-select placeholder="Tenant"   [compareWith]="compareFn"  [(ngModel)]="alertRule.Tenant">
+						@for (tenant of tenants; track tenant.tenantId) {
+							<mat-option name="alertRule.Tenant" ngDefaultControl
+							            [value]="tenant.tenantId">
+								{{tenant.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Streams</mat-label>
+					<mat-select placeholder="Streams" multiple  [compareWith]="compareFn"  [(ngModel)]="alertRule.Streams">
+						@for (telemetryStream of telemetryStreams; track telemetryStream.telemetryStreamId) {
+							<mat-option name="alertRule.Streams" ngDefaultControl
+							            [value]="telemetryStream.telemetryStreamId">
+								{{telemetryStream.streamName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Alerts</mat-label>
+					<mat-select placeholder="Alerts" multiple  [compareWith]="compareFn"  [(ngModel)]="alertRule.Alerts">
+						@for (alert of alerts; track alert.alertId) {
+							<mat-option name="alertRule.Alerts" ngDefaultControl
+							            [value]="alert.alertId">
+								{{alert.raisedAt}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>Severity</mat-label>
+						<mat-select placeholder="Severity" name="alertRule.Severity" [(ngModel)]="alertRule.Severity">
+							@for (AlertSeverity of AlertSeveritys; track AlertSeverity) {
+								<mat-option ngDefaultControl [value]="AlertSeverity">
+									{{AlertSeverity}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																				 						 																				 						 																				 						 																	 						 										<button
+				(click)="updateAlertRule(alertRule.name, alertRule.expression, alertRule.Tenant, alertRule.Streams, alertRule.Alerts, alertRule.Severity)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

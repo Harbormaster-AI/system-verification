@@ -1,0 +1,46 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="connectivityPlan.name" [(ngModel)]="connectivityPlan.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<input matInput placeholder="dataCapMB" name="connectivityPlan.dataCapMB" [(ngModel)]="connectivityPlan.dataCapMB">
+																																																																	<p>
+					 																																																																															<input matInput placeholder="billingCycleDays" name="connectivityPlan.billingCycleDays" [(ngModel)]="connectivityPlan.billingCycleDays">
+																																																																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>SimCards</mat-label>
+					<mat-select placeholder="SimCards" multiple  [compareWith]="compareFn"  [(ngModel)]="connectivityPlan.SimCards">
+						@for (simCard of simCards; track simCard.simCardId) {
+							<mat-option name="connectivityPlan.SimCards" ngDefaultControl
+							            [value]="simCard.simCardId">
+								{{simCard.iccid}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Tenant</mat-label>
+					<mat-select placeholder="Tenant"   [compareWith]="compareFn"  [(ngModel)]="connectivityPlan.Tenant">
+						@for (tenant of tenants; track tenant.tenantId) {
+							<mat-option name="connectivityPlan.Tenant" ngDefaultControl
+							            [value]="tenant.tenantId">
+								{{tenant.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																 						 																	 						 																	 						 																				 						 																				 						 										<button
+				(click)="updateConnectivityPlan(connectivityPlan.name, connectivityPlan.dataCapMB, connectivityPlan.billingCycleDays, connectivityPlan.SimCards, connectivityPlan.Tenant)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

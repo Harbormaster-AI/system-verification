@@ -1,0 +1,62 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="accessPolicy.name" [(ngModel)]="accessPolicy.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>scope</mat-label>
+								<input matInput ngDefaultControl placeholder="scope" name="accessPolicy.scope" [(ngModel)]="accessPolicy.scope">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<ngb-timepicker [(ngModel)]="accessPolicy.expiresAt" class="form-control" name="accessPolicy.expiresAt" #accessPolicy.expiresAt ></ngb-timepicker>
+																																																																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Tenant</mat-label>
+					<mat-select placeholder="Tenant"   [compareWith]="compareFn"  [(ngModel)]="accessPolicy.Tenant">
+						@for (tenant of tenants; track tenant.tenantId) {
+							<mat-option name="accessPolicy.Tenant" ngDefaultControl
+							            [value]="tenant.tenantId">
+								{{tenant.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>ApiKeys</mat-label>
+					<mat-select placeholder="ApiKeys" multiple  [compareWith]="compareFn"  [(ngModel)]="accessPolicy.ApiKeys">
+						@for (apiKey of apiKeys; track apiKey.apiKeyId) {
+							<mat-option name="accessPolicy.ApiKeys" ngDefaultControl
+							            [value]="apiKey.apiKeyId">
+								{{apiKey.keyId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Users</mat-label>
+					<mat-select placeholder="Users" multiple  [compareWith]="compareFn"  [(ngModel)]="accessPolicy.Users">
+						@for (tenantUser of tenantUsers; track tenantUser.tenantUserId) {
+							<mat-option name="accessPolicy.Users" ngDefaultControl
+							            [value]="tenantUser.tenantUserId">
+								{{tenantUser.firstName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																 						 																	 						 																	 						 																				 						 																				 						 																				 						 										<button
+				(click)="updateAccessPolicy(accessPolicy.name, accessPolicy.scope, accessPolicy.expiresAt, accessPolicy.Tenant, accessPolicy.ApiKeys, accessPolicy.Users)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

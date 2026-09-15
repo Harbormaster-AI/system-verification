@@ -1,0 +1,68 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<mat-form-field appearance="outline">
+								<mat-label>periodStart</mat-label>
+								<input matInput ngDefaultControl [matDatepicker]="picker" placeholder="periodStart" name="usageRecord.periodStart" [(ngModel)]="usageRecord.periodStart">
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<mat-datepicker #picker></mat-datepicker>
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																																																	<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>periodEnd</mat-label>
+								<input matInput ngDefaultControl [matDatepicker]="picker" placeholder="periodEnd" name="usageRecord.periodEnd" [(ngModel)]="usageRecord.periodEnd">
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<mat-datepicker #picker></mat-datepicker>
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																																																	<p>
+																																																																																				<input matInput placeholder="messagesSent" name="usageRecord.messagesSent" [(ngModel)]="usageRecord.messagesSent">
+																																																																	<p>
+																																																																																				<input matInput placeholder="dataVolumeMB" name="usageRecord.dataVolumeMB" [(ngModel)]="usageRecord.dataVolumeMB">
+																																																																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Tenant</mat-label>
+					<mat-select placeholder="Tenant"  [(ngModel)]="usageRecord.Tenant">
+						@for (tenant of tenants; track tenant.tenantId) {
+							<mat-option name="usageRecord.Tenant" ngDefaultControl
+							            [value]="tenant.tenantId">
+								{{tenant.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Device</mat-label>
+					<mat-select placeholder="Device"  [(ngModel)]="usageRecord.Device">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="usageRecord.Device" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>ConnectivityPlan</mat-label>
+					<mat-select placeholder="ConnectivityPlan"  [(ngModel)]="usageRecord.ConnectivityPlan">
+						@for (connectivityPlan of connectivityPlans; track connectivityPlan.connectivityPlanId) {
+							<mat-option name="usageRecord.ConnectivityPlan" ngDefaultControl
+							            [value]="connectivityPlan.connectivityPlanId">
+								{{connectivityPlan.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																						 																							 																							 																							 																										 																										 																										 										<button
+				(click)="addUsageRecord(usageRecord.periodStart, usageRecord.periodEnd, usageRecord.messagesSent, usageRecord.dataVolumeMB, usageRecord.Tenant, usageRecord.Device, usageRecord.ConnectivityPlan)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

@@ -1,0 +1,43 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>eventId</mat-label>
+								<input matInput ngDefaultControl placeholder="eventId" name="twinChangeEvent.eventId" [(ngModel)]="twinChangeEvent.eventId">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<ngb-timepicker [(ngModel)]="twinChangeEvent.occurredAt" class="form-control" name="twinChangeEvent.occurredAt" #twinChangeEvent.occurredAt ></ngb-timepicker>
+																																																																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Twin</mat-label>
+					<mat-select placeholder="Twin"   [compareWith]="compareFn"  [(ngModel)]="twinChangeEvent.Twin">
+						@for (digitalTwin of digitalTwins; track digitalTwin.digitalTwinId) {
+							<mat-option name="twinChangeEvent.Twin" ngDefaultControl
+							            [value]="digitalTwin.digitalTwinId">
+								{{digitalTwin.twinId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>ChangeType</mat-label>
+						<mat-select placeholder="ChangeType" name="twinChangeEvent.ChangeType" [(ngModel)]="twinChangeEvent.ChangeType">
+							@for (TwinChangeType of TwinChangeTypes; track TwinChangeType) {
+								<mat-option ngDefaultControl [value]="TwinChangeType">
+									{{TwinChangeType}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																				 						 																	 						 										<button
+				(click)="updateTwinChangeEvent(twinChangeEvent.eventId, twinChangeEvent.occurredAt, twinChangeEvent.Twin, twinChangeEvent.ChangeType)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

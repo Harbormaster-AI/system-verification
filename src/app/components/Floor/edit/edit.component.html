@@ -1,0 +1,44 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="floor.name" [(ngModel)]="floor.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<input matInput placeholder="level" name="floor.level" [(ngModel)]="floor.level">
+																																																																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Building</mat-label>
+					<mat-select placeholder="Building"   [compareWith]="compareFn"  [(ngModel)]="floor.Building">
+						@for (building of buildings; track building.buildingId) {
+							<mat-option name="floor.Building" ngDefaultControl
+							            [value]="building.buildingId">
+								{{building.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Rooms</mat-label>
+					<mat-select placeholder="Rooms" multiple  [compareWith]="compareFn"  [(ngModel)]="floor.Rooms">
+						@for (room of rooms; track room.roomId) {
+							<mat-option name="floor.Rooms" ngDefaultControl
+							            [value]="room.roomId">
+								{{room.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																 						 																	 						 																				 						 																				 						 										<button
+				(click)="updateFloor(floor.name, floor.level, floor.Building, floor.Rooms)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

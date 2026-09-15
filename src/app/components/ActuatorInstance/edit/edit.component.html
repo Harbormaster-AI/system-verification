@@ -1,0 +1,59 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="actuatorInstance.name" [(ngModel)]="actuatorInstance.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>commandTopic</mat-label>
+								<input matInput ngDefaultControl placeholder="commandTopic" name="actuatorInstance.commandTopic" [(ngModel)]="actuatorInstance.commandTopic">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Device</mat-label>
+					<mat-select placeholder="Device"   [compareWith]="compareFn"  [(ngModel)]="actuatorInstance.Device">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="actuatorInstance.Device" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>SupportedCommands</mat-label>
+					<mat-select placeholder="SupportedCommands" multiple  [compareWith]="compareFn"  [(ngModel)]="actuatorInstance.SupportedCommands">
+						@for (commandDefinition of commandDefinitions; track commandDefinition.commandDefinitionId) {
+							<mat-option name="actuatorInstance.SupportedCommands" ngDefaultControl
+							            [value]="commandDefinition.commandDefinitionId">
+								{{commandDefinition.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>ActuatorType</mat-label>
+						<mat-select placeholder="ActuatorType" name="actuatorInstance.ActuatorType" [(ngModel)]="actuatorInstance.ActuatorType">
+							@for (ActuatorType of ActuatorTypes; track ActuatorType) {
+								<mat-option ngDefaultControl [value]="ActuatorType">
+									{{ActuatorType}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																				 						 																				 						 																	 						 										<button
+				(click)="updateActuatorInstance(actuatorInstance.name, actuatorInstance.commandTopic, actuatorInstance.Device, actuatorInstance.SupportedCommands, actuatorInstance.ActuatorType)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

@@ -1,0 +1,81 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<mat-form-field appearance="outline">
+								<mat-label>invocationId</mat-label>
+								<input matInput ngDefaultControl placeholder="invocationId" name="commandInvocation.invocationId" [(ngModel)]="commandInvocation.invocationId">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<ngb-timepicker [(ngModel)]="commandInvocation.requestedAt" class="form-control" name="commandInvocation.requestedAt" #commandInvocation.requestedAt ></ngb-timepicker>
+																																																																	<p>
+																																																																																				<ngb-timepicker [(ngModel)]="commandInvocation.completedAt" class="form-control" name="commandInvocation.completedAt" #commandInvocation.completedAt ></ngb-timepicker>
+																																																																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Device</mat-label>
+					<mat-select placeholder="Device"  [(ngModel)]="commandInvocation.Device">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="commandInvocation.Device" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>CommandDefinition</mat-label>
+					<mat-select placeholder="CommandDefinition"  [(ngModel)]="commandInvocation.CommandDefinition">
+						@for (commandDefinition of commandDefinitions; track commandDefinition.commandDefinitionId) {
+							<mat-option name="commandInvocation.CommandDefinition" ngDefaultControl
+							            [value]="commandDefinition.commandDefinitionId">
+								{{commandDefinition.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Actuator</mat-label>
+					<mat-select placeholder="Actuator"  [(ngModel)]="commandInvocation.Actuator">
+						@for (actuatorInstance of actuatorInstances; track actuatorInstance.actuatorInstanceId) {
+							<mat-option name="commandInvocation.Actuator" ngDefaultControl
+							            [value]="actuatorInstance.actuatorInstanceId">
+								{{actuatorInstance.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>User</mat-label>
+					<mat-select placeholder="User"  [(ngModel)]="commandInvocation.User">
+						@for (tenantUser of tenantUsers; track tenantUser.tenantUserId) {
+							<mat-option name="commandInvocation.User" ngDefaultControl
+							            [value]="tenantUser.tenantUserId">
+								{{tenantUser.firstName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																									<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="commandInvocation.Status" [(ngModel)]="commandInvocation.Status">
+							@for (CommandStatus of CommandStatuss; track CommandStatus) {
+								<mat-option ngDefaultControl [value]="CommandStatus">
+									{{CommandStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																						 																							 																							 																										 																										 																										 																										 																							 										<button
+				(click)="addCommandInvocation(commandInvocation.invocationId, commandInvocation.requestedAt, commandInvocation.completedAt, commandInvocation.Device, commandInvocation.CommandDefinition, commandInvocation.Actuator, commandInvocation.User, commandInvocation.Status)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

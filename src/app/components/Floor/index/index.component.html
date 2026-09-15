@@ -1,0 +1,67 @@
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">Floor List</h5>
+
+    <a
+            [routerLink]="['/createFloor']"
+            class="btn btn-primary btn-sm">
+        Create Floor
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered table-sm">
+        <thead>
+        <tr class="table-dark text-center">
+                                    <th scope="col">name</th>
+                        <th scope="col">level</th>
+                        <th scope="col" colspan="2">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @for (floor of floors; track floor.floorId) {
+            <tr
+                    class="text-center">
+
+                                <td class="align-middle">
+                    {{ floor.name }}
+                </td>
+                                <td class="align-middle">
+                    {{ floor.level }}
+                </td>
+                
+                <td class="align-middle">
+                    <a
+                            [routerLink]="['/loadFloor', floor.floorId]"
+                            class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+                </td>
+
+                <td class="align-middle">
+                    <button
+                            type="button"
+                            (click)="deleteFloor(floor.floorId)"
+                            class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+        }
+
+        
+        @if (floors?.length === 0) {
+            <tr>
+                <td
+                        colspan="4"
+                        class="text-center">
+                    No floors found.
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>

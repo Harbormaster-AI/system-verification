@@ -1,0 +1,44 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="dataRetentionPolicy.name" [(ngModel)]="dataRetentionPolicy.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<input matInput placeholder="retentionDays" name="dataRetentionPolicy.retentionDays" [(ngModel)]="dataRetentionPolicy.retentionDays">
+																																																																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Tenant</mat-label>
+					<mat-select placeholder="Tenant"  [(ngModel)]="dataRetentionPolicy.Tenant">
+						@for (tenant of tenants; track tenant.tenantId) {
+							<mat-option name="dataRetentionPolicy.Tenant" ngDefaultControl
+							            [value]="tenant.tenantId">
+								{{tenant.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																																							<mat-form-field appearance="outline">
+					<mat-label>Streams</mat-label>
+					<mat-select placeholder="Streams" multiple [(ngModel)]="dataRetentionPolicy.Streams">
+						@for (telemetryStream of telemetryStreams; track telemetryStream.telemetryStreamId) {
+							<mat-option name="dataRetentionPolicy.Streams" ngDefaultControl
+							            [value]="telemetryStream.telemetryStreamId">
+								{{telemetryStream.streamName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																						 																							 																										 																										 										<button
+				(click)="addDataRetentionPolicy(dataRetentionPolicy.name, dataRetentionPolicy.retentionDays, dataRetentionPolicy.Tenant, dataRetentionPolicy.Streams)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

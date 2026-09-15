@@ -1,0 +1,42 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="building.name" [(ngModel)]="building.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Site</mat-label>
+					<mat-select placeholder="Site"  [(ngModel)]="building.Site">
+						@for (site of sites; track site.siteId) {
+							<mat-option name="building.Site" ngDefaultControl
+							            [value]="site.siteId">
+								{{site.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																																							<mat-form-field appearance="outline">
+					<mat-label>Floors</mat-label>
+					<mat-select placeholder="Floors" multiple [(ngModel)]="building.Floors">
+						@for (floor of floors; track floor.floorId) {
+							<mat-option name="building.Floors" ngDefaultControl
+							            [value]="floor.floorId">
+								{{floor.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																						 																										 																										 										<button
+				(click)="addBuilding(building.name, building.Site, building.Floors)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

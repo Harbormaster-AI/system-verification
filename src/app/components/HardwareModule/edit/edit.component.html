@@ -1,0 +1,47 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>moduleCode</mat-label>
+								<input matInput ngDefaultControl placeholder="moduleCode" name="hardwareModule.moduleCode" [(ngModel)]="hardwareModule.moduleCode">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>datasheetUri</mat-label>
+								<input matInput ngDefaultControl placeholder="datasheetUri" name="hardwareModule.datasheetUri" [(ngModel)]="hardwareModule.datasheetUri">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Vendor</mat-label>
+					<mat-select placeholder="Vendor"   [compareWith]="compareFn"  [(ngModel)]="hardwareModule.Vendor">
+						@for (deviceVendor of deviceVendors; track deviceVendor.deviceVendorId) {
+							<mat-option name="hardwareModule.Vendor" ngDefaultControl
+							            [value]="deviceVendor.deviceVendorId">
+								{{deviceVendor.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>ModuleType</mat-label>
+						<mat-select placeholder="ModuleType" name="hardwareModule.ModuleType" [(ngModel)]="hardwareModule.ModuleType">
+							@for (ModuleType of ModuleTypes; track ModuleType) {
+								<mat-option ngDefaultControl [value]="ModuleType">
+									{{ModuleType}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																				 						 																	 						 										<button
+				(click)="updateHardwareModule(hardwareModule.moduleCode, hardwareModule.datasheetUri, hardwareModule.Vendor, hardwareModule.ModuleType)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

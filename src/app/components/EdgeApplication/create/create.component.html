@@ -1,0 +1,53 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="edgeApplication.name" [(ngModel)]="edgeApplication.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>version</mat-label>
+								<input matInput ngDefaultControl placeholder="version" name="edgeApplication.version" [(ngModel)]="edgeApplication.version">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>image</mat-label>
+								<input matInput ngDefaultControl placeholder="image" name="edgeApplication.image" [(ngModel)]="edgeApplication.image">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Gateway</mat-label>
+					<mat-select placeholder="Gateway"  [(ngModel)]="edgeApplication.Gateway">
+						@for (gateway of gateways; track gateway.gatewayId) {
+							<mat-option name="edgeApplication.Gateway" ngDefaultControl
+							            [value]="gateway.gatewayId">
+								{{gateway.softwareVersion}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																									<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="edgeApplication.Status" [(ngModel)]="edgeApplication.Status">
+							@for (DeploymentStatus of DeploymentStatuss; track DeploymentStatus) {
+								<mat-option ngDefaultControl [value]="DeploymentStatus">
+									{{DeploymentStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																						 																							 																							 																										 																							 										<button
+				(click)="addEdgeApplication(edgeApplication.name, edgeApplication.version, edgeApplication.image, edgeApplication.Gateway, edgeApplication.Status)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

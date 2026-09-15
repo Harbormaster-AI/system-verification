@@ -1,0 +1,72 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>twinId</mat-label>
+								<input matInput ngDefaultControl placeholder="twinId" name="digitalTwin.twinId" [(ngModel)]="digitalTwin.twinId">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<input matInput placeholder="desiredStateVersion" name="digitalTwin.desiredStateVersion" [(ngModel)]="digitalTwin.desiredStateVersion">
+																																																																	<p>
+					 																																																																															<input matInput placeholder="reportedStateVersion" name="digitalTwin.reportedStateVersion" [(ngModel)]="digitalTwin.reportedStateVersion">
+																																																																	<p>
+					 																																																																															<ngb-timepicker [(ngModel)]="digitalTwin.lastSyncAt" class="form-control" name="digitalTwin.lastSyncAt" #digitalTwin.lastSyncAt ></ngb-timepicker>
+																																																																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Device</mat-label>
+					<mat-select placeholder="Device"   [compareWith]="compareFn"  [(ngModel)]="digitalTwin.Device">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="digitalTwin.Device" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Gateway</mat-label>
+					<mat-select placeholder="Gateway"   [compareWith]="compareFn"  [(ngModel)]="digitalTwin.Gateway">
+						@for (gateway of gateways; track gateway.gatewayId) {
+							<mat-option name="digitalTwin.Gateway" ngDefaultControl
+							            [value]="gateway.gatewayId">
+								{{gateway.softwareVersion}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Template</mat-label>
+					<mat-select placeholder="Template"   [compareWith]="compareFn"  [(ngModel)]="digitalTwin.Template">
+						@for (twinTemplate of twinTemplates; track twinTemplate.twinTemplateId) {
+							<mat-option name="digitalTwin.Template" ngDefaultControl
+							            [value]="twinTemplate.twinTemplateId">
+								{{twinTemplate.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>ChangeEvents</mat-label>
+					<mat-select placeholder="ChangeEvents" multiple  [compareWith]="compareFn"  [(ngModel)]="digitalTwin.ChangeEvents">
+						@for (twinChangeEvent of twinChangeEvents; track twinChangeEvent.twinChangeEventId) {
+							<mat-option name="digitalTwin.ChangeEvents" ngDefaultControl
+							            [value]="twinChangeEvent.twinChangeEventId">
+								{{twinChangeEvent.eventId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																 						 																	 						 																	 						 																	 						 																				 						 																				 						 																				 						 																				 						 										<button
+				(click)="updateDigitalTwin(digitalTwin.twinId, digitalTwin.desiredStateVersion, digitalTwin.reportedStateVersion, digitalTwin.lastSyncAt, digitalTwin.Device, digitalTwin.Gateway, digitalTwin.Template, digitalTwin.ChangeEvents)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

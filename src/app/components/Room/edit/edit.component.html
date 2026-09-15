@@ -1,0 +1,54 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="room.name" [(ngModel)]="room.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Floor</mat-label>
+					<mat-select placeholder="Floor"   [compareWith]="compareFn"  [(ngModel)]="room.Floor">
+						@for (floor of floors; track floor.floorId) {
+							<mat-option name="room.Floor" ngDefaultControl
+							            [value]="floor.floorId">
+								{{floor.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Devices</mat-label>
+					<mat-select placeholder="Devices" multiple  [compareWith]="compareFn"  [(ngModel)]="room.Devices">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="room.Devices" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Gateways</mat-label>
+					<mat-select placeholder="Gateways" multiple  [compareWith]="compareFn"  [(ngModel)]="room.Gateways">
+						@for (gateway of gateways; track gateway.gatewayId) {
+							<mat-option name="room.Gateways" ngDefaultControl
+							            [value]="gateway.gatewayId">
+								{{gateway.softwareVersion}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																 						 																				 						 																				 						 																				 						 										<button
+				(click)="updateRoom(room.name, room.Floor, room.Devices, room.Gateways)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

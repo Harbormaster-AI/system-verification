@@ -1,0 +1,57 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<ngb-timepicker [(ngModel)]="alert.raisedAt" class="form-control" name="alert.raisedAt" #alert.raisedAt ></ngb-timepicker>
+																																																																	<p>
+																																																																																				<ngb-timepicker [(ngModel)]="alert.clearedAt" class="form-control" name="alert.clearedAt" #alert.clearedAt ></ngb-timepicker>
+																																																																	<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>message</mat-label>
+								<input matInput ngDefaultControl placeholder="message" name="alert.message" [(ngModel)]="alert.message">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Device</mat-label>
+					<mat-select placeholder="Device"  [(ngModel)]="alert.Device">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="alert.Device" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>AlertRule</mat-label>
+					<mat-select placeholder="AlertRule"  [(ngModel)]="alert.AlertRule">
+						@for (alertRule of alertRules; track alertRule.alertRuleId) {
+							<mat-option name="alert.AlertRule" ngDefaultControl
+							            [value]="alertRule.alertRuleId">
+								{{alertRule.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																									<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="alert.Status" [(ngModel)]="alert.Status">
+							@for (AlertStatus of AlertStatuss; track AlertStatus) {
+								<mat-option ngDefaultControl [value]="AlertStatus">
+									{{AlertStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																						 																							 																							 																										 																										 																							 										<button
+				(click)="addAlert(alert.raisedAt, alert.clearedAt, alert.message, alert.Device, alert.AlertRule, alert.Status)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

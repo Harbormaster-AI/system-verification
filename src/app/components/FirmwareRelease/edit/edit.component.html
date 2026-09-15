@@ -1,0 +1,50 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>version</mat-label>
+								<input matInput ngDefaultControl placeholder="version" name="firmwareRelease.version" [(ngModel)]="firmwareRelease.version">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>releaseDate</mat-label>
+								<input matInput ngDefaultControl [matDatepicker]="picker" placeholder="releaseDate" name="firmwareRelease.releaseDate" [(ngModel)]="firmwareRelease.releaseDate">
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<mat-datepicker #picker></mat-datepicker>
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																																																	<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>releaseNotes</mat-label>
+								<input matInput ngDefaultControl placeholder="releaseNotes" name="firmwareRelease.releaseNotes" [(ngModel)]="firmwareRelease.releaseNotes">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>checksum</mat-label>
+								<input matInput ngDefaultControl placeholder="checksum" name="firmwareRelease.checksum" [(ngModel)]="firmwareRelease.checksum">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>DeviceModel</mat-label>
+					<mat-select placeholder="DeviceModel"   [compareWith]="compareFn"  [(ngModel)]="firmwareRelease.DeviceModel">
+						@for (deviceModel of deviceModels; track deviceModel.deviceModelId) {
+							<mat-option name="firmwareRelease.DeviceModel" ngDefaultControl
+							            [value]="deviceModel.deviceModelId">
+								{{deviceModel.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																 						 																	 						 																	 						 																	 						 																				 						 										<button
+				(click)="updateFirmwareRelease(firmwareRelease.version, firmwareRelease.releaseDate, firmwareRelease.releaseNotes, firmwareRelease.checksum, firmwareRelease.DeviceModel)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

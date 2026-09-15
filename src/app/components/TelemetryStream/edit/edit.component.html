@@ -1,0 +1,91 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>streamName</mat-label>
+								<input matInput ngDefaultControl placeholder="streamName" name="telemetryStream.streamName" [(ngModel)]="telemetryStream.streamName">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<input matInput placeholder="retentionDays" name="telemetryStream.retentionDays" [(ngModel)]="telemetryStream.retentionDays">
+																																																																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Device</mat-label>
+					<mat-select placeholder="Device"   [compareWith]="compareFn"  [(ngModel)]="telemetryStream.Device">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="telemetryStream.Device" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Sensor</mat-label>
+					<mat-select placeholder="Sensor"   [compareWith]="compareFn"  [(ngModel)]="telemetryStream.Sensor">
+						@for (sensorInstance of sensorInstances; track sensorInstance.sensorInstanceId) {
+							<mat-option name="telemetryStream.Sensor" ngDefaultControl
+							            [value]="sensorInstance.sensorInstanceId">
+								{{sensorInstance.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Schema</mat-label>
+					<mat-select placeholder="Schema"   [compareWith]="compareFn"  [(ngModel)]="telemetryStream.Schema">
+						@for (telemetrySchema of telemetrySchemas; track telemetrySchema.telemetrySchemaId) {
+							<mat-option name="telemetryStream.Schema" ngDefaultControl
+							            [value]="telemetrySchema.telemetrySchemaId">
+								{{telemetrySchema.schemaId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>MessagingEndpoint</mat-label>
+					<mat-select placeholder="MessagingEndpoint"   [compareWith]="compareFn"  [(ngModel)]="telemetryStream.MessagingEndpoint">
+						@for (messagingEndpoint of messagingEndpoints; track messagingEndpoint.messagingEndpointId) {
+							<mat-option name="telemetryStream.MessagingEndpoint" ngDefaultControl
+							            [value]="messagingEndpoint.messagingEndpointId">
+								{{messagingEndpoint.host}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>RetentionPolicy</mat-label>
+					<mat-select placeholder="RetentionPolicy"   [compareWith]="compareFn"  [(ngModel)]="telemetryStream.RetentionPolicy">
+						@for (dataRetentionPolicy of dataRetentionPolicys; track dataRetentionPolicy.dataRetentionPolicyId) {
+							<mat-option name="telemetryStream.RetentionPolicy" ngDefaultControl
+							            [value]="dataRetentionPolicy.dataRetentionPolicyId">
+								{{dataRetentionPolicy.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>Qos</mat-label>
+						<mat-select placeholder="Qos" name="telemetryStream.Qos" [(ngModel)]="telemetryStream.Qos">
+							@for (MessageQoS of MessageQoSs; track MessageQoS) {
+								<mat-option ngDefaultControl [value]="MessageQoS">
+									{{MessageQoS}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																				 						 																				 						 																				 						 																				 						 																				 						 																	 						 										<button
+				(click)="updateTelemetryStream(telemetryStream.streamName, telemetryStream.retentionDays, telemetryStream.Device, telemetryStream.Sensor, telemetryStream.Schema, telemetryStream.MessagingEndpoint, telemetryStream.RetentionPolicy, telemetryStream.Qos)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

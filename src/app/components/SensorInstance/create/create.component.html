@@ -1,0 +1,61 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="sensorInstance.name" [(ngModel)]="sensorInstance.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>unit</mat-label>
+								<input matInput ngDefaultControl placeholder="unit" name="sensorInstance.unit" [(ngModel)]="sensorInstance.unit">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<input matInput placeholder="samplingIntervalMs" name="sensorInstance.samplingIntervalMs" [(ngModel)]="sensorInstance.samplingIntervalMs">
+																																																																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Device</mat-label>
+					<mat-select placeholder="Device"  [(ngModel)]="sensorInstance.Device">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="sensorInstance.Device" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																																							<mat-form-field appearance="outline">
+					<mat-label>TelemetryStreams</mat-label>
+					<mat-select placeholder="TelemetryStreams" multiple [(ngModel)]="sensorInstance.TelemetryStreams">
+						@for (telemetryStream of telemetryStreams; track telemetryStream.telemetryStreamId) {
+							<mat-option name="sensorInstance.TelemetryStreams" ngDefaultControl
+							            [value]="telemetryStream.telemetryStreamId">
+								{{telemetryStream.streamName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																									<mat-form-field appearance="outline">
+						<mat-label>SensorType</mat-label>
+						<mat-select placeholder="SensorType" name="sensorInstance.SensorType" [(ngModel)]="sensorInstance.SensorType">
+							@for (SensorType of SensorTypes; track SensorType) {
+								<mat-option ngDefaultControl [value]="SensorType">
+									{{SensorType}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																						 																							 																							 																										 																										 																							 										<button
+				(click)="addSensorInstance(sensorInstance.name, sensorInstance.unit, sensorInstance.samplingIntervalMs, sensorInstance.Device, sensorInstance.TelemetryStreams, sensorInstance.SensorType)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

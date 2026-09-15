@@ -1,0 +1,112 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="deviceModel.name" [(ngModel)]="deviceModel.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>modelNumber</mat-label>
+								<input matInput ngDefaultControl placeholder="modelNumber" name="deviceModel.modelNumber" [(ngModel)]="deviceModel.modelNumber">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>hardwareRevision</mat-label>
+								<input matInput ngDefaultControl placeholder="hardwareRevision" name="deviceModel.hardwareRevision" [(ngModel)]="deviceModel.hardwareRevision">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Vendor</mat-label>
+					<mat-select placeholder="Vendor"   [compareWith]="compareFn"  [(ngModel)]="deviceModel.Vendor">
+						@for (deviceVendor of deviceVendors; track deviceVendor.deviceVendorId) {
+							<mat-option name="deviceModel.Vendor" ngDefaultControl
+							            [value]="deviceVendor.deviceVendorId">
+								{{deviceVendor.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>HardwareModules</mat-label>
+					<mat-select placeholder="HardwareModules" multiple  [compareWith]="compareFn"  [(ngModel)]="deviceModel.HardwareModules">
+						@for (hardwareModule of hardwareModules; track hardwareModule.hardwareModuleId) {
+							<mat-option name="deviceModel.HardwareModules" ngDefaultControl
+							            [value]="hardwareModule.hardwareModuleId">
+								{{hardwareModule.moduleCode}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>TwinTemplate</mat-label>
+					<mat-select placeholder="TwinTemplate"   [compareWith]="compareFn"  [(ngModel)]="deviceModel.TwinTemplate">
+						@for (twinTemplate of twinTemplates; track twinTemplate.twinTemplateId) {
+							<mat-option name="deviceModel.TwinTemplate" ngDefaultControl
+							            [value]="twinTemplate.twinTemplateId">
+								{{twinTemplate.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>FirmwareReleases</mat-label>
+					<mat-select placeholder="FirmwareReleases" multiple  [compareWith]="compareFn"  [(ngModel)]="deviceModel.FirmwareReleases">
+						@for (firmwareRelease of firmwareReleases; track firmwareRelease.firmwareReleaseId) {
+							<mat-option name="deviceModel.FirmwareReleases" ngDefaultControl
+							            [value]="firmwareRelease.firmwareReleaseId">
+								{{firmwareRelease.version}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>CommandDefinitions</mat-label>
+					<mat-select placeholder="CommandDefinitions" multiple  [compareWith]="compareFn"  [(ngModel)]="deviceModel.CommandDefinitions">
+						@for (commandDefinition of commandDefinitions; track commandDefinition.commandDefinitionId) {
+							<mat-option name="deviceModel.CommandDefinitions" ngDefaultControl
+							            [value]="commandDefinition.commandDefinitionId">
+								{{commandDefinition.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>SupportedConnectivity</mat-label>
+						<mat-select placeholder="SupportedConnectivity" name="deviceModel.SupportedConnectivity" [(ngModel)]="deviceModel.SupportedConnectivity">
+							@for (ConnectivityType of ConnectivityTypes; track ConnectivityType) {
+								<mat-option ngDefaultControl [value]="ConnectivityType">
+									{{ConnectivityType}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>DefaultTelemetryEncoding</mat-label>
+						<mat-select placeholder="DefaultTelemetryEncoding" name="deviceModel.DefaultTelemetryEncoding" [(ngModel)]="deviceModel.DefaultTelemetryEncoding">
+							@for (TelemetryEncoding of TelemetryEncodings; track TelemetryEncoding) {
+								<mat-option ngDefaultControl [value]="TelemetryEncoding">
+									{{TelemetryEncoding}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																	 						 																				 						 																				 						 																				 						 																				 						 																				 						 																	 						 																	 						 										<button
+				(click)="updateDeviceModel(deviceModel.name, deviceModel.modelNumber, deviceModel.hardwareRevision, deviceModel.Vendor, deviceModel.HardwareModules, deviceModel.TwinTemplate, deviceModel.FirmwareReleases, deviceModel.CommandDefinitions, deviceModel.SupportedConnectivity, deviceModel.DefaultTelemetryEncoding)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

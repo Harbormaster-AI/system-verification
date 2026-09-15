@@ -1,0 +1,77 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<mat-form-field appearance="outline">
+								<mat-label>iccid</mat-label>
+								<input matInput ngDefaultControl placeholder="iccid" name="simCard.iccid" [(ngModel)]="simCard.iccid">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>imsi</mat-label>
+								<input matInput ngDefaultControl placeholder="imsi" name="simCard.imsi" [(ngModel)]="simCard.imsi">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>carrier</mat-label>
+								<input matInput ngDefaultControl placeholder="carrier" name="simCard.carrier" [(ngModel)]="simCard.carrier">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																							<mat-form-field appearance="outline">
+					<mat-label>NetworkProfiles</mat-label>
+					<mat-select placeholder="NetworkProfiles" multiple [(ngModel)]="simCard.NetworkProfiles">
+						@for (networkProfile of networkProfiles; track networkProfile.networkProfileId) {
+							<mat-option name="simCard.NetworkProfiles" ngDefaultControl
+							            [value]="networkProfile.networkProfileId">
+								{{networkProfile.profileName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Tenant</mat-label>
+					<mat-select placeholder="Tenant"  [(ngModel)]="simCard.Tenant">
+						@for (tenant of tenants; track tenant.tenantId) {
+							<mat-option name="simCard.Tenant" ngDefaultControl
+							            [value]="tenant.tenantId">
+								{{tenant.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>ConnectivityPlan</mat-label>
+					<mat-select placeholder="ConnectivityPlan"  [(ngModel)]="simCard.ConnectivityPlan">
+						@for (connectivityPlan of connectivityPlans; track connectivityPlan.connectivityPlanId) {
+							<mat-option name="simCard.ConnectivityPlan" ngDefaultControl
+							            [value]="connectivityPlan.connectivityPlanId">
+								{{connectivityPlan.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																									<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="simCard.Status" [(ngModel)]="simCard.Status">
+							@for (SimStatus of SimStatuss; track SimStatus) {
+								<mat-option ngDefaultControl [value]="SimStatus">
+									{{SimStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																						 																							 																							 																										 																										 																										 																							 										<button
+				(click)="addSimCard(simCard.iccid, simCard.imsi, simCard.carrier, simCard.NetworkProfiles, simCard.Tenant, simCard.ConnectivityPlan, simCard.Status)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

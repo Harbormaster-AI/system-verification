@@ -1,0 +1,68 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="commandDefinition.name" [(ngModel)]="commandDefinition.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>requestSchemaUri</mat-label>
+								<input matInput ngDefaultControl placeholder="requestSchemaUri" name="commandDefinition.requestSchemaUri" [(ngModel)]="commandDefinition.requestSchemaUri">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>responseSchemaUri</mat-label>
+								<input matInput ngDefaultControl placeholder="responseSchemaUri" name="commandDefinition.responseSchemaUri" [(ngModel)]="commandDefinition.responseSchemaUri">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<input matInput placeholder="timeoutSeconds" name="commandDefinition.timeoutSeconds" [(ngModel)]="commandDefinition.timeoutSeconds">
+																																																																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>DeviceModel</mat-label>
+					<mat-select placeholder="DeviceModel"   [compareWith]="compareFn"  [(ngModel)]="commandDefinition.DeviceModel">
+						@for (deviceModel of deviceModels; track deviceModel.deviceModelId) {
+							<mat-option name="commandDefinition.DeviceModel" ngDefaultControl
+							            [value]="deviceModel.deviceModelId">
+								{{deviceModel.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Actuators</mat-label>
+					<mat-select placeholder="Actuators" multiple  [compareWith]="compareFn"  [(ngModel)]="commandDefinition.Actuators">
+						@for (actuatorInstance of actuatorInstances; track actuatorInstance.actuatorInstanceId) {
+							<mat-option name="commandDefinition.Actuators" ngDefaultControl
+							            [value]="actuatorInstance.actuatorInstanceId">
+								{{actuatorInstance.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>CommandInvocations</mat-label>
+					<mat-select placeholder="CommandInvocations" multiple  [compareWith]="compareFn"  [(ngModel)]="commandDefinition.CommandInvocations">
+						@for (commandInvocation of commandInvocations; track commandInvocation.commandInvocationId) {
+							<mat-option name="commandDefinition.CommandInvocations" ngDefaultControl
+							            [value]="commandInvocation.commandInvocationId">
+								{{commandInvocation.invocationId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																 						 																	 						 																	 						 																	 						 																				 						 																				 						 																				 						 										<button
+				(click)="updateCommandDefinition(commandDefinition.name, commandDefinition.requestSchemaUri, commandDefinition.responseSchemaUri, commandDefinition.timeoutSeconds, commandDefinition.DeviceModel, commandDefinition.Actuators, commandDefinition.CommandInvocations)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

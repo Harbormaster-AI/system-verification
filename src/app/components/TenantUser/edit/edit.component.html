@@ -1,0 +1,65 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>firstName</mat-label>
+								<input matInput ngDefaultControl placeholder="firstName" name="tenantUser.firstName" [(ngModel)]="tenantUser.firstName">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>lastName</mat-label>
+								<input matInput ngDefaultControl placeholder="lastName" name="tenantUser.lastName" [(ngModel)]="tenantUser.lastName">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>email</mat-label>
+								<input matInput ngDefaultControl placeholder="email" name="tenantUser.email" [(ngModel)]="tenantUser.email">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Tenant</mat-label>
+					<mat-select placeholder="Tenant"   [compareWith]="compareFn"  [(ngModel)]="tenantUser.Tenant">
+						@for (tenant of tenants; track tenant.tenantId) {
+							<mat-option name="tenantUser.Tenant" ngDefaultControl
+							            [value]="tenant.tenantId">
+								{{tenant.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>CommandInvocations</mat-label>
+					<mat-select placeholder="CommandInvocations" multiple  [compareWith]="compareFn"  [(ngModel)]="tenantUser.CommandInvocations">
+						@for (commandInvocation of commandInvocations; track commandInvocation.commandInvocationId) {
+							<mat-option name="tenantUser.CommandInvocations" ngDefaultControl
+							            [value]="commandInvocation.commandInvocationId">
+								{{commandInvocation.invocationId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>Role</mat-label>
+						<mat-select placeholder="Role" name="tenantUser.Role" [(ngModel)]="tenantUser.Role">
+							@for (UserRole of UserRoles; track UserRole) {
+								<mat-option ngDefaultControl [value]="UserRole">
+									{{UserRole}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																	 						 																				 						 																				 						 																	 						 										<button
+				(click)="updateTenantUser(tenantUser.firstName, tenantUser.lastName, tenantUser.email, tenantUser.Tenant, tenantUser.CommandInvocations, tenantUser.Role)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

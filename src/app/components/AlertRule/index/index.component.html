@@ -1,0 +1,71 @@
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">AlertRule List</h5>
+
+    <a
+            [routerLink]="['/createAlertRule']"
+            class="btn btn-primary btn-sm">
+        Create AlertRule
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered table-sm">
+        <thead>
+        <tr class="table-dark text-center">
+                                    <th scope="col">name</th>
+                        <th scope="col">expression</th>
+                        <th scope="col">Severity</th>
+                        <th scope="col" colspan="2">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @for (alertRule of alertRules; track alertRule.alertRuleId) {
+            <tr
+                    class="text-center">
+
+                                <td class="align-middle">
+                    {{ alertRule.name }}
+                </td>
+                                <td class="align-middle">
+                    {{ alertRule.expression }}
+                </td>
+                                <td class="align-middle">
+                    {{ alertRule.Severity }}
+                </td>
+                
+                <td class="align-middle">
+                    <a
+                            [routerLink]="['/loadAlertRule', alertRule.alertRuleId]"
+                            class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+                </td>
+
+                <td class="align-middle">
+                    <button
+                            type="button"
+                            (click)="deleteAlertRule(alertRule.alertRuleId)"
+                            class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+        }
+
+        
+        @if (alertRules?.length === 0) {
+            <tr>
+                <td
+                        colspan="5"
+                        class="text-center">
+                    No alertRules found.
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>

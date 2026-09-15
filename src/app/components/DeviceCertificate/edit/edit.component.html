@@ -1,0 +1,63 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>serialNumber</mat-label>
+								<input matInput ngDefaultControl placeholder="serialNumber" name="deviceCertificate.serialNumber" [(ngModel)]="deviceCertificate.serialNumber">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<ngb-timepicker [(ngModel)]="deviceCertificate.notBefore" class="form-control" name="deviceCertificate.notBefore" #deviceCertificate.notBefore ></ngb-timepicker>
+																																																																	<p>
+					 																																																																															<ngb-timepicker [(ngModel)]="deviceCertificate.notAfter" class="form-control" name="deviceCertificate.notAfter" #deviceCertificate.notAfter ></ngb-timepicker>
+																																																																	<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>fingerprint</mat-label>
+								<input matInput ngDefaultControl placeholder="fingerprint" name="deviceCertificate.fingerprint" [(ngModel)]="deviceCertificate.fingerprint">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Device</mat-label>
+					<mat-select placeholder="Device"   [compareWith]="compareFn"  [(ngModel)]="deviceCertificate.Device">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="deviceCertificate.Device" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Gateway</mat-label>
+					<mat-select placeholder="Gateway"   [compareWith]="compareFn"  [(ngModel)]="deviceCertificate.Gateway">
+						@for (gateway of gateways; track gateway.gatewayId) {
+							<mat-option name="deviceCertificate.Gateway" ngDefaultControl
+							            [value]="gateway.gatewayId">
+								{{gateway.softwareVersion}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>CertificateType</mat-label>
+						<mat-select placeholder="CertificateType" name="deviceCertificate.CertificateType" [(ngModel)]="deviceCertificate.CertificateType">
+							@for (CertificateType of CertificateTypes; track CertificateType) {
+								<mat-option ngDefaultControl [value]="CertificateType">
+									{{CertificateType}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																	 						 																	 						 																				 						 																				 						 																	 						 										<button
+				(click)="updateDeviceCertificate(deviceCertificate.serialNumber, deviceCertificate.notBefore, deviceCertificate.notAfter, deviceCertificate.fingerprint, deviceCertificate.Device, deviceCertificate.Gateway, deviceCertificate.CertificateType)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

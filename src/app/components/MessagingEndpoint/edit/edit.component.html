@@ -1,0 +1,57 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>host</mat-label>
+								<input matInput ngDefaultControl placeholder="host" name="messagingEndpoint.host" [(ngModel)]="messagingEndpoint.host">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<input matInput placeholder="port" name="messagingEndpoint.port" [(ngModel)]="messagingEndpoint.port">
+																																																																	<p>
+					 																																																																								<mat-checkbox name="messagingEndpoint.secure" ngDefaultControl [(ngModel)]="messagingEndpoint.secure">secure</mat-checkbox>
+																																																								<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Tenant</mat-label>
+					<mat-select placeholder="Tenant"   [compareWith]="compareFn"  [(ngModel)]="messagingEndpoint.Tenant">
+						@for (tenant of tenants; track tenant.tenantId) {
+							<mat-option name="messagingEndpoint.Tenant" ngDefaultControl
+							            [value]="tenant.tenantId">
+								{{tenant.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Streams</mat-label>
+					<mat-select placeholder="Streams" multiple  [compareWith]="compareFn"  [(ngModel)]="messagingEndpoint.Streams">
+						@for (telemetryStream of telemetryStreams; track telemetryStream.telemetryStreamId) {
+							<mat-option name="messagingEndpoint.Streams" ngDefaultControl
+							            [value]="telemetryStream.telemetryStreamId">
+								{{telemetryStream.streamName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>Protocol</mat-label>
+						<mat-select placeholder="Protocol" name="messagingEndpoint.Protocol" [(ngModel)]="messagingEndpoint.Protocol">
+							@for (MessagingProtocol of MessagingProtocols; track MessagingProtocol) {
+								<mat-option ngDefaultControl [value]="MessagingProtocol">
+									{{MessagingProtocol}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																	 																										 						 																				 						 																	 						 										<button
+				(click)="updateMessagingEndpoint(messagingEndpoint.host, messagingEndpoint.port, messagingEndpoint.secure == true ? true : false, messagingEndpoint.Tenant, messagingEndpoint.Streams, messagingEndpoint.Protocol)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

@@ -1,0 +1,75 @@
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">UsageRecord List</h5>
+
+    <a
+            [routerLink]="['/createUsageRecord']"
+            class="btn btn-primary btn-sm">
+        Create UsageRecord
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered table-sm">
+        <thead>
+        <tr class="table-dark text-center">
+                                    <th scope="col">periodStart</th>
+                        <th scope="col">periodEnd</th>
+                        <th scope="col">messagesSent</th>
+                        <th scope="col">dataVolumeMB</th>
+                        <th scope="col" colspan="2">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @for (usageRecord of usageRecords; track usageRecord.usageRecordId) {
+            <tr
+                    class="text-center">
+
+                                <td class="align-middle">
+                    {{ usageRecord.periodStart }}
+                </td>
+                                <td class="align-middle">
+                    {{ usageRecord.periodEnd }}
+                </td>
+                                <td class="align-middle">
+                    {{ usageRecord.messagesSent }}
+                </td>
+                                <td class="align-middle">
+                    {{ usageRecord.dataVolumeMB }}
+                </td>
+                
+                <td class="align-middle">
+                    <a
+                            [routerLink]="['/loadUsageRecord', usageRecord.usageRecordId]"
+                            class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+                </td>
+
+                <td class="align-middle">
+                    <button
+                            type="button"
+                            (click)="deleteUsageRecord(usageRecord.usageRecordId)"
+                            class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+        }
+
+        
+        @if (usageRecords?.length === 0) {
+            <tr>
+                <td
+                        colspan="6"
+                        class="text-center">
+                    No usageRecords found.
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>

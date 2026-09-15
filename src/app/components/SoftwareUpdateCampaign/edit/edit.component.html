@@ -1,0 +1,69 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>campaignCode</mat-label>
+								<input matInput ngDefaultControl placeholder="campaignCode" name="softwareUpdateCampaign.campaignCode" [(ngModel)]="softwareUpdateCampaign.campaignCode">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<ngb-timepicker [(ngModel)]="softwareUpdateCampaign.scheduledStart" class="form-control" name="softwareUpdateCampaign.scheduledStart" #softwareUpdateCampaign.scheduledStart ></ngb-timepicker>
+																																																																	<p>
+					 																																																																															<ngb-timepicker [(ngModel)]="softwareUpdateCampaign.scheduledEnd" class="form-control" name="softwareUpdateCampaign.scheduledEnd" #softwareUpdateCampaign.scheduledEnd ></ngb-timepicker>
+																																																																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>FirmwareRelease</mat-label>
+					<mat-select placeholder="FirmwareRelease"   [compareWith]="compareFn"  [(ngModel)]="softwareUpdateCampaign.FirmwareRelease">
+						@for (firmwareRelease of firmwareReleases; track firmwareRelease.firmwareReleaseId) {
+							<mat-option name="softwareUpdateCampaign.FirmwareRelease" ngDefaultControl
+							            [value]="firmwareRelease.firmwareReleaseId">
+								{{firmwareRelease.version}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>DeviceGroup</mat-label>
+					<mat-select placeholder="DeviceGroup"   [compareWith]="compareFn"  [(ngModel)]="softwareUpdateCampaign.DeviceGroup">
+						@for (deviceGroup of deviceGroups; track deviceGroup.deviceGroupId) {
+							<mat-option name="softwareUpdateCampaign.DeviceGroup" ngDefaultControl
+							            [value]="deviceGroup.deviceGroupId">
+								{{deviceGroup.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Executions</mat-label>
+					<mat-select placeholder="Executions" multiple  [compareWith]="compareFn"  [(ngModel)]="softwareUpdateCampaign.Executions">
+						@for (softwareUpdateExecution of softwareUpdateExecutions; track softwareUpdateExecution.softwareUpdateExecutionId) {
+							<mat-option name="softwareUpdateCampaign.Executions" ngDefaultControl
+							            [value]="softwareUpdateExecution.softwareUpdateExecutionId">
+								{{softwareUpdateExecution.startedAt}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="softwareUpdateCampaign.Status" [(ngModel)]="softwareUpdateCampaign.Status">
+							@for (UpdateCampaignStatus of UpdateCampaignStatuss; track UpdateCampaignStatus) {
+								<mat-option ngDefaultControl [value]="UpdateCampaignStatus">
+									{{UpdateCampaignStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																	 						 																				 						 																				 						 																				 						 																	 						 										<button
+				(click)="updateSoftwareUpdateCampaign(softwareUpdateCampaign.campaignCode, softwareUpdateCampaign.scheduledStart, softwareUpdateCampaign.scheduledEnd, softwareUpdateCampaign.FirmwareRelease, softwareUpdateCampaign.DeviceGroup, softwareUpdateCampaign.Executions, softwareUpdateCampaign.Status)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

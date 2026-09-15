@@ -1,0 +1,42 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="twinTemplate.name" [(ngModel)]="twinTemplate.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>schemaUri</mat-label>
+								<input matInput ngDefaultControl placeholder="schemaUri" name="twinTemplate.schemaUri" [(ngModel)]="twinTemplate.schemaUri">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>version</mat-label>
+								<input matInput ngDefaultControl placeholder="version" name="twinTemplate.version" [(ngModel)]="twinTemplate.version">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>DeviceModels</mat-label>
+					<mat-select placeholder="DeviceModels" multiple  [compareWith]="compareFn"  [(ngModel)]="twinTemplate.DeviceModels">
+						@for (deviceModel of deviceModels; track deviceModel.deviceModelId) {
+							<mat-option name="twinTemplate.DeviceModels" ngDefaultControl
+							            [value]="deviceModel.deviceModelId">
+								{{deviceModel.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																 						 																	 						 																	 						 																				 						 										<button
+				(click)="updateTwinTemplate(twinTemplate.name, twinTemplate.schemaUri, twinTemplate.version, twinTemplate.DeviceModels)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

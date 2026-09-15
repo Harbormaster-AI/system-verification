@@ -1,0 +1,75 @@
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">SimCard List</h5>
+
+    <a
+            [routerLink]="['/createSimCard']"
+            class="btn btn-primary btn-sm">
+        Create SimCard
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered table-sm">
+        <thead>
+        <tr class="table-dark text-center">
+                                    <th scope="col">iccid</th>
+                        <th scope="col">imsi</th>
+                        <th scope="col">carrier</th>
+                        <th scope="col">Status</th>
+                        <th scope="col" colspan="2">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @for (simCard of simCards; track simCard.simCardId) {
+            <tr
+                    class="text-center">
+
+                                <td class="align-middle">
+                    {{ simCard.iccid }}
+                </td>
+                                <td class="align-middle">
+                    {{ simCard.imsi }}
+                </td>
+                                <td class="align-middle">
+                    {{ simCard.carrier }}
+                </td>
+                                <td class="align-middle">
+                    {{ simCard.Status }}
+                </td>
+                
+                <td class="align-middle">
+                    <a
+                            [routerLink]="['/loadSimCard', simCard.simCardId]"
+                            class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+                </td>
+
+                <td class="align-middle">
+                    <button
+                            type="button"
+                            (click)="deleteSimCard(simCard.simCardId)"
+                            class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+        }
+
+        
+        @if (simCards?.length === 0) {
+            <tr>
+                <td
+                        colspan="6"
+                        class="text-center">
+                    No simCards found.
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>

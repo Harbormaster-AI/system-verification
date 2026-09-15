@@ -1,0 +1,68 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<mat-form-field appearance="outline">
+								<mat-label>ticketNumber</mat-label>
+								<input matInput ngDefaultControl placeholder="ticketNumber" name="maintenanceTicket.ticketNumber" [(ngModel)]="maintenanceTicket.ticketNumber">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<ngb-timepicker [(ngModel)]="maintenanceTicket.openedAt" class="form-control" name="maintenanceTicket.openedAt" #maintenanceTicket.openedAt ></ngb-timepicker>
+																																																																	<p>
+																																																																																				<ngb-timepicker [(ngModel)]="maintenanceTicket.closedAt" class="form-control" name="maintenanceTicket.closedAt" #maintenanceTicket.closedAt ></ngb-timepicker>
+																																																																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Device</mat-label>
+					<mat-select placeholder="Device"  [(ngModel)]="maintenanceTicket.Device">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="maintenanceTicket.Device" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Tenant</mat-label>
+					<mat-select placeholder="Tenant"  [(ngModel)]="maintenanceTicket.Tenant">
+						@for (tenant of tenants; track tenant.tenantId) {
+							<mat-option name="maintenanceTicket.Tenant" ngDefaultControl
+							            [value]="tenant.tenantId">
+								{{tenant.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																									<mat-form-field appearance="outline">
+						<mat-label>Priority</mat-label>
+						<mat-select placeholder="Priority" name="maintenanceTicket.Priority" [(ngModel)]="maintenanceTicket.Priority">
+							@for (MaintenancePriority of MaintenancePrioritys; track MaintenancePriority) {
+								<mat-option ngDefaultControl [value]="MaintenancePriority">
+									{{MaintenancePriority}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																																									<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="maintenanceTicket.Status" [(ngModel)]="maintenanceTicket.Status">
+							@for (MaintenanceStatus of MaintenanceStatuss; track MaintenanceStatus) {
+								<mat-option ngDefaultControl [value]="MaintenanceStatus">
+									{{MaintenanceStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																						 																							 																							 																										 																										 																							 																							 										<button
+				(click)="addMaintenanceTicket(maintenanceTicket.ticketNumber, maintenanceTicket.openedAt, maintenanceTicket.closedAt, maintenanceTicket.Device, maintenanceTicket.Tenant, maintenanceTicket.Priority, maintenanceTicket.Status)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

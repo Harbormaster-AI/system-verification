@@ -1,0 +1,75 @@
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">Alert List</h5>
+
+    <a
+            [routerLink]="['/createAlert']"
+            class="btn btn-primary btn-sm">
+        Create Alert
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered table-sm">
+        <thead>
+        <tr class="table-dark text-center">
+                                    <th scope="col">raisedAt</th>
+                        <th scope="col">clearedAt</th>
+                        <th scope="col">message</th>
+                        <th scope="col">Status</th>
+                        <th scope="col" colspan="2">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @for (alert of alerts; track alert.alertId) {
+            <tr
+                    class="text-center">
+
+                                <td class="align-middle">
+                    {{ alert.raisedAt }}
+                </td>
+                                <td class="align-middle">
+                    {{ alert.clearedAt }}
+                </td>
+                                <td class="align-middle">
+                    {{ alert.message }}
+                </td>
+                                <td class="align-middle">
+                    {{ alert.Status }}
+                </td>
+                
+                <td class="align-middle">
+                    <a
+                            [routerLink]="['/loadAlert', alert.alertId]"
+                            class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+                </td>
+
+                <td class="align-middle">
+                    <button
+                            type="button"
+                            (click)="deleteAlert(alert.alertId)"
+                            class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+        }
+
+        
+        @if (alerts?.length === 0) {
+            <tr>
+                <td
+                        colspan="6"
+                        class="text-center">
+                    No alerts found.
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>

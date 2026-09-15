@@ -1,0 +1,72 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>name</mat-label>
+								<input matInput ngDefaultControl placeholder="name" name="deviceVendor.name" [(ngModel)]="deviceVendor.name">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>legalName</mat-label>
+								<input matInput ngDefaultControl placeholder="legalName" name="deviceVendor.legalName" [(ngModel)]="deviceVendor.legalName">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>headquartersCountry</mat-label>
+								<input matInput ngDefaultControl placeholder="headquartersCountry" name="deviceVendor.headquartersCountry" [(ngModel)]="deviceVendor.headquartersCountry">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>website</mat-label>
+								<input matInput ngDefaultControl placeholder="website" name="deviceVendor.website" [(ngModel)]="deviceVendor.website">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>DeviceModels</mat-label>
+					<mat-select placeholder="DeviceModels" multiple  [compareWith]="compareFn"  [(ngModel)]="deviceVendor.DeviceModels">
+						@for (deviceModel of deviceModels; track deviceModel.deviceModelId) {
+							<mat-option name="deviceVendor.DeviceModels" ngDefaultControl
+							            [value]="deviceModel.deviceModelId">
+								{{deviceModel.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>FirmwareReleases</mat-label>
+					<mat-select placeholder="FirmwareReleases" multiple  [compareWith]="compareFn"  [(ngModel)]="deviceVendor.FirmwareReleases">
+						@for (firmwareRelease of firmwareReleases; track firmwareRelease.firmwareReleaseId) {
+							<mat-option name="deviceVendor.FirmwareReleases" ngDefaultControl
+							            [value]="firmwareRelease.firmwareReleaseId">
+								{{firmwareRelease.version}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>HardwareModules</mat-label>
+					<mat-select placeholder="HardwareModules" multiple  [compareWith]="compareFn"  [(ngModel)]="deviceVendor.HardwareModules">
+						@for (hardwareModule of hardwareModules; track hardwareModule.hardwareModuleId) {
+							<mat-option name="deviceVendor.HardwareModules" ngDefaultControl
+							            [value]="hardwareModule.hardwareModuleId">
+								{{hardwareModule.moduleCode}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																 						 																	 						 																	 						 																	 						 																				 						 																				 						 																				 						 										<button
+				(click)="updateDeviceVendor(deviceVendor.name, deviceVendor.legalName, deviceVendor.headquartersCountry, deviceVendor.website, deviceVendor.DeviceModels, deviceVendor.FirmwareReleases, deviceVendor.HardwareModules)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

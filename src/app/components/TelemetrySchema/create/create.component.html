@@ -1,0 +1,47 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<mat-form-field appearance="outline">
+								<mat-label>schemaId</mat-label>
+								<input matInput ngDefaultControl placeholder="schemaId" name="telemetrySchema.schemaId" [(ngModel)]="telemetrySchema.schemaId">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>schemaUri</mat-label>
+								<input matInput ngDefaultControl placeholder="schemaUri" name="telemetrySchema.schemaUri" [(ngModel)]="telemetrySchema.schemaUri">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																							<mat-form-field appearance="outline">
+					<mat-label>Streams</mat-label>
+					<mat-select placeholder="Streams" multiple [(ngModel)]="telemetrySchema.Streams">
+						@for (telemetryStream of telemetryStreams; track telemetryStream.telemetryStreamId) {
+							<mat-option name="telemetrySchema.Streams" ngDefaultControl
+							            [value]="telemetryStream.telemetryStreamId">
+								{{telemetryStream.streamName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																									<mat-form-field appearance="outline">
+						<mat-label>Encoding</mat-label>
+						<mat-select placeholder="Encoding" name="telemetrySchema.Encoding" [(ngModel)]="telemetrySchema.Encoding">
+							@for (TelemetryEncoding of TelemetryEncodings; track TelemetryEncoding) {
+								<mat-option ngDefaultControl [value]="TelemetryEncoding">
+									{{TelemetryEncoding}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																						 																							 																										 																							 										<button
+				(click)="addTelemetrySchema(telemetrySchema.schemaId, telemetrySchema.schemaUri, telemetrySchema.Streams, telemetrySchema.Encoding)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

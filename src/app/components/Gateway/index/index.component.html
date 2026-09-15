@@ -1,0 +1,67 @@
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="mb-0">Gateway List</h5>
+
+    <a
+            [routerLink]="['/createGateway']"
+            class="btn btn-primary btn-sm">
+        Create Gateway
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered table-sm">
+        <thead>
+        <tr class="table-dark text-center">
+                                    <th scope="col">softwareVersion</th>
+                        <th scope="col">Status</th>
+                        <th scope="col" colspan="2">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @for (gateway of gateways; track gateway.gatewayId) {
+            <tr
+                    class="text-center">
+
+                                <td class="align-middle">
+                    {{ gateway.softwareVersion }}
+                </td>
+                                <td class="align-middle">
+                    {{ gateway.Status }}
+                </td>
+                
+                <td class="align-middle">
+                    <a
+                            [routerLink]="['/loadGateway', gateway.gatewayId]"
+                            class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+                </td>
+
+                <td class="align-middle">
+                    <button
+                            type="button"
+                            (click)="deleteGateway(gateway.gatewayId)"
+                            class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+        }
+
+        
+        @if (gateways?.length === 0) {
+            <tr>
+                <td
+                        colspan="4"
+                        class="text-center">
+                    No gateways found.
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+</div>

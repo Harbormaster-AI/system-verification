@@ -1,0 +1,234 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>deviceId</mat-label>
+								<input matInput ngDefaultControl placeholder="deviceId" name="ioTDevice.deviceId" [(ngModel)]="ioTDevice.deviceId">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>serialNumber</mat-label>
+								<input matInput ngDefaultControl placeholder="serialNumber" name="ioTDevice.serialNumber" [(ngModel)]="ioTDevice.serialNumber">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<ngb-timepicker [(ngModel)]="ioTDevice.lastSeen" class="form-control" name="ioTDevice.lastSeen" #ioTDevice.lastSeen ></ngb-timepicker>
+																																																																	<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>firmwareVersion</mat-label>
+								<input matInput ngDefaultControl placeholder="firmwareVersion" name="ioTDevice.firmwareVersion" [(ngModel)]="ioTDevice.firmwareVersion">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>DeviceModel</mat-label>
+					<mat-select placeholder="DeviceModel"   [compareWith]="compareFn"  [(ngModel)]="ioTDevice.DeviceModel">
+						@for (deviceModel of deviceModels; track deviceModel.deviceModelId) {
+							<mat-option name="ioTDevice.DeviceModel" ngDefaultControl
+							            [value]="deviceModel.deviceModelId">
+								{{deviceModel.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Tenant</mat-label>
+					<mat-select placeholder="Tenant"   [compareWith]="compareFn"  [(ngModel)]="ioTDevice.Tenant">
+						@for (tenant of tenants; track tenant.tenantId) {
+							<mat-option name="ioTDevice.Tenant" ngDefaultControl
+							            [value]="tenant.tenantId">
+								{{tenant.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Site</mat-label>
+					<mat-select placeholder="Site"   [compareWith]="compareFn"  [(ngModel)]="ioTDevice.Site">
+						@for (site of sites; track site.siteId) {
+							<mat-option name="ioTDevice.Site" ngDefaultControl
+							            [value]="site.siteId">
+								{{site.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Room</mat-label>
+					<mat-select placeholder="Room"   [compareWith]="compareFn"  [(ngModel)]="ioTDevice.Room">
+						@for (room of rooms; track room.roomId) {
+							<mat-option name="ioTDevice.Room" ngDefaultControl
+							            [value]="room.roomId">
+								{{room.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Gateway</mat-label>
+					<mat-select placeholder="Gateway"   [compareWith]="compareFn"  [(ngModel)]="ioTDevice.Gateway">
+						@for (gateway of gateways; track gateway.gatewayId) {
+							<mat-option name="ioTDevice.Gateway" ngDefaultControl
+							            [value]="gateway.gatewayId">
+								{{gateway.softwareVersion}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Sensors</mat-label>
+					<mat-select placeholder="Sensors" multiple  [compareWith]="compareFn"  [(ngModel)]="ioTDevice.Sensors">
+						@for (sensorInstance of sensorInstances; track sensorInstance.sensorInstanceId) {
+							<mat-option name="ioTDevice.Sensors" ngDefaultControl
+							            [value]="sensorInstance.sensorInstanceId">
+								{{sensorInstance.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Actuators</mat-label>
+					<mat-select placeholder="Actuators" multiple  [compareWith]="compareFn"  [(ngModel)]="ioTDevice.Actuators">
+						@for (actuatorInstance of actuatorInstances; track actuatorInstance.actuatorInstanceId) {
+							<mat-option name="ioTDevice.Actuators" ngDefaultControl
+							            [value]="actuatorInstance.actuatorInstanceId">
+								{{actuatorInstance.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Certificates</mat-label>
+					<mat-select placeholder="Certificates" multiple  [compareWith]="compareFn"  [(ngModel)]="ioTDevice.Certificates">
+						@for (deviceCertificate of deviceCertificates; track deviceCertificate.deviceCertificateId) {
+							<mat-option name="ioTDevice.Certificates" ngDefaultControl
+							            [value]="deviceCertificate.deviceCertificateId">
+								{{deviceCertificate.serialNumber}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>DigitalTwin</mat-label>
+					<mat-select placeholder="DigitalTwin"   [compareWith]="compareFn"  [(ngModel)]="ioTDevice.DigitalTwin">
+						@for (digitalTwin of digitalTwins; track digitalTwin.digitalTwinId) {
+							<mat-option name="ioTDevice.DigitalTwin" ngDefaultControl
+							            [value]="digitalTwin.digitalTwinId">
+								{{digitalTwin.twinId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>TelemetryStreams</mat-label>
+					<mat-select placeholder="TelemetryStreams" multiple  [compareWith]="compareFn"  [(ngModel)]="ioTDevice.TelemetryStreams">
+						@for (telemetryStream of telemetryStreams; track telemetryStream.telemetryStreamId) {
+							<mat-option name="ioTDevice.TelemetryStreams" ngDefaultControl
+							            [value]="telemetryStream.telemetryStreamId">
+								{{telemetryStream.streamName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>CommandInvocations</mat-label>
+					<mat-select placeholder="CommandInvocations" multiple  [compareWith]="compareFn"  [(ngModel)]="ioTDevice.CommandInvocations">
+						@for (commandInvocation of commandInvocations; track commandInvocation.commandInvocationId) {
+							<mat-option name="ioTDevice.CommandInvocations" ngDefaultControl
+							            [value]="commandInvocation.commandInvocationId">
+								{{commandInvocation.invocationId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>Alerts</mat-label>
+					<mat-select placeholder="Alerts" multiple  [compareWith]="compareFn"  [(ngModel)]="ioTDevice.Alerts">
+						@for (alert of alerts; track alert.alertId) {
+							<mat-option name="ioTDevice.Alerts" ngDefaultControl
+							            [value]="alert.alertId">
+								{{alert.raisedAt}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>ProvisioningRecord</mat-label>
+					<mat-select placeholder="ProvisioningRecord"   [compareWith]="compareFn"  [(ngModel)]="ioTDevice.ProvisioningRecord">
+						@for (provisioningRecord of provisioningRecords; track provisioningRecord.provisioningRecordId) {
+							<mat-option name="ioTDevice.ProvisioningRecord" ngDefaultControl
+							            [value]="provisioningRecord.provisioningRecordId">
+								{{provisioningRecord.enrolledAt}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>DeviceGroups</mat-label>
+					<mat-select placeholder="DeviceGroups" multiple  [compareWith]="compareFn"  [(ngModel)]="ioTDevice.DeviceGroups">
+						@for (deviceGroup of deviceGroups; track deviceGroup.deviceGroupId) {
+							<mat-option name="ioTDevice.DeviceGroups" ngDefaultControl
+							            [value]="deviceGroup.deviceGroupId">
+								{{deviceGroup.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																																						 								 								<mat-form-field appearance="outline">
+					<mat-label>NetworkProfiles</mat-label>
+					<mat-select placeholder="NetworkProfiles" multiple  [compareWith]="compareFn"  [(ngModel)]="ioTDevice.NetworkProfiles">
+						@for (networkProfile of networkProfiles; track networkProfile.networkProfileId) {
+							<mat-option name="ioTDevice.NetworkProfiles" ngDefaultControl
+							            [value]="networkProfile.networkProfileId">
+								{{networkProfile.profileName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="ioTDevice.Status" [(ngModel)]="ioTDevice.Status">
+							@for (DeviceStatus of DeviceStatuss; track DeviceStatus) {
+								<mat-option ngDefaultControl [value]="DeviceStatus">
+									{{DeviceStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>PowerSource</mat-label>
+						<mat-select placeholder="PowerSource" name="ioTDevice.PowerSource" [(ngModel)]="ioTDevice.PowerSource">
+							@for (PowerSource of PowerSources; track PowerSource) {
+								<mat-option ngDefaultControl [value]="PowerSource">
+									{{PowerSource}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																	 						 																	 						 																				 						 																				 						 																				 						 																				 						 																				 						 																				 						 																				 						 																				 						 																				 						 																				 						 																				 						 																				 						 																				 						 																				 						 																				 						 																	 						 																	 						 										<button
+				(click)="updateIoTDevice(ioTDevice.deviceId, ioTDevice.serialNumber, ioTDevice.lastSeen, ioTDevice.firmwareVersion, ioTDevice.DeviceModel, ioTDevice.Tenant, ioTDevice.Site, ioTDevice.Room, ioTDevice.Gateway, ioTDevice.Sensors, ioTDevice.Actuators, ioTDevice.Certificates, ioTDevice.DigitalTwin, ioTDevice.TelemetryStreams, ioTDevice.CommandInvocations, ioTDevice.Alerts, ioTDevice.ProvisioningRecord, ioTDevice.DeviceGroups, ioTDevice.NetworkProfiles, ioTDevice.Status, ioTDevice.PowerSource)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

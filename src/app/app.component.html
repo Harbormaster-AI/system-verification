@@ -1,0 +1,359 @@
+<div class="app-header">iotOnAngular</div>
+
+<mat-sidenav-container class="app-container">
+
+	<mat-sidenav #sidenav mode="side" opened class="app-sidenav">
+
+						<button mat-menu-item [matMenuTriggerFor]="DeviceVendorMenu">DeviceVendor</button>
+								<button mat-menu-item [matMenuTriggerFor]="HardwareModuleMenu">HardwareModule</button>
+								<button mat-menu-item [matMenuTriggerFor]="DeviceModelMenu">DeviceModel</button>
+								<button mat-menu-item [matMenuTriggerFor]="FirmwareReleaseMenu">FirmwareRelease</button>
+								<button mat-menu-item [matMenuTriggerFor]="IoTDeviceMenu">IoTDevice</button>
+								<button mat-menu-item [matMenuTriggerFor]="SensorInstanceMenu">SensorInstance</button>
+								<button mat-menu-item [matMenuTriggerFor]="ActuatorInstanceMenu">ActuatorInstance</button>
+								<button mat-menu-item [matMenuTriggerFor]="TelemetrySchemaMenu">TelemetrySchema</button>
+								<button mat-menu-item [matMenuTriggerFor]="TelemetryStreamMenu">TelemetryStream</button>
+								<button mat-menu-item [matMenuTriggerFor]="CommandDefinitionMenu">CommandDefinition</button>
+								<button mat-menu-item [matMenuTriggerFor]="CommandInvocationMenu">CommandInvocation</button>
+								<button mat-menu-item [matMenuTriggerFor]="AlertRuleMenu">AlertRule</button>
+								<button mat-menu-item [matMenuTriggerFor]="AlertMenu">Alert</button>
+								<button mat-menu-item [matMenuTriggerFor]="TenantMenu">Tenant</button>
+								<button mat-menu-item [matMenuTriggerFor]="TenantUserMenu">TenantUser</button>
+								<button mat-menu-item [matMenuTriggerFor]="SiteMenu">Site</button>
+								<button mat-menu-item [matMenuTriggerFor]="BuildingMenu">Building</button>
+								<button mat-menu-item [matMenuTriggerFor]="FloorMenu">Floor</button>
+								<button mat-menu-item [matMenuTriggerFor]="RoomMenu">Room</button>
+								<button mat-menu-item [matMenuTriggerFor]="GatewayMenu">Gateway</button>
+								<button mat-menu-item [matMenuTriggerFor]="EdgeApplicationMenu">EdgeApplication</button>
+								<button mat-menu-item [matMenuTriggerFor]="NetworkProfileMenu">NetworkProfile</button>
+								<button mat-menu-item [matMenuTriggerFor]="SimCardMenu">SimCard</button>
+								<button mat-menu-item [matMenuTriggerFor]="ConnectivityPlanMenu">ConnectivityPlan</button>
+								<button mat-menu-item [matMenuTriggerFor]="MessagingEndpointMenu">MessagingEndpoint</button>
+								<button mat-menu-item [matMenuTriggerFor]="AccessPolicyMenu">AccessPolicy</button>
+								<button mat-menu-item [matMenuTriggerFor]="ApiKeyMenu">ApiKey</button>
+								<button mat-menu-item [matMenuTriggerFor]="DeviceCertificateMenu">DeviceCertificate</button>
+								<button mat-menu-item [matMenuTriggerFor]="ProvisioningRecordMenu">ProvisioningRecord</button>
+								<button mat-menu-item [matMenuTriggerFor]="DigitalTwinMenu">DigitalTwin</button>
+								<button mat-menu-item [matMenuTriggerFor]="TwinTemplateMenu">TwinTemplate</button>
+								<button mat-menu-item [matMenuTriggerFor]="TwinChangeEventMenu">TwinChangeEvent</button>
+								<button mat-menu-item [matMenuTriggerFor]="MaintenanceTicketMenu">MaintenanceTicket</button>
+								<button mat-menu-item [matMenuTriggerFor]="DataRetentionPolicyMenu">DataRetentionPolicy</button>
+								<button mat-menu-item [matMenuTriggerFor]="SoftwareUpdateCampaignMenu">SoftwareUpdateCampaign</button>
+								<button mat-menu-item [matMenuTriggerFor]="SoftwareUpdateExecutionMenu">SoftwareUpdateExecution</button>
+								<button mat-menu-item [matMenuTriggerFor]="DeviceGroupMenu">DeviceGroup</button>
+								<button mat-menu-item [matMenuTriggerFor]="UsageRecordMenu">UsageRecord</button>
+				
+						<mat-menu #DeviceVendorMenu="matMenu">
+			<a routerLink="createDeviceVendor">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexDeviceVendor">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #HardwareModuleMenu="matMenu">
+			<a routerLink="createHardwareModule">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexHardwareModule">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #DeviceModelMenu="matMenu">
+			<a routerLink="createDeviceModel">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexDeviceModel">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #FirmwareReleaseMenu="matMenu">
+			<a routerLink="createFirmwareRelease">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexFirmwareRelease">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #IoTDeviceMenu="matMenu">
+			<a routerLink="createIoTDevice">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexIoTDevice">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #SensorInstanceMenu="matMenu">
+			<a routerLink="createSensorInstance">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexSensorInstance">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #ActuatorInstanceMenu="matMenu">
+			<a routerLink="createActuatorInstance">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexActuatorInstance">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #TelemetrySchemaMenu="matMenu">
+			<a routerLink="createTelemetrySchema">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexTelemetrySchema">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #TelemetryStreamMenu="matMenu">
+			<a routerLink="createTelemetryStream">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexTelemetryStream">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #CommandDefinitionMenu="matMenu">
+			<a routerLink="createCommandDefinition">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexCommandDefinition">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #CommandInvocationMenu="matMenu">
+			<a routerLink="createCommandInvocation">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexCommandInvocation">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #AlertRuleMenu="matMenu">
+			<a routerLink="createAlertRule">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexAlertRule">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #AlertMenu="matMenu">
+			<a routerLink="createAlert">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexAlert">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #TenantMenu="matMenu">
+			<a routerLink="createTenant">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexTenant">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #TenantUserMenu="matMenu">
+			<a routerLink="createTenantUser">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexTenantUser">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #SiteMenu="matMenu">
+			<a routerLink="createSite">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexSite">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #BuildingMenu="matMenu">
+			<a routerLink="createBuilding">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexBuilding">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #FloorMenu="matMenu">
+			<a routerLink="createFloor">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexFloor">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #RoomMenu="matMenu">
+			<a routerLink="createRoom">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexRoom">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #GatewayMenu="matMenu">
+			<a routerLink="createGateway">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexGateway">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #EdgeApplicationMenu="matMenu">
+			<a routerLink="createEdgeApplication">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexEdgeApplication">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #NetworkProfileMenu="matMenu">
+			<a routerLink="createNetworkProfile">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexNetworkProfile">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #SimCardMenu="matMenu">
+			<a routerLink="createSimCard">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexSimCard">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #ConnectivityPlanMenu="matMenu">
+			<a routerLink="createConnectivityPlan">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexConnectivityPlan">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #MessagingEndpointMenu="matMenu">
+			<a routerLink="createMessagingEndpoint">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexMessagingEndpoint">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #AccessPolicyMenu="matMenu">
+			<a routerLink="createAccessPolicy">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexAccessPolicy">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #ApiKeyMenu="matMenu">
+			<a routerLink="createApiKey">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexApiKey">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #DeviceCertificateMenu="matMenu">
+			<a routerLink="createDeviceCertificate">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexDeviceCertificate">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #ProvisioningRecordMenu="matMenu">
+			<a routerLink="createProvisioningRecord">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexProvisioningRecord">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #DigitalTwinMenu="matMenu">
+			<a routerLink="createDigitalTwin">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexDigitalTwin">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #TwinTemplateMenu="matMenu">
+			<a routerLink="createTwinTemplate">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexTwinTemplate">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #TwinChangeEventMenu="matMenu">
+			<a routerLink="createTwinChangeEvent">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexTwinChangeEvent">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #MaintenanceTicketMenu="matMenu">
+			<a routerLink="createMaintenanceTicket">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexMaintenanceTicket">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #DataRetentionPolicyMenu="matMenu">
+			<a routerLink="createDataRetentionPolicy">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexDataRetentionPolicy">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #SoftwareUpdateCampaignMenu="matMenu">
+			<a routerLink="createSoftwareUpdateCampaign">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexSoftwareUpdateCampaign">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #SoftwareUpdateExecutionMenu="matMenu">
+			<a routerLink="createSoftwareUpdateExecution">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexSoftwareUpdateExecution">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #DeviceGroupMenu="matMenu">
+			<a routerLink="createDeviceGroup">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexDeviceGroup">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+								<mat-menu #UsageRecordMenu="matMenu">
+			<a routerLink="createUsageRecord">
+				<button mat-menu-item>Add</button>
+			</a>
+			<a routerLink="indexUsageRecord">
+				<button mat-menu-item>Show All</button>
+			</a>
+		</mat-menu>
+				
+	</mat-sidenav>
+
+	<mat-sidenav-content>
+		<div class="container" style="padding-top:10px">
+			<router-outlet></router-outlet>
+		</div>
+	</mat-sidenav-content>
+
+</mat-sidenav-container>

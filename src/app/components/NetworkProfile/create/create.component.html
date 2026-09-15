@@ -1,0 +1,77 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																																																																																																<mat-form-field appearance="outline">
+								<mat-label>profileName</mat-label>
+								<input matInput ngDefaultControl placeholder="profileName" name="networkProfile.profileName" [(ngModel)]="networkProfile.profileName">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>ssid</mat-label>
+								<input matInput ngDefaultControl placeholder="ssid" name="networkProfile.ssid" [(ngModel)]="networkProfile.ssid">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																																																				<mat-form-field appearance="outline">
+								<mat-label>apn</mat-label>
+								<input matInput ngDefaultControl placeholder="apn" name="networkProfile.apn" [(ngModel)]="networkProfile.apn">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Device</mat-label>
+					<mat-select placeholder="Device"  [(ngModel)]="networkProfile.Device">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="networkProfile.Device" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>Gateway</mat-label>
+					<mat-select placeholder="Gateway"  [(ngModel)]="networkProfile.Gateway">
+						@for (gateway of gateways; track gateway.gatewayId) {
+							<mat-option name="networkProfile.Gateway" ngDefaultControl
+							            [value]="gateway.gatewayId">
+								{{gateway.softwareVersion}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																																								<mat-form-field appearance="outline">
+					<mat-label>SimCard</mat-label>
+					<mat-select placeholder="SimCard"  [(ngModel)]="networkProfile.SimCard">
+						@for (simCard of simCards; track simCard.simCardId) {
+							<mat-option name="networkProfile.SimCard" ngDefaultControl
+							            [value]="simCard.simCardId">
+								{{simCard.iccid}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+																																									<mat-form-field appearance="outline">
+						<mat-label>ConnectivityType</mat-label>
+						<mat-select placeholder="ConnectivityType" name="networkProfile.ConnectivityType" [(ngModel)]="networkProfile.ConnectivityType">
+							@for (ConnectivityType of ConnectivityTypes; track ConnectivityType) {
+								<mat-option ngDefaultControl [value]="ConnectivityType">
+									{{ConnectivityType}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																						 																							 																							 																										 																										 																										 																							 										<button
+				(click)="addNetworkProfile(networkProfile.profileName, networkProfile.ssid, networkProfile.apn, networkProfile.Device, networkProfile.Gateway, networkProfile.SimCard, networkProfile.ConnectivityType)"
+							class="btn btn-primary">add
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->

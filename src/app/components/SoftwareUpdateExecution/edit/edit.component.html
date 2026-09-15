@@ -1,0 +1,51 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<ngb-timepicker [(ngModel)]="softwareUpdateExecution.startedAt" class="form-control" name="softwareUpdateExecution.startedAt" #softwareUpdateExecution.startedAt ></ngb-timepicker>
+																																																																	<p>
+					 																																																																															<ngb-timepicker [(ngModel)]="softwareUpdateExecution.completedAt" class="form-control" name="softwareUpdateExecution.completedAt" #softwareUpdateExecution.completedAt ></ngb-timepicker>
+																																																																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Campaign</mat-label>
+					<mat-select placeholder="Campaign"   [compareWith]="compareFn"  [(ngModel)]="softwareUpdateExecution.Campaign">
+						@for (softwareUpdateCampaign of softwareUpdateCampaigns; track softwareUpdateCampaign.softwareUpdateCampaignId) {
+							<mat-option name="softwareUpdateExecution.Campaign" ngDefaultControl
+							            [value]="softwareUpdateCampaign.softwareUpdateCampaignId">
+								{{softwareUpdateCampaign.campaignCode}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Device</mat-label>
+					<mat-select placeholder="Device"   [compareWith]="compareFn"  [(ngModel)]="softwareUpdateExecution.Device">
+						@for (ioTDevice of ioTDevices; track ioTDevice.ioTDeviceId) {
+							<mat-option name="softwareUpdateExecution.Device" ngDefaultControl
+							            [value]="ioTDevice.ioTDeviceId">
+								{{ioTDevice.deviceId}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="softwareUpdateExecution.Status" [(ngModel)]="softwareUpdateExecution.Status">
+							@for (UpdateStatus of UpdateStatuss; track UpdateStatus) {
+								<mat-option ngDefaultControl [value]="UpdateStatus">
+									{{UpdateStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																				 						 																				 						 																	 						 										<button
+				(click)="updateSoftwareUpdateExecution(softwareUpdateExecution.startedAt, softwareUpdateExecution.completedAt, softwareUpdateExecution.Campaign, softwareUpdateExecution.Device, softwareUpdateExecution.Status)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->
