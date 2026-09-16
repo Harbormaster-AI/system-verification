@@ -249,212 +249,240 @@ jobs:
         working-directory: ${{ inputs.appName }}
 
         run: |
-          
+
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
-          
+
           SCORE=0
-          
-          
+
+
           ###########################################################################
-          # Solution
+          # Root Solution
           ###########################################################################
-          
-          SOLUTION_FILE=$(find . -maxdepth 2 -type f -name "*.sln" | head -1)
-          
+
+          SOLUTION_FILE=$(find .. -maxdepth 1 -type f -name "*.sln" | head -1)
+
           if [ -n "$SOLUTION_FILE" ]; then
-          
-              SCORE=$((SCORE + 2))
-          
+
+              SCORE=$((SCORE + 1))
+
               post_pass \
                   "BUILD" \
                   "SOLUTION_FILE" \
-                  2 \
-                  "ASP.NET solution located: ${SOLUTION_FILE}."
-          
+                  1 \
+                  "Solution file located: ${SOLUTION_FILE}."
+
           else
-          
+
               post_fail \
                   "BUILD" \
                   "SOLUTION_FILE" \
                   0 \
-                  "ASP.NET solution file not found."
-          
+                  "Solution file not found."
+
           fi
-          
-          
+
+
           ###########################################################################
-          # Web/API Project
+          # API Project
+          #
+          # The production ASP.NET project is the root project inside APP_NAME.
           ###########################################################################
-          
-          WEB_PROJECT=$(find . -maxdepth 4 -type f \
-              \( -name "*.csproj" \) \
-              -exec grep -l "Microsoft.NET.Sdk.Web" {} \; \
+
+          APPLICATION_PROJECT=$(find . \
+              -maxdepth 1 \
+              -type f \
+              -name "*.csproj" \
               | head -1)
-          
-          if [ -n "$WEB_PROJECT" ]; then
-          
+
+          if [ -n "$APPLICATION_PROJECT" ]; then
+
               SCORE=$((SCORE + 2))
-          
+
+              post_pass \
+                  "BUILD" \
+                  "APPLICATION_PROJECT" \
+                  2 \
+                  "Application project located: ${APPLICATION_PROJECT}."
+
+          else
+
+              post_fail \
+                  "BUILD" \
+                  "APPLICATION_PROJECT" \
+                  0 \
+                  "Application project not found in APP_NAME root."
+
+          fi
+
+
+          ###########################################################################
+          # ASP.NET Web SDK
+          ###########################################################################
+
+          if [ -n "$APPLICATION_PROJECT" ] && \
+             grep -q "Microsoft.NET.Sdk.Web" "$APPLICATION_PROJECT"; then
+
+              SCORE=$((SCORE + 1))
+
               post_pass \
                   "BUILD" \
                   "WEB_PROJECT" \
-                  2 \
-                  "ASP.NET web project located: ${WEB_PROJECT}."
-          
+                  1 \
+                  "ASP.NET Web SDK identified in ${APPLICATION_PROJECT}."
+
           else
-          
+
               post_fail \
                   "BUILD" \
                   "WEB_PROJECT" \
                   0 \
-                  "ASP.NET web project not found."
-          
+                  "Microsoft.NET.Sdk.Web not identified in the application project."
+
           fi
-          
-          
+
+
           ###########################################################################
           # Program.cs
           ###########################################################################
-          
-          PROGRAM_FILE=$(find . -type f -name "Program.cs" | head -1)
-          
-          if [ -n "$PROGRAM_FILE" ]; then
-          
+
+          if [ -f "Program.cs" ]; then
+
               SCORE=$((SCORE + 1))
-          
+
               post_pass \
                   "BUILD" \
                   "PROGRAM_CS" \
                   1 \
-                  "ASP.NET application bootstrap source located."
-          
+                  "Program.cs located."
+
           else
-          
+
               post_fail \
                   "BUILD" \
                   "PROGRAM_CS" \
                   0 \
                   "Program.cs not found."
-          
+
           fi
-          
-          
+
+
           ###########################################################################
           # appsettings.json
           ###########################################################################
-          
+
           if [ -f "appsettings.json" ]; then
-          
+
               SCORE=$((SCORE + 1))
-          
+
               post_pass \
                   "BUILD" \
                   "APPSETTINGS_JSON" \
                   1 \
                   "appsettings.json located."
-          
+
           else
-          
+
               post_fail \
                   "BUILD" \
                   "APPSETTINGS_JSON" \
                   0 \
                   "appsettings.json not found."
-          
+
           fi
-          
-                    
+
+
           ###########################################################################
-          # ASP Root Project
+          # API HTTP File
           ###########################################################################
-          
-          ROOT_PROJECT=$(find . -type f -name "*.csproj" | head -1)
-          
-          if [ -n "$ROOT_PROJECT" ]; then
-          
-              SCORE=$((SCORE + 2))
-          
-              post_pass \
-                  "BUILD" \
-                  "ROOT_PROJECT" \
-                  2 \
-                  "Root(main) project located."
-          
-          else
-          
-              post_warning \
-                  "BUILD" \
-                  "ROOT_PROJECT" \
-                  0 \
-                  "ROot(main) project not identified."
-          
-          fi
-          
-          
-          ###########################################################################
-          # Http File
-          ###########################################################################
-          
-          HTTP_FILE=$(find . -type f -name "*.http" | head -1)
-          
-          if [ -n "HTTP_FILE" ]; then
-          
+
+          if [ -f "Api.http" ]; then
+
               SCORE=$((SCORE + 1))
-          
+
               post_pass \
                   "BUILD" \
-                  "HTTP_FILE" \
+                  "API_HTTP_FILE" \
                   1 \
-                  "Minimum Http declaration file located."
-          
+                  "Api.http located."
+
           else
-          
+
               post_warning \
                   "BUILD" \
-                  "HTTP_FILE" \
+                  "API_HTTP_FILE" \
                   0 \
-                  "Minimum Http declaration file located."
-          
+                  "Api.http not found."
+
           fi
-          
+
+
           ###########################################################################
           # Test Project
+          #
+          # Test project is expected under Test/.
+          # Do not require a specific test project filename.
           ###########################################################################
-          
-          TEST_PROJECT=$(find . -type f -name "*Tests.csproj" | head -1)
-          
+
+          TEST_PROJECT=$(find Test test tests \
+              -type f \
+              -name "*.csproj" \
+              2>/dev/null \
+              | head -1)
+
           if [ -n "$TEST_PROJECT" ]; then
-          
-              SCORE=$((SCORE + 1))
-          
+
+              SCORE=$((SCORE + 2))
+
               post_pass \
                   "BUILD" \
                   "TEST_PROJECT" \
-                  1 \
+                  2 \
                   "Test project located: ${TEST_PROJECT}."
-          
+
           else
-          
+
               post_fail \
                   "BUILD" \
                   "TEST_PROJECT" \
                   0 \
-                  "Test project not found."
-          
+                  "Test project not found under Test/."
+
           fi
-          
-          
+
+
+          ###########################################################################
+          # Export Project Paths
+          ###########################################################################
+
+          if [ -n "$APPLICATION_PROJECT" ]; then
+              echo "APPLICATION_PROJECT=${APPLICATION_PROJECT}" >> "$GITHUB_ENV"
+          fi
+
+          if [ -n "$TEST_PROJECT" ]; then
+              echo "TEST_PROJECT=${TEST_PROJECT}" >> "$GITHUB_ENV"
+          fi
+
+          echo "Application project: ${APPLICATION_PROJECT}"
+          echo "Test project: ${TEST_PROJECT}"
+
+
           ###########################################################################
           # Summary
           ###########################################################################
-          
+
+          if [ "$SCORE" -ge 7 ]; then
+              STATUS="PASSED"
+          else
+              STATUS="FAILED"
+          fi
+
           post_result \
               "BUILD" \
               "EXPECTED_FILES" \
-              "PASSED" \
+              "${STATUS}" \
               0 \
-              "Expected files validation complete (${SCORE}/10)."
-      
+              "Expected files validation complete (${SCORE}/9)."
+          
 
       ###############################################################################
       # Directory Structure
@@ -467,182 +495,179 @@ jobs:
         working-directory: ${{ inputs.appName }}
 
         run: |
-          
+
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
-          
+
           SCORE=0
-          
-          
+
+
           ###########################################################################
-          # src
+          # API
           ###########################################################################
-          
-          if [ -d "src" ]; then
-          
+
+          if [ -d "Api" ]; then
+
               SCORE=$((SCORE + 2))
-          
-              post_pass \
-                  "BUILD" \
-                  "SRC_DIRECTORY" \
-                  2 \
-                  "src directory exists."
-          
-          else
-          
-              post_fail \
-                  "BUILD" \
-                  "SRC_DIRECTORY" \
-                  0 \
-                  "Missing mandatory src directory."
-          
-          fi
-          
-          
-          ###########################################################################
-          # API / Web
-          ###########################################################################
-          
-          if [ -d "src/Api" ] || \
-             [ -d "src/API" ] || \
-             [ -d "src/Web" ] || \
-             [ -d "src/WebApi" ]; then
-          
-              SCORE=$((SCORE + 2))
-          
+
               post_pass \
                   "BUILD" \
                   "API_DIRECTORY" \
                   2 \
-                  "ASP.NET API/Web directory exists."
-          
+                  "Api directory exists."
+
           else
-          
+
               post_fail \
                   "BUILD" \
                   "API_DIRECTORY" \
                   0 \
-                  "ASP.NET API/Web directory not found."
-          
+                  "Required Api directory not found."
+
           fi
-          
-          
+
+
           ###########################################################################
           # Domain
           ###########################################################################
-          
-          if [ -d "src/Domain" ]; then
-          
+
+          if [ -d "Domain" ]; then
+
               SCORE=$((SCORE + 2))
-          
+
               post_pass \
                   "BUILD" \
                   "DOMAIN_DIRECTORY" \
                   2 \
                   "Domain directory exists."
-          
+
           else
-          
-              post_warning \
+
+              post_fail \
                   "BUILD" \
                   "DOMAIN_DIRECTORY" \
                   0 \
-                  "Domain directory not found."
-          
+                  "Required Domain directory not found."
+
           fi
-          
-          
+
+
           ###########################################################################
-          # Application
+          # Persistence
           ###########################################################################
-          
-          if [ -d "src/Application" ]; then
-          
-              SCORE=$((SCORE + 1))
-          
-              post_pass \
-                  "BUILD" \
-                  "APPLICATION_DIRECTORY" \
-                  1 \
-                  "Application directory exists."
-          
-          else
-          
-              post_warning \
-                  "BUILD" \
-                  "APPLICATION_DIRECTORY" \
-                  0 \
-                  "Application directory not found."
-          
-          fi
-          
-          
-          ###########################################################################
-          # Infrastructure
-          ###########################################################################
-          
-          if [ -d "src/Infrastructure" ]; then
-          
-              SCORE=$((SCORE + 1))
-          
-              post_pass \
-                  "BUILD" \
-                  "INFRASTRUCTURE_DIRECTORY" \
-                  1 \
-                  "Infrastructure directory exists."
-          
-          else
-          
-              post_warning \
-                  "BUILD" \
-                  "INFRASTRUCTURE_DIRECTORY" \
-                  0 \
-                  "Infrastructure directory not found."
-          
-          fi
-          
-          
-          ###########################################################################
-          # Tests
-          ###########################################################################
-          
-          if [ -d "tests" ] || [ -d "test" ]; then
-          
+
+          if [ -d "Persistence" ]; then
+
               SCORE=$((SCORE + 2))
-          
+
               post_pass \
                   "BUILD" \
-                  "TESTS_DIRECTORY" \
+                  "PERSISTENCE_DIRECTORY" \
                   2 \
-                  "Test directory exists."
-          
+                  "Persistence directory exists."
+
           else
-          
+
               post_fail \
                   "BUILD" \
-                  "TESTS_DIRECTORY" \
+                  "PERSISTENCE_DIRECTORY" \
                   0 \
-                  "Mandatory test directory not found."
-          
+                  "Required Persistence directory not found."
+
           fi
-          
-          
+
+
+          ###########################################################################
+          # Service
+          ###########################################################################
+
+          if [ -d "Service" ]; then
+
+              SCORE=$((SCORE + 2))
+
+              post_pass \
+                  "BUILD" \
+                  "SERVICE_DIRECTORY" \
+                  2 \
+                  "Service directory exists."
+
+          else
+
+              post_fail \
+                  "BUILD" \
+                  "SERVICE_DIRECTORY" \
+                  0 \
+                  "Required Service directory not found."
+
+          fi
+
+
+          ###########################################################################
+          # Test
+          ###########################################################################
+
+          if [ -d "Test" ]; then
+
+              SCORE=$((SCORE + 2))
+
+              post_pass \
+                  "BUILD" \
+                  "TEST_DIRECTORY" \
+                  2 \
+                  "Test directory exists."
+
+          else
+
+              post_fail \
+                  "BUILD" \
+                  "TEST_DIRECTORY" \
+                  0 \
+                  "Required Test directory not found."
+
+          fi
+
+
+          ###########################################################################
+          # Properties
+          ###########################################################################
+
+          if [ -d "Properties" ]; then
+
+              SCORE=$((SCORE + 1))
+
+              post_pass \
+                  "BUILD" \
+                  "PROPERTIES_DIRECTORY" \
+                  1 \
+                  "Properties directory exists."
+
+          else
+
+              post_warning \
+                  "BUILD" \
+                  "PROPERTIES_DIRECTORY" \
+                  0 \
+                  "Properties directory not found."
+
+          fi
+
+
           ###########################################################################
           # Summary
           ###########################################################################
-          
-          if [ "$SCORE" -ge 7 ]; then
+
+          if [ "$SCORE" -ge 10 ]; then
               STATUS="PASSED"
           else
               STATUS="FAILED"
           fi
-          
+
           post_result \
               "BUILD" \
               "DIRECTORY_STRUCTURE" \
               "${STATUS}" \
               0 \
-              "Directory structure validation complete (${SCORE}/10)."
-      
+              "ASP.NET application directory structure validation complete (${SCORE}/11)."
+          
 
       ###############################################################################
       # ASP.NET 10 Configuration Validation
@@ -776,40 +801,41 @@ jobs:
         working-directory: ${{ inputs.appName }}
 
         run: |
-          
-          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
-          
-          
+
+          source .github/actions/common/report.sh
+
+
           ###########################################################################
-          # Restore dependencies
+          # Restore Application Project
           ###########################################################################
-          
-          if dotnet restore > dependency-validation.log 2>&1; then
-          
+
+          if dotnet restore "${APPLICATION_PROJECT}" \
+              > dependency-validation.log 2>&1; then
+
               cat dependency-validation.log
-          
+
               post_pass \
                   "BUILD" \
                   "DOTNET_DEPENDENCY_RESTORE" \
                   10 \
                   "NuGet dependency restoration completed successfully."
-          
+
           else
-          
+
               cat dependency-validation.log
-          
+
               MESSAGE=$(tail -30 dependency-validation.log | tr '\n' ' ')
-          
+
               post_fail \
                   "BUILD" \
                   "DOTNET_DEPENDENCY_RESTORE" \
                   0 \
                   "${MESSAGE}"
-          
+
               post_terminate_build
-          
-          fi
-      
+
+          fi      
+
 
       ###############################################################################
       # Execute ASP.NET 10 Production Build
@@ -822,44 +848,43 @@ jobs:
         working-directory: ${{ inputs.appName }}
 
         run: |
-          
-          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
-          
-          
+
+          source .github/actions/common/report.sh
+
+
           ###########################################################################
           # ASP.NET Production Build
           ###########################################################################
-          
-          if dotnet build \
+
+          if dotnet build "${APPLICATION_PROJECT}" \
               --configuration Release \
               --no-restore \
               --nologo \
               > build.log 2>&1; then
-          
+
               cat build.log
-          
+
               post_pass \
                   "BUILD" \
                   "ASPNET_BUILD" \
                   40 \
                   "ASP.NET 10 production build completed successfully."
-          
+
           else
-          
+
               cat build.log
-          
+
               MESSAGE=$(tail -30 build.log | tr '\n' ' ')
-          
+
               post_fail \
                   "BUILD" \
                   "ASPNET_BUILD" \
                   0 \
                   "${MESSAGE}"
-          
+
               post_terminate_build
-          
+
           fi
-      
 
       ###############################################################################
       # Execute Tests
@@ -872,45 +897,44 @@ jobs:
         working-directory: ${{ inputs.appName }}
 
         run: |
-          
-          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
-          
-          
+
+          source .github/actions/common/report.sh
+
+
           ###########################################################################
           # ASP.NET Tests
           ###########################################################################
-          
-          if dotnet test \
+
+          if dotnet test "${TEST_PROJECT}" \
               --configuration Release \
               --no-build \
               --nologo \
               --logger "trx" \
               > test.log 2>&1; then
-          
+
               cat test.log
-          
+
               post_pass \
                   "BUILD" \
                   "DOTNET_TEST" \
                   20 \
                   "ASP.NET automated tests completed successfully."
-          
+
           else
-          
+
               cat test.log
-          
+
               MESSAGE=$(tail -30 test.log | tr '\n' ' ')
-          
+
               post_fail \
                   "BUILD" \
                   "DOTNET_TEST" \
                   0 \
                   "${MESSAGE}"
-          
+
               post_terminate_build
-          
-          fi
-      
+
+          fi      
 
       ###############################################################################
       # Determine Build Output
