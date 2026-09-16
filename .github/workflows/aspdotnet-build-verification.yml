@@ -801,7 +801,7 @@ jobs:
 
         run: |
 
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
 
           ###########################################################################
@@ -848,7 +848,7 @@ jobs:
 
         run: |
 
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
 
           ###########################################################################
@@ -897,7 +897,7 @@ jobs:
 
         run: |
 
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
 
           ###########################################################################
