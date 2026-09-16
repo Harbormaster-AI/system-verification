@@ -144,7 +144,7 @@ jobs:
 
         run: |
           
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
           if [ -d ".git" ] || [ -d "../.git" ]; then
           
@@ -250,7 +250,7 @@ jobs:
 
         run: |
           
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
           SCORE=0
           
@@ -502,7 +502,7 @@ jobs:
 
         run: |
           
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
           SCORE=0
           
@@ -690,7 +690,7 @@ jobs:
 
         run: |
           
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
           SCORE=0
           
@@ -811,7 +811,7 @@ jobs:
 
         run: |
           
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
           
           ###########################################################################
@@ -857,7 +857,7 @@ jobs:
 
         run: |
           
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
           
           ###########################################################################
@@ -907,7 +907,7 @@ jobs:
 
         run: |
           
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
           
           ###########################################################################
@@ -958,7 +958,7 @@ jobs:
 
         run: |
           
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
           BUILD_DIRECTORY=""
           
@@ -1015,7 +1015,7 @@ jobs:
 
         run: |
           
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
           
           ###########################################################################
@@ -1174,6 +1174,6 @@ jobs:
 
         run: |
           
-          source .github/actions/common/report.sh
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
           post_terminate_build false
