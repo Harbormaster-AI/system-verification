@@ -363,93 +363,59 @@ jobs:
           
           fi
           
-          
+                    
           ###########################################################################
-          # Domain Project
+          # ASP Root Project
           ###########################################################################
           
-          DOMAIN_PROJECT=$(find . -type f -name "*.csproj" \
-              -exec grep -l "Domain" {} \; \
-              | head -1)
+          ROOT_PROJECT=$(find . -type f -name "*.csproj" | head -1)
           
-          if [ -n "$DOMAIN_PROJECT" ]; then
+          if [ -n "$ROOT_PROJECT" ]; then
           
-              SCORE=$((SCORE + 1))
+              SCORE=$((SCORE + 2))
           
               post_pass \
                   "BUILD" \
-                  "DOMAIN_PROJECT" \
-                  1 \
-                  "Domain project located."
+                  "ROOT_PROJECT" \
+                  2 \
+                  "Root(main) project located."
           
           else
           
               post_warning \
                   "BUILD" \
-                  "DOMAIN_PROJECT" \
+                  "ROOT_PROJECT" \
                   0 \
-                  "Domain project not identified."
+                  "ROot(main) project not identified."
           
           fi
           
           
           ###########################################################################
-          # Application Project
+          # Http File
           ###########################################################################
           
-          APPLICATION_PROJECT=$(find . -type f -name "*.csproj" \
-              -exec grep -l "Application" {} \; \
-              | head -1)
+          HTTP_FILE=$(find . -type f -name "*.http" | head -1)
           
-          if [ -n "$APPLICATION_PROJECT" ]; then
+          if [ -n "HTTP_FILE" ]; then
           
               SCORE=$((SCORE + 1))
           
               post_pass \
                   "BUILD" \
-                  "APPLICATION_PROJECT" \
+                  "HTTP_FILE" \
                   1 \
-                  "Application project located."
+                  "Minimum Http declaration file located."
           
           else
           
               post_warning \
                   "BUILD" \
-                  "APPLICATION_PROJECT" \
+                  "HTTP_FILE" \
                   0 \
-                  "Application project not identified."
+                  "Minimum Http declaration file located."
           
           fi
-          
-          
-          ###########################################################################
-          # Infrastructure Project
-          ###########################################################################
-          
-          INFRASTRUCTURE_PROJECT=$(find . -type f -name "*.csproj" \
-              -exec grep -l "Infrastructure" {} \; \
-              | head -1)
-          
-          if [ -n "$INFRASTRUCTURE_PROJECT" ]; then
-          
-              SCORE=$((SCORE + 1))
-          
-              post_pass \
-                  "BUILD" \
-                  "INFRASTRUCTURE_PROJECT" \
-                  1 \
-                  "Infrastructure project located."
-          
-          else
-          
-              post_warning \
-                  "BUILD" \
-                  "INFRASTRUCTURE_PROJECT" \
-                  0 \
-                  "Infrastructure project not identified."
-          
-          fi
-          
           
           ###########################################################################
           # Test Project
