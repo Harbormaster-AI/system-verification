@@ -1,0 +1,1059 @@
+  ```yaml
+  name: ASP.NET 10 Build Verification
+
+  on:
+
+    workflow_call:
+
+      inputs:
+
+        runner:
+          description: GitHub runner
+          required: false
+          default: self-hosted
+          type: string
+
+        resultUrl:
+          description: URL to post certification progress
+          required: false
+          default: "http://localhost:3000"
+          type: string
+
+        actionToCall:
+          description: action to call when posting to URL
+          required: true
+          default: "updateSystemVerificationProgress"
+          type: string
+
+        branch:
+          description: Branch to checkout
+          required: true
+          default: ""
+          type: string
+
+        certificationIdentifier:
+          description: Certification Identifier
+          required: true
+          type: string
+
+        appName:
+          description: Application Name
+          required: true
+          type: string
+
+        languageVersion:
+          description: .NET SDK version
+          required: false
+          default: "10.x"
+          type: string
+
+        languageName:
+          description: Core language of the system
+          required: false
+          default: "C#"
+          type: string
+
+
+  env:
+
+    RESULT_URL: ${{ inputs.resultUrl }}
+    ACTION_TO_CALL: ${{ inputs.actionToCall }}
+    CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
+    APP_NAME: ${{ inputs.appName }}
+
+
+  jobs:
+
+    build-verification:
+
+      runs-on: ${{ inputs.runner }}
+
+      steps:
+
+        ###############################################################################
+        # Checkout Source
+        ###############################################################################
+
+        - name: Checkout Source
+          uses: actions/checkout@v4
+          with:
+            ref: ${{ inputs.branch != '' && inputs.branch || github.ref_name }}
+
+
+        ###############################################################################
+        # Load Reporting Library
+        ###############################################################################
+
+        - name: Make report.sh executable
+          run: chmod +x .github/actions/common/report.sh
+
+
+        ###############################################################################
+        # Verify Checkout
+        ###############################################################################
+
+        - name: Verify Checkout
+
+          shell: bash
+
+          run: |
+            
+            source .github/actions/common/report.sh
+            
+            if [ -d ".git" ]; then
+            
+                post_pass \
+                    "BUILD" \
+                    "CHECKOUT_SOURCE" \
+                    0 \
+                    "Repository checked out successfully."
+            
+            else
+            
+                post_fail \
+                    "BUILD" \
+                    "CHECKOUT_SOURCE" \
+                    0 \
+                    "Repository checkout failed."
+            
+                post_terminate_build
+            
+            fi
+        
+
+        ###############################################################################
+        # Determine .NET SDK Version
+        ###############################################################################
+
+        - name: Determine .NET SDK Version
+
+          shell: bash
+
+          run: |
+            
+            DOTNET_VERSION="${{ inputs.languageVersion }}"
+            
+            if [ -z "$DOTNET_VERSION" ]; then
+                DOTNET_VERSION="10.x"
+            fi
+            
+            echo "DOTNET_VERSION=${DOTNET_VERSION}" >> "$GITHUB_ENV"
+            
+            echo "Using .NET SDK ${DOTNET_VERSION}"
+        
+
+        ###############################################################################
+        # Setup .NET
+        ###############################################################################
+
+        - name: Setup .NET
+
+          uses: actions/setup-dotnet@v4
+
+          with:
+            dotnet-version: ${{ env.DOTNET_VERSION }}
+
+
+        ###############################################################################
+        # Verify .NET SDK
+        ###############################################################################
+
+        - name: Verify .NET SDK
+
+          shell: bash
+
+          run: |
+            
+            dotnet --version
+            dotnet --info
+        
+
+        ###############################################################################
+        # Expected Files
+        ###############################################################################
+
+        - name: Expected Files
+
+          shell: bash
+
+          run: |
+            
+            source .github/actions/common/report.sh
+            
+            SCORE=0
+            
+            ###########################################################################
+            # Solution
+            ###########################################################################
+            
+            SOLUTION_FILE=$(find . -maxdepth 2 -type f -name "*.sln" | head -1)
+            
+            if [ -n "$SOLUTION_FILE" ]; then
+            
+                SCORE=$((SCORE + 2))
+            
+                post_pass \
+                    "BUILD" \
+                    "SOLUTION_FILE" \
+                    2 \
+                    "ASP.NET solution located: ${SOLUTION_FILE}."
+            
+            else
+            
+                post_fail \
+                    "BUILD" \
+                    "SOLUTION_FILE" \
+                    0 \
+                    "ASP.NET solution file not found."
+            
+            fi
+            
+            
+            ###########################################################################
+            # Web/API Project
+            ###########################################################################
+            
+            WEB_PROJECT=$(find . -maxdepth 4 -type f \
+                \( -name "*.csproj" \) \
+                -exec grep -l "Microsoft.NET.Sdk.Web" {} \; \
+                | head -1)
+            
+            if [ -n "$WEB_PROJECT" ]; then
+            
+                SCORE=$((SCORE + 2))
+            
+                post_pass \
+                    "BUILD" \
+                    "WEB_PROJECT" \
+                    2 \
+                    "ASP.NET web project located: ${WEB_PROJECT}."
+            
+            else
+            
+                post_fail \
+                    "BUILD" \
+                    "WEB_PROJECT" \
+                    0 \
+                    "ASP.NET web project not found."
+            
+            fi
+            
+            
+            ###########################################################################
+            # Program.cs
+            ###########################################################################
+            
+            PROGRAM_FILE=$(find . -type f -name "Program.cs" | head -1)
+            
+            if [ -n "$PROGRAM_FILE" ]; then
+            
+                SCORE=$((SCORE + 1))
+            
+                post_pass \
+                    "BUILD" \
+                    "PROGRAM_CS" \
+                    1 \
+                    "ASP.NET application bootstrap source located."
+            
+            else
+            
+                post_fail \
+                    "BUILD" \
+                    "PROGRAM_CS" \
+                    0 \
+                    "Program.cs not found."
+            
+            fi
+            
+            
+            ###########################################################################
+            # appsettings.json
+            ###########################################################################
+            
+            if [ -f "appsettings.json" ]; then
+            
+                SCORE=$((SCORE + 1))
+            
+                post_pass \
+                    "BUILD" \
+                    "APPSETTINGS_JSON" \
+                    1 \
+                    "appsettings.json located."
+            
+            else
+            
+                post_fail \
+                    "BUILD" \
+                    "APPSETTINGS_JSON" \
+                    0 \
+                    "appsettings.json not found."
+            
+            fi
+            
+            
+            ###########################################################################
+            # Domain Project
+            ###########################################################################
+            
+            DOMAIN_PROJECT=$(find . -type f -name "*.csproj" \
+                -exec grep -l "Domain" {} \; \
+                | head -1)
+            
+            if [ -n "$DOMAIN_PROJECT" ]; then
+            
+                SCORE=$((SCORE + 1))
+            
+                post_pass \
+                    "BUILD" \
+                    "DOMAIN_PROJECT" \
+                    1 \
+                    "Domain project located."
+            
+            else
+            
+                post_warning \
+                    "BUILD" \
+                    "DOMAIN_PROJECT" \
+                    0 \
+                    "Domain project not identified."
+            
+            fi
+            
+            
+            ###########################################################################
+            # Application Project
+            ###########################################################################
+            
+            APPLICATION_PROJECT=$(find . -type f -name "*.csproj" \
+                -exec grep -l "Application" {} \; \
+                | head -1)
+            
+            if [ -n "$APPLICATION_PROJECT" ]; then
+            
+                SCORE=$((SCORE + 1))
+            
+                post_pass \
+                    "BUILD" \
+                    "APPLICATION_PROJECT" \
+                    1 \
+                    "Application project located."
+            
+            else
+            
+                post_warning \
+                    "BUILD" \
+                    "APPLICATION_PROJECT" \
+                    0 \
+                    "Application project not identified."
+            
+            fi
+            
+            
+            ###########################################################################
+            # Infrastructure Project
+            ###########################################################################
+            
+            INFRASTRUCTURE_PROJECT=$(find . -type f -name "*.csproj" \
+                -exec grep -l "Infrastructure" {} \; \
+                | head -1)
+            
+            if [ -n "$INFRASTRUCTURE_PROJECT" ]; then
+            
+                SCORE=$((SCORE + 1))
+            
+                post_pass \
+                    "BUILD" \
+                    "INFRASTRUCTURE_PROJECT" \
+                    1 \
+                    "Infrastructure project located."
+            
+            else
+            
+                post_warning \
+                    "BUILD" \
+                    "INFRASTRUCTURE_PROJECT" \
+                    0 \
+                    "Infrastructure project not identified."
+            
+            fi
+            
+            
+            ###########################################################################
+            # Test Project
+            ###########################################################################
+            
+            TEST_PROJECT=$(find . -type f -name "*Tests.csproj" | head -1)
+            
+            if [ -n "$TEST_PROJECT" ]; then
+            
+                SCORE=$((SCORE + 1))
+            
+                post_pass \
+                    "BUILD" \
+                    "TEST_PROJECT" \
+                    1 \
+                    "Test project located: ${TEST_PROJECT}."
+            
+            else
+            
+                post_fail \
+                    "BUILD" \
+                    "TEST_PROJECT" \
+                    0 \
+                    "Test project not found."
+            
+            fi
+            
+            
+            ###########################################################################
+            # Summary
+            ###########################################################################
+            
+            post_result \
+                "BUILD" \
+                "EXPECTED_FILES" \
+                "PASSED" \
+                0 \
+                "Expected files validation complete (${SCORE}/10)."
+        
+
+        ###############################################################################
+        # Directory Structure
+        ###############################################################################
+
+        - name: Directory Structure
+
+          shell: bash
+
+          run: |
+            
+            source .github/actions/common/report.sh
+            
+            SCORE=0
+            
+            
+            ###########################################################################
+            # src
+            ###########################################################################
+            
+            if [ -d "src" ]; then
+            
+                SCORE=$((SCORE + 2))
+            
+                post_pass \
+                    "BUILD" \
+                    "SRC_DIRECTORY" \
+                    2 \
+                    "src directory exists."
+            
+            else
+            
+                post_fail \
+                    "BUILD" \
+                    "SRC_DIRECTORY" \
+                    0 \
+                    "Missing mandatory src directory."
+            
+            fi
+            
+            
+            ###########################################################################
+            # API / Web
+            ###########################################################################
+            
+            if [ -d "src/Api" ] || \
+               [ -d "src/API" ] || \
+               [ -d "src/Web" ] || \
+               [ -d "src/WebApi" ]; then
+            
+                SCORE=$((SCORE + 2))
+            
+                post_pass \
+                    "BUILD" \
+                    "API_DIRECTORY" \
+                    2 \
+                    "ASP.NET API/Web directory exists."
+            
+            else
+            
+                post_fail \
+                    "BUILD" \
+                    "API_DIRECTORY" \
+                    0 \
+                    "ASP.NET API/Web directory not found."
+            
+            fi
+            
+            
+            ###########################################################################
+            # Domain
+            ###########################################################################
+            
+            if [ -d "src/Domain" ]; then
+            
+                SCORE=$((SCORE + 2))
+            
+                post_pass \
+                    "BUILD" \
+                    "DOMAIN_DIRECTORY" \
+                    2 \
+                    "Domain directory exists."
+            
+            else
+            
+                post_warning \
+                    "BUILD" \
+                    "DOMAIN_DIRECTORY" \
+                    0 \
+                    "Domain directory not found."
+            
+            fi
+            
+            
+            ###########################################################################
+            # Application
+            ###########################################################################
+            
+            if [ -d "src/Application" ]; then
+            
+                SCORE=$((SCORE + 1))
+            
+                post_pass \
+                    "BUILD" \
+                    "APPLICATION_DIRECTORY" \
+                    1 \
+                    "Application directory exists."
+            
+            else
+            
+                post_warning \
+                    "BUILD" \
+                    "APPLICATION_DIRECTORY" \
+                    0 \
+                    "Application directory not found."
+            
+            fi
+            
+            
+            ###########################################################################
+            # Infrastructure
+            ###########################################################################
+            
+            if [ -d "src/Infrastructure" ]; then
+            
+                SCORE=$((SCORE + 1))
+            
+                post_pass \
+                    "BUILD" \
+                    "INFRASTRUCTURE_DIRECTORY" \
+                    1 \
+                    "Infrastructure directory exists."
+            
+            else
+            
+                post_warning \
+                    "BUILD" \
+                    "INFRASTRUCTURE_DIRECTORY" \
+                    0 \
+                    "Infrastructure directory not found."
+            
+            fi
+            
+            
+            ###########################################################################
+            # Tests
+            ###########################################################################
+            
+            if [ -d "tests" ] || [ -d "test" ]; then
+            
+                SCORE=$((SCORE + 2))
+            
+                post_pass \
+                    "BUILD" \
+                    "TESTS_DIRECTORY" \
+                    2 \
+                    "Test directory exists."
+            
+            else
+            
+                post_fail \
+                    "BUILD" \
+                    "TESTS_DIRECTORY" \
+                    0 \
+                    "Mandatory test directory not found."
+            
+            fi
+            
+            
+            ###########################################################################
+            # Summary
+            ###########################################################################
+            
+            if [ "$SCORE" -ge 7 ]; then
+                STATUS="PASSED"
+            else
+                STATUS="FAILED"
+            fi
+            
+            post_result \
+                "BUILD" \
+                "DIRECTORY_STRUCTURE" \
+                "${STATUS}" \
+                0 \
+                "Directory structure validation complete (${SCORE}/10)."
+        
+
+        ###############################################################################
+        # ASP.NET 10 Configuration Validation
+        ###############################################################################
+
+        - name: ASP.NET 10 Configuration Validation
+
+          shell: bash
+
+          run: |
+            
+            source .github/actions/common/report.sh
+            
+            SCORE=0
+            
+            
+            ###########################################################################
+            # Validate .NET SDK
+            ###########################################################################
+            
+            DOTNET_MAJOR=$(dotnet --version | cut -d. -f1)
+            
+            if [ "$DOTNET_MAJOR" = "10" ]; then
+            
+                SCORE=$((SCORE + 5))
+            
+                post_pass \
+                    "BUILD" \
+                    "DOTNET_10" \
+                    5 \
+                    ".NET 10 SDK is available."
+            
+            else
+            
+                post_fail \
+                    "BUILD" \
+                    "DOTNET_10" \
+                    0 \
+                    "Expected .NET 10 SDK but found $(dotnet --version)."
+            
+                post_terminate_build
+            
+            fi
+            
+            
+            ###########################################################################
+            # Validate target framework
+            ###########################################################################
+            
+            PROJECTS=$(find . -type f -name "*.csproj")
+            
+            if [ -n "$PROJECTS" ]; then
+            
+                if grep -R "<TargetFramework>net10.0</TargetFramework>" \
+                    $PROJECTS > target-framework.log 2>&1; then
+            
+                    SCORE=$((SCORE + 5))
+            
+                    post_pass \
+                        "BUILD" \
+                        "TARGET_FRAMEWORK" \
+                        5 \
+                        "Generated project targets net10.0."
+            
+                else
+            
+                    MESSAGE=$(cat target-framework.log | tr '\n' ' ')
+            
+                    post_fail \
+                        "BUILD" \
+                        "TARGET_FRAMEWORK" \
+                        0 \
+                        "Generated project does not target net10.0. ${MESSAGE}"
+            
+                    post_terminate_build
+            
+                fi
+            
+            else
+            
+                post_fail \
+                    "BUILD" \
+                    "TARGET_FRAMEWORK" \
+                    0 \
+                    "No ASP.NET project files found."
+            
+                post_terminate_build
+            
+            fi
+        
+
+        ###############################################################################
+        # Dependency Validation
+        ###############################################################################
+
+        - name: Dependency Validation
+
+          shell: bash
+
+          run: |
+            
+            source .github/actions/common/report.sh
+            
+            
+            ###########################################################################
+            # Restore dependencies
+            ###########################################################################
+            
+            if dotnet restore > dependency-validation.log 2>&1; then
+            
+                cat dependency-validation.log
+            
+                post_pass \
+                    "BUILD" \
+                    "DOTNET_DEPENDENCY_RESTORE" \
+                    10 \
+                    "NuGet dependency restoration completed successfully."
+            
+            else
+            
+                cat dependency-validation.log
+            
+                MESSAGE=$(tail -30 dependency-validation.log | tr '\n' ' ')
+            
+                post_fail \
+                    "BUILD" \
+                    "DOTNET_DEPENDENCY_RESTORE" \
+                    0 \
+                    "${MESSAGE}"
+            
+                post_terminate_build
+            
+            fi
+        
+
+        ###############################################################################
+        # Execute ASP.NET 10 Production Build
+        ###############################################################################
+
+        - name: Execute Build
+
+          shell: bash
+
+          run: |
+            
+            source .github/actions/common/report.sh
+            
+            
+            ###########################################################################
+            # ASP.NET Production Build
+            ###########################################################################
+            
+            if dotnet build \
+                --configuration Release \
+                --no-restore \
+                --nologo \
+                > build.log 2>&1; then
+            
+                cat build.log
+            
+                post_pass \
+                    "BUILD" \
+                    "ASPNET_BUILD" \
+                    40 \
+                    "ASP.NET 10 production build completed successfully."
+            
+            else
+            
+                cat build.log
+            
+                MESSAGE=$(tail -30 build.log | tr '\n' ' ')
+            
+                post_fail \
+                    "BUILD" \
+                    "ASPNET_BUILD" \
+                    0 \
+                    "${MESSAGE}"
+            
+                post_terminate_build
+            
+            fi
+        
+
+        ###############################################################################
+        # Execute Tests
+        ###############################################################################
+
+        - name: Execute Tests
+
+          shell: bash
+
+          run: |
+            
+            source .github/actions/common/report.sh
+            
+            
+            ###########################################################################
+            # ASP.NET Tests
+            ###########################################################################
+            
+            if dotnet test \
+                --configuration Release \
+                --no-build \
+                --nologo \
+                --logger "trx" \
+                > test.log 2>&1; then
+            
+                cat test.log
+            
+                post_pass \
+                    "BUILD" \
+                    "DOTNET_TEST" \
+                    20 \
+                    "ASP.NET automated tests completed successfully."
+            
+            else
+            
+                cat test.log
+            
+                MESSAGE=$(tail -30 test.log | tr '\n' ' ')
+            
+                post_fail \
+                    "BUILD" \
+                    "DOTNET_TEST" \
+                    0 \
+                    "${MESSAGE}"
+            
+                post_terminate_build
+            
+            fi
+        
+
+        ###############################################################################
+        # Determine Build Output
+        ###############################################################################
+
+        - name: Determine Build Output
+
+          shell: bash
+
+          run: |
+            
+            source .github/actions/common/report.sh
+            
+            BUILD_DIRECTORY=""
+            
+            ###########################################################################
+            # Locate ASP.NET release output
+            ###########################################################################
+            
+            BUILD_DIRECTORY=$(find . \
+                -type f \
+                -path "*/bin/Release/net10.0/*.dll" \
+                -not -path "*/obj/*" \
+                | head -1 \
+                | xargs -r dirname)
+            
+            if [ -z "$BUILD_DIRECTORY" ]; then
+            
+                BUILD_DIRECTORY=$(find . \
+                    -type d \
+                    -path "*/bin/Release/net10.0" \
+                    | head -1)
+            
+            fi
+            
+            
+            if [ -z "$BUILD_DIRECTORY" ]; then
+            
+                post_fail \
+                    "BUILD" \
+                    "BUILD_OUTPUT" \
+                    0 \
+                    "Unable to locate ASP.NET 10 build output."
+            
+                post_terminate_build
+            
+            fi
+            
+            
+            echo "BUILD_DIRECTORY=${BUILD_DIRECTORY}" >> "$GITHUB_ENV"
+            
+            echo "ASP.NET build directory: ${BUILD_DIRECTORY}"
+        
+
+        ###############################################################################
+        # Validate Build Artifact
+        ###############################################################################
+
+        - name: Validate Build Artifact
+
+          shell: bash
+
+          run: |
+            
+            source .github/actions/common/report.sh
+            
+            
+            ###########################################################################
+            # Output Directory
+            ###########################################################################
+            
+            if [ -d "${BUILD_DIRECTORY}" ]; then
+            
+                echo "Contents of ${BUILD_DIRECTORY}:"
+            
+                find "${BUILD_DIRECTORY}" -maxdepth 2 -type f | head -50
+            
+            else
+            
+                post_fail \
+                    "BUILD" \
+                    "BUILD_ARTIFACT" \
+                    0 \
+                    "ASP.NET build directory does not exist."
+            
+                post_terminate_build
+            
+            fi
+            
+            
+            ###########################################################################
+            # Application DLL
+            ###########################################################################
+            
+            DLL_FILE=$(find "${BUILD_DIRECTORY}" \
+                -maxdepth 1 \
+                -type f \
+                -name "*.dll" \
+                | head -1)
+            
+            if [ -z "$DLL_FILE" ]; then
+            
+                post_fail \
+                    "BUILD" \
+                    "BUILD_ARTIFACT" \
+                    0 \
+                    "No ASP.NET application DLL found in build output."
+            
+                post_terminate_build
+            
+            fi
+            
+            
+            ###########################################################################
+            # Runtime Configuration
+            ###########################################################################
+            
+            RUNTIME_CONFIG=$(find "${BUILD_DIRECTORY}" \
+                -maxdepth 1 \
+                -type f \
+                -name "*.runtimeconfig.json" \
+                | head -1)
+            
+            if [ -z "$RUNTIME_CONFIG" ]; then
+            
+                post_fail \
+                    "BUILD" \
+                    "BUILD_ARTIFACT" \
+                    0 \
+                    "No ASP.NET runtimeconfig.json found in build output."
+            
+                post_terminate_build
+            
+            fi
+            
+            
+            ###########################################################################
+            # Dependency Manifest
+            ###########################################################################
+            
+            DEPS_FILE=$(find "${BUILD_DIRECTORY}" \
+                -maxdepth 1 \
+                -type f \
+                -name "*.deps.json" \
+                | head -1)
+            
+            if [ -z "$DEPS_FILE" ]; then
+            
+                post_fail \
+                    "BUILD" \
+                    "BUILD_ARTIFACT" \
+                    0 \
+                    "No ASP.NET deps.json found in build output."
+            
+                post_terminate_build
+            
+            fi
+            
+            
+            ###########################################################################
+            # Non-empty output
+            ###########################################################################
+            
+            if [ -z "$(find "${BUILD_DIRECTORY}" \
+                -type f \
+                -size +0c \
+                -print \
+                -quit)" ]; then
+            
+                post_fail \
+                    "BUILD" \
+                    "BUILD_ARTIFACT" \
+                    0 \
+                    "ASP.NET build output is empty."
+            
+                post_terminate_build
+            
+            fi
+            
+            
+            ###########################################################################
+            # Gather Information
+            ###########################################################################
+            
+            FILE_COUNT=$(find "${BUILD_DIRECTORY}" -type f | wc -l)
+            
+            TOTAL_SIZE=$(du -sh "${BUILD_DIRECTORY}" | cut -f1)
+            
+            
+            post_pass \
+                "BUILD" \
+                "BUILD_ARTIFACT" \
+                20 \
+                "ASP.NET 10 build artifact successfully validated." \
+                "BUILD_ARTIFACT: ${FILE_COUNT} files (${TOTAL_SIZE})."
+        
+
+        ###############################################################################
+        # Upload ASP.NET Build Artifact
+        ###############################################################################
+
+        - name: Upload Build Artifact
+
+          uses: actions/upload-artifact@v4
+
+          with:
+            name: packaged-application
+            path: ${{ env.BUILD_DIRECTORY }}
+            retention-days: 1
+
+
+        ###############################################################################
+        # Terminate Verification
+        ###############################################################################
+
+        - name: Terminate Verification
+
+          shell: bash
+
+          run: |
+            
+            source .github/actions/common/report.sh
+            
+            post_terminate_build false
