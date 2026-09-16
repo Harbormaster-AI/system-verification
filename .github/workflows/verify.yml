@@ -36,6 +36,12 @@ on:
         default: ""
         type: string
 
+      repository:
+        description: "App repo (owner/name). Empty = this repo / temp verification branch."
+        required: false
+        default: ""
+        type: string
+
       gitHubToken:
         description: Token to securely access APIs and other capabilities on behalf of the caller
         required: true
@@ -115,6 +121,30 @@ on:
         default: latest
         type: string
 
+      awsAccessKey:
+        description: AWS access key (used when workflow secret is unavailable)
+        required: false
+        default: ""
+        type: string
+
+      awsSecretKey:
+        description: AWS secret key (used when workflow secret is unavailable)
+        required: false
+        default: ""
+        type: string
+
+      awsRegion:
+        description: AWS region (used when workflow secret is unavailable)
+        required: false
+        default: ""
+        type: string
+
+      deployToCloud:
+        description: Whether to run Terraform cloud deploy after delivery
+        required: false
+        default: true
+        type: boolean
+
 env:
   RESULT_URL: ${{ inputs.resultUrl }}
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
@@ -160,30 +190,6 @@ jobs:
       appName: ${{ inputs.appName }}
       languageVersion: ${{ inputs.languageVersion }}
 
-  spring-delivery:
-
-    if: ${{ contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) }}
-
-    needs: spring-runtime
-
-    uses: ./.github/workflows/spring-delivery-verification.yml
-
-    with:
-      runner: ${{ inputs.runner }}
-      branch: ${{ inputs.branch }}
-      gitHubToken: ${{ inputs.gitHubToken }}
-      resultUrl: ${{ inputs.resultUrl }}
-      actionToCall: ${{ inputs.actionToCall }}
-      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
-      appName:                   ${{ inputs.appName }}
-      dockerHost:                ${{ inputs.dockerHost }}
-      dockerOrg:                 ${{ inputs.dockerOrg }}
-      dockerRepository:          ${{ inputs.dockerRepository }}
-      dockerUsername:            ${{ inputs.dockerUsername }}
-      dockerPassword:            ${{ inputs.dockerPassword }}
-      dockerTag:                 ${{ inputs.dockerTag }}
-
-
   go-build:
 
     if: ${{ contains(fromJSON('["go","golang"]'), inputs.technology) }}
@@ -216,18 +222,25 @@ jobs:
       appName: ${{ inputs.appName }}
       languageVersion: ${{ inputs.languageVersion }}
 
-  go-delivery:
+  # Shared Spring/Go delivery (from feature). Angular/Django/Rails/Apollo keep per-tech delivery below.
+  delivery:
 
-    if: ${{ contains(fromJSON('["go","golang"]'), inputs.technology) }}
+    if: >
+      always() &&
+      (
+        (contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) && needs.spring-runtime.result == 'success')
+        ||
+        (contains(fromJSON('["go","golang"]'), inputs.technology) && needs.go-runtime.result == 'success')
+      )
 
+    needs: [spring-runtime, go-runtime]
 
-    needs: go-runtime
-
-    uses: ./.github/workflows/go-delivery-verification.yml
+    uses: ./.github/workflows/delivery-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
       branch: ${{ inputs.branch }}
+      gitHubToken: ${{ inputs.gitHubToken }}
       resultUrl: ${{ inputs.resultUrl }}
       actionToCall: ${{ inputs.actionToCall }}
       certificationIdentifier:   ${{ inputs.certificationIdentifier }}
@@ -238,6 +251,33 @@ jobs:
       dockerUsername:            ${{ inputs.dockerUsername }}
       dockerPassword:            ${{ inputs.dockerPassword }}
       dockerTag:                 ${{ inputs.dockerTag }}
+      deployToCloud:             ${{ inputs.deployToCloud }}
+
+
+  cloud:
+
+    if: ${{ always() && inputs.deployToCloud && needs.delivery.result == 'success' }}
+
+    needs: delivery
+
+    uses: ./.github/workflows/cloud-verification.yml
+    secrets: inherit
+
+    with:
+      runner: ${{ inputs.runner }}
+      repository: ${{ inputs.repository }}
+      branch: ${{ inputs.branch }}
+      gitHubToken: ${{ inputs.gitHubToken }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
+      appName:                   ${{ inputs.appName }}
+      dockerOrg:                 ${{ inputs.dockerOrg }}
+      dockerRepository:          ${{ inputs.dockerRepository }}
+      dockerTag:                 ${{ inputs.dockerTag }}
+      awsAccessKey:              ${{ inputs.awsAccessKey }}
+      awsSecretKey:              ${{ inputs.awsSecretKey }}
+      awsRegion:                 ${{ inputs.awsRegion }}
 
 
   angular-build:
@@ -461,7 +501,6 @@ jobs:
       dockerUsername:            ${{ inputs.dockerUsername }}
       dockerPassword:            ${{ inputs.dockerPassword }}
       dockerTag:                 ${{ inputs.dockerTag }}
-
   aspdotnet-build:
 
     if: ${{ contains(fromJSON('["ASPDotNet","DotNet"]'), inputs.technology) }}
