@@ -259,7 +259,7 @@ jobs:
           # Root Solution
           ###########################################################################
 
-          SOLUTION_FILE=$(find .. -maxdepth 1 -type f -name "*.sln" | head -1)
+          SOLUTION_FILE=$(find .. -maxdepth 1 -type f -name "root.slnx" | head -1)
 
           if [ -n "$SOLUTION_FILE" ]; then
 
