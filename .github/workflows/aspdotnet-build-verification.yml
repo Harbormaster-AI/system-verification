@@ -263,12 +263,12 @@ jobs:
 
           if [ -n "$SOLUTION_FILE" ]; then
 
-              SCORE=$((SCORE + 1))
+              SCORE=$((SCORE + 2))
 
               post_pass \
                   "BUILD" \
                   "SOLUTION_FILE" \
-                  1 \
+                  2 \
                   "Solution file located: ${SOLUTION_FILE}."
 
           else
@@ -423,11 +423,10 @@ jobs:
           # Do not require a specific test project filename.
           ###########################################################################
 
-          TEST_PROJECT=$(find Test test tests \
-              -type f \
-              -name "*.csproj" \
-              2>/dev/null \
-              | head -1)
+          TEST_PROJECT=$(find Test \
+            -type f \
+            -name "*.csproj" \
+            | head -1)
 
           if [ -n "$TEST_PROJECT" ]; then
 
@@ -481,7 +480,7 @@ jobs:
               "EXPECTED_FILES" \
               "${STATUS}" \
               0 \
-              "Expected files validation complete (${SCORE}/9)."
+              "Expected files validation complete (${SCORE}/10)."
           
 
       ###############################################################################
