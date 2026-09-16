@@ -129,7 +129,7 @@ jobs:
 
         run: |
           
-          chmod +x "${APP_NAME}/.github/actions/common/report.sh"
+          chmod +x "./.github/actions/common/report.sh"
       
 
       ###############################################################################
