@@ -501,6 +501,7 @@ jobs:
       dockerUsername:            ${{ inputs.dockerUsername }}
       dockerPassword:            ${{ inputs.dockerPassword }}
       dockerTag:                 ${{ inputs.dockerTag }}
+
   aspdotnet-build:
 
     if: ${{ contains(fromJSON('["ASPDotNet","DotNet"]'), inputs.technology) }}
