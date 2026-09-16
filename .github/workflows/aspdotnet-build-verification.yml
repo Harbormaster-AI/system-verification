@@ -40,10 +40,22 @@ on:
         required: true
         type: string
 
-      languageVersion:
+      technologyVersion:
+        description: ASP.NET Core version
+        required: false
+        default: "10"
+        type: string
+
+      dotnetVersion:
         description: .NET SDK version
         required: false
         default: "10.x"
+        type: string
+
+      languageVersion:
+        description: C# language version
+        required: false
+        default: "14"
         type: string
 
       languageName:
@@ -74,18 +86,51 @@ jobs:
       ###############################################################################
 
       - name: Checkout Source
+
         uses: actions/checkout@v4
+
         with:
           ref: ${{ inputs.branch != '' && inputs.branch || github.ref_name }}
 
+
+      ###############################################################################
+      # Verify Application Directory
+      #
+      # Checkout occurs at repository root. The generated application is expected
+      # to exist beneath the repository root using APP_NAME.
+      ###############################################################################
+
+      - name: Verify Application Directory
+
+        shell: bash
+
+        run: |
+          
+          if [ -d "${APP_NAME}" ]; then
+          
+              echo "Application directory found: ${APP_NAME}"
+          
+          else
+          
+              echo "Application directory not found: ${APP_NAME}"
+          
+              exit 1
+          
+          fi
+      
 
       ###############################################################################
       # Load Reporting Library
       ###############################################################################
 
       - name: Make report.sh executable
-        run: chmod +x .github/actions/common/report.sh
 
+        shell: bash
+
+        run: |
+          
+          chmod +x "${APP_NAME}/.github/actions/common/report.sh"
+      
 
       ###############################################################################
       # Verify Checkout
@@ -95,11 +140,13 @@ jobs:
 
         shell: bash
 
+        working-directory: ${{ inputs.appName }}
+
         run: |
           
           source .github/actions/common/report.sh
           
-          if [ -d ".git" ]; then
+          if [ -d ".git" ] || [ -d "../.git" ]; then
           
               post_pass \
                   "BUILD" \
@@ -128,9 +175,23 @@ jobs:
 
         shell: bash
 
+        working-directory: ${{ inputs.appName }}
+
         run: |
           
-          DOTNET_VERSION="${{ inputs.languageVersion }}"
+          # IMPORTANT:
+          #
+          # dotnetVersion = .NET SDK version
+          # languageVersion = C# language version
+          #
+          # C# 14 must NEVER be passed to actions/setup-dotnet.
+          #
+          # Example:
+          #
+          #   dotnetVersion   = 10.x
+          #   languageVersion = 14
+          
+          DOTNET_VERSION="${{ inputs.dotnetVersion }}"
           
           if [ -z "$DOTNET_VERSION" ]; then
               DOTNET_VERSION="10.x"
@@ -138,7 +199,11 @@ jobs:
           
           echo "DOTNET_VERSION=${DOTNET_VERSION}" >> "$GITHUB_ENV"
           
-          echo "Using .NET SDK ${DOTNET_VERSION}"
+          echo "Application: ${APP_NAME}"
+          echo "ASP.NET Core version: ${{ inputs.technologyVersion }}"
+          echo "Using .NET SDK: ${DOTNET_VERSION}"
+          echo "C# language version: ${{ inputs.languageVersion }}"
+          echo "Language: ${{ inputs.languageName }}"
       
 
       ###############################################################################
@@ -161,9 +226,15 @@ jobs:
 
         shell: bash
 
+        working-directory: ${{ inputs.appName }}
+
         run: |
           
+          echo "Installed .NET SDK:"
           dotnet --version
+          
+          echo ""
+          echo ".NET information:"
           dotnet --info
       
 
@@ -175,11 +246,14 @@ jobs:
 
         shell: bash
 
+        working-directory: ${{ inputs.appName }}
+
         run: |
           
           source .github/actions/common/report.sh
           
           SCORE=0
+          
           
           ###########################################################################
           # Solution
@@ -424,6 +498,8 @@ jobs:
 
         shell: bash
 
+        working-directory: ${{ inputs.appName }}
+
         run: |
           
           source .github/actions/common/report.sh
@@ -610,6 +686,8 @@ jobs:
 
         shell: bash
 
+        working-directory: ${{ inputs.appName }}
+
         run: |
           
           source .github/actions/common/report.sh
@@ -621,17 +699,18 @@ jobs:
           # Validate .NET SDK
           ###########################################################################
           
-          DOTNET_MAJOR=$(dotnet --version | cut -d. -f1)
+          DOTNET_VERSION_ACTUAL=$(dotnet --version)
+          DOTNET_MAJOR=$(echo "$DOTNET_VERSION_ACTUAL" | cut -d. -f1)
           
           if [ "$DOTNET_MAJOR" = "10" ]; then
           
-              SCORE=$((SCORE + 5))
+              SCORE=$((SCORE + 4))
           
               post_pass \
                   "BUILD" \
                   "DOTNET_10" \
-                  5 \
-                  ".NET 10 SDK is available."
+                  4 \
+                  ".NET 10 SDK is available (${DOTNET_VERSION_ACTUAL})."
           
           else
           
@@ -639,7 +718,7 @@ jobs:
                   "BUILD" \
                   "DOTNET_10" \
                   0 \
-                  "Expected .NET 10 SDK but found $(dotnet --version)."
+                  "Expected .NET 10 SDK but found ${DOTNET_VERSION_ACTUAL}."
           
               post_terminate_build
           
@@ -647,7 +726,35 @@ jobs:
           
           
           ###########################################################################
-          # Validate target framework
+          # Validate C# Language Version
+          ###########################################################################
+          
+          CSHARP_VERSION="${{ inputs.languageVersion }}"
+          
+          if [ "$CSHARP_VERSION" = "14" ] || \
+             [ "$CSHARP_VERSION" = "14.0" ]; then
+          
+              SCORE=$((SCORE + 2))
+          
+              post_pass \
+                  "BUILD" \
+                  "CSHARP_14" \
+                  2 \
+                  "C# language version 14 is configured for the ASP.NET 10 blueprint."
+          
+          else
+          
+              post_warning \
+                  "BUILD" \
+                  "CSHARP_14" \
+                  0 \
+                  "C# language version is ${CSHARP_VERSION}; expected 14 for the ASP.NET 10 blueprint."
+          
+          fi
+          
+          
+          ###########################################################################
+          # Validate Target Framework
           ###########################################################################
           
           PROJECTS=$(find . -type f -name "*.csproj")
@@ -657,12 +764,12 @@ jobs:
               if grep -R "<TargetFramework>net10.0</TargetFramework>" \
                   $PROJECTS > target-framework.log 2>&1; then
           
-                  SCORE=$((SCORE + 5))
+                  SCORE=$((SCORE + 4))
           
                   post_pass \
                       "BUILD" \
                       "TARGET_FRAMEWORK" \
-                      5 \
+                      4 \
                       "Generated project targets net10.0."
           
               else
@@ -699,6 +806,8 @@ jobs:
       - name: Dependency Validation
 
         shell: bash
+
+        working-directory: ${{ inputs.appName }}
 
         run: |
           
@@ -743,6 +852,8 @@ jobs:
       - name: Execute Build
 
         shell: bash
+
+        working-directory: ${{ inputs.appName }}
 
         run: |
           
@@ -791,6 +902,8 @@ jobs:
       - name: Execute Tests
 
         shell: bash
+
+        working-directory: ${{ inputs.appName }}
 
         run: |
           
@@ -841,11 +954,14 @@ jobs:
 
         shell: bash
 
+        working-directory: ${{ inputs.appName }}
+
         run: |
           
           source .github/actions/common/report.sh
           
           BUILD_DIRECTORY=""
+          
           
           ###########################################################################
           # Locate ASP.NET release output
@@ -857,6 +973,7 @@ jobs:
               -not -path "*/obj/*" \
               | head -1 \
               | xargs -r dirname)
+          
           
           if [ -z "$BUILD_DIRECTORY" ]; then
           
@@ -893,6 +1010,8 @@ jobs:
       - name: Validate Build Artifact
 
         shell: bash
+
+        working-directory: ${{ inputs.appName }}
 
         run: |
           
@@ -1039,7 +1158,7 @@ jobs:
 
         with:
           name: packaged-application
-          path: ${{ env.BUILD_DIRECTORY }}
+          path: ${{ inputs.appName }}/${{ env.BUILD_DIRECTORY }}
           retention-days: 1
 
 
@@ -1050,6 +1169,8 @@ jobs:
       - name: Terminate Verification
 
         shell: bash
+
+        working-directory: ${{ inputs.appName }}
 
         run: |
           
