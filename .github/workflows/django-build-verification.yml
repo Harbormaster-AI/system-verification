@@ -334,13 +334,19 @@ jobs:
         run: |
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
+          # Generated Django apps import as "<appName>.*" (e.g. manufacturingOnDjango.delegates)
+          # while manage.py lives inside <appName>/. Put the parent on PYTHONPATH and ensure
+          # the app directory is a Python package so those imports resolve.
+          touch __init__.py
+          export PYTHONPATH="${GITHUB_WORKSPACE}:${PYTHONPATH}"
+
           if python manage.py check > build.log 2>&1; then
               cat build.log
 
               post_pass "BUILD" "DJANGO_BUILD" 40 "Django system check completed successfully."
           else
               cat build.log
-              MESSAGE=$(tail -30 build.log | tr '' ' ')
+              MESSAGE=$(tail -30 build.log | tr '\n' ' ')
   
               post_fail "BUILD" "DJANGO_BUILD" 0 "${MESSAGE}"
   

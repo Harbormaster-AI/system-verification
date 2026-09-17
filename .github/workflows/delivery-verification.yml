@@ -505,6 +505,57 @@ jobs:
               ""
 
       ###############################################################################
+      # Django: layout image so "<appName>.*" imports resolve (same package model as build)
+      ###############################################################################
+
+      - name: Prepare Django Dockerfile If Needed
+        if: ${{ contains(fromJSON('["django"]'), inputs.technology) }}
+
+        shell: bash
+
+        run: |
+          source .github/actions/common/report.sh
+
+          APP_DIR="${APP_NAME}"
+          if [ ! -d "${APP_DIR}" ]; then
+            post_fail \
+              "DELIVERY" \
+              "PREPARE_DOCKERFILE" \
+              0 \
+              "Django application directory not found for Docker prepare." \
+              "Expected ${APP_DIR}/"
+            post_terminate_delivery
+          fi
+
+          # Package marker for import manufacturingOnDjango / <appName>
+          touch "${APP_DIR}/__init__.py"
+
+          cat > "${APP_DIR}/Dockerfile" <<EOF
+          FROM python:3.13-slim
+          WORKDIR /workspace
+          COPY . /workspace/${APP_NAME}/
+          RUN apt-get update \\
+           && apt-get install -y --no-install-recommends \\
+                pkg-config \\
+                default-libmysqlclient-dev \\
+                build-essential \\
+           && rm -rf /var/lib/apt/lists/*
+          WORKDIR /workspace/${APP_NAME}
+          ENV PYTHONPATH=/workspace
+          RUN pip install --no-cache-dir -r requirements.txt
+          EXPOSE 8000
+          CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+          EOF
+          sed -i 's/^          //' "${APP_DIR}/Dockerfile"
+
+          post_pass \
+              "DELIVERY" \
+              "PREPARE_DOCKERFILE" \
+              0 \
+              "Django Dockerfile prepared for package imports." \
+              "PREPARE_DOCKERFILE: PYTHONPATH=/workspace, package=${APP_NAME}"
+
+      ###############################################################################
       # Docker Build
       ###############################################################################
 
