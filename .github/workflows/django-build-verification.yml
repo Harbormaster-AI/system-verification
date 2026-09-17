@@ -62,11 +62,26 @@ jobs:
         with:
           ref: ${{ inputs.branch != '' && inputs.branch || github.ref_name }}
 
-      ###############################################################################
-      # Load Reporting Library
-      ###############################################################################
-      - name: Make report.sh executable
-        run: chmod +x .github/actions/common/report.sh
+      ###########################################################################
+      # Always use report.sh from the verification workflow commit (not app branch)
+      ###########################################################################
+
+      - name: Overlay verification report.sh
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.sha }}
+          path: .hm-verification-overlay
+          sparse-checkout: |
+            .github/actions/common
+          sparse-checkout-cone-mode: false
+
+      - name: Install verification report.sh
+        shell: bash
+        run: |
+          mkdir -p .github/actions/common
+          cp -f .hm-verification-overlay/.github/actions/common/report.sh .github/actions/common/report.sh
+          chmod +x .github/actions/common/report.sh
 
       ###############################################################################
       # Verify Checkout

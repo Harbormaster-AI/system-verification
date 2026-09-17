@@ -69,6 +69,26 @@ jobs:
         with:
           ref: ${{ inputs.branch }}
 
+      ###########################################################################
+      # Always use report.sh from the verification workflow commit (not app branch)
+      ###########################################################################
+
+      - name: Overlay verification report.sh
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.sha }}
+          path: .hm-verification-overlay
+          sparse-checkout: |
+            .github/actions/common
+          sparse-checkout-cone-mode: false
+
+      - name: Install verification report.sh
+        shell: bash
+        run: |
+          mkdir -p .github/actions/common
+          cp -f .hm-verification-overlay/.github/actions/common/report.sh .github/actions/common/report.sh
+          chmod +x .github/actions/common/report.sh
 
       ###########################################################################
       # Download pre-built Angular artifact
