@@ -55,6 +55,21 @@ jobs:
 
     runs-on: ${{ inputs.runner }}
 
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: rails_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d rails_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
 
       ###########################################################################
@@ -122,6 +137,24 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: packaged-application
+
+      ###########################################################################
+      # Artifact may extract as <appName>/... — flatten so Gemfile is at workspace root
+      ###########################################################################
+
+      - name: Normalize Rails Artifact Layout
+        shell: bash
+        run: |
+          if [ ! -f "Gemfile" ] && [ -n "${APP_NAME}" ] && [ -f "${APP_NAME}/Gemfile" ]; then
+            echo "Flattening Rails artifact from ${APP_NAME}/ to workspace root..."
+            cp -a "${APP_NAME}/." .
+          fi
+
+          if [ ! -f "Gemfile" ]; then
+            echo "Gemfile not found after artifact download/normalize"
+            find . -maxdepth 3 -type f -name Gemfile -print || true
+            exit 1
+          fi
 
       ###########################################################################
       # Verify Bundled Gems

@@ -66,6 +66,21 @@ jobs:
 
     runs-on: ${{ inputs.runner }}
 
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: testDb_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d testDb_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
 
       ###############################################################################
@@ -657,6 +672,9 @@ jobs:
 
         shell: bash
         working-directory: ${{ env.RAILS_APP_DIRECTORY }}
+        env:
+          SECRET_KEY_BASE: harbormaster-rails-build-secret
+          RAILS_ENV: development
         run: |
 
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
@@ -726,14 +744,25 @@ jobs:
 
         shell: bash
         working-directory: ${{ env.RAILS_APP_DIRECTORY }}
+        env:
+          RAILS_ENV: test
+          PGHOST: 127.0.0.1
+          PGPORT: 5432
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGDATABASE: testDb_test
+          SECRET_KEY_BASE: harbormaster-rails-build-secret
         run: |
 
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
 
           ###########################################################################
-          # Rails Test Suite
+          # Prepare test database then run Rails Test Suite
           ###########################################################################
+
+          bundle exec rails db:prepare > rails-db-prepare.log 2>&1 || true
+          cat rails-db-prepare.log || true
 
           if bundle exec rails test \
               > rails-test.log 2>&1; then

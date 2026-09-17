@@ -200,6 +200,25 @@ jobs:
           name: packaged-application
 
       ###############################################################################
+      # Rails artifact may extract as <appName>/... — flatten for Dockerfile at root
+      ###############################################################################
+
+      - name: Normalize Rails Artifact Layout
+        if: ${{ contains(fromJSON('["rails","rubyonrails"]'), inputs.technology) }}
+        shell: bash
+        run: |
+          if [ ! -f "Dockerfile" ] && [ -n "${APP_NAME}" ] && [ -f "${APP_NAME}/Dockerfile" ]; then
+            echo "Flattening Rails artifact from ${APP_NAME}/ to workspace root..."
+            cp -a "${APP_NAME}/." .
+          fi
+
+          if [ ! -f "Dockerfile" ] || [ ! -f "Gemfile" ]; then
+            echo "Rails Dockerfile/Gemfile missing after artifact normalize"
+            find . -maxdepth 3 \( -name Dockerfile -o -name Gemfile \) -print || true
+            exit 1
+          fi
+
+      ###############################################################################
       # Django: verify packaged application (same as django-delivery-verification.yml)
       ###############################################################################
 
