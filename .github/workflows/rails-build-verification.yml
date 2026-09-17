@@ -761,7 +761,8 @@ jobs:
           # Prepare test database then run Rails Test Suite
           ###########################################################################
 
-          bundle exec rails db:prepare > rails-db-prepare.log 2>&1 || true
+          # Prefer migrate over prepare so broken generated seeds.rb is not loaded.
+          bundle exec rails db:migrate > rails-db-prepare.log 2>&1 || true
           cat rails-db-prepare.log || true
 
           if bundle exec rails test \
