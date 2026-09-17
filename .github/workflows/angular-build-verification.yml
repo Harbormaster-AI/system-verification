@@ -538,7 +538,64 @@ jobs:
 
 
       ###############################################################################
-      # Angular Configuration Validation
+      # Dependency Validation (must run before npx ng — CLI lives in node_modules)
+      ###############################################################################
+
+      - name: Dependency Validation
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+
+          ###########################################################################
+          # package-lock.json
+          ###########################################################################
+
+          if [ ! -f "package-lock.json" ]; then
+
+              post_fail \
+                  "BUILD" \
+                  "PACKAGE_LOCK" \
+                  0 \
+                  "package-lock.json not found."
+
+              post_terminate_build
+
+          fi
+
+
+          ###########################################################################
+          # Install dependencies exactly as locked
+          ###########################################################################
+
+          if npm ci > dependency-validation.log 2>&1; then
+
+              post_pass \
+                  "BUILD" \
+                  "NPM_DEPENDENCY_INSTALL" \
+                  10 \
+                  "npm dependency installation completed successfully."
+
+          else
+
+              MESSAGE=$(tail -20 dependency-validation.log | tr '\n' ' ')
+
+              post_fail \
+                  "BUILD" \
+                  "NPM_DEPENDENCY_INSTALL" \
+                  0 \
+                  "${MESSAGE}"
+
+              post_terminate_build
+
+          fi
+
+
+      ###############################################################################
+      # Angular Configuration Validation (after npm ci so local ng CLI is available)
       ###############################################################################
 
       - name: Angular Configuration Validation
@@ -602,63 +659,6 @@ jobs:
               post_fail \
                   "BUILD" \
                   "ANGULAR_CLI" \
-                  0 \
-                  "${MESSAGE}"
-
-              post_terminate_build
-
-          fi
-
-
-      ###############################################################################
-      # Dependency Validation
-      ###############################################################################
-
-      - name: Dependency Validation
-
-        shell: bash
-
-        run: |
-
-          source .github/actions/common/report.sh
-
-
-          ###########################################################################
-          # package-lock.json
-          ###########################################################################
-
-          if [ ! -f "package-lock.json" ]; then
-
-              post_fail \
-                  "BUILD" \
-                  "PACKAGE_LOCK" \
-                  0 \
-                  "package-lock.json not found."
-
-              post_terminate_build
-
-          fi
-
-
-          ###########################################################################
-          # Install dependencies exactly as locked
-          ###########################################################################
-
-          if npm ci > dependency-validation.log 2>&1; then
-
-              post_pass \
-                  "BUILD" \
-                  "NPM_DEPENDENCY_INSTALL" \
-                  10 \
-                  "npm dependency installation completed successfully."
-
-          else
-
-              MESSAGE=$(tail -20 dependency-validation.log | tr '\n' ' ')
-
-              post_fail \
-                  "BUILD" \
-                  "NPM_DEPENDENCY_INSTALL" \
                   0 \
                   "${MESSAGE}"
 
