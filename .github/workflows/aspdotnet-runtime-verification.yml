@@ -309,6 +309,12 @@ jobs:
 
           fi
 
+          echo "========== RUNTIME LOG =========="
+          cat runtime.log 2>/dev/null || true
+          
+          echo "========== LISTENING PORTS =========="
+          ss -ltnp 2>/dev/null || true
+
       ###########################################################################
       # Wait for application
       #
