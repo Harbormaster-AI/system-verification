@@ -992,120 +992,121 @@ jobs:
           ###########################################################################
           # Output Directory
           ###########################################################################
-          
-          if [ -d "${BUILD_DIRECTORY}" ]; then
-          
+            
+            if [ -d "${BUILD_DIRECTORY}" ]; then
+            
               echo "Contents of ${BUILD_DIRECTORY}:"
-          
-              find "${BUILD_DIRECTORY}" -maxdepth 2 -type f | head -50
-          
-          else
-          
+              
+              find "${BUILD_DIRECTORY}" -maxdepth 2 -type f -print
+            
+            else
+            
               post_fail \
-                  "BUILD" \
-                  "BUILD_ARTIFACT" \
-                  0 \
-                  "ASP.NET build directory does not exist."
-          
+              "BUILD" \
+              "BUILD_ARTIFACT" \
+              0 \
+              "ASP.NET build directory does not exist."
+              
               post_terminate_build
-          
-          fi
-          
-          
-          ###########################################################################
-          # Application DLL
-          ###########################################################################
-          
-          DLL_FILE="${BUILD_DIRECTORY}/${APPLICATION_DLL}"
-          
-          if [ -z "$DLL_FILE" ]; then
-          
+            
+            fi
+            
+            
+            ###########################################################################
+            # Application DLL
+            ###########################################################################
+            
+            DLL_FILE="${BUILD_DIRECTORY}/${APPLICATION_DLL}"
+            
+            if [ ! -f "$DLL_FILE" ]; then
+            
               post_fail \
-                  "BUILD" \
-                  "BUILD_ARTIFACT" \
-                  0 \
-                  "No ASP.NET application DLL found in build output."
-          
+                "BUILD" \
+                "BUILD_ARTIFACT" \
+                0 \
+                "ASP.NET application DLL not found in build output." \
+                "Expected: ${DLL_FILE}"
+              
               post_terminate_build
-          
-          fi
-          
-          
-          ###########################################################################
-          # Runtime Configuration
-          ###########################################################################
-          
-          RUNTIME_CONFIG="${BUILD_DIRECTORY}/${APPLICATION_DLL%.dll}.runtimeconfig.json"
-          
-          if [ -z "$RUNTIME_CONFIG" ]; then
-          
+            
+            fi
+            
+            
+            ###########################################################################
+            # Runtime Configuration
+            ###########################################################################
+            
+            RUNTIME_CONFIG="${BUILD_DIRECTORY}/${APPLICATION_DLL%.dll}.runtimeconfig.json"
+            
+            if [ ! -f "$RUNTIME_CONFIG" ]; then
+            
               post_fail \
-                  "BUILD" \
-                  "BUILD_ARTIFACT" \
-                  0 \
-                  "No ASP.NET runtimeconfig.json found in build output."
-          
+                "BUILD" \
+                "BUILD_ARTIFACT" \
+                0 \
+                "No ASP.NET runtimeconfig.json found in build output." \
+                "Expected: ${RUNTIME_CONFIG}"
+              
               post_terminate_build
-          
-          fi
-          
-          
-          ###########################################################################
-          # Dependency Manifest
-          ###########################################################################
-          
-          DEPS_FILE="${BUILD_DIRECTORY}/${APPLICATION_DLL%.dll}.deps.json"
-          
-          if [ -z "$DEPS_FILE" ]; then
-          
+            
+            fi
+            
+            
+            ###########################################################################
+            # Dependency Manifest
+            ###########################################################################
+            
+            DEPS_FILE="${BUILD_DIRECTORY}/${APPLICATION_DLL%.dll}.deps.json"
+            
+            if [ ! -f "$DEPS_FILE" ]; then
+            
               post_fail \
-                  "BUILD" \
-                  "BUILD_ARTIFACT" \
-                  0 \
-                  "No ASP.NET deps.json found in build output."
-          
+                "BUILD" \
+                "BUILD_ARTIFACT" \
+                0 \
+                "No ASP.NET deps.json found in build output." \
+                "Expected: ${DEPS_FILE}"
+              
               post_terminate_build
-          
-          fi
-          
-          
-          ###########################################################################
-          # Non-empty output
-          ###########################################################################
-          
-          if [ -z "$(find "${BUILD_DIRECTORY}" \
+            
+            fi
+            
+            
+            ###########################################################################
+            # Non-empty output
+            ###########################################################################
+            
+            if [ -z "$(find "${BUILD_DIRECTORY}" \
               -type f \
               -size +0c \
               -print \
               -quit)" ]; then
-          
+            
               post_fail \
-                  "BUILD" \
-                  "BUILD_ARTIFACT" \
-                  0 \
-                  "ASP.NET build output is empty."
-          
+              "BUILD" \
+              "BUILD_ARTIFACT" \
+              0 \
+              "ASP.NET build output is empty."
+              
               post_terminate_build
-          
-          fi
-          
-          
-          ###########################################################################
-          # Gather Information
-          ###########################################################################
-          
-          FILE_COUNT=$(find "${BUILD_DIRECTORY}" -type f | wc -l)
-          
-          TOTAL_SIZE=$(du -sh "${BUILD_DIRECTORY}" | cut -f1)
-          
-          
-          post_pass \
+            
+            fi
+            
+            
+            ###########################################################################
+            # Gather Information
+            ###########################################################################
+            
+            FILE_COUNT=$(find "${BUILD_DIRECTORY}" -type f | wc -l)
+            TOTAL_SIZE=$(du -sh "${BUILD_DIRECTORY}" | cut -f1)
+            
+            post_pass \
               "BUILD" \
               "BUILD_ARTIFACT" \
               20 \
               "ASP.NET 10 build artifact successfully validated." \
               "BUILD_ARTIFACT: ${FILE_COUNT} files (${TOTAL_SIZE})."
-      
+        
 
       ###############################################################################
       # Upload ASP.NET Build Artifact
