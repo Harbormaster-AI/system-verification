@@ -949,42 +949,29 @@ jobs:
           
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
-          BUILD_DIRECTORY=""
-          
           
           ###########################################################################
           # Locate ASP.NET release output
           ###########################################################################
+            
+          BUILD_DIRECTORY="$(dirname "$APPLICATION_PROJECT")/bin/Release/net10.0"
           
-          BUILD_DIRECTORY=$(find . \
-              -type f \
-              -path "*/bin/Release/net10.0/*.dll" \
-              -not -path "*/obj/*" \
-              | head -1 \
-              | xargs -r dirname)
+          APPLICATION_DLL="$(basename "$APPLICATION_PROJECT" .csproj).dll"
           
-          
-          if [ -z "$BUILD_DIRECTORY" ]; then
-              BUILD_DIRECTORY="$(dirname "$APPLICATION_PROJECT")/bin/Release/net10.0"
+          if [ ! -f "$BUILD_DIRECTORY/$APPLICATION_DLL" ]; then
+            post_fail \
+            "BUILD" \
+            "BUILD_OUTPUT" \
+            0 \
+            "ASP.NET application build output not found: ${BUILD_DIRECTORY}/${APPLICATION_DLL}."
+            post_terminate_build
           fi
-          
-          
-          if [ -z "$BUILD_DIRECTORY" ]; then
-          
-              post_fail \
-                  "BUILD" \
-                  "BUILD_OUTPUT" \
-                  0 \
-                  "Unable to locate ASP.NET 10 build output."
-          
-              post_terminate_build
-          
-          fi
-          
           
           echo "BUILD_DIRECTORY=${BUILD_DIRECTORY}" >> "$GITHUB_ENV"
-          
+          echo "APPLICATION_DLL=${APPLICATION_DLL}" >> "$GITHUB_ENV"
+        
           echo "ASP.NET build directory: ${BUILD_DIRECTORY}"
+          echo "ASP.NET application DLL: ${APPLICATION_DLL}"          
       
 
       ###############################################################################
