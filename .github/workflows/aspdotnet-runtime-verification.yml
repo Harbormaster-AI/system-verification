@@ -47,6 +47,7 @@ env:
   APP_NAME: ${{ inputs.appName }}
   APPLICATION_DLL: Api.dll
   ARTIFACT_DIRECTORY: packaged-application
+  BUILD_DIRECTORY: bin/Release/net10.0
 
 jobs:
 
