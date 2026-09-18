@@ -965,12 +965,7 @@ jobs:
           
           
           if [ -z "$BUILD_DIRECTORY" ]; then
-          
-              BUILD_DIRECTORY=$(find . \
-                  -type d \
-                  -path "*/bin/Release/net10.0" \
-                  | head -1)
-          
+              BUILD_DIRECTORY="$(dirname "$APPLICATION_PROJECT")/bin/Release/net10.0"
           fi
           
           
