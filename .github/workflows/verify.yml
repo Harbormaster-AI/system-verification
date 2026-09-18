@@ -423,3 +423,19 @@ jobs:
       branch: ${{ inputs.branch }}
       certificationIdentifier: ${{ inputs.certificationIdentifier }}
       appName: ${{ inputs.appName }}
+
+  aspdotnet-build:
+
+    if: ${{ contains(fromJSON('["ASPDotNet","DotNet"]'), inputs.technology) }}
+
+    uses: ./.github/workflows/aspdotnet-build-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      branch: ${{ inputs.branch }}
+      certificationIdentifier: ${{ inputs.certificationIdentifier }}
+      appName: ${{ inputs.appName }}
+      languageName: ${{ inputs.languageName }}
+      languageVersion: ${{ inputs.languageVersion }}
