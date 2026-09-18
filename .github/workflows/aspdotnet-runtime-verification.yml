@@ -49,6 +49,7 @@ env:
   ARTIFACT_DIRECTORY: packaged-application
   BUILD_DIRECTORY: bin/Release/net10.0
 
+
 jobs:
 
   runtime-verification:
@@ -94,6 +95,29 @@ jobs:
           name: packaged-application
           path: packaged-application
 
+      ###########################################################################
+      # Show artifact contents
+      ###########################################################################
+
+      - name: List Workspace Contents
+        shell: bash
+        run: |
+          echo "========================================"
+          echo "WORKSPACE CONTENTS"
+          echo "========================================"
+          
+          echo "GitHub workspace:"
+          echo "${GITHUB_WORKSPACE}"
+          
+          echo ""
+          echo "Top-level contents:"
+          ls -la
+          
+          echo ""
+          echo "All workspace files:"
+          find . -type f -print
+          
+          echo "========================================"
 
       ###########################################################################
       # Show artifact
@@ -147,8 +171,9 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          RUNTIME_CONFIG="${BUILD_DIRECTORY}/${APPLICATION_DLL%.dll}.runtimeconfig.json"
-          DEPS_FILE="${BUILD_DIRECTORY}/${APPLICATION_DLL%.dll}.deps.json"
+          APPLICATION_PATH="${APPLICATION_DLL}"
+          RUNTIME_CONFIG="${APPLICATION_DLL%.dll}.runtimeconfig.json"
+          DEPS_FILE="${APPLICATION_DLL%.dll}.deps.json"
 
           if [ ! -f "${ARTIFACT_DIRECTORY}/${APPLICATION_DLL}" ]; then
 
@@ -183,7 +208,7 @@ jobs:
               "VERIFY_DEPS" \
               0 \
               "ASP.NET dependency manifest not found." \
-              "VERIFY_DEPS: ${ARTIFACT_DIRECTORY}/${APP_NAME}.deps.json"
+              "VERIFY_DEPS: ${DEPS_FILE}"
 
             post_terminate_runtime "RUNTIME"
 
