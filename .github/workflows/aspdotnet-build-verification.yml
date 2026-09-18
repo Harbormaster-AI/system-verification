@@ -1123,14 +1123,16 @@ jobs:
       # Upload ASP.NET Build Artifact
       ###############################################################################
 
-      - name: Upload Build Artifact
-
+      - name: Upload packaged application
         uses: actions/upload-artifact@v4
-
         with:
           name: packaged-application
           path: ${{ inputs.appName }}/${{ env.BUILD_DIRECTORY }}
           retention-days: 1
+          if-no-files-found: warn
+          compression-level: 6
+          overwrite: false
+          include-hidden-files: false
 
 
       ###############################################################################
