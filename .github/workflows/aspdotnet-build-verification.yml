@@ -953,8 +953,8 @@ jobs:
           ###########################################################################
           # Locate ASP.NET release output
           ###########################################################################
-            
-          BUILD_DIRECTORY="$(dirname "$APPLICATION_PROJECT")/bin/Release/net10.0"
+          
+          BUILD_DIRECTORY="bin/Release/net10.0"
           
           APPLICATION_DLL="$(basename "$APPLICATION_PROJECT" .csproj).dll"
           
