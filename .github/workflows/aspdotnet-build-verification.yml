@@ -1016,11 +1016,7 @@ jobs:
           # Application DLL
           ###########################################################################
           
-          DLL_FILE=$(find "${BUILD_DIRECTORY}" \
-              -maxdepth 1 \
-              -type f \
-              -name "*.dll" \
-              | head -1)
+          DLL_FILE="${BUILD_DIRECTORY}/${APPLICATION_DLL}"
           
           if [ -z "$DLL_FILE" ]; then
           
@@ -1039,11 +1035,7 @@ jobs:
           # Runtime Configuration
           ###########################################################################
           
-          RUNTIME_CONFIG=$(find "${BUILD_DIRECTORY}" \
-              -maxdepth 1 \
-              -type f \
-              -name "*.runtimeconfig.json" \
-              | head -1)
+          RUNTIME_CONFIG="${BUILD_DIRECTORY}/${APPLICATION_DLL%.dll}.runtimeconfig.json"
           
           if [ -z "$RUNTIME_CONFIG" ]; then
           
@@ -1062,11 +1054,7 @@ jobs:
           # Dependency Manifest
           ###########################################################################
           
-          DEPS_FILE=$(find "${BUILD_DIRECTORY}" \
-              -maxdepth 1 \
-              -type f \
-              -name "*.deps.json" \
-              | head -1)
+          DEPS_FILE="${BUILD_DIRECTORY}/${APPLICATION_DLL%.dll}.deps.json"
           
           if [ -z "$DEPS_FILE" ]; then
           
