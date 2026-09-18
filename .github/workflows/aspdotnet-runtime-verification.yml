@@ -172,8 +172,8 @@ jobs:
           source .github/actions/common/report.sh
 
           APPLICATION_PATH="${APPLICATION_DLL}"
-          RUNTIME_CONFIG="${APPLICATION_DLL%.dll}.runtimeconfig.json"
-          DEPS_FILE="${APPLICATION_DLL%.dll}.deps.json"
+          RUNTIME_CONFIG="${ARTIFACT_DIRECTORY}/${APPLICATION_DLL%.dll}.runtimeconfig.json"
+          DEPS_FILE="${ARTIFACT_DIRECTORY}/${APPLICATION_DLL%.dll}.deps.json"
 
           if [ ! -f "${ARTIFACT_DIRECTORY}/${APPLICATION_DLL}" ]; then
 
