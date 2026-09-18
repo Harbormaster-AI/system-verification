@@ -146,8 +146,8 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          RUNTIME_CONFIG="${APPLICATION_DLL%.dll}.runtimeconfig.json"
-          DEPS_FILE="${APPLICATION_DLL%.dll}.deps.json"
+          RUNTIME_CONFIG="${BUILD_DIRECTORY}/${APPLICATION_DLL%.dll}.runtimeconfig.json"
+          DEPS_FILE="${BUILD_DIRECTORY}/${APPLICATION_DLL%.dll}.deps.json"
 
           if [ ! -f "${ARTIFACT_DIRECTORY}/${APPLICATION_DLL}" ]; then
 
@@ -169,7 +169,7 @@ jobs:
               "VERIFY_RUNTIMECONFIG" \
               0 \
               "ASP.NET runtime configuration file not found." \
-              "VERIFY_RUNTIMECONFIG: ${ARTIFACT_DIRECTORY}/${APP_NAME}.runtimeconfig.json"
+              "VERIFY_RUNTIMECONFIG: ${RUNTIME_CONFIG}"
 
             post_terminate_runtime "RUNTIME"
 
