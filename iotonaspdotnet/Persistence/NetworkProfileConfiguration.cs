@@ -1,0 +1,30 @@
+using iotonaspdotnet.Domain;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace iotonaspdotnet.Persistence;
+
+public class NetworkProfileConfiguration : IEntityTypeConfiguration<NetworkProfile>
+{
+    public void Configure(EntityTypeBuilder<NetworkProfile> builder)
+    {
+        builder.ToTable("networkProfiles");
+        builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).ValueGeneratedNever();
+
+        builder.Property(x => x.ProfileName);
+        builder.Property(x => x.Ssid);
+        builder.Property(x => x.Apn);
+        builder.Property(x => x.ConnectivityType).HasConversion<string>();
+
+        builder.Property(x => x.Device).IsRequired();
+        // Exactly one ConnectivityType per NetworkProfile (1:1)
+        builder.HasIndex(x => x.Device.Id).IsUnique();
+        builder.Property(x => x.Gateway).IsRequired();
+        // Exactly one ConnectivityType per NetworkProfile (1:1)
+        builder.HasIndex(x => x.Gateway.Id).IsUnique();
+        builder.Property(x => x.SimCard).IsRequired();
+        // Exactly one ConnectivityType per NetworkProfile (1:1)
+        builder.HasIndex(x => x.SimCard.Id).IsUnique();
+    }
+}
