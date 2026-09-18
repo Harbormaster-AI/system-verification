@@ -146,9 +146,6 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          APPLICATION_DLL="${APP_NAME}.dll"
-          ARTIFACT_DIRECTORY="packaged-application"
-
           if [ ! -f "${ARTIFACT_DIRECTORY}/${APPLICATION_DLL}" ]; then
 
             post_fail \
