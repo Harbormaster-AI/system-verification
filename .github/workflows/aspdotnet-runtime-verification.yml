@@ -146,6 +146,9 @@ jobs:
 
           source .github/actions/common/report.sh
 
+          RUNTIME_CONFIG="${APPLICATION_DLL%.dll}.runtimeconfig.json"
+          DEPS_FILE="${APPLICATION_DLL%.dll}.deps.json"
+
           if [ ! -f "${ARTIFACT_DIRECTORY}/${APPLICATION_DLL}" ]; then
 
             post_fail \
@@ -159,7 +162,7 @@ jobs:
 
           fi
 
-          if [ ! -f "${ARTIFACT_DIRECTORY}/${APP_NAME}.runtimeconfig.json" ]; then
+          if [ ! -f "${RUNTIME_CONFIG}" ]; then
 
             post_fail \
               "RUNTIME" \
@@ -172,7 +175,7 @@ jobs:
 
           fi
 
-          if [ ! -f "${ARTIFACT_DIRECTORY}/${APP_NAME}.deps.json" ]; then
+          if [ ! -f "${DEPS_FILE}" ]; then
 
             post_fail \
               "RUNTIME" \
