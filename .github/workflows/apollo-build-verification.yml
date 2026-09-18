@@ -78,14 +78,26 @@ jobs:
         with:
           ref: ${{ inputs.branch != '' && inputs.branch || github.ref_name }}
 
+      ###########################################################################
+      # Always use report.sh from the verification workflow commit (not app branch)
+      ###########################################################################
 
-      ###############################################################################
-      # Load Reporting Library
-      ###############################################################################
+      - name: Overlay verification report.sh
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.sha }}
+          path: .hm-verification-overlay
+          sparse-checkout: |
+            .github/actions/common
+          sparse-checkout-cone-mode: false
 
-      - name: Make report.sh executable
-        run: chmod +x .github/actions/common/report.sh
-
+      - name: Install verification report.sh
+        shell: bash
+        run: |
+          mkdir -p .github/actions/common
+          cp -f .hm-verification-overlay/.github/actions/common/report.sh .github/actions/common/report.sh
+          chmod +x .github/actions/common/report.sh
 
       ###############################################################################
       # Verify Checkout
@@ -477,50 +489,6 @@ jobs:
 
 
       ###############################################################################
-      # TypeScript / Apollo Configuration Validation
-      ###############################################################################
-
-      - name: TypeScript Configuration Validation
-
-        shell: bash
-
-        run: |
-
-          source .github/actions/common/report.sh
-
-          SCORE=0
-
-
-          ###########################################################################
-          # Validate TypeScript configuration
-          ###########################################################################
-
-          if npx tsc --showConfig > typescript-config.log 2>&1; then
-
-              SCORE=$((SCORE + 10))
-
-              post_pass \
-                  "BUILD" \
-                  "TYPESCRIPT_CONFIGURATION" \
-                  10 \
-                  "TypeScript configuration is valid."
-
-          else
-
-              MESSAGE=$(tail -20 typescript-config.log | tr '\n' ' ')
-
-              post_fail \
-                  "BUILD" \
-                  "TYPESCRIPT_CONFIGURATION" \
-                  0 \
-                  "${MESSAGE}"
-
-              post_terminate_build
-
-          fi
-
-
-      ###############################################################################
       # Dependency Validation
       ###############################################################################
 
@@ -571,6 +539,51 @@ jobs:
               post_fail \
                   "BUILD" \
                   "NPM_DEPENDENCY_INSTALL" \
+                  0 \
+                  "${MESSAGE}"
+
+              post_terminate_build
+
+          fi
+
+
+      ###############################################################################
+      # TypeScript / Apollo Configuration Validation (after npm ci)
+      ###############################################################################
+
+      - name: TypeScript Configuration Validation
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+          SCORE=0
+
+
+          ###########################################################################
+          # Validate TypeScript configuration with the project-local compiler.
+          # Must run after npm ci — bare "npx tsc" installs the wrong npm package.
+          ###########################################################################
+
+          if ./node_modules/.bin/tsc --showConfig > typescript-config.log 2>&1; then
+
+              SCORE=$((SCORE + 10))
+
+              post_pass \
+                  "BUILD" \
+                  "TYPESCRIPT_CONFIGURATION" \
+                  10 \
+                  "TypeScript configuration is valid."
+
+          else
+
+              MESSAGE=$(tail -20 typescript-config.log | tr '\n' ' ')
+
+              post_fail \
+                  "BUILD" \
+                  "TYPESCRIPT_CONFIGURATION" \
                   0 \
                   "${MESSAGE}"
 

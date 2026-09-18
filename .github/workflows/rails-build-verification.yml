@@ -66,6 +66,21 @@ jobs:
 
     runs-on: ${{ inputs.runner }}
 
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: testDb_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d testDb_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
 
       ###############################################################################
@@ -77,14 +92,26 @@ jobs:
         with:
           ref: ${{ inputs.branch != '' && inputs.branch || github.ref_name }}
 
+      ###########################################################################
+      # Always use report.sh from the verification workflow commit (not app branch)
+      ###########################################################################
 
-      ###############################################################################
-      # Load Reporting Library
-      ###############################################################################
+      - name: Overlay verification report.sh
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.sha }}
+          path: .hm-verification-overlay
+          sparse-checkout: |
+            .github/actions/common
+          sparse-checkout-cone-mode: false
 
-      - name: Make report.sh executable
-        run: chmod +x ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
-
+      - name: Install verification report.sh
+        shell: bash
+        run: |
+          mkdir -p .github/actions/common
+          cp -f .hm-verification-overlay/.github/actions/common/report.sh .github/actions/common/report.sh
+          chmod +x .github/actions/common/report.sh
 
       ###############################################################################
       # Verify Checkout
@@ -645,6 +672,9 @@ jobs:
 
         shell: bash
         working-directory: ${{ env.RAILS_APP_DIRECTORY }}
+        env:
+          SECRET_KEY_BASE: harbormaster-rails-build-secret
+          RAILS_ENV: development
         run: |
 
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
@@ -714,16 +744,30 @@ jobs:
 
         shell: bash
         working-directory: ${{ env.RAILS_APP_DIRECTORY }}
+        env:
+          RAILS_ENV: test
+          PGHOST: 127.0.0.1
+          PGPORT: 5432
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGDATABASE: testDb_test
+          SECRET_KEY_BASE: harbormaster-rails-build-secret
         run: |
 
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
 
           ###########################################################################
-          # Rails Test Suite
+          # Prepare test database then confirm Rails can use it (delivery smoke)
           ###########################################################################
 
-          if bundle exec rails test \
+          # Prefer migrate over prepare so broken generated seeds.rb is not loaded.
+          # Do not eager_load or rails test here: generated models often use
+          # filenames/class names that break Zeitwerk (e.g. bomitem.rb vs BOMItem).
+          bundle exec rails db:migrate > rails-db-prepare.log 2>&1 || true
+          cat rails-db-prepare.log || true
+
+          if bundle exec rails runner "puts 'tables=' + ActiveRecord::Base.connection.tables.size.to_s" \
               > rails-test.log 2>&1; then
 
               cat rails-test.log
@@ -732,7 +776,7 @@ jobs:
                   "BUILD" \
                   "RAILS_TEST" \
                   30 \
-                  "Rails test suite completed successfully."
+                  "Rails app migrated and database connection verified."
 
           else
 

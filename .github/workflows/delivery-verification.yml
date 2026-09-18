@@ -80,8 +80,21 @@ on:
         default: latest
         type: string
 
+      # Which stack is being delivered. Drives ports, health checks, and DB sidecars.
+      # spring | go | angular | django | rails | apollo (aliases like springboot/golang accepted)
+      technology:
+        description: Technology being verified
+        required: true
+        type: string
+
+      saveDockerImage:
+        description: Save Docker image as artifact when TRUE
+        required: false
+        default: "FALSE"
+        type: string
+
       deployToCloud:
-        description: When false, delivery deletes the verification branch at the end
+        description: When false (or non Spring/Go), delivery may delete the verification branch at the end
         required: false
         default: true
         type: boolean
@@ -186,6 +199,140 @@ jobs:
         with:
           name: packaged-application
 
+      ###############################################################################
+      # Rails artifact may extract as <appName>/... — flatten for Dockerfile at root
+      ###############################################################################
+
+      - name: Normalize Rails Artifact Layout
+        if: ${{ contains(fromJSON('["rails","rubyonrails"]'), inputs.technology) }}
+        shell: bash
+        run: |
+          if [ ! -f "Dockerfile" ] && [ -n "${APP_NAME}" ] && [ -f "${APP_NAME}/Dockerfile" ]; then
+            echo "Flattening Rails artifact from ${APP_NAME}/ to workspace root..."
+            cp -a "${APP_NAME}/." .
+          fi
+
+          if [ ! -f "Dockerfile" ] || [ ! -f "Gemfile" ]; then
+            echo "Rails Dockerfile/Gemfile missing after artifact normalize"
+            find . -maxdepth 3 \( -name Dockerfile -o -name Gemfile \) -print || true
+            exit 1
+          fi
+
+      ###############################################################################
+      # Django: verify packaged application (same as django-delivery-verification.yml)
+      ###############################################################################
+
+      - name: Verify Django Application Artifact
+        if: ${{ contains(fromJSON('["django"]'), inputs.technology) }}
+
+        shell: bash
+
+        run: |
+          source .github/actions/common/report.sh
+
+          APP_DIRECTORY="${APP_NAME}"
+
+          if [ ! -d "${APP_DIRECTORY}" ]; then
+              post_fail \
+                  "DELIVERY" \
+                  "VERIFY_ARTIFACT" \
+                  0 \
+                  "Django application artifact directory not found." \
+                  "VERIFY_ARTIFACT: ${APP_DIRECTORY}"
+              post_terminate_delivery
+          fi
+
+          if [ ! -f "${APP_DIRECTORY}/manage.py" ]; then
+              post_fail \
+                  "DELIVERY" \
+                  "VERIFY_ARTIFACT" \
+                  0 \
+                  "Django application artifact does not contain manage.py." \
+                  "VERIFY_ARTIFACT: ${APP_DIRECTORY}/manage.py"
+              post_terminate_delivery
+          fi
+
+          post_pass \
+              "DELIVERY" \
+              "VERIFY_ARTIFACT" \
+              5 \
+              "Django application artifact located." \
+              "VERIFY_ARTIFACT: ${APP_DIRECTORY}"
+
+      ###############################################################################
+      # Apollo: verify packaged application (same as apollo-delivery-verification.yml)
+      ###############################################################################
+
+      - name: Verify Apollo Build Artifact
+        if: ${{ contains(fromJSON('["ApolloGraphQL","Apollo","apollo","apollographql"]'), inputs.technology) }}
+
+        shell: bash
+
+        run: |
+          source .github/actions/common/report.sh
+
+          SCORE=0
+
+          if [ -d "dist" ]; then
+              SCORE=$((SCORE + 3))
+              post_pass \
+                  "DELIVERY" \
+                  "VERIFY_DIST" \
+                  3 \
+                  "Compiled Apollo application found." \
+                  "VERIFY_DIST: dist/"
+          else
+              post_fail \
+                  "DELIVERY" \
+                  "VERIFY_DIST" \
+                  0 \
+                  "Compiled Apollo application not found." \
+                  "VERIFY_DIST: dist/ missing."
+              post_terminate_delivery
+          fi
+
+          if [ -d "node_modules" ]; then
+              SCORE=$((SCORE + 3))
+              post_pass \
+                  "DELIVERY" \
+                  "VERIFY_NODE_MODULES" \
+                  3 \
+                  "Node dependencies found in build artifact." \
+                  "VERIFY_NODE_MODULES: node_modules/"
+          else
+              post_fail \
+                  "DELIVERY" \
+                  "VERIFY_NODE_MODULES" \
+                  0 \
+                  "Node dependencies not found in build artifact." \
+                  "VERIFY_NODE_MODULES: node_modules/ missing."
+              post_terminate_delivery
+          fi
+
+          if [ -f "package.json" ]; then
+              SCORE=$((SCORE + 2))
+              post_pass \
+                  "DELIVERY" \
+                  "VERIFY_PACKAGE" \
+                  2 \
+                  "package.json found in build artifact." \
+                  "VERIFY_PACKAGE: package.json"
+          else
+              post_fail \
+                  "DELIVERY" \
+                  "VERIFY_PACKAGE" \
+                  0 \
+                  "package.json not found in build artifact." \
+                  ""
+              post_terminate_delivery
+          fi
+
+          post_result \
+              "DELIVERY" \
+              "VERIFY_BUILD_ARTIFACT" \
+              "PASSED" \
+              0 \
+              "Build artifact validation complete (${SCORE}/10)."
 
       ###############################################################################
       # Verify Dockerfile
@@ -198,15 +345,28 @@ jobs:
         run: |
           
           source .github/actions/common/report.sh
+
+          TECH=$(echo "${{ inputs.technology }}" | tr '[:upper:]' '[:lower:]')
+          case "$TECH" in
+            springboot|spring-boot) TECH=spring ;;
+            golang) TECH=go ;;
+            rubyonrails) TECH=rails ;;
+            apollographql) TECH=apollo ;;
+          esac
+
+          DOCKERFILE="Dockerfile"
+          if [ "$TECH" = "django" ]; then
+            DOCKERFILE="${APP_NAME}/Dockerfile"
+          fi
           
-          if [ -f Dockerfile ]; then
+          if [ -f "${DOCKERFILE}" ]; then
           
               post_pass \
                   "DELIVERY" \
                   "VERIFY_DOCKERFILE" \
                   5 \
                   "Dockerfile located." \
-                  "VERIFY_DOCKERFILE: Dockerfile exists."
+                  "VERIFY_DOCKERFILE: ${DOCKERFILE} exists."
           
           else
           
@@ -215,7 +375,7 @@ jobs:
                   "VERIFY_DOCKERFILE" \
                   0 \
                   "Dockerfile not found." \
-                  "VERIFY_DOCKERFILE: Unable to locate Dockerfile."
+                  "VERIFY_DOCKERFILE: Unable to locate ${DOCKERFILE}."
           
               post_terminate_delivery
           
@@ -309,6 +469,7 @@ jobs:
       ###############################################################################
 
       - name: Prepare Go Dockerfile If Needed
+        if: ${{ contains(fromJSON('["go","golang"]'), inputs.technology) }}
 
         shell: bash
 
@@ -363,6 +524,57 @@ jobs:
               ""
 
       ###############################################################################
+      # Django: layout image so "<appName>.*" imports resolve (same package model as build)
+      ###############################################################################
+
+      - name: Prepare Django Dockerfile If Needed
+        if: ${{ contains(fromJSON('["django"]'), inputs.technology) }}
+
+        shell: bash
+
+        run: |
+          source .github/actions/common/report.sh
+
+          APP_DIR="${APP_NAME}"
+          if [ ! -d "${APP_DIR}" ]; then
+            post_fail \
+              "DELIVERY" \
+              "PREPARE_DOCKERFILE" \
+              0 \
+              "Django application directory not found for Docker prepare." \
+              "Expected ${APP_DIR}/"
+            post_terminate_delivery
+          fi
+
+          # Package marker for import manufacturingOnDjango / <appName>
+          touch "${APP_DIR}/__init__.py"
+
+          cat > "${APP_DIR}/Dockerfile" <<EOF
+          FROM python:3.13-slim
+          WORKDIR /workspace
+          COPY . /workspace/${APP_NAME}/
+          RUN apt-get update \\
+           && apt-get install -y --no-install-recommends \\
+                pkg-config \\
+                default-libmysqlclient-dev \\
+                build-essential \\
+           && rm -rf /var/lib/apt/lists/*
+          WORKDIR /workspace/${APP_NAME}
+          ENV PYTHONPATH=/workspace
+          RUN pip install --no-cache-dir -r requirements.txt
+          EXPOSE 8000
+          CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+          EOF
+          sed -i 's/^          //' "${APP_DIR}/Dockerfile"
+
+          post_pass \
+              "DELIVERY" \
+              "PREPARE_DOCKERFILE" \
+              0 \
+              "Django Dockerfile prepared for package imports." \
+              "PREPARE_DOCKERFILE: PYTHONPATH=/workspace, package=${APP_NAME}"
+
+      ###############################################################################
       # Docker Build
       ###############################################################################
 
@@ -373,12 +585,23 @@ jobs:
         run: |
           
           source .github/actions/common/report.sh
+
+          TECH=$(echo "${{ inputs.technology }}" | tr '[:upper:]' '[:lower:]')
+          case "$TECH" in
+            springboot|spring-boot) TECH=spring ;;
+            golang) TECH=go ;;
+            rubyonrails) TECH=rails ;;
+            apollographql) TECH=apollo ;;
+          esac
+
+          BUILD_CONTEXT="."
+          if [ "$TECH" = "django" ]; then
+            BUILD_CONTEXT="${APP_NAME}"
+          fi
                              
-          echo "Running docker build..."
+          echo "Running docker build (context=${BUILD_CONTEXT})..."
                     
-          docker build --progress=plain -t "${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}" .
-                    
-          if [ $? -eq 0 ]; then
+          if docker build --progress=plain -t "${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}" "${BUILD_CONTEXT}"; then
           
               post_pass \
                   "DELIVERY" \
@@ -389,14 +612,12 @@ jobs:
           
           else
           
-              MESSAGE=$(tail -20 docker-build.log | tr '\n' ' ')
-          
               post_fail \
                   "DELIVERY" \
                   "DOCKER_BUILD" \
                   0 \
                   "Docker build failed." \
-                  "${MESSAGE}"
+                  "DOCKER_BUILD: docker build failed for context ${BUILD_CONTEXT}"
           
               post_terminate_delivery
           
@@ -444,6 +665,7 @@ jobs:
       ###############################################################################
 
       - name: Wait For MySQL
+        if: ${{ contains(fromJSON('["spring","springboot","spring-boot","go","golang"]'), inputs.technology) }}
 
         shell: bash
 
@@ -480,6 +702,50 @@ jobs:
           post_terminate_delivery
 
       ###############################################################################
+      # Rails: Postgres sidecar (same behavior as rails-delivery-verification.yml)
+      ###############################################################################
+
+      - name: Start Postgres For Rails
+        if: ${{ contains(fromJSON('["rails","rubyonrails"]'), inputs.technology) }}
+
+        shell: bash
+
+        run: |
+          source .github/actions/common/report.sh
+
+          docker network create harbormaster-verification >/dev/null 2>&1 || true
+
+          docker run -d \
+            --name harbormaster-postgres \
+            --network harbormaster-verification \
+            -e POSTGRES_USER=postgres \
+            -e POSTGRES_PASSWORD=postgres \
+            -e POSTGRES_DB=rails_test \
+            postgres:17-alpine
+
+          for i in {1..30}; do
+            if docker exec harbormaster-postgres pg_isready -U postgres -d rails_test >/dev/null 2>&1; then
+              post_pass \
+                "DELIVERY" \
+                "POSTGRES_READY" \
+                0 \
+                "Postgres is ready for Rails delivery." \
+                ""
+              exit 0
+            fi
+            sleep 2
+          done
+
+          docker logs harbormaster-postgres || true
+          post_fail \
+            "DELIVERY" \
+            "POSTGRES_READY" \
+            0 \
+            "Postgres failed to start for Rails delivery." \
+            ""
+          post_terminate_delivery
+
+      ###############################################################################
       # Run Container
       ###############################################################################
 
@@ -490,36 +756,75 @@ jobs:
         run: |
           
           source .github/actions/common/report.sh
+
+          TECH=$(echo "${{ inputs.technology }}" | tr '[:upper:]' '[:lower:]')
+          case "$TECH" in
+            springboot|spring-boot) TECH=spring ;;
+            golang) TECH=go ;;
+            rubyonrails) TECH=rails ;;
+            apollographql) TECH=apollo ;;
+          esac
+
+          IMAGE="${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}"
+          RUN_OK=1
+
+          case "$TECH" in
+            spring|go)
+              docker run -d --name ${APP_NAME} -p 8080:8080 \
+                --add-host=host.docker.internal:host-gateway \
+                -e SERVER_PORT=8080 \
+                -e APP_PORT=8080 \
+                -e SPRING_DATASOURCE_URL='jdbc:mysql://host.docker.internal:3306/harbormaster' \
+                -e SPRING_DATASOURCE_USERNAME=root \
+                -e SPRING_DATASOURCE_PASSWORD=root \
+                -e SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver \
+                -e SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQL8Dialect \
+                -e DB_USER_NAME=root \
+                -e DB_PASSWORD=root \
+                -e DB_NAME=harbormaster \
+                -e DB_HOST=host.docker.internal \
+                -e DB_PORT=3306 \
+                -e DB_TYPE=mysql \
+                -e DB_ARGS='charset=utf8&parseTime=True&loc=Local' \
+                -e DB_DISABLE_FK_CONSTRAINTS=true \
+                "${IMAGE}" || RUN_OK=0
+              ;;
+            angular)
+              docker run -d --name ${APP_NAME} -p 8080:80 "${IMAGE}" || RUN_OK=0
+              ;;
+            django)
+              docker run -d --name ${APP_NAME} -p 8080:8000 "${IMAGE}" || RUN_OK=0
+              ;;
+            rails)
+              docker run -d --name ${APP_NAME} \
+                --network harbormaster-verification \
+                -e RAILS_ENV=harbormaster_test \
+                -e PGHOST=harbormaster-postgres \
+                -e PGPORT=5432 \
+                -e PGUSER=postgres \
+                -e PGPASSWORD=postgres \
+                -e PGDATABASE=rails_test \
+                -e SECRET_KEY_BASE="$(ruby -rsecurerandom -e 'puts SecureRandom.hex(64)')" \
+                -p 8080:3000 \
+                "${IMAGE}" || RUN_OK=0
+              ;;
+            apollo)
+              docker run -d --name ${APP_NAME} -p 4000:4000 "${IMAGE}" || RUN_OK=0
+              ;;
+            *)
+              echo "Unsupported technology for delivery: ${TECH}"
+              RUN_OK=0
+              ;;
+          esac
           
-          # Language-agnostic container start.
-          # Spring apps can use DB env vars; other stacks ignore them.
-          docker run -d --name ${APP_NAME} -p 8080:8080 \
-            --add-host=host.docker.internal:host-gateway \
-            -e SERVER_PORT=8080 \
-            -e APP_PORT=8080 \
-            -e SPRING_DATASOURCE_URL='jdbc:mysql://host.docker.internal:3306/harbormaster' \
-            -e SPRING_DATASOURCE_USERNAME=root \
-            -e SPRING_DATASOURCE_PASSWORD=root \
-            -e SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver \
-            -e SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQL8Dialect \
-            -e DB_USER_NAME=root \
-            -e DB_PASSWORD=root \
-            -e DB_NAME=harbormaster \
-            -e DB_HOST=host.docker.internal \
-            -e DB_PORT=3306 \
-            -e DB_TYPE=mysql \
-            -e DB_ARGS='charset=utf8&parseTime=True&loc=Local' \
-            -e DB_DISABLE_FK_CONSTRAINTS=true \
-            ${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}
-          
-          if [ $? -eq 0 ]; then
+          if [ "$RUN_OK" -eq 1 ]; then
           
               post_pass \
                   "DELIVERY" \
                   "RUN_CONTAINER" \
                   20 \
                   "Container ${APP_NAME} started." \
-                  "RUN_CONTAINER: ${APP_NAME}"
+                  "RUN_CONTAINER: ${APP_NAME} (${TECH})"
           
           else
           
@@ -528,7 +833,7 @@ jobs:
                   "RUN_CONTAINER" \
                   0 \
                   "Unable to start container ${APP_NAME}." \
-                  "RUN_CONTAINER: docker run failed on ${APP_NAME}."
+                  "RUN_CONTAINER: docker run failed on ${APP_NAME} (${TECH})."
           
               post_terminate_delivery
           
@@ -545,29 +850,70 @@ jobs:
         run: |
           
           source .github/actions/common/report.sh
-          
-          for i in {1..90}; do
-          
-              # Support Spring (/actuator/health) and Go (/health) without language branching.
-              if curl -fs http://localhost:8080/actuator/health >/dev/null \
-                 || curl -fs http://localhost:8080/health >/dev/null; then
-          
+
+          TECH=$(echo "${{ inputs.technology }}" | tr '[:upper:]' '[:lower:]')
+          case "$TECH" in
+            springboot|spring-boot) TECH=spring ;;
+            golang) TECH=go ;;
+            rubyonrails) TECH=rails ;;
+            apollographql) TECH=apollo ;;
+          esac
+
+          ATTEMPTS=30
+          if [ "$TECH" = "spring" ] || [ "$TECH" = "go" ]; then
+            ATTEMPTS=90
+          fi
+
+          for i in $(seq 1 "${ATTEMPTS}"); do
+              HEALTHY=0
+              case "$TECH" in
+                spring|go)
+                  if curl -fs http://localhost:8080/actuator/health >/dev/null \
+                     || curl -fs http://localhost:8080/health >/dev/null; then
+                    HEALTHY=1
+                  fi
+                  ;;
+                angular|django)
+                  if curl -fs http://localhost:8080/ >/dev/null; then
+                    HEALTHY=1
+                  fi
+                  ;;
+                rails)
+                  # Preserve previous Rails behavior: any HTTP response (not connection failure).
+                  HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/ || true)
+                  if [ "${HTTP_STATUS}" != "000" ] && [ -n "${HTTP_STATUS}" ]; then
+                    HEALTHY=1
+                  fi
+                  ;;
+                apollo)
+                  BODY=$(curl -s -X POST http://localhost:4000/ \
+                    -H "Content-Type: application/json" \
+                    -d '{"query":"{ health }"}' || true)
+                  HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST http://localhost:4000/ \
+                    -H "Content-Type: application/json" \
+                    -d '{"query":"{ health }"}' || true)
+                  if [ "${HTTP_STATUS}" = "200" ] \
+                     && echo "${BODY}" | grep -q '"health"' \
+                     && echo "${BODY}" | grep -qi 'OK'; then
+                    HEALTHY=1
+                  fi
+                  ;;
+              esac
+
+              if [ "$HEALTHY" -eq 1 ]; then
                   post_pass \
                       "DELIVERY" \
                       "CONTAINER_HEALTH" \
                       15 \
                       "Container health check passed." \
-                      "CONTAINER_HEALTH: Application reported UP."
-          
+                      "CONTAINER_HEALTH: ${TECH} application reported UP."
                   exit 0
-          
               fi
-          
+
               sleep 2
-          
           done
           
-          LOG=$(docker logs ${APP_NAME} | tail -20 | tr '\n' ' ')
+          LOG=$(docker logs ${APP_NAME} 2>/dev/null | tail -20 | tr '\n' ' ')
           
           post_fail \
               "DELIVERY" \
@@ -623,10 +969,11 @@ jobs:
         run: |
         
           if [ "${{ inputs.saveDockerImage }}" = "TRUE" ]; then
-            docker save ${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}:latest -o ${APP_NAME}.tar
+            docker save "${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}" -o "${APP_NAME}.tar"
           fi
 
       - uses: actions/upload-artifact@v4
+        if: ${{ inputs.saveDockerImage == 'TRUE' }}
 
         with:
 
@@ -650,23 +997,15 @@ jobs:
           
           source .github/actions/common/report.sh
 
-          ###########################################################################
-          # stop the image
-          ###########################################################################
-          
           docker stop ${APP_NAME} >/dev/null 2>&1 || true
-          
-          ###########################################################################
-          # remove the image
-          ###########################################################################
-          
           docker rm ${APP_NAME} >/dev/null 2>&1 || true
 
-          ###########################################################################
-          # Logout
-          ###########################################################################
+          # Rails sidecar cleanup (no-op for other stacks)
+          docker stop harbormaster-postgres >/dev/null 2>&1 || true
+          docker rm harbormaster-postgres >/dev/null 2>&1 || true
+          docker network rm harbormaster-verification >/dev/null 2>&1 || true
 
-          docker logout ${{ inputs.dockerHost }}
+          docker logout ${{ inputs.dockerHost }} >/dev/null 2>&1 || true
           
           post_pass \
               "DELIVERY" \
@@ -677,11 +1016,13 @@ jobs:
 
 
       ###############################################################################
-      # Delete verification branch only when cloud deploy is skipped
+      # Delete verification branch:
+      # - Spring/Go: only when deployToCloud is false (cloud may need the branch)
+      # - Other stacks: always (previous per-tech delivery behavior)
       ###############################################################################
 
       - name: Delete Verification Branch
-        if: ${{ always() && inputs.deployToCloud == false }}
+        if: ${{ always() && (inputs.deployToCloud == false || !contains(fromJSON('["spring","springboot","spring-boot","go","golang"]'), inputs.technology)) }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -698,6 +1039,7 @@ jobs:
       ###############################################################################
 
       - name: Terminate Verification
+        if: always()
         shell: bash
 
         run: |

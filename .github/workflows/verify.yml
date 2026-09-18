@@ -222,7 +222,7 @@ jobs:
       appName: ${{ inputs.appName }}
       languageVersion: ${{ inputs.languageVersion }}
 
-  # Shared Spring/Go delivery (from feature). Angular/Django/Rails/Apollo keep per-tech delivery below.
+  # Shared delivery for all technologies (ports/DB/health branched inside delivery-verification.yml).
   delivery:
 
     if: >
@@ -231,9 +231,17 @@ jobs:
         (contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) && needs.spring-runtime.result == 'success')
         ||
         (contains(fromJSON('["go","golang"]'), inputs.technology) && needs.go-runtime.result == 'success')
+        ||
+        (contains(fromJSON('["angular"]'), inputs.technology) && needs.angular-runtime.result == 'success')
+        ||
+        (contains(fromJSON('["django"]'), inputs.technology) && needs.django-runtime.result == 'success')
+        ||
+        (contains(fromJSON('["rails","rubyonrails"]'), inputs.technology) && needs.rails-runtime.result == 'success')
+        ||
+        (contains(fromJSON('["ApolloGraphQL","Apollo"]'), inputs.technology) && needs.apollo-runtime.result == 'success')
       )
 
-    needs: [spring-runtime, go-runtime]
+    needs: [spring-runtime, go-runtime, angular-runtime, django-runtime, rails-runtime, apollo-runtime]
 
     uses: ./.github/workflows/delivery-verification.yml
 
@@ -251,12 +259,22 @@ jobs:
       dockerUsername:            ${{ inputs.dockerUsername }}
       dockerPassword:            ${{ inputs.dockerPassword }}
       dockerTag:                 ${{ inputs.dockerTag }}
+      technology:                ${{ inputs.technology }}
       deployToCloud:             ${{ inputs.deployToCloud }}
 
 
   cloud:
 
-    if: ${{ always() && inputs.deployToCloud && needs.delivery.result == 'success' }}
+    # Cloud/Terraform path remains Spring/Go only (same as before shared delivery expansion).
+    if: >
+      always() &&
+      inputs.deployToCloud &&
+      needs.delivery.result == 'success' &&
+      (
+        contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology)
+        ||
+        contains(fromJSON('["go","golang"]'), inputs.technology)
+      )
 
     needs: delivery
 
@@ -311,30 +329,6 @@ jobs:
       certificationIdentifier: ${{ inputs.certificationIdentifier }}
       appName: ${{ inputs.appName }}
 
-  angular-delivery:
-
-    if: ${{ contains(fromJSON('["angular"]'), inputs.technology) }}
-
-
-    needs: angular-runtime
-
-    uses: ./.github/workflows/angular-delivery-verification.yml
-
-    with:
-      runner: ${{ inputs.runner }}
-      branch: ${{ inputs.branch }}
-      gitHubToken: ${{ inputs.gitHubToken }}
-      resultUrl: ${{ inputs.resultUrl }}
-      actionToCall: ${{ inputs.actionToCall }}
-      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
-      appName:                   ${{ inputs.appName }}
-      dockerHost:                ${{ inputs.dockerHost }}
-      dockerOrg:                 ${{ inputs.dockerOrg }}
-      dockerRepository:          ${{ inputs.dockerRepository }}
-      dockerUsername:            ${{ inputs.dockerUsername }}
-      dockerPassword:            ${{ inputs.dockerPassword }}
-      dockerTag:                 ${{ inputs.dockerTag }}
-
   django-build:
 
     if: ${{ contains(fromJSON('["django"]'), inputs.technology) }}
@@ -365,30 +359,6 @@ jobs:
       branch: ${{ inputs.branch }}
       certificationIdentifier: ${{ inputs.certificationIdentifier }}
       appName: ${{ inputs.appName }}
-
-  django-delivery:
-
-    if: ${{ contains(fromJSON('["django"]'), inputs.technology) }}
-
-
-    needs: django-runtime
-
-    uses: ./.github/workflows/django-delivery-verification.yml
-
-    with:
-      runner: ${{ inputs.runner }}
-      branch: ${{ inputs.branch }}
-      gitHubToken: ${{ inputs.gitHubToken }}
-      resultUrl: ${{ inputs.resultUrl }}
-      actionToCall: ${{ inputs.actionToCall }}
-      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
-      appName:                   ${{ inputs.appName }}
-      dockerHost:                ${{ inputs.dockerHost }}
-      dockerOrg:                 ${{ inputs.dockerOrg }}
-      dockerRepository:          ${{ inputs.dockerRepository }}
-      dockerUsername:            ${{ inputs.dockerUsername }}
-      dockerPassword:            ${{ inputs.dockerPassword }}
-      dockerTag:                 ${{ inputs.dockerTag }}
 
   rails-build:
 
@@ -422,30 +392,6 @@ jobs:
       certificationIdentifier: ${{ inputs.certificationIdentifier }}
       appName: ${{ inputs.appName }}
 
-  rails-delivery:
-
-    if: ${{ contains(fromJSON('["rails","rubyonrails"]'), inputs.technology) }}
-
-
-    needs: rails-runtime
-
-    uses: ./.github/workflows/rails-delivery-verification.yml
-
-    with:
-      runner: ${{ inputs.runner }}
-      branch: ${{ inputs.branch }}
-      gitHubToken: ${{ inputs.gitHubToken }}
-      resultUrl: ${{ inputs.resultUrl }}
-      actionToCall: ${{ inputs.actionToCall }}
-      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
-      appName:                   ${{ inputs.appName }}
-      dockerHost:                ${{ inputs.dockerHost }}
-      dockerOrg:                 ${{ inputs.dockerOrg }}
-      dockerRepository:          ${{ inputs.dockerRepository }}
-      dockerUsername:            ${{ inputs.dockerUsername }}
-      dockerPassword:            ${{ inputs.dockerPassword }}
-      dockerTag:                 ${{ inputs.dockerTag }}
-
   apollo-build:
 
     if: ${{ contains(fromJSON('["ApolloGraphQL","Apollo"]'), inputs.technology) }}
@@ -478,30 +424,6 @@ jobs:
       certificationIdentifier: ${{ inputs.certificationIdentifier }}
       appName: ${{ inputs.appName }}
 
-  apollo-delivery:
-
-    if: ${{ contains(fromJSON('["ApolloGraphQL","Apollo"]'), inputs.technology) }}
-
-
-    needs: apollo-runtime
-
-    uses: ./.github/workflows/apollo-delivery-verification.yml
-
-    with:
-      runner: ${{ inputs.runner }}
-      branch: ${{ inputs.branch }}
-      gitHubToken: ${{ inputs.gitHubToken }}
-      resultUrl: ${{ inputs.resultUrl }}
-      actionToCall: ${{ inputs.actionToCall }}
-      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
-      appName:                   ${{ inputs.appName }}
-      dockerHost:                ${{ inputs.dockerHost }}
-      dockerOrg:                 ${{ inputs.dockerOrg }}
-      dockerRepository:          ${{ inputs.dockerRepository }}
-      dockerUsername:            ${{ inputs.dockerUsername }}
-      dockerPassword:            ${{ inputs.dockerPassword }}
-      dockerTag:                 ${{ inputs.dockerTag }}
-
   aspdotnet-build:
 
     if: ${{ contains(fromJSON('["ASPDotNet","DotNet"]'), inputs.technology) }}
@@ -517,4 +439,3 @@ jobs:
       appName: ${{ inputs.appName }}
       languageName: ${{ inputs.languageName }}
       languageVersion: ${{ inputs.languageVersion }}
-
