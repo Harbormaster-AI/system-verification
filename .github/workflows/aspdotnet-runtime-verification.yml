@@ -45,7 +45,8 @@ env:
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
   CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
   APP_NAME: ${{ inputs.appName }}
-
+  APPLICATION_DLL: Api.dll
+  ARTIFACT_DIRECTORY: packaged-application
 
 jobs:
 
@@ -250,41 +251,37 @@ jobs:
 
           echo "Starting ASP.NET application from:"
           echo "${ARTIFACT_DIRECTORY}"
-
+          
           cd "${ARTIFACT_DIRECTORY}"
-
+          
           dotnet "./${APPLICATION_DLL}" \
             --urls "http://127.0.0.1:8080" \
             > runtime.log 2>&1 &
-
+            
           APP_PID=$!
-
+          
           echo "APP_PID=${APP_PID}" >> "$GITHUB_ENV"
-
+          
           sleep 3
-
+          
           if ps -p "${APP_PID}" > /dev/null 2>&1; then
-
             post_pass \
               "RUNTIME" \
               "START_APPLICATION" \
               20 \
               "ASP.NET application process started." \
               "START_APPLICATION: PID ${APP_PID}"
-
           else
-
             post_fail \
               "RUNTIME" \
               "START_APPLICATION" \
               0 \
               "ASP.NET application failed to start." \
               "$(cat runtime.log 2>/dev/null || true)"
-
+          
             post_terminate_runtime "RUNTIME"
 
           fi
-
 
       ###########################################################################
       # Wait for application
