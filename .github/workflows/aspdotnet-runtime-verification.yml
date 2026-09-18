@@ -313,32 +313,36 @@ jobs:
             ""
 
           RESPONSE=""
-
+        
           for i in {1..30}; do
-
-            RESPONSE=$(curl \
-              --silent \
-              --show-error \
-              --write-out "%{http_code}" \
-              --output /dev/null \
-              --max-time 3 \
-              http://127.0.0.1:8080/ 2>/dev/null || true)
-
-            if [[ "$RESPONSE" =~ ^[1-5][0-9][0-9]$ ]]; then
-
+          
+              RESPONSE=$(curl \
+                --silent \
+                --show-error \
+                --write-out "%{http_code}" \
+                --output /dev/null \
+                --connect-timeout 1 \
+                --max-time 3 \
+                http://127.0.0.1:8080/ \
+                2>/dev/null || true)
+            
+            echo "Startup attempt ${i}: HTTP ${RESPONSE}"
+            
+            if [ "$RESPONSE" -ge 100 ] 2>/dev/null && [ "$RESPONSE" -lt 600 ] 2>/dev/null; then
+            
               post_pass \
                 "RUNTIME" \
                 "APPLICATION_STARTED" \
                 20 \
                 "ASP.NET application started successfully and is responding to HTTP requests." \
                 "HTTP ${RESPONSE}"
-
+              
               exit 0
-
+            
             fi
-
+            
             sleep 2
-
+          
           done
 
           post_fail \
