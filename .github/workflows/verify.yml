@@ -231,6 +231,9 @@ jobs:
         (contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) && needs.spring-runtime.result == 'success')
         ||
         (contains(fromJSON('["go","golang"]'), inputs.technology) && needs.go-runtime.result == 'success')
+        ||
+        (contains(fromJSON('["ASPDotNet","DotNet"]'), inputs.technology) && needs.aspdotnet-runtime.result == 'success')
+      
       )
 
     needs: [spring-runtime, go-runtime]
