@@ -236,7 +236,7 @@ jobs:
       
       )
 
-    needs: [spring-runtime, go-runtime]
+    needs: [spring-runtime, go-runtime, aspdotnet-runtime]
 
     uses: ./.github/workflows/delivery-verification.yml
 
