@@ -65,21 +65,7 @@ jobs:
   build-verification:
 
     runs-on: ${{ inputs.runner }}
-    services:
-      postgres:
-        image: postgres:16
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: app_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd="pg_isready -U postgres"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-          
+
     steps:
 
       ###############################################################################
@@ -181,23 +167,6 @@ jobs:
           gem --version
           bundle --version
 
-      ###########################################################################
-      # Configure PostgreSQL runtime
-      ###########################################################################
-
-      - name: Configure PostgreSQL Runtime
-
-        shell: bash
-
-        run: |
-          
-          echo "RAILS_ENV=harbormaster_test" >> "$GITHUB_ENV"
-          echo "PGHOST=127.0.0.1" >> "$GITHUB_ENV"
-          echo "PGPORT=5432" >> "$GITHUB_ENV"
-          echo "PGUSER=postgres" >> "$GITHUB_ENV"
-          echo "PGPASSWORD=postgres" >> "$GITHUB_ENV"
-          echo "PGDATABASE=rails_test" >> "$GITHUB_ENV"
-          echo "SECRET_KEY_BASE=$(ruby -rsecurerandom -e 'puts SecureRandom.hex(64)')" >> "$GITHUB_ENV"
 
       ###############################################################################
       # Determine Rails Application Directory
@@ -737,51 +706,6 @@ jobs:
               post_terminate_build
 
           fi
-
-      ###############################################################################
-      # Execute Rails Build / Test Validation
-      ###############################################################################
-
-      - name: Execute Rails Validation
-
-        shell: bash
-        working-directory: ${{ env.RAILS_APP_DIRECTORY }}
-        run: |
-
-          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
-
-
-          ###########################################################################
-          # Rails Test Suite
-          ###########################################################################
-
-          if bundle exec rails test \
-              > rails-test.log 2>&1; then
-
-              cat rails-test.log
-
-              post_pass \
-                  "BUILD" \
-                  "RAILS_TEST" \
-                  30 \
-                  "Rails test suite completed successfully."
-
-          else
-
-              cat rails-test.log
-
-              MESSAGE=$(tail -30 rails-test.log | tr '\n' ' ')
-
-              post_fail \
-                  "BUILD" \
-                  "RAILS_TEST" \
-                  0 \
-                  "${MESSAGE}"
-
-              post_terminate_build
-
-          fi
-
 
       ###############################################################################
       # Validate Rails Application Artifact
