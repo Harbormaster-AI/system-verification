@@ -212,7 +212,7 @@ jobs:
               "ASP.NET runtime configuration file not found." \
               "VERIFY_RUNTIMECONFIG: ${RUNTIME_CONFIG}"
 
-            post_terminate_runtime "RUNTIME"
+            post_terminate_runtime true
 
           fi
 
@@ -225,7 +225,7 @@ jobs:
               "ASP.NET dependency manifest not found." \
               "VERIFY_DEPS: ${DEPS_FILE}"
 
-            post_terminate_runtime "RUNTIME"
+            post_terminate_runtime true
 
           fi
 
@@ -270,7 +270,7 @@ jobs:
               "ASP.NET application entry point is missing or empty." \
               "APPLICATION_ENTRY_POINT: ${ARTIFACT_DIRECTORY}/${APPLICATION_DLL}"
 
-            post_terminate_runtime "RUNTIME"
+            post_terminate_runtime true
 
           fi
 
@@ -286,7 +286,12 @@ jobs:
 
         shell: bash
         env:
-          ConnectionStrings__DefaultConnection: "Host=127.0.0.1;Port=5432;Database=${{ inputs.appName }};Username=postgres;Password=postgres"
+          DB_USER_NAME: postgres
+          DB_PASSWORD: postgres
+          DB_NAME: hmTest
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_TYPE: postgres
 
         run: |
 
@@ -322,7 +327,7 @@ jobs:
               "ASP.NET application failed to start." \
               "$(cat runtime.log 2>/dev/null || true)"
           
-            post_terminate_runtime "RUNTIME"
+            post_terminate_runtime true
 
           fi
 
@@ -398,7 +403,7 @@ jobs:
             "ASP.NET application failed to respond to HTTP requests." \
             "APPLICATION_STARTED: HTTP ${RESPONSE}"
 
-          post_terminate_runtime "RUNTIME"
+          post_terminate_runtime true
 
 
       ###########################################################################

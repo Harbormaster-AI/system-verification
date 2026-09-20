@@ -882,6 +882,7 @@ jobs:
                   "${MESSAGE}"
 
               post_terminate_build
+              exit 1
 
           fi
 
@@ -1008,6 +1009,7 @@ jobs:
               "ASP.NET build directory does not exist."
               
               post_terminate_build
+              exit 1
             
             fi
             
@@ -1028,7 +1030,8 @@ jobs:
                 "Expected: ${DLL_FILE}"
               
               post_terminate_build
-            
+              exit 1
+          
             fi
             
             
@@ -1048,7 +1051,7 @@ jobs:
                 "Expected: ${RUNTIME_CONFIG}"
               
               post_terminate_build
-            
+              exit 1  
             fi
             
             
