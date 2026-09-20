@@ -190,7 +190,7 @@ jobs:
       # HarborMaster temp-branch cleanup (only when verifying a branch on this repo).
       ###########################################################################
       - name: Delete Verification Branch
-        if: ${{ always() && inputs.repository == '' && inputs.branch != '' }}
+        if: ${{ !always() && inputs.repository == '' && inputs.branch != '' }}
         run: |
           curl -L \
             -X DELETE \
