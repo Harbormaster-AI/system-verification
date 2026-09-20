@@ -259,7 +259,7 @@ jobs:
 
   cloud:
 
-    if: ${{ always() && inputs.deployToCloud && needs.delivery.result == 'success' }}
+    if: ${{ !always() && inputs.deployToCloud && needs.delivery.result == 'success' }}
 
     needs: delivery
 
