@@ -244,16 +244,16 @@ jobs:
           go env GOVERSION
           
           echo "Running gofmt..."
-
+        
           gofmt -w ./internal/controller/ATMController.go
           
-          echo "Checking ATMController..."
-          
+          echo "After first gofmt:"
           gofmt -d ./internal/controller/ATMController.go
           
-          echo "gofmt -l result:"
+          gofmt -w ./internal/controller/ATMController.go
           
-          gofmt -l ./internal/controller/ATMController.go
+          echo "After second gofmt:"
+          gofmt -d ./internal/controller/ATMController.go
   
           find . -type f -name '*.go' -print0 | xargs -0 -r gofmt -w
           
