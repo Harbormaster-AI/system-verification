@@ -254,7 +254,7 @@ jobs:
       dockerUsername:            ${{ inputs.dockerUsername }}
       dockerPassword:            ${{ inputs.dockerPassword }}
       dockerTag:                 ${{ inputs.dockerTag }}
-      deployToCloud:             ${{ inputs.deployToCloud }}
+  #    deployToCloud:             ${{ inputs.deployToCloud }}
 
 
   cloud:
