@@ -220,7 +220,7 @@ jobs:
       - name: Format Code
         shell: bash
         run: |
-
+        
           source .github/actions/common/report.sh
           
           cd "${APP_DIR}"
@@ -231,22 +231,31 @@ jobs:
         
             echo "Formatting: ${file}"
         
-            gofmt -w "${file}"
+            FIRST_HASH=$(sha256sum "${file}" | awk '{print $1}')
         
-            if [ -n "$(gofmt -l "${file}")" ]; then
-              echo "STILL UNFORMATTED: ${file}"
+            gofmt -w "${file}"
           
-              echo "Remaining diff:"
+            SECOND_HASH=$(sha256sum "${file}" | awk '{print $1}')
+          
+            gofmt -w "${file}"
+          
+            THIRD_HASH=$(sha256sum "${file}" | awk '{print $1}')
+          
+            if [ "${SECOND_HASH}" != "${THIRD_HASH}" ]; then
+          
+                echo "gofmt is not stable for: ${file}"
+              
               gofmt -d "${file}"
-          
+            
               post_fail \
                 "PRE_BUILD" \
                 "FORMAT_CODE" \
                 0 \
-                "File remains unformatted after gofmt." \
+                "gofmt is not stable for file." \
                 "${file}"
-          
+            
               post_terminate_build
+          
             fi
           
           done < <(find . -type f -name '*.go' -print0)
