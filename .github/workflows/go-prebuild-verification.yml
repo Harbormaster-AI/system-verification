@@ -233,7 +233,13 @@ jobs:
           
           echo "===== AFTER FORMAT ====="
           gofmt -d ./internal/controller/ATMController.go
-  
+          
+          echo "Direct format check:"
+          gofmt -l ./internal/controller/ATMController.go
+          
+          echo "Backup files:"
+          find . -type f -name '*.orig' -print
+
           echo "Running gofmt..."
           
           find . -type f -name '*.go' -print0 | xargs -0 -r gofmt -w
