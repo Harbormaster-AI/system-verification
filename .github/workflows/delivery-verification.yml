@@ -581,7 +581,7 @@ jobs:
           done
           
           LOG=$(docker logs ${APP_NAME} | tail -20 | tr '\n' ' ')
-          
+          sleep 60
           docker logs ${APP_NAME}
           
           post_fail \
