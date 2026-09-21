@@ -285,7 +285,7 @@ jobs:
             -Dspring.datasource.password=root \
             -Dspring.jpa.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect \
             -Dspring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver \
-            -Dhm.security.authentication=none
+            -Dhm.security.authentication=none \
             -jar \
             "$PACKAGE" > runtime.log 2>&1 &
           APP_PID=$!
