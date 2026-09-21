@@ -222,35 +222,41 @@ jobs:
         run: |
 
           source .github/actions/common/report.sh
-  
+          
           cd "${APP_DIR}"
           
           echo "Running gofmt..."
           
-          find . -type f -name '*.go' -print0 | xargs -0 -r gofmt -w
-          
-          echo "Checking formatting..."
-          
-          UNFORMATTED=$(find . -type f -name '*.go' -print0 | xargs -0 -r gofmt -l)
-          
-          if [ -n "${UNFORMATTED}" ]; then
+          while IFS= read -r -d '' file; do
         
-            post_fail \
-              "PRE_BUILD" \
-              "FORMAT_CODE" \
-              0 \
-              "Unformatted Go files remain." \
-              "${UNFORMATTED}"
+            echo "Formatting: ${file}"
+        
+            gofmt -w "${file}"
+        
+            if [ -n "$(gofmt -l "${file}")" ]; then
+              echo "STILL UNFORMATTED: ${file}"
           
-            post_terminate_build
-          fi
+              echo "Remaining diff:"
+              gofmt -d "${file}"
+          
+              post_fail \
+                "PRE_BUILD" \
+                "FORMAT_CODE" \
+                0 \
+                "File remains unformatted after gofmt." \
+                "${file}"
+          
+              post_terminate_build
+            fi
+          
+          done < <(find . -type f -name '*.go' -print0)
           
           post_pass \
             "PRE_BUILD" \
             "FORMAT_CODE" \
             15 \
             "Go source formatting completed successfully." \
-            "gofmt completed with no unformatted files."
+            "All Go source files are gofmt compliant."
 
       ###########################################################################
       # Static Analysis
