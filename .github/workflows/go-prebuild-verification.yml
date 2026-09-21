@@ -240,7 +240,7 @@ jobs:
               SCORE=$((SCORE + 3))
           
               post_pass \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "BUILD_FILE" \
                   3 \
                   "go.mod located."
@@ -248,7 +248,7 @@ jobs:
           else
           
               post_fail \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "BUILD_FILE" \
                   0 \
                   "No go.mod found."
@@ -264,7 +264,7 @@ jobs:
               SCORE=$((SCORE + 2))
           
               post_pass \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "DOCKERFILE" \
                   2 \
                   "Dockerfile located."
@@ -272,7 +272,7 @@ jobs:
           else
           
               post_fail \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "DOCKERFILE" \
                   0 \
                   "Dockerfile not found."
@@ -288,7 +288,7 @@ jobs:
               SCORE=$((SCORE + 2))
           
               post_pass \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "GO_SUM" \
                   2 \
                   "go.sum located."
@@ -296,7 +296,7 @@ jobs:
           else
           
               post_fail \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "GO_SUM" \
                   0 \
                   "No go.sum found."
@@ -312,7 +312,7 @@ jobs:
               SCORE=$((SCORE + 3))
 
               post_pass \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "GO_SOURCE" \
                   3 \
                   "Go source files located."
@@ -320,7 +320,7 @@ jobs:
           else
           
               post_fail \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "GO_SOURCE" \
                   0 \
                   "No Go source files found."
@@ -332,7 +332,7 @@ jobs:
           ###########################################################################
           
           post_result \
-              "BUILD" \
+              "PRE-BUILD" \
               "EXPECTED_FILES" \
               "PASSED" \
               0 \
@@ -364,7 +364,7 @@ jobs:
               SCORE=$((SCORE + 6))
 
               post_pass \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "GO_MAIN" \
                   6 \
                   "Go main entry point located."
@@ -372,7 +372,7 @@ jobs:
           else
 
               post_fail \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "GO_MAIN" \
                   0 \
                   "Missing main.go."
@@ -388,7 +388,7 @@ jobs:
               SCORE=$((SCORE + 2))
 
               post_pass \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "GO_SOURCE_TREE" \
                   2 \
                   "Go source tree exists."
@@ -396,7 +396,7 @@ jobs:
           else
 
               post_fail \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "GO_SOURCE_TREE" \
                   0 \
                   "No Go source files found."
@@ -412,7 +412,7 @@ jobs:
               SCORE=$((SCORE + 1))
 
               post_pass \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "GO_TEST" \
                   1 \
                   "Go test files located."
@@ -420,7 +420,7 @@ jobs:
           else
 
               post_fail \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "GO_TEST" \
                   0 \
                   "No Go test files found."
@@ -436,7 +436,7 @@ jobs:
               SCORE=$((SCORE + 1))
 
               post_pass \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "GO_PACKAGES" \
                   1 \
                   "internal/ or pkg/ directory exists."
@@ -444,7 +444,7 @@ jobs:
           else
 
               post_warning \
-                  "BUILD" \
+                  "PRE-BUILD" \
                   "GO_PACKAGES" \
                   0 \
                   "Optional internal/ or pkg/ directory not found."
@@ -466,7 +466,7 @@ jobs:
           fi
 
           post_result \
-              "BUILD" \
+              "PRE-BUILD" \
               "DIRECTORY_STRUCTURE" \
               "${STATUS}" \
               0 \
