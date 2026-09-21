@@ -547,10 +547,18 @@ jobs:
           
           source .github/actions/common/report.sh
           
+          echo "===== Docker Logs ====="
+          docker logs ${APP_NAME}
+          
           echo "===== ACTUATOR HEALTH ====="
           curl -i http://localhost:8080/actuator/health
           echo "Actuator exit code: $?"
-                            
+          
+          docker exec ${APP_NAME} sh -c 'env | grep -E "SERVER_PORT|APP_PORT|hm.security"'
+          
+          echo "===== ACTUATOR HEALTH inside docker running the image ====="
+          docker exec ${APP_NAME} wget -S -O - http://localhost:8080/actuator/health
+          
           for i in {1..90}; do
           
               # Support Spring (/actuator/health) and Go (/health) without language branching.
