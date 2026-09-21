@@ -318,6 +318,265 @@ jobs:
 
           fi
 
+      ###############################################################################
+      # Expected Files
+      ###############################################################################
+
+      - name: Expected Files
+
+        shell: bash
+
+        run: |
+          
+          source .github/actions/common/report.sh
+          
+          SCORE=0
+          
+          cd "${APP_DIR}"
+  
+          echo "Searching for go.mod..."
+          find . -name go.mod
+          
+          ###########################################################################
+          # Module File (go.mod)
+          ###########################################################################
+          
+          if [ -f go.mod ]; then
+          
+              SCORE=$((SCORE + 3))
+          
+              post_pass \
+                  "BUILD" \
+                  "BUILD_FILE" \
+                  3 \
+                  "go.mod located."
+          
+          else
+          
+              post_fail \
+                  "BUILD" \
+                  "BUILD_FILE" \
+                  0 \
+                  "No go.mod found."
+          
+          fi
+          
+          ###########################################################################
+          # Dockerfile 
+          ###########################################################################
+          
+          if [[ -f Dockerfile ]]; then
+          
+              SCORE=$((SCORE + 2))
+          
+              post_pass \
+                  "BUILD" \
+                  "DOCKERFILE" \
+                  2 \
+                  "Dockerfile located."
+          
+          else
+          
+              post_fail \
+                  "BUILD" \
+                  "DOCKERFILE" \
+                  0 \
+                  "Dockerfile not found."
+          
+          fi
+          
+          ###########################################################################
+          # Dependency Checksums (go.sum)
+          ###########################################################################
+          
+          if [ -f go.sum ]; then
+          
+              SCORE=$((SCORE + 2))
+          
+              post_pass \
+                  "BUILD" \
+                  "GO_SUM" \
+                  2 \
+                  "go.sum located."
+          
+          else
+          
+              post_fail \
+                  "BUILD" \
+                  "GO_SUM" \
+                  0 \
+                  "No go.sum found."
+          
+          fi
+          
+          ###########################################################################
+          # Go Sources
+          ###########################################################################
+          
+          if find . -name "*.go" | grep -q .; then
+
+              SCORE=$((SCORE + 3))
+
+              post_pass \
+                  "BUILD" \
+                  "GO_SOURCE" \
+                  3 \
+                  "Go source files located."
+          
+          else
+          
+              post_fail \
+                  "BUILD" \
+                  "GO_SOURCE" \
+                  0 \
+                  "No Go source files found."
+          
+          fi
+          
+          ###########################################################################
+          # Summary
+          ###########################################################################
+          
+          post_result \
+              "BUILD" \
+              "EXPECTED_FILES" \
+              "PASSED" \
+              0 \
+              "Expected files validation complete (${SCORE}/10)."
+
+      ###############################################################################
+      # Directory Structure
+      ###############################################################################
+
+      - name: Directory Structure
+
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+          SCORE=0
+
+          cd "${APP_DIR}"
+  
+          ###########################################################################
+          # Main entry point (cmd/ or root main.go)
+          ###########################################################################
+
+          if [ -f main.go ] || find . -name "main.go" | grep -q .; then
+
+              SCORE=$((SCORE + 6))
+
+              post_pass \
+                  "BUILD" \
+                  "GO_MAIN" \
+                  6 \
+                  "Go main entry point located."
+
+          else
+
+              post_fail \
+                  "BUILD" \
+                  "GO_MAIN" \
+                  0 \
+                  "Missing main.go."
+
+          fi
+
+          ###########################################################################
+          # Go source tree
+          ###########################################################################
+
+          if find . -name "*.go" | grep -q .; then
+
+              SCORE=$((SCORE + 2))
+
+              post_pass \
+                  "BUILD" \
+                  "GO_SOURCE_TREE" \
+                  2 \
+                  "Go source tree exists."
+
+          else
+
+              post_fail \
+                  "BUILD" \
+                  "GO_SOURCE_TREE" \
+                  0 \
+                  "No Go source files found."
+
+          fi
+
+          ###########################################################################
+          # Go tests
+          ###########################################################################
+
+          if find . -name "*_test.go" | grep -q .; then
+
+              SCORE=$((SCORE + 1))
+
+              post_pass \
+                  "BUILD" \
+                  "GO_TEST" \
+                  1 \
+                  "Go test files located."
+
+          else
+
+              post_fail \
+                  "BUILD" \
+                  "GO_TEST" \
+                  0 \
+                  "No Go test files found."
+
+          fi
+
+          ###########################################################################
+          # internal/ or pkg/ (optional)
+          ###########################################################################
+
+          if [ -d internal ] || [ -d pkg ]; then
+
+              SCORE=$((SCORE + 1))
+
+              post_pass \
+                  "BUILD" \
+                  "GO_PACKAGES" \
+                  1 \
+                  "internal/ or pkg/ directory exists."
+
+          else
+
+              post_warning \
+                  "BUILD" \
+                  "GO_PACKAGES" \
+                  0 \
+                  "Optional internal/ or pkg/ directory not found."
+
+          fi
+
+          ###########################################################################
+          # Summary
+          ###########################################################################
+
+          if [ "$SCORE" -gt 7 ]; then
+
+              STATUS="PASSED"
+
+          else
+
+              STATUS="FAILED"
+
+          fi
+
+          post_result \
+              "BUILD" \
+              "DIRECTORY_STRUCTURE" \
+              "${STATUS}" \
+              0 \
+              "Directory structure validation complete (${SCORE}/10)."
 
       ###############################################################################
       # Build Validation
