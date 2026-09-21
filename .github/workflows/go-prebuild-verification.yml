@@ -222,39 +222,11 @@ jobs:
         run: |
 
           source .github/actions/common/report.sh
-
+  
           cd "${APP_DIR}"
           
-          echo "Go version:"
-          go version
-          
-          echo "Go executable:"
-          which go
-          
-          echo "gofmt executable:"
-          which gofmt
-          
-          echo "gofmt version:"
-          gofmt -h | head -5
-          
-          echo "GOROOT:"
-          go env GOROOT
-          
-          echo "GOVERSION:"
-          go env GOVERSION
-          
           echo "Running gofmt..."
-        
-          gofmt -w ./internal/controller/ATMController.go
           
-          echo "After first gofmt:"
-          gofmt -d ./internal/controller/ATMController.go
-          
-          gofmt -w ./internal/controller/ATMController.go
-          
-          echo "After second gofmt:"
-          gofmt -d ./internal/controller/ATMController.go
-  
           find . -type f -name '*.go' -print0 | xargs -0 -r gofmt -w
           
           echo "Checking formatting..."
@@ -262,13 +234,14 @@ jobs:
           UNFORMATTED=$(find . -type f -name '*.go' -print0 | xargs -0 -r gofmt -l)
           
           if [ -n "${UNFORMATTED}" ]; then
+        
             post_fail \
               "PRE_BUILD" \
               "FORMAT_CODE" \
               0 \
               "Unformatted Go files remain." \
               "${UNFORMATTED}"
-            
+          
             post_terminate_build
           fi
           
