@@ -1,0 +1,776 @@
+name: Go Pre-Build Verification
+
+on:
+
+  workflow_call:
+
+    inputs:
+
+      runner:
+        description: GitHub runner
+        required: false
+        default: self-hosted
+        type: string
+
+      resultUrl:
+        description: URL to post certification progress
+        required: false
+        default: "http://localhost:3000"
+        type: string
+
+      actionToCall:
+        description: action to call when posting to URL
+        required: true
+        default: "updateSystemVerificationProgress"
+        type: string
+
+      branch:
+        description: Branch to checkout
+        required: true
+        default: ""
+        type: string
+
+      certificationIdentifier:
+        description: Certification Identifier
+        required: true
+        type: string
+
+      appName:
+        description: Application Name
+        required: true
+        type: string
+
+      languageName:
+        description: The core language of the system
+        required: false
+        default: "Go"
+        type: string
+
+      languageVersion:
+        description: The core language version of the system
+        required: true
+        type: string
+
+
+env:
+
+  RESULT_URL: ${{ inputs.resultUrl }}
+  ACTION_TO_CALL: ${{ inputs.actionToCall }}
+  CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
+  APP_NAME: ${{ inputs.appName }}
+
+
+jobs:
+
+  pre-build-verification:
+
+    runs-on: ${{ inputs.runner }}
+
+    steps:
+
+      ###########################################################################
+      # Checkout Source
+      ###########################################################################
+
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch != '' && inputs.branch || github.ref_name }}
+
+      ###########################################################################
+      # Always use report.sh from the verification workflow commit
+      ###########################################################################
+
+      - name: Overlay verification report.sh
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.sha }}
+          path: .hm-verification-overlay
+          sparse-checkout: |
+            .github/actions/common
+          sparse-checkout-cone-mode: false
+
+      - name: Install verification report.sh
+        shell: bash
+        run: |
+          mkdir -p .github/actions/common
+          cp -f \
+            .hm-verification-overlay/.github/actions/common/report.sh \
+            .github/actions/common/report.sh
+          chmod +x .github/actions/common/report.sh
+
+      ###########################################################################
+      # Verify Checkout
+      ###########################################################################
+
+      - name: Verify Checkout
+        shell: bash
+        run: |
+
+          source .github/actions/common/report.sh
+
+          if [ -d ".git" ]; then
+
+            post_pass \
+              "PRE_BUILD" \
+              "CHECKOUT_SOURCE" \
+              0 \
+              "Repository checked out successfully."
+
+          else
+
+            post_fail \
+              "PRE_BUILD" \
+              "CHECKOUT_SOURCE" \
+              0 \
+              "Repository checkout failed."
+
+            post_terminate_build
+
+          fi
+
+      ###########################################################################
+      # Determine Go Application Directory
+      ###########################################################################
+
+      - name: Determine Go Application Directory
+        shell: bash
+        run: |
+
+          source .github/actions/common/report.sh
+
+          if [ -d "${APP_NAME}" ] && {
+              [ -f "${APP_NAME}/go.mod" ] ||
+              [ -f "${APP_NAME}/main.go" ] ||
+              [ -d "${APP_NAME}/internal" ];
+          }; then
+
+            APP_DIR="${APP_NAME}"
+
+          elif [ -f "go.mod" ] ||
+               [ -f "main.go" ] ||
+               [ -d "internal" ]; then
+
+            APP_DIR="."
+
+          else
+
+            post_fail \
+              "PRE_BUILD" \
+              "GO_APPLICATION" \
+              0 \
+              "Could not locate Go application sources." \
+              "Expected ./${APP_NAME} or Go sources at repository root."
+
+            post_terminate_build
+
+          fi
+
+          echo "APP_DIR=${APP_DIR}" >> "$GITHUB_ENV"
+
+          echo "Resolved APP_DIR=${APP_DIR}"
+
+      ###########################################################################
+      # Determine Go Version
+      ###########################################################################
+
+      - name: Determine Go Version
+        shell: bash
+        run: |
+
+          source .github/actions/common/report.sh
+
+          GO_VERSION="${{ inputs.languageVersion }}"
+
+          if [ -f "${APP_DIR}/go.mod" ]; then
+
+            PARSED_VERSION=$(
+              grep -E '^go [0-9]+\.[0-9]+(\.[0-9]+)?' \
+                "${APP_DIR}/go.mod" |
+              head -1 |
+              awk '{print $2}'
+            )
+
+            if [ -n "${PARSED_VERSION}" ]; then
+              GO_VERSION="${PARSED_VERSION}"
+            fi
+
+          fi
+
+          echo "GO_VERSION=${GO_VERSION}" >> "$GITHUB_ENV"
+
+          echo "Using Go ${GO_VERSION}"
+
+      ###########################################################################
+      # Setup Go
+      ###########################################################################
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: false
+
+      ###############################################################################
+      # Expected Files
+      ###############################################################################
+
+      - name: Expected Files
+
+        shell: bash
+
+        run: |
+          
+          source .github/actions/common/report.sh
+          
+          SCORE=0
+          
+          cd "${APP_DIR}"
+          
+          echo "Searching for go.mod..."
+          find . -name go.mod
+          
+          ###########################################################################
+          # Module File (go.mod)
+          ###########################################################################
+          
+          if [ -f go.mod ]; then
+          
+              SCORE=$((SCORE + 3))
+          
+              post_pass \
+                  "BUILD" \
+                  "BUILD_FILE" \
+                  3 \
+                  "go.mod located."
+          
+          else
+          
+              post_fail \
+                  "BUILD" \
+                  "BUILD_FILE" \
+                  0 \
+                  "No go.mod found."
+          
+          fi
+          
+          ###########################################################################
+          # Dockerfile 
+          ###########################################################################
+          
+          if [[ -f Dockerfile ]]; then
+          
+              SCORE=$((SCORE + 2))
+          
+              post_pass \
+                  "BUILD" \
+                  "DOCKERFILE" \
+                  2 \
+                  "Dockerfile located."
+          
+          else
+          
+              post_fail \
+                  "BUILD" \
+                  "DOCKERFILE" \
+                  0 \
+                  "Dockerfile not found."
+          
+          fi
+          
+          ###########################################################################
+          # Dependency Checksums (go.sum)
+          ###########################################################################
+          
+          if [ -f go.sum ]; then
+          
+              SCORE=$((SCORE + 2))
+          
+              post_pass \
+                  "BUILD" \
+                  "GO_SUM" \
+                  2 \
+                  "go.sum located."
+          
+          else
+          
+              post_fail \
+                  "BUILD" \
+                  "GO_SUM" \
+                  0 \
+                  "No go.sum found."
+          
+          fi
+          
+          ###########################################################################
+          # Go Sources
+          ###########################################################################
+          
+          if find . -name "*.go" | grep -q .; then
+
+              SCORE=$((SCORE + 3))
+
+              post_pass \
+                  "BUILD" \
+                  "GO_SOURCE" \
+                  3 \
+                  "Go source files located."
+          
+          else
+          
+              post_fail \
+                  "BUILD" \
+                  "GO_SOURCE" \
+                  0 \
+                  "No Go source files found."
+          
+          fi
+          
+          ###########################################################################
+          # Summary
+          ###########################################################################
+          
+          post_result \
+              "BUILD" \
+              "EXPECTED_FILES" \
+              "PASSED" \
+              0 \
+              "Expected files validation complete (${SCORE}/10)."
+
+      ###############################################################################
+      # Directory Structure
+      ###############################################################################
+
+      - name: Directory Structure
+
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+          SCORE=0
+
+          cd "${APP_DIR}"
+          
+          ###########################################################################
+          # Main entry point (cmd/ or root main.go)
+          ###########################################################################
+
+          if [ -f main.go ] || find . -name "main.go" | grep -q .; then
+
+              SCORE=$((SCORE + 6))
+
+              post_pass \
+                  "BUILD" \
+                  "GO_MAIN" \
+                  6 \
+                  "Go main entry point located."
+
+          else
+
+              post_fail \
+                  "BUILD" \
+                  "GO_MAIN" \
+                  0 \
+                  "Missing main.go."
+
+          fi
+
+          ###########################################################################
+          # Go source tree
+          ###########################################################################
+
+          if find . -name "*.go" | grep -q .; then
+
+              SCORE=$((SCORE + 2))
+
+              post_pass \
+                  "BUILD" \
+                  "GO_SOURCE_TREE" \
+                  2 \
+                  "Go source tree exists."
+
+          else
+
+              post_fail \
+                  "BUILD" \
+                  "GO_SOURCE_TREE" \
+                  0 \
+                  "No Go source files found."
+
+          fi
+
+          ###########################################################################
+          # Go tests
+          ###########################################################################
+
+          if find . -name "*_test.go" | grep -q .; then
+
+              SCORE=$((SCORE + 1))
+
+              post_pass \
+                  "BUILD" \
+                  "GO_TEST" \
+                  1 \
+                  "Go test files located."
+
+          else
+
+              post_fail \
+                  "BUILD" \
+                  "GO_TEST" \
+                  0 \
+                  "No Go test files found."
+
+          fi
+
+          ###########################################################################
+          # internal/ or pkg/ (optional)
+          ###########################################################################
+
+          if [ -d internal ] || [ -d pkg ]; then
+
+              SCORE=$((SCORE + 1))
+
+              post_pass \
+                  "BUILD" \
+                  "GO_PACKAGES" \
+                  1 \
+                  "internal/ or pkg/ directory exists."
+
+          else
+
+              post_warning \
+                  "BUILD" \
+                  "GO_PACKAGES" \
+                  0 \
+                  "Optional internal/ or pkg/ directory not found."
+
+          fi
+
+          ###########################################################################
+          # Summary
+          ###########################################################################
+
+          if [ "$SCORE" -gt 7 ]; then
+
+              STATUS="PASSED"
+
+          else
+
+              STATUS="FAILED"
+
+          fi
+
+          post_result \
+              "BUILD" \
+              "DIRECTORY_STRUCTURE" \
+              "${STATUS}" \
+              0 \
+              "Directory structure validation complete (${SCORE}/10)."
+
+      ###########################################################################
+      # Format Code
+      ###########################################################################
+
+      - name: Format Code
+        shell: bash
+        run: |
+
+          source .github/actions/common/report.sh
+
+          cd "${APP_DIR}"
+
+          echo "Running gofmt..."
+
+          if ! gofmt -w $(find . -name "*.go" -type f); then
+
+            post_fail \
+              "PRE_BUILD" \
+              "FORMAT_CODE" \
+              0 \
+              "Go source formatting failed."
+
+            post_terminate_build
+
+          fi
+
+          UNFORMATTED=$(gofmt -l $(find . -name "*.go" -type f))
+
+          if [ -n "${UNFORMATTED}" ]; then
+
+            post_fail \
+              "PRE_BUILD" \
+              "FORMAT_CODE" \
+              0 \
+              "Unformatted Go files remain." \
+              "${UNFORMATTED}"
+
+            post_terminate_build
+
+          fi
+
+          post_pass \
+            "PRE_BUILD" \
+            "FORMAT_CODE" \
+            15 \
+            "Go source formatting completed successfully." \
+            "gofmt completed with no unformatted files."
+
+      ###########################################################################
+      # Static Analysis
+      ###########################################################################
+
+      - name: Static Analysis
+        shell: bash
+        run: |
+
+          source .github/actions/common/report.sh
+
+          cd "${APP_DIR}"
+
+          echo "Running go vet..."
+
+          if ! go vet ./... > go-vet.log 2>&1; then
+
+            cat go-vet.log
+
+            MESSAGE=$(tail -30 go-vet.log | tr '\n' ' ')
+
+            post_fail \
+              "PRE_BUILD" \
+              "GO_VET" \
+              0 \
+              "go vet failed." \
+              "${MESSAGE}"
+
+            post_terminate_build
+
+          fi
+
+          post_pass \
+            "PRE_BUILD" \
+            "GO_VET" \
+            10 \
+            "go vet completed successfully."
+
+          echo "Installing staticcheck..."
+
+          go install honnef.co/go/tools/cmd/staticcheck@latest
+
+          echo "Running staticcheck..."
+
+          if ! staticcheck ./... > staticcheck.log 2>&1; then
+
+            cat staticcheck.log
+
+            MESSAGE=$(tail -30 staticcheck.log | tr '\n' ' ')
+
+            post_fail \
+              "PRE_BUILD" \
+              "STATICCHECK" \
+              0 \
+              "staticcheck failed." \
+              "${MESSAGE}"
+
+            post_terminate_build
+
+          fi
+
+          post_pass \
+            "PRE_BUILD" \
+            "STATICCHECK" \
+            10 \
+            "staticcheck completed successfully."
+
+      ###########################################################################
+      # Security Check
+      ###########################################################################
+
+      - name: Security Check
+        shell: bash
+        run: |
+
+          source .github/actions/common/report.sh
+
+          cd "${APP_DIR}"
+
+          #######################################################################
+          # Vulnerability scanning
+          #######################################################################
+
+          echo "Installing govulncheck..."
+
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+
+          echo "Running govulncheck..."
+
+          if ! govulncheck ./... > govulncheck.log 2>&1; then
+
+            cat govulncheck.log
+
+            MESSAGE=$(tail -30 govulncheck.log | tr '\n' ' ')
+
+            post_fail \
+              "PRE_BUILD" \
+              "GO_VULNCHECK" \
+              0 \
+              "Go vulnerability check failed." \
+              "${MESSAGE}"
+
+            post_terminate_build
+
+          fi
+
+          post_pass \
+            "PRE_BUILD" \
+            "GO_VULNCHECK" \
+            5 \
+            "Go vulnerability check completed successfully."
+
+          #######################################################################
+          # Source security analysis
+          #######################################################################
+
+          echo "Installing gosec..."
+
+          go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+          echo "Running gosec..."
+
+          if ! gosec ./... > gosec.log 2>&1; then
+
+            cat gosec.log
+
+            MESSAGE=$(tail -30 gosec.log | tr '\n' ' ')
+
+            post_fail \
+              "PRE_BUILD" \
+              "GOSEC" \
+              0 \
+              "gosec security analysis failed." \
+              "${MESSAGE}"
+
+            post_terminate_build
+
+          fi
+
+          post_pass \
+            "PRE_BUILD" \
+            "GOSEC" \
+            5 \
+            "gosec security analysis completed successfully."
+
+      ###########################################################################
+      # Commit Files
+      ###########################################################################
+
+      - name: Commit Files
+        shell: bash
+        run: |
+
+          source .github/actions/common/report.sh
+
+          echo "Checking for generated changes..."
+
+          git status --short
+
+          if [ -z "$(git status --porcelain)" ]; then
+
+            post_pass \
+              "PRE_BUILD" \
+              "COMMIT_FILES" \
+              0 \
+              "No file changes require committing." \
+              "Working tree is clean."
+
+            exit 0
+
+          fi
+
+          echo "Changes detected:"
+
+          git status --short
+
+          #######################################################################
+          # Configure commit identity
+          #######################################################################
+
+          git config user.name "HarborMaster Verification"
+          git config user.email "verification@harbormaster.io"
+
+          #######################################################################
+          # Commit formatting changes
+          #######################################################################
+
+          git add -A
+
+          if git commit -m "chore: format generated Go source"; then
+
+            post_pass \
+              "PRE_BUILD" \
+              "COMMIT_FILES" \
+              0 \
+              "Generated source changes committed." \
+              "Formatting and verification changes committed."
+
+          else
+
+            post_fail \
+              "PRE_BUILD" \
+              "COMMIT_FILES" \
+              0 \
+              "Failed to commit generated source changes."
+
+            post_terminate_build
+
+          fi
+
+          #######################################################################
+          # Push changes back to the source branch
+          #######################################################################
+
+          TARGET_BRANCH="${{ inputs.branch }}"
+
+          if [ -z "${TARGET_BRANCH}" ]; then
+            TARGET_BRANCH="${GITHUB_REF_NAME}"
+          fi
+
+          echo "Pushing changes to ${TARGET_BRANCH}"
+
+          if git push origin "HEAD:${TARGET_BRANCH}"; then
+
+            post_pass \
+              "PRE_BUILD" \
+              "COMMIT_FILES" \
+              0 \
+              "Generated source changes pushed successfully." \
+              "Committed changes pushed to ${TARGET_BRANCH}."
+
+          else
+
+            post_fail \
+              "PRE_BUILD" \
+              "COMMIT_FILES" \
+              0 \
+              "Failed to push generated source changes." \
+              "GitHub rejected the push to ${TARGET_BRANCH}."
+
+            post_terminate_build
+
+          fi
+
+      ###########################################################################
+      # Terminate Verification
+      ###########################################################################
+
+      - name: Terminate Verification
+        shell: bash
+        run: |
+
+          source .github/actions/common/report.sh
+
+          post_terminate_build false
