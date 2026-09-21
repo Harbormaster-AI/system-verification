@@ -319,8 +319,7 @@ jobs:
         run: |
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
-          cd ..
-          python -c "import sys; print('\n'.join(sys.path)); import bankingOnDjango; print(bankingOnDjango)"
+          export PYTHONPATH="${GITHUB_WORKSPACE}:${PYTHONPATH}"
           
           if python manage.py check > build.log 2>&1; then
               cat build.log
