@@ -225,35 +225,34 @@ jobs:
 
           cd "${APP_DIR}"
 
+          echo "===== BEFORE FORMAT ====="
+          gofmt -d ./internal/controller/ATMController.go
+          
+          echo "===== APPLYING FORMAT ====="
+          gofmt -w ./internal/controller/ATMController.go
+          
+          echo "===== AFTER FORMAT ====="
+          gofmt -d ./internal/controller/ATMController.go
+  
           echo "Running gofmt..."
-
-          if ! gofmt -w $(find . -name "*.go" -type f); then
-
-            post_fail \
-              "PRE_BUILD" \
-              "FORMAT_CODE" \
-              0 \
-              "Go source formatting failed."
-
-            post_terminate_build
-
-          fi
-
-          UNFORMATTED=$(gofmt -l $(find . -name "*.go" -type f))
-
+          
+          find . -type f -name '*.go' -print0 | xargs -0 -r gofmt -w
+          
+          echo "Checking formatting..."
+          
+          UNFORMATTED=$(find . -type f -name '*.go' -print0 | xargs -0 -r gofmt -l)
+          
           if [ -n "${UNFORMATTED}" ]; then
-
             post_fail \
               "PRE_BUILD" \
               "FORMAT_CODE" \
               0 \
               "Unformatted Go files remain." \
               "${UNFORMATTED}"
-
+            
             post_terminate_build
-
           fi
-
+          
           post_pass \
             "PRE_BUILD" \
             "FORMAT_CODE" \
