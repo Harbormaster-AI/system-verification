@@ -356,7 +356,7 @@ jobs:
           MESSAGE=$(tail -200 runtime.log | tr '\n' ' ')
           
           echo "===== APPLICATION STARTUP LOG ====="
-          tail -200 runtime.log
+          cat runtime.log
           echo "===== END APPLICATION STARTUP LOG ====="
           
           post_fail \
