@@ -582,6 +582,8 @@ jobs:
           
           LOG=$(docker logs ${APP_NAME} | tail -20 | tr '\n' ' ')
           
+          docker logs ${APP_NAME}
+          
           post_fail \
               "DELIVERY" \
               "CONTAINER_HEALTH" \
