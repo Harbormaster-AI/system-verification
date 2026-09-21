@@ -475,51 +475,6 @@ jobs:
               0 \
               "Directory structure validation complete (${SCORE}/10)."
 
-
-      ###############################################################################
-      # TypeScript / Apollo Configuration Validation
-      ###############################################################################
-
-      - name: TypeScript Configuration Validation
-
-        shell: bash
-
-        run: |
-
-          source .github/actions/common/report.sh
-
-          SCORE=0
-
-
-          ###########################################################################
-          # Validate TypeScript configuration
-          ###########################################################################
-
-          if npx tsc --showConfig > typescript-config.log 2>&1; then
-
-              SCORE=$((SCORE + 10))
-
-              post_pass \
-                  "BUILD" \
-                  "TYPESCRIPT_CONFIGURATION" \
-                  10 \
-                  "TypeScript configuration is valid."
-
-          else
-
-              MESSAGE=$(tail -20 typescript-config.log | tr '\n' ' ')
-
-              post_fail \
-                  "BUILD" \
-                  "TYPESCRIPT_CONFIGURATION" \
-                  0 \
-                  "${MESSAGE}"
-
-              post_terminate_build
-
-          fi
-
-
       ###############################################################################
       # Dependency Validation
       ###############################################################################
@@ -577,6 +532,50 @@ jobs:
               post_terminate_build
 
           fi
+
+      ###############################################################################
+      # TypeScript / Apollo Configuration Validation
+      ###############################################################################
+
+      - name: TypeScript Configuration Validation
+
+        shell: bash
+
+        run: |
+
+          source .github/actions/common/report.sh
+
+          SCORE=0
+
+
+          ###########################################################################
+          # Validate TypeScript configuration
+          ###########################################################################
+
+          if npx tsc --showConfig > typescript-config.log 2>&1; then
+
+              SCORE=$((SCORE + 10))
+
+              post_pass \
+                  "BUILD" \
+                  "TYPESCRIPT_CONFIGURATION" \
+                  10 \
+                  "TypeScript configuration is valid."
+
+          else
+
+              MESSAGE=$(tail -20 typescript-config.log | tr '\n' ' ')
+
+              post_fail \
+                  "BUILD" \
+                  "TYPESCRIPT_CONFIGURATION" \
+                  0 \
+                  "${MESSAGE}"
+
+              post_terminate_build
+
+          fi
+
 
 
       ###############################################################################
