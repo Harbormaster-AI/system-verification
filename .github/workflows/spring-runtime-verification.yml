@@ -334,6 +334,8 @@ jobs:
               "Waiting for system to start." \
               ""
           
+          curl -v http://localhost:8080/actuator/health
+          
           for i in {1..60}; do
           
               if curl -fs http://localhost:8080/actuator/health >/dev/null; then
