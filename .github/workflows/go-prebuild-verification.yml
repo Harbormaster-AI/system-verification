@@ -224,24 +224,37 @@ jobs:
           source .github/actions/common/report.sh
 
           cd "${APP_DIR}"
-
-          echo "===== BEFORE FORMAT ====="
-          gofmt -d ./internal/controller/ATMController.go
           
-          echo "===== APPLYING FORMAT ====="
+          echo "Go version:"
+          go version
+          
+          echo "Go executable:"
+          which go
+          
+          echo "gofmt executable:"
+          which gofmt
+          
+          echo "gofmt version:"
+          gofmt -h | head -5
+          
+          echo "GOROOT:"
+          go env GOROOT
+          
+          echo "GOVERSION:"
+          go env GOVERSION
+          
+          echo "Running gofmt..."
+
           gofmt -w ./internal/controller/ATMController.go
           
-          echo "===== AFTER FORMAT ====="
+          echo "Checking ATMController..."
+          
           gofmt -d ./internal/controller/ATMController.go
           
-          echo "Direct format check:"
+          echo "gofmt -l result:"
+          
           gofmt -l ./internal/controller/ATMController.go
-          
-          echo "Backup files:"
-          find . -type f -name '*.orig' -print
-
-          echo "Running gofmt..."
-          
+  
           find . -type f -name '*.go' -print0 | xargs -0 -r gofmt -w
           
           echo "Checking formatting..."
