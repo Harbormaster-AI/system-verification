@@ -238,7 +238,7 @@ jobs:
 
     needs: [spring-runtime, go-runtime, aspdotnet-runtime]
 
-    uses: ./.github/workflows/delivery-verification.yml
+    uses: ./.github/workflows/spring-delivery-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
