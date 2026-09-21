@@ -238,7 +238,7 @@ jobs:
 
     needs: [spring-runtime, go-runtime, aspdotnet-runtime]
 
-    uses: ./.github/workflows/spring-delivery-verification.yml
+    uses: ./.github/workflows/delivery-verification.yml
 
     with:
       runner: ${{ inputs.runner }}
@@ -254,7 +254,7 @@ jobs:
       dockerUsername:            ${{ inputs.dockerUsername }}
       dockerPassword:            ${{ inputs.dockerPassword }}
       dockerTag:                 ${{ inputs.dockerTag }}
-  #    deployToCloud:             ${{ inputs.deployToCloud }}
+      deployToCloud:             ${{ inputs.deployToCloud }}
 
 
   cloud:
