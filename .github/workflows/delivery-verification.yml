@@ -502,6 +502,7 @@ jobs:
             -e SPRING_DATASOURCE_PASSWORD=root \
             -e SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver \
             -e SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQL8Dialect \
+            -e hm.security.authentication=none \
             -e DB_USER_NAME=root \
             -e DB_PASSWORD=root \
             -e DB_NAME=harbormaster \
@@ -546,6 +547,10 @@ jobs:
           
           source .github/actions/common/report.sh
           
+          echo "===== ACTUATOR HEALTH ====="
+          curl -i http://localhost:8080/actuator/health
+          echo "Actuator exit code: $?"
+                            
           for i in {1..90}; do
           
               # Support Spring (/actuator/health) and Go (/health) without language branching.
