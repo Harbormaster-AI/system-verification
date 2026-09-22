@@ -579,12 +579,18 @@ jobs:
           source .github/actions/common/report.sh
           
           cd "${APP_DIR}"
-          
+                    
           if [ "${BUILD_TOOL}" = "maven" ]; then
           
             echo "Running Checkstyle..."
           
-            if ! ./mvnw checkstyle:check \
+            if [ -x "./mvnw" ]; then
+              MVN="./mvnw"
+            else
+              MVN="mvn"
+            fi
+            
+            if ! ${MVN} checkstyle:check \
                 > checkstyle.log 2>&1; then
           
               cat checkstyle.log
@@ -604,7 +610,7 @@ jobs:
           
             echo "Running SpotBugs..."
           
-            if ! ./mvnw spotbugs:check \
+            if ! ${MVN} spotbugs:check \
                 > spotbugs.log 2>&1; then
           
               cat spotbugs.log
@@ -683,13 +689,19 @@ jobs:
 
           source .github/actions/common/report.sh
 
+          if [ -x "./mvnw" ]; then
+            MVN="./mvnw"
+          else
+            MVN="mvn"
+          fi
+
           cd "${APP_DIR}"
 
           echo "Running dependency vulnerability analysis..."
 
           if [ "${BUILD_TOOL}" = "maven" ]; then
 
-            if ! ./mvnw dependency-check:check \
+            if ! ${MVN} dependency-check:check \
                 > dependency-check.log 2>&1; then
 
               cat dependency-check.log
