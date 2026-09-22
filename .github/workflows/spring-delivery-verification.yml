@@ -80,6 +80,13 @@ on:
         default: latest
         type: string
 
+      # When true, keep the temp verification branch so cloud-verification can check it out.
+      deployToCloud:
+        description: Whether cloud deploy will run after delivery
+        required: false
+        default: false
+        type: boolean
+
 env:
   RESULT_URL:                   ${{ inputs.resultUrl }}
   ACTION_TO_CALL:               ${{ inputs.actionToCall }}
@@ -583,7 +590,8 @@ jobs:
       ###############################################################################
 
       - name: Delete Verification Branch
-        if: always()
+        # Keep branch when cloud deploy follows delivery (same rule as shared delivery).
+        if: ${{ always() && inputs.deployToCloud == false }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |

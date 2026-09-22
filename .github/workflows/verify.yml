@@ -239,21 +239,43 @@ jobs:
       appName: ${{ inputs.appName }}
       languageVersion: ${{ inputs.languageVersion }}
 
-  # Shared Spring/Go delivery (from feature). Angular/Django/Rails/Apollo keep per-tech delivery below.
+  # Spring uses dedicated spring-delivery (working path Steven confirmed).
+  # Shared delivery kept for Go / ASP.NET only on this test branch.
+  spring-delivery:
+
+    if: ${{ contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) }}
+
+    needs: spring-runtime
+
+    uses: ./.github/workflows/spring-delivery-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      branch: ${{ inputs.branch }}
+      gitHubToken: ${{ inputs.gitHubToken }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
+      appName:                   ${{ inputs.appName }}
+      dockerHost:                ${{ inputs.dockerHost }}
+      dockerOrg:                 ${{ inputs.dockerOrg }}
+      dockerRepository:          ${{ inputs.dockerRepository }}
+      dockerUsername:            ${{ inputs.dockerUsername }}
+      dockerPassword:            ${{ inputs.dockerPassword }}
+      dockerTag:                 ${{ inputs.dockerTag }}
+      deployToCloud:             ${{ inputs.deployToCloud }}
+
   delivery:
 
     if: >
       always() &&
       (
-        (contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) && needs.spring-runtime.result == 'success')
-        ||
         (contains(fromJSON('["go","golang"]'), inputs.technology) && needs.go-runtime.result == 'success')
         ||
         (contains(fromJSON('["ASPDotNet","DotNet"]'), inputs.technology) && needs.aspdotnet-runtime.result == 'success')
-      
       )
 
-    needs: [spring-runtime, go-runtime, aspdotnet-runtime]
+    needs: [go-runtime, aspdotnet-runtime]
 
     uses: ./.github/workflows/delivery-verification.yml
 
@@ -276,9 +298,19 @@ jobs:
 
   cloud:
 
-    if: ${{ !always() && inputs.deployToCloud && needs.delivery.result == 'success' }}
+    # Fixed: master had "!always()" which never ran the cloud job.
+    if: >
+      always() &&
+      inputs.deployToCloud &&
+      (
+        (contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) && needs.spring-delivery.result == 'success')
+        ||
+        (contains(fromJSON('["go","golang"]'), inputs.technology) && needs.delivery.result == 'success')
+        ||
+        (contains(fromJSON('["ASPDotNet","DotNet"]'), inputs.technology) && needs.delivery.result == 'success')
+      )
 
-    needs: delivery
+    needs: [spring-delivery, delivery]
 
     uses: ./.github/workflows/cloud-verification.yml
     secrets: inherit
