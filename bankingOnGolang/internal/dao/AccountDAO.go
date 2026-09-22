@@ -1,23 +1,21 @@
-
 package dao
 
 import (
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "fmt"
-    "strings"
-    "github.com/google/uuid"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"fmt"
+	"github.com/google/uuid"
+	"strings"
 )
 
-
 func init() {
-	fmt.Println( strings.ToTitle( "Initializing AccountDAO..." ) )
+	fmt.Println(strings.ToTitle("Initializing AccountDAO..."))
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // CreateAccount - creates a new db entry
-//----------------------------------------------------------------------------
-func CreateAccount(obj model.Account)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func CreateAccount(obj model.Account) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -30,26 +28,25 @@ func CreateAccount(obj model.Account)(utils.RequestResult){
 	result := utils.GetDB().Create(&obj).Error
 
 	if result == nil {
-	    createMsg = fmt.Sprintf( "Created a Account with ID=%v", obj.ID )
-	    success = true
+		createMsg = fmt.Sprintf("Created a Account with ID=%v", obj.ID)
+		success = true
 	} else {
-		createMsg = fmt.Sprintf( "Failed trying to create a Account. Result: %s", result )
+		createMsg = fmt.Sprintf("Failed trying to create a Account. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        createMsg,
-        Call:       "CreateAccount",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     createMsg,
+		Call:    "CreateAccount",
+		Data:    obj,
+	}
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAccount - returns the matching the provided identifier
-//----------------------------------------------------------------------------
-func GetAccount(id uuid.UUID)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAccount(id uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -67,26 +64,26 @@ func GetAccount(id uuid.UUID)(utils.RequestResult){
 	result := utils.GetDB().First(&obj, id).Error // find first using identifier
 
 	if result == nil {
-	    getMsg = fmt.Sprintf( "Retrieved a Account using ID=%v", id )
-	    success = true
+		getMsg = fmt.Sprintf("Retrieved a Account using ID=%v", id)
+		success = true
 	} else {
-		getMsg = fmt.Sprintf( "Failed trying to retrieve a Account using ID=%v", id )
+		getMsg = fmt.Sprintf("Failed trying to retrieve a Account using ID=%v", id)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getMsg,
-        Call:       "GetAccount",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getMsg,
+		Call:    "GetAccount",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAllAccount - returns all
-//----------------------------------------------------------------------------
-func GetAllAccount()(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAllAccount() (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -100,26 +97,26 @@ func GetAllAccount()(requestResult utils.RequestResult){
 	result := utils.GetDB().Find(&objs).Error // find all
 
 	if result == nil {
-	    getAllMsg = "Retrieved all Account"
-	    success = true
+		getAllMsg = "Retrieved all Account"
+		success = true
 	} else {
-		getAllMsg = fmt.Sprintf( "Failed trying to retrieve all Account. Result: %s", result )
+		getAllMsg = fmt.Sprintf("Failed trying to retrieve all Account. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getAllMsg,
-        Call:       "GetAllAccount",
-        Data:       objs,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getAllMsg,
+		Call:    "GetAllAccount",
+		Data:    objs,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // UpdateAccount - updates matching the provided identifier
-//----------------------------------------------------------------------------
-func UpdateAccount(obj model.Account)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func UpdateAccount(obj model.Account) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -132,26 +129,26 @@ func UpdateAccount(obj model.Account)(requestResult utils.RequestResult){
 	result := utils.GetDB().Save(&obj).Error
 
 	if result == nil {
-	    updateMsg = fmt.Sprintf( "Updated a Account using ID=%v", obj.ID )
-	    success = true
+		updateMsg = fmt.Sprintf("Updated a Account using ID=%v", obj.ID)
+		success = true
 	} else {
-		updateMsg = fmt.Sprintf( "Failed trying to update a Account using ID=%v", obj.ID )
+		updateMsg = fmt.Sprintf("Failed trying to update a Account using ID=%v", obj.ID)
 		success = false
 	}
 
 	return utils.RequestResult{
-        Success:    success,
-        Msg:        updateMsg,
-        Call:       "UpdateAccount",
-        Data:       obj,
-    }
+		Success: success,
+		Msg:     updateMsg,
+		Call:    "UpdateAccount",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DeleteAccount - deletes matching the provided identifier
-//----------------------------------------------------------------------------
-func DeleteAccount(id uuid.UUID)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func DeleteAccount(id uuid.UUID) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -168,7 +165,7 @@ func DeleteAccount(id uuid.UUID)(requestResult utils.RequestResult){
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		obj,_ := requestResult.Data.(model.Account)
+		obj, _ := requestResult.Data.(model.Account)
 
 		//----------------------------------------------------------------------------
 		// Make call to the ORM to delete
@@ -176,30 +173,29 @@ func DeleteAccount(id uuid.UUID)(requestResult utils.RequestResult){
 		result := utils.GetDB().Delete(&obj).Error // pass pointer of data to Delete
 
 		if result == nil {
-		    deleteMsg = fmt.Sprintf( "Deleted a Account using ID=%v", id )
-		    success = true
+			deleteMsg = fmt.Sprintf("Deleted a Account using ID=%v", id)
+			success = true
 		} else {
-			deleteMsg = fmt.Sprintf( "Failed trying to delete a Account using ID=%v", id )
+			deleteMsg = fmt.Sprintf("Failed trying to delete a Account using ID=%v", id)
 			success = false
 		}
 
-        requestResult = utils.RequestResult{
-            Success:    success,
-            Msg:        deleteMsg,
-            Call:       "DeleteAccount",
-            Data:       requestResult.Data,
-        }
+		requestResult = utils.RequestResult{
+			Success: success,
+			Msg:     deleteMsg,
+			Call:    "DeleteAccount",
+			Data:    requestResult.Data,
+		}
 
 	}
 
 	return requestResult
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Bank on a Account
-//----------------------------------------------------------------------------
-func AssignBankToAccount( accountId uuid.UUID, bankId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignBankToAccount(accountId uuid.UUID, bankId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
@@ -211,7 +207,7 @@ func AssignBankToAccount( accountId uuid.UUID, bankId uuid.UUID )(utils.RequestR
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -235,24 +231,24 @@ func AssignBankToAccount( accountId uuid.UUID, bankId uuid.UUID )(utils.RequestR
 			//----------------------------------------------------------------------------
 			return UpdateAccount(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Bank", bankId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Bank", bankId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignBank",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignBank",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Bank on a Account
-//----------------------------------------------------------------------------
-func UnassignBankFromAccount(accountId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignBankFromAccount(accountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
@@ -264,17 +260,17 @@ func UnassignBankFromAccount(accountId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Bank to the Bank
 		//----------------------------------------------------------------------------
-		parentObj.Bank = nil;
+		parentObj.Bank = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Bank
 		//----------------------------------------------------------------------------
-		parentObj.BankId = nil;
+		parentObj.BankId = nil
 
 		//----------------------------------------------------------------------------
 		// save the Account
@@ -287,10 +283,10 @@ func UnassignBankFromAccount(accountId uuid.UUID)(utils.RequestResult) {
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Branch on a Account
-//----------------------------------------------------------------------------
-func AssignBranchToAccount( accountId uuid.UUID, branchId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignBranchToAccount(accountId uuid.UUID, branchId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
@@ -302,7 +298,7 @@ func AssignBranchToAccount( accountId uuid.UUID, branchId uuid.UUID )(utils.Requ
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -326,24 +322,24 @@ func AssignBranchToAccount( accountId uuid.UUID, branchId uuid.UUID )(utils.Requ
 			//----------------------------------------------------------------------------
 			return UpdateAccount(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Branch", branchId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Branch", branchId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignBranch",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignBranch",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Branch on a Account
-//----------------------------------------------------------------------------
-func UnassignBranchFromAccount(accountId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignBranchFromAccount(accountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
@@ -355,17 +351,17 @@ func UnassignBranchFromAccount(accountId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Branch to the Branch
 		//----------------------------------------------------------------------------
-		parentObj.Branch = nil;
+		parentObj.Branch = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Branch
 		//----------------------------------------------------------------------------
-		parentObj.BranchId = nil;
+		parentObj.BranchId = nil
 
 		//----------------------------------------------------------------------------
 		// save the Account
@@ -378,10 +374,10 @@ func UnassignBranchFromAccount(accountId uuid.UUID)(utils.RequestResult) {
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Product on a Account
-//----------------------------------------------------------------------------
-func AssignProductToAccount( accountId uuid.UUID, productId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignProductToAccount(accountId uuid.UUID, productId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
@@ -393,7 +389,7 @@ func AssignProductToAccount( accountId uuid.UUID, productId uuid.UUID )(utils.Re
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -417,24 +413,24 @@ func AssignProductToAccount( accountId uuid.UUID, productId uuid.UUID )(utils.Re
 			//----------------------------------------------------------------------------
 			return UpdateAccount(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Product", productId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Product", productId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignProduct",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignProduct",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Product on a Account
-//----------------------------------------------------------------------------
-func UnassignProductFromAccount(accountId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignProductFromAccount(accountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
@@ -446,17 +442,17 @@ func UnassignProductFromAccount(accountId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
 		//----------------------------------------------------------------------------
 		// assign an empty BankingProduct to the Product
 		//----------------------------------------------------------------------------
-		parentObj.Product = nil;
+		parentObj.Product = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Product
 		//----------------------------------------------------------------------------
-		parentObj.ProductId = nil;
+		parentObj.ProductId = nil
 
 		//----------------------------------------------------------------------------
 		// save the Account
@@ -469,11 +465,10 @@ func UnassignProductFromAccount(accountId uuid.UUID)(utils.RequestResult) {
 
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more ownersIds as a Owners to a Account
-//----------------------------------------------------------------------------
-func AddOwnersToAccount ( accountId uuid.UUID, ownersIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddOwnersToAccount(accountId uuid.UUID, ownersIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
@@ -485,9 +480,9 @@ func AddOwnersToAccount ( accountId uuid.UUID, ownersIds []uuid.UUID )(utils.Req
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
-		for _, ownersId:= range ownersIds {
+		for _, ownersId := range ownersIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -497,29 +492,29 @@ func AddOwnersToAccount ( accountId uuid.UUID, ownersIds []uuid.UUID )(utils.Req
 			// Retrieve the 1st occurrence from the ORM of a Customer
 			// with a matching ownersId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , ownersId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, ownersId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the Owners using the gorm mechanism
 				//----------------------------------------------------------------------------
-                if err := utils.GetDB().Model(&parentObj).Association("Owners").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addOwnersToAccount",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("Owners").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addOwnersToAccount",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Owners", ownersId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Owners", ownersId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addOwnersToAccount",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addOwnersToAccount",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -533,10 +528,10 @@ func AddOwnersToAccount ( accountId uuid.UUID, ownersIds []uuid.UUID )(utils.Req
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more ownersIds as a Owners from a Account
-//----------------------------------------------------------------------------
-func RemoveOwnersFromAccount( accountId uuid.UUID, ownersIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveOwnersFromAccount(accountId uuid.UUID, ownersIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
 	//----------------------------------------------------------------------------
@@ -547,9 +542,9 @@ func RemoveOwnersFromAccount( accountId uuid.UUID, ownersIds []uuid.UUID )(utils
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
-		for _, ownersId:= range ownersIds {
+		for _, ownersId := range ownersIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -559,29 +554,29 @@ func RemoveOwnersFromAccount( accountId uuid.UUID, ownersIds []uuid.UUID )(utils
 			// Retrieve the 1st occurrence from the ORM of a Customer
 			// with a matching ownersId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , ownersId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, ownersId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove CustomerObj from the Owners array, but wont delete it from db
 				//----------------------------------------------------------------------------
 				if err := utils.GetDB().Model(&parentObj).Association("Owners").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeOwnersFromAccount",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeOwnersFromAccount",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Owners", ownersId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Owners", ownersId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeOwnersFromAccount",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeOwnersFromAccount",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -595,10 +590,10 @@ func RemoveOwnersFromAccount( accountId uuid.UUID, ownersIds []uuid.UUID )(utils
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more transactionsIds as a Transactions to a Account
-//----------------------------------------------------------------------------
-func AddTransactionsToAccount ( accountId uuid.UUID, transactionsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddTransactionsToAccount(accountId uuid.UUID, transactionsIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
@@ -610,9 +605,9 @@ func AddTransactionsToAccount ( accountId uuid.UUID, transactionsIds []uuid.UUID
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
-		for _, transactionsId:= range transactionsIds {
+		for _, transactionsId := range transactionsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -622,29 +617,29 @@ func AddTransactionsToAccount ( accountId uuid.UUID, transactionsIds []uuid.UUID
 			// Retrieve the 1st occurrence from the ORM of a Transaction
 			// with a matching transactionsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , transactionsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, transactionsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the Transactions using the gorm mechanism
 				//----------------------------------------------------------------------------
-                if err := utils.GetDB().Model(&parentObj).Association("Transactions").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addTransactionsToAccount",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("Transactions").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addTransactionsToAccount",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Transactions", transactionsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Transactions", transactionsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addTransactionsToAccount",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addTransactionsToAccount",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -658,10 +653,10 @@ func AddTransactionsToAccount ( accountId uuid.UUID, transactionsIds []uuid.UUID
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more transactionsIds as a Transactions from a Account
-//----------------------------------------------------------------------------
-func RemoveTransactionsFromAccount( accountId uuid.UUID, transactionsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveTransactionsFromAccount(accountId uuid.UUID, transactionsIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
 	//----------------------------------------------------------------------------
@@ -672,9 +667,9 @@ func RemoveTransactionsFromAccount( accountId uuid.UUID, transactionsIds []uuid.
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
-		for _, transactionsId:= range transactionsIds {
+		for _, transactionsId := range transactionsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -684,29 +679,29 @@ func RemoveTransactionsFromAccount( accountId uuid.UUID, transactionsIds []uuid.
 			// Retrieve the 1st occurrence from the ORM of a Transaction
 			// with a matching transactionsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , transactionsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, transactionsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove TransactionObj from the Transactions array, but wont delete it from db
 				//----------------------------------------------------------------------------
 				if err := utils.GetDB().Model(&parentObj).Association("Transactions").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeTransactionsFromAccount",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeTransactionsFromAccount",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Transactions", transactionsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Transactions", transactionsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeTransactionsFromAccount",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeTransactionsFromAccount",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -720,10 +715,10 @@ func RemoveTransactionsFromAccount( accountId uuid.UUID, transactionsIds []uuid.
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more statementsIds as a Statements to a Account
-//----------------------------------------------------------------------------
-func AddStatementsToAccount ( accountId uuid.UUID, statementsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddStatementsToAccount(accountId uuid.UUID, statementsIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
@@ -735,9 +730,9 @@ func AddStatementsToAccount ( accountId uuid.UUID, statementsIds []uuid.UUID )(u
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
-		for _, statementsId:= range statementsIds {
+		for _, statementsId := range statementsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -747,29 +742,29 @@ func AddStatementsToAccount ( accountId uuid.UUID, statementsIds []uuid.UUID )(u
 			// Retrieve the 1st occurrence from the ORM of a AccountStatement
 			// with a matching statementsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , statementsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, statementsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the Statements using the gorm mechanism
 				//----------------------------------------------------------------------------
-                if err := utils.GetDB().Model(&parentObj).Association("Statements").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addStatementsToAccount",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("Statements").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addStatementsToAccount",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Statements", statementsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Statements", statementsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addStatementsToAccount",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addStatementsToAccount",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -783,10 +778,10 @@ func AddStatementsToAccount ( accountId uuid.UUID, statementsIds []uuid.UUID )(u
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more statementsIds as a Statements from a Account
-//----------------------------------------------------------------------------
-func RemoveStatementsFromAccount( accountId uuid.UUID, statementsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveStatementsFromAccount(accountId uuid.UUID, statementsIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
 	//----------------------------------------------------------------------------
@@ -797,9 +792,9 @@ func RemoveStatementsFromAccount( accountId uuid.UUID, statementsIds []uuid.UUID
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
-		for _, statementsId:= range statementsIds {
+		for _, statementsId := range statementsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -809,29 +804,29 @@ func RemoveStatementsFromAccount( accountId uuid.UUID, statementsIds []uuid.UUID
 			// Retrieve the 1st occurrence from the ORM of a AccountStatement
 			// with a matching statementsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , statementsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, statementsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove AccountStatementObj from the Statements array, but wont delete it from db
 				//----------------------------------------------------------------------------
 				if err := utils.GetDB().Model(&parentObj).Association("Statements").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeStatementsFromAccount",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeStatementsFromAccount",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Statements", statementsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Statements", statementsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeStatementsFromAccount",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeStatementsFromAccount",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -845,10 +840,10 @@ func RemoveStatementsFromAccount( accountId uuid.UUID, statementsIds []uuid.UUID
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more standingInstructionsIds as a StandingInstructions to a Account
-//----------------------------------------------------------------------------
-func AddStandingInstructionsToAccount ( accountId uuid.UUID, standingInstructionsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddStandingInstructionsToAccount(accountId uuid.UUID, standingInstructionsIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
@@ -860,9 +855,9 @@ func AddStandingInstructionsToAccount ( accountId uuid.UUID, standingInstruction
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
-		for _, standingInstructionsId:= range standingInstructionsIds {
+		for _, standingInstructionsId := range standingInstructionsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -872,29 +867,29 @@ func AddStandingInstructionsToAccount ( accountId uuid.UUID, standingInstruction
 			// Retrieve the 1st occurrence from the ORM of a StandingInstruction
 			// with a matching standingInstructionsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , standingInstructionsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, standingInstructionsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the StandingInstructions using the gorm mechanism
 				//----------------------------------------------------------------------------
-                if err := utils.GetDB().Model(&parentObj).Association("StandingInstructions").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addStandingInstructionsToAccount",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("StandingInstructions").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addStandingInstructionsToAccount",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "StandingInstructions", standingInstructionsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "StandingInstructions", standingInstructionsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addStandingInstructionsToAccount",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addStandingInstructionsToAccount",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -908,10 +903,10 @@ func AddStandingInstructionsToAccount ( accountId uuid.UUID, standingInstruction
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more standingInstructionsIds as a StandingInstructions from a Account
-//----------------------------------------------------------------------------
-func RemoveStandingInstructionsFromAccount( accountId uuid.UUID, standingInstructionsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveStandingInstructionsFromAccount(accountId uuid.UUID, standingInstructionsIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
 	//----------------------------------------------------------------------------
@@ -922,9 +917,9 @@ func RemoveStandingInstructionsFromAccount( accountId uuid.UUID, standingInstruc
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
-		for _, standingInstructionsId:= range standingInstructionsIds {
+		for _, standingInstructionsId := range standingInstructionsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -934,29 +929,29 @@ func RemoveStandingInstructionsFromAccount( accountId uuid.UUID, standingInstruc
 			// Retrieve the 1st occurrence from the ORM of a StandingInstruction
 			// with a matching standingInstructionsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , standingInstructionsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, standingInstructionsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove StandingInstructionObj from the StandingInstructions array, but wont delete it from db
 				//----------------------------------------------------------------------------
 				if err := utils.GetDB().Model(&parentObj).Association("StandingInstructions").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeStandingInstructionsFromAccount",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeStandingInstructionsFromAccount",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "StandingInstructions", standingInstructionsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "StandingInstructions", standingInstructionsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeStandingInstructionsFromAccount",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeStandingInstructionsFromAccount",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -970,10 +965,10 @@ func RemoveStandingInstructionsFromAccount( accountId uuid.UUID, standingInstruc
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more feeChargesIds as a FeeCharges to a Account
-//----------------------------------------------------------------------------
-func AddFeeChargesToAccount ( accountId uuid.UUID, feeChargesIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddFeeChargesToAccount(accountId uuid.UUID, feeChargesIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
@@ -985,9 +980,9 @@ func AddFeeChargesToAccount ( accountId uuid.UUID, feeChargesIds []uuid.UUID )(u
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
-		for _, feeChargesId:= range feeChargesIds {
+		for _, feeChargesId := range feeChargesIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -997,29 +992,29 @@ func AddFeeChargesToAccount ( accountId uuid.UUID, feeChargesIds []uuid.UUID )(u
 			// Retrieve the 1st occurrence from the ORM of a FeeCharge
 			// with a matching feeChargesId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , feeChargesId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, feeChargesId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the FeeCharges using the gorm mechanism
 				//----------------------------------------------------------------------------
-                if err := utils.GetDB().Model(&parentObj).Association("FeeCharges").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addFeeChargesToAccount",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("FeeCharges").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addFeeChargesToAccount",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "FeeCharges", feeChargesId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "FeeCharges", feeChargesId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addFeeChargesToAccount",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addFeeChargesToAccount",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -1033,10 +1028,10 @@ func AddFeeChargesToAccount ( accountId uuid.UUID, feeChargesIds []uuid.UUID )(u
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more feeChargesIds as a FeeCharges from a Account
-//----------------------------------------------------------------------------
-func RemoveFeeChargesFromAccount( accountId uuid.UUID, feeChargesIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveFeeChargesFromAccount(accountId uuid.UUID, feeChargesIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the Account with the matching identifier
 	//----------------------------------------------------------------------------
@@ -1047,9 +1042,9 @@ func RemoveFeeChargesFromAccount( accountId uuid.UUID, feeChargesIds []uuid.UUID
 		// Need to cast the interface to a model.Account so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Account)
+		parentObj, _ := parentRequestResult.Data.(model.Account)
 
-		for _, feeChargesId:= range feeChargesIds {
+		for _, feeChargesId := range feeChargesIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -1059,29 +1054,29 @@ func RemoveFeeChargesFromAccount( accountId uuid.UUID, feeChargesIds []uuid.UUID
 			// Retrieve the 1st occurrence from the ORM of a FeeCharge
 			// with a matching feeChargesId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , feeChargesId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, feeChargesId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove FeeChargeObj from the FeeCharges array, but wont delete it from db
 				//----------------------------------------------------------------------------
 				if err := utils.GetDB().Model(&parentObj).Association("FeeCharges").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeFeeChargesFromAccount",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeFeeChargesFromAccount",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "FeeCharges", feeChargesId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "FeeCharges", feeChargesId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeFeeChargesFromAccount",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeFeeChargesFromAccount",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -1094,4 +1089,3 @@ func RemoveFeeChargesFromAccount( accountId uuid.UUID, feeChargesIds []uuid.UUID
 		return parentRequestResult
 	}
 }
-

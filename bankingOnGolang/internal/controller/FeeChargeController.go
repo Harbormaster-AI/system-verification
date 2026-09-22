@@ -1,13 +1,12 @@
-
 package controller
 
 import (
-    FeeChargeDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "net/http"
-    "encoding/json"
-    "log"
+	FeeChargeDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
+	"log"
+	"net/http"
 )
 
 // ----------------------------------------------------------------------------
@@ -18,7 +17,7 @@ func CreateFeeCharge(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty FeeCharge model
 	// ----------------------------------------------------------------------------
 	data := model.FeeCharge{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a FeeCharge model structure
 	// ----------------------------------------------------------------------------
@@ -27,17 +26,17 @@ func CreateFeeCharge(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the FeeCharge data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := FeeChargeDAO.CreateFeeCharge( data )
-	
+	requestResult := FeeChargeDAO.CreateFeeCharge(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -60,18 +59,17 @@ func GetFeeCharge(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := FeeChargeDAO.GetFeeCharge(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to FeeChargeDAO for database read of all FeeCharges
@@ -81,16 +79,16 @@ func GetAllFeeCharge(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the FeeCharge data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := FeeChargeDAO.GetAllFeeCharge()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -101,7 +99,7 @@ func UpdateFeeCharge(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty FeeCharge model
 	// ----------------------------------------------------------------------------
 	var data = model.FeeCharge{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a FeeCharge model structure
 	// ----------------------------------------------------------------------------
@@ -119,8 +117,8 @@ func UpdateFeeCharge(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -140,24 +138,24 @@ func DeleteFeeCharge(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the FeeCharge data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := FeeChargeDAO.DeleteFeeCharge(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Account on a FeeCharge
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Account on a FeeCharge
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignAccountToFeeCharge(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -181,15 +179,15 @@ func AssignAccountToFeeCharge(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Account on a FeeCharge
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignAccountFromFeeCharge( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Account on a FeeCharge
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignAccountFromFeeCharge(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -212,14 +210,14 @@ func UnassignAccountFromFeeCharge( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a LoanAccount on a FeeCharge
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a LoanAccount on a FeeCharge
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignLoanAccountToFeeCharge(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -243,15 +241,15 @@ func AssignLoanAccountToFeeCharge(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a LoanAccount on a FeeCharge
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignLoanAccountFromFeeCharge( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a LoanAccount on a FeeCharge
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignLoanAccountFromFeeCharge(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -274,8 +272,6 @@ func UnassignLoanAccountFromFeeCharge( w http.ResponseWriter, r *http.Request ) 
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
-
