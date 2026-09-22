@@ -1,65 +1,70 @@
 package model
 
-
-//==============================================================
+// ==============================================================
 // CustomerType Declaration
-//==============================================================
+// ==============================================================
 type CustomerType int
+
 const (
-    CustomerTypeIndividual CustomerType = iota
+	CustomerTypeIndividual CustomerType = iota
 	CustomerTypeBusiness
 	CustomerTypeNonProfit
 	CustomerTypeGovernment
 )
 
-//==============================================================
+// ==============================================================
 // AccountType Declaration
-//==============================================================
+// ==============================================================
 type AccountType int
+
 const (
-    AccountTypeChecking AccountType = iota
+	AccountTypeChecking AccountType = iota
 	AccountTypeSavings
 	AccountTypeMoneyMarket
 	AccountTypeTimeDeposit
 )
 
-//==============================================================
+// ==============================================================
 // AccountStatus Declaration
-//==============================================================
+// ==============================================================
 type AccountStatus int
+
 const (
-    AccountStatusOpen AccountStatus = iota
+	AccountStatusOpen AccountStatus = iota
 	AccountStatusFrozen
 	AccountStatusDormant
 	AccountStatusClosed
 )
 
-//==============================================================
+// ==============================================================
 // AccountOwnershipType Declaration
-//==============================================================
+// ==============================================================
 type AccountOwnershipType int
+
 const (
-    AccountOwnershipTypeSole AccountOwnershipType = iota
+	AccountOwnershipTypeSole AccountOwnershipType = iota
 	AccountOwnershipTypeJoint
 	AccountOwnershipTypeCorporate
 	AccountOwnershipTypeTrust
 )
 
-//==============================================================
+// ==============================================================
 // StatementDeliveryMethod Declaration
-//==============================================================
+// ==============================================================
 type StatementDeliveryMethod int
+
 const (
-    StatementDeliveryMethodElectronic StatementDeliveryMethod = iota
+	StatementDeliveryMethodElectronic StatementDeliveryMethod = iota
 	StatementDeliveryMethodPaper
 )
 
-//==============================================================
+// ==============================================================
 // TransactionType Declaration
-//==============================================================
+// ==============================================================
 type TransactionType int
+
 const (
-    TransactionTypeDeposit TransactionType = iota
+	TransactionTypeDeposit TransactionType = iota
 	TransactionTypeWithdrawal
 	TransactionTypeTransfer
 	TransactionTypePayment
@@ -71,33 +76,36 @@ const (
 	TransactionTypeFXConversion
 )
 
-//==============================================================
+// ==============================================================
 // TransactionStatus Declaration
-//==============================================================
+// ==============================================================
 type TransactionStatus int
+
 const (
-    TransactionStatusPending TransactionStatus = iota
+	TransactionStatusPending TransactionStatus = iota
 	TransactionStatusPosted
 	TransactionStatusReversed
 	TransactionStatusFailed
 	TransactionStatusCancelled
 )
 
-//==============================================================
+// ==============================================================
 // TransactionDirection Declaration
-//==============================================================
+// ==============================================================
 type TransactionDirection int
+
 const (
-    TransactionDirectionCredit TransactionDirection = iota
+	TransactionDirectionCredit TransactionDirection = iota
 	TransactionDirectionDebit
 )
 
-//==============================================================
+// ==============================================================
 // ChannelType Declaration
-//==============================================================
+// ==============================================================
 type ChannelType int
+
 const (
-    ChannelTypeBranch ChannelType = iota
+	ChannelTypeBranch ChannelType = iota
 	ChannelTypeOnline
 	ChannelTypeMobile
 	ChannelTypeATM
@@ -105,12 +113,13 @@ const (
 	ChannelTypeCallCenter
 )
 
-//==============================================================
+// ==============================================================
 // PaymentMethod Declaration
-//==============================================================
+// ==============================================================
 type PaymentMethod int
+
 const (
-    PaymentMethodInternalTransfer PaymentMethod = iota
+	PaymentMethodInternalTransfer PaymentMethod = iota
 	PaymentMethodACH
 	PaymentMethodWire
 	PaymentMethodSEPA
@@ -121,12 +130,13 @@ const (
 	PaymentMethodMobileWallet
 )
 
-//==============================================================
+// ==============================================================
 // PaymentStatus Declaration
-//==============================================================
+// ==============================================================
 type PaymentStatus int
+
 const (
-    PaymentStatusInitiated PaymentStatus = iota
+	PaymentStatusInitiated PaymentStatus = iota
 	PaymentStatusInProcess
 	PaymentStatusSettled
 	PaymentStatusFailed
@@ -134,12 +144,13 @@ const (
 	PaymentStatusCancelled
 )
 
-//==============================================================
+// ==============================================================
 // StandingInstructionFrequency Declaration
-//==============================================================
+// ==============================================================
 type StandingInstructionFrequency int
+
 const (
-    StandingInstructionFrequencyOneTime StandingInstructionFrequency = iota
+	StandingInstructionFrequencyOneTime StandingInstructionFrequency = iota
 	StandingInstructionFrequencyWeekly
 	StandingInstructionFrequencyBiWeekly
 	StandingInstructionFrequencyMonthly
@@ -147,46 +158,50 @@ const (
 	StandingInstructionFrequencyAnnually
 )
 
-//==============================================================
+// ==============================================================
 // StandingInstructionStatus Declaration
-//==============================================================
+// ==============================================================
 type StandingInstructionStatus int
+
 const (
-    StandingInstructionStatusActive StandingInstructionStatus = iota
+	StandingInstructionStatusActive StandingInstructionStatus = iota
 	StandingInstructionStatusPaused
 	StandingInstructionStatusCancelled
 	StandingInstructionStatusCompleted
 )
 
-//==============================================================
+// ==============================================================
 // CardType Declaration
-//==============================================================
+// ==============================================================
 type CardType int
+
 const (
-    CardTypeDebit CardType = iota
+	CardTypeDebit CardType = iota
 	CardTypeCredit
 	CardTypePrepaid
 	CardTypeVirtual
 )
 
-//==============================================================
+// ==============================================================
 // CardStatus Declaration
-//==============================================================
+// ==============================================================
 type CardStatus int
+
 const (
-    CardStatusActive CardStatus = iota
+	CardStatusActive CardStatus = iota
 	CardStatusBlocked
 	CardStatusLostStolen
 	CardStatusExpired
 	CardStatusClosed
 )
 
-//==============================================================
+// ==============================================================
 // CardNetwork Declaration
-//==============================================================
+// ==============================================================
 type CardNetwork int
+
 const (
-    CardNetworkVisa CardNetwork = iota
+	CardNetworkVisa CardNetwork = iota
 	CardNetworkMastercard
 	CardNetworkAmex
 	CardNetworkDiscover
@@ -194,12 +209,13 @@ const (
 	CardNetworkOther
 )
 
-//==============================================================
+// ==============================================================
 // LoanType Declaration
-//==============================================================
+// ==============================================================
 type LoanType int
+
 const (
-    LoanTypeMortgage LoanType = iota
+	LoanTypeMortgage LoanType = iota
 	LoanTypePersonal
 	LoanTypeAuto
 	LoanTypeSmallBusiness
@@ -207,12 +223,13 @@ const (
 	LoanTypeStudent
 )
 
-//==============================================================
+// ==============================================================
 // LoanStatus Declaration
-//==============================================================
+// ==============================================================
 type LoanStatus int
+
 const (
-    LoanStatusApplied LoanStatus = iota
+	LoanStatusApplied LoanStatus = iota
 	LoanStatusApproved
 	LoanStatusActive
 	LoanStatusDelinquent
@@ -220,43 +237,47 @@ const (
 	LoanStatusClosed
 )
 
-//==============================================================
+// ==============================================================
 // RateType Declaration
-//==============================================================
+// ==============================================================
 type RateType int
+
 const (
-    RateTypeFixed RateType = iota
+	RateTypeFixed RateType = iota
 	RateTypeVariable
 )
 
-//==============================================================
+// ==============================================================
 // InterestCompounding Declaration
-//==============================================================
+// ==============================================================
 type InterestCompounding int
+
 const (
-    InterestCompoundingDaily InterestCompounding = iota
+	InterestCompoundingDaily InterestCompounding = iota
 	InterestCompoundingMonthly
 	InterestCompoundingQuarterly
 	InterestCompoundingAnnually
 )
 
-//==============================================================
+// ==============================================================
 // InstallmentStatus Declaration
-//==============================================================
+// ==============================================================
 type InstallmentStatus int
+
 const (
-    InstallmentStatusDue InstallmentStatus = iota
+	InstallmentStatusDue InstallmentStatus = iota
 	InstallmentStatusPaid
 	InstallmentStatusOverdue
 	InstallmentStatusDeferred
 )
 
-//==============================================================
+// ==============================================================
 // FeeType Declaration
-//==============================================================
+// ==============================================================
 type FeeType int
+
 const (
-    FeeTypeMaintenance FeeType = iota
+	FeeTypeMaintenance FeeType = iota
 	FeeTypeOverdraft
 	FeeTypeWire
 	FeeTypeATM
@@ -266,33 +287,36 @@ const (
 	FeeTypeReplacementCard
 )
 
-//==============================================================
+// ==============================================================
 // RiskRating Declaration
-//==============================================================
+// ==============================================================
 type RiskRating int
+
 const (
-    RiskRatingLow RiskRating = iota
+	RiskRatingLow RiskRating = iota
 	RiskRatingMedium
 	RiskRatingHigh
 )
 
-//==============================================================
+// ==============================================================
 // KycStatus Declaration
-//==============================================================
+// ==============================================================
 type KycStatus int
+
 const (
-    KycStatusPending KycStatus = iota
+	KycStatusPending KycStatus = iota
 	KycStatusVerified
 	KycStatusRejected
 	KycStatusExpired
 )
 
-//==============================================================
+// ==============================================================
 // IdentityDocumentType Declaration
-//==============================================================
+// ==============================================================
 type IdentityDocumentType int
+
 const (
-    IdentityDocumentTypePassport IdentityDocumentType = iota
+	IdentityDocumentTypePassport IdentityDocumentType = iota
 	IdentityDocumentTypeNationalID
 	IdentityDocumentTypeDriverLicense
 	IdentityDocumentTypeResidencePermit
@@ -300,92 +324,99 @@ const (
 	IdentityDocumentTypeTaxCertificate
 )
 
-//==============================================================
+// ==============================================================
 // ScreeningOutcome Declaration
-//==============================================================
+// ==============================================================
 type ScreeningOutcome int
+
 const (
-    ScreeningOutcomeClear ScreeningOutcome = iota
+	ScreeningOutcomeClear ScreeningOutcome = iota
 	ScreeningOutcomeMatch
 	ScreeningOutcomeReview
 )
 
-//==============================================================
+// ==============================================================
 // TradeStatus Declaration
-//==============================================================
+// ==============================================================
 type TradeStatus int
+
 const (
-    TradeStatusBooked TradeStatus = iota
+	TradeStatusBooked TradeStatus = iota
 	TradeStatusSettled
 	TradeStatusCancelled
 )
 
-//==============================================================
+// ==============================================================
 // ATMStatus Declaration
-//==============================================================
+// ==============================================================
 type ATMStatus int
+
 const (
-    ATMStatusInService ATMStatus = iota
+	ATMStatusInService ATMStatus = iota
 	ATMStatusOutOfService
 	ATMStatusMaintenance
 )
 
-//==============================================================
+// ==============================================================
 // ConsentType Declaration
-//==============================================================
+// ==============================================================
 type ConsentType int
+
 const (
-    ConsentTypeOpenBanking ConsentType = iota
+	ConsentTypeOpenBanking ConsentType = iota
 	ConsentTypePaymentInitiation
 	ConsentTypeAccountInformation
 	ConsentTypeMarketing
 	ConsentTypeDataSharing
 )
 
-//==============================================================
+// ==============================================================
 // ConsentStatus Declaration
-//==============================================================
+// ==============================================================
 type ConsentStatus int
+
 const (
-    ConsentStatusActive ConsentStatus = iota
+	ConsentStatusActive ConsentStatus = iota
 	ConsentStatusRevoked
 	ConsentStatusExpired
 )
 
-//==============================================================
+// ==============================================================
 // DisputeStatus Declaration
-//==============================================================
+// ==============================================================
 type DisputeStatus int
+
 const (
-    DisputeStatusOpen DisputeStatus = iota
+	DisputeStatusOpen DisputeStatus = iota
 	DisputeStatusUnderReview
 	DisputeStatusResolved
 	DisputeStatusRejected
 	DisputeStatusWithdrawn
 )
 
-//==============================================================
+// ==============================================================
 // ProductCategory Declaration
-//==============================================================
+// ==============================================================
 type ProductCategory int
+
 const (
-    ProductCategoryDeposit ProductCategory = iota
+	ProductCategoryDeposit ProductCategory = iota
 	ProductCategoryLoan
 	ProductCategoryCard
 	ProductCategoryPaymentService
 	ProductCategoryInvestment
 )
 
-//==============================================================
+// ==============================================================
 // CollateralType Declaration
-//==============================================================
+// ==============================================================
 type CollateralType int
+
 const (
-    CollateralTypeRealEstate CollateralType = iota
+	CollateralTypeRealEstate CollateralType = iota
 	CollateralTypeVehicle
 	CollateralTypeCash
 	CollateralTypeSecurities
 	CollateralTypeGuarantee
 	CollateralTypeEquipment
 )
-

@@ -1,23 +1,21 @@
-
 package dao
 
 import (
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "fmt"
-    "strings"
-    "github.com/google/uuid"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"fmt"
+	"github.com/google/uuid"
+	"strings"
 )
 
-
 func init() {
-	fmt.Println( strings.ToTitle( "Initializing FXTradeDAO..." ) )
+	fmt.Println(strings.ToTitle("Initializing FXTradeDAO..."))
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // CreateFXTrade - creates a new db entry
-//----------------------------------------------------------------------------
-func CreateFXTrade(obj model.FXTrade)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func CreateFXTrade(obj model.FXTrade) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -30,26 +28,25 @@ func CreateFXTrade(obj model.FXTrade)(utils.RequestResult){
 	result := utils.GetDB().Create(&obj).Error
 
 	if result == nil {
-	    createMsg = fmt.Sprintf( "Created a FXTrade with ID=%v", obj.ID )
-	    success = true
+		createMsg = fmt.Sprintf("Created a FXTrade with ID=%v", obj.ID)
+		success = true
 	} else {
-		createMsg = fmt.Sprintf( "Failed trying to create a FXTrade. Result: %s", result )
+		createMsg = fmt.Sprintf("Failed trying to create a FXTrade. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        createMsg,
-        Call:       "CreateFXTrade",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     createMsg,
+		Call:    "CreateFXTrade",
+		Data:    obj,
+	}
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetFXTrade - returns the matching the provided identifier
-//----------------------------------------------------------------------------
-func GetFXTrade(id uuid.UUID)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetFXTrade(id uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -67,26 +64,26 @@ func GetFXTrade(id uuid.UUID)(utils.RequestResult){
 	result := utils.GetDB().First(&obj, id).Error // find first using identifier
 
 	if result == nil {
-	    getMsg = fmt.Sprintf( "Retrieved a FXTrade using ID=%v", id )
-	    success = true
+		getMsg = fmt.Sprintf("Retrieved a FXTrade using ID=%v", id)
+		success = true
 	} else {
-		getMsg = fmt.Sprintf( "Failed trying to retrieve a FXTrade using ID=%v", id )
+		getMsg = fmt.Sprintf("Failed trying to retrieve a FXTrade using ID=%v", id)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getMsg,
-        Call:       "GetFXTrade",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getMsg,
+		Call:    "GetFXTrade",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAllFXTrade - returns all
-//----------------------------------------------------------------------------
-func GetAllFXTrade()(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAllFXTrade() (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -100,26 +97,26 @@ func GetAllFXTrade()(requestResult utils.RequestResult){
 	result := utils.GetDB().Find(&objs).Error // find all
 
 	if result == nil {
-	    getAllMsg = "Retrieved all FXTrade"
-	    success = true
+		getAllMsg = "Retrieved all FXTrade"
+		success = true
 	} else {
-		getAllMsg = fmt.Sprintf( "Failed trying to retrieve all FXTrade. Result: %s", result )
+		getAllMsg = fmt.Sprintf("Failed trying to retrieve all FXTrade. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getAllMsg,
-        Call:       "GetAllFXTrade",
-        Data:       objs,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getAllMsg,
+		Call:    "GetAllFXTrade",
+		Data:    objs,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // UpdateFXTrade - updates matching the provided identifier
-//----------------------------------------------------------------------------
-func UpdateFXTrade(obj model.FXTrade)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func UpdateFXTrade(obj model.FXTrade) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -132,26 +129,26 @@ func UpdateFXTrade(obj model.FXTrade)(requestResult utils.RequestResult){
 	result := utils.GetDB().Save(&obj).Error
 
 	if result == nil {
-	    updateMsg = fmt.Sprintf( "Updated a FXTrade using ID=%v", obj.ID )
-	    success = true
+		updateMsg = fmt.Sprintf("Updated a FXTrade using ID=%v", obj.ID)
+		success = true
 	} else {
-		updateMsg = fmt.Sprintf( "Failed trying to update a FXTrade using ID=%v", obj.ID )
+		updateMsg = fmt.Sprintf("Failed trying to update a FXTrade using ID=%v", obj.ID)
 		success = false
 	}
 
 	return utils.RequestResult{
-        Success:    success,
-        Msg:        updateMsg,
-        Call:       "UpdateFXTrade",
-        Data:       obj,
-    }
+		Success: success,
+		Msg:     updateMsg,
+		Call:    "UpdateFXTrade",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DeleteFXTrade - deletes matching the provided identifier
-//----------------------------------------------------------------------------
-func DeleteFXTrade(id uuid.UUID)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func DeleteFXTrade(id uuid.UUID) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -168,7 +165,7 @@ func DeleteFXTrade(id uuid.UUID)(requestResult utils.RequestResult){
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		obj,_ := requestResult.Data.(model.FXTrade)
+		obj, _ := requestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// Make call to the ORM to delete
@@ -176,30 +173,29 @@ func DeleteFXTrade(id uuid.UUID)(requestResult utils.RequestResult){
 		result := utils.GetDB().Delete(&obj).Error // pass pointer of data to Delete
 
 		if result == nil {
-		    deleteMsg = fmt.Sprintf( "Deleted a FXTrade using ID=%v", id )
-		    success = true
+			deleteMsg = fmt.Sprintf("Deleted a FXTrade using ID=%v", id)
+			success = true
 		} else {
-			deleteMsg = fmt.Sprintf( "Failed trying to delete a FXTrade using ID=%v", id )
+			deleteMsg = fmt.Sprintf("Failed trying to delete a FXTrade using ID=%v", id)
 			success = false
 		}
 
-        requestResult = utils.RequestResult{
-            Success:    success,
-            Msg:        deleteMsg,
-            Call:       "DeleteFXTrade",
-            Data:       requestResult.Data,
-        }
+		requestResult = utils.RequestResult{
+			Success: success,
+			Msg:     deleteMsg,
+			Call:    "DeleteFXTrade",
+			Data:    requestResult.Data,
+		}
 
 	}
 
 	return requestResult
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Customer on a FXTrade
-//----------------------------------------------------------------------------
-func AssignCustomerToFXTrade( fXTradeId uuid.UUID, customerId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignCustomerToFXTrade(fXTradeId uuid.UUID, customerId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FXTrade with the matching identifier
@@ -211,7 +207,7 @@ func AssignCustomerToFXTrade( fXTradeId uuid.UUID, customerId uuid.UUID )(utils.
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FXTrade)
+		parentObj, _ := parentRequestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -235,24 +231,24 @@ func AssignCustomerToFXTrade( fXTradeId uuid.UUID, customerId uuid.UUID )(utils.
 			//----------------------------------------------------------------------------
 			return UpdateFXTrade(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Customer", customerId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Customer", customerId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignCustomer",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignCustomer",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Customer on a FXTrade
-//----------------------------------------------------------------------------
-func UnassignCustomerFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignCustomerFromFXTrade(fXTradeId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FXTrade with the matching identifier
@@ -264,17 +260,17 @@ func UnassignCustomerFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FXTrade)
+		parentObj, _ := parentRequestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Customer to the Customer
 		//----------------------------------------------------------------------------
-		parentObj.Customer = nil;
+		parentObj.Customer = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Customer
 		//----------------------------------------------------------------------------
-		parentObj.CustomerId = nil;
+		parentObj.CustomerId = nil
 
 		//----------------------------------------------------------------------------
 		// save the FXTrade
@@ -287,10 +283,10 @@ func UnassignCustomerFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Bank on a FXTrade
-//----------------------------------------------------------------------------
-func AssignBankToFXTrade( fXTradeId uuid.UUID, bankId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignBankToFXTrade(fXTradeId uuid.UUID, bankId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FXTrade with the matching identifier
@@ -302,7 +298,7 @@ func AssignBankToFXTrade( fXTradeId uuid.UUID, bankId uuid.UUID )(utils.RequestR
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FXTrade)
+		parentObj, _ := parentRequestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -326,24 +322,24 @@ func AssignBankToFXTrade( fXTradeId uuid.UUID, bankId uuid.UUID )(utils.RequestR
 			//----------------------------------------------------------------------------
 			return UpdateFXTrade(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Bank", bankId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Bank", bankId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignBank",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignBank",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Bank on a FXTrade
-//----------------------------------------------------------------------------
-func UnassignBankFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignBankFromFXTrade(fXTradeId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FXTrade with the matching identifier
@@ -355,17 +351,17 @@ func UnassignBankFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FXTrade)
+		parentObj, _ := parentRequestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Bank to the Bank
 		//----------------------------------------------------------------------------
-		parentObj.Bank = nil;
+		parentObj.Bank = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Bank
 		//----------------------------------------------------------------------------
-		parentObj.BankId = nil;
+		parentObj.BankId = nil
 
 		//----------------------------------------------------------------------------
 		// save the FXTrade
@@ -378,10 +374,10 @@ func UnassignBankFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a ExchangeRate on a FXTrade
-//----------------------------------------------------------------------------
-func AssignExchangeRateToFXTrade( fXTradeId uuid.UUID, exchangeRateId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignExchangeRateToFXTrade(fXTradeId uuid.UUID, exchangeRateId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FXTrade with the matching identifier
@@ -393,7 +389,7 @@ func AssignExchangeRateToFXTrade( fXTradeId uuid.UUID, exchangeRateId uuid.UUID 
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FXTrade)
+		parentObj, _ := parentRequestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -417,24 +413,24 @@ func AssignExchangeRateToFXTrade( fXTradeId uuid.UUID, exchangeRateId uuid.UUID 
 			//----------------------------------------------------------------------------
 			return UpdateFXTrade(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "ExchangeRate", exchangeRateId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "ExchangeRate", exchangeRateId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignExchangeRate",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignExchangeRate",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a ExchangeRate on a FXTrade
-//----------------------------------------------------------------------------
-func UnassignExchangeRateFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignExchangeRateFromFXTrade(fXTradeId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FXTrade with the matching identifier
@@ -446,17 +442,17 @@ func UnassignExchangeRateFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FXTrade)
+		parentObj, _ := parentRequestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// assign an empty ExchangeRate to the ExchangeRate
 		//----------------------------------------------------------------------------
-		parentObj.ExchangeRate = nil;
+		parentObj.ExchangeRate = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the ExchangeRate
 		//----------------------------------------------------------------------------
-		parentObj.ExchangeRateId = nil;
+		parentObj.ExchangeRateId = nil
 
 		//----------------------------------------------------------------------------
 		// save the FXTrade
@@ -469,10 +465,10 @@ func UnassignExchangeRateFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a SourceAccount on a FXTrade
-//----------------------------------------------------------------------------
-func AssignSourceAccountToFXTrade( fXTradeId uuid.UUID, sourceAccountId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignSourceAccountToFXTrade(fXTradeId uuid.UUID, sourceAccountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FXTrade with the matching identifier
@@ -484,7 +480,7 @@ func AssignSourceAccountToFXTrade( fXTradeId uuid.UUID, sourceAccountId uuid.UUI
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FXTrade)
+		parentObj, _ := parentRequestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -508,24 +504,24 @@ func AssignSourceAccountToFXTrade( fXTradeId uuid.UUID, sourceAccountId uuid.UUI
 			//----------------------------------------------------------------------------
 			return UpdateFXTrade(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "SourceAccount", sourceAccountId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "SourceAccount", sourceAccountId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignSourceAccount",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignSourceAccount",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a SourceAccount on a FXTrade
-//----------------------------------------------------------------------------
-func UnassignSourceAccountFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignSourceAccountFromFXTrade(fXTradeId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FXTrade with the matching identifier
@@ -537,17 +533,17 @@ func UnassignSourceAccountFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) 
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FXTrade)
+		parentObj, _ := parentRequestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Account to the SourceAccount
 		//----------------------------------------------------------------------------
-		parentObj.SourceAccount = nil;
+		parentObj.SourceAccount = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the SourceAccount
 		//----------------------------------------------------------------------------
-		parentObj.SourceAccountId = nil;
+		parentObj.SourceAccountId = nil
 
 		//----------------------------------------------------------------------------
 		// save the FXTrade
@@ -560,10 +556,10 @@ func UnassignSourceAccountFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) 
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a DestinationAccount on a FXTrade
-//----------------------------------------------------------------------------
-func AssignDestinationAccountToFXTrade( fXTradeId uuid.UUID, destinationAccountId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignDestinationAccountToFXTrade(fXTradeId uuid.UUID, destinationAccountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FXTrade with the matching identifier
@@ -575,7 +571,7 @@ func AssignDestinationAccountToFXTrade( fXTradeId uuid.UUID, destinationAccountI
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FXTrade)
+		parentObj, _ := parentRequestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -599,24 +595,24 @@ func AssignDestinationAccountToFXTrade( fXTradeId uuid.UUID, destinationAccountI
 			//----------------------------------------------------------------------------
 			return UpdateFXTrade(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "DestinationAccount", destinationAccountId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "DestinationAccount", destinationAccountId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignDestinationAccount",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignDestinationAccount",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a DestinationAccount on a FXTrade
-//----------------------------------------------------------------------------
-func UnassignDestinationAccountFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignDestinationAccountFromFXTrade(fXTradeId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FXTrade with the matching identifier
@@ -628,17 +624,17 @@ func UnassignDestinationAccountFromFXTrade(fXTradeId uuid.UUID)(utils.RequestRes
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FXTrade)
+		parentObj, _ := parentRequestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Account to the DestinationAccount
 		//----------------------------------------------------------------------------
-		parentObj.DestinationAccount = nil;
+		parentObj.DestinationAccount = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the DestinationAccount
 		//----------------------------------------------------------------------------
-		parentObj.DestinationAccountId = nil;
+		parentObj.DestinationAccountId = nil
 
 		//----------------------------------------------------------------------------
 		// save the FXTrade
@@ -651,10 +647,10 @@ func UnassignDestinationAccountFromFXTrade(fXTradeId uuid.UUID)(utils.RequestRes
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Transaction on a FXTrade
-//----------------------------------------------------------------------------
-func AssignTransactionToFXTrade( fXTradeId uuid.UUID, transactionId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignTransactionToFXTrade(fXTradeId uuid.UUID, transactionId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FXTrade with the matching identifier
@@ -666,7 +662,7 @@ func AssignTransactionToFXTrade( fXTradeId uuid.UUID, transactionId uuid.UUID )(
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FXTrade)
+		parentObj, _ := parentRequestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -690,24 +686,24 @@ func AssignTransactionToFXTrade( fXTradeId uuid.UUID, transactionId uuid.UUID )(
 			//----------------------------------------------------------------------------
 			return UpdateFXTrade(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Transaction", transactionId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Transaction", transactionId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignTransaction",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignTransaction",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Transaction on a FXTrade
-//----------------------------------------------------------------------------
-func UnassignTransactionFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignTransactionFromFXTrade(fXTradeId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FXTrade with the matching identifier
@@ -719,17 +715,17 @@ func UnassignTransactionFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.FXTrade so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FXTrade)
+		parentObj, _ := parentRequestResult.Data.(model.FXTrade)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Transaction to the Transaction
 		//----------------------------------------------------------------------------
-		parentObj.Transaction = nil;
+		parentObj.Transaction = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Transaction
 		//----------------------------------------------------------------------------
-		parentObj.TransactionId = nil;
+		parentObj.TransactionId = nil
 
 		//----------------------------------------------------------------------------
 		// save the FXTrade
@@ -741,5 +737,3 @@ func UnassignTransactionFromFXTrade(fXTradeId uuid.UUID)(utils.RequestResult) {
 	}
 
 }
-
-
