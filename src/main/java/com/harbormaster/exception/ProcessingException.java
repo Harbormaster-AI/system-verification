@@ -24,55 +24,52 @@
 
 package com.harbormaster.exception;
 
-//***********************************
+// ***********************************
 // Imports
-//***********************************
+// ***********************************
 
 /**
  * Used to indicate an error occured in generic processing.
+ *
  * <p>
+ *
  * @author Harbormaster Dev Team
  */
-public class ProcessingException extends Exception
-{
+public class ProcessingException extends Exception {
 
-//************************************************************************    
-// Public Methods
-//************************************************************************
+  // ************************************************************************
+  // Public Methods
+  // ************************************************************************
 
-    /** 
-     * Base constructor.
-     */
-    public ProcessingException()
-    {
-        super(); 
-    }
+  /** Base constructor. */
+  public ProcessingException() {
+    super();
+  }
 
-    /** Constructor with message.
-     * @param message text of the exception
-     */
-    public ProcessingException( String message )
-    {
-        super( message ); 
-    }
+  /**
+   * Constructor with message.
+   *
+   * @param message text of the exception
+   */
+  public ProcessingException(String message) {
+    super(message);
+  }
 
-    /**
-     * Constructor with a Throwabe for chained exception and a message.
-     * 
-     * @param message
-     * @param exception
-     */
-    public ProcessingException( String message, Throwable exception )
-    {
-        super( message ); 
-    }
+  /**
+   * Constructor with a Throwabe for chained exception and a message.
+   *
+   * @param message
+   * @param exception
+   */
+  public ProcessingException(String message, Throwable exception) {
+    super(message);
+  }
 
-//************************************************************************    
-// Private / Protected Methods
-//************************************************************************
+  // ************************************************************************
+  // Private / Protected Methods
+  // ************************************************************************
 
-//************************************************************************    
-// Attributes
-//************************************************************************
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
 }
-
