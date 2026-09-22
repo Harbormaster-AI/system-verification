@@ -467,7 +467,7 @@ jobs:
           #######################################################################
 
           git config user.name "HarborMaster Verification"
-          git config user.email "verification@harbormaster.io"
+          git config user.email "dev@harbormaster.net"
 
           #######################################################################
           # Determine target branch
