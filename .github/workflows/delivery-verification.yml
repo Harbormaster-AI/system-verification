@@ -562,7 +562,8 @@ jobs:
           for i in {1..90}; do
           
               # Support Spring (/actuator/health) and Go (/health) without language branching.
-              if curl -fs http://localhost:8080/actuator/health >/dev/null; then
+              if curl -fs http://localhost:8080/actuator/health >/dev/null \
+                 || curl -fs http://localhost:8080/health >/dev/null; then
           
                   post_pass \
                       "DELIVERY" \
