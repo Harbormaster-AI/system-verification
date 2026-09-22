@@ -515,8 +515,23 @@ jobs:
       # Push Image
       ###########################################################################
 
-      - name: Push Image
+      # TEMP (banking cloud test): skip push when deployToCloud=true.
+      # Image theharbormaster/banking-on-springboot already exists; our login cannot
+      # push to that org. Revert this after cloud testing.
+      - name: Skip Push Image (pre-published image for cloud test)
+        if: ${{ inputs.deployToCloud == true }}
+        shell: bash
+        run: |
+          source .github/actions/common/report.sh
+          post_pass \
+            "DELIVERY" \
+            "PUBLISH_IMAGE" \
+            15 \
+            "Skipped push; using pre-published image for cloud test." \
+            "PUBLISH_IMAGE: skipped (deployToCloud=true)"
 
+      - name: Push Image
+        if: ${{ inputs.deployToCloud == false }}
         shell: bash
 
         run: |
@@ -531,19 +546,19 @@ jobs:
               15 \
               "Docker image published successfully." \
               "PUBLISH_IMAGE: ${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}"
-    
+          
           else
-            
+          
             post_fail \
               "DELIVERY" \
               "PUBLISH_IMAGE" \
               0 \
               "Docker image publication failed." \
               "PUBLISH_IMAGE: Unable to push ${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}"
-        
-              post_terminate_delivery
-      
-            fi
+          
+            post_terminate_delivery
+          
+          fi
 
 
       ###########################################################################
