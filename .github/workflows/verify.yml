@@ -464,7 +464,6 @@ jobs:
 
     if: ${{ contains(fromJSON('["rails","rubyonrails"]'), inputs.technology) }}
 
-
     needs: rails-runtime
 
     uses: ./.github/workflows/rails-delivery-verification.yml
