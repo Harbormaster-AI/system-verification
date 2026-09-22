@@ -1,23 +1,21 @@
-
 package dao
 
 import (
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "fmt"
-    "strings"
-    "github.com/google/uuid"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"fmt"
+	"github.com/google/uuid"
+	"strings"
 )
 
-
 func init() {
-	fmt.Println( strings.ToTitle( "Initializing DisputeDAO..." ) )
+	fmt.Println(strings.ToTitle("Initializing DisputeDAO..."))
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // CreateDispute - creates a new db entry
-//----------------------------------------------------------------------------
-func CreateDispute(obj model.Dispute)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func CreateDispute(obj model.Dispute) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -30,26 +28,25 @@ func CreateDispute(obj model.Dispute)(utils.RequestResult){
 	result := utils.GetDB().Create(&obj).Error
 
 	if result == nil {
-	    createMsg = fmt.Sprintf( "Created a Dispute with ID=%v", obj.ID )
-	    success = true
+		createMsg = fmt.Sprintf("Created a Dispute with ID=%v", obj.ID)
+		success = true
 	} else {
-		createMsg = fmt.Sprintf( "Failed trying to create a Dispute. Result: %s", result )
+		createMsg = fmt.Sprintf("Failed trying to create a Dispute. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        createMsg,
-        Call:       "CreateDispute",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     createMsg,
+		Call:    "CreateDispute",
+		Data:    obj,
+	}
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetDispute - returns the matching the provided identifier
-//----------------------------------------------------------------------------
-func GetDispute(id uuid.UUID)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetDispute(id uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -67,26 +64,26 @@ func GetDispute(id uuid.UUID)(utils.RequestResult){
 	result := utils.GetDB().First(&obj, id).Error // find first using identifier
 
 	if result == nil {
-	    getMsg = fmt.Sprintf( "Retrieved a Dispute using ID=%v", id )
-	    success = true
+		getMsg = fmt.Sprintf("Retrieved a Dispute using ID=%v", id)
+		success = true
 	} else {
-		getMsg = fmt.Sprintf( "Failed trying to retrieve a Dispute using ID=%v", id )
+		getMsg = fmt.Sprintf("Failed trying to retrieve a Dispute using ID=%v", id)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getMsg,
-        Call:       "GetDispute",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getMsg,
+		Call:    "GetDispute",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAllDispute - returns all
-//----------------------------------------------------------------------------
-func GetAllDispute()(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAllDispute() (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -100,26 +97,26 @@ func GetAllDispute()(requestResult utils.RequestResult){
 	result := utils.GetDB().Find(&objs).Error // find all
 
 	if result == nil {
-	    getAllMsg = "Retrieved all Dispute"
-	    success = true
+		getAllMsg = "Retrieved all Dispute"
+		success = true
 	} else {
-		getAllMsg = fmt.Sprintf( "Failed trying to retrieve all Dispute. Result: %s", result )
+		getAllMsg = fmt.Sprintf("Failed trying to retrieve all Dispute. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getAllMsg,
-        Call:       "GetAllDispute",
-        Data:       objs,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getAllMsg,
+		Call:    "GetAllDispute",
+		Data:    objs,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // UpdateDispute - updates matching the provided identifier
-//----------------------------------------------------------------------------
-func UpdateDispute(obj model.Dispute)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func UpdateDispute(obj model.Dispute) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -132,26 +129,26 @@ func UpdateDispute(obj model.Dispute)(requestResult utils.RequestResult){
 	result := utils.GetDB().Save(&obj).Error
 
 	if result == nil {
-	    updateMsg = fmt.Sprintf( "Updated a Dispute using ID=%v", obj.ID )
-	    success = true
+		updateMsg = fmt.Sprintf("Updated a Dispute using ID=%v", obj.ID)
+		success = true
 	} else {
-		updateMsg = fmt.Sprintf( "Failed trying to update a Dispute using ID=%v", obj.ID )
+		updateMsg = fmt.Sprintf("Failed trying to update a Dispute using ID=%v", obj.ID)
 		success = false
 	}
 
 	return utils.RequestResult{
-        Success:    success,
-        Msg:        updateMsg,
-        Call:       "UpdateDispute",
-        Data:       obj,
-    }
+		Success: success,
+		Msg:     updateMsg,
+		Call:    "UpdateDispute",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DeleteDispute - deletes matching the provided identifier
-//----------------------------------------------------------------------------
-func DeleteDispute(id uuid.UUID)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func DeleteDispute(id uuid.UUID) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -168,7 +165,7 @@ func DeleteDispute(id uuid.UUID)(requestResult utils.RequestResult){
 		// Need to cast the interface to a model.Dispute so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		obj,_ := requestResult.Data.(model.Dispute)
+		obj, _ := requestResult.Data.(model.Dispute)
 
 		//----------------------------------------------------------------------------
 		// Make call to the ORM to delete
@@ -176,30 +173,29 @@ func DeleteDispute(id uuid.UUID)(requestResult utils.RequestResult){
 		result := utils.GetDB().Delete(&obj).Error // pass pointer of data to Delete
 
 		if result == nil {
-		    deleteMsg = fmt.Sprintf( "Deleted a Dispute using ID=%v", id )
-		    success = true
+			deleteMsg = fmt.Sprintf("Deleted a Dispute using ID=%v", id)
+			success = true
 		} else {
-			deleteMsg = fmt.Sprintf( "Failed trying to delete a Dispute using ID=%v", id )
+			deleteMsg = fmt.Sprintf("Failed trying to delete a Dispute using ID=%v", id)
 			success = false
 		}
 
-        requestResult = utils.RequestResult{
-            Success:    success,
-            Msg:        deleteMsg,
-            Call:       "DeleteDispute",
-            Data:       requestResult.Data,
-        }
+		requestResult = utils.RequestResult{
+			Success: success,
+			Msg:     deleteMsg,
+			Call:    "DeleteDispute",
+			Data:    requestResult.Data,
+		}
 
 	}
 
 	return requestResult
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Transaction on a Dispute
-//----------------------------------------------------------------------------
-func AssignTransactionToDispute( disputeId uuid.UUID, transactionId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignTransactionToDispute(disputeId uuid.UUID, transactionId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Dispute with the matching identifier
@@ -211,7 +207,7 @@ func AssignTransactionToDispute( disputeId uuid.UUID, transactionId uuid.UUID )(
 		// Need to cast the interface to a model.Dispute so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Dispute)
+		parentObj, _ := parentRequestResult.Data.(model.Dispute)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -235,24 +231,24 @@ func AssignTransactionToDispute( disputeId uuid.UUID, transactionId uuid.UUID )(
 			//----------------------------------------------------------------------------
 			return UpdateDispute(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Transaction", transactionId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Transaction", transactionId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignTransaction",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignTransaction",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Transaction on a Dispute
-//----------------------------------------------------------------------------
-func UnassignTransactionFromDispute(disputeId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignTransactionFromDispute(disputeId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Dispute with the matching identifier
@@ -264,17 +260,17 @@ func UnassignTransactionFromDispute(disputeId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.Dispute so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Dispute)
+		parentObj, _ := parentRequestResult.Data.(model.Dispute)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Transaction to the Transaction
 		//----------------------------------------------------------------------------
-		parentObj.Transaction = nil;
+		parentObj.Transaction = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Transaction
 		//----------------------------------------------------------------------------
-		parentObj.TransactionId = nil;
+		parentObj.TransactionId = nil
 
 		//----------------------------------------------------------------------------
 		// save the Dispute
@@ -287,10 +283,10 @@ func UnassignTransactionFromDispute(disputeId uuid.UUID)(utils.RequestResult) {
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Customer on a Dispute
-//----------------------------------------------------------------------------
-func AssignCustomerToDispute( disputeId uuid.UUID, customerId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignCustomerToDispute(disputeId uuid.UUID, customerId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Dispute with the matching identifier
@@ -302,7 +298,7 @@ func AssignCustomerToDispute( disputeId uuid.UUID, customerId uuid.UUID )(utils.
 		// Need to cast the interface to a model.Dispute so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Dispute)
+		parentObj, _ := parentRequestResult.Data.(model.Dispute)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -326,24 +322,24 @@ func AssignCustomerToDispute( disputeId uuid.UUID, customerId uuid.UUID )(utils.
 			//----------------------------------------------------------------------------
 			return UpdateDispute(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Customer", customerId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Customer", customerId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignCustomer",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignCustomer",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Customer on a Dispute
-//----------------------------------------------------------------------------
-func UnassignCustomerFromDispute(disputeId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignCustomerFromDispute(disputeId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Dispute with the matching identifier
@@ -355,17 +351,17 @@ func UnassignCustomerFromDispute(disputeId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.Dispute so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Dispute)
+		parentObj, _ := parentRequestResult.Data.(model.Dispute)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Customer to the Customer
 		//----------------------------------------------------------------------------
-		parentObj.Customer = nil;
+		parentObj.Customer = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Customer
 		//----------------------------------------------------------------------------
-		parentObj.CustomerId = nil;
+		parentObj.CustomerId = nil
 
 		//----------------------------------------------------------------------------
 		// save the Dispute
@@ -378,10 +374,10 @@ func UnassignCustomerFromDispute(disputeId uuid.UUID)(utils.RequestResult) {
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Account on a Dispute
-//----------------------------------------------------------------------------
-func AssignAccountToDispute( disputeId uuid.UUID, accountId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignAccountToDispute(disputeId uuid.UUID, accountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Dispute with the matching identifier
@@ -393,7 +389,7 @@ func AssignAccountToDispute( disputeId uuid.UUID, accountId uuid.UUID )(utils.Re
 		// Need to cast the interface to a model.Dispute so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Dispute)
+		parentObj, _ := parentRequestResult.Data.(model.Dispute)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -417,24 +413,24 @@ func AssignAccountToDispute( disputeId uuid.UUID, accountId uuid.UUID )(utils.Re
 			//----------------------------------------------------------------------------
 			return UpdateDispute(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Account", accountId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Account", accountId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignAccount",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignAccount",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Account on a Dispute
-//----------------------------------------------------------------------------
-func UnassignAccountFromDispute(disputeId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignAccountFromDispute(disputeId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Dispute with the matching identifier
@@ -446,17 +442,17 @@ func UnassignAccountFromDispute(disputeId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.Dispute so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Dispute)
+		parentObj, _ := parentRequestResult.Data.(model.Dispute)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Account to the Account
 		//----------------------------------------------------------------------------
-		parentObj.Account = nil;
+		parentObj.Account = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Account
 		//----------------------------------------------------------------------------
-		parentObj.AccountId = nil;
+		parentObj.AccountId = nil
 
 		//----------------------------------------------------------------------------
 		// save the Dispute
@@ -469,10 +465,10 @@ func UnassignAccountFromDispute(disputeId uuid.UUID)(utils.RequestResult) {
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a PaymentCard on a Dispute
-//----------------------------------------------------------------------------
-func AssignPaymentCardToDispute( disputeId uuid.UUID, paymentCardId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignPaymentCardToDispute(disputeId uuid.UUID, paymentCardId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Dispute with the matching identifier
@@ -484,7 +480,7 @@ func AssignPaymentCardToDispute( disputeId uuid.UUID, paymentCardId uuid.UUID )(
 		// Need to cast the interface to a model.Dispute so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Dispute)
+		parentObj, _ := parentRequestResult.Data.(model.Dispute)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -508,24 +504,24 @@ func AssignPaymentCardToDispute( disputeId uuid.UUID, paymentCardId uuid.UUID )(
 			//----------------------------------------------------------------------------
 			return UpdateDispute(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "PaymentCard", paymentCardId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "PaymentCard", paymentCardId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignPaymentCard",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignPaymentCard",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a PaymentCard on a Dispute
-//----------------------------------------------------------------------------
-func UnassignPaymentCardFromDispute(disputeId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignPaymentCardFromDispute(disputeId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Dispute with the matching identifier
@@ -537,17 +533,17 @@ func UnassignPaymentCardFromDispute(disputeId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.Dispute so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Dispute)
+		parentObj, _ := parentRequestResult.Data.(model.Dispute)
 
 		//----------------------------------------------------------------------------
 		// assign an empty PaymentCard to the PaymentCard
 		//----------------------------------------------------------------------------
-		parentObj.PaymentCard = nil;
+		parentObj.PaymentCard = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the PaymentCard
 		//----------------------------------------------------------------------------
-		parentObj.PaymentCardId = nil;
+		parentObj.PaymentCardId = nil
 
 		//----------------------------------------------------------------------------
 		// save the Dispute
@@ -559,5 +555,3 @@ func UnassignPaymentCardFromDispute(disputeId uuid.UUID)(utils.RequestResult) {
 	}
 
 }
-
-

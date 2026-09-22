@@ -1,23 +1,21 @@
-
 package dao
 
 import (
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "fmt"
-    "strings"
-    "github.com/google/uuid"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"fmt"
+	"github.com/google/uuid"
+	"strings"
 )
 
-
 func init() {
-	fmt.Println( strings.ToTitle( "Initializing ConsentDAO..." ) )
+	fmt.Println(strings.ToTitle("Initializing ConsentDAO..."))
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // CreateConsent - creates a new db entry
-//----------------------------------------------------------------------------
-func CreateConsent(obj model.Consent)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func CreateConsent(obj model.Consent) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -30,26 +28,25 @@ func CreateConsent(obj model.Consent)(utils.RequestResult){
 	result := utils.GetDB().Create(&obj).Error
 
 	if result == nil {
-	    createMsg = fmt.Sprintf( "Created a Consent with ID=%v", obj.ID )
-	    success = true
+		createMsg = fmt.Sprintf("Created a Consent with ID=%v", obj.ID)
+		success = true
 	} else {
-		createMsg = fmt.Sprintf( "Failed trying to create a Consent. Result: %s", result )
+		createMsg = fmt.Sprintf("Failed trying to create a Consent. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        createMsg,
-        Call:       "CreateConsent",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     createMsg,
+		Call:    "CreateConsent",
+		Data:    obj,
+	}
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetConsent - returns the matching the provided identifier
-//----------------------------------------------------------------------------
-func GetConsent(id uuid.UUID)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetConsent(id uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -67,26 +64,26 @@ func GetConsent(id uuid.UUID)(utils.RequestResult){
 	result := utils.GetDB().First(&obj, id).Error // find first using identifier
 
 	if result == nil {
-	    getMsg = fmt.Sprintf( "Retrieved a Consent using ID=%v", id )
-	    success = true
+		getMsg = fmt.Sprintf("Retrieved a Consent using ID=%v", id)
+		success = true
 	} else {
-		getMsg = fmt.Sprintf( "Failed trying to retrieve a Consent using ID=%v", id )
+		getMsg = fmt.Sprintf("Failed trying to retrieve a Consent using ID=%v", id)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getMsg,
-        Call:       "GetConsent",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getMsg,
+		Call:    "GetConsent",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAllConsent - returns all
-//----------------------------------------------------------------------------
-func GetAllConsent()(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAllConsent() (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -100,26 +97,26 @@ func GetAllConsent()(requestResult utils.RequestResult){
 	result := utils.GetDB().Find(&objs).Error // find all
 
 	if result == nil {
-	    getAllMsg = "Retrieved all Consent"
-	    success = true
+		getAllMsg = "Retrieved all Consent"
+		success = true
 	} else {
-		getAllMsg = fmt.Sprintf( "Failed trying to retrieve all Consent. Result: %s", result )
+		getAllMsg = fmt.Sprintf("Failed trying to retrieve all Consent. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getAllMsg,
-        Call:       "GetAllConsent",
-        Data:       objs,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getAllMsg,
+		Call:    "GetAllConsent",
+		Data:    objs,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // UpdateConsent - updates matching the provided identifier
-//----------------------------------------------------------------------------
-func UpdateConsent(obj model.Consent)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func UpdateConsent(obj model.Consent) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -132,26 +129,26 @@ func UpdateConsent(obj model.Consent)(requestResult utils.RequestResult){
 	result := utils.GetDB().Save(&obj).Error
 
 	if result == nil {
-	    updateMsg = fmt.Sprintf( "Updated a Consent using ID=%v", obj.ID )
-	    success = true
+		updateMsg = fmt.Sprintf("Updated a Consent using ID=%v", obj.ID)
+		success = true
 	} else {
-		updateMsg = fmt.Sprintf( "Failed trying to update a Consent using ID=%v", obj.ID )
+		updateMsg = fmt.Sprintf("Failed trying to update a Consent using ID=%v", obj.ID)
 		success = false
 	}
 
 	return utils.RequestResult{
-        Success:    success,
-        Msg:        updateMsg,
-        Call:       "UpdateConsent",
-        Data:       obj,
-    }
+		Success: success,
+		Msg:     updateMsg,
+		Call:    "UpdateConsent",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DeleteConsent - deletes matching the provided identifier
-//----------------------------------------------------------------------------
-func DeleteConsent(id uuid.UUID)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func DeleteConsent(id uuid.UUID) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -168,7 +165,7 @@ func DeleteConsent(id uuid.UUID)(requestResult utils.RequestResult){
 		// Need to cast the interface to a model.Consent so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		obj,_ := requestResult.Data.(model.Consent)
+		obj, _ := requestResult.Data.(model.Consent)
 
 		//----------------------------------------------------------------------------
 		// Make call to the ORM to delete
@@ -176,30 +173,29 @@ func DeleteConsent(id uuid.UUID)(requestResult utils.RequestResult){
 		result := utils.GetDB().Delete(&obj).Error // pass pointer of data to Delete
 
 		if result == nil {
-		    deleteMsg = fmt.Sprintf( "Deleted a Consent using ID=%v", id )
-		    success = true
+			deleteMsg = fmt.Sprintf("Deleted a Consent using ID=%v", id)
+			success = true
 		} else {
-			deleteMsg = fmt.Sprintf( "Failed trying to delete a Consent using ID=%v", id )
+			deleteMsg = fmt.Sprintf("Failed trying to delete a Consent using ID=%v", id)
 			success = false
 		}
 
-        requestResult = utils.RequestResult{
-            Success:    success,
-            Msg:        deleteMsg,
-            Call:       "DeleteConsent",
-            Data:       requestResult.Data,
-        }
+		requestResult = utils.RequestResult{
+			Success: success,
+			Msg:     deleteMsg,
+			Call:    "DeleteConsent",
+			Data:    requestResult.Data,
+		}
 
 	}
 
 	return requestResult
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Customer on a Consent
-//----------------------------------------------------------------------------
-func AssignCustomerToConsent( consentId uuid.UUID, customerId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignCustomerToConsent(consentId uuid.UUID, customerId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Consent with the matching identifier
@@ -211,7 +207,7 @@ func AssignCustomerToConsent( consentId uuid.UUID, customerId uuid.UUID )(utils.
 		// Need to cast the interface to a model.Consent so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Consent)
+		parentObj, _ := parentRequestResult.Data.(model.Consent)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -235,24 +231,24 @@ func AssignCustomerToConsent( consentId uuid.UUID, customerId uuid.UUID )(utils.
 			//----------------------------------------------------------------------------
 			return UpdateConsent(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Customer", customerId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Customer", customerId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignCustomer",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignCustomer",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Customer on a Consent
-//----------------------------------------------------------------------------
-func UnassignCustomerFromConsent(consentId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignCustomerFromConsent(consentId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Consent with the matching identifier
@@ -264,17 +260,17 @@ func UnassignCustomerFromConsent(consentId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.Consent so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Consent)
+		parentObj, _ := parentRequestResult.Data.(model.Consent)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Customer to the Customer
 		//----------------------------------------------------------------------------
-		parentObj.Customer = nil;
+		parentObj.Customer = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Customer
 		//----------------------------------------------------------------------------
-		parentObj.CustomerId = nil;
+		parentObj.CustomerId = nil
 
 		//----------------------------------------------------------------------------
 		// save the Consent
@@ -287,10 +283,10 @@ func UnassignCustomerFromConsent(consentId uuid.UUID)(utils.RequestResult) {
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Bank on a Consent
-//----------------------------------------------------------------------------
-func AssignBankToConsent( consentId uuid.UUID, bankId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignBankToConsent(consentId uuid.UUID, bankId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Consent with the matching identifier
@@ -302,7 +298,7 @@ func AssignBankToConsent( consentId uuid.UUID, bankId uuid.UUID )(utils.RequestR
 		// Need to cast the interface to a model.Consent so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Consent)
+		parentObj, _ := parentRequestResult.Data.(model.Consent)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -326,24 +322,24 @@ func AssignBankToConsent( consentId uuid.UUID, bankId uuid.UUID )(utils.RequestR
 			//----------------------------------------------------------------------------
 			return UpdateConsent(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Bank", bankId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Bank", bankId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignBank",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignBank",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Bank on a Consent
-//----------------------------------------------------------------------------
-func UnassignBankFromConsent(consentId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignBankFromConsent(consentId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Consent with the matching identifier
@@ -355,17 +351,17 @@ func UnassignBankFromConsent(consentId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.Consent so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Consent)
+		parentObj, _ := parentRequestResult.Data.(model.Consent)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Bank to the Bank
 		//----------------------------------------------------------------------------
-		parentObj.Bank = nil;
+		parentObj.Bank = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Bank
 		//----------------------------------------------------------------------------
-		parentObj.BankId = nil;
+		parentObj.BankId = nil
 
 		//----------------------------------------------------------------------------
 		// save the Consent
@@ -378,10 +374,10 @@ func UnassignBankFromConsent(consentId uuid.UUID)(utils.RequestResult) {
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a ThirdPartyProvider on a Consent
-//----------------------------------------------------------------------------
-func AssignThirdPartyProviderToConsent( consentId uuid.UUID, thirdPartyProviderId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignThirdPartyProviderToConsent(consentId uuid.UUID, thirdPartyProviderId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Consent with the matching identifier
@@ -393,7 +389,7 @@ func AssignThirdPartyProviderToConsent( consentId uuid.UUID, thirdPartyProviderI
 		// Need to cast the interface to a model.Consent so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Consent)
+		parentObj, _ := parentRequestResult.Data.(model.Consent)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -417,24 +413,24 @@ func AssignThirdPartyProviderToConsent( consentId uuid.UUID, thirdPartyProviderI
 			//----------------------------------------------------------------------------
 			return UpdateConsent(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "ThirdPartyProvider", thirdPartyProviderId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "ThirdPartyProvider", thirdPartyProviderId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignThirdPartyProvider",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignThirdPartyProvider",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a ThirdPartyProvider on a Consent
-//----------------------------------------------------------------------------
-func UnassignThirdPartyProviderFromConsent(consentId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignThirdPartyProviderFromConsent(consentId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Consent with the matching identifier
@@ -446,17 +442,17 @@ func UnassignThirdPartyProviderFromConsent(consentId uuid.UUID)(utils.RequestRes
 		// Need to cast the interface to a model.Consent so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Consent)
+		parentObj, _ := parentRequestResult.Data.(model.Consent)
 
 		//----------------------------------------------------------------------------
 		// assign an empty ThirdPartyProvider to the ThirdPartyProvider
 		//----------------------------------------------------------------------------
-		parentObj.ThirdPartyProvider = nil;
+		parentObj.ThirdPartyProvider = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the ThirdPartyProvider
 		//----------------------------------------------------------------------------
-		parentObj.ThirdPartyProviderId = nil;
+		parentObj.ThirdPartyProviderId = nil
 
 		//----------------------------------------------------------------------------
 		// save the Consent
@@ -469,11 +465,10 @@ func UnassignThirdPartyProviderFromConsent(consentId uuid.UUID)(utils.RequestRes
 
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more authorizedAccountsIds as a AuthorizedAccounts to a Consent
-//----------------------------------------------------------------------------
-func AddAuthorizedAccountsToConsent ( consentId uuid.UUID, authorizedAccountsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddAuthorizedAccountsToConsent(consentId uuid.UUID, authorizedAccountsIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the Consent with the matching identifier
@@ -485,9 +480,9 @@ func AddAuthorizedAccountsToConsent ( consentId uuid.UUID, authorizedAccountsIds
 		// Need to cast the interface to a model.Consent so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Consent)
+		parentObj, _ := parentRequestResult.Data.(model.Consent)
 
-		for _, authorizedAccountsId:= range authorizedAccountsIds {
+		for _, authorizedAccountsId := range authorizedAccountsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -497,29 +492,29 @@ func AddAuthorizedAccountsToConsent ( consentId uuid.UUID, authorizedAccountsIds
 			// Retrieve the 1st occurrence from the ORM of a Account
 			// with a matching authorizedAccountsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , authorizedAccountsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, authorizedAccountsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the AuthorizedAccounts using the gorm mechanism
 				//----------------------------------------------------------------------------
-                if err := utils.GetDB().Model(&parentObj).Association("AuthorizedAccounts").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addAuthorizedAccountsToConsent",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("AuthorizedAccounts").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addAuthorizedAccountsToConsent",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "AuthorizedAccounts", authorizedAccountsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "AuthorizedAccounts", authorizedAccountsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addAuthorizedAccountsToConsent",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addAuthorizedAccountsToConsent",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -533,10 +528,10 @@ func AddAuthorizedAccountsToConsent ( consentId uuid.UUID, authorizedAccountsIds
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more authorizedAccountsIds as a AuthorizedAccounts from a Consent
-//----------------------------------------------------------------------------
-func RemoveAuthorizedAccountsFromConsent( consentId uuid.UUID, authorizedAccountsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveAuthorizedAccountsFromConsent(consentId uuid.UUID, authorizedAccountsIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the Consent with the matching identifier
 	//----------------------------------------------------------------------------
@@ -547,9 +542,9 @@ func RemoveAuthorizedAccountsFromConsent( consentId uuid.UUID, authorizedAccount
 		// Need to cast the interface to a model.Consent so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.Consent)
+		parentObj, _ := parentRequestResult.Data.(model.Consent)
 
-		for _, authorizedAccountsId:= range authorizedAccountsIds {
+		for _, authorizedAccountsId := range authorizedAccountsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -559,29 +554,29 @@ func RemoveAuthorizedAccountsFromConsent( consentId uuid.UUID, authorizedAccount
 			// Retrieve the 1st occurrence from the ORM of a Account
 			// with a matching authorizedAccountsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , authorizedAccountsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, authorizedAccountsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove AccountObj from the AuthorizedAccounts array, but wont delete it from db
 				//----------------------------------------------------------------------------
 				if err := utils.GetDB().Model(&parentObj).Association("AuthorizedAccounts").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeAuthorizedAccountsFromConsent",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeAuthorizedAccountsFromConsent",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "AuthorizedAccounts", authorizedAccountsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "AuthorizedAccounts", authorizedAccountsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeAuthorizedAccountsFromConsent",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeAuthorizedAccountsFromConsent",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -594,4 +589,3 @@ func RemoveAuthorizedAccountsFromConsent( consentId uuid.UUID, authorizedAccount
 		return parentRequestResult
 	}
 }
-
