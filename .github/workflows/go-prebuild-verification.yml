@@ -268,72 +268,66 @@ jobs:
             "All Go source files are gofmt compliant."
 
       ###########################################################################
-      # Commit Files
+      # Commit Formatted Source
       ###########################################################################
 
-      - name: Commit Files
+      - name: Commit Formatted Source
         shell: bash
         run: |
 
           source .github/actions/common/report.sh
 
-          echo "Checking for generated changes..."
+          echo "Checking for formatted source changes..."
 
           git status --short
 
-          if [ -z "$(git status --porcelain)" ]; then
+          #######################################################################
+          # Only source/configuration files affected by formatting are eligible.
+          #
+          # DO NOT use git add -A.
+          #
+          # This prevents verification artifacts such as:
+          #   bin/
+          #   obj/
+          #   test results
+          #   logs
+          #   temporary files
+          #
+          # from entering the source commit.
+          #######################################################################
+
+          git add -- '*.cs'
+
+          #######################################################################
+          # Show exactly what will be committed.
+          #######################################################################
+
+          echo "Files staged for commit:"
+
+          git diff --cached --name-status
+
+          if git diff --cached --quiet; then
 
             post_pass \
               "PRE_BUILD" \
-              "COMMIT_FILES" \
+              "COMMIT_FORMATTED_SOURCE" \
               0 \
-              "No file changes require committing." \
-              "Working tree is clean."
+              "No formatted source changes require committing." \
+              "No C# source changes were produced by formatting."
 
             exit 0
 
           fi
-
-          echo "Changes detected:"
-
-          git status --short
 
           #######################################################################
           # Configure commit identity
           #######################################################################
 
           git config user.name "HarborMaster Verification"
-          git config user.email "verification@harbormaster.io"
+          git config user.email "dev@harbormaster.net"
 
           #######################################################################
-          # Commit formatting changes
-          #######################################################################
-
-          git add -A
-
-          if git commit -m "chore: format generated Go source"; then
-
-            post_pass \
-              "PRE_BUILD" \
-              "COMMIT_FILES" \
-              0 \
-              "Generated source changes committed." \
-              "Formatting and verification changes committed."
-
-          else
-
-            post_fail \
-              "PRE_BUILD" \
-              "COMMIT_FILES" \
-              0 \
-              "Failed to commit generated source changes."
-
-            post_terminate_build
-
-          fi
-
-          #######################################################################
-          # Push changes back to the source branch
+          # Determine target branch
           #######################################################################
 
           TARGET_BRANCH="${{ inputs.branch }}"
@@ -342,24 +336,68 @@ jobs:
             TARGET_BRANCH="${GITHUB_REF_NAME}"
           fi
 
-          echo "Pushing changes to ${TARGET_BRANCH}"
+          echo "Target branch: ${TARGET_BRANCH}"
 
-          if git push origin "HEAD:${TARGET_BRANCH}"; then
+          #######################################################################
+          # Ensure the local branch corresponds to the source branch.
+          #######################################################################
+
+          git fetch origin "${TARGET_BRANCH}"
+
+          git checkout -B "${TARGET_BRANCH}" \
+            "origin/${TARGET_BRANCH}"
+
+          #######################################################################
+          # Re-stage only formatted C# source after checkout.
+          #######################################################################
+
+          git add -- '*.cs'
+
+          echo "Final staged files:"
+
+          git diff --cached --name-status
+
+          #######################################################################
+          # Commit
+          #######################################################################
+
+          if ! git commit -m "chore: format generated ASP.NET source"; then
+
+            post_fail \
+              "PRE_BUILD" \
+              "COMMIT_FORMATTED_SOURCE" \
+              0 \
+              "Failed to commit formatted ASP.NET source."
+
+            post_terminate_build
+
+          fi
+
+          COMMIT_SHA=$(git rev-parse HEAD)
+
+          echo "Created commit: ${COMMIT_SHA}"
+
+          #######################################################################
+          # Push explicitly to the source branch.
+          #######################################################################
+
+          if git push origin \
+              "HEAD:${TARGET_BRANCH}"; then
 
             post_pass \
               "PRE_BUILD" \
-              "COMMIT_FILES" \
-              0 \
-              "Generated source changes pushed successfully." \
-              "Committed changes pushed to ${TARGET_BRANCH}."
+              "COMMIT_FORMATTED_SOURCE" \
+              5 \
+              "Formatted ASP.NET source committed successfully." \
+              "Commit ${COMMIT_SHA} pushed to ${TARGET_BRANCH}."
 
           else
 
             post_fail \
               "PRE_BUILD" \
-              "COMMIT_FILES" \
+              "COMMIT_FORMATTED_SOURCE" \
               0 \
-              "Failed to push generated source changes." \
+              "Failed to push formatted ASP.NET source." \
               "GitHub rejected the push to ${TARGET_BRANCH}."
 
             post_terminate_build
