@@ -182,33 +182,77 @@ jobs:
           echo "Resolved APP_DIR=${APP_DIR}"
 
 
-      ###########################################################################
-      # Determine .NET Version
-      ###########################################################################
+      ###############################################################################
+      # Determine .NET SDK Version
+      ###############################################################################
 
-      - name: Determine .NET Version
+      - name: Determine .NET SDK Version
+
         shell: bash
+
+        working-directory: ${{ inputs.appName }}
+
         run: |
-
-          source .github/actions/common/report.sh
-
-          DOTNET_VERSION="${{ inputs.languageVersion }}"
-
+          
+          # IMPORTANT:
+          #
+          # dotnetVersion = .NET SDK version
+          # languageVersion = C# language version
+          #
+          # C# 14 must NEVER be passed to actions/setup-dotnet.
+          #
+          # Example:
+          #
+          #   dotnetVersion   = 10.x
+          #   languageVersion = 14
+          
+          DOTNET_VERSION="${{ inputs.dotnetVersion }}"
+          
+          if [ -z "$DOTNET_VERSION" ]; then
+              DOTNET_VERSION="10.x"
+          fi
+          
           echo "DOTNET_VERSION=${DOTNET_VERSION}" >> "$GITHUB_ENV"
+          
+          echo "Application: ${APP_NAME}"
+          echo "ASP.NET Core version: ${{ inputs.technologyVersion }}"
+          echo "Using .NET SDK: ${DOTNET_VERSION}"
+          echo "C# language version: ${{ inputs.languageVersion }}"
+          echo "Language: ${{ inputs.languageName }}"
+      
 
-          echo "Using .NET ${DOTNET_VERSION}"
-
-
-      ###########################################################################
+      ###############################################################################
       # Setup .NET
-      ###########################################################################
+      ###############################################################################
 
       - name: Setup .NET
+
         uses: actions/setup-dotnet@v4
+
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
 
+      ###############################################################################
+      # Verify .NET SDK
+      ###############################################################################
+
+      - name: Verify .NET SDK
+
+        shell: bash
+
+        working-directory: ${{ inputs.appName }}
+
+        run: |
+          
+          echo "Installed .NET SDK:"
+          dotnet --version
+          
+          echo ""
+          echo ".NET information:"
+          dotnet --info
+      
+      
       ###########################################################################
       # Locate Project
       ###########################################################################
