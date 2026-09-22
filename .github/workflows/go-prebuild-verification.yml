@@ -268,6 +268,105 @@ jobs:
             "All Go source files are gofmt compliant."
 
       ###########################################################################
+      # Commit Files
+      ###########################################################################
+
+      - name: Commit Files
+        shell: bash
+        run: |
+
+          source .github/actions/common/report.sh
+
+          echo "Checking for generated changes..."
+
+          git status --short
+
+          if [ -z "$(git status --porcelain)" ]; then
+
+            post_pass \
+              "PRE_BUILD" \
+              "COMMIT_FILES" \
+              0 \
+              "No file changes require committing." \
+              "Working tree is clean."
+
+            exit 0
+
+          fi
+
+          echo "Changes detected:"
+
+          git status --short
+
+          #######################################################################
+          # Configure commit identity
+          #######################################################################
+
+          git config user.name "HarborMaster Verification"
+          git config user.email "verification@harbormaster.io"
+
+          #######################################################################
+          # Commit formatting changes
+          #######################################################################
+
+          git add -A
+
+          if git commit -m "chore: format generated Go source"; then
+
+            post_pass \
+              "PRE_BUILD" \
+              "COMMIT_FILES" \
+              0 \
+              "Generated source changes committed." \
+              "Formatting and verification changes committed."
+
+          else
+
+            post_fail \
+              "PRE_BUILD" \
+              "COMMIT_FILES" \
+              0 \
+              "Failed to commit generated source changes."
+
+            post_terminate_build
+
+          fi
+
+          #######################################################################
+          # Push changes back to the source branch
+          #######################################################################
+
+          TARGET_BRANCH="${{ inputs.branch }}"
+
+          if [ -z "${TARGET_BRANCH}" ]; then
+            TARGET_BRANCH="${GITHUB_REF_NAME}"
+          fi
+
+          echo "Pushing changes to ${TARGET_BRANCH}"
+
+          if git push origin "HEAD:${TARGET_BRANCH}"; then
+
+            post_pass \
+              "PRE_BUILD" \
+              "COMMIT_FILES" \
+              0 \
+              "Generated source changes pushed successfully." \
+              "Committed changes pushed to ${TARGET_BRANCH}."
+
+          else
+
+            post_fail \
+              "PRE_BUILD" \
+              "COMMIT_FILES" \
+              0 \
+              "Failed to push generated source changes." \
+              "GitHub rejected the push to ${TARGET_BRANCH}."
+
+            post_terminate_build
+
+          fi
+
+      ###########################################################################
       # Static Analysis
       ###########################################################################
 
@@ -279,6 +378,24 @@ jobs:
 
           cd "${APP_DIR}"
 
+          if [ ! -f go.mod ]; then
+            echo "go.mod not found. Initializing Go module..."
+          
+            # Module path for go mod init. Root layouts often import "demo/..." etc.
+            MODULE_NAME="${APP_NAME}"
+          
+            if [ "${APP_DIR}" = "." ]; then
+              INFERRED=$(grep -RhoE '"[a-zA-Z0-9._-]+/internal/' --include='*.go' . 2>/dev/null | head -1 | sed -E 's/^"([^/]+)\/.*/\1/' || true)
+              if [ -n "${INFERRED}" ]; then
+                  MODULE_NAME="${INFERRED}"
+              fi
+            fi
+            
+            go mod init "${MODULE_NAME}"
+            go mod tidy
+          
+          fi
+  
           echo "Running go vet..."
 
           if ! go vet ./... > go-vet.log 2>&1; then
@@ -410,105 +527,6 @@ jobs:
             "GOSEC" \
             5 \
             "gosec security analysis completed successfully."
-
-      ###########################################################################
-      # Commit Files
-      ###########################################################################
-
-      - name: Commit Files
-        shell: bash
-        run: |
-
-          source .github/actions/common/report.sh
-
-          echo "Checking for generated changes..."
-
-          git status --short
-
-          if [ -z "$(git status --porcelain)" ]; then
-
-            post_pass \
-              "PRE_BUILD" \
-              "COMMIT_FILES" \
-              0 \
-              "No file changes require committing." \
-              "Working tree is clean."
-
-            exit 0
-
-          fi
-
-          echo "Changes detected:"
-
-          git status --short
-
-          #######################################################################
-          # Configure commit identity
-          #######################################################################
-
-          git config user.name "HarborMaster Verification"
-          git config user.email "verification@harbormaster.io"
-
-          #######################################################################
-          # Commit formatting changes
-          #######################################################################
-
-          git add -A
-
-          if git commit -m "chore: format generated Go source"; then
-
-            post_pass \
-              "PRE_BUILD" \
-              "COMMIT_FILES" \
-              0 \
-              "Generated source changes committed." \
-              "Formatting and verification changes committed."
-
-          else
-
-            post_fail \
-              "PRE_BUILD" \
-              "COMMIT_FILES" \
-              0 \
-              "Failed to commit generated source changes."
-
-            post_terminate_build
-
-          fi
-
-          #######################################################################
-          # Push changes back to the source branch
-          #######################################################################
-
-          TARGET_BRANCH="${{ inputs.branch }}"
-
-          if [ -z "${TARGET_BRANCH}" ]; then
-            TARGET_BRANCH="${GITHUB_REF_NAME}"
-          fi
-
-          echo "Pushing changes to ${TARGET_BRANCH}"
-
-          if git push origin "HEAD:${TARGET_BRANCH}"; then
-
-            post_pass \
-              "PRE_BUILD" \
-              "COMMIT_FILES" \
-              0 \
-              "Generated source changes pushed successfully." \
-              "Committed changes pushed to ${TARGET_BRANCH}."
-
-          else
-
-            post_fail \
-              "PRE_BUILD" \
-              "COMMIT_FILES" \
-              0 \
-              "Failed to push generated source changes." \
-              "GitHub rejected the push to ${TARGET_BRANCH}."
-
-            post_terminate_build
-
-          fi
 
       ###########################################################################
       # Terminate Verification
