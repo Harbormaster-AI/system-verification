@@ -58,7 +58,7 @@ env:
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
   CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
   APP_NAME: ${{ inputs.appName }}
-
+  HM_EXIT_WORKFLOW: "true"
 
 jobs:
 
@@ -126,7 +126,7 @@ jobs:
               0 \
               "Repository checkout failed."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -163,7 +163,7 @@ jobs:
               "Could not locate Go application sources." \
               "Expected ./${APP_NAME} or Go sources at repository root."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -254,7 +254,7 @@ jobs:
                 "gofmt is not stable for file." \
                 "${file}"
             
-              post_terminate_build
+              post_terminate_prebuild
           
             fi
           
@@ -369,7 +369,7 @@ jobs:
               0 \
               "Failed to commit formatted ASP.NET source."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -400,7 +400,7 @@ jobs:
               "Failed to push formatted ASP.NET source." \
               "GitHub rejected the push to ${TARGET_BRANCH}."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -459,7 +459,7 @@ jobs:
               "go vet failed." \
               "${MESSAGE}"
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -488,7 +488,7 @@ jobs:
               "staticcheck failed." \
               "${MESSAGE}"
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -533,7 +533,7 @@ jobs:
               "Go vulnerability check failed." \
               "${MESSAGE}"
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -566,7 +566,7 @@ jobs:
               "gosec security analysis failed." \
               "${MESSAGE}"
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -586,4 +586,4 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          post_terminate_build false
+          post_terminate_prebuild false

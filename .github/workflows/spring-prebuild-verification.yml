@@ -56,7 +56,7 @@ env:
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
   CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
   APP_NAME: ${{ inputs.appName }}
-
+  HM_EXIT_WORKFLOW: "false"
 
 permissions:
   contents: write
@@ -134,7 +134,7 @@ jobs:
               0 \
               "Repository checkout failed."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -172,7 +172,7 @@ jobs:
               "Could not locate Spring Boot application sources." \
               "Expected ./${APP_NAME} or a Maven/Gradle build file."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -256,7 +256,7 @@ jobs:
               0 \
               "No Maven or Gradle build file was found."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -287,7 +287,7 @@ jobs:
                 0 \
                 "pom.xml was not found."
 
-              post_terminate_build
+              post_terminate_prebuild
 
             fi
 
@@ -302,7 +302,7 @@ jobs:
                 0 \
                 "Gradle build file was not found."
 
-              post_terminate_build
+              post_terminate_prebuild
 
             fi
 
@@ -325,7 +325,7 @@ jobs:
               0 \
               "No Java source files were found."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -357,7 +357,7 @@ jobs:
               0 \
               "Spring Boot src directory was not found."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -369,7 +369,7 @@ jobs:
               0 \
               "Spring Boot src/main directory was not found."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -425,7 +425,7 @@ jobs:
               "Java source is not formatted." \
               "Spotless detected remaining formatting changes."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -531,7 +531,7 @@ jobs:
               0 \
               "Failed to commit formatted Spring Boot source."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -563,7 +563,7 @@ jobs:
               "Failed to push formatted Spring Boot source." \
               "GitHub rejected the push to ${TARGET_BRANCH}."
 
-            post_terminate_build
+            post_terminate_prebuild
 
           fi
 
@@ -604,7 +604,7 @@ jobs:
                 "Checkstyle failed." \
                 "${MESSAGE}"
           
-              post_terminate_build
+              post_terminate_prebuild
           
             fi
           
@@ -624,7 +624,7 @@ jobs:
                 "SpotBugs failed." \
                 "${MESSAGE}"
           
-              post_terminate_build
+              post_terminate_prebuild
           
             fi
           
@@ -646,7 +646,7 @@ jobs:
                 "Checkstyle failed." \
                 "${MESSAGE}"
           
-              post_terminate_build
+              post_terminate_prebuild
           
             fi
           
@@ -666,7 +666,7 @@ jobs:
                 "SpotBugs failed." \
                 "${MESSAGE}"
           
-              post_terminate_build
+              post_terminate_prebuild
           
             fi
           
@@ -715,7 +715,7 @@ jobs:
                 "Dependency security check failed." \
                 "${MESSAGE}"
 
-              post_terminate_build
+              post_terminate_prebuild
 
             fi
 
@@ -735,7 +735,7 @@ jobs:
                 "Dependency security check failed." \
                 "${MESSAGE}"
 
-              post_terminate_build
+              post_terminate_prebuild
 
             fi
 
@@ -758,4 +758,4 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          post_terminate_build false
+          post_terminate_prebuild false
