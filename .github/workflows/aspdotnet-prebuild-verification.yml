@@ -252,7 +252,7 @@ jobs:
           echo ".NET information:"
           dotnet --info
       
-      
+
       ###########################################################################
       # Locate Project
       ###########################################################################
@@ -263,30 +263,30 @@ jobs:
 
           source .github/actions/common/report.sh
 
+          cd "${APP_DIR}"
+          
           PROJECT_FILE=$(
-            find "${APP_DIR}" -type f -name "*.csproj" \
+            find . -type f -name "*.csproj" \
               -not -path "*/bin/*" \
               -not -path "*/obj/*" |
             sort |
             head -1
           )
-
+          
           if [ -z "${PROJECT_FILE}" ]; then
-
             post_fail \
               "PRE_BUILD" \
               "LOCATE_PROJECT" \
               0 \
               "No ASP.NET project found." \
               "No .csproj file was found."
-
+          
             post_terminate_build
-
           fi
-
+          
           echo "PROJECT_FILE=${PROJECT_FILE}" >> "$GITHUB_ENV"
 
-          echo "Using project: ${PROJECT_FILE}"
+        echo "Using project: ${PROJECT_FILE}"
 
 
       ###########################################################################
