@@ -1,13 +1,12 @@
-
 package controller
 
 import (
-    BankingProductDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "net/http"
-    "encoding/json"
-    "log"
+	BankingProductDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
+	"log"
+	"net/http"
 )
 
 // ----------------------------------------------------------------------------
@@ -18,7 +17,7 @@ func CreateBankingProduct(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty BankingProduct model
 	// ----------------------------------------------------------------------------
 	data := model.BankingProduct{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a BankingProduct model structure
 	// ----------------------------------------------------------------------------
@@ -27,17 +26,17 @@ func CreateBankingProduct(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the BankingProduct data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := BankingProductDAO.CreateBankingProduct( data )
-	
+	requestResult := BankingProductDAO.CreateBankingProduct(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -60,18 +59,17 @@ func GetBankingProduct(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := BankingProductDAO.GetBankingProduct(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to BankingProductDAO for database read of all BankingProducts
@@ -81,16 +79,16 @@ func GetAllBankingProduct(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the BankingProduct data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := BankingProductDAO.GetAllBankingProduct()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -101,7 +99,7 @@ func UpdateBankingProduct(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty BankingProduct model
 	// ----------------------------------------------------------------------------
 	var data = model.BankingProduct{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a BankingProduct model structure
 	// ----------------------------------------------------------------------------
@@ -119,8 +117,8 @@ func UpdateBankingProduct(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -140,24 +138,24 @@ func DeleteBankingProduct(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the BankingProduct data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := BankingProductDAO.DeleteBankingProduct(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Bank on a BankingProduct
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Bank on a BankingProduct
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignBankToBankingProduct(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -181,15 +179,15 @@ func AssignBankToBankingProduct(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Bank on a BankingProduct
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignBankFromBankingProduct( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Bank on a BankingProduct
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignBankFromBankingProduct(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -212,15 +210,14 @@ func UnassignBankFromBankingProduct( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-
-	// ----------------------------------------------------------------------------
-	// adds one or more accountsIds as a Accounts to a BankingProduct
-	// ----------------------------------------------------------------------------
-func AddAccountsToBankingProduct(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// adds one or more accountsIds as a Accounts to a BankingProduct
+// ----------------------------------------------------------------------------
+func AddAccountsToBankingProduct(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -243,15 +240,15 @@ func AddAccountsToBankingProduct(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more accountsIds as a Accounts from a BankingProduct
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveAccountsFromBankingProduct(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more accountsIds as a Accounts from a BankingProduct
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveAccountsFromBankingProduct(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -274,14 +271,14 @@ func RemoveAccountsFromBankingProduct(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more loanAccountsIds as a LoanAccounts to a BankingProduct
-	// ----------------------------------------------------------------------------
-func AddLoanAccountsToBankingProduct(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more loanAccountsIds as a LoanAccounts to a BankingProduct
+// ----------------------------------------------------------------------------
+func AddLoanAccountsToBankingProduct(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -304,15 +301,15 @@ func AddLoanAccountsToBankingProduct(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more loanAccountsIds as a LoanAccounts from a BankingProduct
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveLoanAccountsFromBankingProduct(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more loanAccountsIds as a LoanAccounts from a BankingProduct
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveLoanAccountsFromBankingProduct(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -335,14 +332,14 @@ func RemoveLoanAccountsFromBankingProduct(w http.ResponseWriter, r *http.Request
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more paymentCardsIds as a PaymentCards to a BankingProduct
-	// ----------------------------------------------------------------------------
-func AddPaymentCardsToBankingProduct(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more paymentCardsIds as a PaymentCards to a BankingProduct
+// ----------------------------------------------------------------------------
+func AddPaymentCardsToBankingProduct(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -365,15 +362,15 @@ func AddPaymentCardsToBankingProduct(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more paymentCardsIds as a PaymentCards from a BankingProduct
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemovePaymentCardsFromBankingProduct(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more paymentCardsIds as a PaymentCards from a BankingProduct
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemovePaymentCardsFromBankingProduct(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -396,7 +393,6 @@ func RemovePaymentCardsFromBankingProduct(w http.ResponseWriter, r *http.Request
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		

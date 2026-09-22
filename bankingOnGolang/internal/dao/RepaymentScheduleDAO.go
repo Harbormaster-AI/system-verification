@@ -1,23 +1,21 @@
-
 package dao
 
 import (
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "fmt"
-    "strings"
-    "github.com/google/uuid"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"fmt"
+	"github.com/google/uuid"
+	"strings"
 )
 
-
 func init() {
-	fmt.Println( strings.ToTitle( "Initializing RepaymentScheduleDAO..." ) )
+	fmt.Println(strings.ToTitle("Initializing RepaymentScheduleDAO..."))
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // CreateRepaymentSchedule - creates a new db entry
-//----------------------------------------------------------------------------
-func CreateRepaymentSchedule(obj model.RepaymentSchedule)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func CreateRepaymentSchedule(obj model.RepaymentSchedule) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -30,26 +28,25 @@ func CreateRepaymentSchedule(obj model.RepaymentSchedule)(utils.RequestResult){
 	result := utils.GetDB().Create(&obj).Error
 
 	if result == nil {
-	    createMsg = fmt.Sprintf( "Created a RepaymentSchedule with ID=%v", obj.ID )
-	    success = true
+		createMsg = fmt.Sprintf("Created a RepaymentSchedule with ID=%v", obj.ID)
+		success = true
 	} else {
-		createMsg = fmt.Sprintf( "Failed trying to create a RepaymentSchedule. Result: %s", result )
+		createMsg = fmt.Sprintf("Failed trying to create a RepaymentSchedule. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        createMsg,
-        Call:       "CreateRepaymentSchedule",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     createMsg,
+		Call:    "CreateRepaymentSchedule",
+		Data:    obj,
+	}
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetRepaymentSchedule - returns the matching the provided identifier
-//----------------------------------------------------------------------------
-func GetRepaymentSchedule(id uuid.UUID)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetRepaymentSchedule(id uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -67,26 +64,26 @@ func GetRepaymentSchedule(id uuid.UUID)(utils.RequestResult){
 	result := utils.GetDB().First(&obj, id).Error // find first using identifier
 
 	if result == nil {
-	    getMsg = fmt.Sprintf( "Retrieved a RepaymentSchedule using ID=%v", id )
-	    success = true
+		getMsg = fmt.Sprintf("Retrieved a RepaymentSchedule using ID=%v", id)
+		success = true
 	} else {
-		getMsg = fmt.Sprintf( "Failed trying to retrieve a RepaymentSchedule using ID=%v", id )
+		getMsg = fmt.Sprintf("Failed trying to retrieve a RepaymentSchedule using ID=%v", id)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getMsg,
-        Call:       "GetRepaymentSchedule",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getMsg,
+		Call:    "GetRepaymentSchedule",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAllRepaymentSchedule - returns all
-//----------------------------------------------------------------------------
-func GetAllRepaymentSchedule()(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAllRepaymentSchedule() (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -100,26 +97,26 @@ func GetAllRepaymentSchedule()(requestResult utils.RequestResult){
 	result := utils.GetDB().Find(&objs).Error // find all
 
 	if result == nil {
-	    getAllMsg = "Retrieved all RepaymentSchedule"
-	    success = true
+		getAllMsg = "Retrieved all RepaymentSchedule"
+		success = true
 	} else {
-		getAllMsg = fmt.Sprintf( "Failed trying to retrieve all RepaymentSchedule. Result: %s", result )
+		getAllMsg = fmt.Sprintf("Failed trying to retrieve all RepaymentSchedule. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getAllMsg,
-        Call:       "GetAllRepaymentSchedule",
-        Data:       objs,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getAllMsg,
+		Call:    "GetAllRepaymentSchedule",
+		Data:    objs,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // UpdateRepaymentSchedule - updates matching the provided identifier
-//----------------------------------------------------------------------------
-func UpdateRepaymentSchedule(obj model.RepaymentSchedule)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func UpdateRepaymentSchedule(obj model.RepaymentSchedule) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -132,26 +129,26 @@ func UpdateRepaymentSchedule(obj model.RepaymentSchedule)(requestResult utils.Re
 	result := utils.GetDB().Save(&obj).Error
 
 	if result == nil {
-	    updateMsg = fmt.Sprintf( "Updated a RepaymentSchedule using ID=%v", obj.ID )
-	    success = true
+		updateMsg = fmt.Sprintf("Updated a RepaymentSchedule using ID=%v", obj.ID)
+		success = true
 	} else {
-		updateMsg = fmt.Sprintf( "Failed trying to update a RepaymentSchedule using ID=%v", obj.ID )
+		updateMsg = fmt.Sprintf("Failed trying to update a RepaymentSchedule using ID=%v", obj.ID)
 		success = false
 	}
 
 	return utils.RequestResult{
-        Success:    success,
-        Msg:        updateMsg,
-        Call:       "UpdateRepaymentSchedule",
-        Data:       obj,
-    }
+		Success: success,
+		Msg:     updateMsg,
+		Call:    "UpdateRepaymentSchedule",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DeleteRepaymentSchedule - deletes matching the provided identifier
-//----------------------------------------------------------------------------
-func DeleteRepaymentSchedule(id uuid.UUID)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func DeleteRepaymentSchedule(id uuid.UUID) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -168,7 +165,7 @@ func DeleteRepaymentSchedule(id uuid.UUID)(requestResult utils.RequestResult){
 		// Need to cast the interface to a model.RepaymentSchedule so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		obj,_ := requestResult.Data.(model.RepaymentSchedule)
+		obj, _ := requestResult.Data.(model.RepaymentSchedule)
 
 		//----------------------------------------------------------------------------
 		// Make call to the ORM to delete
@@ -176,30 +173,29 @@ func DeleteRepaymentSchedule(id uuid.UUID)(requestResult utils.RequestResult){
 		result := utils.GetDB().Delete(&obj).Error // pass pointer of data to Delete
 
 		if result == nil {
-		    deleteMsg = fmt.Sprintf( "Deleted a RepaymentSchedule using ID=%v", id )
-		    success = true
+			deleteMsg = fmt.Sprintf("Deleted a RepaymentSchedule using ID=%v", id)
+			success = true
 		} else {
-			deleteMsg = fmt.Sprintf( "Failed trying to delete a RepaymentSchedule using ID=%v", id )
+			deleteMsg = fmt.Sprintf("Failed trying to delete a RepaymentSchedule using ID=%v", id)
 			success = false
 		}
 
-        requestResult = utils.RequestResult{
-            Success:    success,
-            Msg:        deleteMsg,
-            Call:       "DeleteRepaymentSchedule",
-            Data:       requestResult.Data,
-        }
+		requestResult = utils.RequestResult{
+			Success: success,
+			Msg:     deleteMsg,
+			Call:    "DeleteRepaymentSchedule",
+			Data:    requestResult.Data,
+		}
 
 	}
 
 	return requestResult
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a LoanAccount on a RepaymentSchedule
-//----------------------------------------------------------------------------
-func AssignLoanAccountToRepaymentSchedule( repaymentScheduleId uuid.UUID, loanAccountId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignLoanAccountToRepaymentSchedule(repaymentScheduleId uuid.UUID, loanAccountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the RepaymentSchedule with the matching identifier
@@ -211,7 +207,7 @@ func AssignLoanAccountToRepaymentSchedule( repaymentScheduleId uuid.UUID, loanAc
 		// Need to cast the interface to a model.RepaymentSchedule so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.RepaymentSchedule)
+		parentObj, _ := parentRequestResult.Data.(model.RepaymentSchedule)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -235,24 +231,24 @@ func AssignLoanAccountToRepaymentSchedule( repaymentScheduleId uuid.UUID, loanAc
 			//----------------------------------------------------------------------------
 			return UpdateRepaymentSchedule(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "LoanAccount", loanAccountId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "LoanAccount", loanAccountId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignLoanAccount",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignLoanAccount",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a LoanAccount on a RepaymentSchedule
-//----------------------------------------------------------------------------
-func UnassignLoanAccountFromRepaymentSchedule(repaymentScheduleId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignLoanAccountFromRepaymentSchedule(repaymentScheduleId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the RepaymentSchedule with the matching identifier
@@ -264,17 +260,17 @@ func UnassignLoanAccountFromRepaymentSchedule(repaymentScheduleId uuid.UUID)(uti
 		// Need to cast the interface to a model.RepaymentSchedule so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.RepaymentSchedule)
+		parentObj, _ := parentRequestResult.Data.(model.RepaymentSchedule)
 
 		//----------------------------------------------------------------------------
 		// assign an empty LoanAccount to the LoanAccount
 		//----------------------------------------------------------------------------
-		parentObj.LoanAccount = nil;
+		parentObj.LoanAccount = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the LoanAccount
 		//----------------------------------------------------------------------------
-		parentObj.LoanAccountId = nil;
+		parentObj.LoanAccountId = nil
 
 		//----------------------------------------------------------------------------
 		// save the RepaymentSchedule
@@ -287,10 +283,10 @@ func UnassignLoanAccountFromRepaymentSchedule(repaymentScheduleId uuid.UUID)(uti
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Payment on a RepaymentSchedule
-//----------------------------------------------------------------------------
-func AssignPaymentToRepaymentSchedule( repaymentScheduleId uuid.UUID, paymentId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignPaymentToRepaymentSchedule(repaymentScheduleId uuid.UUID, paymentId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the RepaymentSchedule with the matching identifier
@@ -302,7 +298,7 @@ func AssignPaymentToRepaymentSchedule( repaymentScheduleId uuid.UUID, paymentId 
 		// Need to cast the interface to a model.RepaymentSchedule so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.RepaymentSchedule)
+		parentObj, _ := parentRequestResult.Data.(model.RepaymentSchedule)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -326,24 +322,24 @@ func AssignPaymentToRepaymentSchedule( repaymentScheduleId uuid.UUID, paymentId 
 			//----------------------------------------------------------------------------
 			return UpdateRepaymentSchedule(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Payment", paymentId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Payment", paymentId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignPayment",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignPayment",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Payment on a RepaymentSchedule
-//----------------------------------------------------------------------------
-func UnassignPaymentFromRepaymentSchedule(repaymentScheduleId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignPaymentFromRepaymentSchedule(repaymentScheduleId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the RepaymentSchedule with the matching identifier
@@ -355,17 +351,17 @@ func UnassignPaymentFromRepaymentSchedule(repaymentScheduleId uuid.UUID)(utils.R
 		// Need to cast the interface to a model.RepaymentSchedule so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.RepaymentSchedule)
+		parentObj, _ := parentRequestResult.Data.(model.RepaymentSchedule)
 
 		//----------------------------------------------------------------------------
 		// assign an empty LoanPayment to the Payment
 		//----------------------------------------------------------------------------
-		parentObj.Payment = nil;
+		parentObj.Payment = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Payment
 		//----------------------------------------------------------------------------
-		parentObj.PaymentId = nil;
+		parentObj.PaymentId = nil
 
 		//----------------------------------------------------------------------------
 		// save the RepaymentSchedule
@@ -377,5 +373,3 @@ func UnassignPaymentFromRepaymentSchedule(repaymentScheduleId uuid.UUID)(utils.R
 	}
 
 }
-
-

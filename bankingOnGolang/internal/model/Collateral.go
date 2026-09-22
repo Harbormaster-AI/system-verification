@@ -1,23 +1,20 @@
-
 package model
 
-import (
-)
+import ()
 
-//==============================================================
+// ==============================================================
 // Collateral Declaration
-//==============================================================
+// ==============================================================
 type Collateral struct {
-    BaseModel
-     CollateralIdentifier            string
-    AppraisedValue            Money
-    Description            string
-    Location            Address
-    LoanAccountId         *uint
-    LoanAccount           *LoanAccount `gorm:"foreignKey:LoanAccountId"`
-    CollateralType            CollateralType
+	BaseModel
+	CollateralIdentifier string
+	AppraisedValue       Money
+	Description          string
+	Location             Address
+	LoanAccountId        *uint
+	LoanAccount          *LoanAccount `gorm:"foreignKey:LoanAccountId"`
+	CollateralType       CollateralType
 
-// parent associations as their child
+	// parent associations as their child
 
 }
-

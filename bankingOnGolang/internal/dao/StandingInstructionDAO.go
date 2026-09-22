@@ -1,23 +1,21 @@
-
 package dao
 
 import (
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "fmt"
-    "strings"
-    "github.com/google/uuid"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"fmt"
+	"github.com/google/uuid"
+	"strings"
 )
 
-
 func init() {
-	fmt.Println( strings.ToTitle( "Initializing StandingInstructionDAO..." ) )
+	fmt.Println(strings.ToTitle("Initializing StandingInstructionDAO..."))
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // CreateStandingInstruction - creates a new db entry
-//----------------------------------------------------------------------------
-func CreateStandingInstruction(obj model.StandingInstruction)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func CreateStandingInstruction(obj model.StandingInstruction) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -30,26 +28,25 @@ func CreateStandingInstruction(obj model.StandingInstruction)(utils.RequestResul
 	result := utils.GetDB().Create(&obj).Error
 
 	if result == nil {
-	    createMsg = fmt.Sprintf( "Created a StandingInstruction with ID=%v", obj.ID )
-	    success = true
+		createMsg = fmt.Sprintf("Created a StandingInstruction with ID=%v", obj.ID)
+		success = true
 	} else {
-		createMsg = fmt.Sprintf( "Failed trying to create a StandingInstruction. Result: %s", result )
+		createMsg = fmt.Sprintf("Failed trying to create a StandingInstruction. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        createMsg,
-        Call:       "CreateStandingInstruction",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     createMsg,
+		Call:    "CreateStandingInstruction",
+		Data:    obj,
+	}
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetStandingInstruction - returns the matching the provided identifier
-//----------------------------------------------------------------------------
-func GetStandingInstruction(id uuid.UUID)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetStandingInstruction(id uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -67,26 +64,26 @@ func GetStandingInstruction(id uuid.UUID)(utils.RequestResult){
 	result := utils.GetDB().First(&obj, id).Error // find first using identifier
 
 	if result == nil {
-	    getMsg = fmt.Sprintf( "Retrieved a StandingInstruction using ID=%v", id )
-	    success = true
+		getMsg = fmt.Sprintf("Retrieved a StandingInstruction using ID=%v", id)
+		success = true
 	} else {
-		getMsg = fmt.Sprintf( "Failed trying to retrieve a StandingInstruction using ID=%v", id )
+		getMsg = fmt.Sprintf("Failed trying to retrieve a StandingInstruction using ID=%v", id)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getMsg,
-        Call:       "GetStandingInstruction",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getMsg,
+		Call:    "GetStandingInstruction",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAllStandingInstruction - returns all
-//----------------------------------------------------------------------------
-func GetAllStandingInstruction()(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAllStandingInstruction() (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -100,26 +97,26 @@ func GetAllStandingInstruction()(requestResult utils.RequestResult){
 	result := utils.GetDB().Find(&objs).Error // find all
 
 	if result == nil {
-	    getAllMsg = "Retrieved all StandingInstruction"
-	    success = true
+		getAllMsg = "Retrieved all StandingInstruction"
+		success = true
 	} else {
-		getAllMsg = fmt.Sprintf( "Failed trying to retrieve all StandingInstruction. Result: %s", result )
+		getAllMsg = fmt.Sprintf("Failed trying to retrieve all StandingInstruction. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getAllMsg,
-        Call:       "GetAllStandingInstruction",
-        Data:       objs,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getAllMsg,
+		Call:    "GetAllStandingInstruction",
+		Data:    objs,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // UpdateStandingInstruction - updates matching the provided identifier
-//----------------------------------------------------------------------------
-func UpdateStandingInstruction(obj model.StandingInstruction)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func UpdateStandingInstruction(obj model.StandingInstruction) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -132,26 +129,26 @@ func UpdateStandingInstruction(obj model.StandingInstruction)(requestResult util
 	result := utils.GetDB().Save(&obj).Error
 
 	if result == nil {
-	    updateMsg = fmt.Sprintf( "Updated a StandingInstruction using ID=%v", obj.ID )
-	    success = true
+		updateMsg = fmt.Sprintf("Updated a StandingInstruction using ID=%v", obj.ID)
+		success = true
 	} else {
-		updateMsg = fmt.Sprintf( "Failed trying to update a StandingInstruction using ID=%v", obj.ID )
+		updateMsg = fmt.Sprintf("Failed trying to update a StandingInstruction using ID=%v", obj.ID)
 		success = false
 	}
 
 	return utils.RequestResult{
-        Success:    success,
-        Msg:        updateMsg,
-        Call:       "UpdateStandingInstruction",
-        Data:       obj,
-    }
+		Success: success,
+		Msg:     updateMsg,
+		Call:    "UpdateStandingInstruction",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DeleteStandingInstruction - deletes matching the provided identifier
-//----------------------------------------------------------------------------
-func DeleteStandingInstruction(id uuid.UUID)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func DeleteStandingInstruction(id uuid.UUID) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -168,7 +165,7 @@ func DeleteStandingInstruction(id uuid.UUID)(requestResult utils.RequestResult){
 		// Need to cast the interface to a model.StandingInstruction so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		obj,_ := requestResult.Data.(model.StandingInstruction)
+		obj, _ := requestResult.Data.(model.StandingInstruction)
 
 		//----------------------------------------------------------------------------
 		// Make call to the ORM to delete
@@ -176,30 +173,29 @@ func DeleteStandingInstruction(id uuid.UUID)(requestResult utils.RequestResult){
 		result := utils.GetDB().Delete(&obj).Error // pass pointer of data to Delete
 
 		if result == nil {
-		    deleteMsg = fmt.Sprintf( "Deleted a StandingInstruction using ID=%v", id )
-		    success = true
+			deleteMsg = fmt.Sprintf("Deleted a StandingInstruction using ID=%v", id)
+			success = true
 		} else {
-			deleteMsg = fmt.Sprintf( "Failed trying to delete a StandingInstruction using ID=%v", id )
+			deleteMsg = fmt.Sprintf("Failed trying to delete a StandingInstruction using ID=%v", id)
 			success = false
 		}
 
-        requestResult = utils.RequestResult{
-            Success:    success,
-            Msg:        deleteMsg,
-            Call:       "DeleteStandingInstruction",
-            Data:       requestResult.Data,
-        }
+		requestResult = utils.RequestResult{
+			Success: success,
+			Msg:     deleteMsg,
+			Call:    "DeleteStandingInstruction",
+			Data:    requestResult.Data,
+		}
 
 	}
 
 	return requestResult
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Account on a StandingInstruction
-//----------------------------------------------------------------------------
-func AssignAccountToStandingInstruction( standingInstructionId uuid.UUID, accountId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignAccountToStandingInstruction(standingInstructionId uuid.UUID, accountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the StandingInstruction with the matching identifier
@@ -211,7 +207,7 @@ func AssignAccountToStandingInstruction( standingInstructionId uuid.UUID, accoun
 		// Need to cast the interface to a model.StandingInstruction so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.StandingInstruction)
+		parentObj, _ := parentRequestResult.Data.(model.StandingInstruction)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -235,24 +231,24 @@ func AssignAccountToStandingInstruction( standingInstructionId uuid.UUID, accoun
 			//----------------------------------------------------------------------------
 			return UpdateStandingInstruction(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Account", accountId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Account", accountId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignAccount",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignAccount",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Account on a StandingInstruction
-//----------------------------------------------------------------------------
-func UnassignAccountFromStandingInstruction(standingInstructionId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignAccountFromStandingInstruction(standingInstructionId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the StandingInstruction with the matching identifier
@@ -264,17 +260,17 @@ func UnassignAccountFromStandingInstruction(standingInstructionId uuid.UUID)(uti
 		// Need to cast the interface to a model.StandingInstruction so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.StandingInstruction)
+		parentObj, _ := parentRequestResult.Data.(model.StandingInstruction)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Account to the Account
 		//----------------------------------------------------------------------------
-		parentObj.Account = nil;
+		parentObj.Account = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Account
 		//----------------------------------------------------------------------------
-		parentObj.AccountId = nil;
+		parentObj.AccountId = nil
 
 		//----------------------------------------------------------------------------
 		// save the StandingInstruction
@@ -287,10 +283,10 @@ func UnassignAccountFromStandingInstruction(standingInstructionId uuid.UUID)(uti
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Beneficiary on a StandingInstruction
-//----------------------------------------------------------------------------
-func AssignBeneficiaryToStandingInstruction( standingInstructionId uuid.UUID, beneficiaryId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignBeneficiaryToStandingInstruction(standingInstructionId uuid.UUID, beneficiaryId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the StandingInstruction with the matching identifier
@@ -302,7 +298,7 @@ func AssignBeneficiaryToStandingInstruction( standingInstructionId uuid.UUID, be
 		// Need to cast the interface to a model.StandingInstruction so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.StandingInstruction)
+		parentObj, _ := parentRequestResult.Data.(model.StandingInstruction)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -326,24 +322,24 @@ func AssignBeneficiaryToStandingInstruction( standingInstructionId uuid.UUID, be
 			//----------------------------------------------------------------------------
 			return UpdateStandingInstruction(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Beneficiary", beneficiaryId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Beneficiary", beneficiaryId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignBeneficiary",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignBeneficiary",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Beneficiary on a StandingInstruction
-//----------------------------------------------------------------------------
-func UnassignBeneficiaryFromStandingInstruction(standingInstructionId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignBeneficiaryFromStandingInstruction(standingInstructionId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the StandingInstruction with the matching identifier
@@ -355,17 +351,17 @@ func UnassignBeneficiaryFromStandingInstruction(standingInstructionId uuid.UUID)
 		// Need to cast the interface to a model.StandingInstruction so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.StandingInstruction)
+		parentObj, _ := parentRequestResult.Data.(model.StandingInstruction)
 
 		//----------------------------------------------------------------------------
 		// assign an empty ExternalAccount to the Beneficiary
 		//----------------------------------------------------------------------------
-		parentObj.Beneficiary = nil;
+		parentObj.Beneficiary = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Beneficiary
 		//----------------------------------------------------------------------------
-		parentObj.BeneficiaryId = nil;
+		parentObj.BeneficiaryId = nil
 
 		//----------------------------------------------------------------------------
 		// save the StandingInstruction
@@ -377,5 +373,3 @@ func UnassignBeneficiaryFromStandingInstruction(standingInstructionId uuid.UUID)
 	}
 
 }
-
-
