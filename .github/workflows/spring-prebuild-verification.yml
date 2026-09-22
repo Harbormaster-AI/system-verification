@@ -593,7 +593,7 @@ jobs:
             if ! ${MVN} checkstyle:check \
                 > checkstyle.log 2>&1; then
           
-              cat checkstyle.log
+              tail -30 checkstyle.log
           
               MESSAGE=$(tail -30 checkstyle.log | tr '\n' ' ')
           
