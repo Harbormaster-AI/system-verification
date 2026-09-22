@@ -590,10 +590,10 @@ jobs:
               MVN="mvn"
             fi
             
-            if ! ${MVN} checkstyle:check \
+            if ! ${MVN} --no-transfer-progress checkstyle:check \
                 > checkstyle.log 2>&1; then
           
-              tail -30 checkstyle.log
+              cat checkstyle.log
           
               MESSAGE=$(tail -30 checkstyle.log | tr '\n' ' ')
           
