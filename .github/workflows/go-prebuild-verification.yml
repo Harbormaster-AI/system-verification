@@ -391,6 +391,7 @@ jobs:
               fi
             fi
             
+            go get golang.org/x/text@v0.42.0
             go mod init "${MODULE_NAME}"
             go mod tidy
           
