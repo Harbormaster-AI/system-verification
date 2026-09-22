@@ -391,9 +391,10 @@ jobs:
               fi
             fi
             
-            go get golang.org/x/text@v0.42.0
             go mod init "${MODULE_NAME}"
             go mod tidy
+            go list -m all | grep -E 'gorm.io/gorm|golang.org/x/text'
+            go mod why -m golang.org/x/text
           
           fi
   
