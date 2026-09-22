@@ -23,55 +23,52 @@
  */
 package com.harbormaster.controller;
 
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class BaseRootRestController extends BaseSpringRestController {
 
-    @GetMapping("/")
-    public ResponseEntity<String> root() {
-        return ResponseEntity.ok("bankingOnSpringboot is running.");
-    }
+  @GetMapping("/")
+  public ResponseEntity<String> root() {
+    return ResponseEntity.ok("bankingOnSpringboot is running.");
+  }
 
-    @GetMapping("/health")
-    public ResponseEntity<String> health() {
-        return ResponseEntity.ok("bankingOnSpringboot is healthy.");
-    }
+  @GetMapping("/health")
+  public ResponseEntity<String> health() {
+    return ResponseEntity.ok("bankingOnSpringboot is healthy.");
+  }
 
-    @GetMapping("/system")
-    public GeneratedSystemInfo system() {
-        GeneratedSystemInfo info = new GeneratedSystemInfo();
+  @GetMapping("/system")
+  public GeneratedSystemInfo system() {
+    GeneratedSystemInfo info = new GeneratedSystemInfo();
 
-        info.generator          = GENERATOR;
-        info.blueprint          = BLUEPRINT;
-        info.blueprintVersion   = BLUEPRINT_VERSION;
-        info.domainModel        = DOMAIN_MODEL;
-        info.domainModelVersion = DOMAIN_MODEL_VERSION;
+    info.generator = GENERATOR;
+    info.blueprint = BLUEPRINT;
+    info.blueprintVersion = BLUEPRINT_VERSION;
+    info.domainModel = DOMAIN_MODEL;
+    info.domainModelVersion = DOMAIN_MODEL_VERSION;
 
+    return info;
+  }
 
-        return info;
-    }
+  protected static final String GENERATOR = "${generatorName}";
+  protected static final String BLUEPRINT = "Spring Boot 3.5";
+  protected static final String BLUEPRINT_VERSION = "1.1";
+  protected static final String DOMAIN_MODEL = "${model.getName()}";
+  protected static final String DOMAIN_MODEL_VERSION = "1.0.0";
 
-    protected static final String GENERATOR             = "${generatorName}";
-    protected static final String BLUEPRINT             = "Spring Boot 3.5";
-    protected static final String BLUEPRINT_VERSION     = "1.1";
-    protected static final String DOMAIN_MODEL          = "${model.getName()}";
-    protected static final String DOMAIN_MODEL_VERSION  = "1.0.0";
- //   protected static final String SYSTEM_ID             = "${systemIdentifier}";
- //   protected static final String VERIFICATION          = "${certificationLevel}";
+  //   protected static final String SYSTEM_ID             = "${systemIdentifier}";
+  //   protected static final String VERIFICATION          = "${certificationLevel}";
 
+  private class GeneratedSystemInfo {
+    public GeneratedSystemInfo() {}
 
-    private class GeneratedSystemInfo {
-        public GeneratedSystemInfo() {
-
-        }
-
-        public String generator;
-        public String blueprint;
-        public String blueprintVersion;
-        public String domainModel;
-        public String domainModelVersion;
-//        public String certificationId;
-    }
+    public String generator;
+    public String blueprint;
+    public String blueprintVersion;
+    public String domainModel;
+    public String domainModelVersion;
+    //        public String certificationId;
+  }
 }
