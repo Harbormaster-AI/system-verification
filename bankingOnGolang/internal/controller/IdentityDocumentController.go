@@ -1,13 +1,12 @@
-
 package controller
 
 import (
-    IdentityDocumentDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "net/http"
-    "encoding/json"
-    "log"
+	IdentityDocumentDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
+	"log"
+	"net/http"
 )
 
 // ----------------------------------------------------------------------------
@@ -18,7 +17,7 @@ func CreateIdentityDocument(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty IdentityDocument model
 	// ----------------------------------------------------------------------------
 	data := model.IdentityDocument{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a IdentityDocument model structure
 	// ----------------------------------------------------------------------------
@@ -27,17 +26,17 @@ func CreateIdentityDocument(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the IdentityDocument data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := IdentityDocumentDAO.CreateIdentityDocument( data )
-	
+	requestResult := IdentityDocumentDAO.CreateIdentityDocument(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -60,18 +59,17 @@ func GetIdentityDocument(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := IdentityDocumentDAO.GetIdentityDocument(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to IdentityDocumentDAO for database read of all IdentityDocuments
@@ -81,16 +79,16 @@ func GetAllIdentityDocument(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the IdentityDocument data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := IdentityDocumentDAO.GetAllIdentityDocument()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -101,7 +99,7 @@ func UpdateIdentityDocument(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty IdentityDocument model
 	// ----------------------------------------------------------------------------
 	var data = model.IdentityDocument{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a IdentityDocument model structure
 	// ----------------------------------------------------------------------------
@@ -119,8 +117,8 @@ func UpdateIdentityDocument(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -140,24 +138,24 @@ func DeleteIdentityDocument(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the IdentityDocument data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := IdentityDocumentDAO.DeleteIdentityDocument(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a KycProfile on a IdentityDocument
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a KycProfile on a IdentityDocument
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignKycProfileToIdentityDocument(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -181,15 +179,15 @@ func AssignKycProfileToIdentityDocument(w http.ResponseWriter, r *http.Request) 
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a KycProfile on a IdentityDocument
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignKycProfileFromIdentityDocument( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a KycProfile on a IdentityDocument
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignKycProfileFromIdentityDocument(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -212,8 +210,6 @@ func UnassignKycProfileFromIdentityDocument( w http.ResponseWriter, r *http.Requ
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
-

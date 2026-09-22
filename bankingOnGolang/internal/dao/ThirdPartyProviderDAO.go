@@ -1,23 +1,21 @@
-
 package dao
 
 import (
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "fmt"
-    "strings"
-    "github.com/google/uuid"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"fmt"
+	"github.com/google/uuid"
+	"strings"
 )
 
-
 func init() {
-	fmt.Println( strings.ToTitle( "Initializing ThirdPartyProviderDAO..." ) )
+	fmt.Println(strings.ToTitle("Initializing ThirdPartyProviderDAO..."))
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // CreateThirdPartyProvider - creates a new db entry
-//----------------------------------------------------------------------------
-func CreateThirdPartyProvider(obj model.ThirdPartyProvider)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func CreateThirdPartyProvider(obj model.ThirdPartyProvider) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -30,26 +28,25 @@ func CreateThirdPartyProvider(obj model.ThirdPartyProvider)(utils.RequestResult)
 	result := utils.GetDB().Create(&obj).Error
 
 	if result == nil {
-	    createMsg = fmt.Sprintf( "Created a ThirdPartyProvider with ID=%v", obj.ID )
-	    success = true
+		createMsg = fmt.Sprintf("Created a ThirdPartyProvider with ID=%v", obj.ID)
+		success = true
 	} else {
-		createMsg = fmt.Sprintf( "Failed trying to create a ThirdPartyProvider. Result: %s", result )
+		createMsg = fmt.Sprintf("Failed trying to create a ThirdPartyProvider. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        createMsg,
-        Call:       "CreateThirdPartyProvider",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     createMsg,
+		Call:    "CreateThirdPartyProvider",
+		Data:    obj,
+	}
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetThirdPartyProvider - returns the matching the provided identifier
-//----------------------------------------------------------------------------
-func GetThirdPartyProvider(id uuid.UUID)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetThirdPartyProvider(id uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -67,26 +64,26 @@ func GetThirdPartyProvider(id uuid.UUID)(utils.RequestResult){
 	result := utils.GetDB().First(&obj, id).Error // find first using identifier
 
 	if result == nil {
-	    getMsg = fmt.Sprintf( "Retrieved a ThirdPartyProvider using ID=%v", id )
-	    success = true
+		getMsg = fmt.Sprintf("Retrieved a ThirdPartyProvider using ID=%v", id)
+		success = true
 	} else {
-		getMsg = fmt.Sprintf( "Failed trying to retrieve a ThirdPartyProvider using ID=%v", id )
+		getMsg = fmt.Sprintf("Failed trying to retrieve a ThirdPartyProvider using ID=%v", id)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getMsg,
-        Call:       "GetThirdPartyProvider",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getMsg,
+		Call:    "GetThirdPartyProvider",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAllThirdPartyProvider - returns all
-//----------------------------------------------------------------------------
-func GetAllThirdPartyProvider()(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAllThirdPartyProvider() (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -100,26 +97,26 @@ func GetAllThirdPartyProvider()(requestResult utils.RequestResult){
 	result := utils.GetDB().Find(&objs).Error // find all
 
 	if result == nil {
-	    getAllMsg = "Retrieved all ThirdPartyProvider"
-	    success = true
+		getAllMsg = "Retrieved all ThirdPartyProvider"
+		success = true
 	} else {
-		getAllMsg = fmt.Sprintf( "Failed trying to retrieve all ThirdPartyProvider. Result: %s", result )
+		getAllMsg = fmt.Sprintf("Failed trying to retrieve all ThirdPartyProvider. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getAllMsg,
-        Call:       "GetAllThirdPartyProvider",
-        Data:       objs,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getAllMsg,
+		Call:    "GetAllThirdPartyProvider",
+		Data:    objs,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // UpdateThirdPartyProvider - updates matching the provided identifier
-//----------------------------------------------------------------------------
-func UpdateThirdPartyProvider(obj model.ThirdPartyProvider)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func UpdateThirdPartyProvider(obj model.ThirdPartyProvider) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -132,26 +129,26 @@ func UpdateThirdPartyProvider(obj model.ThirdPartyProvider)(requestResult utils.
 	result := utils.GetDB().Save(&obj).Error
 
 	if result == nil {
-	    updateMsg = fmt.Sprintf( "Updated a ThirdPartyProvider using ID=%v", obj.ID )
-	    success = true
+		updateMsg = fmt.Sprintf("Updated a ThirdPartyProvider using ID=%v", obj.ID)
+		success = true
 	} else {
-		updateMsg = fmt.Sprintf( "Failed trying to update a ThirdPartyProvider using ID=%v", obj.ID )
+		updateMsg = fmt.Sprintf("Failed trying to update a ThirdPartyProvider using ID=%v", obj.ID)
 		success = false
 	}
 
 	return utils.RequestResult{
-        Success:    success,
-        Msg:        updateMsg,
-        Call:       "UpdateThirdPartyProvider",
-        Data:       obj,
-    }
+		Success: success,
+		Msg:     updateMsg,
+		Call:    "UpdateThirdPartyProvider",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DeleteThirdPartyProvider - deletes matching the provided identifier
-//----------------------------------------------------------------------------
-func DeleteThirdPartyProvider(id uuid.UUID)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func DeleteThirdPartyProvider(id uuid.UUID) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -168,7 +165,7 @@ func DeleteThirdPartyProvider(id uuid.UUID)(requestResult utils.RequestResult){
 		// Need to cast the interface to a model.ThirdPartyProvider so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		obj,_ := requestResult.Data.(model.ThirdPartyProvider)
+		obj, _ := requestResult.Data.(model.ThirdPartyProvider)
 
 		//----------------------------------------------------------------------------
 		// Make call to the ORM to delete
@@ -176,30 +173,29 @@ func DeleteThirdPartyProvider(id uuid.UUID)(requestResult utils.RequestResult){
 		result := utils.GetDB().Delete(&obj).Error // pass pointer of data to Delete
 
 		if result == nil {
-		    deleteMsg = fmt.Sprintf( "Deleted a ThirdPartyProvider using ID=%v", id )
-		    success = true
+			deleteMsg = fmt.Sprintf("Deleted a ThirdPartyProvider using ID=%v", id)
+			success = true
 		} else {
-			deleteMsg = fmt.Sprintf( "Failed trying to delete a ThirdPartyProvider using ID=%v", id )
+			deleteMsg = fmt.Sprintf("Failed trying to delete a ThirdPartyProvider using ID=%v", id)
 			success = false
 		}
 
-        requestResult = utils.RequestResult{
-            Success:    success,
-            Msg:        deleteMsg,
-            Call:       "DeleteThirdPartyProvider",
-            Data:       requestResult.Data,
-        }
+		requestResult = utils.RequestResult{
+			Success: success,
+			Msg:     deleteMsg,
+			Call:    "DeleteThirdPartyProvider",
+			Data:    requestResult.Data,
+		}
 
 	}
 
 	return requestResult
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Bank on a ThirdPartyProvider
-//----------------------------------------------------------------------------
-func AssignBankToThirdPartyProvider( thirdPartyProviderId uuid.UUID, bankId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignBankToThirdPartyProvider(thirdPartyProviderId uuid.UUID, bankId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the ThirdPartyProvider with the matching identifier
@@ -211,7 +207,7 @@ func AssignBankToThirdPartyProvider( thirdPartyProviderId uuid.UUID, bankId uuid
 		// Need to cast the interface to a model.ThirdPartyProvider so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.ThirdPartyProvider)
+		parentObj, _ := parentRequestResult.Data.(model.ThirdPartyProvider)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -235,24 +231,24 @@ func AssignBankToThirdPartyProvider( thirdPartyProviderId uuid.UUID, bankId uuid
 			//----------------------------------------------------------------------------
 			return UpdateThirdPartyProvider(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Bank", bankId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Bank", bankId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignBank",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignBank",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Bank on a ThirdPartyProvider
-//----------------------------------------------------------------------------
-func UnassignBankFromThirdPartyProvider(thirdPartyProviderId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignBankFromThirdPartyProvider(thirdPartyProviderId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the ThirdPartyProvider with the matching identifier
@@ -264,17 +260,17 @@ func UnassignBankFromThirdPartyProvider(thirdPartyProviderId uuid.UUID)(utils.Re
 		// Need to cast the interface to a model.ThirdPartyProvider so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.ThirdPartyProvider)
+		parentObj, _ := parentRequestResult.Data.(model.ThirdPartyProvider)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Bank to the Bank
 		//----------------------------------------------------------------------------
-		parentObj.Bank = nil;
+		parentObj.Bank = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Bank
 		//----------------------------------------------------------------------------
-		parentObj.BankId = nil;
+		parentObj.BankId = nil
 
 		//----------------------------------------------------------------------------
 		// save the ThirdPartyProvider
@@ -287,11 +283,10 @@ func UnassignBankFromThirdPartyProvider(thirdPartyProviderId uuid.UUID)(utils.Re
 
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more consentsIds as a Consents to a ThirdPartyProvider
-//----------------------------------------------------------------------------
-func AddConsentsToThirdPartyProvider ( thirdPartyProviderId uuid.UUID, consentsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddConsentsToThirdPartyProvider(thirdPartyProviderId uuid.UUID, consentsIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the ThirdPartyProvider with the matching identifier
@@ -303,9 +298,9 @@ func AddConsentsToThirdPartyProvider ( thirdPartyProviderId uuid.UUID, consentsI
 		// Need to cast the interface to a model.ThirdPartyProvider so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.ThirdPartyProvider)
+		parentObj, _ := parentRequestResult.Data.(model.ThirdPartyProvider)
 
-		for _, consentsId:= range consentsIds {
+		for _, consentsId := range consentsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -315,29 +310,29 @@ func AddConsentsToThirdPartyProvider ( thirdPartyProviderId uuid.UUID, consentsI
 			// Retrieve the 1st occurrence from the ORM of a Consent
 			// with a matching consentsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , consentsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, consentsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the Consents using the gorm mechanism
 				//----------------------------------------------------------------------------
-                if err := utils.GetDB().Model(&parentObj).Association("Consents").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addConsentsToThirdPartyProvider",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("Consents").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addConsentsToThirdPartyProvider",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Consents", consentsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Consents", consentsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addConsentsToThirdPartyProvider",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addConsentsToThirdPartyProvider",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -351,10 +346,10 @@ func AddConsentsToThirdPartyProvider ( thirdPartyProviderId uuid.UUID, consentsI
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more consentsIds as a Consents from a ThirdPartyProvider
-//----------------------------------------------------------------------------
-func RemoveConsentsFromThirdPartyProvider( thirdPartyProviderId uuid.UUID, consentsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveConsentsFromThirdPartyProvider(thirdPartyProviderId uuid.UUID, consentsIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the ThirdPartyProvider with the matching identifier
 	//----------------------------------------------------------------------------
@@ -365,9 +360,9 @@ func RemoveConsentsFromThirdPartyProvider( thirdPartyProviderId uuid.UUID, conse
 		// Need to cast the interface to a model.ThirdPartyProvider so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.ThirdPartyProvider)
+		parentObj, _ := parentRequestResult.Data.(model.ThirdPartyProvider)
 
-		for _, consentsId:= range consentsIds {
+		for _, consentsId := range consentsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -377,29 +372,29 @@ func RemoveConsentsFromThirdPartyProvider( thirdPartyProviderId uuid.UUID, conse
 			// Retrieve the 1st occurrence from the ORM of a Consent
 			// with a matching consentsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , consentsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, consentsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove ConsentObj from the Consents array, but wont delete it from db
 				//----------------------------------------------------------------------------
 				if err := utils.GetDB().Model(&parentObj).Association("Consents").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeConsentsFromThirdPartyProvider",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeConsentsFromThirdPartyProvider",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Consents", consentsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Consents", consentsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeConsentsFromThirdPartyProvider",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeConsentsFromThirdPartyProvider",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -412,4 +407,3 @@ func RemoveConsentsFromThirdPartyProvider( thirdPartyProviderId uuid.UUID, conse
 		return parentRequestResult
 	}
 }
-

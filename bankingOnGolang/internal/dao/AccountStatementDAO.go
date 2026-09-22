@@ -1,23 +1,21 @@
-
 package dao
 
 import (
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "fmt"
-    "strings"
-    "github.com/google/uuid"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"fmt"
+	"github.com/google/uuid"
+	"strings"
 )
 
-
 func init() {
-	fmt.Println( strings.ToTitle( "Initializing AccountStatementDAO..." ) )
+	fmt.Println(strings.ToTitle("Initializing AccountStatementDAO..."))
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // CreateAccountStatement - creates a new db entry
-//----------------------------------------------------------------------------
-func CreateAccountStatement(obj model.AccountStatement)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func CreateAccountStatement(obj model.AccountStatement) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -30,26 +28,25 @@ func CreateAccountStatement(obj model.AccountStatement)(utils.RequestResult){
 	result := utils.GetDB().Create(&obj).Error
 
 	if result == nil {
-	    createMsg = fmt.Sprintf( "Created a AccountStatement with ID=%v", obj.ID )
-	    success = true
+		createMsg = fmt.Sprintf("Created a AccountStatement with ID=%v", obj.ID)
+		success = true
 	} else {
-		createMsg = fmt.Sprintf( "Failed trying to create a AccountStatement. Result: %s", result )
+		createMsg = fmt.Sprintf("Failed trying to create a AccountStatement. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        createMsg,
-        Call:       "CreateAccountStatement",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     createMsg,
+		Call:    "CreateAccountStatement",
+		Data:    obj,
+	}
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAccountStatement - returns the matching the provided identifier
-//----------------------------------------------------------------------------
-func GetAccountStatement(id uuid.UUID)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAccountStatement(id uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -67,26 +64,26 @@ func GetAccountStatement(id uuid.UUID)(utils.RequestResult){
 	result := utils.GetDB().First(&obj, id).Error // find first using identifier
 
 	if result == nil {
-	    getMsg = fmt.Sprintf( "Retrieved a AccountStatement using ID=%v", id )
-	    success = true
+		getMsg = fmt.Sprintf("Retrieved a AccountStatement using ID=%v", id)
+		success = true
 	} else {
-		getMsg = fmt.Sprintf( "Failed trying to retrieve a AccountStatement using ID=%v", id )
+		getMsg = fmt.Sprintf("Failed trying to retrieve a AccountStatement using ID=%v", id)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getMsg,
-        Call:       "GetAccountStatement",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getMsg,
+		Call:    "GetAccountStatement",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAllAccountStatement - returns all
-//----------------------------------------------------------------------------
-func GetAllAccountStatement()(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAllAccountStatement() (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -100,26 +97,26 @@ func GetAllAccountStatement()(requestResult utils.RequestResult){
 	result := utils.GetDB().Find(&objs).Error // find all
 
 	if result == nil {
-	    getAllMsg = "Retrieved all AccountStatement"
-	    success = true
+		getAllMsg = "Retrieved all AccountStatement"
+		success = true
 	} else {
-		getAllMsg = fmt.Sprintf( "Failed trying to retrieve all AccountStatement. Result: %s", result )
+		getAllMsg = fmt.Sprintf("Failed trying to retrieve all AccountStatement. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getAllMsg,
-        Call:       "GetAllAccountStatement",
-        Data:       objs,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getAllMsg,
+		Call:    "GetAllAccountStatement",
+		Data:    objs,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // UpdateAccountStatement - updates matching the provided identifier
-//----------------------------------------------------------------------------
-func UpdateAccountStatement(obj model.AccountStatement)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func UpdateAccountStatement(obj model.AccountStatement) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -132,26 +129,26 @@ func UpdateAccountStatement(obj model.AccountStatement)(requestResult utils.Requ
 	result := utils.GetDB().Save(&obj).Error
 
 	if result == nil {
-	    updateMsg = fmt.Sprintf( "Updated a AccountStatement using ID=%v", obj.ID )
-	    success = true
+		updateMsg = fmt.Sprintf("Updated a AccountStatement using ID=%v", obj.ID)
+		success = true
 	} else {
-		updateMsg = fmt.Sprintf( "Failed trying to update a AccountStatement using ID=%v", obj.ID )
+		updateMsg = fmt.Sprintf("Failed trying to update a AccountStatement using ID=%v", obj.ID)
 		success = false
 	}
 
 	return utils.RequestResult{
-        Success:    success,
-        Msg:        updateMsg,
-        Call:       "UpdateAccountStatement",
-        Data:       obj,
-    }
+		Success: success,
+		Msg:     updateMsg,
+		Call:    "UpdateAccountStatement",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DeleteAccountStatement - deletes matching the provided identifier
-//----------------------------------------------------------------------------
-func DeleteAccountStatement(id uuid.UUID)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func DeleteAccountStatement(id uuid.UUID) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -168,7 +165,7 @@ func DeleteAccountStatement(id uuid.UUID)(requestResult utils.RequestResult){
 		// Need to cast the interface to a model.AccountStatement so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		obj,_ := requestResult.Data.(model.AccountStatement)
+		obj, _ := requestResult.Data.(model.AccountStatement)
 
 		//----------------------------------------------------------------------------
 		// Make call to the ORM to delete
@@ -176,30 +173,29 @@ func DeleteAccountStatement(id uuid.UUID)(requestResult utils.RequestResult){
 		result := utils.GetDB().Delete(&obj).Error // pass pointer of data to Delete
 
 		if result == nil {
-		    deleteMsg = fmt.Sprintf( "Deleted a AccountStatement using ID=%v", id )
-		    success = true
+			deleteMsg = fmt.Sprintf("Deleted a AccountStatement using ID=%v", id)
+			success = true
 		} else {
-			deleteMsg = fmt.Sprintf( "Failed trying to delete a AccountStatement using ID=%v", id )
+			deleteMsg = fmt.Sprintf("Failed trying to delete a AccountStatement using ID=%v", id)
 			success = false
 		}
 
-        requestResult = utils.RequestResult{
-            Success:    success,
-            Msg:        deleteMsg,
-            Call:       "DeleteAccountStatement",
-            Data:       requestResult.Data,
-        }
+		requestResult = utils.RequestResult{
+			Success: success,
+			Msg:     deleteMsg,
+			Call:    "DeleteAccountStatement",
+			Data:    requestResult.Data,
+		}
 
 	}
 
 	return requestResult
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Account on a AccountStatement
-//----------------------------------------------------------------------------
-func AssignAccountToAccountStatement( accountStatementId uuid.UUID, accountId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignAccountToAccountStatement(accountStatementId uuid.UUID, accountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the AccountStatement with the matching identifier
@@ -211,7 +207,7 @@ func AssignAccountToAccountStatement( accountStatementId uuid.UUID, accountId uu
 		// Need to cast the interface to a model.AccountStatement so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.AccountStatement)
+		parentObj, _ := parentRequestResult.Data.(model.AccountStatement)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -235,24 +231,24 @@ func AssignAccountToAccountStatement( accountStatementId uuid.UUID, accountId uu
 			//----------------------------------------------------------------------------
 			return UpdateAccountStatement(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Account", accountId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Account", accountId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignAccount",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignAccount",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Account on a AccountStatement
-//----------------------------------------------------------------------------
-func UnassignAccountFromAccountStatement(accountStatementId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignAccountFromAccountStatement(accountStatementId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the AccountStatement with the matching identifier
@@ -264,17 +260,17 @@ func UnassignAccountFromAccountStatement(accountStatementId uuid.UUID)(utils.Req
 		// Need to cast the interface to a model.AccountStatement so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.AccountStatement)
+		parentObj, _ := parentRequestResult.Data.(model.AccountStatement)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Account to the Account
 		//----------------------------------------------------------------------------
-		parentObj.Account = nil;
+		parentObj.Account = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Account
 		//----------------------------------------------------------------------------
-		parentObj.AccountId = nil;
+		parentObj.AccountId = nil
 
 		//----------------------------------------------------------------------------
 		// save the AccountStatement
@@ -286,5 +282,3 @@ func UnassignAccountFromAccountStatement(accountStatementId uuid.UUID)(utils.Req
 	}
 
 }
-
-
