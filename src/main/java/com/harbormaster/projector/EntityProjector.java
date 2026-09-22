@@ -27,7 +27,7 @@ import java.util.UUID;
 
 public interface EntityProjector<T> {
 
-    public Class<T> getEntityClass();
+  public Class<T> getEntityClass();
 
-    public T find(UUID id);
+  public T find(UUID id);
 }
