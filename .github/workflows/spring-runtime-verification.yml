@@ -335,7 +335,8 @@ jobs:
               "Waiting for system to start." \
               ""
           
-          curl -v http://localhost:8080/actuator/health
+          # Diagnostic only — must not fail the step (set -e); retries follow.
+          curl -v http://localhost:8080/actuator/health || true
           
           for i in {1..60}; do
           
