@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IKycProfileService {
+public interface IKycProfileService
+{
 
-    Task Create(KycProfile model , CancellationToken cancellationToken);
+    Task Create(KycProfile model, CancellationToken cancellationToken);
     Task<bool> Update(KycProfile model, CancellationToken cancellationToken);
     Task<KycProfile?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<KycProfile>> GetAll(CancellationToken cancellationToken);
@@ -33,7 +34,7 @@ public class KycProfileService : IKycProfileService
     private readonly ILogger<KycProfileService> _logger;
 
     public KycProfileService(
-        IKycProfileRepository repository, ILogger<KycProfileService> logger )
+        IKycProfileRepository repository, ILogger<KycProfileService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -43,7 +44,7 @@ public class KycProfileService : IKycProfileService
     public async Task Create(KycProfile model, CancellationToken cancellationToken)
     {
 
-         try
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -55,7 +56,8 @@ public class KycProfileService : IKycProfileService
 
     public async Task<bool> Update(KycProfile model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -102,32 +104,40 @@ public class KycProfileService : IKycProfileService
 
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-
-    public async Task<bool> AddToIdentityDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> RemoveFromIdentityDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AddToRiskAssessments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+
+    public async Task<bool> AddToIdentityDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromRiskAssessments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromIdentityDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AddToScreenings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToRiskAssessments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromScreenings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromRiskAssessments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AddToScreenings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> RemoveFromScreenings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

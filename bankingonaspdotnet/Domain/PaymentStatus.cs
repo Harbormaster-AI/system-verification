@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum PaymentStatus
 {
-    Initiated=1,InProcess=2,Settled=3,Failed=4,Reversed=5,Cancelled=6
+    Initiated = 1, InProcess = 2, Settled = 3, Failed = 4, Reversed = 5, Cancelled = 6
 }
 
 /// <summary>

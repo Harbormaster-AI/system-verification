@@ -26,9 +26,10 @@ public static class RiskAssessmentEndpoints
     private static async Task<IResult> Create(
         RiskAssessmentRequest request,
         IRiskAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRiskAssessment( request );
+        var model = mapRequestToRiskAssessment(request);
 
         try
         {
@@ -45,9 +46,10 @@ public static class RiskAssessmentEndpoints
     private static async Task<IResult> Update(
         RiskAssessmentRequest request,
         IRiskAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRiskAssessment( request );
+        var model = mapRequestToRiskAssessment(request);
 
         try
         {
@@ -64,25 +66,28 @@ public static class RiskAssessmentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRiskAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var riskAssessment = await service.Get(identifier, cancellationToken);
-        return riskAssessment is null ? Results.NotFound() : Results.Ok( riskAssessment );
+        return riskAssessment is null ? Results.NotFound() : Results.Ok(riskAssessment);
     }
 
 
     private static async Task<IResult> GetAll(
         IRiskAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RiskAssessmentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RiskAssessmentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRiskAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -90,7 +95,8 @@ public static class RiskAssessmentEndpoints
     private static async Task<IResult> AssignKycProfile(
         AssociationRequest request,
         IRiskAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignKycProfile(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -98,13 +104,15 @@ public static class RiskAssessmentEndpoints
     private static async Task<IResult> UnassignKycProfile(
     AssociationRequest request,
     IRiskAssessmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignKycProfile(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static RiskAssessment mapRequestToRiskAssessment( RiskAssessmentRequest request ) {
+    private static RiskAssessment mapRequestToRiskAssessment(RiskAssessmentRequest request)
+    {
         var model = new RiskAssessment
         {
             Id = request.Id,

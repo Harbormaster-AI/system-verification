@@ -19,8 +19,8 @@ public static class ThirdPartyProviderEndpoints
         group.MapPut("/assignBank", AssignBank);
         group.MapPut("/unassignBank", UnassignBank);
 
-    group.MapPut("/addToConsents", AddToConsents);
-    group.MapPut("/removeFromConsents", RemoveFromConsents);
+        group.MapPut("/addToConsents", AddToConsents);
+        group.MapPut("/removeFromConsents", RemoveFromConsents);
 
 
         return app;
@@ -29,9 +29,10 @@ public static class ThirdPartyProviderEndpoints
     private static async Task<IResult> Create(
         ThirdPartyProviderRequest request,
         IThirdPartyProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToThirdPartyProvider( request );
+        var model = mapRequestToThirdPartyProvider(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class ThirdPartyProviderEndpoints
     private static async Task<IResult> Update(
         ThirdPartyProviderRequest request,
         IThirdPartyProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToThirdPartyProvider( request );
+        var model = mapRequestToThirdPartyProvider(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class ThirdPartyProviderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IThirdPartyProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var thirdPartyProvider = await service.Get(identifier, cancellationToken);
-        return thirdPartyProvider is null ? Results.NotFound() : Results.Ok( thirdPartyProvider );
+        return thirdPartyProvider is null ? Results.NotFound() : Results.Ok(thirdPartyProvider);
     }
 
 
     private static async Task<IResult> GetAll(
         IThirdPartyProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ThirdPartyProviderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ThirdPartyProviderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IThirdPartyProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class ThirdPartyProviderEndpoints
     private static async Task<IResult> AssignBank(
         AssociationRequest request,
         IThirdPartyProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBank(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class ThirdPartyProviderEndpoints
     private static async Task<IResult> UnassignBank(
     AssociationRequest request,
     IThirdPartyProviderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBank(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -110,7 +117,8 @@ public static class ThirdPartyProviderEndpoints
     private static async Task<IResult> AddToConsents(
         MultipleAssociationRequest request,
         IThirdPartyProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToConsents(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -118,11 +126,13 @@ public static class ThirdPartyProviderEndpoints
     private static async Task<IResult> RemoveFromConsents(
         MultipleAssociationRequest request,
         IThirdPartyProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromConsents(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static ThirdPartyProvider mapRequestToThirdPartyProvider( ThirdPartyProviderRequest request ) {
+    private static ThirdPartyProvider mapRequestToThirdPartyProvider(ThirdPartyProviderRequest request)
+    {
         var model = new ThirdPartyProvider
         {
             Id = request.Id,

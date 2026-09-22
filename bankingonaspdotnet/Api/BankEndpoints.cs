@@ -17,32 +17,32 @@ public static class BankEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToBranches", AddToBranches);
-    group.MapPut("/removeFromBranches", RemoveFromBranches);
+        group.MapPut("/addToBranches", AddToBranches);
+        group.MapPut("/removeFromBranches", RemoveFromBranches);
 
-    group.MapPut("/addToProducts", AddToProducts);
-    group.MapPut("/removeFromProducts", RemoveFromProducts);
+        group.MapPut("/addToProducts", AddToProducts);
+        group.MapPut("/removeFromProducts", RemoveFromProducts);
 
-    group.MapPut("/addToCustomers", AddToCustomers);
-    group.MapPut("/removeFromCustomers", RemoveFromCustomers);
+        group.MapPut("/addToCustomers", AddToCustomers);
+        group.MapPut("/removeFromCustomers", RemoveFromCustomers);
 
-    group.MapPut("/addToAccounts", AddToAccounts);
-    group.MapPut("/removeFromAccounts", RemoveFromAccounts);
+        group.MapPut("/addToAccounts", AddToAccounts);
+        group.MapPut("/removeFromAccounts", RemoveFromAccounts);
 
-    group.MapPut("/addToPaymentCards", AddToPaymentCards);
-    group.MapPut("/removeFromPaymentCards", RemoveFromPaymentCards);
+        group.MapPut("/addToPaymentCards", AddToPaymentCards);
+        group.MapPut("/removeFromPaymentCards", RemoveFromPaymentCards);
 
-    group.MapPut("/addToLoanAccounts", AddToLoanAccounts);
-    group.MapPut("/removeFromLoanAccounts", RemoveFromLoanAccounts);
+        group.MapPut("/addToLoanAccounts", AddToLoanAccounts);
+        group.MapPut("/removeFromLoanAccounts", RemoveFromLoanAccounts);
 
-    group.MapPut("/addToExchangeRates", AddToExchangeRates);
-    group.MapPut("/removeFromExchangeRates", RemoveFromExchangeRates);
+        group.MapPut("/addToExchangeRates", AddToExchangeRates);
+        group.MapPut("/removeFromExchangeRates", RemoveFromExchangeRates);
 
-    group.MapPut("/addToConsents", AddToConsents);
-    group.MapPut("/removeFromConsents", RemoveFromConsents);
+        group.MapPut("/addToConsents", AddToConsents);
+        group.MapPut("/removeFromConsents", RemoveFromConsents);
 
-    group.MapPut("/addToThirdPartyProviders", AddToThirdPartyProviders);
-    group.MapPut("/removeFromThirdPartyProviders", RemoveFromThirdPartyProviders);
+        group.MapPut("/addToThirdPartyProviders", AddToThirdPartyProviders);
+        group.MapPut("/removeFromThirdPartyProviders", RemoveFromThirdPartyProviders);
 
 
         return app;
@@ -51,9 +51,10 @@ public static class BankEndpoints
     private static async Task<IResult> Create(
         BankRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBank( request );
+        var model = mapRequestToBank(request);
 
         try
         {
@@ -70,9 +71,10 @@ public static class BankEndpoints
     private static async Task<IResult> Update(
         BankRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBank( request );
+        var model = mapRequestToBank(request);
 
         try
         {
@@ -89,25 +91,28 @@ public static class BankEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var bank = await service.Get(identifier, cancellationToken);
-        return bank is null ? Results.NotFound() : Results.Ok( bank );
+        return bank is null ? Results.NotFound() : Results.Ok(bank);
     }
 
 
     private static async Task<IResult> GetAll(
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( BankResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(BankResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -116,7 +121,8 @@ public static class BankEndpoints
     private static async Task<IResult> AddToBranches(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToBranches(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -124,14 +130,16 @@ public static class BankEndpoints
     private static async Task<IResult> RemoveFromBranches(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromBranches(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToProducts(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToProducts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -139,14 +147,16 @@ public static class BankEndpoints
     private static async Task<IResult> RemoveFromProducts(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromProducts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCustomers(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCustomers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -154,14 +164,16 @@ public static class BankEndpoints
     private static async Task<IResult> RemoveFromCustomers(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCustomers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToAccounts(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAccounts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -169,14 +181,16 @@ public static class BankEndpoints
     private static async Task<IResult> RemoveFromAccounts(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAccounts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPaymentCards(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPaymentCards(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -184,14 +198,16 @@ public static class BankEndpoints
     private static async Task<IResult> RemoveFromPaymentCards(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPaymentCards(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToLoanAccounts(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLoanAccounts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -199,14 +215,16 @@ public static class BankEndpoints
     private static async Task<IResult> RemoveFromLoanAccounts(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLoanAccounts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToExchangeRates(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToExchangeRates(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -214,14 +232,16 @@ public static class BankEndpoints
     private static async Task<IResult> RemoveFromExchangeRates(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromExchangeRates(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToConsents(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToConsents(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -229,14 +249,16 @@ public static class BankEndpoints
     private static async Task<IResult> RemoveFromConsents(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromConsents(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToThirdPartyProviders(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToThirdPartyProviders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -244,11 +266,13 @@ public static class BankEndpoints
     private static async Task<IResult> RemoveFromThirdPartyProviders(
         MultipleAssociationRequest request,
         IBankService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromThirdPartyProviders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Bank mapRequestToBank( BankRequest request ) {
+    private static Bank mapRequestToBank(BankRequest request)
+    {
         var model = new Bank
         {
             Id = request.Id,

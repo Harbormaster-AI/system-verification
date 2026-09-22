@@ -26,9 +26,10 @@ public static class ATMEndpoints
     private static async Task<IResult> Create(
         ATMRequest request,
         IATMService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToATM( request );
+        var model = mapRequestToATM(request);
 
         try
         {
@@ -45,9 +46,10 @@ public static class ATMEndpoints
     private static async Task<IResult> Update(
         ATMRequest request,
         IATMService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToATM( request );
+        var model = mapRequestToATM(request);
 
         try
         {
@@ -64,25 +66,28 @@ public static class ATMEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IATMService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var aTM = await service.Get(identifier, cancellationToken);
-        return aTM is null ? Results.NotFound() : Results.Ok( aTM );
+        return aTM is null ? Results.NotFound() : Results.Ok(aTM);
     }
 
 
     private static async Task<IResult> GetAll(
         IATMService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ATMResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ATMResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IATMService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -90,7 +95,8 @@ public static class ATMEndpoints
     private static async Task<IResult> AssignBranch(
         AssociationRequest request,
         IATMService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBranch(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -98,13 +104,15 @@ public static class ATMEndpoints
     private static async Task<IResult> UnassignBranch(
     AssociationRequest request,
     IATMService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBranch(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ATM mapRequestToATM( ATMRequest request ) {
+    private static ATM mapRequestToATM(ATMRequest request)
+    {
         var model = new ATM
         {
             Id = request.Id,

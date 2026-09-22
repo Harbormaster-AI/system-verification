@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IRepaymentScheduleService {
+public interface IRepaymentScheduleService
+{
 
-    Task Create(RepaymentSchedule model , CancellationToken cancellationToken);
+    Task Create(RepaymentSchedule model, CancellationToken cancellationToken);
     Task<bool> Update(RepaymentSchedule model, CancellationToken cancellationToken);
     Task<RepaymentSchedule?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RepaymentSchedule>> GetAll(CancellationToken cancellationToken);
@@ -29,7 +30,7 @@ public class RepaymentScheduleService : IRepaymentScheduleService
     private readonly ILogger<RepaymentScheduleService> _logger;
 
     public RepaymentScheduleService(
-        IRepaymentScheduleRepository repository, ILogger<RepaymentScheduleService> logger )
+        IRepaymentScheduleRepository repository, ILogger<RepaymentScheduleService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -39,8 +40,8 @@ public class RepaymentScheduleService : IRepaymentScheduleService
     public async Task Create(RepaymentSchedule model, CancellationToken cancellationToken)
     {
 
- 
-         try
+
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -52,7 +53,8 @@ public class RepaymentScheduleService : IRepaymentScheduleService
 
     public async Task<bool> Update(RepaymentSchedule model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -102,17 +104,21 @@ public class RepaymentScheduleService : IRepaymentScheduleService
 
     }
 
-    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignPayment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPayment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignPayment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPayment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

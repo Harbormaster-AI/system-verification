@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IDisputeService {
+public interface IDisputeService
+{
 
-    Task Create(Dispute model , CancellationToken cancellationToken);
+    Task Create(Dispute model, CancellationToken cancellationToken);
     Task<bool> Update(Dispute model, CancellationToken cancellationToken);
     Task<Dispute?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Dispute>> GetAll(CancellationToken cancellationToken);
@@ -33,7 +34,7 @@ public class DisputeService : IDisputeService
     private readonly ILogger<DisputeService> _logger;
 
     public DisputeService(
-        IDisputeRepository repository, ILogger<DisputeService> logger )
+        IDisputeRepository repository, ILogger<DisputeService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -43,10 +44,10 @@ public class DisputeService : IDisputeService
     public async Task Create(Dispute model, CancellationToken cancellationToken)
     {
 
- 
- 
- 
-         try
+
+
+
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -58,7 +59,8 @@ public class DisputeService : IDisputeService
 
     public async Task<bool> Update(Dispute model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -106,31 +108,39 @@ public class DisputeService : IDisputeService
 
     }
 
-    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignPaymentCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignPaymentCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AssignPaymentCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> UnassignPaymentCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

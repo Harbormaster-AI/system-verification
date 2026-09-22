@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IConsentService {
+public interface IConsentService
+{
 
-    Task Create(Consent model , CancellationToken cancellationToken);
+    Task Create(Consent model, CancellationToken cancellationToken);
     Task<bool> Update(Consent model, CancellationToken cancellationToken);
     Task<Consent?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Consent>> GetAll(CancellationToken cancellationToken);
@@ -33,7 +34,7 @@ public class ConsentService : IConsentService
     private readonly ILogger<ConsentService> _logger;
 
     public ConsentService(
-        IConsentRepository repository, ILogger<ConsentService> logger )
+        IConsentRepository repository, ILogger<ConsentService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -43,9 +44,9 @@ public class ConsentService : IConsentService
     public async Task Create(Consent model, CancellationToken cancellationToken)
     {
 
- 
- 
-         try
+
+
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -57,7 +58,8 @@ public class ConsentService : IConsentService
 
     public async Task<bool> Update(Consent model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -105,32 +107,40 @@ public class ConsentService : IConsentService
 
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignThirdPartyProvider(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignThirdPartyProvider(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AssignThirdPartyProvider(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> UnassignThirdPartyProvider(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
 
-    public async Task<bool> AddToAuthorizedAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToAuthorizedAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromAuthorizedAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromAuthorizedAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

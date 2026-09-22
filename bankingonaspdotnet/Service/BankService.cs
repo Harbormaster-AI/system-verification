@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IBankService {
+public interface IBankService
+{
 
-    Task Create(Bank model , CancellationToken cancellationToken);
+    Task Create(Bank model, CancellationToken cancellationToken);
     Task<bool> Update(Bank model, CancellationToken cancellationToken);
     Task<Bank?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Bank>> GetAll(CancellationToken cancellationToken);
@@ -43,7 +44,7 @@ public class BankService : IBankService
     private readonly ILogger<BankService> _logger;
 
     public BankService(
-        IBankRepository repository, ILogger<BankService> logger )
+        IBankRepository repository, ILogger<BankService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -64,7 +65,8 @@ public class BankService : IBankService
 
     public async Task<bool> Update(Bank model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -114,66 +116,84 @@ public class BankService : IBankService
     }
 
 
-    public async Task<bool> AddToBranches(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToBranches(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromBranches(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AddToProducts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> RemoveFromProducts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromBranches(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AddToCustomers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToProducts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromCustomers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AddToAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> RemoveFromAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromProducts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AddToPaymentCards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToCustomers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromPaymentCards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AddToLoanAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> RemoveFromLoanAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromCustomers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AddToExchangeRates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromExchangeRates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AddToThirdPartyProviders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToPaymentCards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromThirdPartyProviders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromPaymentCards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AddToLoanAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> RemoveFromLoanAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AddToExchangeRates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> RemoveFromExchangeRates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AddToThirdPartyProviders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> RemoveFromThirdPartyProviders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

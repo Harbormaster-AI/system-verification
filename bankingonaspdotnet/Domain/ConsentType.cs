@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum ConsentType
 {
-    OpenBanking=1,PaymentInitiation=2,AccountInformation=3,Marketing=4,DataSharing=5
+    OpenBanking = 1, PaymentInitiation = 2, AccountInformation = 3, Marketing = 4, DataSharing = 5
 }
 
 /// <summary>

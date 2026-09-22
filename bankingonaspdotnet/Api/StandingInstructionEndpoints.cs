@@ -28,9 +28,10 @@ public static class StandingInstructionEndpoints
     private static async Task<IResult> Create(
         StandingInstructionRequest request,
         IStandingInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToStandingInstruction( request );
+        var model = mapRequestToStandingInstruction(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class StandingInstructionEndpoints
     private static async Task<IResult> Update(
         StandingInstructionRequest request,
         IStandingInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToStandingInstruction( request );
+        var model = mapRequestToStandingInstruction(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class StandingInstructionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IStandingInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var standingInstruction = await service.Get(identifier, cancellationToken);
-        return standingInstruction is null ? Results.NotFound() : Results.Ok( standingInstruction );
+        return standingInstruction is null ? Results.NotFound() : Results.Ok(standingInstruction);
     }
 
 
     private static async Task<IResult> GetAll(
         IStandingInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( StandingInstructionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(StandingInstructionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IStandingInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -92,7 +97,8 @@ public static class StandingInstructionEndpoints
     private static async Task<IResult> AssignAccount(
         AssociationRequest request,
         IStandingInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -100,7 +106,8 @@ public static class StandingInstructionEndpoints
     private static async Task<IResult> UnassignAccount(
     AssociationRequest request,
     IStandingInstructionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +115,8 @@ public static class StandingInstructionEndpoints
     private static async Task<IResult> AssignBeneficiary(
         AssociationRequest request,
         IStandingInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBeneficiary(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -116,13 +124,15 @@ public static class StandingInstructionEndpoints
     private static async Task<IResult> UnassignBeneficiary(
     AssociationRequest request,
     IStandingInstructionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBeneficiary(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static StandingInstruction mapRequestToStandingInstruction( StandingInstructionRequest request ) {
+    private static StandingInstruction mapRequestToStandingInstruction(StandingInstructionRequest request)
+    {
         var model = new StandingInstruction
         {
             Id = request.Id,
