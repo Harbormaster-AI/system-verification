@@ -1,13 +1,12 @@
-
 package controller
 
 import (
-    StandingInstructionDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "net/http"
-    "encoding/json"
-    "log"
+	StandingInstructionDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
+	"log"
+	"net/http"
 )
 
 // ----------------------------------------------------------------------------
@@ -18,7 +17,7 @@ func CreateStandingInstruction(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty StandingInstruction model
 	// ----------------------------------------------------------------------------
 	data := model.StandingInstruction{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a StandingInstruction model structure
 	// ----------------------------------------------------------------------------
@@ -27,17 +26,17 @@ func CreateStandingInstruction(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the StandingInstruction data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := StandingInstructionDAO.CreateStandingInstruction( data )
-	
+	requestResult := StandingInstructionDAO.CreateStandingInstruction(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -60,18 +59,17 @@ func GetStandingInstruction(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := StandingInstructionDAO.GetStandingInstruction(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to StandingInstructionDAO for database read of all StandingInstructions
@@ -81,16 +79,16 @@ func GetAllStandingInstruction(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the StandingInstruction data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := StandingInstructionDAO.GetAllStandingInstruction()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -101,7 +99,7 @@ func UpdateStandingInstruction(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty StandingInstruction model
 	// ----------------------------------------------------------------------------
 	var data = model.StandingInstruction{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a StandingInstruction model structure
 	// ----------------------------------------------------------------------------
@@ -119,8 +117,8 @@ func UpdateStandingInstruction(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -140,24 +138,24 @@ func DeleteStandingInstruction(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the StandingInstruction data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := StandingInstructionDAO.DeleteStandingInstruction(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Account on a StandingInstruction
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Account on a StandingInstruction
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignAccountToStandingInstruction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -181,15 +179,15 @@ func AssignAccountToStandingInstruction(w http.ResponseWriter, r *http.Request) 
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Account on a StandingInstruction
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignAccountFromStandingInstruction( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Account on a StandingInstruction
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignAccountFromStandingInstruction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -212,14 +210,14 @@ func UnassignAccountFromStandingInstruction( w http.ResponseWriter, r *http.Requ
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Beneficiary on a StandingInstruction
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Beneficiary on a StandingInstruction
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignBeneficiaryToStandingInstruction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -243,15 +241,15 @@ func AssignBeneficiaryToStandingInstruction(w http.ResponseWriter, r *http.Reque
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Beneficiary on a StandingInstruction
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignBeneficiaryFromStandingInstruction( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Beneficiary on a StandingInstruction
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignBeneficiaryFromStandingInstruction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -274,8 +272,6 @@ func UnassignBeneficiaryFromStandingInstruction( w http.ResponseWriter, r *http.
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
-

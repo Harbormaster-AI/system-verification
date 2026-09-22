@@ -1,36 +1,34 @@
-
 package model
 
 import (
-    "github.com/shopspring/decimal"
+	"github.com/shopspring/decimal"
 )
 
- type Money struct {
-     Amount            decimal.Decimal
-    Currency            string
+type Money struct {
+	Amount   decimal.Decimal
+	Currency string
 
-// parent associations as their child
-
-}
-
- type Address struct {
-     Street            string
-    City            string
-    State            string
-    PostalCode            string
-    Country            string
-
-// parent associations as their child
+	// parent associations as their child
 
 }
 
- type AccountNumber     string
+type Address struct {
+	Street     string
+	City       string
+	State      string
+	PostalCode string
+	Country    string
 
- type IBAN     string
+	// parent associations as their child
 
- type BIC     string
+}
 
- type CardPAN     string
+type AccountNumber string
 
- type Percentage     decimal.Decimal
+type IBAN string
 
+type BIC string
+
+type CardPAN string
+
+type Percentage decimal.Decimal

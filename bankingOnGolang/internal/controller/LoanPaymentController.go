@@ -1,13 +1,12 @@
-
 package controller
 
 import (
-    LoanPaymentDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "net/http"
-    "encoding/json"
-    "log"
+	LoanPaymentDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
+	"log"
+	"net/http"
 )
 
 // ----------------------------------------------------------------------------
@@ -18,7 +17,7 @@ func CreateLoanPayment(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty LoanPayment model
 	// ----------------------------------------------------------------------------
 	data := model.LoanPayment{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a LoanPayment model structure
 	// ----------------------------------------------------------------------------
@@ -27,17 +26,17 @@ func CreateLoanPayment(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the LoanPayment data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := LoanPaymentDAO.CreateLoanPayment( data )
-	
+	requestResult := LoanPaymentDAO.CreateLoanPayment(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -60,18 +59,17 @@ func GetLoanPayment(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := LoanPaymentDAO.GetLoanPayment(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to LoanPaymentDAO for database read of all LoanPayments
@@ -81,16 +79,16 @@ func GetAllLoanPayment(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the LoanPayment data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := LoanPaymentDAO.GetAllLoanPayment()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -101,7 +99,7 @@ func UpdateLoanPayment(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty LoanPayment model
 	// ----------------------------------------------------------------------------
 	var data = model.LoanPayment{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a LoanPayment model structure
 	// ----------------------------------------------------------------------------
@@ -119,8 +117,8 @@ func UpdateLoanPayment(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -140,24 +138,24 @@ func DeleteLoanPayment(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the LoanPayment data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := LoanPaymentDAO.DeleteLoanPayment(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a LoanAccount on a LoanPayment
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a LoanAccount on a LoanPayment
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignLoanAccountToLoanPayment(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -181,15 +179,15 @@ func AssignLoanAccountToLoanPayment(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a LoanAccount on a LoanPayment
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignLoanAccountFromLoanPayment( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a LoanAccount on a LoanPayment
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignLoanAccountFromLoanPayment(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -212,14 +210,14 @@ func UnassignLoanAccountFromLoanPayment( w http.ResponseWriter, r *http.Request 
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Transaction on a LoanPayment
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Transaction on a LoanPayment
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignTransactionToLoanPayment(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -243,15 +241,15 @@ func AssignTransactionToLoanPayment(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Transaction on a LoanPayment
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignTransactionFromLoanPayment( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Transaction on a LoanPayment
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignTransactionFromLoanPayment(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -274,8 +272,6 @@ func UnassignTransactionFromLoanPayment( w http.ResponseWriter, r *http.Request 
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
-
