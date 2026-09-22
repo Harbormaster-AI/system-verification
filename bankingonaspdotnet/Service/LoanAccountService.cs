@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface ILoanAccountService {
+public interface ILoanAccountService
+{
 
-    Task Create(LoanAccount model , CancellationToken cancellationToken);
+    Task Create(LoanAccount model, CancellationToken cancellationToken);
     Task<bool> Update(LoanAccount model, CancellationToken cancellationToken);
     Task<LoanAccount?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<LoanAccount>> GetAll(CancellationToken cancellationToken);
@@ -41,7 +42,7 @@ public class LoanAccountService : ILoanAccountService
     private readonly ILogger<LoanAccountService> _logger;
 
     public LoanAccountService(
-        ILoanAccountRepository repository, ILogger<LoanAccountService> logger )
+        ILoanAccountRepository repository, ILogger<LoanAccountService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -51,9 +52,9 @@ public class LoanAccountService : ILoanAccountService
     public async Task Create(LoanAccount model, CancellationToken cancellationToken)
     {
 
- 
- 
-         try
+
+
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -65,7 +66,8 @@ public class LoanAccountService : ILoanAccountService
 
     public async Task<bool> Update(LoanAccount model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,60 +123,76 @@ public class LoanAccountService : ILoanAccountService
 
     }
 
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AssignBranch(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> UnassignBranch(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBranch(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBranch(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
 
-    public async Task<bool> AddToBorrowers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToBorrowers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromBorrowers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AddToRepaymentSchedule(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> RemoveFromRepaymentSchedule(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromBorrowers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AddToPayments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToRepaymentSchedule(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromPayments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AddToCollateral(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> RemoveFromCollateral(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromRepaymentSchedule(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AddToFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToPayments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromPayments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AddToCollateral(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> RemoveFromCollateral(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AddToFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> RemoveFromFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

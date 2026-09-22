@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum CollateralType
 {
-    RealEstate=1,Vehicle=2,Cash=3,Securities=4,Guarantee=5,Equipment=6
+    RealEstate = 1, Vehicle = 2, Cash = 3, Securities = 4, Guarantee = 5, Equipment = 6
 }
 
 /// <summary>

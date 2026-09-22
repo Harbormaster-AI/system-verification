@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IFXTradeService {
+public interface IFXTradeService
+{
 
-    Task Create(FXTrade model , CancellationToken cancellationToken);
+    Task Create(FXTrade model, CancellationToken cancellationToken);
     Task<bool> Update(FXTrade model, CancellationToken cancellationToken);
     Task<FXTrade?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FXTrade>> GetAll(CancellationToken cancellationToken);
@@ -37,7 +38,7 @@ public class FXTradeService : IFXTradeService
     private readonly ILogger<FXTradeService> _logger;
 
     public FXTradeService(
-        IFXTradeRepository repository, ILogger<FXTradeService> logger )
+        IFXTradeRepository repository, ILogger<FXTradeService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -47,12 +48,12 @@ public class FXTradeService : IFXTradeService
     public async Task Create(FXTrade model, CancellationToken cancellationToken)
     {
 
- 
- 
- 
- 
- 
-         try
+
+
+
+
+
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -64,7 +65,8 @@ public class FXTradeService : IFXTradeService
 
     public async Task<bool> Update(FXTrade model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -115,45 +117,57 @@ public class FXTradeService : IFXTradeService
 
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignExchangeRate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignExchangeRate(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AssignSourceAccount(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> UnassignSourceAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignExchangeRate(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignExchangeRate(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSourceAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSourceAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AssignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> UnassignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

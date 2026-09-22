@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum ProductCategory
 {
-    Deposit=1,Loan=2,Card=3,PaymentService=4,Investment=5
+    Deposit = 1, Loan = 2, Card = 3, PaymentService = 4, Investment = 5
 }
 
 /// <summary>

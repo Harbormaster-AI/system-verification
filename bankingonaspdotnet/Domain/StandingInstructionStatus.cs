@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum StandingInstructionStatus
 {
-    Active=1,Paused=2,Cancelled=3,Completed=4
+    Active = 1, Paused = 2, Cancelled = 3, Completed = 4
 }
 
 /// <summary>

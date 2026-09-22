@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum LoanStatus
 {
-    Applied=1,Approved=2,Active=3,Delinquent=4,Defaulted=5,Closed=6
+    Applied = 1, Approved = 2, Active = 3, Delinquent = 4, Defaulted = 5, Closed = 6
 }
 
 /// <summary>

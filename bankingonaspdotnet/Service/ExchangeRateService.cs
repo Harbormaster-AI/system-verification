@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IExchangeRateService {
+public interface IExchangeRateService
+{
 
-    Task Create(ExchangeRate model , CancellationToken cancellationToken);
+    Task Create(ExchangeRate model, CancellationToken cancellationToken);
     Task<bool> Update(ExchangeRate model, CancellationToken cancellationToken);
     Task<ExchangeRate?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ExchangeRate>> GetAll(CancellationToken cancellationToken);
@@ -29,7 +30,7 @@ public class ExchangeRateService : IExchangeRateService
     private readonly ILogger<ExchangeRateService> _logger;
 
     public ExchangeRateService(
-        IExchangeRateRepository repository, ILogger<ExchangeRateService> logger )
+        IExchangeRateRepository repository, ILogger<ExchangeRateService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -39,7 +40,7 @@ public class ExchangeRateService : IExchangeRateService
     public async Task Create(ExchangeRate model, CancellationToken cancellationToken)
     {
 
-         try
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -51,7 +52,8 @@ public class ExchangeRateService : IExchangeRateService
 
     public async Task<bool> Update(ExchangeRate model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -100,18 +102,22 @@ public class ExchangeRateService : IExchangeRateService
 
     }
 
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
 
-    public async Task<bool> AddToFxTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToFxTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromFxTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromFxTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

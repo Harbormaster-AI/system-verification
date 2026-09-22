@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IThirdPartyProviderService {
+public interface IThirdPartyProviderService
+{
 
-    Task Create(ThirdPartyProvider model , CancellationToken cancellationToken);
+    Task Create(ThirdPartyProvider model, CancellationToken cancellationToken);
     Task<bool> Update(ThirdPartyProvider model, CancellationToken cancellationToken);
     Task<ThirdPartyProvider?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ThirdPartyProvider>> GetAll(CancellationToken cancellationToken);
@@ -29,7 +30,7 @@ public class ThirdPartyProviderService : IThirdPartyProviderService
     private readonly ILogger<ThirdPartyProviderService> _logger;
 
     public ThirdPartyProviderService(
-        IThirdPartyProviderRepository repository, ILogger<ThirdPartyProviderService> logger )
+        IThirdPartyProviderRepository repository, ILogger<ThirdPartyProviderService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -39,7 +40,7 @@ public class ThirdPartyProviderService : IThirdPartyProviderService
     public async Task Create(ThirdPartyProvider model, CancellationToken cancellationToken)
     {
 
-         try
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -51,7 +52,8 @@ public class ThirdPartyProviderService : IThirdPartyProviderService
 
     public async Task<bool> Update(ThirdPartyProvider model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -98,18 +100,22 @@ public class ThirdPartyProviderService : IThirdPartyProviderService
 
     }
 
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
 
-    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

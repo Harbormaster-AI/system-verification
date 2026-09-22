@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IIdentityDocumentService {
+public interface IIdentityDocumentService
+{
 
-    Task Create(IdentityDocument model , CancellationToken cancellationToken);
+    Task Create(IdentityDocument model, CancellationToken cancellationToken);
     Task<bool> Update(IdentityDocument model, CancellationToken cancellationToken);
     Task<IdentityDocument?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<IdentityDocument>> GetAll(CancellationToken cancellationToken);
@@ -27,7 +28,7 @@ public class IdentityDocumentService : IIdentityDocumentService
     private readonly ILogger<IdentityDocumentService> _logger;
 
     public IdentityDocumentService(
-        IIdentityDocumentRepository repository, ILogger<IdentityDocumentService> logger )
+        IIdentityDocumentRepository repository, ILogger<IdentityDocumentService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -37,7 +38,7 @@ public class IdentityDocumentService : IIdentityDocumentService
     public async Task Create(IdentityDocument model, CancellationToken cancellationToken)
     {
 
-         try
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -49,7 +50,8 @@ public class IdentityDocumentService : IIdentityDocumentService
 
     public async Task<bool> Update(IdentityDocument model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -97,10 +99,12 @@ public class IdentityDocumentService : IIdentityDocumentService
 
     }
 
-    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface ICollateralService {
+public interface ICollateralService
+{
 
-    Task Create(Collateral model , CancellationToken cancellationToken);
+    Task Create(Collateral model, CancellationToken cancellationToken);
     Task<bool> Update(Collateral model, CancellationToken cancellationToken);
     Task<Collateral?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Collateral>> GetAll(CancellationToken cancellationToken);
@@ -27,7 +28,7 @@ public class CollateralService : ICollateralService
     private readonly ILogger<CollateralService> _logger;
 
     public CollateralService(
-        ICollateralRepository repository, ILogger<CollateralService> logger )
+        ICollateralRepository repository, ILogger<CollateralService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -37,7 +38,7 @@ public class CollateralService : ICollateralService
     public async Task Create(Collateral model, CancellationToken cancellationToken)
     {
 
-         try
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -49,7 +50,8 @@ public class CollateralService : ICollateralService
 
     public async Task<bool> Update(Collateral model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -98,10 +100,12 @@ public class CollateralService : ICollateralService
 
     }
 
-    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

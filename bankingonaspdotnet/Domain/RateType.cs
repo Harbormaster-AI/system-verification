@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum RateType
 {
-    Fixed=1,Variable=2
+    Fixed = 1, Variable = 2
 }
 
 /// <summary>

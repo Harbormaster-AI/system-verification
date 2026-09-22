@@ -28,9 +28,10 @@ public static class LoanPaymentEndpoints
     private static async Task<IResult> Create(
         LoanPaymentRequest request,
         ILoanPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLoanPayment( request );
+        var model = mapRequestToLoanPayment(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class LoanPaymentEndpoints
     private static async Task<IResult> Update(
         LoanPaymentRequest request,
         ILoanPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLoanPayment( request );
+        var model = mapRequestToLoanPayment(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class LoanPaymentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ILoanPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var loanPayment = await service.Get(identifier, cancellationToken);
-        return loanPayment is null ? Results.NotFound() : Results.Ok( loanPayment );
+        return loanPayment is null ? Results.NotFound() : Results.Ok(loanPayment);
     }
 
 
     private static async Task<IResult> GetAll(
         ILoanPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( LoanPaymentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(LoanPaymentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ILoanPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -92,7 +97,8 @@ public static class LoanPaymentEndpoints
     private static async Task<IResult> AssignLoanAccount(
         AssociationRequest request,
         ILoanPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLoanAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -100,7 +106,8 @@ public static class LoanPaymentEndpoints
     private static async Task<IResult> UnassignLoanAccount(
     AssociationRequest request,
     ILoanPaymentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLoanAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +115,8 @@ public static class LoanPaymentEndpoints
     private static async Task<IResult> AssignTransaction(
         AssociationRequest request,
         ILoanPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTransaction(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -116,13 +124,15 @@ public static class LoanPaymentEndpoints
     private static async Task<IResult> UnassignTransaction(
     AssociationRequest request,
     ILoanPaymentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTransaction(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static LoanPayment mapRequestToLoanPayment( LoanPaymentRequest request ) {
+    private static LoanPayment mapRequestToLoanPayment(LoanPaymentRequest request)
+    {
         var model = new LoanPayment
         {
             Id = request.Id,

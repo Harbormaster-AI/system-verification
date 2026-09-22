@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum CardType
 {
-    Debit=1,Credit=2,Prepaid=3,Virtual=4
+    Debit = 1, Credit = 2, Prepaid = 3, Virtual = 4
 }
 
 /// <summary>
