@@ -138,6 +138,9 @@ jobs:
 
         with:
           ref: ${{ inputs.branch }}
+          # Orphan temp branches often fail with default fetch-depth: 1
+          fetch-depth: 0
+          token: ${{ inputs.gitHubToken }}
 
       ###########################################################################
       # Always use report.sh from the verification workflow commit (not app branch)
@@ -152,6 +155,7 @@ jobs:
           sparse-checkout: |
             .github/actions/common
           sparse-checkout-cone-mode: false
+          fetch-depth: 0
 
       - name: Install verification report.sh
         shell: bash
@@ -159,6 +163,8 @@ jobs:
           mkdir -p .github/actions/common
           cp -f .hm-verification-overlay/.github/actions/common/report.sh .github/actions/common/report.sh
           chmod +x .github/actions/common/report.sh
+          test -f .github/actions/common/report.sh
+          ls -la .github/actions/common/report.sh
 
       ###########################################################################
       #   Announce start of delivery verification
@@ -574,12 +580,13 @@ jobs:
           fi
 
       - uses: actions/upload-artifact@v4
-
+        continue-on-error: true
         with:
 
           name: docker-image
 
           path: ${{ env.APP_NAME }}.tar
+          if-no-files-found: ignore
 
       ###############################################################################
       # Cleanup
@@ -593,7 +600,11 @@ jobs:
 
         run: |
           
-          source .github/actions/common/report.sh
+          if [ -f .github/actions/common/report.sh ]; then
+            source .github/actions/common/report.sh
+          else
+            echo "WARNING: report.sh missing during cleanup (checkout/overlay may have failed earlier)."
+          fi
 
           ###########################################################################
           # stop the image
@@ -611,14 +622,16 @@ jobs:
           # Logout
           ###########################################################################
 
-          docker logout ${{ inputs.dockerHost }}
+          docker logout ${{ inputs.dockerHost }} || true
           
-          post_pass \
-              "DELIVERY" \
-              "CLEANUP" \
-              0 \
-              "Container stopped and removed locally." \
-              "CLEANUP: Docker resources cleaned up."
+          if type post_pass >/dev/null 2>&1; then
+            post_pass \
+                "DELIVERY" \
+                "CLEANUP" \
+                0 \
+                "Container stopped and removed locally." \
+                "CLEANUP: Docker resources cleaned up."
+          fi
 
 
       ###############################################################################
@@ -642,9 +655,13 @@ jobs:
       ###############################################################################
 
       - name: Terminate Verification
+        if: always()
         shell: bash
 
         run: |
-          source .github/actions/common/report.sh
-          
-          post_terminate_delivery false
+          if [ -f .github/actions/common/report.sh ]; then
+            source .github/actions/common/report.sh
+            post_terminate_delivery false
+          else
+            echo "WARNING: report.sh missing; skip terminate report."
+          fi
