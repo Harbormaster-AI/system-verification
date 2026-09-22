@@ -388,6 +388,9 @@ jobs:
         id: format_code
         shell: bash
         run: |
+          
+          source .github/actions/common/report.sh
+          
           set -euo pipefail
           
           cd "${APP_DIR}"
