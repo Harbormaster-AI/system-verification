@@ -395,6 +395,9 @@ jobs:
             go mod tidy
             go list -m all | grep -E 'gorm.io/gorm|golang.org/x/text'
             go mod why -m golang.org/x/text
+            go mod why -m gorm.io/driver/sqlite
+            go mod graph | grep 'golang.org/x/text'
+          
           
           fi
   
