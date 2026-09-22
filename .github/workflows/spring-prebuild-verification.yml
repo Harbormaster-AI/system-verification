@@ -597,106 +597,106 @@ jobs:
       # Static Analysis
       ###########################################################################
 
-        - name: Static Analysis
-          shell: bash
-          run: |
-            
-            source .github/actions/common/report.sh
-            
-            cd "${APP_DIR}"
-            
-            if [ "${BUILD_TOOL}" = "maven" ]; then
-            
-              echo "Running Checkstyle..."
-            
-              if ! ./mvnw checkstyle:check \
-                  > checkstyle.log 2>&1; then
-            
-                cat checkstyle.log
-            
-                MESSAGE=$(tail -30 checkstyle.log | tr '\n' ' ')
-            
-                post_fail \
-                  "PRE_BUILD" \
-                  "CHECKSTYLE" \
-                  0 \
-                  "Checkstyle failed." \
-                  "${MESSAGE}"
-            
-                post_terminate_build
-            
-              fi
-            
-              echo "Running SpotBugs..."
-            
-              if ! ./mvnw spotbugs:check \
-                  > spotbugs.log 2>&1; then
-            
-                cat spotbugs.log
-            
-                MESSAGE=$(tail -30 spotbugs.log | tr '\n' ' ')
-            
-                post_fail \
-                  "PRE_BUILD" \
-                  "SPOTBUGS" \
-                  0 \
-                  "SpotBugs failed." \
-                  "${MESSAGE}"
-            
-                post_terminate_build
-            
-              fi
-            
-            else
-            
-              echo "Running Checkstyle..."
-            
-              if ! ./gradlew checkstyleMain \
-                  > checkstyle.log 2>&1; then
-            
-                cat checkstyle.log
-            
-                MESSAGE=$(tail -30 checkstyle.log | tr '\n' ' ')
-            
-                post_fail \
-                  "PRE_BUILD" \
-                  "CHECKSTYLE" \
-                  0 \
-                  "Checkstyle failed." \
-                  "${MESSAGE}"
-            
-                post_terminate_build
-            
-              fi
-            
-              echo "Running SpotBugs..."
-            
-              if ! ./gradlew spotbugsMain \
-                  > spotbugs.log 2>&1; then
-            
-                cat spotbugs.log
-            
-                MESSAGE=$(tail -30 spotbugs.log | tr '\n' ' ')
-            
-                post_fail \
-                  "PRE_BUILD" \
-                  "SPOTBUGS" \
-                  0 \
-                  "SpotBugs failed." \
-                  "${MESSAGE}"
-            
-                post_terminate_build
-            
-              fi
-            
+      - name: Static Analysis
+        shell: bash
+        run: |
+          
+          source .github/actions/common/report.sh
+          
+          cd "${APP_DIR}"
+          
+          if [ "${BUILD_TOOL}" = "maven" ]; then
+          
+            echo "Running Checkstyle..."
+          
+            if ! ./mvnw checkstyle:check \
+                > checkstyle.log 2>&1; then
+          
+              cat checkstyle.log
+          
+              MESSAGE=$(tail -30 checkstyle.log | tr '\n' ' ')
+          
+              post_fail \
+                "PRE_BUILD" \
+                "CHECKSTYLE" \
+                0 \
+                "Checkstyle failed." \
+                "${MESSAGE}"
+          
+              post_terminate_build
+          
             fi
-            
-            post_pass \
-              "PRE_BUILD" \
-              "STATIC_ANALYSIS" \
-              15 \
-              "Spring Boot static analysis completed successfully." \
-              "Checkstyle and SpotBugs completed successfully."
+          
+            echo "Running SpotBugs..."
+          
+            if ! ./mvnw spotbugs:check \
+                > spotbugs.log 2>&1; then
+          
+              cat spotbugs.log
+          
+              MESSAGE=$(tail -30 spotbugs.log | tr '\n' ' ')
+          
+              post_fail \
+                "PRE_BUILD" \
+                "SPOTBUGS" \
+                0 \
+                "SpotBugs failed." \
+                "${MESSAGE}"
+          
+              post_terminate_build
+          
+            fi
+          
+          else
+          
+            echo "Running Checkstyle..."
+          
+            if ! ./gradlew checkstyleMain \
+                > checkstyle.log 2>&1; then
+          
+              cat checkstyle.log
+          
+              MESSAGE=$(tail -30 checkstyle.log | tr '\n' ' ')
+          
+              post_fail \
+                "PRE_BUILD" \
+                "CHECKSTYLE" \
+                0 \
+                "Checkstyle failed." \
+                "${MESSAGE}"
+          
+              post_terminate_build
+          
+            fi
+          
+            echo "Running SpotBugs..."
+          
+            if ! ./gradlew spotbugsMain \
+                > spotbugs.log 2>&1; then
+          
+              cat spotbugs.log
+          
+              MESSAGE=$(tail -30 spotbugs.log | tr '\n' ' ')
+          
+              post_fail \
+                "PRE_BUILD" \
+                "SPOTBUGS" \
+                0 \
+                "SpotBugs failed." \
+                "${MESSAGE}"
+          
+              post_terminate_build
+          
+            fi
+          
+          fi
+          
+          post_pass \
+            "PRE_BUILD" \
+            "STATIC_ANALYSIS" \
+            15 \
+            "Spring Boot static analysis completed successfully." \
+            "Checkstyle and SpotBugs completed successfully."
 
       ###########################################################################
       # Security Check
