@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum AccountStatus
 {
-    Open=1,Frozen=2,Dormant=3,Closed=4
+    Open = 1, Frozen = 2, Dormant = 3, Closed = 4
 }
 
 /// <summary>

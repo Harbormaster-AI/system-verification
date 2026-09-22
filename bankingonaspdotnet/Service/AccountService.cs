@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IAccountService {
+public interface IAccountService
+{
 
-    Task Create(Account model , CancellationToken cancellationToken);
+    Task Create(Account model, CancellationToken cancellationToken);
     Task<bool> Update(Account model, CancellationToken cancellationToken);
     Task<Account?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Account>> GetAll(CancellationToken cancellationToken);
@@ -41,7 +42,7 @@ public class AccountService : IAccountService
     private readonly ILogger<AccountService> _logger;
 
     public AccountService(
-        IAccountRepository repository, ILogger<AccountService> logger )
+        IAccountRepository repository, ILogger<AccountService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -51,9 +52,9 @@ public class AccountService : IAccountService
     public async Task Create(Account model, CancellationToken cancellationToken)
     {
 
- 
- 
-         try
+
+
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -65,7 +66,8 @@ public class AccountService : IAccountService
 
     public async Task<bool> Update(Account model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,60 +120,76 @@ public class AccountService : IAccountService
 
     }
 
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AssignBranch(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> UnassignBranch(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBranch(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBranch(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
 
-    public async Task<bool> AddToOwners(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToOwners(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromOwners(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromOwners(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AddToStatements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromStatements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AddToStandingInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> RemoveFromStandingInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AddToFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToStatements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromStatements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AddToStandingInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> RemoveFromStandingInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AddToFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> RemoveFromFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

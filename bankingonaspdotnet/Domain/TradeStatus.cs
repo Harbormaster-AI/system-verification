@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum TradeStatus
 {
-    Booked=1,Settled=2,Cancelled=3
+    Booked = 1, Settled = 2, Cancelled = 3
 }
 
 /// <summary>

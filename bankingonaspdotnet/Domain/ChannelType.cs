@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum ChannelType
 {
-    Branch=1,Online=2,Mobile=3,ATM=4,API=5,CallCenter=6
+    Branch = 1, Online = 2, Mobile = 3, ATM = 4, API = 5, CallCenter = 6
 }
 
 /// <summary>

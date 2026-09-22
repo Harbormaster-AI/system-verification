@@ -19,14 +19,14 @@ public static class BankingProductEndpoints
         group.MapPut("/assignBank", AssignBank);
         group.MapPut("/unassignBank", UnassignBank);
 
-    group.MapPut("/addToAccounts", AddToAccounts);
-    group.MapPut("/removeFromAccounts", RemoveFromAccounts);
+        group.MapPut("/addToAccounts", AddToAccounts);
+        group.MapPut("/removeFromAccounts", RemoveFromAccounts);
 
-    group.MapPut("/addToLoanAccounts", AddToLoanAccounts);
-    group.MapPut("/removeFromLoanAccounts", RemoveFromLoanAccounts);
+        group.MapPut("/addToLoanAccounts", AddToLoanAccounts);
+        group.MapPut("/removeFromLoanAccounts", RemoveFromLoanAccounts);
 
-    group.MapPut("/addToPaymentCards", AddToPaymentCards);
-    group.MapPut("/removeFromPaymentCards", RemoveFromPaymentCards);
+        group.MapPut("/addToPaymentCards", AddToPaymentCards);
+        group.MapPut("/removeFromPaymentCards", RemoveFromPaymentCards);
 
 
         return app;
@@ -35,9 +35,10 @@ public static class BankingProductEndpoints
     private static async Task<IResult> Create(
         BankingProductRequest request,
         IBankingProductService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBankingProduct( request );
+        var model = mapRequestToBankingProduct(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class BankingProductEndpoints
     private static async Task<IResult> Update(
         BankingProductRequest request,
         IBankingProductService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBankingProduct( request );
+        var model = mapRequestToBankingProduct(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class BankingProductEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IBankingProductService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var bankingProduct = await service.Get(identifier, cancellationToken);
-        return bankingProduct is null ? Results.NotFound() : Results.Ok( bankingProduct );
+        return bankingProduct is null ? Results.NotFound() : Results.Ok(bankingProduct);
     }
 
 
     private static async Task<IResult> GetAll(
         IBankingProductService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( BankingProductResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(BankingProductResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IBankingProductService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class BankingProductEndpoints
     private static async Task<IResult> AssignBank(
         AssociationRequest request,
         IBankingProductService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBank(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class BankingProductEndpoints
     private static async Task<IResult> UnassignBank(
     AssociationRequest request,
     IBankingProductService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBank(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -116,7 +123,8 @@ public static class BankingProductEndpoints
     private static async Task<IResult> AddToAccounts(
         MultipleAssociationRequest request,
         IBankingProductService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAccounts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -124,14 +132,16 @@ public static class BankingProductEndpoints
     private static async Task<IResult> RemoveFromAccounts(
         MultipleAssociationRequest request,
         IBankingProductService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAccounts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToLoanAccounts(
         MultipleAssociationRequest request,
         IBankingProductService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLoanAccounts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -139,14 +149,16 @@ public static class BankingProductEndpoints
     private static async Task<IResult> RemoveFromLoanAccounts(
         MultipleAssociationRequest request,
         IBankingProductService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLoanAccounts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPaymentCards(
         MultipleAssociationRequest request,
         IBankingProductService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPaymentCards(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -154,11 +166,13 @@ public static class BankingProductEndpoints
     private static async Task<IResult> RemoveFromPaymentCards(
         MultipleAssociationRequest request,
         IBankingProductService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPaymentCards(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static BankingProduct mapRequestToBankingProduct( BankingProductRequest request ) {
+    private static BankingProduct mapRequestToBankingProduct(BankingProductRequest request)
+    {
         var model = new BankingProduct
         {
             Id = request.Id,

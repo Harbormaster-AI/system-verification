@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum LoanType
 {
-    Mortgage=1,Personal=2,Auto=3,SmallBusiness=4,CreditLine=5,Student=6
+    Mortgage = 1, Personal = 2, Auto = 3, SmallBusiness = 4, CreditLine = 5, Student = 6
 }
 
 /// <summary>

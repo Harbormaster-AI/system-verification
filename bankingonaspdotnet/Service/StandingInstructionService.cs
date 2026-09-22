@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IStandingInstructionService {
+public interface IStandingInstructionService
+{
 
-    Task Create(StandingInstruction model , CancellationToken cancellationToken);
+    Task Create(StandingInstruction model, CancellationToken cancellationToken);
     Task<bool> Update(StandingInstruction model, CancellationToken cancellationToken);
     Task<StandingInstruction?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<StandingInstruction>> GetAll(CancellationToken cancellationToken);
@@ -29,7 +30,7 @@ public class StandingInstructionService : IStandingInstructionService
     private readonly ILogger<StandingInstructionService> _logger;
 
     public StandingInstructionService(
-        IStandingInstructionRepository repository, ILogger<StandingInstructionService> logger )
+        IStandingInstructionRepository repository, ILogger<StandingInstructionService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -39,8 +40,8 @@ public class StandingInstructionService : IStandingInstructionService
     public async Task Create(StandingInstruction model, CancellationToken cancellationToken)
     {
 
- 
-         try
+
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -52,7 +53,8 @@ public class StandingInstructionService : IStandingInstructionService
 
     public async Task<bool> Update(StandingInstruction model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -101,17 +103,21 @@ public class StandingInstructionService : IStandingInstructionService
 
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignBeneficiary(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBeneficiary(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignBeneficiary(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBeneficiary(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
