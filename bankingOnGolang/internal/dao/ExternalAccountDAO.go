@@ -1,23 +1,21 @@
-
 package dao
 
 import (
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "fmt"
-    "strings"
-    "github.com/google/uuid"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"fmt"
+	"github.com/google/uuid"
+	"strings"
 )
 
-
 func init() {
-	fmt.Println( strings.ToTitle( "Initializing ExternalAccountDAO..." ) )
+	fmt.Println(strings.ToTitle("Initializing ExternalAccountDAO..."))
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // CreateExternalAccount - creates a new db entry
-//----------------------------------------------------------------------------
-func CreateExternalAccount(obj model.ExternalAccount)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func CreateExternalAccount(obj model.ExternalAccount) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -30,26 +28,25 @@ func CreateExternalAccount(obj model.ExternalAccount)(utils.RequestResult){
 	result := utils.GetDB().Create(&obj).Error
 
 	if result == nil {
-	    createMsg = fmt.Sprintf( "Created a ExternalAccount with ID=%v", obj.ID )
-	    success = true
+		createMsg = fmt.Sprintf("Created a ExternalAccount with ID=%v", obj.ID)
+		success = true
 	} else {
-		createMsg = fmt.Sprintf( "Failed trying to create a ExternalAccount. Result: %s", result )
+		createMsg = fmt.Sprintf("Failed trying to create a ExternalAccount. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        createMsg,
-        Call:       "CreateExternalAccount",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     createMsg,
+		Call:    "CreateExternalAccount",
+		Data:    obj,
+	}
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetExternalAccount - returns the matching the provided identifier
-//----------------------------------------------------------------------------
-func GetExternalAccount(id uuid.UUID)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetExternalAccount(id uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -67,26 +64,26 @@ func GetExternalAccount(id uuid.UUID)(utils.RequestResult){
 	result := utils.GetDB().First(&obj, id).Error // find first using identifier
 
 	if result == nil {
-	    getMsg = fmt.Sprintf( "Retrieved a ExternalAccount using ID=%v", id )
-	    success = true
+		getMsg = fmt.Sprintf("Retrieved a ExternalAccount using ID=%v", id)
+		success = true
 	} else {
-		getMsg = fmt.Sprintf( "Failed trying to retrieve a ExternalAccount using ID=%v", id )
+		getMsg = fmt.Sprintf("Failed trying to retrieve a ExternalAccount using ID=%v", id)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getMsg,
-        Call:       "GetExternalAccount",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getMsg,
+		Call:    "GetExternalAccount",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAllExternalAccount - returns all
-//----------------------------------------------------------------------------
-func GetAllExternalAccount()(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAllExternalAccount() (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -100,26 +97,26 @@ func GetAllExternalAccount()(requestResult utils.RequestResult){
 	result := utils.GetDB().Find(&objs).Error // find all
 
 	if result == nil {
-	    getAllMsg = "Retrieved all ExternalAccount"
-	    success = true
+		getAllMsg = "Retrieved all ExternalAccount"
+		success = true
 	} else {
-		getAllMsg = fmt.Sprintf( "Failed trying to retrieve all ExternalAccount. Result: %s", result )
+		getAllMsg = fmt.Sprintf("Failed trying to retrieve all ExternalAccount. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getAllMsg,
-        Call:       "GetAllExternalAccount",
-        Data:       objs,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getAllMsg,
+		Call:    "GetAllExternalAccount",
+		Data:    objs,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // UpdateExternalAccount - updates matching the provided identifier
-//----------------------------------------------------------------------------
-func UpdateExternalAccount(obj model.ExternalAccount)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func UpdateExternalAccount(obj model.ExternalAccount) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -132,26 +129,26 @@ func UpdateExternalAccount(obj model.ExternalAccount)(requestResult utils.Reques
 	result := utils.GetDB().Save(&obj).Error
 
 	if result == nil {
-	    updateMsg = fmt.Sprintf( "Updated a ExternalAccount using ID=%v", obj.ID )
-	    success = true
+		updateMsg = fmt.Sprintf("Updated a ExternalAccount using ID=%v", obj.ID)
+		success = true
 	} else {
-		updateMsg = fmt.Sprintf( "Failed trying to update a ExternalAccount using ID=%v", obj.ID )
+		updateMsg = fmt.Sprintf("Failed trying to update a ExternalAccount using ID=%v", obj.ID)
 		success = false
 	}
 
 	return utils.RequestResult{
-        Success:    success,
-        Msg:        updateMsg,
-        Call:       "UpdateExternalAccount",
-        Data:       obj,
-    }
+		Success: success,
+		Msg:     updateMsg,
+		Call:    "UpdateExternalAccount",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DeleteExternalAccount - deletes matching the provided identifier
-//----------------------------------------------------------------------------
-func DeleteExternalAccount(id uuid.UUID)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func DeleteExternalAccount(id uuid.UUID) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -168,7 +165,7 @@ func DeleteExternalAccount(id uuid.UUID)(requestResult utils.RequestResult){
 		// Need to cast the interface to a model.ExternalAccount so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		obj,_ := requestResult.Data.(model.ExternalAccount)
+		obj, _ := requestResult.Data.(model.ExternalAccount)
 
 		//----------------------------------------------------------------------------
 		// Make call to the ORM to delete
@@ -176,30 +173,29 @@ func DeleteExternalAccount(id uuid.UUID)(requestResult utils.RequestResult){
 		result := utils.GetDB().Delete(&obj).Error // pass pointer of data to Delete
 
 		if result == nil {
-		    deleteMsg = fmt.Sprintf( "Deleted a ExternalAccount using ID=%v", id )
-		    success = true
+			deleteMsg = fmt.Sprintf("Deleted a ExternalAccount using ID=%v", id)
+			success = true
 		} else {
-			deleteMsg = fmt.Sprintf( "Failed trying to delete a ExternalAccount using ID=%v", id )
+			deleteMsg = fmt.Sprintf("Failed trying to delete a ExternalAccount using ID=%v", id)
 			success = false
 		}
 
-        requestResult = utils.RequestResult{
-            Success:    success,
-            Msg:        deleteMsg,
-            Call:       "DeleteExternalAccount",
-            Data:       requestResult.Data,
-        }
+		requestResult = utils.RequestResult{
+			Success: success,
+			Msg:     deleteMsg,
+			Call:    "DeleteExternalAccount",
+			Data:    requestResult.Data,
+		}
 
 	}
 
 	return requestResult
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Customer on a ExternalAccount
-//----------------------------------------------------------------------------
-func AssignCustomerToExternalAccount( externalAccountId uuid.UUID, customerId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignCustomerToExternalAccount(externalAccountId uuid.UUID, customerId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the ExternalAccount with the matching identifier
@@ -211,7 +207,7 @@ func AssignCustomerToExternalAccount( externalAccountId uuid.UUID, customerId uu
 		// Need to cast the interface to a model.ExternalAccount so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.ExternalAccount)
+		parentObj, _ := parentRequestResult.Data.(model.ExternalAccount)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -235,24 +231,24 @@ func AssignCustomerToExternalAccount( externalAccountId uuid.UUID, customerId uu
 			//----------------------------------------------------------------------------
 			return UpdateExternalAccount(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Customer", customerId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Customer", customerId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignCustomer",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignCustomer",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Customer on a ExternalAccount
-//----------------------------------------------------------------------------
-func UnassignCustomerFromExternalAccount(externalAccountId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignCustomerFromExternalAccount(externalAccountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the ExternalAccount with the matching identifier
@@ -264,17 +260,17 @@ func UnassignCustomerFromExternalAccount(externalAccountId uuid.UUID)(utils.Requ
 		// Need to cast the interface to a model.ExternalAccount so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.ExternalAccount)
+		parentObj, _ := parentRequestResult.Data.(model.ExternalAccount)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Customer to the Customer
 		//----------------------------------------------------------------------------
-		parentObj.Customer = nil;
+		parentObj.Customer = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Customer
 		//----------------------------------------------------------------------------
-		parentObj.CustomerId = nil;
+		parentObj.CustomerId = nil
 
 		//----------------------------------------------------------------------------
 		// save the ExternalAccount
@@ -287,11 +283,10 @@ func UnassignCustomerFromExternalAccount(externalAccountId uuid.UUID)(utils.Requ
 
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more transactionsIds as a Transactions to a ExternalAccount
-//----------------------------------------------------------------------------
-func AddTransactionsToExternalAccount ( externalAccountId uuid.UUID, transactionsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddTransactionsToExternalAccount(externalAccountId uuid.UUID, transactionsIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the ExternalAccount with the matching identifier
@@ -303,9 +298,9 @@ func AddTransactionsToExternalAccount ( externalAccountId uuid.UUID, transaction
 		// Need to cast the interface to a model.ExternalAccount so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.ExternalAccount)
+		parentObj, _ := parentRequestResult.Data.(model.ExternalAccount)
 
-		for _, transactionsId:= range transactionsIds {
+		for _, transactionsId := range transactionsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -315,31 +310,31 @@ func AddTransactionsToExternalAccount ( externalAccountId uuid.UUID, transaction
 			// Retrieve the 1st occurrence from the ORM of a Transaction
 			// with a matching transactionsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , transactionsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, transactionsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the Transactions using the gorm mechanism
 				//----------------------------------------------------------------------------
-				utils.GetDB().Model(&parentObj).Association("Transactions").Append( &childObj )
+				utils.GetDB().Model(&parentObj).Association("Transactions").Append(&childObj)
 
-                if err := utils.GetDB().Model(&parentObj).Association("Transactions").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addTransactionsToExternalAccount",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("Transactions").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addTransactionsToExternalAccount",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Transactions", transactionsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Transactions", transactionsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addTransactionsToExternalAccount",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addTransactionsToExternalAccount",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -353,10 +348,10 @@ func AddTransactionsToExternalAccount ( externalAccountId uuid.UUID, transaction
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more transactionsIds as a Transactions from a ExternalAccount
-//----------------------------------------------------------------------------
-func RemoveTransactionsFromExternalAccount( externalAccountId uuid.UUID, transactionsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveTransactionsFromExternalAccount(externalAccountId uuid.UUID, transactionsIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the ExternalAccount with the matching identifier
 	//----------------------------------------------------------------------------
@@ -367,9 +362,9 @@ func RemoveTransactionsFromExternalAccount( externalAccountId uuid.UUID, transac
 		// Need to cast the interface to a model.ExternalAccount so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.ExternalAccount)
+		parentObj, _ := parentRequestResult.Data.(model.ExternalAccount)
 
-		for _, transactionsId:= range transactionsIds {
+		for _, transactionsId := range transactionsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -379,30 +374,30 @@ func RemoveTransactionsFromExternalAccount( externalAccountId uuid.UUID, transac
 			// Retrieve the 1st occurrence from the ORM of a Transaction
 			// with a matching transactionsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , transactionsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, transactionsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove TransactionObj from the Transactions array, but wont delete it from db
 				//----------------------------------------------------------------------------
-				utils.GetDB().Model(&parentObj).Association("Transactions").Delete( &childObj )
+				utils.GetDB().Model(&parentObj).Association("Transactions").Delete(&childObj)
 				if err := utils.GetDB().Model(&parentObj).Association("Transactions").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeTransactionsFromExternalAccount",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeTransactionsFromExternalAccount",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Transactions", transactionsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Transactions", transactionsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeTransactionsFromExternalAccount",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeTransactionsFromExternalAccount",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -415,4 +410,3 @@ func RemoveTransactionsFromExternalAccount( externalAccountId uuid.UUID, transac
 		return parentRequestResult
 	}
 }
-
