@@ -1,23 +1,21 @@
-
 package dao
 
 import (
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "fmt"
-    "strings"
-    "github.com/google/uuid"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"fmt"
+	"github.com/google/uuid"
+	"strings"
 )
 
-
 func init() {
-	fmt.Println( strings.ToTitle( "Initializing KycProfileDAO..." ) )
+	fmt.Println(strings.ToTitle("Initializing KycProfileDAO..."))
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // CreateKycProfile - creates a new db entry
-//----------------------------------------------------------------------------
-func CreateKycProfile(obj model.KycProfile)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func CreateKycProfile(obj model.KycProfile) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -30,26 +28,25 @@ func CreateKycProfile(obj model.KycProfile)(utils.RequestResult){
 	result := utils.GetDB().Create(&obj).Error
 
 	if result == nil {
-	    createMsg = fmt.Sprintf( "Created a KycProfile with ID=%v", obj.ID )
-	    success = true
+		createMsg = fmt.Sprintf("Created a KycProfile with ID=%v", obj.ID)
+		success = true
 	} else {
-		createMsg = fmt.Sprintf( "Failed trying to create a KycProfile. Result: %s", result )
+		createMsg = fmt.Sprintf("Failed trying to create a KycProfile. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        createMsg,
-        Call:       "CreateKycProfile",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     createMsg,
+		Call:    "CreateKycProfile",
+		Data:    obj,
+	}
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetKycProfile - returns the matching the provided identifier
-//----------------------------------------------------------------------------
-func GetKycProfile(id uuid.UUID)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetKycProfile(id uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -67,26 +64,26 @@ func GetKycProfile(id uuid.UUID)(utils.RequestResult){
 	result := utils.GetDB().First(&obj, id).Error // find first using identifier
 
 	if result == nil {
-	    getMsg = fmt.Sprintf( "Retrieved a KycProfile using ID=%v", id )
-	    success = true
+		getMsg = fmt.Sprintf("Retrieved a KycProfile using ID=%v", id)
+		success = true
 	} else {
-		getMsg = fmt.Sprintf( "Failed trying to retrieve a KycProfile using ID=%v", id )
+		getMsg = fmt.Sprintf("Failed trying to retrieve a KycProfile using ID=%v", id)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getMsg,
-        Call:       "GetKycProfile",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getMsg,
+		Call:    "GetKycProfile",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAllKycProfile - returns all
-//----------------------------------------------------------------------------
-func GetAllKycProfile()(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAllKycProfile() (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -100,26 +97,26 @@ func GetAllKycProfile()(requestResult utils.RequestResult){
 	result := utils.GetDB().Find(&objs).Error // find all
 
 	if result == nil {
-	    getAllMsg = "Retrieved all KycProfile"
-	    success = true
+		getAllMsg = "Retrieved all KycProfile"
+		success = true
 	} else {
-		getAllMsg = fmt.Sprintf( "Failed trying to retrieve all KycProfile. Result: %s", result )
+		getAllMsg = fmt.Sprintf("Failed trying to retrieve all KycProfile. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getAllMsg,
-        Call:       "GetAllKycProfile",
-        Data:       objs,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getAllMsg,
+		Call:    "GetAllKycProfile",
+		Data:    objs,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // UpdateKycProfile - updates matching the provided identifier
-//----------------------------------------------------------------------------
-func UpdateKycProfile(obj model.KycProfile)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func UpdateKycProfile(obj model.KycProfile) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -132,26 +129,26 @@ func UpdateKycProfile(obj model.KycProfile)(requestResult utils.RequestResult){
 	result := utils.GetDB().Save(&obj).Error
 
 	if result == nil {
-	    updateMsg = fmt.Sprintf( "Updated a KycProfile using ID=%v", obj.ID )
-	    success = true
+		updateMsg = fmt.Sprintf("Updated a KycProfile using ID=%v", obj.ID)
+		success = true
 	} else {
-		updateMsg = fmt.Sprintf( "Failed trying to update a KycProfile using ID=%v", obj.ID )
+		updateMsg = fmt.Sprintf("Failed trying to update a KycProfile using ID=%v", obj.ID)
 		success = false
 	}
 
 	return utils.RequestResult{
-        Success:    success,
-        Msg:        updateMsg,
-        Call:       "UpdateKycProfile",
-        Data:       obj,
-    }
+		Success: success,
+		Msg:     updateMsg,
+		Call:    "UpdateKycProfile",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DeleteKycProfile - deletes matching the provided identifier
-//----------------------------------------------------------------------------
-func DeleteKycProfile(id uuid.UUID)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func DeleteKycProfile(id uuid.UUID) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -168,7 +165,7 @@ func DeleteKycProfile(id uuid.UUID)(requestResult utils.RequestResult){
 		// Need to cast the interface to a model.KycProfile so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		obj,_ := requestResult.Data.(model.KycProfile)
+		obj, _ := requestResult.Data.(model.KycProfile)
 
 		//----------------------------------------------------------------------------
 		// Make call to the ORM to delete
@@ -176,30 +173,29 @@ func DeleteKycProfile(id uuid.UUID)(requestResult utils.RequestResult){
 		result := utils.GetDB().Delete(&obj).Error // pass pointer of data to Delete
 
 		if result == nil {
-		    deleteMsg = fmt.Sprintf( "Deleted a KycProfile using ID=%v", id )
-		    success = true
+			deleteMsg = fmt.Sprintf("Deleted a KycProfile using ID=%v", id)
+			success = true
 		} else {
-			deleteMsg = fmt.Sprintf( "Failed trying to delete a KycProfile using ID=%v", id )
+			deleteMsg = fmt.Sprintf("Failed trying to delete a KycProfile using ID=%v", id)
 			success = false
 		}
 
-        requestResult = utils.RequestResult{
-            Success:    success,
-            Msg:        deleteMsg,
-            Call:       "DeleteKycProfile",
-            Data:       requestResult.Data,
-        }
+		requestResult = utils.RequestResult{
+			Success: success,
+			Msg:     deleteMsg,
+			Call:    "DeleteKycProfile",
+			Data:    requestResult.Data,
+		}
 
 	}
 
 	return requestResult
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Customer on a KycProfile
-//----------------------------------------------------------------------------
-func AssignCustomerToKycProfile( kycProfileId uuid.UUID, customerId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignCustomerToKycProfile(kycProfileId uuid.UUID, customerId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the KycProfile with the matching identifier
@@ -211,7 +207,7 @@ func AssignCustomerToKycProfile( kycProfileId uuid.UUID, customerId uuid.UUID )(
 		// Need to cast the interface to a model.KycProfile so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.KycProfile)
+		parentObj, _ := parentRequestResult.Data.(model.KycProfile)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -235,24 +231,24 @@ func AssignCustomerToKycProfile( kycProfileId uuid.UUID, customerId uuid.UUID )(
 			//----------------------------------------------------------------------------
 			return UpdateKycProfile(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Customer", customerId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Customer", customerId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignCustomer",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignCustomer",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Customer on a KycProfile
-//----------------------------------------------------------------------------
-func UnassignCustomerFromKycProfile(kycProfileId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignCustomerFromKycProfile(kycProfileId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the KycProfile with the matching identifier
@@ -264,17 +260,17 @@ func UnassignCustomerFromKycProfile(kycProfileId uuid.UUID)(utils.RequestResult)
 		// Need to cast the interface to a model.KycProfile so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.KycProfile)
+		parentObj, _ := parentRequestResult.Data.(model.KycProfile)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Customer to the Customer
 		//----------------------------------------------------------------------------
-		parentObj.Customer = nil;
+		parentObj.Customer = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Customer
 		//----------------------------------------------------------------------------
-		parentObj.CustomerId = nil;
+		parentObj.CustomerId = nil
 
 		//----------------------------------------------------------------------------
 		// save the KycProfile
@@ -287,11 +283,10 @@ func UnassignCustomerFromKycProfile(kycProfileId uuid.UUID)(utils.RequestResult)
 
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more identityDocumentsIds as a IdentityDocuments to a KycProfile
-//----------------------------------------------------------------------------
-func AddIdentityDocumentsToKycProfile ( kycProfileId uuid.UUID, identityDocumentsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddIdentityDocumentsToKycProfile(kycProfileId uuid.UUID, identityDocumentsIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the KycProfile with the matching identifier
@@ -303,9 +298,9 @@ func AddIdentityDocumentsToKycProfile ( kycProfileId uuid.UUID, identityDocument
 		// Need to cast the interface to a model.KycProfile so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.KycProfile)
+		parentObj, _ := parentRequestResult.Data.(model.KycProfile)
 
-		for _, identityDocumentsId:= range identityDocumentsIds {
+		for _, identityDocumentsId := range identityDocumentsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -315,29 +310,29 @@ func AddIdentityDocumentsToKycProfile ( kycProfileId uuid.UUID, identityDocument
 			// Retrieve the 1st occurrence from the ORM of a IdentityDocument
 			// with a matching identityDocumentsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , identityDocumentsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, identityDocumentsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the IdentityDocuments using the gorm mechanism
 				//----------------------------------------------------------------------------
-                if err := utils.GetDB().Model(&parentObj).Association("IdentityDocuments").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addIdentityDocumentsToKycProfile",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("IdentityDocuments").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addIdentityDocumentsToKycProfile",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "IdentityDocuments", identityDocumentsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "IdentityDocuments", identityDocumentsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addIdentityDocumentsToKycProfile",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addIdentityDocumentsToKycProfile",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -351,10 +346,10 @@ func AddIdentityDocumentsToKycProfile ( kycProfileId uuid.UUID, identityDocument
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more identityDocumentsIds as a IdentityDocuments from a KycProfile
-//----------------------------------------------------------------------------
-func RemoveIdentityDocumentsFromKycProfile( kycProfileId uuid.UUID, identityDocumentsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveIdentityDocumentsFromKycProfile(kycProfileId uuid.UUID, identityDocumentsIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the KycProfile with the matching identifier
 	//----------------------------------------------------------------------------
@@ -365,9 +360,9 @@ func RemoveIdentityDocumentsFromKycProfile( kycProfileId uuid.UUID, identityDocu
 		// Need to cast the interface to a model.KycProfile so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.KycProfile)
+		parentObj, _ := parentRequestResult.Data.(model.KycProfile)
 
-		for _, identityDocumentsId:= range identityDocumentsIds {
+		for _, identityDocumentsId := range identityDocumentsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -377,29 +372,29 @@ func RemoveIdentityDocumentsFromKycProfile( kycProfileId uuid.UUID, identityDocu
 			// Retrieve the 1st occurrence from the ORM of a IdentityDocument
 			// with a matching identityDocumentsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , identityDocumentsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, identityDocumentsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove IdentityDocumentObj from the IdentityDocuments array, but wont delete it from db
 				//----------------------------------------------------------------------------
 				if err := utils.GetDB().Model(&parentObj).Association("IdentityDocuments").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeIdentityDocumentsFromKycProfile",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeIdentityDocumentsFromKycProfile",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "IdentityDocuments", identityDocumentsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "IdentityDocuments", identityDocumentsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeIdentityDocumentsFromKycProfile",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeIdentityDocumentsFromKycProfile",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -413,10 +408,10 @@ func RemoveIdentityDocumentsFromKycProfile( kycProfileId uuid.UUID, identityDocu
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more riskAssessmentsIds as a RiskAssessments to a KycProfile
-//----------------------------------------------------------------------------
-func AddRiskAssessmentsToKycProfile ( kycProfileId uuid.UUID, riskAssessmentsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddRiskAssessmentsToKycProfile(kycProfileId uuid.UUID, riskAssessmentsIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the KycProfile with the matching identifier
@@ -428,9 +423,9 @@ func AddRiskAssessmentsToKycProfile ( kycProfileId uuid.UUID, riskAssessmentsIds
 		// Need to cast the interface to a model.KycProfile so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.KycProfile)
+		parentObj, _ := parentRequestResult.Data.(model.KycProfile)
 
-		for _, riskAssessmentsId:= range riskAssessmentsIds {
+		for _, riskAssessmentsId := range riskAssessmentsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -440,29 +435,29 @@ func AddRiskAssessmentsToKycProfile ( kycProfileId uuid.UUID, riskAssessmentsIds
 			// Retrieve the 1st occurrence from the ORM of a RiskAssessment
 			// with a matching riskAssessmentsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , riskAssessmentsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, riskAssessmentsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the RiskAssessments using the gorm mechanism
 				//----------------------------------------------------------------------------
-                if err := utils.GetDB().Model(&parentObj).Association("RiskAssessments").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addRiskAssessmentsToKycProfile",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("RiskAssessments").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addRiskAssessmentsToKycProfile",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "RiskAssessments", riskAssessmentsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "RiskAssessments", riskAssessmentsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addRiskAssessmentsToKycProfile",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addRiskAssessmentsToKycProfile",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -476,10 +471,10 @@ func AddRiskAssessmentsToKycProfile ( kycProfileId uuid.UUID, riskAssessmentsIds
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more riskAssessmentsIds as a RiskAssessments from a KycProfile
-//----------------------------------------------------------------------------
-func RemoveRiskAssessmentsFromKycProfile( kycProfileId uuid.UUID, riskAssessmentsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveRiskAssessmentsFromKycProfile(kycProfileId uuid.UUID, riskAssessmentsIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the KycProfile with the matching identifier
 	//----------------------------------------------------------------------------
@@ -490,9 +485,9 @@ func RemoveRiskAssessmentsFromKycProfile( kycProfileId uuid.UUID, riskAssessment
 		// Need to cast the interface to a model.KycProfile so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.KycProfile)
+		parentObj, _ := parentRequestResult.Data.(model.KycProfile)
 
-		for _, riskAssessmentsId:= range riskAssessmentsIds {
+		for _, riskAssessmentsId := range riskAssessmentsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -502,29 +497,29 @@ func RemoveRiskAssessmentsFromKycProfile( kycProfileId uuid.UUID, riskAssessment
 			// Retrieve the 1st occurrence from the ORM of a RiskAssessment
 			// with a matching riskAssessmentsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , riskAssessmentsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, riskAssessmentsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove RiskAssessmentObj from the RiskAssessments array, but wont delete it from db
 				//----------------------------------------------------------------------------
 				if err := utils.GetDB().Model(&parentObj).Association("RiskAssessments").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeRiskAssessmentsFromKycProfile",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeRiskAssessmentsFromKycProfile",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "RiskAssessments", riskAssessmentsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "RiskAssessments", riskAssessmentsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeRiskAssessmentsFromKycProfile",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeRiskAssessmentsFromKycProfile",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -538,10 +533,10 @@ func RemoveRiskAssessmentsFromKycProfile( kycProfileId uuid.UUID, riskAssessment
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more screeningsIds as a Screenings to a KycProfile
-//----------------------------------------------------------------------------
-func AddScreeningsToKycProfile ( kycProfileId uuid.UUID, screeningsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddScreeningsToKycProfile(kycProfileId uuid.UUID, screeningsIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the KycProfile with the matching identifier
@@ -553,9 +548,9 @@ func AddScreeningsToKycProfile ( kycProfileId uuid.UUID, screeningsIds []uuid.UU
 		// Need to cast the interface to a model.KycProfile so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.KycProfile)
+		parentObj, _ := parentRequestResult.Data.(model.KycProfile)
 
-		for _, screeningsId:= range screeningsIds {
+		for _, screeningsId := range screeningsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -565,29 +560,29 @@ func AddScreeningsToKycProfile ( kycProfileId uuid.UUID, screeningsIds []uuid.UU
 			// Retrieve the 1st occurrence from the ORM of a ScreeningResult
 			// with a matching screeningsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , screeningsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, screeningsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the Screenings using the gorm mechanism
 				//----------------------------------------------------------------------------
-                if err := utils.GetDB().Model(&parentObj).Association("Screenings").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addScreeningsToKycProfile",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("Screenings").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addScreeningsToKycProfile",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Screenings", screeningsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Screenings", screeningsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addScreeningsToKycProfile",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addScreeningsToKycProfile",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -601,10 +596,10 @@ func AddScreeningsToKycProfile ( kycProfileId uuid.UUID, screeningsIds []uuid.UU
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more screeningsIds as a Screenings from a KycProfile
-//----------------------------------------------------------------------------
-func RemoveScreeningsFromKycProfile( kycProfileId uuid.UUID, screeningsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveScreeningsFromKycProfile(kycProfileId uuid.UUID, screeningsIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the KycProfile with the matching identifier
 	//----------------------------------------------------------------------------
@@ -615,9 +610,9 @@ func RemoveScreeningsFromKycProfile( kycProfileId uuid.UUID, screeningsIds []uui
 		// Need to cast the interface to a model.KycProfile so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.KycProfile)
+		parentObj, _ := parentRequestResult.Data.(model.KycProfile)
 
-		for _, screeningsId:= range screeningsIds {
+		for _, screeningsId := range screeningsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -627,29 +622,29 @@ func RemoveScreeningsFromKycProfile( kycProfileId uuid.UUID, screeningsIds []uui
 			// Retrieve the 1st occurrence from the ORM of a ScreeningResult
 			// with a matching screeningsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , screeningsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, screeningsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove ScreeningResultObj from the Screenings array, but wont delete it from db
 				//----------------------------------------------------------------------------
 				if err := utils.GetDB().Model(&parentObj).Association("Screenings").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeScreeningsFromKycProfile",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeScreeningsFromKycProfile",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Screenings", screeningsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Screenings", screeningsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeScreeningsFromKycProfile",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeScreeningsFromKycProfile",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -662,4 +657,3 @@ func RemoveScreeningsFromKycProfile( kycProfileId uuid.UUID, screeningsIds []uui
 		return parentRequestResult
 	}
 }
-

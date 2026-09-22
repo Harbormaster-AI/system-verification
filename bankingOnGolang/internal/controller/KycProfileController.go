@@ -1,13 +1,12 @@
-
 package controller
 
 import (
-    KycProfileDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "net/http"
-    "encoding/json"
-    "log"
+	KycProfileDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
+	"log"
+	"net/http"
 )
 
 // ----------------------------------------------------------------------------
@@ -18,7 +17,7 @@ func CreateKycProfile(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty KycProfile model
 	// ----------------------------------------------------------------------------
 	data := model.KycProfile{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a KycProfile model structure
 	// ----------------------------------------------------------------------------
@@ -27,17 +26,17 @@ func CreateKycProfile(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the KycProfile data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := KycProfileDAO.CreateKycProfile( data )
-	
+	requestResult := KycProfileDAO.CreateKycProfile(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -60,18 +59,17 @@ func GetKycProfile(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := KycProfileDAO.GetKycProfile(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to KycProfileDAO for database read of all KycProfiles
@@ -81,16 +79,16 @@ func GetAllKycProfile(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the KycProfile data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := KycProfileDAO.GetAllKycProfile()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -101,7 +99,7 @@ func UpdateKycProfile(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty KycProfile model
 	// ----------------------------------------------------------------------------
 	var data = model.KycProfile{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a KycProfile model structure
 	// ----------------------------------------------------------------------------
@@ -119,8 +117,8 @@ func UpdateKycProfile(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -140,24 +138,24 @@ func DeleteKycProfile(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the KycProfile data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := KycProfileDAO.DeleteKycProfile(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Customer on a KycProfile
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Customer on a KycProfile
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignCustomerToKycProfile(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -181,15 +179,15 @@ func AssignCustomerToKycProfile(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Customer on a KycProfile
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignCustomerFromKycProfile( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Customer on a KycProfile
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignCustomerFromKycProfile(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -212,15 +210,14 @@ func UnassignCustomerFromKycProfile( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-
-	// ----------------------------------------------------------------------------
-	// adds one or more identityDocumentsIds as a IdentityDocuments to a KycProfile
-	// ----------------------------------------------------------------------------
-func AddIdentityDocumentsToKycProfile(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// adds one or more identityDocumentsIds as a IdentityDocuments to a KycProfile
+// ----------------------------------------------------------------------------
+func AddIdentityDocumentsToKycProfile(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -243,15 +240,15 @@ func AddIdentityDocumentsToKycProfile(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more identityDocumentsIds as a IdentityDocuments from a KycProfile
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveIdentityDocumentsFromKycProfile(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more identityDocumentsIds as a IdentityDocuments from a KycProfile
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveIdentityDocumentsFromKycProfile(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -274,14 +271,14 @@ func RemoveIdentityDocumentsFromKycProfile(w http.ResponseWriter, r *http.Reques
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more riskAssessmentsIds as a RiskAssessments to a KycProfile
-	// ----------------------------------------------------------------------------
-func AddRiskAssessmentsToKycProfile(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more riskAssessmentsIds as a RiskAssessments to a KycProfile
+// ----------------------------------------------------------------------------
+func AddRiskAssessmentsToKycProfile(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -304,15 +301,15 @@ func AddRiskAssessmentsToKycProfile(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more riskAssessmentsIds as a RiskAssessments from a KycProfile
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveRiskAssessmentsFromKycProfile(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more riskAssessmentsIds as a RiskAssessments from a KycProfile
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveRiskAssessmentsFromKycProfile(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -335,14 +332,14 @@ func RemoveRiskAssessmentsFromKycProfile(w http.ResponseWriter, r *http.Request)
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more screeningsIds as a Screenings to a KycProfile
-	// ----------------------------------------------------------------------------
-func AddScreeningsToKycProfile(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more screeningsIds as a Screenings to a KycProfile
+// ----------------------------------------------------------------------------
+func AddScreeningsToKycProfile(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -365,15 +362,15 @@ func AddScreeningsToKycProfile(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more screeningsIds as a Screenings from a KycProfile
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveScreeningsFromKycProfile(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more screeningsIds as a Screenings from a KycProfile
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveScreeningsFromKycProfile(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -396,7 +393,6 @@ func RemoveScreeningsFromKycProfile(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		

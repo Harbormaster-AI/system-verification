@@ -1,23 +1,21 @@
-
 package dao
 
 import (
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "fmt"
-    "strings"
-    "github.com/google/uuid"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"fmt"
+	"github.com/google/uuid"
+	"strings"
 )
 
-
 func init() {
-	fmt.Println( strings.ToTitle( "Initializing FundsTransferDAO..." ) )
+	fmt.Println(strings.ToTitle("Initializing FundsTransferDAO..."))
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // CreateFundsTransfer - creates a new db entry
-//----------------------------------------------------------------------------
-func CreateFundsTransfer(obj model.FundsTransfer)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func CreateFundsTransfer(obj model.FundsTransfer) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -30,26 +28,25 @@ func CreateFundsTransfer(obj model.FundsTransfer)(utils.RequestResult){
 	result := utils.GetDB().Create(&obj).Error
 
 	if result == nil {
-	    createMsg = fmt.Sprintf( "Created a FundsTransfer with ID=%v", obj.ID )
-	    success = true
+		createMsg = fmt.Sprintf("Created a FundsTransfer with ID=%v", obj.ID)
+		success = true
 	} else {
-		createMsg = fmt.Sprintf( "Failed trying to create a FundsTransfer. Result: %s", result )
+		createMsg = fmt.Sprintf("Failed trying to create a FundsTransfer. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        createMsg,
-        Call:       "CreateFundsTransfer",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     createMsg,
+		Call:    "CreateFundsTransfer",
+		Data:    obj,
+	}
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetFundsTransfer - returns the matching the provided identifier
-//----------------------------------------------------------------------------
-func GetFundsTransfer(id uuid.UUID)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetFundsTransfer(id uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -67,26 +64,26 @@ func GetFundsTransfer(id uuid.UUID)(utils.RequestResult){
 	result := utils.GetDB().First(&obj, id).Error // find first using identifier
 
 	if result == nil {
-	    getMsg = fmt.Sprintf( "Retrieved a FundsTransfer using ID=%v", id )
-	    success = true
+		getMsg = fmt.Sprintf("Retrieved a FundsTransfer using ID=%v", id)
+		success = true
 	} else {
-		getMsg = fmt.Sprintf( "Failed trying to retrieve a FundsTransfer using ID=%v", id )
+		getMsg = fmt.Sprintf("Failed trying to retrieve a FundsTransfer using ID=%v", id)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getMsg,
-        Call:       "GetFundsTransfer",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getMsg,
+		Call:    "GetFundsTransfer",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAllFundsTransfer - returns all
-//----------------------------------------------------------------------------
-func GetAllFundsTransfer()(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAllFundsTransfer() (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -100,26 +97,26 @@ func GetAllFundsTransfer()(requestResult utils.RequestResult){
 	result := utils.GetDB().Find(&objs).Error // find all
 
 	if result == nil {
-	    getAllMsg = "Retrieved all FundsTransfer"
-	    success = true
+		getAllMsg = "Retrieved all FundsTransfer"
+		success = true
 	} else {
-		getAllMsg = fmt.Sprintf( "Failed trying to retrieve all FundsTransfer. Result: %s", result )
+		getAllMsg = fmt.Sprintf("Failed trying to retrieve all FundsTransfer. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getAllMsg,
-        Call:       "GetAllFundsTransfer",
-        Data:       objs,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getAllMsg,
+		Call:    "GetAllFundsTransfer",
+		Data:    objs,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // UpdateFundsTransfer - updates matching the provided identifier
-//----------------------------------------------------------------------------
-func UpdateFundsTransfer(obj model.FundsTransfer)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func UpdateFundsTransfer(obj model.FundsTransfer) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -132,26 +129,26 @@ func UpdateFundsTransfer(obj model.FundsTransfer)(requestResult utils.RequestRes
 	result := utils.GetDB().Save(&obj).Error
 
 	if result == nil {
-	    updateMsg = fmt.Sprintf( "Updated a FundsTransfer using ID=%v", obj.ID )
-	    success = true
+		updateMsg = fmt.Sprintf("Updated a FundsTransfer using ID=%v", obj.ID)
+		success = true
 	} else {
-		updateMsg = fmt.Sprintf( "Failed trying to update a FundsTransfer using ID=%v", obj.ID )
+		updateMsg = fmt.Sprintf("Failed trying to update a FundsTransfer using ID=%v", obj.ID)
 		success = false
 	}
 
 	return utils.RequestResult{
-        Success:    success,
-        Msg:        updateMsg,
-        Call:       "UpdateFundsTransfer",
-        Data:       obj,
-    }
+		Success: success,
+		Msg:     updateMsg,
+		Call:    "UpdateFundsTransfer",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DeleteFundsTransfer - deletes matching the provided identifier
-//----------------------------------------------------------------------------
-func DeleteFundsTransfer(id uuid.UUID)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func DeleteFundsTransfer(id uuid.UUID) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -168,7 +165,7 @@ func DeleteFundsTransfer(id uuid.UUID)(requestResult utils.RequestResult){
 		// Need to cast the interface to a model.FundsTransfer so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		obj,_ := requestResult.Data.(model.FundsTransfer)
+		obj, _ := requestResult.Data.(model.FundsTransfer)
 
 		//----------------------------------------------------------------------------
 		// Make call to the ORM to delete
@@ -176,30 +173,29 @@ func DeleteFundsTransfer(id uuid.UUID)(requestResult utils.RequestResult){
 		result := utils.GetDB().Delete(&obj).Error // pass pointer of data to Delete
 
 		if result == nil {
-		    deleteMsg = fmt.Sprintf( "Deleted a FundsTransfer using ID=%v", id )
-		    success = true
+			deleteMsg = fmt.Sprintf("Deleted a FundsTransfer using ID=%v", id)
+			success = true
 		} else {
-			deleteMsg = fmt.Sprintf( "Failed trying to delete a FundsTransfer using ID=%v", id )
+			deleteMsg = fmt.Sprintf("Failed trying to delete a FundsTransfer using ID=%v", id)
 			success = false
 		}
 
-        requestResult = utils.RequestResult{
-            Success:    success,
-            Msg:        deleteMsg,
-            Call:       "DeleteFundsTransfer",
-            Data:       requestResult.Data,
-        }
+		requestResult = utils.RequestResult{
+			Success: success,
+			Msg:     deleteMsg,
+			Call:    "DeleteFundsTransfer",
+			Data:    requestResult.Data,
+		}
 
 	}
 
 	return requestResult
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a SourceAccount on a FundsTransfer
-//----------------------------------------------------------------------------
-func AssignSourceAccountToFundsTransfer( fundsTransferId uuid.UUID, sourceAccountId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignSourceAccountToFundsTransfer(fundsTransferId uuid.UUID, sourceAccountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FundsTransfer with the matching identifier
@@ -211,7 +207,7 @@ func AssignSourceAccountToFundsTransfer( fundsTransferId uuid.UUID, sourceAccoun
 		// Need to cast the interface to a model.FundsTransfer so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FundsTransfer)
+		parentObj, _ := parentRequestResult.Data.(model.FundsTransfer)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -235,24 +231,24 @@ func AssignSourceAccountToFundsTransfer( fundsTransferId uuid.UUID, sourceAccoun
 			//----------------------------------------------------------------------------
 			return UpdateFundsTransfer(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "SourceAccount", sourceAccountId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "SourceAccount", sourceAccountId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignSourceAccount",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignSourceAccount",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a SourceAccount on a FundsTransfer
-//----------------------------------------------------------------------------
-func UnassignSourceAccountFromFundsTransfer(fundsTransferId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignSourceAccountFromFundsTransfer(fundsTransferId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FundsTransfer with the matching identifier
@@ -264,17 +260,17 @@ func UnassignSourceAccountFromFundsTransfer(fundsTransferId uuid.UUID)(utils.Req
 		// Need to cast the interface to a model.FundsTransfer so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FundsTransfer)
+		parentObj, _ := parentRequestResult.Data.(model.FundsTransfer)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Account to the SourceAccount
 		//----------------------------------------------------------------------------
-		parentObj.SourceAccount = nil;
+		parentObj.SourceAccount = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the SourceAccount
 		//----------------------------------------------------------------------------
-		parentObj.SourceAccountId = nil;
+		parentObj.SourceAccountId = nil
 
 		//----------------------------------------------------------------------------
 		// save the FundsTransfer
@@ -287,10 +283,10 @@ func UnassignSourceAccountFromFundsTransfer(fundsTransferId uuid.UUID)(utils.Req
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a DestinationAccount on a FundsTransfer
-//----------------------------------------------------------------------------
-func AssignDestinationAccountToFundsTransfer( fundsTransferId uuid.UUID, destinationAccountId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignDestinationAccountToFundsTransfer(fundsTransferId uuid.UUID, destinationAccountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FundsTransfer with the matching identifier
@@ -302,7 +298,7 @@ func AssignDestinationAccountToFundsTransfer( fundsTransferId uuid.UUID, destina
 		// Need to cast the interface to a model.FundsTransfer so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FundsTransfer)
+		parentObj, _ := parentRequestResult.Data.(model.FundsTransfer)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -326,24 +322,24 @@ func AssignDestinationAccountToFundsTransfer( fundsTransferId uuid.UUID, destina
 			//----------------------------------------------------------------------------
 			return UpdateFundsTransfer(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "DestinationAccount", destinationAccountId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "DestinationAccount", destinationAccountId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignDestinationAccount",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignDestinationAccount",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a DestinationAccount on a FundsTransfer
-//----------------------------------------------------------------------------
-func UnassignDestinationAccountFromFundsTransfer(fundsTransferId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignDestinationAccountFromFundsTransfer(fundsTransferId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FundsTransfer with the matching identifier
@@ -355,17 +351,17 @@ func UnassignDestinationAccountFromFundsTransfer(fundsTransferId uuid.UUID)(util
 		// Need to cast the interface to a model.FundsTransfer so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FundsTransfer)
+		parentObj, _ := parentRequestResult.Data.(model.FundsTransfer)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Account to the DestinationAccount
 		//----------------------------------------------------------------------------
-		parentObj.DestinationAccount = nil;
+		parentObj.DestinationAccount = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the DestinationAccount
 		//----------------------------------------------------------------------------
-		parentObj.DestinationAccountId = nil;
+		parentObj.DestinationAccountId = nil
 
 		//----------------------------------------------------------------------------
 		// save the FundsTransfer
@@ -378,10 +374,10 @@ func UnassignDestinationAccountFromFundsTransfer(fundsTransferId uuid.UUID)(util
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a ExternalBeneficiary on a FundsTransfer
-//----------------------------------------------------------------------------
-func AssignExternalBeneficiaryToFundsTransfer( fundsTransferId uuid.UUID, externalBeneficiaryId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignExternalBeneficiaryToFundsTransfer(fundsTransferId uuid.UUID, externalBeneficiaryId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FundsTransfer with the matching identifier
@@ -393,7 +389,7 @@ func AssignExternalBeneficiaryToFundsTransfer( fundsTransferId uuid.UUID, extern
 		// Need to cast the interface to a model.FundsTransfer so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FundsTransfer)
+		parentObj, _ := parentRequestResult.Data.(model.FundsTransfer)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -417,24 +413,24 @@ func AssignExternalBeneficiaryToFundsTransfer( fundsTransferId uuid.UUID, extern
 			//----------------------------------------------------------------------------
 			return UpdateFundsTransfer(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "ExternalBeneficiary", externalBeneficiaryId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "ExternalBeneficiary", externalBeneficiaryId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignExternalBeneficiary",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignExternalBeneficiary",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a ExternalBeneficiary on a FundsTransfer
-//----------------------------------------------------------------------------
-func UnassignExternalBeneficiaryFromFundsTransfer(fundsTransferId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignExternalBeneficiaryFromFundsTransfer(fundsTransferId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FundsTransfer with the matching identifier
@@ -446,17 +442,17 @@ func UnassignExternalBeneficiaryFromFundsTransfer(fundsTransferId uuid.UUID)(uti
 		// Need to cast the interface to a model.FundsTransfer so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FundsTransfer)
+		parentObj, _ := parentRequestResult.Data.(model.FundsTransfer)
 
 		//----------------------------------------------------------------------------
 		// assign an empty ExternalAccount to the ExternalBeneficiary
 		//----------------------------------------------------------------------------
-		parentObj.ExternalBeneficiary = nil;
+		parentObj.ExternalBeneficiary = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the ExternalBeneficiary
 		//----------------------------------------------------------------------------
-		parentObj.ExternalBeneficiaryId = nil;
+		parentObj.ExternalBeneficiaryId = nil
 
 		//----------------------------------------------------------------------------
 		// save the FundsTransfer
@@ -469,10 +465,10 @@ func UnassignExternalBeneficiaryFromFundsTransfer(fundsTransferId uuid.UUID)(uti
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a InitiatedBy on a FundsTransfer
-//----------------------------------------------------------------------------
-func AssignInitiatedByToFundsTransfer( fundsTransferId uuid.UUID, initiatedById uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignInitiatedByToFundsTransfer(fundsTransferId uuid.UUID, initiatedById uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FundsTransfer with the matching identifier
@@ -484,7 +480,7 @@ func AssignInitiatedByToFundsTransfer( fundsTransferId uuid.UUID, initiatedById 
 		// Need to cast the interface to a model.FundsTransfer so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FundsTransfer)
+		parentObj, _ := parentRequestResult.Data.(model.FundsTransfer)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -508,24 +504,24 @@ func AssignInitiatedByToFundsTransfer( fundsTransferId uuid.UUID, initiatedById 
 			//----------------------------------------------------------------------------
 			return UpdateFundsTransfer(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "InitiatedBy", initiatedById )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "InitiatedBy", initiatedById)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignInitiatedBy",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignInitiatedBy",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a InitiatedBy on a FundsTransfer
-//----------------------------------------------------------------------------
-func UnassignInitiatedByFromFundsTransfer(fundsTransferId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignInitiatedByFromFundsTransfer(fundsTransferId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FundsTransfer with the matching identifier
@@ -537,17 +533,17 @@ func UnassignInitiatedByFromFundsTransfer(fundsTransferId uuid.UUID)(utils.Reque
 		// Need to cast the interface to a model.FundsTransfer so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FundsTransfer)
+		parentObj, _ := parentRequestResult.Data.(model.FundsTransfer)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Customer to the InitiatedBy
 		//----------------------------------------------------------------------------
-		parentObj.InitiatedBy = nil;
+		parentObj.InitiatedBy = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the InitiatedBy
 		//----------------------------------------------------------------------------
-		parentObj.InitiatedById = nil;
+		parentObj.InitiatedById = nil
 
 		//----------------------------------------------------------------------------
 		// save the FundsTransfer
@@ -560,11 +556,10 @@ func UnassignInitiatedByFromFundsTransfer(fundsTransferId uuid.UUID)(utils.Reque
 
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more transactionsIds as a Transactions to a FundsTransfer
-//----------------------------------------------------------------------------
-func AddTransactionsToFundsTransfer ( fundsTransferId uuid.UUID, transactionsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddTransactionsToFundsTransfer(fundsTransferId uuid.UUID, transactionsIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the FundsTransfer with the matching identifier
@@ -576,9 +571,9 @@ func AddTransactionsToFundsTransfer ( fundsTransferId uuid.UUID, transactionsIds
 		// Need to cast the interface to a model.FundsTransfer so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FundsTransfer)
+		parentObj, _ := parentRequestResult.Data.(model.FundsTransfer)
 
-		for _, transactionsId:= range transactionsIds {
+		for _, transactionsId := range transactionsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -588,29 +583,29 @@ func AddTransactionsToFundsTransfer ( fundsTransferId uuid.UUID, transactionsIds
 			// Retrieve the 1st occurrence from the ORM of a Transaction
 			// with a matching transactionsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , transactionsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, transactionsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the Transactions using the gorm mechanism
 				//----------------------------------------------------------------------------
-                if err := utils.GetDB().Model(&parentObj).Association("Transactions").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addTransactionsToFundsTransfer",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("Transactions").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addTransactionsToFundsTransfer",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Transactions", transactionsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Transactions", transactionsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addTransactionsToFundsTransfer",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addTransactionsToFundsTransfer",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -624,10 +619,10 @@ func AddTransactionsToFundsTransfer ( fundsTransferId uuid.UUID, transactionsIds
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more transactionsIds as a Transactions from a FundsTransfer
-//----------------------------------------------------------------------------
-func RemoveTransactionsFromFundsTransfer( fundsTransferId uuid.UUID, transactionsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveTransactionsFromFundsTransfer(fundsTransferId uuid.UUID, transactionsIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the FundsTransfer with the matching identifier
 	//----------------------------------------------------------------------------
@@ -638,9 +633,9 @@ func RemoveTransactionsFromFundsTransfer( fundsTransferId uuid.UUID, transaction
 		// Need to cast the interface to a model.FundsTransfer so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.FundsTransfer)
+		parentObj, _ := parentRequestResult.Data.(model.FundsTransfer)
 
-		for _, transactionsId:= range transactionsIds {
+		for _, transactionsId := range transactionsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -650,29 +645,29 @@ func RemoveTransactionsFromFundsTransfer( fundsTransferId uuid.UUID, transaction
 			// Retrieve the 1st occurrence from the ORM of a Transaction
 			// with a matching transactionsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , transactionsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, transactionsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove TransactionObj from the Transactions array, but wont delete it from db
 				//----------------------------------------------------------------------------
 				if err := utils.GetDB().Model(&parentObj).Association("Transactions").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeTransactionsFromFundsTransfer",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeTransactionsFromFundsTransfer",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Transactions", transactionsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Transactions", transactionsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeTransactionsFromFundsTransfer",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeTransactionsFromFundsTransfer",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -685,4 +680,3 @@ func RemoveTransactionsFromFundsTransfer( fundsTransferId uuid.UUID, transaction
 		return parentRequestResult
 	}
 }
-

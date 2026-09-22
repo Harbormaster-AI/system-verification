@@ -1,13 +1,12 @@
-
 package controller
 
 import (
-    ExchangeRateDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "net/http"
-    "encoding/json"
-    "log"
+	ExchangeRateDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
+	"log"
+	"net/http"
 )
 
 // ----------------------------------------------------------------------------
@@ -18,7 +17,7 @@ func CreateExchangeRate(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty ExchangeRate model
 	// ----------------------------------------------------------------------------
 	data := model.ExchangeRate{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a ExchangeRate model structure
 	// ----------------------------------------------------------------------------
@@ -27,17 +26,17 @@ func CreateExchangeRate(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the ExchangeRate data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := ExchangeRateDAO.CreateExchangeRate( data )
-	
+	requestResult := ExchangeRateDAO.CreateExchangeRate(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -60,18 +59,17 @@ func GetExchangeRate(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := ExchangeRateDAO.GetExchangeRate(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to ExchangeRateDAO for database read of all ExchangeRates
@@ -81,16 +79,16 @@ func GetAllExchangeRate(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the ExchangeRate data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := ExchangeRateDAO.GetAllExchangeRate()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -101,7 +99,7 @@ func UpdateExchangeRate(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty ExchangeRate model
 	// ----------------------------------------------------------------------------
 	var data = model.ExchangeRate{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a ExchangeRate model structure
 	// ----------------------------------------------------------------------------
@@ -119,8 +117,8 @@ func UpdateExchangeRate(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -140,24 +138,24 @@ func DeleteExchangeRate(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the ExchangeRate data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := ExchangeRateDAO.DeleteExchangeRate(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Bank on a ExchangeRate
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Bank on a ExchangeRate
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignBankToExchangeRate(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -181,15 +179,15 @@ func AssignBankToExchangeRate(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Bank on a ExchangeRate
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignBankFromExchangeRate( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Bank on a ExchangeRate
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignBankFromExchangeRate(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -212,15 +210,14 @@ func UnassignBankFromExchangeRate( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-
-	// ----------------------------------------------------------------------------
-	// adds one or more fxTradesIds as a FxTrades to a ExchangeRate
-	// ----------------------------------------------------------------------------
-func AddFxTradesToExchangeRate(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// adds one or more fxTradesIds as a FxTrades to a ExchangeRate
+// ----------------------------------------------------------------------------
+func AddFxTradesToExchangeRate(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -243,15 +240,15 @@ func AddFxTradesToExchangeRate(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more fxTradesIds as a FxTrades from a ExchangeRate
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveFxTradesFromExchangeRate(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more fxTradesIds as a FxTrades from a ExchangeRate
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveFxTradesFromExchangeRate(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -274,7 +271,6 @@ func RemoveFxTradesFromExchangeRate(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
