@@ -138,9 +138,10 @@ jobs:
 
         with:
           ref: ${{ inputs.branch }}
-          # Orphan temp branches often fail with default fetch-depth: 1
+          # Full history — safer for temp branches. Use default GITHUB_TOKEN (same repo).
+          # Do NOT pass inputs.gitHubToken here — bad/limited PAT causes:
+          # "could not read Username for 'https://github.com': terminal prompts disabled"
           fetch-depth: 0
-          token: ${{ inputs.gitHubToken }}
 
       ###########################################################################
       # Always use report.sh from the verification workflow commit (not app branch)
