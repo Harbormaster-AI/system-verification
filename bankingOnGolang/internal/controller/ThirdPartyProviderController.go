@@ -1,13 +1,12 @@
-
 package controller
 
 import (
-    ThirdPartyProviderDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "net/http"
-    "encoding/json"
-    "log"
+	ThirdPartyProviderDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
+	"log"
+	"net/http"
 )
 
 // ----------------------------------------------------------------------------
@@ -18,7 +17,7 @@ func CreateThirdPartyProvider(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty ThirdPartyProvider model
 	// ----------------------------------------------------------------------------
 	data := model.ThirdPartyProvider{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a ThirdPartyProvider model structure
 	// ----------------------------------------------------------------------------
@@ -27,17 +26,17 @@ func CreateThirdPartyProvider(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the ThirdPartyProvider data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := ThirdPartyProviderDAO.CreateThirdPartyProvider( data )
-	
+	requestResult := ThirdPartyProviderDAO.CreateThirdPartyProvider(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -60,18 +59,17 @@ func GetThirdPartyProvider(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := ThirdPartyProviderDAO.GetThirdPartyProvider(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to ThirdPartyProviderDAO for database read of all ThirdPartyProviders
@@ -81,16 +79,16 @@ func GetAllThirdPartyProvider(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the ThirdPartyProvider data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := ThirdPartyProviderDAO.GetAllThirdPartyProvider()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -101,7 +99,7 @@ func UpdateThirdPartyProvider(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty ThirdPartyProvider model
 	// ----------------------------------------------------------------------------
 	var data = model.ThirdPartyProvider{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a ThirdPartyProvider model structure
 	// ----------------------------------------------------------------------------
@@ -119,8 +117,8 @@ func UpdateThirdPartyProvider(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -140,24 +138,24 @@ func DeleteThirdPartyProvider(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the ThirdPartyProvider data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := ThirdPartyProviderDAO.DeleteThirdPartyProvider(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Bank on a ThirdPartyProvider
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Bank on a ThirdPartyProvider
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignBankToThirdPartyProvider(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -181,15 +179,15 @@ func AssignBankToThirdPartyProvider(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Bank on a ThirdPartyProvider
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignBankFromThirdPartyProvider( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Bank on a ThirdPartyProvider
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignBankFromThirdPartyProvider(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -212,15 +210,14 @@ func UnassignBankFromThirdPartyProvider( w http.ResponseWriter, r *http.Request 
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-
-	// ----------------------------------------------------------------------------
-	// adds one or more consentsIds as a Consents to a ThirdPartyProvider
-	// ----------------------------------------------------------------------------
-func AddConsentsToThirdPartyProvider(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// adds one or more consentsIds as a Consents to a ThirdPartyProvider
+// ----------------------------------------------------------------------------
+func AddConsentsToThirdPartyProvider(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -243,15 +240,15 @@ func AddConsentsToThirdPartyProvider(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more consentsIds as a Consents from a ThirdPartyProvider
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveConsentsFromThirdPartyProvider(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more consentsIds as a Consents from a ThirdPartyProvider
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveConsentsFromThirdPartyProvider(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -274,7 +271,6 @@ func RemoveConsentsFromThirdPartyProvider(w http.ResponseWriter, r *http.Request
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
