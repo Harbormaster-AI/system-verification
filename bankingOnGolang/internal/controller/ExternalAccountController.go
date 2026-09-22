@@ -1,12 +1,11 @@
-
 package controller
 
 import (
-    ExternalAccountDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
+	ExternalAccountDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
 	"net/http"
-	 "encoding/json"
 )
 
 // ----------------------------------------------------------------------------
@@ -17,7 +16,7 @@ func CreateExternalAccount(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty ExternalAccount model
 	// ----------------------------------------------------------------------------
 	data := model.ExternalAccount{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a ExternalAccount model structure
 	// ----------------------------------------------------------------------------
@@ -26,17 +25,17 @@ func CreateExternalAccount(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the ExternalAccount data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := ExternalAccountDAO.CreateExternalAccount( data )
-	
+	requestResult := ExternalAccountDAO.CreateExternalAccount(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -59,18 +58,17 @@ func GetExternalAccount(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := ExternalAccountDAO.GetExternalAccount(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to ExternalAccountDAO for database read of all ExternalAccounts
@@ -80,16 +78,16 @@ func GetAllExternalAccount(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the ExternalAccount data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := ExternalAccountDAO.GetAllExternalAccount()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -100,7 +98,7 @@ func UpdateExternalAccount(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty ExternalAccount model
 	// ----------------------------------------------------------------------------
 	var data = model.ExternalAccount{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a ExternalAccount model structure
 	// ----------------------------------------------------------------------------
@@ -118,8 +116,8 @@ func UpdateExternalAccount(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -139,24 +137,24 @@ func DeleteExternalAccount(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the ExternalAccount data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := ExternalAccountDAO.DeleteExternalAccount(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Customer on a ExternalAccount
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Customer on a ExternalAccount
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignCustomerToExternalAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -180,15 +178,15 @@ func AssignCustomerToExternalAccount(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Customer on a ExternalAccount
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignCustomerFromExternalAccount( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Customer on a ExternalAccount
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignCustomerFromExternalAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -211,15 +209,14 @@ func UnassignCustomerFromExternalAccount( w http.ResponseWriter, r *http.Request
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-
-	// ----------------------------------------------------------------------------
-	// adds one or more transactionsIds as a Transactions to a ExternalAccount
-	// ----------------------------------------------------------------------------
-func AddTransactionsToExternalAccount(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// adds one or more transactionsIds as a Transactions to a ExternalAccount
+// ----------------------------------------------------------------------------
+func AddTransactionsToExternalAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -242,15 +239,15 @@ func AddTransactionsToExternalAccount(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more transactionsIds as a Transactions from a ExternalAccount
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveTransactionsFromExternalAccount(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more transactionsIds as a Transactions from a ExternalAccount
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveTransactionsFromExternalAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -273,7 +270,6 @@ func RemoveTransactionsFromExternalAccount(w http.ResponseWriter, r *http.Reques
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		

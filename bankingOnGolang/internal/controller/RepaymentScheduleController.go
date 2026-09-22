@@ -1,12 +1,11 @@
-
 package controller
 
 import (
-    RepaymentScheduleDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
+	RepaymentScheduleDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
 	"net/http"
-	 "encoding/json"
 )
 
 // ----------------------------------------------------------------------------
@@ -17,7 +16,7 @@ func CreateRepaymentSchedule(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty RepaymentSchedule model
 	// ----------------------------------------------------------------------------
 	data := model.RepaymentSchedule{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a RepaymentSchedule model structure
 	// ----------------------------------------------------------------------------
@@ -26,17 +25,17 @@ func CreateRepaymentSchedule(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the RepaymentSchedule data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := RepaymentScheduleDAO.CreateRepaymentSchedule( data )
-	
+	requestResult := RepaymentScheduleDAO.CreateRepaymentSchedule(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -59,18 +58,17 @@ func GetRepaymentSchedule(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := RepaymentScheduleDAO.GetRepaymentSchedule(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to RepaymentScheduleDAO for database read of all RepaymentSchedules
@@ -80,16 +78,16 @@ func GetAllRepaymentSchedule(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the RepaymentSchedule data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := RepaymentScheduleDAO.GetAllRepaymentSchedule()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -100,7 +98,7 @@ func UpdateRepaymentSchedule(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty RepaymentSchedule model
 	// ----------------------------------------------------------------------------
 	var data = model.RepaymentSchedule{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a RepaymentSchedule model structure
 	// ----------------------------------------------------------------------------
@@ -118,8 +116,8 @@ func UpdateRepaymentSchedule(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -139,24 +137,24 @@ func DeleteRepaymentSchedule(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the RepaymentSchedule data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := RepaymentScheduleDAO.DeleteRepaymentSchedule(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a LoanAccount on a RepaymentSchedule
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a LoanAccount on a RepaymentSchedule
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignLoanAccountToRepaymentSchedule(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -180,15 +178,15 @@ func AssignLoanAccountToRepaymentSchedule(w http.ResponseWriter, r *http.Request
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a LoanAccount on a RepaymentSchedule
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignLoanAccountFromRepaymentSchedule( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a LoanAccount on a RepaymentSchedule
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignLoanAccountFromRepaymentSchedule(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -211,14 +209,14 @@ func UnassignLoanAccountFromRepaymentSchedule( w http.ResponseWriter, r *http.Re
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Payment on a RepaymentSchedule
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Payment on a RepaymentSchedule
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignPaymentToRepaymentSchedule(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -242,15 +240,15 @@ func AssignPaymentToRepaymentSchedule(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Payment on a RepaymentSchedule
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignPaymentFromRepaymentSchedule( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Payment on a RepaymentSchedule
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignPaymentFromRepaymentSchedule(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -273,8 +271,6 @@ func UnassignPaymentFromRepaymentSchedule( w http.ResponseWriter, r *http.Reques
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
-

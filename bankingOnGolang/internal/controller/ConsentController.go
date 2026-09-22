@@ -1,12 +1,11 @@
-
 package controller
 
 import (
-    ConsentDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
+	ConsentDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
 	"net/http"
-	 "encoding/json"
 )
 
 // ----------------------------------------------------------------------------
@@ -17,7 +16,7 @@ func CreateConsent(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty Consent model
 	// ----------------------------------------------------------------------------
 	data := model.Consent{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a Consent model structure
 	// ----------------------------------------------------------------------------
@@ -26,17 +25,17 @@ func CreateConsent(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the Consent data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := ConsentDAO.CreateConsent( data )
-	
+	requestResult := ConsentDAO.CreateConsent(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -59,18 +58,17 @@ func GetConsent(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := ConsentDAO.GetConsent(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to ConsentDAO for database read of all Consents
@@ -80,16 +78,16 @@ func GetAllConsent(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the Consent data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := ConsentDAO.GetAllConsent()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -100,7 +98,7 @@ func UpdateConsent(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty Consent model
 	// ----------------------------------------------------------------------------
 	var data = model.Consent{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a Consent model structure
 	// ----------------------------------------------------------------------------
@@ -118,8 +116,8 @@ func UpdateConsent(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -139,24 +137,24 @@ func DeleteConsent(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the Consent data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := ConsentDAO.DeleteConsent(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Customer on a Consent
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Customer on a Consent
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignCustomerToConsent(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -180,15 +178,15 @@ func AssignCustomerToConsent(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Customer on a Consent
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignCustomerFromConsent( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Customer on a Consent
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignCustomerFromConsent(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -211,14 +209,14 @@ func UnassignCustomerFromConsent( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Bank on a Consent
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Bank on a Consent
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignBankToConsent(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -242,15 +240,15 @@ func AssignBankToConsent(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Bank on a Consent
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignBankFromConsent( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Bank on a Consent
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignBankFromConsent(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -273,14 +271,14 @@ func UnassignBankFromConsent( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a ThirdPartyProvider on a Consent
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a ThirdPartyProvider on a Consent
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignThirdPartyProviderToConsent(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -304,15 +302,15 @@ func AssignThirdPartyProviderToConsent(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a ThirdPartyProvider on a Consent
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignThirdPartyProviderFromConsent( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a ThirdPartyProvider on a Consent
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignThirdPartyProviderFromConsent(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -335,15 +333,14 @@ func UnassignThirdPartyProviderFromConsent( w http.ResponseWriter, r *http.Reque
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-
-	// ----------------------------------------------------------------------------
-	// adds one or more authorizedAccountsIds as a AuthorizedAccounts to a Consent
-	// ----------------------------------------------------------------------------
-func AddAuthorizedAccountsToConsent(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// adds one or more authorizedAccountsIds as a AuthorizedAccounts to a Consent
+// ----------------------------------------------------------------------------
+func AddAuthorizedAccountsToConsent(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -366,15 +363,15 @@ func AddAuthorizedAccountsToConsent(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more authorizedAccountsIds as a AuthorizedAccounts from a Consent
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveAuthorizedAccountsFromConsent(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more authorizedAccountsIds as a AuthorizedAccounts from a Consent
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveAuthorizedAccountsFromConsent(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -397,7 +394,6 @@ func RemoveAuthorizedAccountsFromConsent(w http.ResponseWriter, r *http.Request)
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		

@@ -1,12 +1,11 @@
-
 package controller
 
 import (
-    TransactionDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
+	TransactionDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
 	"net/http"
-	 "encoding/json"
 )
 
 // ----------------------------------------------------------------------------
@@ -17,7 +16,7 @@ func CreateTransaction(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty Transaction model
 	// ----------------------------------------------------------------------------
 	data := model.Transaction{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a Transaction model structure
 	// ----------------------------------------------------------------------------
@@ -26,17 +25,17 @@ func CreateTransaction(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the Transaction data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := TransactionDAO.CreateTransaction( data )
-	
+	requestResult := TransactionDAO.CreateTransaction(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -59,18 +58,17 @@ func GetTransaction(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := TransactionDAO.GetTransaction(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to TransactionDAO for database read of all Transactions
@@ -80,16 +78,16 @@ func GetAllTransaction(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the Transaction data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := TransactionDAO.GetAllTransaction()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -100,7 +98,7 @@ func UpdateTransaction(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty Transaction model
 	// ----------------------------------------------------------------------------
 	var data = model.Transaction{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a Transaction model structure
 	// ----------------------------------------------------------------------------
@@ -118,8 +116,8 @@ func UpdateTransaction(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -139,24 +137,24 @@ func DeleteTransaction(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the Transaction data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := TransactionDAO.DeleteTransaction(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Account on a Transaction
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Account on a Transaction
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignAccountToTransaction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -180,15 +178,15 @@ func AssignAccountToTransaction(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Account on a Transaction
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignAccountFromTransaction( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Account on a Transaction
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignAccountFromTransaction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -211,14 +209,14 @@ func UnassignAccountFromTransaction( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a ExternalCounterparty on a Transaction
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a ExternalCounterparty on a Transaction
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignExternalCounterpartyToTransaction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -242,15 +240,15 @@ func AssignExternalCounterpartyToTransaction(w http.ResponseWriter, r *http.Requ
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a ExternalCounterparty on a Transaction
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignExternalCounterpartyFromTransaction( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a ExternalCounterparty on a Transaction
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignExternalCounterpartyFromTransaction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -273,14 +271,14 @@ func UnassignExternalCounterpartyFromTransaction( w http.ResponseWriter, r *http
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a PaymentCard on a Transaction
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a PaymentCard on a Transaction
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignPaymentCardToTransaction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -304,15 +302,15 @@ func AssignPaymentCardToTransaction(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a PaymentCard on a Transaction
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignPaymentCardFromTransaction( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a PaymentCard on a Transaction
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignPaymentCardFromTransaction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -335,14 +333,14 @@ func UnassignPaymentCardFromTransaction( w http.ResponseWriter, r *http.Request 
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a FundsTransfer on a Transaction
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a FundsTransfer on a Transaction
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignFundsTransferToTransaction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -366,15 +364,15 @@ func AssignFundsTransferToTransaction(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a FundsTransfer on a Transaction
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignFundsTransferFromTransaction( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a FundsTransfer on a Transaction
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignFundsTransferFromTransaction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -397,14 +395,14 @@ func UnassignFundsTransferFromTransaction( w http.ResponseWriter, r *http.Reques
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a FxTrade on a Transaction
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a FxTrade on a Transaction
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignFxTradeToTransaction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -428,15 +426,15 @@ func AssignFxTradeToTransaction(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a FxTrade on a Transaction
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignFxTradeFromTransaction( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a FxTrade on a Transaction
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignFxTradeFromTransaction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -459,14 +457,14 @@ func UnassignFxTradeFromTransaction( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Dispute on a Transaction
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Dispute on a Transaction
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignDisputeToTransaction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -490,15 +488,15 @@ func AssignDisputeToTransaction(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Dispute on a Transaction
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignDisputeFromTransaction( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Dispute on a Transaction
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignDisputeFromTransaction(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -521,8 +519,6 @@ func UnassignDisputeFromTransaction( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
-

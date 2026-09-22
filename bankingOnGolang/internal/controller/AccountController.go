@@ -1,12 +1,11 @@
-
 package controller
 
 import (
-    AccountDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
+	AccountDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
 	"net/http"
-	 "encoding/json"
 )
 
 // ----------------------------------------------------------------------------
@@ -17,7 +16,7 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty Account model
 	// ----------------------------------------------------------------------------
 	data := model.Account{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a Account model structure
 	// ----------------------------------------------------------------------------
@@ -26,17 +25,17 @@ func CreateAccount(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the Account data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := AccountDAO.CreateAccount( data )
-	
+	requestResult := AccountDAO.CreateAccount(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -59,18 +58,17 @@ func GetAccount(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := AccountDAO.GetAccount(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to AccountDAO for database read of all Accounts
@@ -80,16 +78,16 @@ func GetAllAccount(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the Account data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := AccountDAO.GetAllAccount()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -100,7 +98,7 @@ func UpdateAccount(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty Account model
 	// ----------------------------------------------------------------------------
 	var data = model.Account{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a Account model structure
 	// ----------------------------------------------------------------------------
@@ -118,8 +116,8 @@ func UpdateAccount(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -139,24 +137,24 @@ func DeleteAccount(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the Account data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := AccountDAO.DeleteAccount(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Bank on a Account
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Bank on a Account
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignBankToAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -180,15 +178,15 @@ func AssignBankToAccount(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Bank on a Account
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignBankFromAccount( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Bank on a Account
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignBankFromAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -211,14 +209,14 @@ func UnassignBankFromAccount( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Branch on a Account
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Branch on a Account
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignBranchToAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -242,15 +240,15 @@ func AssignBranchToAccount(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Branch on a Account
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignBranchFromAccount( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Branch on a Account
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignBranchFromAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -273,14 +271,14 @@ func UnassignBranchFromAccount( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Product on a Account
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Product on a Account
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignProductToAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -304,15 +302,15 @@ func AssignProductToAccount(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Product on a Account
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignProductFromAccount( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Product on a Account
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignProductFromAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -335,15 +333,14 @@ func UnassignProductFromAccount( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-
-	// ----------------------------------------------------------------------------
-	// adds one or more ownersIds as a Owners to a Account
-	// ----------------------------------------------------------------------------
-func AddOwnersToAccount(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// adds one or more ownersIds as a Owners to a Account
+// ----------------------------------------------------------------------------
+func AddOwnersToAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -366,15 +363,15 @@ func AddOwnersToAccount(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more ownersIds as a Owners from a Account
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveOwnersFromAccount(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more ownersIds as a Owners from a Account
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveOwnersFromAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -397,14 +394,14 @@ func RemoveOwnersFromAccount(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more transactionsIds as a Transactions to a Account
-	// ----------------------------------------------------------------------------
-func AddTransactionsToAccount(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more transactionsIds as a Transactions to a Account
+// ----------------------------------------------------------------------------
+func AddTransactionsToAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -427,15 +424,15 @@ func AddTransactionsToAccount(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more transactionsIds as a Transactions from a Account
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveTransactionsFromAccount(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more transactionsIds as a Transactions from a Account
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveTransactionsFromAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -458,14 +455,14 @@ func RemoveTransactionsFromAccount(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more statementsIds as a Statements to a Account
-	// ----------------------------------------------------------------------------
-func AddStatementsToAccount(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more statementsIds as a Statements to a Account
+// ----------------------------------------------------------------------------
+func AddStatementsToAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -488,15 +485,15 @@ func AddStatementsToAccount(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more statementsIds as a Statements from a Account
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveStatementsFromAccount(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more statementsIds as a Statements from a Account
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveStatementsFromAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -519,14 +516,14 @@ func RemoveStatementsFromAccount(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more standingInstructionsIds as a StandingInstructions to a Account
-	// ----------------------------------------------------------------------------
-func AddStandingInstructionsToAccount(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more standingInstructionsIds as a StandingInstructions to a Account
+// ----------------------------------------------------------------------------
+func AddStandingInstructionsToAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -549,15 +546,15 @@ func AddStandingInstructionsToAccount(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more standingInstructionsIds as a StandingInstructions from a Account
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveStandingInstructionsFromAccount(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more standingInstructionsIds as a StandingInstructions from a Account
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveStandingInstructionsFromAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -580,14 +577,14 @@ func RemoveStandingInstructionsFromAccount(w http.ResponseWriter, r *http.Reques
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more feeChargesIds as a FeeCharges to a Account
-	// ----------------------------------------------------------------------------
-func AddFeeChargesToAccount(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more feeChargesIds as a FeeCharges to a Account
+// ----------------------------------------------------------------------------
+func AddFeeChargesToAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -610,15 +607,15 @@ func AddFeeChargesToAccount(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more feeChargesIds as a FeeCharges from a Account
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveFeeChargesFromAccount(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more feeChargesIds as a FeeCharges from a Account
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveFeeChargesFromAccount(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -641,7 +638,6 @@ func RemoveFeeChargesFromAccount(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		

@@ -1,12 +1,11 @@
-
 package controller
 
 import (
-    BranchDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
+	BranchDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
 	"net/http"
-	 "encoding/json"
 )
 
 // ----------------------------------------------------------------------------
@@ -17,7 +16,7 @@ func CreateBranch(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty Branch model
 	// ----------------------------------------------------------------------------
 	data := model.Branch{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a Branch model structure
 	// ----------------------------------------------------------------------------
@@ -26,17 +25,17 @@ func CreateBranch(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the Branch data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := BranchDAO.CreateBranch( data )
-	
+	requestResult := BranchDAO.CreateBranch(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -59,18 +58,17 @@ func GetBranch(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := BranchDAO.GetBranch(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to BranchDAO for database read of all Branchs
@@ -80,16 +78,16 @@ func GetAllBranch(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the Branch data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := BranchDAO.GetAllBranch()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -100,7 +98,7 @@ func UpdateBranch(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty Branch model
 	// ----------------------------------------------------------------------------
 	var data = model.Branch{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a Branch model structure
 	// ----------------------------------------------------------------------------
@@ -118,8 +116,8 @@ func UpdateBranch(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -139,24 +137,24 @@ func DeleteBranch(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the Branch data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := BranchDAO.DeleteBranch(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Bank on a Branch
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Bank on a Branch
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignBankToBranch(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -180,15 +178,15 @@ func AssignBankToBranch(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Bank on a Branch
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignBankFromBranch( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Bank on a Branch
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignBankFromBranch(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -211,15 +209,14 @@ func UnassignBankFromBranch( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-
-	// ----------------------------------------------------------------------------
-	// adds one or more accountsIds as a Accounts to a Branch
-	// ----------------------------------------------------------------------------
-func AddAccountsToBranch(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// adds one or more accountsIds as a Accounts to a Branch
+// ----------------------------------------------------------------------------
+func AddAccountsToBranch(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -242,15 +239,15 @@ func AddAccountsToBranch(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more accountsIds as a Accounts from a Branch
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveAccountsFromBranch(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more accountsIds as a Accounts from a Branch
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveAccountsFromBranch(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -273,14 +270,14 @@ func RemoveAccountsFromBranch(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more loanAccountsIds as a LoanAccounts to a Branch
-	// ----------------------------------------------------------------------------
-func AddLoanAccountsToBranch(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more loanAccountsIds as a LoanAccounts to a Branch
+// ----------------------------------------------------------------------------
+func AddLoanAccountsToBranch(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -303,15 +300,15 @@ func AddLoanAccountsToBranch(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more loanAccountsIds as a LoanAccounts from a Branch
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveLoanAccountsFromBranch(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more loanAccountsIds as a LoanAccounts from a Branch
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveLoanAccountsFromBranch(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -334,14 +331,14 @@ func RemoveLoanAccountsFromBranch(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more atmsIds as a Atms to a Branch
-	// ----------------------------------------------------------------------------
-func AddAtmsToBranch(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more atmsIds as a Atms to a Branch
+// ----------------------------------------------------------------------------
+func AddAtmsToBranch(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -364,15 +361,15 @@ func AddAtmsToBranch(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more atmsIds as a Atms from a Branch
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveAtmsFromBranch(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more atmsIds as a Atms from a Branch
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveAtmsFromBranch(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -395,7 +392,6 @@ func RemoveAtmsFromBranch(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		

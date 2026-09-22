@@ -1,12 +1,11 @@
-
 package controller
 
 import (
-    ScreeningResultDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
+	ScreeningResultDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
 	"net/http"
-	 "encoding/json"
 )
 
 // ----------------------------------------------------------------------------
@@ -17,7 +16,7 @@ func CreateScreeningResult(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty ScreeningResult model
 	// ----------------------------------------------------------------------------
 	data := model.ScreeningResult{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a ScreeningResult model structure
 	// ----------------------------------------------------------------------------
@@ -26,17 +25,17 @@ func CreateScreeningResult(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the ScreeningResult data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := ScreeningResultDAO.CreateScreeningResult( data )
-	
+	requestResult := ScreeningResultDAO.CreateScreeningResult(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -59,18 +58,17 @@ func GetScreeningResult(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := ScreeningResultDAO.GetScreeningResult(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to ScreeningResultDAO for database read of all ScreeningResults
@@ -80,16 +78,16 @@ func GetAllScreeningResult(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the ScreeningResult data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := ScreeningResultDAO.GetAllScreeningResult()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -100,7 +98,7 @@ func UpdateScreeningResult(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty ScreeningResult model
 	// ----------------------------------------------------------------------------
 	var data = model.ScreeningResult{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a ScreeningResult model structure
 	// ----------------------------------------------------------------------------
@@ -118,8 +116,8 @@ func UpdateScreeningResult(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -139,24 +137,24 @@ func DeleteScreeningResult(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the ScreeningResult data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := ScreeningResultDAO.DeleteScreeningResult(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a KycProfile on a ScreeningResult
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a KycProfile on a ScreeningResult
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignKycProfileToScreeningResult(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -180,15 +178,15 @@ func AssignKycProfileToScreeningResult(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a KycProfile on a ScreeningResult
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignKycProfileFromScreeningResult( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a KycProfile on a ScreeningResult
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignKycProfileFromScreeningResult(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -211,8 +209,6 @@ func UnassignKycProfileFromScreeningResult( w http.ResponseWriter, r *http.Reque
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
-

@@ -1,12 +1,11 @@
-
 package controller
 
 import (
-    CustomerDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
+	CustomerDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
 	"net/http"
-	 "encoding/json"
 )
 
 // ----------------------------------------------------------------------------
@@ -17,7 +16,7 @@ func CreateCustomer(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty Customer model
 	// ----------------------------------------------------------------------------
 	data := model.Customer{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a Customer model structure
 	// ----------------------------------------------------------------------------
@@ -26,17 +25,17 @@ func CreateCustomer(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the Customer data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := CustomerDAO.CreateCustomer( data )
-	
+	requestResult := CustomerDAO.CreateCustomer(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -59,18 +58,17 @@ func GetCustomer(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := CustomerDAO.GetCustomer(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to CustomerDAO for database read of all Customers
@@ -80,16 +78,16 @@ func GetAllCustomer(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the Customer data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := CustomerDAO.GetAllCustomer()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -100,7 +98,7 @@ func UpdateCustomer(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty Customer model
 	// ----------------------------------------------------------------------------
 	var data = model.Customer{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a Customer model structure
 	// ----------------------------------------------------------------------------
@@ -118,8 +116,8 @@ func UpdateCustomer(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -139,24 +137,24 @@ func DeleteCustomer(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the Customer data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := CustomerDAO.DeleteCustomer(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Bank on a Customer
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Bank on a Customer
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignBankToCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -180,15 +178,15 @@ func AssignBankToCustomer(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Bank on a Customer
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignBankFromCustomer( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Bank on a Customer
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignBankFromCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -211,15 +209,14 @@ func UnassignBankFromCustomer( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-
-	// ----------------------------------------------------------------------------
-	// adds one or more accountsIds as a Accounts to a Customer
-	// ----------------------------------------------------------------------------
-func AddAccountsToCustomer(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// adds one or more accountsIds as a Accounts to a Customer
+// ----------------------------------------------------------------------------
+func AddAccountsToCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -242,15 +239,15 @@ func AddAccountsToCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more accountsIds as a Accounts from a Customer
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveAccountsFromCustomer(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more accountsIds as a Accounts from a Customer
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveAccountsFromCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -273,14 +270,14 @@ func RemoveAccountsFromCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more loanAccountsIds as a LoanAccounts to a Customer
-	// ----------------------------------------------------------------------------
-func AddLoanAccountsToCustomer(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more loanAccountsIds as a LoanAccounts to a Customer
+// ----------------------------------------------------------------------------
+func AddLoanAccountsToCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -303,15 +300,15 @@ func AddLoanAccountsToCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more loanAccountsIds as a LoanAccounts from a Customer
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveLoanAccountsFromCustomer(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more loanAccountsIds as a LoanAccounts from a Customer
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveLoanAccountsFromCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -334,14 +331,14 @@ func RemoveLoanAccountsFromCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more paymentCardsIds as a PaymentCards to a Customer
-	// ----------------------------------------------------------------------------
-func AddPaymentCardsToCustomer(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more paymentCardsIds as a PaymentCards to a Customer
+// ----------------------------------------------------------------------------
+func AddPaymentCardsToCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -364,15 +361,15 @@ func AddPaymentCardsToCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more paymentCardsIds as a PaymentCards from a Customer
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemovePaymentCardsFromCustomer(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more paymentCardsIds as a PaymentCards from a Customer
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemovePaymentCardsFromCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -395,14 +392,14 @@ func RemovePaymentCardsFromCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more externalAccountsIds as a ExternalAccounts to a Customer
-	// ----------------------------------------------------------------------------
-func AddExternalAccountsToCustomer(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more externalAccountsIds as a ExternalAccounts to a Customer
+// ----------------------------------------------------------------------------
+func AddExternalAccountsToCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -425,15 +422,15 @@ func AddExternalAccountsToCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more externalAccountsIds as a ExternalAccounts from a Customer
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveExternalAccountsFromCustomer(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more externalAccountsIds as a ExternalAccounts from a Customer
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveExternalAccountsFromCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -456,14 +453,14 @@ func RemoveExternalAccountsFromCustomer(w http.ResponseWriter, r *http.Request) 
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more fundsTransfersIds as a FundsTransfers to a Customer
-	// ----------------------------------------------------------------------------
-func AddFundsTransfersToCustomer(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more fundsTransfersIds as a FundsTransfers to a Customer
+// ----------------------------------------------------------------------------
+func AddFundsTransfersToCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -486,15 +483,15 @@ func AddFundsTransfersToCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more fundsTransfersIds as a FundsTransfers from a Customer
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveFundsTransfersFromCustomer(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more fundsTransfersIds as a FundsTransfers from a Customer
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveFundsTransfersFromCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -517,14 +514,14 @@ func RemoveFundsTransfersFromCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more disputesIds as a Disputes to a Customer
-	// ----------------------------------------------------------------------------
-func AddDisputesToCustomer(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more disputesIds as a Disputes to a Customer
+// ----------------------------------------------------------------------------
+func AddDisputesToCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -547,15 +544,15 @@ func AddDisputesToCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more disputesIds as a Disputes from a Customer
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveDisputesFromCustomer(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more disputesIds as a Disputes from a Customer
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveDisputesFromCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -578,14 +575,14 @@ func RemoveDisputesFromCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more kycProfilesIds as a KycProfiles to a Customer
-	// ----------------------------------------------------------------------------
-func AddKycProfilesToCustomer(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more kycProfilesIds as a KycProfiles to a Customer
+// ----------------------------------------------------------------------------
+func AddKycProfilesToCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -608,15 +605,15 @@ func AddKycProfilesToCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more kycProfilesIds as a KycProfiles from a Customer
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveKycProfilesFromCustomer(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more kycProfilesIds as a KycProfiles from a Customer
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveKycProfilesFromCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -639,14 +636,14 @@ func RemoveKycProfilesFromCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		
-	// ----------------------------------------------------------------------------
-	// adds one or more consentsIds as a Consents to a Customer
-	// ----------------------------------------------------------------------------
-func AddConsentsToCustomer(w http.ResponseWriter, r *http.Request)  {
+
+// ----------------------------------------------------------------------------
+// adds one or more consentsIds as a Consents to a Customer
+// ----------------------------------------------------------------------------
+func AddConsentsToCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -669,15 +666,15 @@ func AddConsentsToCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more consentsIds as a Consents from a Customer
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveConsentsFromCustomer(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more consentsIds as a Consents from a Customer
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveConsentsFromCustomer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -700,7 +697,6 @@ func RemoveConsentsFromCustomer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		

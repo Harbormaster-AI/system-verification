@@ -1,12 +1,11 @@
-
 package controller
 
 import (
-    FundsTransferDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
+	FundsTransferDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
 	"net/http"
-	 "encoding/json"
 )
 
 // ----------------------------------------------------------------------------
@@ -17,7 +16,7 @@ func CreateFundsTransfer(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty FundsTransfer model
 	// ----------------------------------------------------------------------------
 	data := model.FundsTransfer{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a FundsTransfer model structure
 	// ----------------------------------------------------------------------------
@@ -26,17 +25,17 @@ func CreateFundsTransfer(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the FundsTransfer data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := FundsTransferDAO.CreateFundsTransfer( data )
-	
+	requestResult := FundsTransferDAO.CreateFundsTransfer(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -59,18 +58,17 @@ func GetFundsTransfer(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := FundsTransferDAO.GetFundsTransfer(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to FundsTransferDAO for database read of all FundsTransfers
@@ -80,16 +78,16 @@ func GetAllFundsTransfer(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the FundsTransfer data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := FundsTransferDAO.GetAllFundsTransfer()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -100,7 +98,7 @@ func UpdateFundsTransfer(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty FundsTransfer model
 	// ----------------------------------------------------------------------------
 	var data = model.FundsTransfer{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a FundsTransfer model structure
 	// ----------------------------------------------------------------------------
@@ -118,8 +116,8 @@ func UpdateFundsTransfer(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -139,24 +137,24 @@ func DeleteFundsTransfer(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the FundsTransfer data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := FundsTransferDAO.DeleteFundsTransfer(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a SourceAccount on a FundsTransfer
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a SourceAccount on a FundsTransfer
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignSourceAccountToFundsTransfer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -180,15 +178,15 @@ func AssignSourceAccountToFundsTransfer(w http.ResponseWriter, r *http.Request) 
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a SourceAccount on a FundsTransfer
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignSourceAccountFromFundsTransfer( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a SourceAccount on a FundsTransfer
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignSourceAccountFromFundsTransfer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -211,14 +209,14 @@ func UnassignSourceAccountFromFundsTransfer( w http.ResponseWriter, r *http.Requ
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a DestinationAccount on a FundsTransfer
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a DestinationAccount on a FundsTransfer
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignDestinationAccountToFundsTransfer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -242,15 +240,15 @@ func AssignDestinationAccountToFundsTransfer(w http.ResponseWriter, r *http.Requ
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a DestinationAccount on a FundsTransfer
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignDestinationAccountFromFundsTransfer( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a DestinationAccount on a FundsTransfer
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignDestinationAccountFromFundsTransfer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -273,14 +271,14 @@ func UnassignDestinationAccountFromFundsTransfer( w http.ResponseWriter, r *http
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a ExternalBeneficiary on a FundsTransfer
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a ExternalBeneficiary on a FundsTransfer
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignExternalBeneficiaryToFundsTransfer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -304,15 +302,15 @@ func AssignExternalBeneficiaryToFundsTransfer(w http.ResponseWriter, r *http.Req
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a ExternalBeneficiary on a FundsTransfer
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignExternalBeneficiaryFromFundsTransfer( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a ExternalBeneficiary on a FundsTransfer
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignExternalBeneficiaryFromFundsTransfer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -335,14 +333,14 @@ func UnassignExternalBeneficiaryFromFundsTransfer( w http.ResponseWriter, r *htt
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a InitiatedBy on a FundsTransfer
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a InitiatedBy on a FundsTransfer
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignInitiatedByToFundsTransfer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -366,15 +364,15 @@ func AssignInitiatedByToFundsTransfer(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a InitiatedBy on a FundsTransfer
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignInitiatedByFromFundsTransfer( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a InitiatedBy on a FundsTransfer
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignInitiatedByFromFundsTransfer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -397,15 +395,14 @@ func UnassignInitiatedByFromFundsTransfer( w http.ResponseWriter, r *http.Reques
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-
-	// ----------------------------------------------------------------------------
-	// adds one or more transactionsIds as a Transactions to a FundsTransfer
-	// ----------------------------------------------------------------------------
-func AddTransactionsToFundsTransfer(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// adds one or more transactionsIds as a Transactions to a FundsTransfer
+// ----------------------------------------------------------------------------
+func AddTransactionsToFundsTransfer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty AddToRequest model
@@ -428,15 +425,15 @@ func AddTransactionsToFundsTransfer(w http.ResponseWriter, r *http.Request)  {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// removes one or more transactionsIds as a Transactions from a FundsTransfer
-	// delegates via URI to an ORM handler
-	// ----------------------------------------------------------------------------
-func RemoveTransactionsFromFundsTransfer(w http.ResponseWriter, r *http.Request)  {
+// ----------------------------------------------------------------------------
+// removes one or more transactionsIds as a Transactions from a FundsTransfer
+// delegates via URI to an ORM handler
+// ----------------------------------------------------------------------------
+func RemoveTransactionsFromFundsTransfer(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty RemoveFromRequest model
@@ -459,7 +456,6 @@ func RemoveTransactionsFromFundsTransfer(w http.ResponseWriter, r *http.Request)
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-		

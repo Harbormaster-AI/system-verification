@@ -1,12 +1,11 @@
-
 package controller
 
 import (
-    FXTradeDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
+	FXTradeDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
 	"net/http"
-	 "encoding/json"
 )
 
 // ----------------------------------------------------------------------------
@@ -17,7 +16,7 @@ func CreateFXTrade(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty FXTrade model
 	// ----------------------------------------------------------------------------
 	data := model.FXTrade{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a FXTrade model structure
 	// ----------------------------------------------------------------------------
@@ -26,17 +25,17 @@ func CreateFXTrade(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the FXTrade data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := FXTradeDAO.CreateFXTrade( data )
-	
+	requestResult := FXTradeDAO.CreateFXTrade(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -59,18 +58,17 @@ func GetFXTrade(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := FXTradeDAO.GetFXTrade(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to FXTradeDAO for database read of all FXTrades
@@ -80,16 +78,16 @@ func GetAllFXTrade(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the FXTrade data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := FXTradeDAO.GetAllFXTrade()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -100,7 +98,7 @@ func UpdateFXTrade(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty FXTrade model
 	// ----------------------------------------------------------------------------
 	var data = model.FXTrade{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a FXTrade model structure
 	// ----------------------------------------------------------------------------
@@ -118,8 +116,8 @@ func UpdateFXTrade(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -139,24 +137,24 @@ func DeleteFXTrade(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the FXTrade data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := FXTradeDAO.DeleteFXTrade(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Customer on a FXTrade
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Customer on a FXTrade
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignCustomerToFXTrade(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -180,15 +178,15 @@ func AssignCustomerToFXTrade(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Customer on a FXTrade
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignCustomerFromFXTrade( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Customer on a FXTrade
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignCustomerFromFXTrade(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -211,14 +209,14 @@ func UnassignCustomerFromFXTrade( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Bank on a FXTrade
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Bank on a FXTrade
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignBankToFXTrade(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -242,15 +240,15 @@ func AssignBankToFXTrade(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Bank on a FXTrade
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignBankFromFXTrade( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Bank on a FXTrade
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignBankFromFXTrade(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -273,14 +271,14 @@ func UnassignBankFromFXTrade( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a ExchangeRate on a FXTrade
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a ExchangeRate on a FXTrade
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignExchangeRateToFXTrade(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -304,15 +302,15 @@ func AssignExchangeRateToFXTrade(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a ExchangeRate on a FXTrade
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignExchangeRateFromFXTrade( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a ExchangeRate on a FXTrade
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignExchangeRateFromFXTrade(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -335,14 +333,14 @@ func UnassignExchangeRateFromFXTrade( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a SourceAccount on a FXTrade
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a SourceAccount on a FXTrade
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignSourceAccountToFXTrade(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -366,15 +364,15 @@ func AssignSourceAccountToFXTrade(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a SourceAccount on a FXTrade
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignSourceAccountFromFXTrade( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a SourceAccount on a FXTrade
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignSourceAccountFromFXTrade(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -397,14 +395,14 @@ func UnassignSourceAccountFromFXTrade( w http.ResponseWriter, r *http.Request ) 
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a DestinationAccount on a FXTrade
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a DestinationAccount on a FXTrade
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignDestinationAccountToFXTrade(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -428,15 +426,15 @@ func AssignDestinationAccountToFXTrade(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a DestinationAccount on a FXTrade
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignDestinationAccountFromFXTrade( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a DestinationAccount on a FXTrade
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignDestinationAccountFromFXTrade(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -459,14 +457,14 @@ func UnassignDestinationAccountFromFXTrade( w http.ResponseWriter, r *http.Reque
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Transaction on a FXTrade
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Transaction on a FXTrade
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignTransactionToFXTrade(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -490,15 +488,15 @@ func AssignTransactionToFXTrade(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Transaction on a FXTrade
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignTransactionFromFXTrade( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Transaction on a FXTrade
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignTransactionFromFXTrade(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -521,8 +519,6 @@ func UnassignTransactionFromFXTrade( w http.ResponseWriter, r *http.Request ) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
-

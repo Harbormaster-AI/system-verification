@@ -1,12 +1,11 @@
-
 package controller
 
 import (
-    AccountStatementDAO "bankingOnGolang/internal/dao"
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
+	AccountStatementDAO "bankingOnGolang/internal/dao"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"encoding/json"
 	"net/http"
-	 "encoding/json"
 )
 
 // ----------------------------------------------------------------------------
@@ -17,7 +16,7 @@ func CreateAccountStatement(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty AccountStatement model
 	// ----------------------------------------------------------------------------
 	data := model.AccountStatement{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a AccountStatement model structure
 	// ----------------------------------------------------------------------------
@@ -26,17 +25,17 @@ func CreateAccountStatement(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the AccountStatement data access object to create
 	// ----------------------------------------------------------------------------
-	requestResult := AccountStatementDAO.CreateAccountStatement( data )
-	
+	requestResult := AccountStatementDAO.CreateAccountStatement(data)
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -59,18 +58,17 @@ func GetAccountStatement(w http.ResponseWriter, r *http.Request) {
 	// find the one with the matching identifier
 	// ----------------------------------------------------------------------------
 	requestResult := AccountStatementDAO.GetAccountStatement(data.Id)
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
 
 // ----------------------------------------------------------------------------
 // GetAll controller, delegates to AccountStatementDAO for database read of all AccountStatements
@@ -80,16 +78,16 @@ func GetAllAccountStatement(w http.ResponseWriter, r *http.Request) {
 	// Delegate to the AccountStatement data access object to get all
 	// ----------------------------------------------------------------------------
 	requestResult := AccountStatementDAO.GetAllAccountStatement()
-	
+
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
-	res,_ := json.Marshal(requestResult)
+	res, _ := json.Marshal(requestResult)
 
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -100,7 +98,7 @@ func UpdateAccountStatement(w http.ResponseWriter, r *http.Request) {
 	// Initialize an empty AccountStatement model
 	// ----------------------------------------------------------------------------
 	var data = model.AccountStatement{}
-	
+
 	// ----------------------------------------------------------------------------
 	// Parse the body into a AccountStatement model structure
 	// ----------------------------------------------------------------------------
@@ -118,8 +116,8 @@ func UpdateAccountStatement(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
 // ----------------------------------------------------------------------------
@@ -139,24 +137,24 @@ func DeleteAccountStatement(w http.ResponseWriter, r *http.Request) {
 	// ----------------------------------------------------------------------------
 	// Delegate to the AccountStatement data access object
 	// delete the one with the matching identifier
-	// ----------------------------------------------------------------------------	
+	// ----------------------------------------------------------------------------
 	requestResult := AccountStatementDAO.DeleteAccountStatement(data.Id)
 
 	// ----------------------------------------------------------------------------
 	// Marshal the model into a JSON object
 	// ----------------------------------------------------------------------------
 	res, _ := json.Marshal(requestResult)
-	
+
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// assigns a Account on a AccountStatement
-	// delegates to an ORM handler
-	// ----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// assigns a Account on a AccountStatement
+// delegates to an ORM handler
+// ----------------------------------------------------------------------------
 func AssignAccountToAccountStatement(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
@@ -180,15 +178,15 @@ func AssignAccountToAccountStatement(w http.ResponseWriter, r *http.Request) {
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
 
-	// ----------------------------------------------------------------------------
-	// unassigns a Account on a AccountStatement
-	// delegates to the ORM handler
-	// ----------------------------------------------------------------------------
-func UnassignAccountFromAccountStatement( w http.ResponseWriter, r *http.Request ) {
+// ----------------------------------------------------------------------------
+// unassigns a Account on a AccountStatement
+// delegates to the ORM handler
+// ----------------------------------------------------------------------------
+func UnassignAccountFromAccountStatement(w http.ResponseWriter, r *http.Request) {
 
 	// ----------------------------------------------------------------------------
 	// Initialize an empty UnassignRequest model
@@ -211,8 +209,6 @@ func UnassignAccountFromAccountStatement( w http.ResponseWriter, r *http.Request
 	res, _ := json.Marshal(requestResult)
 	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(res); err != nil {
-        log.Printf("Failed to write response: %v", err)
-    }
+		log.Printf("Failed to write response: %v", err)
+	}
 }
-
-

@@ -1,23 +1,21 @@
-
 package dao
 
 import (
-    "bankingOnGolang/internal/model"
-    "bankingOnGolang/internal/utils"
-    "fmt"
-    "strings"
-    "github.com/google/uuid"
+	"bankingOnGolang/internal/model"
+	"bankingOnGolang/internal/utils"
+	"fmt"
+	"github.com/google/uuid"
+	"strings"
 )
 
-
 func init() {
-	fmt.Println( strings.ToTitle( "Initializing PaymentCardDAO..." ) )
+	fmt.Println(strings.ToTitle("Initializing PaymentCardDAO..."))
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // CreatePaymentCard - creates a new db entry
-//----------------------------------------------------------------------------
-func CreatePaymentCard(obj model.PaymentCard)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func CreatePaymentCard(obj model.PaymentCard) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -30,26 +28,25 @@ func CreatePaymentCard(obj model.PaymentCard)(utils.RequestResult){
 	result := utils.GetDB().Create(&obj).Error
 
 	if result == nil {
-	    createMsg = fmt.Sprintf( "Created a PaymentCard with ID=%v", obj.ID )
-	    success = true
+		createMsg = fmt.Sprintf("Created a PaymentCard with ID=%v", obj.ID)
+		success = true
 	} else {
-		createMsg = fmt.Sprintf( "Failed trying to create a PaymentCard. Result: %s", result )
+		createMsg = fmt.Sprintf("Failed trying to create a PaymentCard. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        createMsg,
-        Call:       "CreatePaymentCard",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     createMsg,
+		Call:    "CreatePaymentCard",
+		Data:    obj,
+	}
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetPaymentCard - returns the matching the provided identifier
-//----------------------------------------------------------------------------
-func GetPaymentCard(id uuid.UUID)(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetPaymentCard(id uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -67,26 +64,26 @@ func GetPaymentCard(id uuid.UUID)(utils.RequestResult){
 	result := utils.GetDB().First(&obj, id).Error // find first using identifier
 
 	if result == nil {
-	    getMsg = fmt.Sprintf( "Retrieved a PaymentCard using ID=%v", id )
-	    success = true
+		getMsg = fmt.Sprintf("Retrieved a PaymentCard using ID=%v", id)
+		success = true
 	} else {
-		getMsg = fmt.Sprintf( "Failed trying to retrieve a PaymentCard using ID=%v", id )
+		getMsg = fmt.Sprintf("Failed trying to retrieve a PaymentCard using ID=%v", id)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getMsg,
-        Call:       "GetPaymentCard",
-        Data:       obj,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getMsg,
+		Call:    "GetPaymentCard",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // GetAllPaymentCard - returns all
-//----------------------------------------------------------------------------
-func GetAllPaymentCard()(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func GetAllPaymentCard() (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -100,26 +97,26 @@ func GetAllPaymentCard()(requestResult utils.RequestResult){
 	result := utils.GetDB().Find(&objs).Error // find all
 
 	if result == nil {
-	    getAllMsg = "Retrieved all PaymentCard"
-	    success = true
+		getAllMsg = "Retrieved all PaymentCard"
+		success = true
 	} else {
-		getAllMsg = fmt.Sprintf( "Failed trying to retrieve all PaymentCard. Result: %s", result )
+		getAllMsg = fmt.Sprintf("Failed trying to retrieve all PaymentCard. Result: %s", result)
 		success = false
 	}
 
-    return utils.RequestResult{
-        Success:    success,
-        Msg:        getAllMsg,
-        Call:       "GetAllPaymentCard",
-        Data:       objs,
-    }
+	return utils.RequestResult{
+		Success: success,
+		Msg:     getAllMsg,
+		Call:    "GetAllPaymentCard",
+		Data:    objs,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // UpdatePaymentCard - updates matching the provided identifier
-//----------------------------------------------------------------------------
-func UpdatePaymentCard(obj model.PaymentCard)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func UpdatePaymentCard(obj model.PaymentCard) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -132,26 +129,26 @@ func UpdatePaymentCard(obj model.PaymentCard)(requestResult utils.RequestResult)
 	result := utils.GetDB().Save(&obj).Error
 
 	if result == nil {
-	    updateMsg = fmt.Sprintf( "Updated a PaymentCard using ID=%v", obj.ID )
-	    success = true
+		updateMsg = fmt.Sprintf("Updated a PaymentCard using ID=%v", obj.ID)
+		success = true
 	} else {
-		updateMsg = fmt.Sprintf( "Failed trying to update a PaymentCard using ID=%v", obj.ID )
+		updateMsg = fmt.Sprintf("Failed trying to update a PaymentCard using ID=%v", obj.ID)
 		success = false
 	}
 
 	return utils.RequestResult{
-        Success:    success,
-        Msg:        updateMsg,
-        Call:       "UpdatePaymentCard",
-        Data:       obj,
-    }
+		Success: success,
+		Msg:     updateMsg,
+		Call:    "UpdatePaymentCard",
+		Data:    obj,
+	}
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DeletePaymentCard - deletes matching the provided identifier
-//----------------------------------------------------------------------------
-func DeletePaymentCard(id uuid.UUID)(requestResult utils.RequestResult){
+// ----------------------------------------------------------------------------
+func DeletePaymentCard(id uuid.UUID) (requestResult utils.RequestResult) {
 	//----------------------------------------------------------------------------
 	// variable initialization
 	//----------------------------------------------------------------------------
@@ -168,7 +165,7 @@ func DeletePaymentCard(id uuid.UUID)(requestResult utils.RequestResult){
 		// Need to cast the interface to a model.PaymentCard so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		obj,_ := requestResult.Data.(model.PaymentCard)
+		obj, _ := requestResult.Data.(model.PaymentCard)
 
 		//----------------------------------------------------------------------------
 		// Make call to the ORM to delete
@@ -176,30 +173,29 @@ func DeletePaymentCard(id uuid.UUID)(requestResult utils.RequestResult){
 		result := utils.GetDB().Delete(&obj).Error // pass pointer of data to Delete
 
 		if result == nil {
-		    deleteMsg = fmt.Sprintf( "Deleted a PaymentCard using ID=%v", id )
-		    success = true
+			deleteMsg = fmt.Sprintf("Deleted a PaymentCard using ID=%v", id)
+			success = true
 		} else {
-			deleteMsg = fmt.Sprintf( "Failed trying to delete a PaymentCard using ID=%v", id )
+			deleteMsg = fmt.Sprintf("Failed trying to delete a PaymentCard using ID=%v", id)
 			success = false
 		}
 
-        requestResult = utils.RequestResult{
-            Success:    success,
-            Msg:        deleteMsg,
-            Call:       "DeletePaymentCard",
-            Data:       requestResult.Data,
-        }
+		requestResult = utils.RequestResult{
+			Success: success,
+			Msg:     deleteMsg,
+			Call:    "DeletePaymentCard",
+			Data:    requestResult.Data,
+		}
 
 	}
 
 	return requestResult
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Bank on a PaymentCard
-//----------------------------------------------------------------------------
-func AssignBankToPaymentCard( paymentCardId uuid.UUID, bankId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignBankToPaymentCard(paymentCardId uuid.UUID, bankId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the PaymentCard with the matching identifier
@@ -211,7 +207,7 @@ func AssignBankToPaymentCard( paymentCardId uuid.UUID, bankId uuid.UUID )(utils.
 		// Need to cast the interface to a model.PaymentCard so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.PaymentCard)
+		parentObj, _ := parentRequestResult.Data.(model.PaymentCard)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -235,24 +231,24 @@ func AssignBankToPaymentCard( paymentCardId uuid.UUID, bankId uuid.UUID )(utils.
 			//----------------------------------------------------------------------------
 			return UpdatePaymentCard(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Bank", bankId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Bank", bankId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignBank",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignBank",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Bank on a PaymentCard
-//----------------------------------------------------------------------------
-func UnassignBankFromPaymentCard(paymentCardId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignBankFromPaymentCard(paymentCardId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the PaymentCard with the matching identifier
@@ -264,17 +260,17 @@ func UnassignBankFromPaymentCard(paymentCardId uuid.UUID)(utils.RequestResult) {
 		// Need to cast the interface to a model.PaymentCard so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.PaymentCard)
+		parentObj, _ := parentRequestResult.Data.(model.PaymentCard)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Bank to the Bank
 		//----------------------------------------------------------------------------
-		parentObj.Bank = nil;
+		parentObj.Bank = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Bank
 		//----------------------------------------------------------------------------
-		parentObj.BankId = nil;
+		parentObj.BankId = nil
 
 		//----------------------------------------------------------------------------
 		// save the PaymentCard
@@ -287,10 +283,10 @@ func UnassignBankFromPaymentCard(paymentCardId uuid.UUID)(utils.RequestResult) {
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Account on a PaymentCard
-//----------------------------------------------------------------------------
-func AssignAccountToPaymentCard( paymentCardId uuid.UUID, accountId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignAccountToPaymentCard(paymentCardId uuid.UUID, accountId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the PaymentCard with the matching identifier
@@ -302,7 +298,7 @@ func AssignAccountToPaymentCard( paymentCardId uuid.UUID, accountId uuid.UUID )(
 		// Need to cast the interface to a model.PaymentCard so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.PaymentCard)
+		parentObj, _ := parentRequestResult.Data.(model.PaymentCard)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -326,24 +322,24 @@ func AssignAccountToPaymentCard( paymentCardId uuid.UUID, accountId uuid.UUID )(
 			//----------------------------------------------------------------------------
 			return UpdatePaymentCard(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Account", accountId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Account", accountId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignAccount",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignAccount",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Account on a PaymentCard
-//----------------------------------------------------------------------------
-func UnassignAccountFromPaymentCard(paymentCardId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignAccountFromPaymentCard(paymentCardId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the PaymentCard with the matching identifier
@@ -355,17 +351,17 @@ func UnassignAccountFromPaymentCard(paymentCardId uuid.UUID)(utils.RequestResult
 		// Need to cast the interface to a model.PaymentCard so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.PaymentCard)
+		parentObj, _ := parentRequestResult.Data.(model.PaymentCard)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Account to the Account
 		//----------------------------------------------------------------------------
-		parentObj.Account = nil;
+		parentObj.Account = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Account
 		//----------------------------------------------------------------------------
-		parentObj.AccountId = nil;
+		parentObj.AccountId = nil
 
 		//----------------------------------------------------------------------------
 		// save the PaymentCard
@@ -378,10 +374,10 @@ func UnassignAccountFromPaymentCard(paymentCardId uuid.UUID)(utils.RequestResult
 
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // assigns a Customer on a PaymentCard
-//----------------------------------------------------------------------------
-func AssignCustomerToPaymentCard( paymentCardId uuid.UUID, customerId uuid.UUID )(utils.RequestResult){
+// ----------------------------------------------------------------------------
+func AssignCustomerToPaymentCard(paymentCardId uuid.UUID, customerId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the PaymentCard with the matching identifier
@@ -393,7 +389,7 @@ func AssignCustomerToPaymentCard( paymentCardId uuid.UUID, customerId uuid.UUID 
 		// Need to cast the interface to a model.PaymentCard so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.PaymentCard)
+		parentObj, _ := parentRequestResult.Data.(model.PaymentCard)
 
 		//----------------------------------------------------------------------------
 		// Pass the reference to the ORM to get
@@ -417,24 +413,24 @@ func AssignCustomerToPaymentCard( paymentCardId uuid.UUID, customerId uuid.UUID 
 			//----------------------------------------------------------------------------
 			return UpdatePaymentCard(parentObj)
 		} else {
-			msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Customer", customerId )
+			msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Customer", customerId)
 
-            return utils.RequestResult{
-                        Success:    false,
-                        Msg:        msg,
-                        Call:       "assignCustomer",
-                        Data:       childObj,
-            }
+			return utils.RequestResult{
+				Success: false,
+				Msg:     msg,
+				Call:    "assignCustomer",
+				Data:    childObj,
+			}
 		}
 	} else {
 		return parentRequestResult
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // unassigns a Customer on a PaymentCard
-//----------------------------------------------------------------------------
-func UnassignCustomerFromPaymentCard(paymentCardId uuid.UUID)(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func UnassignCustomerFromPaymentCard(paymentCardId uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the PaymentCard with the matching identifier
@@ -446,17 +442,17 @@ func UnassignCustomerFromPaymentCard(paymentCardId uuid.UUID)(utils.RequestResul
 		// Need to cast the interface to a model.PaymentCard so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.PaymentCard)
+		parentObj, _ := parentRequestResult.Data.(model.PaymentCard)
 
 		//----------------------------------------------------------------------------
 		// assign an empty Customer to the Customer
 		//----------------------------------------------------------------------------
-		parentObj.Customer = nil;
+		parentObj.Customer = nil
 
 		//----------------------------------------------------------------------------
 		// assign  nil to the Customer
 		//----------------------------------------------------------------------------
-		parentObj.CustomerId = nil;
+		parentObj.CustomerId = nil
 
 		//----------------------------------------------------------------------------
 		// save the PaymentCard
@@ -469,11 +465,10 @@ func UnassignCustomerFromPaymentCard(paymentCardId uuid.UUID)(utils.RequestResul
 
 }
 
-
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // adds one or more transactionsIds as a Transactions to a PaymentCard
-//----------------------------------------------------------------------------
-func AddTransactionsToPaymentCard ( paymentCardId uuid.UUID, transactionsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func AddTransactionsToPaymentCard(paymentCardId uuid.UUID, transactionsIds []uuid.UUID) utils.RequestResult {
 
 	//----------------------------------------------------------------------------
 	// Obtain the PaymentCard with the matching identifier
@@ -485,9 +480,9 @@ func AddTransactionsToPaymentCard ( paymentCardId uuid.UUID, transactionsIds []u
 		// Need to cast the interface to a model.PaymentCard so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.PaymentCard)
+		parentObj, _ := parentRequestResult.Data.(model.PaymentCard)
 
-		for _, transactionsId:= range transactionsIds {
+		for _, transactionsId := range transactionsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -497,31 +492,31 @@ func AddTransactionsToPaymentCard ( paymentCardId uuid.UUID, transactionsIds []u
 			// Retrieve the 1st occurrence from the ORM of a Transaction
 			// with a matching transactionsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , transactionsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, transactionsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// append to the Transactions using the gorm mechanism
 				//----------------------------------------------------------------------------
-				utils.GetDB().Model(&parentObj).Association("Transactions").Append( &childObj )
+				utils.GetDB().Model(&parentObj).Association("Transactions").Append(&childObj)
 
-                if err := utils.GetDB().Model(&parentObj).Association("Transactions").Append(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "addTransactionsToPaymentCard",
-                        Data:    nil,
-                    }
-                }
+				if err := utils.GetDB().Model(&parentObj).Association("Transactions").Append(&childObj); err != nil {
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "addTransactionsToPaymentCard",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Transactions", transactionsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Transactions", transactionsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "addTransactionsToPaymentCard",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "addTransactionsToPaymentCard",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -535,10 +530,10 @@ func AddTransactionsToPaymentCard ( paymentCardId uuid.UUID, transactionsIds []u
 	}
 }
 
-//----------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // removes one or more transactionsIds as a Transactions from a PaymentCard
-//----------------------------------------------------------------------------
-func RemoveTransactionsFromPaymentCard( paymentCardId uuid.UUID, transactionsIds []uuid.UUID )(utils.RequestResult) {
+// ----------------------------------------------------------------------------
+func RemoveTransactionsFromPaymentCard(paymentCardId uuid.UUID, transactionsIds []uuid.UUID) utils.RequestResult {
 	//----------------------------------------------------------------------------
 	// Obtain the PaymentCard with the matching identifier
 	//----------------------------------------------------------------------------
@@ -549,9 +544,9 @@ func RemoveTransactionsFromPaymentCard( paymentCardId uuid.UUID, transactionsIds
 		// Need to cast the interface to a model.PaymentCard so the ORM can figure
 		// out which table to deal with
 		//----------------------------------------------------------------------------
-		parentObj,_ := parentRequestResult.Data. (model.PaymentCard)
+		parentObj, _ := parentRequestResult.Data.(model.PaymentCard)
 
-		for _, transactionsId:= range transactionsIds {
+		for _, transactionsId := range transactionsIds {
 			//----------------------------------------------------------------------------
 			// Pass the reference to the ORM to get
 			//----------------------------------------------------------------------------
@@ -561,30 +556,30 @@ func RemoveTransactionsFromPaymentCard( paymentCardId uuid.UUID, transactionsIds
 			// Retrieve the 1st occurrence from the ORM of a Transaction
 			// with a matching transactionsId
 			//----------------------------------------------------------------------------
-			childRequestResult := utils.GetDB().First(&childObj , transactionsId).Error // find first using identifier
+			childRequestResult := utils.GetDB().First(&childObj, transactionsId).Error // find first using identifier
 
 			if childRequestResult == nil {
 				//----------------------------------------------------------------------------
 				// remove TransactionObj from the Transactions array, but wont delete it from db
 				//----------------------------------------------------------------------------
-				utils.GetDB().Model(&parentObj).Association("Transactions").Delete( &childObj )
+				utils.GetDB().Model(&parentObj).Association("Transactions").Delete(&childObj)
 				if err := utils.GetDB().Model(&parentObj).Association("Transactions").Delete(&childObj); err != nil {
-                    return utils.RequestResult {
-                        Success: false,
-                        Msg:     err.Error(),
-                        Call:    "removeTransactionsFromPaymentCard",
-                        Data:    nil,
-                    }
-                }
+					return utils.RequestResult{
+						Success: false,
+						Msg:     err.Error(),
+						Call:    "removeTransactionsFromPaymentCard",
+						Data:    nil,
+					}
+				}
 			} else {
-				msg := fmt.Sprintf( "Failed trying to read %s using ID=%v", "Transactions", transactionsId )
+				msg := fmt.Sprintf("Failed trying to read %s using ID=%v", "Transactions", transactionsId)
 
-                return utils.RequestResult{
-                    Success:    false,
-                    Msg:        msg,
-                    Call:       "removeTransactionsFromPaymentCard",
-                    Data:       childObj,
-                }
+				return utils.RequestResult{
+					Success: false,
+					Msg:     msg,
+					Call:    "removeTransactionsFromPaymentCard",
+					Data:    childObj,
+				}
 			}
 		}
 
@@ -597,4 +592,3 @@ func RemoveTransactionsFromPaymentCard( paymentCardId uuid.UUID, transactionsIds
 		return parentRequestResult
 	}
 }
-
