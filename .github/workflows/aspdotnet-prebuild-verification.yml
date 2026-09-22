@@ -286,8 +286,7 @@ jobs:
           
           echo "PROJECT_FILE=${PROJECT_FILE}" >> "$GITHUB_ENV"
 
-        echo "Using project: ${PROJECT_FILE}"
-
+          echo "Using project: ${PROJECT_FILE}"
 
       ###########################################################################
       # Verify Files
