@@ -385,58 +385,30 @@ jobs:
       ###########################################################################
 
       - name: Format Code
+        id: format_code
         shell: bash
         run: |
-
-          source .github/actions/common/report.sh
-
+          set -euo pipefail
+          
           cd "${APP_DIR}"
-
+          
           echo "Running Spring Boot source formatter..."
-
-          if [ "${BUILD_TOOL}" = "maven" ]; then
-
-            ./mvnw spotless:apply \
-              2>&1 | tee spotless-format.log
-
-            FORMAT_EXIT=${PIPESTATUS[0]}
-
+          
+          if [ -x "./mvnw" ]; then
+            ./mvnw spotless:apply
+          elif command -v mvn >/dev/null 2>&1; then
+            mvn spotless:apply
           else
-
-            ./gradlew spotlessApply \
-              2>&1 | tee spotless-format.log
-
-            FORMAT_EXIT=${PIPESTATUS[0]}
-
+            echo "ERROR: Neither Maven Wrapper (./mvnw) nor Maven (mvn) is available."
+            exit 1
           fi
-
-          if [ "${FORMAT_EXIT}" -ne 0 ]; then
-
-            cat spotless-format.log
-
-            post_fail \
-              "PRE_BUILD" \
-              "FORMAT_CODE" \
-              0 \
-              "Java source formatting failed." \
-              "Spotless formatting failed."
-
-            post_terminate_build
-
-          fi
-
-          echo "Verifying formatting..."
-
-          if [ "${BUILD_TOOL}" = "maven" ]; then
-
-            ./mvnw spotless:check \
-              > spotless-check.log 2>&1
-
+          
+          echo "Verifying formatted source..."
+          
+          if [ -x "./mvnw" ]; then
+            ./mvnw spotless:check
           else
-
-            ./gradlew spotlessCheck \
-              > spotless-check.log 2>&1
-
+            mvn spotless:check
           fi
 
           if [ "$?" -ne 0 ]; then
