@@ -23,15 +23,9 @@
  */
 package com.harbormaster.controller;
 
-/** 
+/**
  * Base class of all application Spring Controller classes.
  *
  * @author Harbormaster Dev Team
  */
-public class BaseSpringRestController
-{
-
-}
-
-
-
+public class BaseSpringRestController {}
