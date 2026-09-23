@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of identityDocument found in  bankingonrails/test/controllers
+
+one:
+  documentNumber: test string for documentNumber
+  issuingCountry: test string for issuingCountry
+  expirationDate: 2020-10-15
+  DocumentType: 0
+
+two:
+  documentNumber: test string for documentNumber
+  issuingCountry: test string for issuingCountry
+  expirationDate: 2020-10-15
+  DocumentType: 0
+
+
