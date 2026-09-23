@@ -1,0 +1,20 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of accountStatement found in  bankingonrails/test/controllers
+
+one:
+  statementNumber: test string for statementNumber
+  periodStart: 2020-10-15
+  periodEnd: 2020-10-15
+  openingBalance: "test value"
+  closingBalance: "test value"
+  DeliveryMethod: 0
+
+two:
+  statementNumber: test string for statementNumber
+  periodStart: 2020-10-15
+  periodEnd: 2020-10-15
+  openingBalance: "test value"
+  closingBalance: "test value"
+  DeliveryMethod: 0
+
+
