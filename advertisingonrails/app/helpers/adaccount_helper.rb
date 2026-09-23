@@ -1,0 +1,2 @@
+module AdAccountHelper
+end

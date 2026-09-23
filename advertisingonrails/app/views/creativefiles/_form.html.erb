@@ -1,0 +1,45 @@
+
+<%= form_with model: @creativeFile, local: true do |form| %>
+ 
+  <% if @creativeFile.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@creativeFile.errors.count, "error") %> prohibited
+        this creativeFile from being saved:
+      </h2>
+      <ul>
+        <% @creativeFile.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :uri, { class: 'form-label'} %><br>
+	<%= form.text_field :uri, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :fileSizeKB, { class: 'form-label'} %><br>
+	<%= form.text_field :fileSizeKB, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :mimeType, { class: 'form-label'} %><br>
+	<%= form.text_field :mimeType, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :checksum, { class: 'form-label'} %><br>
+	<%= form.text_field :checksum, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

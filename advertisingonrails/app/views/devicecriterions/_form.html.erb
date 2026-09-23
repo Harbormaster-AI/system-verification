@@ -1,0 +1,41 @@
+
+<%= form_with model: @deviceCriterion, local: true do |form| %>
+ 
+  <% if @deviceCriterion.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@deviceCriterion.errors.count, "error") %> prohibited
+        this deviceCriterion from being saved:
+      </h2>
+      <ul>
+        <% @deviceCriterion.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+  </p>			
+  <p>
+   <%= form.label :DeviceType, { class: 'form-label'} %><br>
+   <%= form.select :DeviceType, DeviceCriterion.DeviceTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :PlatformType, { class: 'form-label'} %><br>
+   <%= form.select :PlatformType, DeviceCriterion.PlatformTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Operator_, { class: 'form-label'} %><br>
+   <%= form.select :Operator_, DeviceCriterion.Operator_s.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

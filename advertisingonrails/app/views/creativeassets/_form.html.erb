@@ -1,0 +1,67 @@
+
+<%= form_with model: @creativeAsset, local: true do |form| %>
+ 
+  <% if @creativeAsset.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@creativeAsset.errors.count, "error") %> prohibited
+        this creativeAsset from being saved:
+      </h2>
+      <ul>
+        <% @creativeAsset.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :clickUrl, { class: 'form-label'} %><br>
+	<%= form.text_field :clickUrl, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :landingPage, { class: 'form-label'} %><br>
+	<%= form.text_field :landingPage, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :width, { class: 'form-label'} %><br>
+	<%= form.text_field :width, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :height, { class: 'form-label'} %><br>
+	<%= form.text_field :height, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :durationSeconds, { class: 'form-label'} %><br>
+	<%= form.text_field :durationSeconds, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :CreativeType, { class: 'form-label'} %><br>
+   <%= form.select :CreativeType, CreativeAsset.CreativeTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :AdFormat, { class: 'form-label'} %><br>
+   <%= form.select :AdFormat, CreativeAsset.AdFormats.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

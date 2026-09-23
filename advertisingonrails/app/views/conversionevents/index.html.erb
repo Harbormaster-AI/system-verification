@@ -1,0 +1,40 @@
+<div class="title text-center">
+  List of ConversionEvents
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">timestamp</th>
+			<th style="text-align:center">value</th>
+			<th style="text-align:center">EventType</th>
+			<th style="text-align:center">AttributionModel</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @conversionEvents.each do |conversionEvent| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= conversionEvent.timestamp %>
+			</td>
+			<td style="text-align:center">
+	  			<%= conversionEvent.value %>
+			</td>
+			<td style="text-align:center">
+	  			<%= conversionEvent.EventType %>
+			</td>
+			<td style="text-align:center">
+	  			<%= conversionEvent.AttributionModel %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_conversionEvent_path(conversionEvent), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', conversionEvent_path(conversionEvent), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New ConversionEvent', new_conversionEvent_path, :method => :get, :class => "btn btn-success btn-sm" %>

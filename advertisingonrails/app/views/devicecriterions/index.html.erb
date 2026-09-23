@@ -1,0 +1,36 @@
+<div class="title text-center">
+  List of DeviceCriterions
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">DeviceType</th>
+			<th style="text-align:center">PlatformType</th>
+			<th style="text-align:center">Operator_</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @deviceCriterions.each do |deviceCriterion| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= deviceCriterion.DeviceType %>
+			</td>
+			<td style="text-align:center">
+	  			<%= deviceCriterion.PlatformType %>
+			</td>
+			<td style="text-align:center">
+	  			<%= deviceCriterion.Operator_ %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_deviceCriterion_path(deviceCriterion), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', deviceCriterion_path(deviceCriterion), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New DeviceCriterion', new_deviceCriterion_path, :method => :get, :class => "btn btn-success btn-sm" %>

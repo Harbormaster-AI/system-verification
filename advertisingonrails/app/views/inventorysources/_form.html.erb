@@ -1,0 +1,49 @@
+
+<%= form_with model: @inventorySource, local: true do |form| %>
+ 
+  <% if @inventorySource.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@inventorySource.errors.count, "error") %> prohibited
+        this inventorySource from being saved:
+      </h2>
+      <ul>
+        <% @inventorySource.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :domain, { class: 'form-label'} %><br>
+	<%= form.text_field :domain, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Channel, { class: 'form-label'} %><br>
+   <%= form.select :Channel, InventorySource.Channels.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :PrimaryFormat, { class: 'form-label'} %><br>
+   <%= form.select :PrimaryFormat, InventorySource.PrimaryFormats.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

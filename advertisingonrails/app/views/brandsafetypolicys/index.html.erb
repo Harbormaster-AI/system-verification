@@ -1,0 +1,32 @@
+<div class="title text-center">
+  List of BrandSafetyPolicys
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">Level</th>
+			<th style="text-align:center">ContentRatingThreshold</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @brandSafetyPolicys.each do |brandSafetyPolicy| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= brandSafetyPolicy.Level %>
+			</td>
+			<td style="text-align:center">
+	  			<%= brandSafetyPolicy.ContentRatingThreshold %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_brandSafetyPolicy_path(brandSafetyPolicy), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', brandSafetyPolicy_path(brandSafetyPolicy), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New BrandSafetyPolicy', new_brandSafetyPolicy_path, :method => :get, :class => "btn btn-success btn-sm" %>

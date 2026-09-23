@@ -1,0 +1,40 @@
+<div class="title text-center">
+  List of BillingProfiles
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">billingName</th>
+			<th style="text-align:center">taxId</th>
+			<th style="text-align:center">billingAddress</th>
+			<th style="text-align:center">PaymentTerms</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @billingProfiles.each do |billingProfile| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= billingProfile.billingName %>
+			</td>
+			<td style="text-align:center">
+	  			<%= billingProfile.taxId %>
+			</td>
+			<td style="text-align:center">
+	  			<%= billingProfile.billingAddress %>
+			</td>
+			<td style="text-align:center">
+	  			<%= billingProfile.PaymentTerms %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_billingProfile_path(billingProfile), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', billingProfile_path(billingProfile), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New BillingProfile', new_billingProfile_path, :method => :get, :class => "btn btn-success btn-sm" %>

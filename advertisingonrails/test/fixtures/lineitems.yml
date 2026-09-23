@@ -1,0 +1,24 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of lineItem found in  advertisingonrails/test/controllers
+
+one:
+  name: test string for name
+  bidAmount: "test value"
+  dailyBudget: "test value"
+  frequencyCap: "test value"
+  Status: 0
+  PricingModel: 0
+  BidStrategy: 0
+  Pacing: 0
+
+two:
+  name: test string for name
+  bidAmount: "test value"
+  dailyBudget: "test value"
+  frequencyCap: "test value"
+  Status: 0
+  PricingModel: 0
+  BidStrategy: 0
+  Pacing: 0
+
+

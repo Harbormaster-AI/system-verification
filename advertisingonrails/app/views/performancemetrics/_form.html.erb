@@ -1,0 +1,49 @@
+
+<%= form_with model: @performanceMetric, local: true do |form| %>
+ 
+  <% if @performanceMetric.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@performanceMetric.errors.count, "error") %> prohibited
+        this performanceMetric from being saved:
+      </h2>
+      <ul>
+        <% @performanceMetric.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :date, { class: 'form-label'} %><br>
+    <%= form.date_field :date, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :value, { class: 'form-label'} %><br>
+	<%= form.text_field :value, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :MetricType, { class: 'form-label'} %><br>
+   <%= form.select :MetricType, PerformanceMetric.MetricTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

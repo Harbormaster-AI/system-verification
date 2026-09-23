@@ -1,0 +1,40 @@
+<div class="title text-center">
+  List of AdAccounts
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">name</th>
+			<th style="text-align:center">accountCode</th>
+			<th style="text-align:center">defaultCurrency</th>
+			<th style="text-align:center">defaultTimezone</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @adAccounts.each do |adAccount| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= adAccount.name %>
+			</td>
+			<td style="text-align:center">
+	  			<%= adAccount.accountCode %>
+			</td>
+			<td style="text-align:center">
+	  			<%= adAccount.defaultCurrency %>
+			</td>
+			<td style="text-align:center">
+	  			<%= adAccount.defaultTimezone %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_adAccount_path(adAccount), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', adAccount_path(adAccount), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New AdAccount', new_adAccount_path, :method => :get, :class => "btn btn-success btn-sm" %>
