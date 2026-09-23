@@ -1,4 +1,3 @@
-
 from django.core import exceptions
 from django.core import serializers
 from django.db import models
@@ -8,120 +7,149 @@ from bankingOnDjango.models.RiskAssessment import RiskAssessment
 from bankingOnDjango.models.KycProfile import KycProfile
 from bankingOnDjango.exceptions import Exceptions
 
- #======================================================================
-# 
+# ======================================================================
+#
 # Encapsulates data for model RiskAssessment
 #
 # @author Harbormaster Dev Team
 #
-#======================================================================
+# ======================================================================
 
-#======================================================================
+
+# ======================================================================
 # Class RiskAssessmentDelegate Declaration
-#======================================================================
-class RiskAssessmentDelegate :
+# ======================================================================
+class RiskAssessmentDelegate:
 
-#======================================================================
-# Function Declarations
-#======================================================================
+    # ======================================================================
+    # Function Declarations
+    # ======================================================================
 
-	def get(self, risk_assessment_id ):
-		try:	
-			risk_assessment = RiskAssessment.objects.filter(id=risk_assessment_id)
-			return risk_assessment.first();
-		except RiskAssessment.DoesNotExist:
-			raise ProcessingError("RiskAssessment with id " + str(risk_assessment_id) + " does not exist.")
-		except utils.DatabaseError:
-			raise StorageReadError()
-		except Exception:
-			raise GeneralError(err_msg) 
+    def get(self, risk_assessment_id):
+        try:
+            risk_assessment = RiskAssessment.objects.filter(id=risk_assessment_id)
+            return risk_assessment.first()
+        except RiskAssessment.DoesNotExist:
+            raise ProcessingError(
+                "RiskAssessment with id " + str(risk_assessment_id) + " does not exist."
+            )
+        except utils.DatabaseError:
+            raise StorageReadError()
+        except Exception:
+            raise GeneralError(err_msg)
 
-	def createFromJson(self, risk_assessment):
-		for model in serializers.deserialize("json", risk_assessment):
-			model.save()
-			return model;
+    def createFromJson(self, risk_assessment):
+        for model in serializers.deserialize("json", risk_assessment):
+            model.save()
+            return model
 
-	def create(self, risk_assessment):
-		risk_assessment.save()
-		return risk_assessment;
+    def create(self, risk_assessment):
+        risk_assessment.save()
+        return risk_assessment
 
-	def saveFromJson(self, risk_assessment):
-		for model in serializers.deserialize("json", risk_assessment):
-			model.save()
-			return risk_assessment;
-	
-	def save(self, risk_assessment):
-		risk_assessment.save()
-		return risk_assessment;
-	
-	def delete(self, risk_assessment_id ):
-		err_msg = "Failed to delete RiskAssessment from db using id " + str(risk_assessment_id)
-		
-		try:
-			risk_assessment = RiskAssessment.objects.get(id=risk_assessment_id)
-			risk_assessment.delete()
-			return True
-		except RiskAssessment.DoesNotExist:
-			raise ProcessingError("RiskAssessment with id " + str(risk_assessment_id) + " does not exist.")
-		except utils.DatabaseError:
-			raise StorageReadError()
-		except Exception:
-			raise GeneralError(err_msg) 
-	
-	def getAll(self):
-		try:
-			all = RiskAssessment.objects.all()
-			return all;
-		except utils.DatabaseError:
-			raise StorageReadError("Failed to get all RiskAssessment from db")
-		except Exception:
-			return None;
-		
-	def assignKycProfile( self, risk_assessment_id, kycProfileId ):
-		# lazy importing avoids circular dependencies
-		from bankingOnDjango.delegates.KycProfileDelegate import KycProfileDelegate
+    def saveFromJson(self, risk_assessment):
+        for model in serializers.deserialize("json", risk_assessment):
+            model.save()
+            return risk_assessment
 
-		err_msg = "Failed to assign element " + str(kycProfileId) + " for KycProfile on RiskAssessment"
+    def save(self, risk_assessment):
+        risk_assessment.save()
+        return risk_assessment
 
-		try:
-			# get the RiskAssessment from db
-			risk_assessment = self.get( risk_assessment_id ).first()	
-			
-			# get the KycProfile from db
-			kycProfile = KycProfileDelegate().get(kycProfileId).first();
-			
-			# assign the KycProfile		
-			risk_assessment.kycProfile = kycProfile
-			
-			#save it
-			risk_assessment.save()
+    def delete(self, risk_assessment_id):
+        err_msg = "Failed to delete RiskAssessment from db using id " + str(
+            risk_assessment_id
+        )
 
-			# reload and return the appropriate version					
-			return self.get( risk_assessment_id );
-		except RiskAssessment.DoesNotExist:
-			raise ProcessingError(err_msg + " : RiskAssessment with id " + str(risk_assessment_id) + " does not exist.")
-		except KycProfile.DoesNotExist:
-			raise ProcessingError(err_msg + " : KycProfile with id " + str(kycProfileId) + " does not exist.")
-		except Exception:
-			return None;
-				
-	def unassignKycProfile( self, risk_assessment_id ):
-		err_msg = "Failed to unassign element " + str(kycProfileId) + " for KycProfile on RiskAssessment"
+        try:
+            risk_assessment = RiskAssessment.objects.get(id=risk_assessment_id)
+            risk_assessment.delete()
+            return True
+        except RiskAssessment.DoesNotExist:
+            raise ProcessingError(
+                "RiskAssessment with id " + str(risk_assessment_id) + " does not exist."
+            )
+        except utils.DatabaseError:
+            raise StorageReadError()
+        except Exception:
+            raise GeneralError(err_msg)
 
-		try:
-			# get the RiskAssessment from db
-			risk_assessment = self.get( risk_assessment_id ).first()	
-			
-			# assign to None for unassignment
-			risk_assessment.kycProfile = None			
+    def getAll(self):
+        try:
+            all = RiskAssessment.objects.all()
+            return all
+        except utils.DatabaseError:
+            raise StorageReadError("Failed to get all RiskAssessment from db")
+        except Exception:
+            return None
 
-			#save it
-			risk_assessment.save()
+    def assignKycProfile(self, risk_assessment_id, kycProfileId):
+        # lazy importing avoids circular dependencies
+        from bankingOnDjango.delegates.KycProfileDelegate import KycProfileDelegate
 
-			# reload and return the appropriate version					
-			return self.get( risk_assessment_id );
-		except RiskAssessment.DoesNotExist:
-			raise ProcessingError(err_msg + " : RiskAssessment with id " + str(risk_assessment_id) + " does not exist.")
-		except Exception:
-			return None;
-		
+        err_msg = (
+            "Failed to assign element "
+            + str(kycProfileId)
+            + " for KycProfile on RiskAssessment"
+        )
+
+        try:
+            # get the RiskAssessment from db
+            risk_assessment = self.get(risk_assessment_id).first()
+
+            # get the KycProfile from db
+            kycProfile = KycProfileDelegate().get(kycProfileId).first()
+
+            # assign the KycProfile
+            risk_assessment.kycProfile = kycProfile
+
+            # save it
+            risk_assessment.save()
+
+            # reload and return the appropriate version
+            return self.get(risk_assessment_id)
+        except RiskAssessment.DoesNotExist:
+            raise ProcessingError(
+                err_msg
+                + " : RiskAssessment with id "
+                + str(risk_assessment_id)
+                + " does not exist."
+            )
+        except KycProfile.DoesNotExist:
+            raise ProcessingError(
+                err_msg
+                + " : KycProfile with id "
+                + str(kycProfileId)
+                + " does not exist."
+            )
+        except Exception:
+            return None
+
+    def unassignKycProfile(self, risk_assessment_id):
+        err_msg = (
+            "Failed to unassign element "
+            + str(kycProfileId)
+            + " for KycProfile on RiskAssessment"
+        )
+
+        try:
+            # get the RiskAssessment from db
+            risk_assessment = self.get(risk_assessment_id).first()
+
+            # assign to None for unassignment
+            risk_assessment.kycProfile = None
+
+            # save it
+            risk_assessment.save()
+
+            # reload and return the appropriate version
+            return self.get(risk_assessment_id)
+        except RiskAssessment.DoesNotExist:
+            raise ProcessingError(
+                err_msg
+                + " : RiskAssessment with id "
+                + str(risk_assessment_id)
+                + " does not exist."
+            )
+        except Exception:
+            return None
