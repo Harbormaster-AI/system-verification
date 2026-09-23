@@ -1,0 +1,14 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of thirdPartyProvider found in  bankingonrails/test/controllers
+
+one:
+  name: test string for name
+  registrationId: test string for registrationId
+  website: test string for website
+
+two:
+  name: test string for name
+  registrationId: test string for registrationId
+  website: test string for website
+
+
