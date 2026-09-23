@@ -684,71 +684,59 @@ jobs:
             "Checkstyle and SpotBugs completed successfully."
 
       ###########################################################################
-      # Security Check
+      # Setup Trivy
       ###########################################################################
+      - name: Security Check
+        shell: bash
+        run: |
+          set -o pipefail
+          
+          if ! trivy fs . \
+              --scanners vuln \
+              --severity HIGH,CRITICAL \
+              --ignore-unfixed \
+              --format table \
+              --exit-code 1 \
+              2>&1 | tee trivy-security.log; then
+          
+            MESSAGE=$(tail -30 trivy-security.log | tr '\n' ' ')
+            post_fail "Security Check" "Trivy vulnerability scan failed: ${MESSAGE}"
+            post_terminate_build
+          fi
+
+        ###########################################################################
+        # Security Check
+        ###########################################################################
 
       - name: Security Check
         shell: bash
         run: |
-
-          source .github/actions/common/report.sh
-
-          if [ -x "./mvnw" ]; then
-            MVN="./mvnw"
-          else
-            MVN="mvn"
+          set -o pipefail
+          
+          echo "Running Trivy vulnerability scan..."
+          
+          if ! trivy fs . \
+              --scanners vuln \
+              --severity HIGH,CRITICAL \
+              --ignore-unfixed \
+              --format table \
+              --exit-code 1 \
+              2>&1 | tee trivy-security.log; then
+          
+            MESSAGE=$(tail -30 trivy-security.log | tr '\n' ' ')
+          
+            post_fail \
+              "Security Check" \
+              "Trivy vulnerability scan failed: ${MESSAGE}"
+          
+            post_terminate_build
           fi
-
-          cd "${APP_DIR}"
-
-          echo "Running dependency vulnerability analysis..."
-
-          if [ "${BUILD_TOOL}" = "maven" ]; then
-
-            if ! ${MVN} dependency-check:check \
-                > dependency-check.log 2>&1; then
-
-              cat dependency-check.log
-
-              MESSAGE=$(tail -30 dependency-check.log | tr '\n' ' ')
-
-              post_fail \
+          
+          echo "Trivy vulnerability scan passed."
+              post_pass \
                 "PRE_BUILD" \
                 "DEPENDENCY_SECURITY" \
-                0 \
-                "Dependency security check failed." \
-                "${MESSAGE}"
-
-              post_terminate_prebuild
-
-            fi
-
-          else
-
-            if ! ./gradlew dependencyCheckAnalyze \
-                > dependency-check.log 2>&1; then
-
-              cat dependency-check.log
-
-              MESSAGE=$(tail -30 dependency-check.log | tr '\n' ' ')
-
-              post_fail \
-                "PRE_BUILD" \
-                "DEPENDENCY_SECURITY" \
-                0 \
-                "Dependency security check failed." \
-                "${MESSAGE}"
-
-              post_terminate_prebuild
-
-            fi
-
-          fi
-
-          post_pass \
-            "PRE_BUILD" \
-            "DEPENDENCY_SECURITY" \
-            10 \
+                10 \
             "Spring Boot dependency security check completed successfully."
 
 
