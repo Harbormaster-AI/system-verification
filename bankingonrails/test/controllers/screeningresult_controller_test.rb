@@ -15,17 +15,15 @@ class ScreeningResultControllerTest < ActionDispatch::IntegrationTest
   test "should create screening_result" do
     assert_difference("ScreeningResult.count") do
       post screening_results_url, params: { screening_result: {
-        screening_date:1.week.ago, 
-provider:"test string for provider", 
-outcome:ScreeningResult.Outcomes[0]
- } }
+        screening_date: 1.week.ago,
+        provider: "test string for provider",
+        outcome: ScreeningResult.Outcomes[0]
+      } }
     end
 
     assert_redirected_to screening_results_url
   end
 
- 
-  
   test "should destroy screening_result" do
     assert_difference("ScreeningResult.count", -1) do
       delete screening_result_url(@screening_result)
@@ -33,7 +31,4 @@ outcome:ScreeningResult.Outcomes[0]
 
     assert_redirected_to screening_results_url
   end
-  
 end
-
-

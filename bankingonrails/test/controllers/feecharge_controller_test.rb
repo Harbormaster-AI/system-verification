@@ -15,18 +15,16 @@ class FeeChargeControllerTest < ActionDispatch::IntegrationTest
   test "should create fee_charge" do
     assert_difference("FeeCharge.count") do
       post fee_charges_url, params: { fee_charge: {
-        fee_code:"test string for feeCode", 
-amount:"test value", 
-applied_on:1.week.ago, 
-fee_type:FeeCharge.FeeTypes[0]
- } }
+        fee_code: "test string for feeCode",
+        amount: "test value",
+        applied_on: 1.week.ago,
+        fee_type: FeeCharge.FeeTypes[0]
+      } }
     end
 
     assert_redirected_to fee_charges_url
   end
 
- 
-  
   test "should destroy fee_charge" do
     assert_difference("FeeCharge.count", -1) do
       delete fee_charge_url(@fee_charge)
@@ -34,7 +32,4 @@ fee_type:FeeCharge.FeeTypes[0]
 
     assert_redirected_to fee_charges_url
   end
-  
 end
-
-

@@ -15,18 +15,16 @@ class DisputeControllerTest < ActionDispatch::IntegrationTest
   test "should create dispute" do
     assert_difference("Dispute.count") do
       post disputes_url, params: { dispute: {
-        dispute_reference:"test string for disputeReference", 
-raised_on:1.week.ago, 
-reason:"test string for reason", 
-status:Dispute.Statuss[0]
- } }
+        dispute_reference: "test string for disputeReference",
+        raised_on: 1.week.ago,
+        reason: "test string for reason",
+        status: Dispute.Statuss[0]
+      } }
     end
 
     assert_redirected_to disputes_url
   end
 
- 
-  
   test "should destroy dispute" do
     assert_difference("Dispute.count", -1) do
       delete dispute_url(@dispute)
@@ -34,7 +32,4 @@ status:Dispute.Statuss[0]
 
     assert_redirected_to disputes_url
   end
-  
 end
-
-

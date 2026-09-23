@@ -15,17 +15,15 @@ class RiskAssessmentControllerTest < ActionDispatch::IntegrationTest
   test "should create risk_assessment" do
     assert_difference("RiskAssessment.count") do
       post risk_assessments_url, params: { risk_assessment: {
-        score:100, 
-assessed_on:1.week.ago, 
-rating:RiskAssessment.Ratings[0]
- } }
+        score: 100,
+        assessed_on: 1.week.ago,
+        rating: RiskAssessment.Ratings[0]
+      } }
     end
 
     assert_redirected_to risk_assessments_url
   end
 
- 
-  
   test "should destroy risk_assessment" do
     assert_difference("RiskAssessment.count", -1) do
       delete risk_assessment_url(@risk_assessment)
@@ -33,7 +31,4 @@ rating:RiskAssessment.Ratings[0]
 
     assert_redirected_to risk_assessments_url
   end
-  
 end
-
-

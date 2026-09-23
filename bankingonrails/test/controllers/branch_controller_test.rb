@@ -15,19 +15,17 @@ class BranchControllerTest < ActionDispatch::IntegrationTest
   test "should create branch" do
     assert_difference("Branch.count") do
       post branchs_url, params: { branch: {
-        name:"test string for name", 
-branch_code:"test string for branchCode", 
-address:"test value", 
-phone:"test string for phone", 
-opening_hours:"test string for openingHours"
- } }
+        name: "test string for name",
+        branch_code: "test string for branchCode",
+        address: "test value",
+        phone: "test string for phone",
+        opening_hours: "test string for openingHours"
+      } }
     end
 
     assert_redirected_to branchs_url
   end
 
- 
-  
   test "should destroy branch" do
     assert_difference("Branch.count", -1) do
       delete branch_url(@branch)
@@ -35,7 +33,4 @@ opening_hours:"test string for openingHours"
 
     assert_redirected_to branchs_url
   end
-  
 end
-
-

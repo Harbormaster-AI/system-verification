@@ -1,0 +1,29 @@
+Warning: AllCops does not support FailLevel parameter.
+
+Supported parameters are:
+
+  - RubyInterpreters
+  - Include
+  - Exclude
+  - DefaultFormatter
+  - DisplayCopNames
+  - DisplayStyleGuide
+  - StyleGuideBaseURL
+  - DocumentationBaseURL
+  - DocumentationExtension
+  - ExtraDetails
+  - StyleGuideCopsOnly
+  - EnabledByDefault
+  - DisabledByDefault
+  - NewCops
+  - UseCache
+  - MaxFilesInCache
+  - CacheRootDirectory
+  - AllowSymlinksInCacheRootDirectory
+  - TargetRubyVersion
+  - ParserEngine
+  - SuggestExtensions
+  - ActiveSupportExtensionsEnabled
+  - StringLiteralsFrozenByDefault
+
+152 files inspected, no offenses detected

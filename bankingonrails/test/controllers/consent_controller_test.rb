@@ -15,18 +15,16 @@ class ConsentControllerTest < ActionDispatch::IntegrationTest
   test "should create consent" do
     assert_difference("Consent.count") do
       post consents_url, params: { consent: {
-        granted_on:1.week.ago, 
-expires_on:1.week.ago, 
-consent_type:Consent.ConsentTypes[0], 
-status:Consent.Statuss[0]
- } }
+        granted_on: 1.week.ago,
+        expires_on: 1.week.ago,
+        consent_type: Consent.ConsentTypes[0],
+        status: Consent.Statuss[0]
+      } }
     end
 
     assert_redirected_to consents_url
   end
 
- 
-  
   test "should destroy consent" do
     assert_difference("Consent.count", -1) do
       delete consent_url(@consent)
@@ -34,7 +32,4 @@ status:Consent.Statuss[0]
 
     assert_redirected_to consents_url
   end
-  
 end
-
-

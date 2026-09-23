@@ -15,19 +15,17 @@ class BankControllerTest < ActionDispatch::IntegrationTest
   test "should create bank" do
     assert_difference("Bank.count") do
       post banks_url, params: { bank: {
-        name:"test string for name", 
-legal_name:"test string for legalName", 
-swift_bic:"test value", 
-headquarters_country:"test string for headquartersCountry", 
-website:"test string for website"
- } }
+        name: "test string for name",
+        legal_name: "test string for legalName",
+        swift_bic: "test value",
+        headquarters_country: "test string for headquartersCountry",
+        website: "test string for website"
+      } }
     end
 
     assert_redirected_to banks_url
   end
 
- 
-  
   test "should destroy bank" do
     assert_difference("Bank.count", -1) do
       delete bank_url(@bank)
@@ -35,7 +33,4 @@ website:"test string for website"
 
     assert_redirected_to banks_url
   end
-  
 end
-
-

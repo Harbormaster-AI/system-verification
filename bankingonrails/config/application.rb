@@ -15,6 +15,5 @@ module Bankingonrails
     config.database_password = "postgres"
     config.database_host     = "localhost"
     config.database_port     = 5432
-
   end
 end

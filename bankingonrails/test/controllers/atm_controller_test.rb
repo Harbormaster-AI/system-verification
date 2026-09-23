@@ -15,17 +15,15 @@ class ATMControllerTest < ActionDispatch::IntegrationTest
   test "should create a_t_m" do
     assert_difference("ATM.count") do
       post a_t_ms_url, params: { a_t_m: {
-        terminal_id:"test string for terminalId", 
-location:"test value", 
-status:ATM.Statuss[0]
- } }
+        terminal_id: "test string for terminalId",
+        location: "test value",
+        status: ATM.Statuss[0]
+      } }
     end
 
     assert_redirected_to a_t_ms_url
   end
 
- 
-  
   test "should destroy a_t_m" do
     assert_difference("ATM.count", -1) do
       delete a_t_m_url(@a_t_m)
@@ -33,7 +31,4 @@ status:ATM.Statuss[0]
 
     assert_redirected_to a_t_ms_url
   end
-  
 end
-
-

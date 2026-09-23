@@ -15,23 +15,21 @@ class AccountControllerTest < ActionDispatch::IntegrationTest
   test "should create account" do
     assert_difference("Account.count") do
       post accounts_url, params: { account: {
-        account_number:"test value", 
-iban:"test value", 
-account_name:"test string for accountName", 
-currency:"test string for currency", 
-opened_on:1.week.ago, 
-closed_on:1.week.ago, 
-account_type:Account.AccountTypes[0], 
-ownership_type:Account.OwnershipTypes[0], 
-status:Account.Statuss[0]
- } }
+        account_number: "test value",
+        iban: "test value",
+        account_name: "test string for accountName",
+        currency: "test string for currency",
+        opened_on: 1.week.ago,
+        closed_on: 1.week.ago,
+        account_type: Account.AccountTypes[0],
+        ownership_type: Account.OwnershipTypes[0],
+        status: Account.Statuss[0]
+      } }
     end
 
     assert_redirected_to accounts_url
   end
 
- 
-  
   test "should destroy account" do
     assert_difference("Account.count", -1) do
       delete account_url(@account)
@@ -39,7 +37,4 @@ status:Account.Statuss[0]
 
     assert_redirected_to accounts_url
   end
-  
 end
-
-

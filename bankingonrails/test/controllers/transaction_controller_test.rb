@@ -15,22 +15,20 @@ class TransactionControllerTest < ActionDispatch::IntegrationTest
   test "should create transaction" do
     assert_difference("Transaction.count") do
       post transactions_url, params: { transaction: {
-        booking_date:1.week.ago, 
-value_date:1.week.ago, 
-amount:"test value", 
-description:"test string for description", 
-direction:Transaction.Directions[0], 
-transaction_type:Transaction.TransactionTypes[0], 
-status:Transaction.Statuss[0], 
-channel:Transaction.Channels[0]
- } }
+        booking_date: 1.week.ago,
+        value_date: 1.week.ago,
+        amount: "test value",
+        description: "test string for description",
+        direction: Transaction.Directions[0],
+        transaction_type: Transaction.TransactionTypes[0],
+        status: Transaction.Statuss[0],
+        channel: Transaction.Channels[0]
+      } }
     end
 
     assert_redirected_to transactions_url
   end
 
- 
-  
   test "should destroy transaction" do
     assert_difference("Transaction.count", -1) do
       delete transaction_url(@transaction)
@@ -38,7 +36,4 @@ channel:Transaction.Channels[0]
 
     assert_redirected_to transactions_url
   end
-  
 end
-
-
