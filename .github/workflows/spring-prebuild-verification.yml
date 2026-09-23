@@ -683,26 +683,12 @@ jobs:
             "Spring Boot static analysis completed successfully." \
             "Checkstyle and SpotBugs completed successfully."
 
-      ###########################################################################
-      # Setup Trivy
-      ###########################################################################
-      - name: Security Check
-        shell: bash
-        run: |
-          set -o pipefail
-          
-          if ! trivy fs . \
-              --scanners vuln \
-              --severity HIGH,CRITICAL \
-              --ignore-unfixed \
-              --format table \
-              --exit-code 1 \
-              2>&1 | tee trivy-security.log; then
-          
-            MESSAGE=$(tail -30 trivy-security.log | tr '\n' ' ')
-            post_fail "Security Check" "Trivy vulnerability scan failed: ${MESSAGE}"
-            post_terminate_build
-          fi
+        ###########################################################################
+        # Setup Trivy
+        ###########################################################################
+      - name: Setup Trivy
+        uses: aquasecurity/setup-trivy@v0.2.5
+
 
         ###########################################################################
         # Security Check
