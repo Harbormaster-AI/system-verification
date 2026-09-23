@@ -310,50 +310,40 @@ jobs:
           source .github/actions/common/report.sh
 
           cd "${APP_DIR}"
-
-          REQUIRED_DIRECTORIES=""
-
-          # Locate the Django project directory containing settings.py.
-          DJANGO_PROJECT_DIR="$(dirname "$(find . -maxdepth 3 -type f \
-            -name "settings.py" -print -quit)")"
-
-          if [ "${DJANGO_PROJECT_DIR}" = "." ] || \
-             [ "${DJANGO_PROJECT_DIR}" = "./" ]; then
-            DJANGO_PROJECT_DIR=""
+          
+          MISSING_FILES=""
+          
+          if [ ! -f "manage.py" ]; then
+            MISSING_FILES="${MISSING_FILES} manage.py"
           fi
-
-          # A generated Django system should have an application directory.
-          if [ -d "app" ]; then
-            REQUIRED_DIRECTORIES="${REQUIRED_DIRECTORIES} app"
+          
+          SETTINGS_FILE="$(find . -maxdepth 4 -type f \
+            -name "settings.py" \
+            -print -quit)"
+          
+          if [ -z "${SETTINGS_FILE}" ]; then
+            MISSING_FILES="${MISSING_FILES} settings.py"
           fi
-
-          # Generated systems may instead use domain-specific Django apps.
-          DJANGO_APP_COUNT=$(find . -mindepth 1 -maxdepth 2 \
-            -type f -name "models.py" | wc -l)
-
-          if [ "${DJANGO_APP_COUNT}" -eq 0 ]; then
-
+          
+          if [ -n "${MISSING_FILES}" ]; then          
             post_fail \
               "PRE_BUILD" \
-              "VERIFY_DIRECTORIES" \
+              "VERIFY_FILES" \
               0 \
-              "No Django application directory was found." \
-              "Expected at least one Django application containing models.py."
-
-            post_terminate_prebuild
-
-          else
-
+              "Required Django files were not found." \
+              "Missing:${MISSING_FILES}"
+          
+              post_terminate_prebuild          
+          else          
             post_pass \
               "PRE_BUILD" \
-              "VERIFY_DIRECTORIES" \
+              "VERIFY_FILES" \
               5 \
-              "Django directory structure verified." \
-              "Found ${DJANGO_APP_COUNT} Django application(s)."
-
+              "Django application files verified." \
+              "manage.py and settings.py were found."
+          
           fi
-
-
+          
       ###########################################################################
       # Setup Black
       ###########################################################################
