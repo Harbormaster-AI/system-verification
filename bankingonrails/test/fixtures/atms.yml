@@ -1,0 +1,14 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of aTM found in  bankingonrails/test/controllers
+
+one:
+  terminalId: test string for terminalId
+  location: "test value"
+  Status: 0
+
+two:
+  terminalId: test string for terminalId
+  location: "test value"
+  Status: 0
+
+
