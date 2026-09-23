@@ -593,17 +593,30 @@ jobs:
             if ! ${MVN} --no-transfer-progress checkstyle:check \
                 > checkstyle.log 2>&1; then
           
+              echo "===== CHECKSTYLE MAVEN OUTPUT ====="
               cat checkstyle.log
-          
-              echo "Generating Checkstyle violation report..."
             
-              ${MVN} --no-transfer-progress checkstyle:checkstyle \
-              > checkstyle-report.log 2>&1 || true
+              echo "===== GENERATED CHECKSTYLE.XML ====="
+              cat checkstyle.xml
             
-              cat checkstyle-report.log
+              echo "===== RUNNING DIRECT CHECKSTYLE DIAGNOSTIC ====="
+            
+              CHECKSTYLE_JAR=$(find "${HOME}/.m2/repository/com/puppycrawl/tools/checkstyle" \
+              -name "checkstyle-9.3.jar" | head -1)
+            
+              if [ -n "${CHECKSTYLE_JAR}" ]; then
+                java -jar "${CHECKSTYLE_JAR}" \
+                  -c checkstyle.xml \
+                    src/main/java \
+                > checkstyle-violations.log 2>&1 || true
+              
+                cat checkstyle-violations.log
+              else
+                echo "Checkstyle 9.3 JAR not found."
+              fi
   
               MESSAGE=$(tail -30 checkstyle.log | tr '\n' ' ')
-          
+  
               post_fail \
                 "PRE_BUILD" \
                 "CHECKSTYLE" \
