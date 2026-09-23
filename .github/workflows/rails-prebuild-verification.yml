@@ -352,32 +352,16 @@ jobs:
           cd "${APP_DIR}"
 
           echo "Running RuboCop formatter..."
-
-          if ! rubocop -A; then
-
-            post_fail \
-              "PRE_BUILD" \
-              "FORMAT_CODE" \
-              0 \
-              "Rails code formatting failed."
-
-            post_terminate_prebuild
-
-          fi
-
-          echo "Checking for remaining formatting violations..."
-
-          if ! rubocop --format simple; then
-
-            post_fail \
-              "PRE_BUILD" \
-              "FORMAT_CODE" \
-              0 \
-              "Rails source is not clean after formatting." \
-              "RuboCop detected remaining violations."
-
-            post_terminate_prebuild
-
+          
+          rubocop -A --format quiet
+          
+          echo "Checking for remaining RuboCop offenses..."
+          
+          if ! rubocop --format simple 2>&1 | tee rubocop-analysis.log; then
+            cat rubocop-analysis.log
+            MESSAGE=$(tail -30 rubocop-analysis.log | tr '\n' ' ')
+            post_fail "Static Analysis" "RuboCop found remaining offenses: ${MESSAGE}"
+            post_terminate_build
           fi
 
           post_pass \
