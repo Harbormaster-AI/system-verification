@@ -125,6 +125,14 @@ jobs:
 
           chmod +x .github/actions/common/report.sh
 
+      ###########################################################################
+      # Normalize Technology as a capitalized env var
+      ###########################################################################
+
+      - name: Normalize technology
+        shell: bash
+        run: |
+          echo "TECHNOLOGY=${TECHNOLOGY^^}" >> "$GITHUB_ENV"
 
       ###########################################################################
       # Verify Checkout
