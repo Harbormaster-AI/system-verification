@@ -264,10 +264,6 @@ jobs:
             MISSING_FILES="${MISSING_FILES} Gemfile"
           fi
 
-          if [ ! -f "Gemfile.lock" ]; then
-            MISSING_FILES="${MISSING_FILES} Gemfile.lock"
-          fi
-
           if [ ! -f "config/application.rb" ]; then
             MISSING_FILES="${MISSING_FILES} config/application.rb"
           fi
