@@ -393,13 +393,10 @@ jobs:
           git status --short
 
           #######################################################################
-          # Only Ruby source/configuration files affected by formatting are
-          # eligible for the source commit.
-          #
-          # DO NOT use git add -A.
+          # Since new new files are generated up to this point, stage all the files
           #######################################################################
 
-          git add -- '*.rb' '*.rake'
+          git add -- .
 
           echo "Files staged for commit:"
 
