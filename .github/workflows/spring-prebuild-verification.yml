@@ -398,9 +398,9 @@ jobs:
           echo "Running Spring Boot source formatter..."
           
           if [ -x "./mvnw" ]; then
-            ./mvnw spotless:apply
+            ./mvnw --no-transfer-progress spotless:apply
           elif command -v mvn >/dev/null 2>&1; then
-            mvn spotless:apply
+            mvn --no-transfer-progress spotless:apply
           else
             echo "ERROR: Neither Maven Wrapper (./mvnw) nor Maven (mvn) is available."
             exit 1
@@ -595,6 +595,13 @@ jobs:
           
               cat checkstyle.log
           
+              echo "Generating Checkstyle violation report..."
+            
+              ${MVN} --no-transfer-progress checkstyle:checkstyle \
+              > checkstyle-report.log 2>&1 || true
+            
+              cat checkstyle-report.log
+  
               MESSAGE=$(tail -30 checkstyle.log | tr '\n' ' ')
           
               post_fail \
