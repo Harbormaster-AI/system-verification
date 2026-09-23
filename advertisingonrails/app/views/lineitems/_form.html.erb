@@ -1,0 +1,71 @@
+
+<%= form_with model: @lineItem, local: true do |form| %>
+ 
+  <% if @lineItem.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@lineItem.errors.count, "error") %> prohibited
+        this lineItem from being saved:
+      </h2>
+      <ul>
+        <% @lineItem.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :bidAmount, { class: 'form-label'} %><br>
+	<%= form.text_field :bidAmount, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :dailyBudget, { class: 'form-label'} %><br>
+	<%= form.text_field :dailyBudget, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :frequencyCap, { class: 'form-label'} %><br>
+	<%= form.text_field :frequencyCap, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, LineItem.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :PricingModel, { class: 'form-label'} %><br>
+   <%= form.select :PricingModel, LineItem.PricingModels.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :BidStrategy, { class: 'form-label'} %><br>
+   <%= form.select :BidStrategy, LineItem.BidStrategys.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Pacing, { class: 'form-label'} %><br>
+   <%= form.select :Pacing, LineItem.Pacings.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of brandSafetyPolicy found in  advertisingonrails/test/controllers
+
+one:
+  Level: 0
+  ContentRatingThreshold: 0
+
+two:
+  Level: 0
+  ContentRatingThreshold: 0
+
+

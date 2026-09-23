@@ -1,0 +1,40 @@
+<div class="title text-center">
+  List of Reports
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">reportName</th>
+			<th style="text-align:center">generatedAt</th>
+			<th style="text-align:center">fileUrl</th>
+			<th style="text-align:center">ReportType</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @reports.each do |report| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= report.reportName %>
+			</td>
+			<td style="text-align:center">
+	  			<%= report.generatedAt %>
+			</td>
+			<td style="text-align:center">
+	  			<%= report.fileUrl %>
+			</td>
+			<td style="text-align:center">
+	  			<%= report.ReportType %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_report_path(report), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', report_path(report), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New Report', new_report_path, :method => :get, :class => "btn btn-success btn-sm" %>

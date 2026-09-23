@@ -1,0 +1,24 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of creativeAsset found in  advertisingonrails/test/controllers
+
+one:
+  name: test string for name
+  clickUrl: "test value"
+  landingPage: "test value"
+  width: 100
+  height: 100
+  durationSeconds: 100
+  CreativeType: 0
+  AdFormat: 0
+
+two:
+  name: test string for name
+  clickUrl: "test value"
+  landingPage: "test value"
+  width: 100
+  height: 100
+  durationSeconds: 100
+  CreativeType: 0
+  AdFormat: 0
+
+

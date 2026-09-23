@@ -1,0 +1,51 @@
+
+<%= form_with model: @insertionOrder, local: true do |form| %>
+ 
+  <% if @insertionOrder.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@insertionOrder.errors.count, "error") %> prohibited
+        this insertionOrder from being saved:
+      </h2>
+      <ul>
+        <% @insertionOrder.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :ioNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :ioNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :agreedBudget, { class: 'form-label'} %><br>
+	<%= form.text_field :agreedBudget, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :flight, { class: 'form-label'} %><br>
+	<%= form.text_field :flight, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, InsertionOrder.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

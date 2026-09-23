@@ -1,0 +1,40 @@
+<div class="title text-center">
+  List of CreativeFiles
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">uri</th>
+			<th style="text-align:center">fileSizeKB</th>
+			<th style="text-align:center">mimeType</th>
+			<th style="text-align:center">checksum</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @creativeFiles.each do |creativeFile| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= creativeFile.uri %>
+			</td>
+			<td style="text-align:center">
+	  			<%= creativeFile.fileSizeKB %>
+			</td>
+			<td style="text-align:center">
+	  			<%= creativeFile.mimeType %>
+			</td>
+			<td style="text-align:center">
+	  			<%= creativeFile.checksum %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_creativeFile_path(creativeFile), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', creativeFile_path(creativeFile), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New CreativeFile', new_creativeFile_path, :method => :get, :class => "btn btn-success btn-sm" %>

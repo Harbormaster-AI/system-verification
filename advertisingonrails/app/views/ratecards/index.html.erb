@@ -1,0 +1,36 @@
+<div class="title text-center">
+  List of RateCards
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">name</th>
+			<th style="text-align:center">effectiveDate</th>
+			<th style="text-align:center">currency</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @rateCards.each do |rateCard| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= rateCard.name %>
+			</td>
+			<td style="text-align:center">
+	  			<%= rateCard.effectiveDate %>
+			</td>
+			<td style="text-align:center">
+	  			<%= rateCard.currency %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_rateCard_path(rateCard), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', rateCard_path(rateCard), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New RateCard', new_rateCard_path, :method => :get, :class => "btn btn-success btn-sm" %>

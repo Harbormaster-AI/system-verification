@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of paymentMethod found in  advertisingonrails/test/controllers
+
+one:
+  last4: test string for last4
+  cardholderName: test string for cardholderName
+  billingAddress: "test value"
+  MethodType: 0
+
+two:
+  last4: test string for last4
+  cardholderName: test string for cardholderName
+  billingAddress: "test value"
+  MethodType: 0
+
+

@@ -1,0 +1,36 @@
+<div class="title text-center">
+  List of CreativeApprovals
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">reviewer</th>
+			<th style="text-align:center">reviewedAt</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @creativeApprovals.each do |creativeApproval| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= creativeApproval.reviewer %>
+			</td>
+			<td style="text-align:center">
+	  			<%= creativeApproval.reviewedAt %>
+			</td>
+			<td style="text-align:center">
+	  			<%= creativeApproval.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_creativeApproval_path(creativeApproval), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', creativeApproval_path(creativeApproval), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New CreativeApproval', new_creativeApproval_path, :method => :get, :class => "btn btn-success btn-sm" %>

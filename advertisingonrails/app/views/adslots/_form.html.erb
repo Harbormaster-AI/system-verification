@@ -1,0 +1,53 @@
+
+<%= form_with model: @adSlot, local: true do |form| %>
+ 
+  <% if @adSlot.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@adSlot.errors.count, "error") %> prohibited
+        this adSlot from being saved:
+      </h2>
+      <ul>
+        <% @adSlot.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :slotCode, { class: 'form-label'} %><br>
+	<%= form.text_field :slotCode, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :width, { class: 'form-label'} %><br>
+	<%= form.text_field :width, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :height, { class: 'form-label'} %><br>
+	<%= form.text_field :height, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :floorPrice, { class: 'form-label'} %><br>
+	<%= form.text_field :floorPrice, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Format, { class: 'form-label'} %><br>
+   <%= form.select :Format, AdSlot.Formats.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>
