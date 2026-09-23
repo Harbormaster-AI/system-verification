@@ -1,0 +1,24 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of fundsTransfer found in  bankingonrails/test/controllers
+
+one:
+  transferReference: test string for transferReference
+  amount: "test value"
+  requestedDate: 2020-10-15
+  executionDate: 2020-10-15
+  purpose: test string for purpose
+  feeAmount: "test value"
+  Method: 0
+  Status: 0
+
+two:
+  transferReference: test string for transferReference
+  amount: "test value"
+  requestedDate: 2020-10-15
+  executionDate: 2020-10-15
+  purpose: test string for purpose
+  feeAmount: "test value"
+  Method: 0
+  Status: 0
+
+
