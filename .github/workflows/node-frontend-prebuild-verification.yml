@@ -69,7 +69,7 @@ env:
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
   CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
   APP_NAME: ${{ inputs.appName }}
-  TECHNOLOGY: ${{ toUpper(inputs.technology) }}
+  TECHNOLOGY: ${{ inputs.technology }}
   APOLLO_ENABLED: ${{ inputs.apollo }}
   HM_EXIT_WORKFLOW: "false"
 
