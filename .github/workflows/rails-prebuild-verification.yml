@@ -353,7 +353,7 @@ jobs:
 
           echo "Running RuboCop formatter..."
 
-          if ! bundle exec rubocop -A; then
+          if ! rubocop -A; then
 
             post_fail \
               "PRE_BUILD" \
@@ -367,7 +367,7 @@ jobs:
 
           echo "Checking for remaining formatting violations..."
 
-          if ! bundle exec rubocop --format simple; then
+          if ! rubocop --format simple; then
 
             post_fail \
               "PRE_BUILD" \
