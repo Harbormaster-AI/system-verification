@@ -1,0 +1,37 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+
+development:
+  <<: *default
+  database: <%= Rails.configuration.database_name %>_development
+  username: <%= Rails.configuration.database_username %>
+  password: <%= Rails.configuration.database_password %>
+  host: <%= Rails.configuration.database_host %>
+  port: <%= Rails.configuration.database_port %>
+
+test:
+  <<: *default
+  database: <%= Rails.configuration.database_name %>_test
+  username: <%= Rails.configuration.database_username %>
+  password: <%= Rails.configuration.database_password %>
+  host: <%= Rails.configuration.database_host %>
+  port: <%= Rails.configuration.database_port %>
+
+harbormaster_test:
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV.fetch("PGHOST", "127.0.0.1") %>
+  port: <%= ENV.fetch("PGPORT", 5432) %>
+  database: <%= ENV.fetch("PGDATABASE", "rails_test") %>
+  username: <%= ENV.fetch("PGUSER", "postgres") %>
+  password: <%= ENV.fetch("PGPASSWORD", "postgres") %>
+
+production:
+  <<: *default
+  database: <%= Rails.configuration.database_name %>production
+  username: <%= Rails.configuration.database_username %>
+  password: <%= Rails.configuration.database_password %>
+  host: <%= Rails.configuration.database_host %>
+  port: <%= Rails.configuration.database_port %>

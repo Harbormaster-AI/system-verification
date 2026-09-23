@@ -1,0 +1,18 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of branch found in  bankingonrails/test/controllers
+
+one:
+  name: test string for name
+  branchCode: test string for branchCode
+  address: "test value"
+  phone: test string for phone
+  openingHours: test string for openingHours
+
+two:
+  name: test string for name
+  branchCode: test string for branchCode
+  address: "test value"
+  phone: test string for phone
+  openingHours: test string for openingHours
+
+
