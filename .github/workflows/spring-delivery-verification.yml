@@ -85,9 +85,9 @@ env:
   ACTION_TO_CALL:               ${{ inputs.actionToCall }}
   CERTIFICATION_IDENTIFIER:     ${{ inputs.certificationIdentifier }}
   APP_NAME:                     ${{ inputs.appName }}
-
+  HM_EXIT_WORKFLOW:             "false"
   REGISTRY_HOST:                ${{ inputs.dockerHost }}
-  REGISTRY_ORG:                ${{ inputs.dockerOrg }}
+  REGISTRY_ORG:                 ${{ inputs.dockerOrg }}
   REGISTRY_REPOSITORY:          ${{ inputs.dockerRepository }}
   REGISTRY_USERNAME:            ${{ inputs.dockerUsername }}
   REGISTRY_PASSWORD:            ${{ inputs.dockerPassword }}

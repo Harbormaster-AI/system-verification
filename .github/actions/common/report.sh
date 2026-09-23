@@ -119,10 +119,10 @@ post_warning() {
 
 post_terminate_prebuild() {
 
-    local EXIT_WORKFLOW="${HM_EXIT_WORKFLOW:-true}"
+    local EXIT_WORKFLOW="${1:-true}"
 
     post_result \
-        "PRE_BUILD" \
+        "BUILD" \
         "" \
         "" \
         0 \
@@ -137,7 +137,7 @@ post_terminate_prebuild() {
 
 post_terminate_build() {
 
-    local EXIT_WORKFLOW="${HM_EXIT_WORKFLOW:-true}"
+    local EXIT_WORKFLOW="${1:-true}"
 
     post_result \
         "BUILD" \
@@ -155,7 +155,7 @@ post_terminate_build() {
 
 post_terminate_runtime() {
 
-    local EXIT_WORKFLOW="${HM_EXIT_WORKFLOW:-true}"
+    local EXIT_WORKFLOW="${1:-true}"
 
     post_result \
         "RUNTIME" \
@@ -173,7 +173,7 @@ post_terminate_runtime() {
 
 post_terminate_delivery() {
 
-    local EXIT_WORKFLOW="${HM_EXIT_WORKFLOW:-true}"
+    local EXIT_WORKFLOW="${1:-true}"
 
     post_result \
         "DELIVERY" \
@@ -191,7 +191,7 @@ post_terminate_delivery() {
 
 post_terminate_cloud() {
 
-    local EXIT_WORKFLOW="${HM_EXIT_WORKFLOW:-true}"
+    local EXIT_WORKFLOW="${1:-true}"
 
     post_result \
         "CLOUD" \
