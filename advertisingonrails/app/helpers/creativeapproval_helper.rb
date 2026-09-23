@@ -1,0 +1,2 @@
+module CreativeApprovalHelper
+end

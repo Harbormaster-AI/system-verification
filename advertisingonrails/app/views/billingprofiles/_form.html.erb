@@ -1,0 +1,49 @@
+
+<%= form_with model: @billingProfile, local: true do |form| %>
+ 
+  <% if @billingProfile.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@billingProfile.errors.count, "error") %> prohibited
+        this billingProfile from being saved:
+      </h2>
+      <ul>
+        <% @billingProfile.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :billingName, { class: 'form-label'} %><br>
+	<%= form.text_field :billingName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :taxId, { class: 'form-label'} %><br>
+	<%= form.text_field :taxId, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :billingAddress, { class: 'form-label'} %><br>
+	<%= form.text_field :billingAddress, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :PaymentTerms, { class: 'form-label'} %><br>
+   <%= form.select :PaymentTerms, BillingProfile.PaymentTermss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

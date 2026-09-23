@@ -1,0 +1,40 @@
+<div class="title text-center">
+  List of PaymentMethods
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">last4</th>
+			<th style="text-align:center">cardholderName</th>
+			<th style="text-align:center">billingAddress</th>
+			<th style="text-align:center">MethodType</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @paymentMethods.each do |paymentMethod| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= paymentMethod.last4 %>
+			</td>
+			<td style="text-align:center">
+	  			<%= paymentMethod.cardholderName %>
+			</td>
+			<td style="text-align:center">
+	  			<%= paymentMethod.billingAddress %>
+			</td>
+			<td style="text-align:center">
+	  			<%= paymentMethod.MethodType %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_paymentMethod_path(paymentMethod), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', paymentMethod_path(paymentMethod), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New PaymentMethod', new_paymentMethod_path, :method => :get, :class => "btn btn-success btn-sm" %>

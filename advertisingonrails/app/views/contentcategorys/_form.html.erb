@@ -1,0 +1,35 @@
+
+<%= form_with model: @contentCategory, local: true do |form| %>
+ 
+  <% if @contentCategory.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@contentCategory.errors.count, "error") %> prohibited
+        this contentCategory from being saved:
+      </h2>
+      <ul>
+        <% @contentCategory.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :code, { class: 'form-label'} %><br>
+	<%= form.text_field :code, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

@@ -1,0 +1,6 @@
+
+class ContentCategory < ApplicationRecord
+
+
+
+end

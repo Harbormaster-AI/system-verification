@@ -1,0 +1,18 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of creativeVariation found in  advertisingonrails/test/controllers
+
+one:
+  name: test string for name
+  language: test string for language
+  headline: test string for headline
+  bodyText: test string for bodyText
+  callToAction: test string for callToAction
+
+two:
+  name: test string for name
+  language: test string for language
+  headline: test string for headline
+  bodyText: test string for bodyText
+  callToAction: test string for callToAction
+
+

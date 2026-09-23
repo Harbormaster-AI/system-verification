@@ -1,0 +1,55 @@
+
+<%= form_with model: @adAccount, local: true do |form| %>
+ 
+  <% if @adAccount.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@adAccount.errors.count, "error") %> prohibited
+        this adAccount from being saved:
+      </h2>
+      <ul>
+        <% @adAccount.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :accountCode, { class: 'form-label'} %><br>
+	<%= form.text_field :accountCode, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :defaultCurrency, { class: 'form-label'} %><br>
+	<%= form.text_field :defaultCurrency, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :defaultTimezone, { class: 'form-label'} %><br>
+	<%= form.text_field :defaultTimezone, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

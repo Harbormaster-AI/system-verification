@@ -1,0 +1,37 @@
+
+<%= form_with model: @kPI, local: true do |form| %>
+ 
+  <% if @kPI.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@kPI.errors.count, "error") %> prohibited
+        this kPI from being saved:
+      </h2>
+      <ul>
+        <% @kPI.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :targetValue, { class: 'form-label'} %><br>
+	<%= form.text_field :targetValue, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :MetricType, { class: 'form-label'} %><br>
+   <%= form.select :MetricType, KPI.MetricTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

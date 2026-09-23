@@ -1,0 +1,37 @@
+
+<%= form_with model: @brandSafetyPolicy, local: true do |form| %>
+ 
+  <% if @brandSafetyPolicy.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@brandSafetyPolicy.errors.count, "error") %> prohibited
+        this brandSafetyPolicy from being saved:
+      </h2>
+      <ul>
+        <% @brandSafetyPolicy.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Level, { class: 'form-label'} %><br>
+   <%= form.select :Level, BrandSafetyPolicy.Levels.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :ContentRatingThreshold, { class: 'form-label'} %><br>
+   <%= form.select :ContentRatingThreshold, BrandSafetyPolicy.ContentRatingThresholds.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

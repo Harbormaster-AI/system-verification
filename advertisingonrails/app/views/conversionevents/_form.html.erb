@@ -1,0 +1,49 @@
+
+<%= form_with model: @conversionEvent, local: true do |form| %>
+ 
+  <% if @conversionEvent.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@conversionEvent.errors.count, "error") %> prohibited
+        this conversionEvent from being saved:
+      </h2>
+      <ul>
+        <% @conversionEvent.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :timestamp, { class: 'form-label'} %><br>
+    <%= form.time_field :timestamp, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :value, { class: 'form-label'} %><br>
+	<%= form.text_field :value, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :EventType, { class: 'form-label'} %><br>
+   <%= form.select :EventType, ConversionEvent.EventTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :AttributionModel, { class: 'form-label'} %><br>
+   <%= form.select :AttributionModel, ConversionEvent.AttributionModels.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

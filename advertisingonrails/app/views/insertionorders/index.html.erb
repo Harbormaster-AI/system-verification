@@ -1,0 +1,40 @@
+<div class="title text-center">
+  List of InsertionOrders
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">ioNumber</th>
+			<th style="text-align:center">agreedBudget</th>
+			<th style="text-align:center">flight</th>
+			<th style="text-align:center">Status</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @insertionOrders.each do |insertionOrder| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= insertionOrder.ioNumber %>
+			</td>
+			<td style="text-align:center">
+	  			<%= insertionOrder.agreedBudget %>
+			</td>
+			<td style="text-align:center">
+	  			<%= insertionOrder.flight %>
+			</td>
+			<td style="text-align:center">
+	  			<%= insertionOrder.Status %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_insertionOrder_path(insertionOrder), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', insertionOrder_path(insertionOrder), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New InsertionOrder', new_insertionOrder_path, :method => :get, :class => "btn btn-success btn-sm" %>
