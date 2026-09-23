@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of report found in  advertisingonrails/test/controllers
+
+one:
+  reportName: test string for reportName
+  generatedAt: 2020-10-15
+  fileUrl: "test value"
+  ReportType: 0
+
+two:
+  reportName: test string for reportName
+  generatedAt: 2020-10-15
+  fileUrl: "test value"
+  ReportType: 0
+
+

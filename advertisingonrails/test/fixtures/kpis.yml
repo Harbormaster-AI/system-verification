@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of kPI found in  advertisingonrails/test/controllers
+
+one:
+  targetValue: "test value"
+  MetricType: 0
+
+two:
+  targetValue: "test value"
+  MetricType: 0
+
+

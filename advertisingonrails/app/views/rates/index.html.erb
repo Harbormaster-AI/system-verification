@@ -1,0 +1,36 @@
+<div class="title text-center">
+  List of Rates
+</div>
+
+<table class="table table-sm table-hover table-striped"">
+	<thead class="table-dark">
+		<tr>
+
+			<th style="text-align:center">unitPrice</th>
+			<th style="text-align:center">AdFormat</th>
+			<th style="text-align:center">PricingModel</th>
+			<th style="text-align:center" colspan="2">Actions</th>
+	</thead>
+	<tbody>
+ 
+  <% @rates.each do |rate| %>
+		<tr>   
+			<td style="text-align:center">
+	  			<%= rate.unitPrice %>
+			</td>
+			<td style="text-align:center">
+	  			<%= rate.AdFormat %>
+			</td>
+			<td style="text-align:center">
+	  			<%= rate.PricingModel %>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Change', edit_rate_path(rate), :method => :get, :class => "btn btn-secondary btn-sm"%>
+			</td>
+			<td style="vertical-align:middle;text-align:center">
+				<%= button_to 'Delete', rate_path(rate), :method => :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger btn-sm"%>
+			</td>
+    	</tr>
+  <% end %>
+</table>
+<%= button_to 'New Rate', new_rate_path, :method => :get, :class => "btn btn-success btn-sm" %>

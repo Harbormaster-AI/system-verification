@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of user found in  advertisingonrails/test/controllers
+
+one:
+  firstName: test string for firstName
+  lastName: test string for lastName
+  email: "test value"
+  Role: 0
+
+two:
+  firstName: test string for firstName
+  lastName: test string for lastName
+  email: "test value"
+  Role: 0
+
+

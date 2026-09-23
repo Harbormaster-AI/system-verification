@@ -1,0 +1,47 @@
+
+<%= form_with model: @audienceSegment, local: true do |form| %>
+ 
+  <% if @audienceSegment.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@audienceSegment.errors.count, "error") %> prohibited
+        this audienceSegment from being saved:
+      </h2>
+      <ul>
+        <% @audienceSegment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :estimatedReach, { class: 'form-label'} %><br>
+	<%= form.text_field :estimatedReach, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :description, { class: 'form-label'} %><br>
+	<%= form.text_field :description, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :ProviderType, { class: 'form-label'} %><br>
+   <%= form.select :ProviderType, AudienceSegment.ProviderTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

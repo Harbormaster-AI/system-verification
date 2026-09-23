@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+    	<title>advertisingonrails</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+	    <%= csrf_meta_tags %>
+    	<%= csp_meta_tag %>
+	
+	    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+  	</head>
+
+	<body>
+	
+	  	<div class="jumbotron text-center">
+			<h1>advertisingonrails</h1>
+  		</div>
+ 
+    	<div class="container">
+	   	
+	   		<div class="row">
+	    
+	     		<div class="col-lg-2">
+		   			<%= button_to 'Agencys', agencys_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Teams', teams_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Users', users_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Advertisers', advertisers_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'BillingProfiles', billingProfiles_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'PaymentMethods', paymentMethods_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AdAccounts', adAccounts_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'DSPs', dSPs_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Campaigns', campaigns_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'KPIs', kPIs_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AudienceSegments', audienceSegments_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'DataProviders', dataProviders_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'LineItems', lineItems_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'TargetingProfiles', targetingProfiles_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'DeviceCriterions', deviceCriterions_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'BrandSafetyPolicys', brandSafetyPolicys_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ContentCategorys', contentCategorys_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Publishers', publishers_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'InventorySources', inventorySources_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AdSlots', adSlots_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Deals', deals_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Placements', placements_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'CreativeAssets', creativeAssets_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'CreativeFiles', creativeFiles_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'CreativeVariations', creativeVariations_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'CreativeApprovals', creativeApprovals_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'TrackingPixels', trackingPixels_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ConversionEvents', conversionEvents_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'PerformanceMetrics', performanceMetrics_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Reports', reports_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'InsertionOrders', insertionOrders_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'RateCards', rateCards_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Rates', rates_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Experiments', experiments_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ExperimentVariants', experimentVariants_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'GeoRegions', geoRegions_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+	     		</div>
+
+        		<!-- Page Content -->
+        		<div class="col-lg-10">
+					<%= yield %>
+        		</div>
+
+      		</div>   
+		
+		</div>
+		
+  </body>
+
+</html>

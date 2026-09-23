@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of conversionEvent found in  advertisingonrails/test/controllers
+
+one:
+  timestamp: 2020-10-15
+  value: "test value"
+  EventType: 0
+  AttributionModel: 0
+
+two:
+  timestamp: 2020-10-15
+  value: "test value"
+  EventType: 0
+  AttributionModel: 0
+
+

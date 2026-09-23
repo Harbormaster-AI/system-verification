@@ -1,0 +1,2 @@
+module BrandSafetyPolicyHelper
+end

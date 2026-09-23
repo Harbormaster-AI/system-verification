@@ -1,0 +1,49 @@
+
+<%= form_with model: @trackingPixel, local: true do |form| %>
+ 
+  <% if @trackingPixel.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@trackingPixel.errors.count, "error") %> prohibited
+        this trackingPixel from being saved:
+      </h2>
+      <ul>
+        <% @trackingPixel.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :url, { class: 'form-label'} %><br>
+	<%= form.text_field :url, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :EventType, { class: 'form-label'} %><br>
+   <%= form.select :EventType, TrackingPixel.EventTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :PixelType, { class: 'form-label'} %><br>
+   <%= form.select :PixelType, TrackingPixel.PixelTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

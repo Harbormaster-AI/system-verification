@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of creativeFile found in  advertisingonrails/test/controllers
+
+one:
+  uri: "test value"
+  fileSizeKB: 100
+  mimeType: test string for mimeType
+  checksum: test string for checksum
+
+two:
+  uri: "test value"
+  fileSizeKB: 100
+  mimeType: test string for mimeType
+  checksum: test string for checksum
+
+

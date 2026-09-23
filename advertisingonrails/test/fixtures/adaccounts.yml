@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of adAccount found in  advertisingonrails/test/controllers
+
+one:
+  name: test string for name
+  accountCode: test string for accountCode
+  defaultCurrency: test string for defaultCurrency
+  defaultTimezone: test string for defaultTimezone
+
+two:
+  name: test string for name
+  accountCode: test string for accountCode
+  defaultCurrency: test string for defaultCurrency
+  defaultTimezone: test string for defaultTimezone
+
+

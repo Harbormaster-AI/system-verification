@@ -1,0 +1,43 @@
+
+<%= form_with model: @creativeApproval, local: true do |form| %>
+ 
+  <% if @creativeApproval.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@creativeApproval.errors.count, "error") %> prohibited
+        this creativeApproval from being saved:
+      </h2>
+      <ul>
+        <% @creativeApproval.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :reviewer, { class: 'form-label'} %><br>
+	<%= form.text_field :reviewer, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :reviewedAt, { class: 'form-label'} %><br>
+    <%= form.date_field :reviewedAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, CreativeApproval.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

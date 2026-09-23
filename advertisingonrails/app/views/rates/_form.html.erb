@@ -1,0 +1,43 @@
+
+<%= form_with model: @rate, local: true do |form| %>
+ 
+  <% if @rate.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@rate.errors.count, "error") %> prohibited
+        this rate from being saved:
+      </h2>
+      <ul>
+        <% @rate.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :unitPrice, { class: 'form-label'} %><br>
+	<%= form.text_field :unitPrice, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :AdFormat, { class: 'form-label'} %><br>
+   <%= form.select :AdFormat, Rate.AdFormats.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :PricingModel, { class: 'form-label'} %><br>
+   <%= form.select :PricingModel, Rate.PricingModels.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

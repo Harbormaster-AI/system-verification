@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of deal found in  advertisingonrails/test/controllers
+
+one:
+  floorPrice: "test value"
+  DealType: 0
+
+two:
+  floorPrice: "test value"
+  DealType: 0
+
+

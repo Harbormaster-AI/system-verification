@@ -1,0 +1,49 @@
+
+<%= form_with model: @creativeVariation, local: true do |form| %>
+ 
+  <% if @creativeVariation.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@creativeVariation.errors.count, "error") %> prohibited
+        this creativeVariation from being saved:
+      </h2>
+      <ul>
+        <% @creativeVariation.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :language, { class: 'form-label'} %><br>
+	<%= form.text_field :language, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :headline, { class: 'form-label'} %><br>
+	<%= form.text_field :headline, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :bodyText, { class: 'form-label'} %><br>
+	<%= form.text_field :bodyText, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :callToAction, { class: 'form-label'} %><br>
+	<%= form.text_field :callToAction, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

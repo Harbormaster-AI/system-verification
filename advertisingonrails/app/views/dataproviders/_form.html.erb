@@ -1,0 +1,41 @@
+
+<%= form_with model: @dataProvider, local: true do |form| %>
+ 
+  <% if @dataProvider.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@dataProvider.errors.count, "error") %> prohibited
+        this dataProvider from being saved:
+      </h2>
+      <ul>
+        <% @dataProvider.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :website, { class: 'form-label'} %><br>
+	<%= form.text_field :website, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :ProviderType, { class: 'form-label'} %><br>
+   <%= form.select :ProviderType, DataProvider.ProviderTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

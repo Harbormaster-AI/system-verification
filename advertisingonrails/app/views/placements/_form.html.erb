@@ -1,0 +1,45 @@
+
+<%= form_with model: @placement, local: true do |form| %>
+ 
+  <% if @placement.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@placement.errors.count, "error") %> prohibited
+        this placement from being saved:
+      </h2>
+      <ul>
+        <% @placement.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :flight, { class: 'form-label'} %><br>
+	<%= form.text_field :flight, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :goalImpressions, { class: 'form-label'} %><br>
+	<%= form.text_field :goalImpressions, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>
