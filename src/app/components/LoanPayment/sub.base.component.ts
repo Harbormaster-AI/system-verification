@@ -1,20 +1,21 @@
-import { HttpClient } from '@angular/common/http';
-import { BaseComponent } from '../base.component';
+import { HttpClient } from "@angular/common/http";
+import { BaseComponent } from "../base.component";
 
-import { Directive } from '@angular/core';
+import { Directive } from "@angular/core";
 
 /**
 	Base class of all LoanPayment Edit and Create Components.  
  **/
 @Directive()
 export class SubBaseComponent extends BaseComponent {
+  constructor(http: HttpClient) {
+    super(http);
+  }
 
-  constructor (http: HttpClient) { super(http); }
-  
   ngOnInit() {
-  	super.ngOnInit();
-  	
-	this.initLoanAccountList();
-	this.initTransactionList();
+    super.ngOnInit();
+
+    this.initLoanAccountList();
+    this.initTransactionList();
   }
 }

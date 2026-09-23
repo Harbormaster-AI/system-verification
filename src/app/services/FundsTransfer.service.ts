@@ -1,354 +1,389 @@
-
-import { Injectable } from '@angular/core';
-import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import {FundsTransfer} from '../models/FundsTransfer';
-import {AccountService} from '../services/Account.service';
-import {ExternalAccountService} from '../services/ExternalAccount.service';
-import {CustomerService} from '../services/Customer.service';
-import {TransactionService} from '../services/Transaction.service';
-import { HelperBaseService } from './helperbase.service';
+import { Injectable } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { HttpClient } from "@angular/common/http";
+import { Observable, Subject } from "rxjs";
+import { FundsTransfer } from "../models/FundsTransfer";
+import { AccountService } from "../services/Account.service";
+import { ExternalAccountService } from "../services/ExternalAccount.service";
+import { CustomerService } from "../services/Customer.service";
+import { TransactionService } from "../services/Transaction.service";
+import { HelperBaseService } from "./helperbase.service";
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: "root",
 })
-
 export class FundsTransferService extends HelperBaseService {
+  //********************************************************************
+  // general holder
+  //********************************************************************
+  fundsTransfer: FundsTransfer;
 
-	//********************************************************************
-	// general holder 
-	//********************************************************************
-	fundsTransfer : FundsTransfer;
+  //********************************************************************
+  // Catch all for the return value of a service call
+  //********************************************************************
+  result: any;
 
-	//********************************************************************
-	// Catch all for the return value of a service call
-	//********************************************************************
-	result: any;
+  //********************************************************************
+  // sole constructor, injected with the HttpClient
+  //********************************************************************
+  constructor(private http: HttpClient) {
+    super();
+  }
 
-	//********************************************************************
-	// sole constructor, injected with the HttpClient
-	//********************************************************************
-	constructor(private http: HttpClient) {
-		super();
-	}
+  //********************************************************************
+  // add a FundsTransfer
+  // returns the results untouched as a JSON representation
+  // delegates via URI
+  //********************************************************************
+  addFundsTransfer(
+    transferReference,
+    amount,
+    requestedDate,
+    executionDate,
+    purpose,
+    feeAmount,
+    SourceAccount,
+    DestinationAccount,
+    ExternalBeneficiary,
+    InitiatedBy,
+    Transactions,
+    Method,
+    Status,
+  ): Observable<any> {
+    const uri_ = this.apiUrl + "/FundsTransfer/create";
+    const obj = {
+      transferReference: transferReference,
+      amount: amount,
+      requestedDate: requestedDate,
+      executionDate: executionDate,
+      purpose: purpose,
+      feeAmount: feeAmount,
+      SourceAccount:
+        SourceAccount != null && SourceAccount.length > 0
+          ? SourceAccount
+          : null,
+      DestinationAccount:
+        DestinationAccount != null && DestinationAccount.length > 0
+          ? DestinationAccount
+          : null,
+      ExternalBeneficiary:
+        ExternalBeneficiary != null && ExternalBeneficiary.length > 0
+          ? ExternalBeneficiary
+          : null,
+      InitiatedBy:
+        InitiatedBy != null && InitiatedBy.length > 0 ? InitiatedBy : null,
+      Transactions:
+        Transactions != null && Transactions.length > 0 ? Transactions : null,
+      Method: Method,
+      Status: Status,
+    };
 
-		//********************************************************************
-	// add a FundsTransfer
-	// returns the results untouched as a JSON representation
-	// delegates via URI
-	//********************************************************************
-	addFundsTransfer(transferReference, amount, requestedDate, executionDate, purpose, feeAmount, SourceAccount, DestinationAccount, ExternalBeneficiary, InitiatedBy, Transactions, Method, Status) : Observable<any> {
-		const uri_ = this.apiUrl + '/FundsTransfer/create';
-		const obj = {
-			      		transferReference: transferReference,
-      		amount: amount,
-      		requestedDate: requestedDate,
-      		executionDate: executionDate,
-      		purpose: purpose,
-      		feeAmount: feeAmount,
-      		SourceAccount: SourceAccount != null && SourceAccount.length > 0 ? SourceAccount : null,
-      		DestinationAccount: DestinationAccount != null && DestinationAccount.length > 0 ? DestinationAccount : null,
-      		ExternalBeneficiary: ExternalBeneficiary != null && ExternalBeneficiary.length > 0 ? ExternalBeneficiary : null,
-      		InitiatedBy: InitiatedBy != null && InitiatedBy.length > 0 ? InitiatedBy : null,
-      		Transactions: Transactions != null && Transactions.length > 0 ? Transactions : null,
-      		Method: Method,
-			Status: Status
-		};
+    return this.http.post(uri_, obj);
+  }
 
-		return this.http.post(uri_, obj);
-	}
+  //********************************************************************
+  // update a FundsTransfer
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  updateFundsTransfer(
+    transferReference,
+    amount,
+    requestedDate,
+    executionDate,
+    purpose,
+    feeAmount,
+    SourceAccount,
+    DestinationAccount,
+    ExternalBeneficiary,
+    InitiatedBy,
+    Transactions,
+    Method,
+    Status,
+    id,
+  ): Observable<any> {
+    const uri_ = this.apiUrl + "/FundsTransfer/update/" + id;
+    const obj = {
+      transferReference: transferReference,
+      amount: amount,
+      requestedDate: requestedDate,
+      executionDate: executionDate,
+      purpose: purpose,
+      feeAmount: feeAmount,
+      SourceAccount:
+        SourceAccount != null && SourceAccount.length > 0
+          ? SourceAccount
+          : null,
+      DestinationAccount:
+        DestinationAccount != null && DestinationAccount.length > 0
+          ? DestinationAccount
+          : null,
+      ExternalBeneficiary:
+        ExternalBeneficiary != null && ExternalBeneficiary.length > 0
+          ? ExternalBeneficiary
+          : null,
+      InitiatedBy:
+        InitiatedBy != null && InitiatedBy.length > 0 ? InitiatedBy : null,
+      Transactions:
+        Transactions != null && Transactions.length > 0 ? Transactions : null,
+      Method: Method,
+      Status: Status,
+    };
+    return this.http.post(uri_, obj);
+  }
 
-	//********************************************************************
-	// update a FundsTransfer
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-		updateFundsTransfer(transferReference, amount, requestedDate, executionDate, purpose, feeAmount, SourceAccount, DestinationAccount, ExternalBeneficiary, InitiatedBy, Transactions, Method, Status, id)  :  Observable<any>  {
-			const uri_ = this.apiUrl + '/FundsTransfer/update/' + id;
-		const obj = {
-				      		transferReference: transferReference,
-      		amount: amount,
-      		requestedDate: requestedDate,
-      		executionDate: executionDate,
-      		purpose: purpose,
-      		feeAmount: feeAmount,
-      		SourceAccount: SourceAccount != null && SourceAccount.length > 0 ? SourceAccount : null,
-      		DestinationAccount: DestinationAccount != null && DestinationAccount.length > 0 ? DestinationAccount : null,
-      		ExternalBeneficiary: ExternalBeneficiary != null && ExternalBeneficiary.length > 0 ? ExternalBeneficiary : null,
-      		InitiatedBy: InitiatedBy != null && InitiatedBy.length > 0 ? InitiatedBy : null,
-      		Transactions: Transactions != null && Transactions.length > 0 ? Transactions : null,
-      		Method: Method,
-			Status: Status
-		};
-		return this.http.post(uri_, obj);
-	}
+  //********************************************************************
+  // delete a FundsTransfer
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  deleteFundsTransfer(id): Observable<any> {
+    const uri_ = this.apiUrl + "/FundsTransfer/delete/" + id;
 
-	//********************************************************************
-	// delete a FundsTransfer
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	deleteFundsTransfer(id)  : Observable<any> {
-		const uri_ = this.apiUrl + '/FundsTransfer/delete/' + id;
+    return this.http.get(uri_);
+  }
 
-		return this.http.get(uri_);
-	}
-	
-	//********************************************************************
-	// loads a FundsTransfer
-	// returns the results untouched as an Observable FundsTransfer
-	// FundsTransfer model
-	// delegates via URI
-	//********************************************************************
-	getFundsTransfer(id) : Observable<FundsTransfer> {
-		const uri_ = this.apiUrl + '/FundsTransfer/load/' + id;
+  //********************************************************************
+  // loads a FundsTransfer
+  // returns the results untouched as an Observable FundsTransfer
+  // FundsTransfer model
+  // delegates via URI
+  //********************************************************************
+  getFundsTransfer(id): Observable<FundsTransfer> {
+    const uri_ = this.apiUrl + "/FundsTransfer/load/" + id;
 
-		return this.http.get<FundsTransfer>(uri_);
-	}
-	
-	//********************************************************************
-	// gets all FundsTransfer
-	// returns the results untouched as JSON representation of an
-	// Observable array of FundsTransfer models
-	// delegates via URI
-	//********************************************************************
-	getFundsTransfers() : Observable<FundsTransfer[]> {
-		const uri_ = this.apiUrl + '/FundsTransfer/';
+    return this.http.get<FundsTransfer>(uri_);
+  }
 
-		return this
-			.http.get<FundsTransfer[]>(uri_);
-	}
-	
-		
-	//********************************************************************
-	// assigns a SourceAccount on a FundsTransfer
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	assignSourceAccount( fundsTransferId, _sourceAccountId ): Observable<any> {
+  //********************************************************************
+  // gets all FundsTransfer
+  // returns the results untouched as JSON representation of an
+  // Observable array of FundsTransfer models
+  // delegates via URI
+  //********************************************************************
+  getFundsTransfers(): Observable<FundsTransfer[]> {
+    const uri_ = this.apiUrl + "/FundsTransfer/";
 
-		// get the FundsTransfer from storage
-		this.loadHelper( fundsTransferId );
+    return this.http.get<FundsTransfer[]>(uri_);
+  }
 
-	// get the Account from storage
-	var tmp 	= new AccountService(this.http).getAccount(_sourceAccountId);
+  //********************************************************************
+  // assigns a SourceAccount on a FundsTransfer
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  assignSourceAccount(fundsTransferId, _sourceAccountId): Observable<any> {
+    // get the FundsTransfer from storage
+    this.loadHelper(fundsTransferId);
 
-	// assign the SourceAccount
-	this.fundsTransfer.sourceAccount = tmp;
+    // get the Account from storage
+    var tmp = new AccountService(this.http).getAccount(_sourceAccountId);
 
-	// save the FundsTransfer
-	return this.saveHelper();
-}
+    // assign the SourceAccount
+    this.fundsTransfer.sourceAccount = tmp;
 
-	//********************************************************************
-	// unassigns a SourceAccount on a FundsTransfer
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	unassignSourceAccount( fundsTransferId ): Observable<any> {
+    // save the FundsTransfer
+    return this.saveHelper();
+  }
 
-		// get the FundsTransfer from storage
-		this.loadHelper( fundsTransferId );
+  //********************************************************************
+  // unassigns a SourceAccount on a FundsTransfer
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  unassignSourceAccount(fundsTransferId): Observable<any> {
+    // get the FundsTransfer from storage
+    this.loadHelper(fundsTransferId);
 
-	// assign SourceAccount to null
-	this.fundsTransfer.sourceAccount = null;
+    // assign SourceAccount to null
+    this.fundsTransfer.sourceAccount = null;
 
-	// save the FundsTransfer
-	return this.saveHelper();
-}
+    // save the FundsTransfer
+    return this.saveHelper();
+  }
 
-	
-	//********************************************************************
-	// assigns a DestinationAccount on a FundsTransfer
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	assignDestinationAccount( fundsTransferId, _destinationAccountId ): Observable<any> {
+  //********************************************************************
+  // assigns a DestinationAccount on a FundsTransfer
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  assignDestinationAccount(
+    fundsTransferId,
+    _destinationAccountId,
+  ): Observable<any> {
+    // get the FundsTransfer from storage
+    this.loadHelper(fundsTransferId);
 
-		// get the FundsTransfer from storage
-		this.loadHelper( fundsTransferId );
+    // get the Account from storage
+    var tmp = new AccountService(this.http).getAccount(_destinationAccountId);
 
-	// get the Account from storage
-	var tmp 	= new AccountService(this.http).getAccount(_destinationAccountId);
+    // assign the DestinationAccount
+    this.fundsTransfer.destinationAccount = tmp;
 
-	// assign the DestinationAccount
-	this.fundsTransfer.destinationAccount = tmp;
+    // save the FundsTransfer
+    return this.saveHelper();
+  }
 
-	// save the FundsTransfer
-	return this.saveHelper();
-}
+  //********************************************************************
+  // unassigns a DestinationAccount on a FundsTransfer
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  unassignDestinationAccount(fundsTransferId): Observable<any> {
+    // get the FundsTransfer from storage
+    this.loadHelper(fundsTransferId);
 
-	//********************************************************************
-	// unassigns a DestinationAccount on a FundsTransfer
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	unassignDestinationAccount( fundsTransferId ): Observable<any> {
+    // assign DestinationAccount to null
+    this.fundsTransfer.destinationAccount = null;
 
-		// get the FundsTransfer from storage
-		this.loadHelper( fundsTransferId );
+    // save the FundsTransfer
+    return this.saveHelper();
+  }
 
-	// assign DestinationAccount to null
-	this.fundsTransfer.destinationAccount = null;
+  //********************************************************************
+  // assigns a ExternalBeneficiary on a FundsTransfer
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  assignExternalBeneficiary(
+    fundsTransferId,
+    _externalBeneficiaryId,
+  ): Observable<any> {
+    // get the FundsTransfer from storage
+    this.loadHelper(fundsTransferId);
 
-	// save the FundsTransfer
-	return this.saveHelper();
-}
+    // get the ExternalAccount from storage
+    var tmp = new ExternalAccountService(this.http).getExternalAccount(
+      _externalBeneficiaryId,
+    );
 
-	
-	//********************************************************************
-	// assigns a ExternalBeneficiary on a FundsTransfer
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	assignExternalBeneficiary( fundsTransferId, _externalBeneficiaryId ): Observable<any> {
+    // assign the ExternalBeneficiary
+    this.fundsTransfer.externalBeneficiary = tmp;
 
-		// get the FundsTransfer from storage
-		this.loadHelper( fundsTransferId );
+    // save the FundsTransfer
+    return this.saveHelper();
+  }
 
-	// get the ExternalAccount from storage
-	var tmp 	= new ExternalAccountService(this.http).getExternalAccount(_externalBeneficiaryId);
+  //********************************************************************
+  // unassigns a ExternalBeneficiary on a FundsTransfer
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  unassignExternalBeneficiary(fundsTransferId): Observable<any> {
+    // get the FundsTransfer from storage
+    this.loadHelper(fundsTransferId);
 
-	// assign the ExternalBeneficiary
-	this.fundsTransfer.externalBeneficiary = tmp;
+    // assign ExternalBeneficiary to null
+    this.fundsTransfer.externalBeneficiary = null;
 
-	// save the FundsTransfer
-	return this.saveHelper();
-}
+    // save the FundsTransfer
+    return this.saveHelper();
+  }
 
-	//********************************************************************
-	// unassigns a ExternalBeneficiary on a FundsTransfer
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	unassignExternalBeneficiary( fundsTransferId ): Observable<any> {
+  //********************************************************************
+  // assigns a InitiatedBy on a FundsTransfer
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  assignInitiatedBy(fundsTransferId, _initiatedById): Observable<any> {
+    // get the FundsTransfer from storage
+    this.loadHelper(fundsTransferId);
 
-		// get the FundsTransfer from storage
-		this.loadHelper( fundsTransferId );
+    // get the Customer from storage
+    var tmp = new CustomerService(this.http).getCustomer(_initiatedById);
 
-	// assign ExternalBeneficiary to null
-	this.fundsTransfer.externalBeneficiary = null;
+    // assign the InitiatedBy
+    this.fundsTransfer.initiatedBy = tmp;
 
-	// save the FundsTransfer
-	return this.saveHelper();
-}
+    // save the FundsTransfer
+    return this.saveHelper();
+  }
 
-	
-	//********************************************************************
-	// assigns a InitiatedBy on a FundsTransfer
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	assignInitiatedBy( fundsTransferId, _initiatedById ): Observable<any> {
+  //********************************************************************
+  // unassigns a InitiatedBy on a FundsTransfer
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  unassignInitiatedBy(fundsTransferId): Observable<any> {
+    // get the FundsTransfer from storage
+    this.loadHelper(fundsTransferId);
 
-		// get the FundsTransfer from storage
-		this.loadHelper( fundsTransferId );
+    // assign InitiatedBy to null
+    this.fundsTransfer.initiatedBy = null;
 
-	// get the Customer from storage
-	var tmp 	= new CustomerService(this.http).getCustomer(_initiatedById);
+    // save the FundsTransfer
+    return this.saveHelper();
+  }
 
-	// assign the InitiatedBy
-	this.fundsTransfer.initiatedBy = tmp;
+  //********************************************************************
+  // adds one or more transactionsIds as a Transactions
+  // to a FundsTransfer
+  // returns a Promise
+  // delegates via URI
+  //********************************************************************
+  addTransactions(fundsTransferId, transactionsIds): Observable<any> {
+    // get the FundsTransfer
+    this.loadHelper(fundsTransferId);
 
-	// save the FundsTransfer
-	return this.saveHelper();
-}
+    // split on a comma with no spaces
+    var idList = transactionsIds.split(",");
 
-	//********************************************************************
-	// unassigns a InitiatedBy on a FundsTransfer
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	unassignInitiatedBy( fundsTransferId ): Observable<any> {
+    // iterate over array of transactions ids
+    idList.forEach(function (id) {
+      // read the Transaction
+      var transaction = new TransactionService(this.http).getTransaction(id);
+      // add the Transaction if not already assigned
+      if (this.fundsTransfer.transactions.indexOf(transaction) == -1)
+        this.fundsTransfer.transactions.push(transaction);
+    });
 
-		// get the FundsTransfer from storage
-		this.loadHelper( fundsTransferId );
+    // save it
+    return this.saveHelper();
+  }
 
-	// assign InitiatedBy to null
-	this.fundsTransfer.initiatedBy = null;
+  //********************************************************************
+  // removes one or more transactionsIds as a Transactions
+  // from a FundsTransfer
+  // returns a Promise
+  // delegates via URI
+  //********************************************************************
+  removeTransactions(fundsTransferId, transactionsIds): Observable<any> {
+    // get the FundsTransfer
+    this.loadHelper(fundsTransferId);
 
-	// save the FundsTransfer
-	return this.saveHelper();
-}
+    // split on a comma with no spaces
+    var idList = transactionsIds.split(",");
+    var transactions = this.fundsTransfer.transactions;
 
-	
-		//********************************************************************
-	// adds one or more transactionsIds as a Transactions
-	// to a FundsTransfer
-	// returns a Promise
-	// delegates via URI
-	//********************************************************************
-	addTransactions( fundsTransferId, transactionsIds ): Observable<any> {
+    if (transactions != null && transactionsIds != null) {
+      // iterate over array of transactions ids
+      transactions.forEach(function (obj) {
+        if (transactionsIds.indexOf(obj._id) > -1) {
+          // remove the Transaction
+          this.fundsTransfer.transactions.pop(obj);
+        }
+      });
 
-		// get the FundsTransfer
-		this.loadHelper( fundsTransferId );
+      // save it
+      return this.saveHelper();
+    }
+  }
 
-	// split on a comma with no spaces
-	var idList = transactionsIds.split(',')
+  //********************************************************************
+  // saveHelper - internal helper to save a FundsTransfer
+  //********************************************************************
+  saveHelper(): Observable<any> {
+    const uri_ = this.apiUrl + "/FundsTransfer/update/" + this.fundsTransfer;
 
-	// iterate over array of transactions ids
-	idList.forEach(function (id) {
-		// read the Transaction
-		var transaction = new TransactionService(this.http).getTransaction(id);
-		// add the Transaction if not already assigned
-		if ( this.fundsTransfer.transactions.indexOf(transaction) == -1 )
-		this.fundsTransfer.transactions.push(transaction);
-	});
+    return this.http.post(uri_, this.fundsTransfer);
+  }
 
-	// save it
-	return this.saveHelper();
-}
-
-	//********************************************************************
-	// removes one or more transactionsIds as a Transactions
-	// from a FundsTransfer
-	// returns a Promise
-	// delegates via URI
-	//********************************************************************
-	removeTransactions( fundsTransferId, transactionsIds ): Observable<any> {
-
-		// get the FundsTransfer
-		this.loadHelper( fundsTransferId );
-
-
-	// split on a comma with no spaces
-	var idList 					= transactionsIds.split(',');
-	var transactions 	= this.fundsTransfer.transactions;
-
-	if ( transactions != null && transactionsIds != null ) {
-
-		// iterate over array of transactions ids
-		transactions.forEach(function (obj) {
-			if ( transactionsIds.indexOf(obj._id) > -1 ) {
-				// remove the Transaction
-				this.fundsTransfer.transactions.pop(obj);
-			}
-		});
-
-		// save it
-		return this.saveHelper();
-	}
-}
-
-	
-	//********************************************************************
-	// saveHelper - internal helper to save a FundsTransfer
-	//********************************************************************
-	saveHelper() : Observable<any> {
-
-		const uri_ = this.apiUrl + '/FundsTransfer/update/' + this.fundsTransfer;
-
-	return  this.http.post(uri_, this.fundsTransfer );
-}
-
-	//********************************************************************
-	// loadHelper - internal helper to load a FundsTransfer
-	//********************************************************************	
-	loadHelper( id ) {
-		this.getFundsTransfer(id)
-			.subscribe((res : FundsTransfer) => {
-				this.fundsTransfer = res;
-			});
-	}
+  //********************************************************************
+  // loadHelper - internal helper to load a FundsTransfer
+  //********************************************************************
+  loadHelper(id) {
+    this.getFundsTransfer(id).subscribe((res: FundsTransfer) => {
+      this.fundsTransfer = res;
+    });
+  }
 }

@@ -1,39 +1,35 @@
-
-
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { BankingProductService } from '../../../services/BankingProduct.service';
-import { BankingProduct } from '../../../models/BankingProduct';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { BankingProductService } from "../../../services/BankingProduct.service";
+import { BankingProduct } from "../../../models/BankingProduct";
 
 @Component({
-    selector: 'app-index-bankingProduct',
-    standalone: false,
-    templateUrl: './index.component.html',
-    styleUrls: ['./index.component.css']
+  selector: "app-index-bankingProduct",
+  standalone: false,
+  templateUrl: "./index.component.html",
+  styleUrls: ["./index.component.css"],
 })
 export class IndexBankingProductComponent implements OnInit {
+  bankingProducts: BankingProduct[] = [];
 
-    bankingProducts: BankingProduct[] = [];
+  constructor(
+    private router: Router,
+    private service: BankingProductService,
+  ) {}
 
-    constructor(
-        private router: Router,
-        private service: BankingProductService
-) {}
+  ngOnInit(): void {
+    this.getBankingProducts();
+  }
 
-    ngOnInit(): void {
-        this.getBankingProducts();
-}
-
-    getBankingProducts(): void {
-        this.service.getBankingProducts().subscribe((res) => {
-        this.bankingProducts = res;
+  getBankingProducts(): void {
+    this.service.getBankingProducts().subscribe((res) => {
+      this.bankingProducts = res;
     });
-}
+  }
 
-    deleteBankingProduct(id: any): void {
-        this.service.deleteBankingProduct(id)
-            .subscribe(() => {
-                this.getBankingProducts();
-            });
-    }
+  deleteBankingProduct(id: any): void {
+    this.service.deleteBankingProduct(id).subscribe(() => {
+      this.getBankingProducts();
+    });
+  }
 }

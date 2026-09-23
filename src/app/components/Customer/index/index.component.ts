@@ -1,39 +1,35 @@
-
-
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CustomerService } from '../../../services/Customer.service';
-import { Customer } from '../../../models/Customer';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { CustomerService } from "../../../services/Customer.service";
+import { Customer } from "../../../models/Customer";
 
 @Component({
-    selector: 'app-index-customer',
-    standalone: false,
-    templateUrl: './index.component.html',
-    styleUrls: ['./index.component.css']
+  selector: "app-index-customer",
+  standalone: false,
+  templateUrl: "./index.component.html",
+  styleUrls: ["./index.component.css"],
 })
 export class IndexCustomerComponent implements OnInit {
+  customers: Customer[] = [];
 
-    customers: Customer[] = [];
+  constructor(
+    private router: Router,
+    private service: CustomerService,
+  ) {}
 
-    constructor(
-        private router: Router,
-        private service: CustomerService
-) {}
+  ngOnInit(): void {
+    this.getCustomers();
+  }
 
-    ngOnInit(): void {
-        this.getCustomers();
-}
-
-    getCustomers(): void {
-        this.service.getCustomers().subscribe((res) => {
-        this.customers = res;
+  getCustomers(): void {
+    this.service.getCustomers().subscribe((res) => {
+      this.customers = res;
     });
-}
+  }
 
-    deleteCustomer(id: any): void {
-        this.service.deleteCustomer(id)
-            .subscribe(() => {
-                this.getCustomers();
-            });
-    }
+  deleteCustomer(id: any): void {
+    this.service.deleteCustomer(id).subscribe(() => {
+      this.getCustomers();
+    });
+  }
 }

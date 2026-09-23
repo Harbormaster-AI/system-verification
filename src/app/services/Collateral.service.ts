@@ -1,165 +1,171 @@
-
-import { Injectable } from '@angular/core';
-import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import {Collateral} from '../models/Collateral';
-import {LoanAccountService} from '../services/LoanAccount.service';
-import { HelperBaseService } from './helperbase.service';
+import { Injectable } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { HttpClient } from "@angular/common/http";
+import { Observable, Subject } from "rxjs";
+import { Collateral } from "../models/Collateral";
+import { LoanAccountService } from "../services/LoanAccount.service";
+import { HelperBaseService } from "./helperbase.service";
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: "root",
 })
-
 export class CollateralService extends HelperBaseService {
+  //********************************************************************
+  // general holder
+  //********************************************************************
+  collateral: Collateral;
 
-	//********************************************************************
-	// general holder 
-	//********************************************************************
-	collateral : Collateral;
+  //********************************************************************
+  // Catch all for the return value of a service call
+  //********************************************************************
+  result: any;
 
-	//********************************************************************
-	// Catch all for the return value of a service call
-	//********************************************************************
-	result: any;
+  //********************************************************************
+  // sole constructor, injected with the HttpClient
+  //********************************************************************
+  constructor(private http: HttpClient) {
+    super();
+  }
 
-	//********************************************************************
-	// sole constructor, injected with the HttpClient
-	//********************************************************************
-	constructor(private http: HttpClient) {
-		super();
-	}
+  //********************************************************************
+  // add a Collateral
+  // returns the results untouched as a JSON representation
+  // delegates via URI
+  //********************************************************************
+  addCollateral(
+    collateralIdentifier,
+    appraisedValue,
+    description,
+    location,
+    LoanAccount,
+    CollateralType,
+  ): Observable<any> {
+    const uri_ = this.apiUrl + "/Collateral/create";
+    const obj = {
+      collateralIdentifier: collateralIdentifier,
+      appraisedValue: appraisedValue,
+      description: description,
+      location: location,
+      LoanAccount:
+        LoanAccount != null && LoanAccount.length > 0 ? LoanAccount : null,
+      CollateralType: CollateralType,
+    };
 
-		//********************************************************************
-	// add a Collateral
-	// returns the results untouched as a JSON representation
-	// delegates via URI
-	//********************************************************************
-	addCollateral(collateralIdentifier, appraisedValue, description, location, LoanAccount, CollateralType) : Observable<any> {
-		const uri_ = this.apiUrl + '/Collateral/create';
-		const obj = {
-			      		collateralIdentifier: collateralIdentifier,
-      		appraisedValue: appraisedValue,
-      		description: description,
-      		location: location,
-      		LoanAccount: LoanAccount != null && LoanAccount.length > 0 ? LoanAccount : null,
-			CollateralType: CollateralType
-		};
+    return this.http.post(uri_, obj);
+  }
 
-		return this.http.post(uri_, obj);
-	}
+  //********************************************************************
+  // update a Collateral
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  updateCollateral(
+    collateralIdentifier,
+    appraisedValue,
+    description,
+    location,
+    LoanAccount,
+    CollateralType,
+    id,
+  ): Observable<any> {
+    const uri_ = this.apiUrl + "/Collateral/update/" + id;
+    const obj = {
+      collateralIdentifier: collateralIdentifier,
+      appraisedValue: appraisedValue,
+      description: description,
+      location: location,
+      LoanAccount:
+        LoanAccount != null && LoanAccount.length > 0 ? LoanAccount : null,
+      CollateralType: CollateralType,
+    };
+    return this.http.post(uri_, obj);
+  }
 
-	//********************************************************************
-	// update a Collateral
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-		updateCollateral(collateralIdentifier, appraisedValue, description, location, LoanAccount, CollateralType, id)  :  Observable<any>  {
-			const uri_ = this.apiUrl + '/Collateral/update/' + id;
-		const obj = {
-				      		collateralIdentifier: collateralIdentifier,
-      		appraisedValue: appraisedValue,
-      		description: description,
-      		location: location,
-      		LoanAccount: LoanAccount != null && LoanAccount.length > 0 ? LoanAccount : null,
-			CollateralType: CollateralType
-		};
-		return this.http.post(uri_, obj);
-	}
+  //********************************************************************
+  // delete a Collateral
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  deleteCollateral(id): Observable<any> {
+    const uri_ = this.apiUrl + "/Collateral/delete/" + id;
 
-	//********************************************************************
-	// delete a Collateral
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	deleteCollateral(id)  : Observable<any> {
-		const uri_ = this.apiUrl + '/Collateral/delete/' + id;
+    return this.http.get(uri_);
+  }
 
-		return this.http.get(uri_);
-	}
-	
-	//********************************************************************
-	// loads a Collateral
-	// returns the results untouched as an Observable Collateral
-	// Collateral model
-	// delegates via URI
-	//********************************************************************
-	getCollateral(id) : Observable<Collateral> {
-		const uri_ = this.apiUrl + '/Collateral/load/' + id;
+  //********************************************************************
+  // loads a Collateral
+  // returns the results untouched as an Observable Collateral
+  // Collateral model
+  // delegates via URI
+  //********************************************************************
+  getCollateral(id): Observable<Collateral> {
+    const uri_ = this.apiUrl + "/Collateral/load/" + id;
 
-		return this.http.get<Collateral>(uri_);
-	}
-	
-	//********************************************************************
-	// gets all Collateral
-	// returns the results untouched as JSON representation of an
-	// Observable array of Collateral models
-	// delegates via URI
-	//********************************************************************
-	getCollaterals() : Observable<Collateral[]> {
-		const uri_ = this.apiUrl + '/Collateral/';
+    return this.http.get<Collateral>(uri_);
+  }
 
-		return this
-			.http.get<Collateral[]>(uri_);
-	}
-	
-		
-	//********************************************************************
-	// assigns a LoanAccount on a Collateral
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	assignLoanAccount( collateralId, _loanAccountId ): Observable<any> {
+  //********************************************************************
+  // gets all Collateral
+  // returns the results untouched as JSON representation of an
+  // Observable array of Collateral models
+  // delegates via URI
+  //********************************************************************
+  getCollaterals(): Observable<Collateral[]> {
+    const uri_ = this.apiUrl + "/Collateral/";
 
-		// get the Collateral from storage
-		this.loadHelper( collateralId );
+    return this.http.get<Collateral[]>(uri_);
+  }
 
-	// get the LoanAccount from storage
-	var tmp 	= new LoanAccountService(this.http).getLoanAccount(_loanAccountId);
+  //********************************************************************
+  // assigns a LoanAccount on a Collateral
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  assignLoanAccount(collateralId, _loanAccountId): Observable<any> {
+    // get the Collateral from storage
+    this.loadHelper(collateralId);
 
-	// assign the LoanAccount
-	this.collateral.loanAccount = tmp;
+    // get the LoanAccount from storage
+    var tmp = new LoanAccountService(this.http).getLoanAccount(_loanAccountId);
 
-	// save the Collateral
-	return this.saveHelper();
-}
+    // assign the LoanAccount
+    this.collateral.loanAccount = tmp;
 
-	//********************************************************************
-	// unassigns a LoanAccount on a Collateral
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	unassignLoanAccount( collateralId ): Observable<any> {
+    // save the Collateral
+    return this.saveHelper();
+  }
 
-		// get the Collateral from storage
-		this.loadHelper( collateralId );
+  //********************************************************************
+  // unassigns a LoanAccount on a Collateral
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  unassignLoanAccount(collateralId): Observable<any> {
+    // get the Collateral from storage
+    this.loadHelper(collateralId);
 
-	// assign LoanAccount to null
-	this.collateral.loanAccount = null;
+    // assign LoanAccount to null
+    this.collateral.loanAccount = null;
 
-	// save the Collateral
-	return this.saveHelper();
-}
+    // save the Collateral
+    return this.saveHelper();
+  }
 
-	
-	
-	//********************************************************************
-	// saveHelper - internal helper to save a Collateral
-	//********************************************************************
-	saveHelper() : Observable<any> {
+  //********************************************************************
+  // saveHelper - internal helper to save a Collateral
+  //********************************************************************
+  saveHelper(): Observable<any> {
+    const uri_ = this.apiUrl + "/Collateral/update/" + this.collateral;
 
-		const uri_ = this.apiUrl + '/Collateral/update/' + this.collateral;
+    return this.http.post(uri_, this.collateral);
+  }
 
-	return  this.http.post(uri_, this.collateral );
-}
-
-	//********************************************************************
-	// loadHelper - internal helper to load a Collateral
-	//********************************************************************	
-	loadHelper( id ) {
-		this.getCollateral(id)
-			.subscribe((res : Collateral) => {
-				this.collateral = res;
-			});
-	}
+  //********************************************************************
+  // loadHelper - internal helper to load a Collateral
+  //********************************************************************
+  loadHelper(id) {
+    this.getCollateral(id).subscribe((res: Collateral) => {
+      this.collateral = res;
+    });
+  }
 }

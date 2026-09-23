@@ -1,37 +1,32 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { EditAccountStatementComponent } from "./edit.component";
+import { AccountStatementService } from "../../../services/AccountStatement.service";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EditAccountStatementComponent } from './edit.component';
-import { AccountStatementService } from '../../../services/AccountStatement.service';
-
-describe('EditAccountStatementComponent', () => {
+describe("EditAccountStatementComponent", () => {
   let component: EditAccountStatementComponent;
   let fixture: ComponentFixture<EditAccountStatementComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule
-      ],
-      declarations: [
-        EditAccountStatementComponent
-      ],
+      imports: [ReactiveFormsModule],
+      declarations: [EditAccountStatementComponent],
       providers: [
         AccountStatementService,
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '1' })
-          }
+            params: of({ id: "1" }),
+          },
         },
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EditAccountStatementComponent);
@@ -39,7 +34,7 @@ describe('EditAccountStatementComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

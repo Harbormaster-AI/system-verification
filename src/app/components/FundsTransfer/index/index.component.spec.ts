@@ -1,28 +1,25 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { IndexFundsTransferComponent } from "./index.component";
+import { FundsTransferService } from "../../../services/FundsTransfer.service";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { IndexFundsTransferComponent } from './index.component';
-import { FundsTransferService } from '../../../services/FundsTransfer.service';
-
-describe('IndexFundsTransferComponent', () => {
+describe("IndexFundsTransferComponent", () => {
   let component: IndexFundsTransferComponent;
   let fixture: ComponentFixture<IndexFundsTransferComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        IndexFundsTransferComponent
-      ],
+      declarations: [IndexFundsTransferComponent],
       providers: [
         FundsTransferService,
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate'),
-            navigateByUrl: jasmine.createSpy('navigateByUrl')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+            navigateByUrl: jasmine.createSpy("navigateByUrl"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IndexFundsTransferComponent);
@@ -31,7 +28,7 @@ describe('IndexFundsTransferComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

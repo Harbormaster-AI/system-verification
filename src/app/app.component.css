@@ -20,10 +20,10 @@
   left: 0;
   right: 0;
   background: rgba(0, 0, 255, 0.5);
-  color:white;
-  text-align:center;
-  padding:15px;
-  font-size:1.4em;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 1.4em;
 }
 
 .app-footer {
