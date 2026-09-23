@@ -395,9 +395,26 @@ jobs:
       dockerPassword:            ${{ inputs.dockerPassword }}
       dockerTag:                 ${{ inputs.dockerTag }}
 
+  django-prebuild:
+
+    if: ${{ contains(fromJSON('["django"]'), inputs.technology) }}
+
+    uses: ./.github/workflows/django-prebuild-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      branch: ${{ inputs.branch }}
+      certificationIdentifier: ${{ inputs.certificationIdentifier }}
+      appName: ${{ inputs.appName }}
+      languageVersion: ${{ inputs.languageVersion }}
+
   django-build:
 
     if: ${{ contains(fromJSON('["django"]'), inputs.technology) }}
+
+    needs: django-prebuild
 
     uses: ./.github/workflows/django-build-verification.yml
 
