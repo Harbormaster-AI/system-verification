@@ -1,0 +1,116 @@
+AllCops:
+  TargetRubyVersion: 3.4
+  NewCops: enable
+  SuggestExtensions: false
+
+  Exclude:
+    - 'bin/**/*'
+    - 'db/schema.rb'
+    - 'db/migrate/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
+
+  # Don't fail the build on style-level offenses.
+  # Lint/Security/etc. remain failures.
+  FailLevel: warning
+
+
+# ---------------------------------------------------------------------------
+# Layout
+# ---------------------------------------------------------------------------
+
+Layout/LineLength:
+  Max: 120
+
+Layout/IndentationWidth:
+  Width: 2
+
+Layout/TrailingWhitespace:
+  Enabled: true
+
+Layout/TrailingEmptyLines:
+  Enabled: true
+
+
+# ---------------------------------------------------------------------------
+# Style
+# ---------------------------------------------------------------------------
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+
+# ---------------------------------------------------------------------------
+# Metrics
+# ---------------------------------------------------------------------------
+
+Metrics/MethodLength:
+  Max: 30
+
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/ModuleLength:
+  Max: 200
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
+    - 'config/routes.rb'
+
+
+# ---------------------------------------------------------------------------
+# Naming
+# ---------------------------------------------------------------------------
+
+Naming/MethodName:
+  Enabled: true
+
+Naming/VariableName:
+  Enabled: true
+
+Naming/ConstantName:
+  Enabled: true
+
+
+# ---------------------------------------------------------------------------
+# Lint
+# ---------------------------------------------------------------------------
+
+Lint/AmbiguousRegexpLiteral:
+  Enabled: true
+
+Lint/DuplicateBranch:
+  Enabled: true
+
+Lint/ShadowingOuterLocalVariable:
+  Enabled: true
+
+
+# ---------------------------------------------------------------------------
+# Security
+# ---------------------------------------------------------------------------
+
+Security/Eval:
+  Enabled: true
+
+Security/IoMethods:
+  Enabled: true
+
+Security/JSONLoad:
+  Enabled: true
