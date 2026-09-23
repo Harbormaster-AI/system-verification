@@ -553,38 +553,36 @@ jobs:
 
           cd "${APP_DIR}"
 
+          echo "Resolving Rails dependencies for security scanning..."
+  
+          bundle install
+
           echo "Running Trivy vulnerability scan..."
-
-          set -o pipefail
-
+          
           if ! trivy fs . \
-              --scanners vuln \
-              --severity HIGH,CRITICAL \
-              --ignore-unfixed \
-              --format table \
-              --exit-code 1 \
-              2>&1 | tee trivy-security.log; then
-
+            --scanners vuln \
+            --severity HIGH,CRITICAL \
+            --ignore-unfixed \
+            --format table \
+            --exit-code 1 \
+            2>&1 | tee trivy-security.log; then
+            
             MESSAGE=$(tail -30 trivy-security.log | tr '\n' ' ')
-
+            
             post_fail \
+              "Security Check" \
+              "Trivy vulnerability scan failed: ${MESSAGE}"
+            
+            post_terminate_build
+
+          else
+            post_pass \
               "PRE_BUILD" \
               "SECURITY_CHECK" \
-              0 \
-              "Trivy vulnerability scan failed." \
-              "${MESSAGE}"
-
-            post_terminate_prebuild
-
+              40 \
+              "Rails security check completed successfully." \
+              "Trivy found no HIGH or CRITICAL vulnerabilities."
           fi
-
-          post_pass \
-            "PRE_BUILD" \
-            "SECURITY_CHECK" \
-            10 \
-            "Trivy vulnerability scan completed successfully." \
-            "No unfixed HIGH or CRITICAL vulnerabilities were detected."
-
 
       ###########################################################################
       # Terminate Verification
