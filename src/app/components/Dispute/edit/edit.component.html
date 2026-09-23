@@ -1,0 +1,91 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>disputeReference</mat-label>
+								<input matInput ngDefaultControl placeholder="disputeReference" name="dispute.disputeReference" [(ngModel)]="dispute.disputeReference">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>raisedOn</mat-label>
+								<input matInput ngDefaultControl [matDatepicker]="picker" placeholder="raisedOn" name="dispute.raisedOn" [(ngModel)]="dispute.raisedOn">
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<mat-datepicker #picker></mat-datepicker>
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																																																	<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>reason</mat-label>
+								<input matInput ngDefaultControl placeholder="reason" name="dispute.reason" [(ngModel)]="dispute.reason">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Transaction</mat-label>
+					<mat-select placeholder="Transaction"   [compareWith]="compareFn"  [(ngModel)]="dispute.Transaction">
+						@for (transaction of transactions; track transaction.transactionId) {
+							<mat-option name="dispute.Transaction" ngDefaultControl
+							            [value]="transaction.transactionId">
+								{{transaction.bookingDate}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Customer</mat-label>
+					<mat-select placeholder="Customer"   [compareWith]="compareFn"  [(ngModel)]="dispute.Customer">
+						@for (customer of customers; track customer.customerId) {
+							<mat-option name="dispute.Customer" ngDefaultControl
+							            [value]="customer.customerId">
+								{{customer.firstName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Account</mat-label>
+					<mat-select placeholder="Account"   [compareWith]="compareFn"  [(ngModel)]="dispute.Account">
+						@for (account of accounts; track account.accountId) {
+							<mat-option name="dispute.Account" ngDefaultControl
+							            [value]="account.accountId">
+								{{account.accountName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>PaymentCard</mat-label>
+					<mat-select placeholder="PaymentCard"   [compareWith]="compareFn"  [(ngModel)]="dispute.PaymentCard">
+						@for (paymentCard of paymentCards; track paymentCard.paymentCardId) {
+							<mat-option name="dispute.PaymentCard" ngDefaultControl
+							            [value]="paymentCard.paymentCardId">
+								{{paymentCard.embossedName}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="dispute.Status" [(ngModel)]="dispute.Status">
+							@for (DisputeStatus of DisputeStatuss; track DisputeStatus) {
+								<mat-option ngDefaultControl [value]="DisputeStatus">
+									{{DisputeStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																	 						 																				 						 																				 						 																				 						 																				 						 																	 						 										<button
+				(click)="updateDispute(dispute.disputeReference, dispute.raisedOn, dispute.reason, dispute.Transaction, dispute.Customer, dispute.Account, dispute.PaymentCard, dispute.Status)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->
