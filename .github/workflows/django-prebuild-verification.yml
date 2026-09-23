@@ -343,7 +343,7 @@ jobs:
               "manage.py and settings.py were found."
           
           fi
-          
+
       ###########################################################################
       # Setup Black
       ###########################################################################
@@ -369,14 +369,13 @@ jobs:
 
           echo "Running Black formatter..."
 
-          black . > /dev/null 2>&1 || {
-            RC=$?
-
-            if [ "$RC" -ne 1 ]; then
-              echo "Black formatter failed with exit code ${RC}."
-              exit "$RC"
-            fi
-          }
+          black .
+          RC=$?
+          
+          if [ "$RC" -ne 0 ] && [ "$RC" -ne 1 ]; then
+            echo "Black formatter failed with exit code ${RC}."
+            exit "$RC"
+          fi
 
           echo "Checking for remaining Black formatting issues..."
 
