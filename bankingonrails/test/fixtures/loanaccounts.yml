@@ -1,0 +1,32 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of loanAccount found in  bankingonrails/test/controllers
+
+one:
+  loanNumber: test string for loanNumber
+  principalAmount: "test value"
+  outstandingPrincipal: "test value"
+  interestRate: "test value"
+  originationDate: 2020-10-15
+  maturityDate: 2020-10-15
+  paymentDayOfMonth: 100
+  currency: test string for currency
+  LoanType: 0
+  RateType: 0
+  Compounding: 0
+  Status: 0
+
+two:
+  loanNumber: test string for loanNumber
+  principalAmount: "test value"
+  outstandingPrincipal: "test value"
+  interestRate: "test value"
+  originationDate: 2020-10-15
+  maturityDate: 2020-10-15
+  paymentDayOfMonth: 100
+  currency: test string for currency
+  LoanType: 0
+  RateType: 0
+  Compounding: 0
+  Status: 0
+
+
