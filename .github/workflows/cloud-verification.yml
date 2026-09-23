@@ -108,8 +108,20 @@ jobs:
         with:
           repository: ${{ inputs.repository != '' && inputs.repository || github.repository }}
           ref: ${{ inputs.branch }}
-          # Same-repo → GITHUB_TOKEN. External repo → gitHubToken input.
+          # -----------------------------------------------------------------
+          # Checkout token options (keep both; enable ONE):
+          #
+          # (A) ORIGINAL — same-repo uses GITHUB_TOKEN; external repo uses
+          #     inputs.gitHubToken. Requires a valid PAT when repository is set.
+          #     Failed for us when PAT was bad/expired ("terminal prompts disabled").
+          #
           token: ${{ inputs.repository != '' && inputs.gitHubToken || github.token }}
+          #
+          # (B) ACTIVE — always use GITHUB_TOKEN. Works for public app repos
+          #     (e.g. Harbormaster-AI/banking-on-springboot) during Cloud Only /
+          #     ROSA tests without depending on a personal PAT.
+          # -----------------------------------------------------------------
+#          token: ${{ github.token }}
 
       ###########################################################################
       # report.sh from verification workflow commit (not from app branch).
