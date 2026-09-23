@@ -2,160 +2,140 @@ package com.harbormaster.security;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
-
-
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpringSecurityCurrentIdentity
-        implements CurrentIdentity {
+public class SpringSecurityCurrentIdentity implements CurrentIdentity {
 
-    protected Authentication authentication() {
+  protected Authentication authentication() {
 
-        return SecurityContextHolder
-                .getContext()
-                .getAuthentication();
+    return SecurityContextHolder.getContext().getAuthentication();
+  }
+
+  @Override
+  public boolean isAuthenticated() {
+
+    Authentication authentication = authentication();
+
+    return authentication != null && authentication.isAuthenticated();
+  }
+
+  @Override
+  public String getSubject() {
+
+    Authentication authentication = authentication();
+
+    if (authentication == null) {
+      return null;
     }
 
-    @Override
-    public boolean isAuthenticated() {
-
-        Authentication authentication =
-                authentication();
-
-        return authentication != null &&
-                authentication.isAuthenticated();
+    //
+    // JWT Resource Server
+    //
+    if (authentication instanceof JwtAuthenticationToken jwt) {
+      return jwt.getToken().getSubject();
     }
 
-    @Override
-    public String getSubject() {
-
-        Authentication authentication = authentication();
-
-        if (authentication == null) {
-            return null;
-        }
-
-        //
-        // JWT Resource Server
-        //
-        if (authentication instanceof JwtAuthenticationToken jwt) {
-            return jwt.getToken().getSubject();
-        }
-
-        //
-        // OAuth2 Login
-        //
-        if (authentication instanceof OAuth2AuthenticationToken oauth) {
-            return oauth.getName();
-        }
-
-
-        //
-        // Form Login / LDAP
-        //
-        if (authentication instanceof UsernamePasswordAuthenticationToken usernamePassword) {
-
-            Object principal = usernamePassword.getPrincipal();
-
-          //  if (principal instanceof UserDetails user) {
-            //    return user.getUsername();
-            //}
-
-            return usernamePassword.getName();
-        }
-
-        return authentication.getName();
+    //
+    // OAuth2 Login
+    //
+    if (authentication instanceof OAuth2AuthenticationToken oauth) {
+      return oauth.getName();
     }
 
-    @Override
-    public String getUsername() {
+    //
+    // Form Login / LDAP
+    //
+    if (authentication instanceof UsernamePasswordAuthenticationToken usernamePassword) {
 
-        return getSubject();
+      Object principal = usernamePassword.getPrincipal();
+
+      //  if (principal instanceof UserDetails user) {
+      //    return user.getUsername();
+      // }
+
+      return usernamePassword.getName();
     }
 
-    @Override
-    public String getOrganizationId() {
+    return authentication.getName();
+  }
 
-        Authentication authentication = authentication();
+  @Override
+  public String getUsername() {
 
-        if (authentication == null) {
-            return null;
-        }
+    return getSubject();
+  }
 
-        //
-        // JWT Resource Server
-        //
-        if (authentication instanceof JwtAuthenticationToken jwt) {
+  @Override
+  public String getOrganizationId() {
 
-            return jwt.getToken()
-                    .getClaimAsString("organization");
-        }
+    Authentication authentication = authentication();
 
-        //
-        // OAuth2 Login
-        //
-        if (authentication instanceof OAuth2AuthenticationToken oauth) {
-
-            // Provider-specific
-            String organization =
-                    oauth.getPrincipal()
-                            .getAttribute("organization");
-
-            if (organization != null) {
-                return organization;
-            }
-
-            // Azure AD tenant
-            return oauth.getPrincipal()
-                    .getAttribute("tid");
-        }
-
-        //
-        // Form Login / LDAP
-        //
-        if (authentication instanceof UsernamePasswordAuthenticationToken usernamePassword) {
-
-            Object principal =
-                    usernamePassword.getPrincipal();
-
-          //  if (principal instanceof CurrentUser user) {
-
-            //    return user.getOrganizationId();
-            //}
-
-            return null;
-        }
-
-        return null;
+    if (authentication == null) {
+      return null;
     }
 
-    @Override
-    public Collection<String> getAuthorities() {
+    //
+    // JWT Resource Server
+    //
+    if (authentication instanceof JwtAuthenticationToken jwt) {
 
-        return authentication()
-                .getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+      return jwt.getToken().getClaimAsString("organization");
     }
 
-    @Override
-    public boolean hasAuthority(
-            String authority) {
+    //
+    // OAuth2 Login
+    //
+    if (authentication instanceof OAuth2AuthenticationToken oauth) {
 
-        return authentication()
-                .getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .anyMatch(authority::equals);
+      // Provider-specific
+      String organization = oauth.getPrincipal().getAttribute("organization");
+
+      if (organization != null) {
+        return organization;
+      }
+
+      // Azure AD tenant
+      return oauth.getPrincipal().getAttribute("tid");
     }
 
+    //
+    // Form Login / LDAP
+    //
+    if (authentication instanceof UsernamePasswordAuthenticationToken usernamePassword) {
+
+      Object principal = usernamePassword.getPrincipal();
+
+      //  if (principal instanceof CurrentUser user) {
+
+      //    return user.getOrganizationId();
+      // }
+
+      return null;
+    }
+
+    return null;
+  }
+
+  @Override
+  public Collection<String> getAuthorities() {
+
+    return authentication().getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public boolean hasAuthority(String authority) {
+
+    return authentication().getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority)
+        .anyMatch(authority::equals);
+  }
 }
