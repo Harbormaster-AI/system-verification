@@ -1,0 +1,26 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of account found in  bankingonrails/test/controllers
+
+one:
+  accountNumber: "test value"
+  iban: "test value"
+  accountName: test string for accountName
+  currency: test string for currency
+  openedOn: 2020-10-15
+  closedOn: 2020-10-15
+  AccountType: 0
+  OwnershipType: 0
+  Status: 0
+
+two:
+  accountNumber: "test value"
+  iban: "test value"
+  accountName: test string for accountName
+  currency: test string for currency
+  openedOn: 2020-10-15
+  closedOn: 2020-10-15
+  AccountType: 0
+  OwnershipType: 0
+  Status: 0
+
+
