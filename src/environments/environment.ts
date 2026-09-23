@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   angularPort: 4000,
-  apiUrl: 'aib.getParam("angular.backendUrl")'
+  apiUrl: 'aib.getParam("angular.backendUrl")',
 };

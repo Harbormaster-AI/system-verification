@@ -1,39 +1,35 @@
-
-
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { LoanAccountService } from '../../../services/LoanAccount.service';
-import { LoanAccount } from '../../../models/LoanAccount';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { LoanAccountService } from "../../../services/LoanAccount.service";
+import { LoanAccount } from "../../../models/LoanAccount";
 
 @Component({
-    selector: 'app-index-loanAccount',
-    standalone: false,
-    templateUrl: './index.component.html',
-    styleUrls: ['./index.component.css']
+  selector: "app-index-loanAccount",
+  standalone: false,
+  templateUrl: "./index.component.html",
+  styleUrls: ["./index.component.css"],
 })
 export class IndexLoanAccountComponent implements OnInit {
+  loanAccounts: LoanAccount[] = [];
 
-    loanAccounts: LoanAccount[] = [];
+  constructor(
+    private router: Router,
+    private service: LoanAccountService,
+  ) {}
 
-    constructor(
-        private router: Router,
-        private service: LoanAccountService
-) {}
+  ngOnInit(): void {
+    this.getLoanAccounts();
+  }
 
-    ngOnInit(): void {
-        this.getLoanAccounts();
-}
-
-    getLoanAccounts(): void {
-        this.service.getLoanAccounts().subscribe((res) => {
-        this.loanAccounts = res;
+  getLoanAccounts(): void {
+    this.service.getLoanAccounts().subscribe((res) => {
+      this.loanAccounts = res;
     });
-}
+  }
 
-    deleteLoanAccount(id: any): void {
-        this.service.deleteLoanAccount(id)
-            .subscribe(() => {
-                this.getLoanAccounts();
-            });
-    }
+  deleteLoanAccount(id: any): void {
+    this.service.deleteLoanAccount(id).subscribe(() => {
+      this.getLoanAccounts();
+    });
+  }
 }

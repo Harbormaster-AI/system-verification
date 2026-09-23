@@ -1,31 +1,26 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { CreateAccountStatementComponent } from "./create.component";
+import { AccountStatementService } from "../../../services/AccountStatement.service";
+import { Router } from "@angular/router";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CreateAccountStatementComponent } from './create.component';
-import { AccountStatementService } from '../../../services/AccountStatement.service';
-import { Router } from '@angular/router';
-
-describe('CreateAccountStatementComponent', () => {
+describe("CreateAccountStatementComponent", () => {
   let component: CreateAccountStatementComponent;
   let fixture: ComponentFixture<CreateAccountStatementComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule
-      ],
-      declarations: [
-        CreateAccountStatementComponent
-      ],
+      imports: [ReactiveFormsModule],
+      declarations: [CreateAccountStatementComponent],
       providers: [
         AccountStatementService,
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CreateAccountStatementComponent);
@@ -33,7 +28,7 @@ describe('CreateAccountStatementComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

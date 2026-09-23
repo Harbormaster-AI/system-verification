@@ -1,28 +1,25 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { IndexConsentComponent } from "./index.component";
+import { ConsentService } from "../../../services/Consent.service";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { IndexConsentComponent } from './index.component';
-import { ConsentService } from '../../../services/Consent.service';
-
-describe('IndexConsentComponent', () => {
+describe("IndexConsentComponent", () => {
   let component: IndexConsentComponent;
   let fixture: ComponentFixture<IndexConsentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        IndexConsentComponent
-      ],
+      declarations: [IndexConsentComponent],
       providers: [
         ConsentService,
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate'),
-            navigateByUrl: jasmine.createSpy('navigateByUrl')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+            navigateByUrl: jasmine.createSpy("navigateByUrl"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IndexConsentComponent);
@@ -31,7 +28,7 @@ describe('IndexConsentComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

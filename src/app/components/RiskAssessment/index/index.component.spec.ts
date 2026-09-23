@@ -1,28 +1,25 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { IndexRiskAssessmentComponent } from "./index.component";
+import { RiskAssessmentService } from "../../../services/RiskAssessment.service";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { IndexRiskAssessmentComponent } from './index.component';
-import { RiskAssessmentService } from '../../../services/RiskAssessment.service';
-
-describe('IndexRiskAssessmentComponent', () => {
+describe("IndexRiskAssessmentComponent", () => {
   let component: IndexRiskAssessmentComponent;
   let fixture: ComponentFixture<IndexRiskAssessmentComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        IndexRiskAssessmentComponent
-      ],
+      declarations: [IndexRiskAssessmentComponent],
       providers: [
         RiskAssessmentService,
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate'),
-            navigateByUrl: jasmine.createSpy('navigateByUrl')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+            navigateByUrl: jasmine.createSpy("navigateByUrl"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IndexRiskAssessmentComponent);
@@ -31,7 +28,7 @@ describe('IndexRiskAssessmentComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

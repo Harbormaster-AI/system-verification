@@ -1,28 +1,25 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { IndexCollateralComponent } from "./index.component";
+import { CollateralService } from "../../../services/Collateral.service";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { IndexCollateralComponent } from './index.component';
-import { CollateralService } from '../../../services/Collateral.service';
-
-describe('IndexCollateralComponent', () => {
+describe("IndexCollateralComponent", () => {
   let component: IndexCollateralComponent;
   let fixture: ComponentFixture<IndexCollateralComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        IndexCollateralComponent
-      ],
+      declarations: [IndexCollateralComponent],
       providers: [
         CollateralService,
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate'),
-            navigateByUrl: jasmine.createSpy('navigateByUrl')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+            navigateByUrl: jasmine.createSpy("navigateByUrl"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IndexCollateralComponent);
@@ -31,7 +28,7 @@ describe('IndexCollateralComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

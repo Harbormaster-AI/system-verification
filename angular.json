@@ -1,99 +1,98 @@
 {
-"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-"version": 1,
-"cli": {
-"analytics": false
-},
-"newProjectRoot": "projects",
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "analytics": false
+  },
+  "newProjectRoot": "projects",
 
-"projects": {
-"bankingOnAngular": {
-"root": "",
-"sourceRoot": "src",
-"projectType": "application",
-"prefix": "app",
+  "projects": {
+    "bankingOnAngular": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "prefix": "app",
 
-"schematics": {
-"@schematics/angular:component": {
-"style": "css"
-}
-},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "css"
+        }
+      },
 
-"architect": {
-"build": {
-"builder": "@angular/build:application",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
 
-"options": {
-"outputPath": "dist/bankingOnAngular",
-"index": "src/index.html",
-"browser": "src/main.ts",
-"tsConfig": "src/tsconfig.app.json",
+          "options": {
+            "outputPath": "dist/bankingOnAngular",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "tsConfig": "src/tsconfig.app.json",
 
-"assets": [
-{
-"glob": "**/*",
-"input": "public"
-}
-],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
 
-"styles": [
-"node_modules/bootstrap/dist/css/bootstrap.min.css",
-"src/styles.css"
-],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css"
+            ],
 
-"scripts": []
-},
+            "scripts": []
+          },
 
-"configurations": {
-"production": {
-"optimization": true,
-"sourceMap": false,
-"extractLicenses": true,
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "sourceMap": false,
+              "extractLicenses": true,
 
-"budgets": [
-{
-"type": "initial",
-"maximumWarning": "2mb",
-"maximumError": "5mb"
-}
-]
-},
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
 
-"development": {
-"optimization": false,
-"extractLicenses": false,
-"sourceMap": true
-}
-},
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
 
-"defaultConfiguration": "production"
-},
+          "defaultConfiguration": "production"
+        },
 
-"serve": {
-"builder": "@angular-devkit/build-angular:dev-server",
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
 
-"configurations": {
-"production": {
-"buildTarget": "bankingOnAngular:build:production"
-},
+          "configurations": {
+            "production": {
+              "buildTarget": "bankingOnAngular:build:production"
+            },
 
-"development": {
-"buildTarget": "bankingOnAngular:build:development"
-}
-},
+            "development": {
+              "buildTarget": "bankingOnAngular:build:development"
+            }
+          },
 
-"defaultConfiguration": "development"
-},
+          "defaultConfiguration": "development"
+        },
 
-"extract-i18n": {
-"builder": "@angular-devkit/build-angular:extract-i18n",
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
 
-"options": {
-"buildTarget": "bankingOnAngular:build"
-}
-}
-}
-}
-},
-
+          "options": {
+            "buildTarget": "bankingOnAngular:build"
+          }
+        }
+      }
+    }
+  }
 }
