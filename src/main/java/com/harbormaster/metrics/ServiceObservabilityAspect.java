@@ -11,100 +11,79 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServiceObservabilityAspect {
 
-    private final ApplicationMetrics metrics;
-    private final CurrentIdentity currentIdentity;
+  private final ApplicationMetrics metrics;
+  private final CurrentIdentity currentIdentity;
 
-    public ServiceObservabilityAspect(
-            ApplicationMetrics metrics,
-            CurrentIdentity currentIdentity) {
+  public ServiceObservabilityAspect(ApplicationMetrics metrics, CurrentIdentity currentIdentity) {
 
-        this.metrics = metrics;
-        this.currentIdentity = currentIdentity;
-    }
+    this.metrics = metrics;
+    this.currentIdentity = currentIdentity;
+  }
 
-    @Around("execution(public * com.harbormaster..service..*(..))")
-    public Object observe(ProceedingJoinPoint pjp)
-            throws Throwable {
+  @Around("execution(public * com.harbormaster..service..*(..))")
+  public Object observe(ProceedingJoinPoint pjp) throws Throwable {
 
-        long start = System.nanoTime();
+    long start = System.nanoTime();
 
-        Class<?> serviceClass =
-                pjp.getTarget().getClass();
+    Class<?> serviceClass = pjp.getTarget().getClass();
 
-        String serviceName =
-                serviceClass.getSimpleName();
+    String serviceName = serviceClass.getSimpleName();
 
-        // CustomerService -> Customer
-        String entity =
-                serviceName.replace("Service", "");
+    // CustomerService -> Customer
+    String entity = serviceName.replace("Service", "");
 
-        // create(), update(), delete(), approve(), ...
-        String operation =
-                pjp.getSignature().getName();
+    // create(), update(), delete(), approve(), ...
+    String operation = pjp.getSignature().getName();
 
-        try {
-            //
-            // Populate the logging context
-            //
-            MDC.put("entity", entity);
-            MDC.put("operation", operation);
+    try {
+      //
+      // Populate the logging context
+      //
+      MDC.put("entity", entity);
+      MDC.put("operation", operation);
 
-            if (currentIdentity != null) {
+      if (currentIdentity != null) {
 
-                if (currentIdentity.getSubject() != null) {
-                    MDC.put("userId",
-                            currentIdentity.getSubject());
-                }
-
-                if (currentIdentity.getOrganizationId() != null) {
-                    MDC.put("organizationId",
-                            currentIdentity.getOrganizationId());
-                }
-            }
-
-            //
-            // Execute the service
-            //
-            Object result = pjp.proceed();
-
-            //
-            // Metrics
-            //
-            metrics.increment(
-                    entity,
-                    operation,
-                    "success");
-
-            metrics.recordDuration(
-                    entity,
-                    operation,
-                    System.nanoTime() - start);
-
-            return result;
-
-        } catch (Exception ex) {
-
-            metrics.increment(
-                    entity,
-                    operation,
-                    "failure");
-
-            metrics.recordException(
-                    entity,
-                    operation,
-                    ex.getClass().getSimpleName());
-
-            throw ex;
-
-        } finally {
-
-            //
-            // Remove only what we added.
-            //
-            MDC.remove("entity");
-            MDC.remove("operation");
-            MDC.remove("userId");
-            MDC.remove("organizationId");
+        if (currentIdentity.getSubject() != null) {
+          MDC.put("userId", currentIdentity.getSubject());
         }
+
+        if (currentIdentity.getOrganizationId() != null) {
+          MDC.put("organizationId", currentIdentity.getOrganizationId());
+        }
+      }
+
+      //
+      // Execute the service
+      //
+      Object result = pjp.proceed();
+
+      //
+      // Metrics
+      //
+      metrics.increment(entity, operation, "success");
+
+      metrics.recordDuration(entity, operation, System.nanoTime() - start);
+
+      return result;
+
+    } catch (Exception ex) {
+
+      metrics.increment(entity, operation, "failure");
+
+      metrics.recordException(entity, operation, ex.getClass().getSimpleName());
+
+      throw ex;
+
+    } finally {
+
+      //
+      // Remove only what we added.
+      //
+      MDC.remove("entity");
+      MDC.remove("operation");
+      MDC.remove("userId");
+      MDC.remove("organizationId");
     }
+  }
 }
