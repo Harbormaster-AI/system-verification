@@ -6,19 +6,20 @@ from django.http import HttpResponse
 
 from bankingOnDjango.delegates.FXTradeDelegate import FXTradeDelegate
 
- #======================================================================
-# 
+# ======================================================================
+#
 # Encapsulates data for View FXTrade
 #
 # @author Harbormaster Dev Team
 #
-#======================================================================
+# ======================================================================
 
-#======================================================================
+
+# ======================================================================
 # Class FXTradeView function declarations
-#======================================================================
+# ======================================================================
 def index(request):
-	return HttpResponse("Hello, world. You're at the FXTrade index.")
+    return HttpResponse("Hello, world. You're at the FXTrade index.")
 
 
 def get(request):
@@ -26,144 +27,164 @@ def get(request):
     fXTrade_id = request_data["id"]
     delegate = FXTradeDelegate()
     request_data = delegate.get(fXTrade_id)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def create(request):
-	fXTrade = json.loads(request.body)
-	delegate = FXTradeDelegate()
-	request_data = delegate.createFromJson( fXTrade )
-	as_json = serializers.serialize("json", request_data)
-	return HttpResponse(as_json, content_type="application/json");
+    fXTrade = json.loads(request.body)
+    delegate = FXTradeDelegate()
+    request_data = delegate.createFromJson(fXTrade)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def update(request):
-	fXTrade = json.loads(request.body)
-	delegate = FXTradeDelegate()
-	request_data = delegate.save( fXTrade )
-	as_json = serializers.serialize("json", request_data)
-	return HttpResponse(as_json, content_type="application/json");
+    fXTrade = json.loads(request.body)
+    delegate = FXTradeDelegate()
+    request_data = delegate.save(fXTrade)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def delete(request):
     request_data = json.loads(request.body)
     fXTrade_id = request_data["id"]
     delegate = FXTradeDelegate()
     request_data = delegate.delete(fXTrade_id)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def getAll(request):
     delegate = FXTradeDelegate()
     request_data = delegate.getAll()
     as_json = serializers.serialize("json", request_data)
-    return HttpResponse(as_json, content_type="application/json");
-
+    return HttpResponse(as_json, content_type="application/json")
 
     # ---------------------------------------------------------
     # Single association
     # ---------------------------------------------------------
+
+
 def assignCustomer(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FXTradeDelegate()
-    request_data = delegate.assignCustomer(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.assignCustomer(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def unassignCustomer(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FXTradeDelegate()
-    request_data = delegate.unassignCustomer(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.unassignCustomer(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
+
 def assignBank(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FXTradeDelegate()
-    request_data = delegate.assignBank(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.assignBank(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def unassignBank(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FXTradeDelegate()
-    request_data = delegate.unassignBank(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.unassignBank(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
+
 def assignExchangeRate(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FXTradeDelegate()
-    request_data = delegate.assignExchangeRate(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.assignExchangeRate(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def unassignExchangeRate(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FXTradeDelegate()
-    request_data = delegate.unassignExchangeRate(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.unassignExchangeRate(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
+
 def assignSourceAccount(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FXTradeDelegate()
-    request_data = delegate.assignSourceAccount(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.assignSourceAccount(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def unassignSourceAccount(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FXTradeDelegate()
-    request_data = delegate.unassignSourceAccount(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.unassignSourceAccount(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
+
 def assignDestinationAccount(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FXTradeDelegate()
-    request_data = delegate.assignDestinationAccount(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.assignDestinationAccount(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def unassignDestinationAccount(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FXTradeDelegate()
-    request_data = delegate.unassignDestinationAccount(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.unassignDestinationAccount(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
+
 def assignTransaction(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FXTradeDelegate()
-    request_data = delegate.assignTransaction(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.assignTransaction(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def unassignTransaction(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FXTradeDelegate()
-    request_data = delegate.unassignTransaction(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
-
+    request_data = delegate.unassignTransaction(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
 
     # ---------------------------------------------------------
     # Multiple association

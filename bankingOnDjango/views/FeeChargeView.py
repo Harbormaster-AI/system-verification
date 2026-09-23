@@ -6,19 +6,20 @@ from django.http import HttpResponse
 
 from bankingOnDjango.delegates.FeeChargeDelegate import FeeChargeDelegate
 
- #======================================================================
-# 
+# ======================================================================
+#
 # Encapsulates data for View FeeCharge
 #
 # @author Harbormaster Dev Team
 #
-#======================================================================
+# ======================================================================
 
-#======================================================================
+
+# ======================================================================
 # Class FeeChargeView function declarations
-#======================================================================
+# ======================================================================
 def index(request):
-	return HttpResponse("Hello, world. You're at the FeeCharge index.")
+    return HttpResponse("Hello, world. You're at the FeeCharge index.")
 
 
 def get(request):
@@ -26,76 +27,84 @@ def get(request):
     feeCharge_id = request_data["id"]
     delegate = FeeChargeDelegate()
     request_data = delegate.get(feeCharge_id)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def create(request):
-	feeCharge = json.loads(request.body)
-	delegate = FeeChargeDelegate()
-	request_data = delegate.createFromJson( feeCharge )
-	as_json = serializers.serialize("json", request_data)
-	return HttpResponse(as_json, content_type="application/json");
+    feeCharge = json.loads(request.body)
+    delegate = FeeChargeDelegate()
+    request_data = delegate.createFromJson(feeCharge)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def update(request):
-	feeCharge = json.loads(request.body)
-	delegate = FeeChargeDelegate()
-	request_data = delegate.save( feeCharge )
-	as_json = serializers.serialize("json", request_data)
-	return HttpResponse(as_json, content_type="application/json");
+    feeCharge = json.loads(request.body)
+    delegate = FeeChargeDelegate()
+    request_data = delegate.save(feeCharge)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def delete(request):
     request_data = json.loads(request.body)
     feeCharge_id = request_data["id"]
     delegate = FeeChargeDelegate()
     request_data = delegate.delete(feeCharge_id)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def getAll(request):
     delegate = FeeChargeDelegate()
     request_data = delegate.getAll()
     as_json = serializers.serialize("json", request_data)
-    return HttpResponse(as_json, content_type="application/json");
-
+    return HttpResponse(as_json, content_type="application/json")
 
     # ---------------------------------------------------------
     # Single association
     # ---------------------------------------------------------
+
+
 def assignAccount(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FeeChargeDelegate()
-    request_data = delegate.assignAccount(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.assignAccount(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def unassignAccount(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FeeChargeDelegate()
-    request_data = delegate.unassignAccount(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.unassignAccount(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
+
 def assignLoanAccount(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FeeChargeDelegate()
-    request_data = delegate.assignLoanAccount(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
+    request_data = delegate.assignLoanAccount(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
+
 
 def unassignLoanAccount(request):
     request_data = json.loads(request.body)
     parent_id = request_data["parent_id"]
     child_id = request_data["childId"]
     delegate = FeeChargeDelegate()
-    request_data = delegate.unassignLoanAccount(parent_id,childId)
-    as_json = serializers.serialize("json",request_data)
-    return HttpResponse(as_json,content_type="application/json")
-
+    request_data = delegate.unassignLoanAccount(parent_id, childId)
+    as_json = serializers.serialize("json", request_data)
+    return HttpResponse(as_json, content_type="application/json")
 
     # ---------------------------------------------------------
     # Multiple association
