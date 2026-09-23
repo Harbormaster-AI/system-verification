@@ -1,0 +1,20 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of repaymentSchedule found in  bankingonrails/test/controllers
+
+one:
+  installmentNumber: 100
+  dueDate: 2020-10-15
+  principalDue: "test value"
+  interestDue: "test value"
+  totalDue: "test value"
+  Status: 0
+
+two:
+  installmentNumber: 100
+  dueDate: 2020-10-15
+  principalDue: "test value"
+  interestDue: "test value"
+  totalDue: "test value"
+  Status: 0
+
+
