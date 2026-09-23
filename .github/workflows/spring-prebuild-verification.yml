@@ -56,7 +56,7 @@ env:
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
   CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
   APP_NAME: ${{ inputs.appName }}
-  HM_EXIT_WORKFLOW: "true"
+  HM_EXIT_WORKFLOW: "false"
 
 permissions:
   contents: write
