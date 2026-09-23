@@ -444,11 +444,11 @@ jobs:
             "origin/${TARGET_BRANCH}"
 
           #######################################################################
-          # Re-stage only formatted Ruby source after checkout.
+          # Re-stage all files after checkout.
           #######################################################################
 
-          git add -- '*.rb' '*.rake'
-
+          git add -- .
+          
           echo "Final staged files:"
 
           git diff --cached --name-status
