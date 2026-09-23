@@ -352,8 +352,15 @@ jobs:
           cd "${APP_DIR}"
 
           echo "Running RuboCop formatter..."
-
-          rubocop -A > /dev/null 2>&1
+      
+          rubocop -A > /dev/null 2>&1 || {
+            RC=$?
+          
+            if [ "$RC" -ne 1 ]; then
+              echo "RuboCop formatter failed with exit code ${RC}."
+              exit "$RC"
+            fi
+          }
           
           echo "Checking for remaining RuboCop offenses..."
           
@@ -362,7 +369,7 @@ jobs:
             post_fail "Static Analysis" "RuboCop found remaining offenses: ${MESSAGE}"
             post_terminate_build
           fi
-
+          
           post_pass \
             "PRE_BUILD" \
             "FORMAT_CODE" \
