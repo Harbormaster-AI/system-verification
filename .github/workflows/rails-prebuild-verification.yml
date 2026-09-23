@@ -513,17 +513,6 @@ jobs:
 
           cd "${APP_DIR}"
 
-          echo "Running RuboCop static analysis..."
-
-          rubocop -A > /dev/null 2>&1 || {
-            RC=$?
-            
-            if [ "$RC" -ne 1 ]; then
-              echo "RuboCop formatter failed with exit code ${RC}."
-              exit "$RC"
-            fi
-        }
-
           echo "Checking for remaining RuboCop offenses..."
         
           if ! rubocop --format simple 2>&1 | tee rubocop-analysis.log; then
