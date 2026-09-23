@@ -697,6 +697,9 @@ jobs:
       - name: Security Check
         shell: bash
         run: |
+          
+          source .github/actions/common/report.sh
+          
           set -o pipefail
           
           echo "Running Trivy vulnerability scan..."
@@ -719,10 +722,10 @@ jobs:
           fi
           
           echo "Trivy vulnerability scan passed."
-              post_pass \
-                "PRE_BUILD" \
-                "DEPENDENCY_SECURITY" \
-                10 \
+          post_pass \
+            "PRE_BUILD" \
+            "DEPENDENCY_SECURITY" \
+            10 \
             "Spring Boot dependency security check completed successfully."
 
 
