@@ -319,7 +319,7 @@ jobs:
 
               ;;
 
-            APOLLO)
+            APOLLOGRAPHQL)
             
               if [ ! -f "tsconfig.json" ]; then
               
@@ -623,7 +623,7 @@ jobs:
 
             fi
           
-          elif [ "${TECHNOLOGY}" = "APOLLO" ]; then
+          elif [ "${TECHNOLOGY}" = "APOLLOGRAPHQL" ]; then
         
             if npm run lint --if-present \
               > frontend-analysis.log 2>&1; then
