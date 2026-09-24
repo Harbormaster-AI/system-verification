@@ -322,8 +322,9 @@ jobs:
 
     if: (contains(fromJSON('["react","REACT","React"]'), inputs.technology) )
       ||
-        (contains(fromJSON('["angular","Angular"]'), inputs.technology))
-
+        (contains(fromJSON('["angular","Angular"]'), inputs.technology) )
+      ||
+        (contains(fromJSON('["apollo","Apollo"]'), inputs.technology) )
 
     uses: ./.github/workflows/node-frontend-prebuild-verification.yml
 
@@ -545,6 +546,8 @@ jobs:
     if: ${{ contains(fromJSON('["ApolloGraphQL","Apollo"]'), inputs.technology) }}
 
     uses: ./.github/workflows/apollo-build-verification.yml
+
+    needs: node-frontend-prebuild
 
     with:
       runner: ${{ inputs.runner }}

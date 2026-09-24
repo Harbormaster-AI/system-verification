@@ -328,6 +328,21 @@ jobs:
 
               ;;
 
+            APOLLO)
+            
+              if [ ! -f "tsconfig.json" ]; then
+              
+              post_fail \
+              "PRE_BUILD" \
+              "VERIFY_FILES" \
+              0 \
+              "Apollo GraphQL application is missing tsconfig.json."
+              
+              post_terminate_prebuild
+              
+              fi
+              
+              ;;
             *)
 
               post_fail \
@@ -615,6 +630,30 @@ jobs:
 
               post_terminate_prebuild
 
+            fi
+          
+          elif [ "${TECHNOLOGY}" = "APOLLO" ]; then
+        
+            if npm run lint --if-present \
+              > frontend-analysis.log 2>&1; then
+            
+              cat frontend-analysis.log
+          
+            else
+            
+              cat frontend-analysis.log
+            
+              MESSAGE=$(tail -30 frontend-analysis.log | tr '\n' ' ')
+            
+              post_fail \
+                "PRE_BUILD" \
+                "STATIC_ANALYSIS" \
+                0 \
+                "Apollo GraphQL static analysis failed." \
+                "${MESSAGE}"
+                
+                post_terminate_prebuild          
+            
             fi
 
           fi
