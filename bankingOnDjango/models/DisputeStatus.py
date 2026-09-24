@@ -1,18 +1,20 @@
- #======================================================================
-# 
+# ======================================================================
+#
 # Encapsulates data for model DisputeStatus
 #
 # @author Harbormaster Dev Team
 #
-#======================================================================
+# ======================================================================
 
-#======================================================================
+# ======================================================================
 # Class DisputeStatus Declaration (enumerated type)
-#======================================================================
-from enum import Enum 
-class DisputeStatus(Enum):   # A subclass of Enum
-	open = 'open'
-	under_review = 'under_review'
-	resolved = 'resolved'
-	rejected = 'rejected'
-	withdrawn = 'withdrawn'
+# ======================================================================
+from enum import Enum
+
+
+class DisputeStatus(Enum):  # A subclass of Enum
+    open = "open"
+    under_review = "under_review"
+    resolved = "resolved"
+    rejected = "rejected"
+    withdrawn = "withdrawn"
