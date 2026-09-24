@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+
+  platform:
+    image: theharbormaster/banking-on-apollo:latest    ports:
+      - "4000:4000
+"
+
