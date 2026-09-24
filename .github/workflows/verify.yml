@@ -323,7 +323,7 @@ jobs:
       ||
         (contains(fromJSON('["angular","Angular"]'), inputs.technology) )
       ||
-        (contains(fromJSON('["apollo","Apollo"]'), inputs.technology) )
+        (contains(fromJSON('["ApolloGraphQL","Apollo"]'), inputs.technology) )
 
     uses: ./.github/workflows/node-frontend-prebuild-verification.yml
 
