@@ -57,20 +57,12 @@ on:
         default: "TypeScript"
         type: string
 
-      apollo:
-        description: Whether Apollo Client is expected
-        required: false
-        default: false
-        type: boolean
-
-
 env:
   RESULT_URL: ${{ inputs.resultUrl }}
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
   CERTIFICATION_IDENTIFIER: ${{ inputs.certificationIdentifier }}
   APP_NAME: ${{ inputs.appName }}
   TECHNOLOGY: ${{ inputs.technology }}
-  APOLLO_ENABLED: ${{ inputs.apollo }}
   HM_EXIT_WORKFLOW: "false"
 
 
@@ -238,7 +230,6 @@ jobs:
           echo "Technology: ${TECHNOLOGY}"
           echo "Technology version: ${{ inputs.technologyVersion }}"
           echo "Node.js version: ${NODE_VERSION}"
-          echo "Apollo enabled: ${APOLLO_ENABLED}"
 
 
       ###########################################################################

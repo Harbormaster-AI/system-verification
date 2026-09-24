@@ -257,7 +257,6 @@ jobs:
       appName: ${{ inputs.appName }}
       languageVersion: ${{ inputs.languageVersion }}
 
-  # Shared Spring/Go delivery (from feature). Angular/Django/Rails/Apollo keep per-tech delivery below.
   delivery:
 
     if: >
