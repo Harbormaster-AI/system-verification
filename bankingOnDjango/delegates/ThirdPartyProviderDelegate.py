@@ -1,5 +1,3 @@
-
-
 from django.core import serializers
 from django.db import utils
 
@@ -8,168 +6,225 @@ from bankingOnDjango.models.Bank import Bank
 from bankingOnDjango.models.Consent import Consent
 from bankingOnDjango.exceptions import Exceptions
 
- #======================================================================
-# 
+# ======================================================================
+#
 # Encapsulates data for model ThirdPartyProvider
 #
 # @author Harbormaster Dev Team
 #
-#======================================================================
+# ======================================================================
 
-#======================================================================
+
+# ======================================================================
 # Class ThirdPartyProviderDelegate Declaration
-#======================================================================
-class ThirdPartyProviderDelegate :
+# ======================================================================
+class ThirdPartyProviderDelegate:
 
-#======================================================================
-# Function Declarations
-#======================================================================
+    # ======================================================================
+    # Function Declarations
+    # ======================================================================
 
-	def get(self, third_party_provider_id ):
-		err_msg = "Failed to get ThirdPartyProvider from db using id " + str(third_party_provider_id)
-		try:	
-			third_party_provider = ThirdPartyProvider.objects.filter(id=third_party_provider_id)
-			return third_party_provider.first();
-		except ThirdPartyProvider.DoesNotExist:
-			raise Exceptions.ProcessingError("ThirdPartyProvider with id " + str(third_party_provider_id) + " does not exist.")
-		except utils.Exceptions.DatabaseError:
-			raise Exceptions.StorageReadError()
-		except Exception:
-			raise Exceptions.GeneralError(err_msg) 
+    def get(self, third_party_provider_id):
+        err_msg = "Failed to get ThirdPartyProvider from db using id " + str(
+            third_party_provider_id
+        )
+        try:
+            third_party_provider = ThirdPartyProvider.objects.filter(
+                id=third_party_provider_id
+            )
+            return third_party_provider.first()
+        except ThirdPartyProvider.DoesNotExist:
+            raise Exceptions.ProcessingError(
+                "ThirdPartyProvider with id "
+                + str(third_party_provider_id)
+                + " does not exist."
+            )
+        except utils.Exceptions.DatabaseError:
+            raise Exceptions.StorageReadError()
+        except Exception:
+            raise Exceptions.GeneralError(err_msg)
 
-	def createFromJson(self, third_party_provider):
-		for model in serializers.deserialize("json", third_party_provider):
-			model.save()
-			return model;
+    def createFromJson(self, third_party_provider):
+        for model in serializers.deserialize("json", third_party_provider):
+            model.save()
+            return model
 
-	def create(self, third_party_provider):
-		third_party_provider.save()
-		return third_party_provider;
+    def create(self, third_party_provider):
+        third_party_provider.save()
+        return third_party_provider
 
-	def saveFromJson(self, third_party_provider):
-		for model in serializers.deserialize("json", third_party_provider):
-			model.save()
-			return third_party_provider;
-	
-	def save(self, third_party_provider):
-		third_party_provider.save()
-		return third_party_provider;
-	
-	def delete(self, third_party_provider_id ):
-		err_msg = "Failed to delete ThirdPartyProvider from db using id " + str(third_party_provider_id)
-		
-		try:
-			third_party_provider = ThirdPartyProvider.objects.get(id=third_party_provider_id)
-			third_party_provider.delete()
-			return True
-		except ThirdPartyProvider.DoesNotExist:
-			raise Exceptions.ProcessingError("ThirdPartyProvider with id " + str(third_party_provider_id) + " does not exist.")
-		except utils.Exceptions.DatabaseError:
-			raise Exceptions.StorageReadError()
-		except Exception:
-			raise Exceptions.GeneralError(err_msg) 
-	
-	def getAll(self):
-		try:
-			all = ThirdPartyProvider.objects.all()
-			return all;
-		except utils.Exceptions.DatabaseError:
-			raise Exceptions.StorageReadError("Failed to get all ThirdPartyProvider from db")
-		except Exception:
-			return None;
-		
-	def assignBank( self, third_party_provider_id, bank_id ):
-		# lazy importing avoids circular dependencies
-		from bankingOnDjango.delegates.BankDelegate import BankDelegate
+    def saveFromJson(self, third_party_provider):
+        for model in serializers.deserialize("json", third_party_provider):
+            model.save()
+            return third_party_provider
 
-		err_msg = "Failed to assign element " + str(bank_id) + " for Bank on ThirdPartyProvider"
+    def save(self, third_party_provider):
+        third_party_provider.save()
+        return third_party_provider
 
-		try:
-			# get the ThirdPartyProvider from db
-			third_party_provider = self.get( third_party_provider_id ).first()	
-			
-			# get the Bank from db
-			bank = BankDelegate().get(bank_id).first();
-			
-			# assign the Bank		
-			third_party_provider.bank = bank
-			
-			#save it
-			third_party_provider.save()
+    def delete(self, third_party_provider_id):
+        err_msg = "Failed to delete ThirdPartyProvider from db using id " + str(
+            third_party_provider_id
+        )
 
-			# reload and return the appropriate version					
-			return self.get( third_party_provider_id );
-		except ThirdPartyProvider.DoesNotExist:
-			raise Exceptions.ProcessingError(err_msg + " : ThirdPartyProvider with id " + str(third_party_provider_id) + " does not exist.")
-		except Bank.DoesNotExist:
-			raise Exceptions.ProcessingError(err_msg + " : Bank with id " + str(bank_id) + " does not exist.")
-		except Exception:
-			return None;
-				
-	def unassignBank( self, third_party_provider_id ):
-		err_msg = "Failed to unassign element " + str(third_party_provider_id) + " for Bank on ThirdPartyProvider"
+        try:
+            third_party_provider = ThirdPartyProvider.objects.get(
+                id=third_party_provider_id
+            )
+            third_party_provider.delete()
+            return True
+        except ThirdPartyProvider.DoesNotExist:
+            raise Exceptions.ProcessingError(
+                "ThirdPartyProvider with id "
+                + str(third_party_provider_id)
+                + " does not exist."
+            )
+        except utils.Exceptions.DatabaseError:
+            raise Exceptions.StorageReadError()
+        except Exception:
+            raise Exceptions.GeneralError(err_msg)
 
-		try:
-			# get the ThirdPartyProvider from db
-			third_party_provider = self.get( third_party_provider_id ).first()	
-			
-			# assign to None for unassignment
-			third_party_provider.bank = None			
+    def getAll(self):
+        try:
+            all = ThirdPartyProvider.objects.all()
+            return all
+        except utils.Exceptions.DatabaseError:
+            raise Exceptions.StorageReadError(
+                "Failed to get all ThirdPartyProvider from db"
+            )
+        except Exception:
+            return None
 
-			#save it
-			third_party_provider.save()
+    def assignBank(self, third_party_provider_id, bank_id):
+        # lazy importing avoids circular dependencies
+        from bankingOnDjango.delegates.BankDelegate import BankDelegate
 
-			# reload and return the appropriate version					
-			return self.get( third_party_provider_id );
-		except ThirdPartyProvider.DoesNotExist:
-			raise Exceptions.ProcessingError(err_msg + " : ThirdPartyProvider with id " + str(third_party_provider_id) + " does not exist.")
-		except Exception:
-			return None;
-		
-	def addConsents( self, third_party_provider_id, consents_ids ):
-		# lazy importing avoids circular dependencies
-		from bankingOnDjango.delegates.ConsentDelegate import ConsentDelegate
+        err_msg = (
+            "Failed to assign element "
+            + str(bank_id)
+            + " for Bank on ThirdPartyProvider"
+        )
 
-		err_msg = "Failed to add elements " + str(consents_ids) + " for Consents on ThirdPartyProvider"
+        try:
+            # get the ThirdPartyProvider from db
+            third_party_provider = self.get(third_party_provider_id).first()
 
-		try:
-			# get the ThirdPartyProvider
-			third_party_provider = self.get( third_party_provider_id ).first()
-				
-			# add the children ids
-			third_party_provider.consents.add(consents_ids)
-				
-			# save it		
-			third_party_provider.save()
-			
-			# reload and return the appropriate version
-			return self.get( third_party_provider_id );
-		except ThirdPartyProvider.DoesNotExist:
-			raise Exceptions.ProcessingError(err_msg + " : ThirdPartyProvider with id " + str(third_party_provider_id) + " does not exist.")
-		except Consent.DoesNotExist:
-			raise Exceptions.ProcessingError(err_msg + " : Consent does not exist.")
-		except Exception:
-			raise Exceptions.ProcessingError(err_msg) 
-		
-	def removeConsents( self, third_party_provider_id, consents_ids ):
+            # get the Bank from db
+            bank = BankDelegate().get(bank_id).first()
 
-		err_msg = "Failed to remove elements " + str(consents_ids) + " for Consents on ThirdPartyProvider"
+            # assign the Bank
+            third_party_provider.bank = bank
 
-		# lazy importing avoids circular dependenciesId
-		try:
-			third_party_provider.consents.remove(consents_ids)
+            # save it
+            third_party_provider.save()
 
-			# save it
-			third_party_provider.save()
+            # reload and return the appropriate version
+            return self.get(third_party_provider_id)
+        except ThirdPartyProvider.DoesNotExist:
+            raise Exceptions.ProcessingError(
+                err_msg
+                + " : ThirdPartyProvider with id "
+                + str(third_party_provider_id)
+                + " does not exist."
+            )
+        except Bank.DoesNotExist:
+            raise Exceptions.ProcessingError(
+                err_msg + " : Bank with id " + str(bank_id) + " does not exist."
+            )
+        except Exception:
+            return None
 
-			# reload and return the appropriate version
-			return self.get( third_party_provider_id );
-		except ThirdPartyProvider.DoesNotExist:
-			raise Exceptions.ProcessingError("ThirdPartyProvider with id " + str(third_party_provider_id) + " does not exist.")
-		except Consent.DoesNotExist:
-			raise Exceptions.ProcessingError("Consent with id " + str(consents_id) + " does not exist.")
-		except utils.Exceptions.DatabaseError:
-			raise Exceptions.StorageWriteError()
-		except Exception:
-			raise Exceptions.GeneralError(err_msg) 
-		
+    def unassignBank(self, third_party_provider_id):
+        err_msg = (
+            "Failed to unassign element "
+            + str(third_party_provider_id)
+            + " for Bank on ThirdPartyProvider"
+        )
+
+        try:
+            # get the ThirdPartyProvider from db
+            third_party_provider = self.get(third_party_provider_id).first()
+
+            # assign to None for unassignment
+            third_party_provider.bank = None
+
+            # save it
+            third_party_provider.save()
+
+            # reload and return the appropriate version
+            return self.get(third_party_provider_id)
+        except ThirdPartyProvider.DoesNotExist:
+            raise Exceptions.ProcessingError(
+                err_msg
+                + " : ThirdPartyProvider with id "
+                + str(third_party_provider_id)
+                + " does not exist."
+            )
+        except Exception:
+            return None
+
+    def addConsents(self, third_party_provider_id, consents_ids):
+        # lazy importing avoids circular dependencies
+        from bankingOnDjango.delegates.ConsentDelegate import ConsentDelegate
+
+        err_msg = (
+            "Failed to add elements "
+            + str(consents_ids)
+            + " for Consents on ThirdPartyProvider"
+        )
+
+        try:
+            # get the ThirdPartyProvider
+            third_party_provider = self.get(third_party_provider_id).first()
+
+            # add the children ids
+            third_party_provider.consents.add(consents_ids)
+
+            # save it
+            third_party_provider.save()
+
+            # reload and return the appropriate version
+            return self.get(third_party_provider_id)
+        except ThirdPartyProvider.DoesNotExist:
+            raise Exceptions.ProcessingError(
+                err_msg
+                + " : ThirdPartyProvider with id "
+                + str(third_party_provider_id)
+                + " does not exist."
+            )
+        except Consent.DoesNotExist:
+            raise Exceptions.ProcessingError(err_msg + " : Consent does not exist.")
+        except Exception:
+            raise Exceptions.ProcessingError(err_msg)
+
+    def removeConsents(self, third_party_provider_id, consents_ids):
+
+        err_msg = (
+            "Failed to remove elements "
+            + str(consents_ids)
+            + " for Consents on ThirdPartyProvider"
+        )
+
+        # lazy importing avoids circular dependenciesId
+        try:
+            third_party_provider.consents.remove(consents_ids)
+
+            # save it
+            third_party_provider.save()
+
+            # reload and return the appropriate version
+            return self.get(third_party_provider_id)
+        except ThirdPartyProvider.DoesNotExist:
+            raise Exceptions.ProcessingError(
+                "ThirdPartyProvider with id "
+                + str(third_party_provider_id)
+                + " does not exist."
+            )
+        except Consent.DoesNotExist:
+            raise Exceptions.ProcessingError(
+                "Consent with id " + str(consents_id) + " does not exist."
+            )
+        except utils.Exceptions.DatabaseError:
+            raise Exceptions.StorageWriteError()
+        except Exception:
+            raise Exceptions.GeneralError(err_msg)
