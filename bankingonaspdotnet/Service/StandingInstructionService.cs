@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IStandingInstructionService {
+public interface IStandingInstructionService
+{
 
-    Task Create(StandingInstruction model , CancellationToken cancellationToken);
+    Task Create(StandingInstruction model, CancellationToken cancellationToken);
     Task<bool> Update(StandingInstruction model, CancellationToken cancellationToken);
     Task<StandingInstruction?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<StandingInstruction>> GetAll(CancellationToken cancellationToken);
@@ -62,7 +63,8 @@ public class StandingInstructionService : IStandingInstructionService
 
     public async Task<bool> Update(StandingInstruction model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,7 +118,8 @@ public class StandingInstructionService : IStandingInstructionService
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -132,9 +135,9 @@ public class StandingInstructionService : IStandingInstructionService
                 Id = request.ChildId;
             };
 
-            var child = serviceResolver.get(AccountService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(AccountService).get(childRequest, cancellationToken)
             parent.Account = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -144,7 +147,8 @@ public class StandingInstructionService : IStandingInstructionService
         return true;
     }
 
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -155,7 +159,7 @@ public class StandingInstructionService : IStandingInstructionService
         try
         {
             parent.Account = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -165,7 +169,8 @@ public class StandingInstructionService : IStandingInstructionService
         return true;
     }
 
-    public async Task<bool> AssignBeneficiary(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBeneficiary(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -181,9 +186,9 @@ public class StandingInstructionService : IStandingInstructionService
                 Id = request.ChildId;
             };
 
-            var child = serviceResolver.get(ExternalAccountService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(ExternalAccountService).get(childRequest, cancellationToken)
             parent.Beneficiary = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -193,7 +198,8 @@ public class StandingInstructionService : IStandingInstructionService
         return true;
     }
 
-    public async Task<bool> UnassignBeneficiary(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBeneficiary(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -204,7 +210,7 @@ public class StandingInstructionService : IStandingInstructionService
         try
         {
             parent.Beneficiary = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
