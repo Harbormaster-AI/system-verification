@@ -260,7 +260,7 @@ jobs:
   delivery:
 
     if: >
-      !always() &&
+      always() &&
       (
         (contains(fromJSON('["spring","springboot","spring-boot"]'), inputs.technology) && needs.spring-runtime.result == 'success')
         ||
