@@ -6,9 +6,10 @@ using crmonaspdotnet.Telemetry;
 
 namespace crmonaspdotnet.Service;
 
-public interface IPriceBookEntryService {
+public interface IPriceBookEntryService
+{
 
-    Task Create(PriceBookEntry model , CancellationToken cancellationToken);
+    Task Create(PriceBookEntry model, CancellationToken cancellationToken);
     Task<bool> Update(PriceBookEntry model, CancellationToken cancellationToken);
     Task<PriceBookEntry?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<PriceBookEntry>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class PriceBookEntryService : IPriceBookEntryService
 
     public async Task<bool> Update(PriceBookEntry model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class PriceBookEntryService : IPriceBookEntryService
         return true;
     }
 
-    public async Task<bool> AssignPriceBook(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPriceBook(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class PriceBookEntryService : IPriceBookEntryService
 
             var child = await _serviceResolver.Get<PriceBookService>().Get(childRequest, cancellationToken);
             parent.PriceBook = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class PriceBookEntryService : IPriceBookEntryService
         return true;
     }
 
-    public async Task<bool> UnassignPriceBook(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPriceBook(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class PriceBookEntryService : IPriceBookEntryService
         try
         {
             parent.PriceBook = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class PriceBookEntryService : IPriceBookEntryService
         return true;
     }
 
-    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class PriceBookEntryService : IPriceBookEntryService
 
             var child = await _serviceResolver.Get<ProductService>().Get(childRequest, cancellationToken);
             parent.Product = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class PriceBookEntryService : IPriceBookEntryService
         return true;
     }
 
-    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class PriceBookEntryService : IPriceBookEntryService
         try
         {
             parent.Product = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

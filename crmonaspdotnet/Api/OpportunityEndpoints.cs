@@ -24,29 +24,29 @@ public static class OpportunityEndpoints
         group.MapPut("/assignOwner", AssignOwner);
         group.MapPut("/unassignOwner", UnassignOwner);
 
-    group.MapPut("/addToContacts", AddToContacts);
-    group.MapPut("/removeFromContacts", RemoveFromContacts);
+        group.MapPut("/addToContacts", AddToContacts);
+        group.MapPut("/removeFromContacts", RemoveFromContacts);
 
-    group.MapPut("/addToLineItems", AddToLineItems);
-    group.MapPut("/removeFromLineItems", RemoveFromLineItems);
+        group.MapPut("/addToLineItems", AddToLineItems);
+        group.MapPut("/removeFromLineItems", RemoveFromLineItems);
 
-    group.MapPut("/addToStageHistory", AddToStageHistory);
-    group.MapPut("/removeFromStageHistory", RemoveFromStageHistory);
+        group.MapPut("/addToStageHistory", AddToStageHistory);
+        group.MapPut("/removeFromStageHistory", RemoveFromStageHistory);
 
-    group.MapPut("/addToQuotes", AddToQuotes);
-    group.MapPut("/removeFromQuotes", RemoveFromQuotes);
+        group.MapPut("/addToQuotes", AddToQuotes);
+        group.MapPut("/removeFromQuotes", RemoveFromQuotes);
 
-    group.MapPut("/addToOrders", AddToOrders);
-    group.MapPut("/removeFromOrders", RemoveFromOrders);
+        group.MapPut("/addToOrders", AddToOrders);
+        group.MapPut("/removeFromOrders", RemoveFromOrders);
 
-    group.MapPut("/addToCampaigns", AddToCampaigns);
-    group.MapPut("/removeFromCampaigns", RemoveFromCampaigns);
+        group.MapPut("/addToCampaigns", AddToCampaigns);
+        group.MapPut("/removeFromCampaigns", RemoveFromCampaigns);
 
-    group.MapPut("/addToActivities", AddToActivities);
-    group.MapPut("/removeFromActivities", RemoveFromActivities);
+        group.MapPut("/addToActivities", AddToActivities);
+        group.MapPut("/removeFromActivities", RemoveFromActivities);
 
-    group.MapPut("/addToTeams", AddToTeams);
-    group.MapPut("/removeFromTeams", RemoveFromTeams);
+        group.MapPut("/addToTeams", AddToTeams);
+        group.MapPut("/removeFromTeams", RemoveFromTeams);
 
 
         return app;
@@ -55,9 +55,10 @@ public static class OpportunityEndpoints
     private static async Task<IResult> Create(
         OpportunityRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOpportunity( request );
+        var model = mapRequestToOpportunity(request);
 
         try
         {
@@ -74,9 +75,10 @@ public static class OpportunityEndpoints
     private static async Task<IResult> Update(
         OpportunityRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOpportunity( request );
+        var model = mapRequestToOpportunity(request);
 
         try
         {
@@ -93,25 +95,28 @@ public static class OpportunityEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var opportunity = await service.Get(identifier, cancellationToken);
-        return opportunity is null ? Results.NotFound() : Results.Ok( opportunity );
+        return opportunity is null ? Results.NotFound() : Results.Ok(opportunity);
     }
 
 
     private static async Task<IResult> GetAll(
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( OpportunityResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(OpportunityResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +124,8 @@ public static class OpportunityEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +133,8 @@ public static class OpportunityEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IOpportunityService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,7 +142,8 @@ public static class OpportunityEndpoints
     private static async Task<IResult> AssignAccount(
         AssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -143,7 +151,8 @@ public static class OpportunityEndpoints
     private static async Task<IResult> UnassignAccount(
     AssociationRequest request,
     IOpportunityService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -151,7 +160,8 @@ public static class OpportunityEndpoints
     private static async Task<IResult> AssignOwner(
         AssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOwner(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -159,7 +169,8 @@ public static class OpportunityEndpoints
     private static async Task<IResult> UnassignOwner(
     AssociationRequest request,
     IOpportunityService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOwner(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -168,7 +179,8 @@ public static class OpportunityEndpoints
     private static async Task<IResult> AddToContacts(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToContacts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -176,14 +188,16 @@ public static class OpportunityEndpoints
     private static async Task<IResult> RemoveFromContacts(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromContacts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToLineItems(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLineItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -191,14 +205,16 @@ public static class OpportunityEndpoints
     private static async Task<IResult> RemoveFromLineItems(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLineItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToStageHistory(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToStageHistory(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -206,14 +222,16 @@ public static class OpportunityEndpoints
     private static async Task<IResult> RemoveFromStageHistory(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromStageHistory(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToQuotes(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToQuotes(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -221,14 +239,16 @@ public static class OpportunityEndpoints
     private static async Task<IResult> RemoveFromQuotes(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromQuotes(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOrders(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -236,14 +256,16 @@ public static class OpportunityEndpoints
     private static async Task<IResult> RemoveFromOrders(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCampaigns(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCampaigns(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -251,14 +273,16 @@ public static class OpportunityEndpoints
     private static async Task<IResult> RemoveFromCampaigns(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCampaigns(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToActivities(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToActivities(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -266,14 +290,16 @@ public static class OpportunityEndpoints
     private static async Task<IResult> RemoveFromActivities(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromActivities(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToTeams(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTeams(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -281,11 +307,13 @@ public static class OpportunityEndpoints
     private static async Task<IResult> RemoveFromTeams(
         MultipleAssociationRequest request,
         IOpportunityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTeams(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Opportunity mapRequestToOpportunity( OpportunityRequest request ) {
+    private static Opportunity mapRequestToOpportunity(OpportunityRequest request)
+    {
         var model = new Opportunity
         {
             Id = request.Id,

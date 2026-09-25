@@ -6,9 +6,10 @@ using crmonaspdotnet.Telemetry;
 
 namespace crmonaspdotnet.Service;
 
-public interface IOpportunityLineItemService {
+public interface IOpportunityLineItemService
+{
 
-    Task Create(OpportunityLineItem model , CancellationToken cancellationToken);
+    Task Create(OpportunityLineItem model, CancellationToken cancellationToken);
     Task<bool> Update(OpportunityLineItem model, CancellationToken cancellationToken);
     Task<OpportunityLineItem?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<OpportunityLineItem>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class OpportunityLineItemService : IOpportunityLineItemService
 
     public async Task<bool> Update(OpportunityLineItem model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class OpportunityLineItemService : IOpportunityLineItemService
         return true;
     }
 
-    public async Task<bool> AssignOpportunity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOpportunity(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class OpportunityLineItemService : IOpportunityLineItemService
 
             var child = await _serviceResolver.Get<OpportunityService>().Get(childRequest, cancellationToken);
             parent.Opportunity = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class OpportunityLineItemService : IOpportunityLineItemService
         return true;
     }
 
-    public async Task<bool> UnassignOpportunity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOpportunity(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class OpportunityLineItemService : IOpportunityLineItemService
         try
         {
             parent.Opportunity = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class OpportunityLineItemService : IOpportunityLineItemService
         return true;
     }
 
-    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class OpportunityLineItemService : IOpportunityLineItemService
 
             var child = await _serviceResolver.Get<ProductService>().Get(childRequest, cancellationToken);
             parent.Product = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class OpportunityLineItemService : IOpportunityLineItemService
         return true;
     }
 
-    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class OpportunityLineItemService : IOpportunityLineItemService
         try
         {
             parent.Product = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class OpportunityLineItemService : IOpportunityLineItemService
         return true;
     }
 
-    public async Task<bool> AssignPriceBookEntry(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPriceBookEntry(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class OpportunityLineItemService : IOpportunityLineItemService
 
             var child = await _serviceResolver.Get<PriceBookEntryService>().Get(childRequest, cancellationToken);
             parent.PriceBookEntry = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class OpportunityLineItemService : IOpportunityLineItemService
         return true;
     }
 
-    public async Task<bool> UnassignPriceBookEntry(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPriceBookEntry(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class OpportunityLineItemService : IOpportunityLineItemService
         try
         {
             parent.PriceBookEntry = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

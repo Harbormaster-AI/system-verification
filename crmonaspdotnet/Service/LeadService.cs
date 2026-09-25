@@ -6,9 +6,10 @@ using crmonaspdotnet.Telemetry;
 
 namespace crmonaspdotnet.Service;
 
-public interface ILeadService {
+public interface ILeadService
+{
 
-    Task Create(Lead model , CancellationToken cancellationToken);
+    Task Create(Lead model, CancellationToken cancellationToken);
     Task<bool> Update(Lead model, CancellationToken cancellationToken);
     Task<Lead?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Lead>> GetAll(CancellationToken cancellationToken);
@@ -77,7 +78,8 @@ public class LeadService : ILeadService
 
     public async Task<bool> Update(Lead model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -139,7 +141,8 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -157,7 +160,7 @@ public class LeadService : ILeadService
 
             var child = await _serviceResolver.Get<OrganizationService>().Get(childRequest, cancellationToken);
             parent.Organization = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -169,7 +172,8 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -180,7 +184,7 @@ public class LeadService : ILeadService
         try
         {
             parent.Organization = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -192,7 +196,8 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> AssignOwner(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOwner(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -210,7 +215,7 @@ public class LeadService : ILeadService
 
             var child = await _serviceResolver.Get<UserService>().Get(childRequest, cancellationToken);
             parent.Owner = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -222,7 +227,8 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> UnassignOwner(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOwner(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -233,7 +239,7 @@ public class LeadService : ILeadService
         try
         {
             parent.Owner = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -245,7 +251,8 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> AssignConvertedAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignConvertedAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -263,7 +270,7 @@ public class LeadService : ILeadService
 
             var child = await _serviceResolver.Get<AccountService>().Get(childRequest, cancellationToken);
             parent.ConvertedAccount = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -275,7 +282,8 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> UnassignConvertedAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignConvertedAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -286,7 +294,7 @@ public class LeadService : ILeadService
         try
         {
             parent.ConvertedAccount = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -298,7 +306,8 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> AssignConvertedContact(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignConvertedContact(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -316,7 +325,7 @@ public class LeadService : ILeadService
 
             var child = await _serviceResolver.Get<ContactService>().Get(childRequest, cancellationToken);
             parent.ConvertedContact = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -328,7 +337,8 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> UnassignConvertedContact(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignConvertedContact(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -339,7 +349,7 @@ public class LeadService : ILeadService
         try
         {
             parent.ConvertedContact = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -351,7 +361,8 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> AssignConvertedOpportunity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignConvertedOpportunity(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -369,7 +380,7 @@ public class LeadService : ILeadService
 
             var child = await _serviceResolver.Get<OpportunityService>().Get(childRequest, cancellationToken);
             parent.ConvertedOpportunity = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -381,7 +392,8 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> UnassignConvertedOpportunity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignConvertedOpportunity(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -392,7 +404,7 @@ public class LeadService : ILeadService
         try
         {
             parent.ConvertedOpportunity = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -405,8 +417,10 @@ public class LeadService : ILeadService
     }
 
 
-    public async Task<bool> AddToActivities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToActivities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Lead",
                 "AddToActivities",
@@ -414,16 +428,18 @@ public class LeadService : ILeadService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromActivities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromActivities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Lead",
                 "RemoveFromActivities",
@@ -439,8 +455,10 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> AddToCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Lead",
                 "AddToCampaigns",
@@ -448,16 +466,18 @@ public class LeadService : ILeadService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Lead",
                 "RemoveFromCampaigns",
@@ -473,8 +493,10 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> AddToNotes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToNotes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Lead",
                 "AddToNotes",
@@ -482,16 +504,18 @@ public class LeadService : ILeadService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromNotes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromNotes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Lead",
                 "RemoveFromNotes",
@@ -507,8 +531,10 @@ public class LeadService : ILeadService
         return true;
     }
 
-    public async Task<bool> AddToEmailMessages(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEmailMessages(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Lead",
                 "AddToEmailMessages",
@@ -516,16 +542,18 @@ public class LeadService : ILeadService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEmailMessages(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEmailMessages(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Lead",
                 "RemoveFromEmailMessages",

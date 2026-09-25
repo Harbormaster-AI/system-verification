@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum ActivityType
 {
-    Task=1,Call=2,Meeting=3,Demo=4,FollowUp=5
+    Task = 1, Call = 2, Meeting = 3, Demo = 4, FollowUp = 5
 }
 
 /// <summary>

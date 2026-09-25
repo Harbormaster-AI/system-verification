@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum QuoteStatus
 {
-    Draft=1,Presented=2,Approved=3,Rejected=4,Accepted=5,Expired=6,Withdrawn=7
+    Draft = 1, Presented = 2, Approved = 3, Rejected = 4, Accepted = 5, Expired = 6, Withdrawn = 7
 }
 
 /// <summary>

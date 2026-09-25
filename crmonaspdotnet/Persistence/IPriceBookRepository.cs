@@ -11,11 +11,11 @@ public interface IPriceBookRepository
     Task UpdateAsync(PriceBook priceBook, CancellationToken cancellationToken);
     Task DeleteAsync(PriceBook priceBook, CancellationToken cancellationToken);
 
-    Task AddToEntriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromEntriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToQuotesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromQuotesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToEntriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromEntriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToQuotesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromQuotesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

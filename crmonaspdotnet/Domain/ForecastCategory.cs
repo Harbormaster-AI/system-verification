@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum ForecastCategory
 {
-    Pipeline=1,BestCase=2,Commit=3,Omitted=4,Closed=5
+    Pipeline = 1, BestCase = 2, Commit = 3, Omitted = 4, Closed = 5
 }
 
 /// <summary>

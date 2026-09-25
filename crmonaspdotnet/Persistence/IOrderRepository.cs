@@ -11,7 +11,7 @@ public interface IOrderRepository
     Task UpdateAsync(Order order, CancellationToken cancellationToken);
     Task DeleteAsync(Order order, CancellationToken cancellationToken);
 
-    Task AddToItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

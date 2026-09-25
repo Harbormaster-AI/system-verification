@@ -31,9 +31,10 @@ public static class OrderItemEndpoints
     private static async Task<IResult> Create(
         OrderItemRequest request,
         IOrderItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOrderItem( request );
+        var model = mapRequestToOrderItem(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class OrderItemEndpoints
     private static async Task<IResult> Update(
         OrderItemRequest request,
         IOrderItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOrderItem( request );
+        var model = mapRequestToOrderItem(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class OrderItemEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IOrderItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var orderItem = await service.Get(identifier, cancellationToken);
-        return orderItem is null ? Results.NotFound() : Results.Ok( orderItem );
+        return orderItem is null ? Results.NotFound() : Results.Ok(orderItem);
     }
 
 
     private static async Task<IResult> GetAll(
         IOrderItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( OrderItemResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(OrderItemResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IOrderItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class OrderItemEndpoints
     private static async Task<IResult> AssignOrder(
         AssociationRequest request,
         IOrderItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class OrderItemEndpoints
     private static async Task<IResult> UnassignOrder(
     AssociationRequest request,
     IOrderItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class OrderItemEndpoints
     private static async Task<IResult> AssignProduct(
         AssociationRequest request,
         IOrderItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProduct(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class OrderItemEndpoints
     private static async Task<IResult> UnassignProduct(
     AssociationRequest request,
     IOrderItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProduct(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class OrderItemEndpoints
     private static async Task<IResult> AssignPriceBookEntry(
         AssociationRequest request,
         IOrderItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPriceBookEntry(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class OrderItemEndpoints
     private static async Task<IResult> UnassignPriceBookEntry(
     AssociationRequest request,
     IOrderItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPriceBookEntry(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static OrderItem mapRequestToOrderItem( OrderItemRequest request ) {
+    private static OrderItem mapRequestToOrderItem(OrderItemRequest request)
+    {
         var model = new OrderItem
         {
             Id = request.Id,

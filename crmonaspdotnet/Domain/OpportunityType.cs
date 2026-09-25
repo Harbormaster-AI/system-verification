@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum OpportunityType
 {
-    NewBusiness=1,ExistingBusiness=2,Renewal=3,Upsell=4,CrossSell=5
+    NewBusiness = 1, ExistingBusiness = 2, Renewal = 3, Upsell = 4, CrossSell = 5
 }
 
 /// <summary>

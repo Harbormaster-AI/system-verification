@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum CampaignMemberStatus
 {
-    Sent=1,Opened=2,Responded=3,Unsubscribed=4,Bounced=5,Registered=6,Attended=7,NoShow=8
+    Sent = 1, Opened = 2, Responded = 3, Unsubscribed = 4, Bounced = 5, Registered = 6, Attended = 7, NoShow = 8
 }
 
 /// <summary>

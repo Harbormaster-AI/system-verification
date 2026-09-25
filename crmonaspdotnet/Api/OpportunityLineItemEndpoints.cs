@@ -31,9 +31,10 @@ public static class OpportunityLineItemEndpoints
     private static async Task<IResult> Create(
         OpportunityLineItemRequest request,
         IOpportunityLineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOpportunityLineItem( request );
+        var model = mapRequestToOpportunityLineItem(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class OpportunityLineItemEndpoints
     private static async Task<IResult> Update(
         OpportunityLineItemRequest request,
         IOpportunityLineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOpportunityLineItem( request );
+        var model = mapRequestToOpportunityLineItem(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class OpportunityLineItemEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IOpportunityLineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var opportunityLineItem = await service.Get(identifier, cancellationToken);
-        return opportunityLineItem is null ? Results.NotFound() : Results.Ok( opportunityLineItem );
+        return opportunityLineItem is null ? Results.NotFound() : Results.Ok(opportunityLineItem);
     }
 
 
     private static async Task<IResult> GetAll(
         IOpportunityLineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( OpportunityLineItemResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(OpportunityLineItemResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IOpportunityLineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class OpportunityLineItemEndpoints
     private static async Task<IResult> AssignOpportunity(
         AssociationRequest request,
         IOpportunityLineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOpportunity(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class OpportunityLineItemEndpoints
     private static async Task<IResult> UnassignOpportunity(
     AssociationRequest request,
     IOpportunityLineItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOpportunity(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class OpportunityLineItemEndpoints
     private static async Task<IResult> AssignProduct(
         AssociationRequest request,
         IOpportunityLineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProduct(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class OpportunityLineItemEndpoints
     private static async Task<IResult> UnassignProduct(
     AssociationRequest request,
     IOpportunityLineItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProduct(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class OpportunityLineItemEndpoints
     private static async Task<IResult> AssignPriceBookEntry(
         AssociationRequest request,
         IOpportunityLineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPriceBookEntry(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class OpportunityLineItemEndpoints
     private static async Task<IResult> UnassignPriceBookEntry(
     AssociationRequest request,
     IOpportunityLineItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPriceBookEntry(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static OpportunityLineItem mapRequestToOpportunityLineItem( OpportunityLineItemRequest request ) {
+    private static OpportunityLineItem mapRequestToOpportunityLineItem(OpportunityLineItemRequest request)
+    {
         var model = new OpportunityLineItem
         {
             Id = request.Id,

@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum UserRole
 {
-    SalesRep=1,SalesManager=2,ServiceAgent=3,MarketingSpecialist=4,Administrator=5,Executive=6
+    SalesRep = 1, SalesManager = 2, ServiceAgent = 3, MarketingSpecialist = 4, Administrator = 5, Executive = 6
 }
 
 /// <summary>

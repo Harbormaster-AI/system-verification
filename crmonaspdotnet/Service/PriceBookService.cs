@@ -6,9 +6,10 @@ using crmonaspdotnet.Telemetry;
 
 namespace crmonaspdotnet.Service;
 
-public interface IPriceBookService {
+public interface IPriceBookService
+{
 
-    Task Create(PriceBook model , CancellationToken cancellationToken);
+    Task Create(PriceBook model, CancellationToken cancellationToken);
     Task<bool> Update(PriceBook model, CancellationToken cancellationToken);
     Task<PriceBook?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<PriceBook>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class PriceBookService : IPriceBookService
 
     public async Task<bool> Update(PriceBook model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class PriceBookService : IPriceBookService
         return true;
     }
 
-    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class PriceBookService : IPriceBookService
 
             var child = await _serviceResolver.Get<OrganizationService>().Get(childRequest, cancellationToken);
             parent.Organization = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class PriceBookService : IPriceBookService
         return true;
     }
 
-    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class PriceBookService : IPriceBookService
         try
         {
             parent.Organization = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,8 +181,10 @@ public class PriceBookService : IPriceBookService
     }
 
 
-    public async Task<bool> AddToEntries(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEntries(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PriceBook",
                 "AddToEntries",
@@ -186,16 +192,18 @@ public class PriceBookService : IPriceBookService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEntries(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEntries(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PriceBook",
                 "RemoveFromEntries",
@@ -211,8 +219,10 @@ public class PriceBookService : IPriceBookService
         return true;
     }
 
-    public async Task<bool> AddToQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PriceBook",
                 "AddToQuotes",
@@ -220,16 +230,18 @@ public class PriceBookService : IPriceBookService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PriceBook",
                 "RemoveFromQuotes",
@@ -245,8 +257,10 @@ public class PriceBookService : IPriceBookService
         return true;
     }
 
-    public async Task<bool> AddToOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PriceBook",
                 "AddToOrders",
@@ -254,16 +268,18 @@ public class PriceBookService : IPriceBookService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PriceBook",
                 "RemoveFromOrders",

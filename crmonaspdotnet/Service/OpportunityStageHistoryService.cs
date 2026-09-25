@@ -6,9 +6,10 @@ using crmonaspdotnet.Telemetry;
 
 namespace crmonaspdotnet.Service;
 
-public interface IOpportunityStageHistoryService {
+public interface IOpportunityStageHistoryService
+{
 
-    Task Create(OpportunityStageHistory model , CancellationToken cancellationToken);
+    Task Create(OpportunityStageHistory model, CancellationToken cancellationToken);
     Task<bool> Update(OpportunityStageHistory model, CancellationToken cancellationToken);
     Task<OpportunityStageHistory?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<OpportunityStageHistory>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class OpportunityStageHistoryService : IOpportunityStageHistoryService
 
     public async Task<bool> Update(OpportunityStageHistory model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class OpportunityStageHistoryService : IOpportunityStageHistoryService
         return true;
     }
 
-    public async Task<bool> AssignOpportunity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOpportunity(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class OpportunityStageHistoryService : IOpportunityStageHistoryService
 
             var child = await _serviceResolver.Get<OpportunityService>().Get(childRequest, cancellationToken);
             parent.Opportunity = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class OpportunityStageHistoryService : IOpportunityStageHistoryService
         return true;
     }
 
-    public async Task<bool> UnassignOpportunity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOpportunity(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class OpportunityStageHistoryService : IOpportunityStageHistoryService
         try
         {
             parent.Opportunity = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class OpportunityStageHistoryService : IOpportunityStageHistoryService
         return true;
     }
 
-    public async Task<bool> AssignChangedBy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignChangedBy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class OpportunityStageHistoryService : IOpportunityStageHistoryService
 
             var child = await _serviceResolver.Get<UserService>().Get(childRequest, cancellationToken);
             parent.ChangedBy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class OpportunityStageHistoryService : IOpportunityStageHistoryService
         return true;
     }
 
-    public async Task<bool> UnassignChangedBy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignChangedBy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class OpportunityStageHistoryService : IOpportunityStageHistoryService
         try
         {
             parent.ChangedBy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

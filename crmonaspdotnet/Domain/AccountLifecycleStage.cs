@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum AccountLifecycleStage
 {
-    Subscriber=1,Lead=2,MarketingQualified=3,SalesQualified=4,Customer=5,Evangelist=6,Churned=7
+    Subscriber = 1, Lead = 2, MarketingQualified = 3, SalesQualified = 4, Customer = 5, Evangelist = 6, Churned = 7
 }
 
 /// <summary>

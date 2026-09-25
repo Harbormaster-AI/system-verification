@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum AccountType
 {
-    Prospect=1,Customer=2,Partner=3,Vendor=4,Competitor=5
+    Prospect = 1, Customer = 2, Partner = 3, Vendor = 4, Competitor = 5
 }
 
 /// <summary>

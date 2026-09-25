@@ -6,9 +6,10 @@ using crmonaspdotnet.Telemetry;
 
 namespace crmonaspdotnet.Service;
 
-public interface ICampaignMemberService {
+public interface ICampaignMemberService
+{
 
-    Task Create(CampaignMember model , CancellationToken cancellationToken);
+    Task Create(CampaignMember model, CancellationToken cancellationToken);
     Task<bool> Update(CampaignMember model, CancellationToken cancellationToken);
     Task<CampaignMember?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CampaignMember>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class CampaignMemberService : ICampaignMemberService
 
     public async Task<bool> Update(CampaignMember model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class CampaignMemberService : ICampaignMemberService
         return true;
     }
 
-    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class CampaignMemberService : ICampaignMemberService
 
             var child = await _serviceResolver.Get<CampaignService>().Get(childRequest, cancellationToken);
             parent.Campaign = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class CampaignMemberService : ICampaignMemberService
         return true;
     }
 
-    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class CampaignMemberService : ICampaignMemberService
         try
         {
             parent.Campaign = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class CampaignMemberService : ICampaignMemberService
         return true;
     }
 
-    public async Task<bool> AssignLead(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLead(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class CampaignMemberService : ICampaignMemberService
 
             var child = await _serviceResolver.Get<LeadService>().Get(childRequest, cancellationToken);
             parent.Lead = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class CampaignMemberService : ICampaignMemberService
         return true;
     }
 
-    public async Task<bool> UnassignLead(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLead(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class CampaignMemberService : ICampaignMemberService
         try
         {
             parent.Lead = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -227,7 +233,8 @@ public class CampaignMemberService : ICampaignMemberService
         return true;
     }
 
-    public async Task<bool> AssignContact(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignContact(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -245,7 +252,7 @@ public class CampaignMemberService : ICampaignMemberService
 
             var child = await _serviceResolver.Get<ContactService>().Get(childRequest, cancellationToken);
             parent.Contact = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -257,7 +264,8 @@ public class CampaignMemberService : ICampaignMemberService
         return true;
     }
 
-    public async Task<bool> UnassignContact(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignContact(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -268,7 +276,7 @@ public class CampaignMemberService : ICampaignMemberService
         try
         {
             parent.Contact = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

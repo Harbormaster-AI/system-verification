@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum OrderStatus
 {
-    Draft=1,Submitted=2,PartiallyFulfilled=3,Fulfilled=4,Invoiced=5,Cancelled=6
+    Draft = 1, Submitted = 2, PartiallyFulfilled = 3, Fulfilled = 4, Invoiced = 5, Cancelled = 6
 }
 
 /// <summary>

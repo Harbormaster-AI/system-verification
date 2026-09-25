@@ -11,13 +11,13 @@ public interface IProductRepository
     Task UpdateAsync(Product product, CancellationToken cancellationToken);
     Task DeleteAsync(Product product, CancellationToken cancellationToken);
 
-    Task AddToPriceBookEntriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPriceBookEntriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToOpportunityLineItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromOpportunityLineItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToQuoteLineItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromQuoteLineItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToOrderItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromOrderItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPriceBookEntriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPriceBookEntriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToOpportunityLineItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromOpportunityLineItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToQuoteLineItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromQuoteLineItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToOrderItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromOrderItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

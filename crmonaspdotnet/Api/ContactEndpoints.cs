@@ -24,23 +24,23 @@ public static class ContactEndpoints
         group.MapPut("/assignOwner", AssignOwner);
         group.MapPut("/unassignOwner", UnassignOwner);
 
-    group.MapPut("/addToActivities", AddToActivities);
-    group.MapPut("/removeFromActivities", RemoveFromActivities);
+        group.MapPut("/addToActivities", AddToActivities);
+        group.MapPut("/removeFromActivities", RemoveFromActivities);
 
-    group.MapPut("/addToOpportunities", AddToOpportunities);
-    group.MapPut("/removeFromOpportunities", RemoveFromOpportunities);
+        group.MapPut("/addToOpportunities", AddToOpportunities);
+        group.MapPut("/removeFromOpportunities", RemoveFromOpportunities);
 
-    group.MapPut("/addToCases", AddToCases);
-    group.MapPut("/removeFromCases", RemoveFromCases);
+        group.MapPut("/addToCases", AddToCases);
+        group.MapPut("/removeFromCases", RemoveFromCases);
 
-    group.MapPut("/addToCampaigns", AddToCampaigns);
-    group.MapPut("/removeFromCampaigns", RemoveFromCampaigns);
+        group.MapPut("/addToCampaigns", AddToCampaigns);
+        group.MapPut("/removeFromCampaigns", RemoveFromCampaigns);
 
-    group.MapPut("/addToNotes", AddToNotes);
-    group.MapPut("/removeFromNotes", RemoveFromNotes);
+        group.MapPut("/addToNotes", AddToNotes);
+        group.MapPut("/removeFromNotes", RemoveFromNotes);
 
-    group.MapPut("/addToEmailMessages", AddToEmailMessages);
-    group.MapPut("/removeFromEmailMessages", RemoveFromEmailMessages);
+        group.MapPut("/addToEmailMessages", AddToEmailMessages);
+        group.MapPut("/removeFromEmailMessages", RemoveFromEmailMessages);
 
 
         return app;
@@ -49,9 +49,10 @@ public static class ContactEndpoints
     private static async Task<IResult> Create(
         ContactRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToContact( request );
+        var model = mapRequestToContact(request);
 
         try
         {
@@ -68,9 +69,10 @@ public static class ContactEndpoints
     private static async Task<IResult> Update(
         ContactRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToContact( request );
+        var model = mapRequestToContact(request);
 
         try
         {
@@ -87,25 +89,28 @@ public static class ContactEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var contact = await service.Get(identifier, cancellationToken);
-        return contact is null ? Results.NotFound() : Results.Ok( contact );
+        return contact is null ? Results.NotFound() : Results.Ok(contact);
     }
 
 
     private static async Task<IResult> GetAll(
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ContactResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ContactResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +118,8 @@ public static class ContactEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +127,8 @@ public static class ContactEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IContactService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +136,8 @@ public static class ContactEndpoints
     private static async Task<IResult> AssignAccount(
         AssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +145,8 @@ public static class ContactEndpoints
     private static async Task<IResult> UnassignAccount(
     AssociationRequest request,
     IContactService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +154,8 @@ public static class ContactEndpoints
     private static async Task<IResult> AssignOwner(
         AssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOwner(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,7 +163,8 @@ public static class ContactEndpoints
     private static async Task<IResult> UnassignOwner(
     AssociationRequest request,
     IContactService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOwner(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -162,7 +173,8 @@ public static class ContactEndpoints
     private static async Task<IResult> AddToActivities(
         MultipleAssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToActivities(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -170,14 +182,16 @@ public static class ContactEndpoints
     private static async Task<IResult> RemoveFromActivities(
         MultipleAssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromActivities(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOpportunities(
         MultipleAssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOpportunities(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -185,14 +199,16 @@ public static class ContactEndpoints
     private static async Task<IResult> RemoveFromOpportunities(
         MultipleAssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOpportunities(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCases(
         MultipleAssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCases(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -200,14 +216,16 @@ public static class ContactEndpoints
     private static async Task<IResult> RemoveFromCases(
         MultipleAssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCases(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCampaigns(
         MultipleAssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCampaigns(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -215,14 +233,16 @@ public static class ContactEndpoints
     private static async Task<IResult> RemoveFromCampaigns(
         MultipleAssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCampaigns(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToNotes(
         MultipleAssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToNotes(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -230,14 +250,16 @@ public static class ContactEndpoints
     private static async Task<IResult> RemoveFromNotes(
         MultipleAssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromNotes(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToEmailMessages(
         MultipleAssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToEmailMessages(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -245,11 +267,13 @@ public static class ContactEndpoints
     private static async Task<IResult> RemoveFromEmailMessages(
         MultipleAssociationRequest request,
         IContactService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromEmailMessages(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Contact mapRequestToContact( ContactRequest request ) {
+    private static Contact mapRequestToContact(ContactRequest request)
+    {
         var model = new Contact
         {
             Id = request.Id,

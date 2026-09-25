@@ -6,9 +6,10 @@ using crmonaspdotnet.Telemetry;
 
 namespace crmonaspdotnet.Service;
 
-public interface ICase_Service {
+public interface ICase_Service
+{
 
-    Task Create(Case_ model , CancellationToken cancellationToken);
+    Task Create(Case_ model, CancellationToken cancellationToken);
     Task<bool> Update(Case_ model, CancellationToken cancellationToken);
     Task<Case_?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Case_>> GetAll(CancellationToken cancellationToken);
@@ -77,7 +78,8 @@ public class Case_Service : ICase_Service
 
     public async Task<bool> Update(Case_ model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -138,7 +140,8 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -156,7 +159,7 @@ public class Case_Service : ICase_Service
 
             var child = await _serviceResolver.Get<OrganizationService>().Get(childRequest, cancellationToken);
             parent.Organization = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -168,7 +171,8 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -179,7 +183,7 @@ public class Case_Service : ICase_Service
         try
         {
             parent.Organization = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -191,7 +195,8 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -209,7 +214,7 @@ public class Case_Service : ICase_Service
 
             var child = await _serviceResolver.Get<AccountService>().Get(childRequest, cancellationToken);
             parent.Account = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -221,7 +226,8 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -232,7 +238,7 @@ public class Case_Service : ICase_Service
         try
         {
             parent.Account = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -244,7 +250,8 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> AssignContact(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignContact(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -262,7 +269,7 @@ public class Case_Service : ICase_Service
 
             var child = await _serviceResolver.Get<ContactService>().Get(childRequest, cancellationToken);
             parent.Contact = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -274,7 +281,8 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> UnassignContact(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignContact(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -285,7 +293,7 @@ public class Case_Service : ICase_Service
         try
         {
             parent.Contact = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -297,7 +305,8 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> AssignOwner(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOwner(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -315,7 +324,7 @@ public class Case_Service : ICase_Service
 
             var child = await _serviceResolver.Get<UserService>().Get(childRequest, cancellationToken);
             parent.Owner = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -327,7 +336,8 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> UnassignOwner(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOwner(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -338,7 +348,7 @@ public class Case_Service : ICase_Service
         try
         {
             parent.Owner = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -350,7 +360,8 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> AssignTeam(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTeam(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -368,7 +379,7 @@ public class Case_Service : ICase_Service
 
             var child = await _serviceResolver.Get<TeamService>().Get(childRequest, cancellationToken);
             parent.Team = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -380,7 +391,8 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> UnassignTeam(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTeam(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -391,7 +403,7 @@ public class Case_Service : ICase_Service
         try
         {
             parent.Team = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -404,8 +416,10 @@ public class Case_Service : ICase_Service
     }
 
 
-    public async Task<bool> AddToActivities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToActivities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Case_",
                 "AddToActivities",
@@ -413,16 +427,18 @@ public class Case_Service : ICase_Service
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromActivities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromActivities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Case_",
                 "RemoveFromActivities",
@@ -438,8 +454,10 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> AddToCaseComments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCaseComments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Case_",
                 "AddToCaseComments",
@@ -447,16 +465,18 @@ public class Case_Service : ICase_Service
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCaseComments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCaseComments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Case_",
                 "RemoveFromCaseComments",
@@ -472,8 +492,10 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> AddToEmails(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEmails(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Case_",
                 "AddToEmails",
@@ -481,16 +503,18 @@ public class Case_Service : ICase_Service
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEmails(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEmails(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Case_",
                 "RemoveFromEmails",
@@ -506,8 +530,10 @@ public class Case_Service : ICase_Service
         return true;
     }
 
-    public async Task<bool> AddToRelatedOpportunities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRelatedOpportunities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Case_",
                 "AddToRelatedOpportunities",
@@ -515,16 +541,18 @@ public class Case_Service : ICase_Service
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRelatedOpportunities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRelatedOpportunities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Case_",
                 "RemoveFromRelatedOpportunities",

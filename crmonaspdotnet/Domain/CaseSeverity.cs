@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum CaseSeverity
 {
-    Minor=1,Major=2,Critical=3,Blocker=4
+    Minor = 1, Major = 2, Critical = 3, Blocker = 4
 }
 
 /// <summary>

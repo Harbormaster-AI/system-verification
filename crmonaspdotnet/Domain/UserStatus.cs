@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum UserStatus
 {
-    Active=1,Inactive=2,Locked=3,PendingInvite=4
+    Active = 1, Inactive = 2, Locked = 3, PendingInvite = 4
 }
 
 /// <summary>

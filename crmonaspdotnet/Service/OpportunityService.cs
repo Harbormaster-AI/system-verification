@@ -6,9 +6,10 @@ using crmonaspdotnet.Telemetry;
 
 namespace crmonaspdotnet.Service;
 
-public interface IOpportunityService {
+public interface IOpportunityService
+{
 
-    Task Create(Opportunity model , CancellationToken cancellationToken);
+    Task Create(Opportunity model, CancellationToken cancellationToken);
     Task<bool> Update(Opportunity model, CancellationToken cancellationToken);
     Task<Opportunity?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Opportunity>> GetAll(CancellationToken cancellationToken);
@@ -81,7 +82,8 @@ public class OpportunityService : IOpportunityService
 
     public async Task<bool> Update(Opportunity model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -142,7 +144,8 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -160,7 +163,7 @@ public class OpportunityService : IOpportunityService
 
             var child = await _serviceResolver.Get<OrganizationService>().Get(childRequest, cancellationToken);
             parent.Organization = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +175,8 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -183,7 +187,7 @@ public class OpportunityService : IOpportunityService
         try
         {
             parent.Organization = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -195,7 +199,8 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -213,7 +218,7 @@ public class OpportunityService : IOpportunityService
 
             var child = await _serviceResolver.Get<AccountService>().Get(childRequest, cancellationToken);
             parent.Account = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -225,7 +230,8 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -236,7 +242,7 @@ public class OpportunityService : IOpportunityService
         try
         {
             parent.Account = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -248,7 +254,8 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> AssignOwner(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOwner(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -266,7 +273,7 @@ public class OpportunityService : IOpportunityService
 
             var child = await _serviceResolver.Get<UserService>().Get(childRequest, cancellationToken);
             parent.Owner = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -278,7 +285,8 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> UnassignOwner(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOwner(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -289,7 +297,7 @@ public class OpportunityService : IOpportunityService
         try
         {
             parent.Owner = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -302,8 +310,10 @@ public class OpportunityService : IOpportunityService
     }
 
 
-    public async Task<bool> AddToContacts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToContacts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "AddToContacts",
@@ -311,16 +321,18 @@ public class OpportunityService : IOpportunityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromContacts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromContacts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "RemoveFromContacts",
@@ -336,8 +348,10 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> AddToLineItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLineItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "AddToLineItems",
@@ -345,16 +359,18 @@ public class OpportunityService : IOpportunityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLineItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLineItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "RemoveFromLineItems",
@@ -370,8 +386,10 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> AddToStageHistory(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToStageHistory(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "AddToStageHistory",
@@ -379,16 +397,18 @@ public class OpportunityService : IOpportunityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromStageHistory(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromStageHistory(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "RemoveFromStageHistory",
@@ -404,8 +424,10 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> AddToQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "AddToQuotes",
@@ -413,16 +435,18 @@ public class OpportunityService : IOpportunityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "RemoveFromQuotes",
@@ -438,8 +462,10 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> AddToOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "AddToOrders",
@@ -447,16 +473,18 @@ public class OpportunityService : IOpportunityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "RemoveFromOrders",
@@ -472,8 +500,10 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> AddToCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "AddToCampaigns",
@@ -481,16 +511,18 @@ public class OpportunityService : IOpportunityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "RemoveFromCampaigns",
@@ -506,8 +538,10 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> AddToActivities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToActivities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "AddToActivities",
@@ -515,16 +549,18 @@ public class OpportunityService : IOpportunityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromActivities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromActivities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "RemoveFromActivities",
@@ -540,8 +576,10 @@ public class OpportunityService : IOpportunityService
         return true;
     }
 
-    public async Task<bool> AddToTeams(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTeams(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "AddToTeams",
@@ -549,16 +587,18 @@ public class OpportunityService : IOpportunityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTeams(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTeams(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Opportunity",
                 "RemoveFromTeams",

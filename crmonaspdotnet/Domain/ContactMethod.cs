@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum ContactMethod
 {
-    Email=1,Phone=2,Mobile=3,SMS=4,InPerson=5,Web=6
+    Email = 1, Phone = 2, Mobile = 3, SMS = 4, InPerson = 5, Web = 6
 }
 
 /// <summary>

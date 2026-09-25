@@ -41,9 +41,10 @@ public static class ActivityEndpoints
     private static async Task<IResult> Create(
         ActivityRequest request,
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToActivity( request );
+        var model = mapRequestToActivity(request);
 
         try
         {
@@ -60,9 +61,10 @@ public static class ActivityEndpoints
     private static async Task<IResult> Update(
         ActivityRequest request,
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToActivity( request );
+        var model = mapRequestToActivity(request);
 
         try
         {
@@ -79,25 +81,28 @@ public static class ActivityEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var activity = await service.Get(identifier, cancellationToken);
-        return activity is null ? Results.NotFound() : Results.Ok( activity );
+        return activity is null ? Results.NotFound() : Results.Ok(activity);
     }
 
 
     private static async Task<IResult> GetAll(
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ActivityResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ActivityResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +110,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +119,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IActivityService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +128,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> AssignOwner(
         AssociationRequest request,
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOwner(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +137,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> UnassignOwner(
     AssociationRequest request,
     IActivityService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOwner(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +146,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> AssignAccount(
         AssociationRequest request,
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +155,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> UnassignAccount(
     AssociationRequest request,
     IActivityService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,7 +164,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> AssignContact(
         AssociationRequest request,
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignContact(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -161,7 +173,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> UnassignContact(
     AssociationRequest request,
     IActivityService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignContact(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -169,7 +182,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> AssignLead(
         AssociationRequest request,
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLead(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -177,7 +191,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> UnassignLead(
     AssociationRequest request,
     IActivityService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLead(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -185,7 +200,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> AssignOpportunity(
         AssociationRequest request,
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOpportunity(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -193,7 +209,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> UnassignOpportunity(
     AssociationRequest request,
     IActivityService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOpportunity(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -201,7 +218,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> AssignCase_(
         AssociationRequest request,
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCase_(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -209,7 +227,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> UnassignCase_(
     AssociationRequest request,
     IActivityService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCase_(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -217,7 +236,8 @@ public static class ActivityEndpoints
     private static async Task<IResult> AssignCampaign(
         AssociationRequest request,
         IActivityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCampaign(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -225,13 +245,15 @@ public static class ActivityEndpoints
     private static async Task<IResult> UnassignCampaign(
     AssociationRequest request,
     IActivityService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCampaign(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Activity mapRequestToActivity( ActivityRequest request ) {
+    private static Activity mapRequestToActivity(ActivityRequest request)
+    {
         var model = new Activity
         {
             Id = request.Id,

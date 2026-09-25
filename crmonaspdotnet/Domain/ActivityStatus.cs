@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum ActivityStatus
 {
-    NotStarted=1,InProgress=2,Completed=3,Deferred=4,Cancelled=5
+    NotStarted = 1, InProgress = 2, Completed = 3, Deferred = 4, Cancelled = 5
 }
 
 /// <summary>

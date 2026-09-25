@@ -41,9 +41,10 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> Create(
         EmailMessageRequest request,
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEmailMessage( request );
+        var model = mapRequestToEmailMessage(request);
 
         try
         {
@@ -60,9 +61,10 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> Update(
         EmailMessageRequest request,
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEmailMessage( request );
+        var model = mapRequestToEmailMessage(request);
 
         try
         {
@@ -79,25 +81,28 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var emailMessage = await service.Get(identifier, cancellationToken);
-        return emailMessage is null ? Results.NotFound() : Results.Ok( emailMessage );
+        return emailMessage is null ? Results.NotFound() : Results.Ok(emailMessage);
     }
 
 
     private static async Task<IResult> GetAll(
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( EmailMessageResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(EmailMessageResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +110,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +119,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IEmailMessageService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +128,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> AssignOwner(
         AssociationRequest request,
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOwner(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +137,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> UnassignOwner(
     AssociationRequest request,
     IEmailMessageService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOwner(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +146,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> AssignAccount(
         AssociationRequest request,
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +155,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> UnassignAccount(
     AssociationRequest request,
     IEmailMessageService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,7 +164,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> AssignContact(
         AssociationRequest request,
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignContact(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -161,7 +173,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> UnassignContact(
     AssociationRequest request,
     IEmailMessageService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignContact(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -169,7 +182,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> AssignLead(
         AssociationRequest request,
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLead(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -177,7 +191,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> UnassignLead(
     AssociationRequest request,
     IEmailMessageService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLead(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -185,7 +200,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> AssignCase_(
         AssociationRequest request,
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCase_(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -193,7 +209,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> UnassignCase_(
     AssociationRequest request,
     IEmailMessageService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCase_(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -201,7 +218,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> AssignOpportunity(
         AssociationRequest request,
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOpportunity(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -209,7 +227,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> UnassignOpportunity(
     AssociationRequest request,
     IEmailMessageService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOpportunity(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -217,7 +236,8 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> AssignCampaign(
         AssociationRequest request,
         IEmailMessageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCampaign(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -225,13 +245,15 @@ public static class EmailMessageEndpoints
     private static async Task<IResult> UnassignCampaign(
     AssociationRequest request,
     IEmailMessageService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCampaign(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static EmailMessage mapRequestToEmailMessage( EmailMessageRequest request ) {
+    private static EmailMessage mapRequestToEmailMessage(EmailMessageRequest request)
+    {
         var model = new EmailMessage
         {
             Id = request.Id,

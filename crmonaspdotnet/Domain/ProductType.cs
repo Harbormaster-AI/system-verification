@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum ProductType
 {
-    Good=1,Service=2,Subscription=3,Bundle=4
+    Good = 1, Service = 2, Subscription = 3, Bundle = 4
 }
 
 /// <summary>

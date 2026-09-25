@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum LeadSource
 {
-    Web=1,Referral=2,Event=3,Partner=4,Advertisement=5,Outbound=6,Inbound=7,Social=8,Other=9
+    Web = 1, Referral = 2, Event = 3, Partner = 4, Advertisement = 5, Outbound = 6, Inbound = 7, Social = 8, Other = 9
 }
 
 /// <summary>

@@ -6,9 +6,10 @@ using crmonaspdotnet.Telemetry;
 
 namespace crmonaspdotnet.Service;
 
-public interface IOrderService {
+public interface IOrderService
+{
 
-    Task Create(Order model , CancellationToken cancellationToken);
+    Task Create(Order model, CancellationToken cancellationToken);
     Task<bool> Update(Order model, CancellationToken cancellationToken);
     Task<Order?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Order>> GetAll(CancellationToken cancellationToken);
@@ -75,7 +76,8 @@ public class OrderService : IOrderService
 
     public async Task<bool> Update(Order model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -134,7 +136,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -152,7 +155,7 @@ public class OrderService : IOrderService
 
             var child = await _serviceResolver.Get<OrganizationService>().Get(childRequest, cancellationToken);
             parent.Organization = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -164,7 +167,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -175,7 +179,7 @@ public class OrderService : IOrderService
         try
         {
             parent.Organization = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -187,7 +191,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -205,7 +210,7 @@ public class OrderService : IOrderService
 
             var child = await _serviceResolver.Get<AccountService>().Get(childRequest, cancellationToken);
             parent.Account = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -217,7 +222,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -228,7 +234,7 @@ public class OrderService : IOrderService
         try
         {
             parent.Account = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -240,7 +246,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AssignOpportunity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOpportunity(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -258,7 +265,7 @@ public class OrderService : IOrderService
 
             var child = await _serviceResolver.Get<OpportunityService>().Get(childRequest, cancellationToken);
             parent.Opportunity = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -270,7 +277,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> UnassignOpportunity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOpportunity(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -281,7 +289,7 @@ public class OrderService : IOrderService
         try
         {
             parent.Opportunity = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -293,7 +301,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AssignQuote(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignQuote(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -311,7 +320,7 @@ public class OrderService : IOrderService
 
             var child = await _serviceResolver.Get<QuoteService>().Get(childRequest, cancellationToken);
             parent.Quote = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -323,7 +332,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> UnassignQuote(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignQuote(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -334,7 +344,7 @@ public class OrderService : IOrderService
         try
         {
             parent.Quote = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -346,7 +356,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AssignOwner(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOwner(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -364,7 +375,7 @@ public class OrderService : IOrderService
 
             var child = await _serviceResolver.Get<UserService>().Get(childRequest, cancellationToken);
             parent.Owner = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -376,7 +387,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> UnassignOwner(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOwner(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -387,7 +399,7 @@ public class OrderService : IOrderService
         try
         {
             parent.Owner = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -399,7 +411,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AssignContract(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignContract(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -417,7 +430,7 @@ public class OrderService : IOrderService
 
             var child = await _serviceResolver.Get<ContractService>().Get(childRequest, cancellationToken);
             parent.Contract = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -429,7 +442,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> UnassignContract(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignContract(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -440,7 +454,7 @@ public class OrderService : IOrderService
         try
         {
             parent.Contract = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -452,7 +466,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AssignPriceBook(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPriceBook(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -470,7 +485,7 @@ public class OrderService : IOrderService
 
             var child = await _serviceResolver.Get<PriceBookService>().Get(childRequest, cancellationToken);
             parent.PriceBook = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -482,7 +497,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> UnassignPriceBook(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPriceBook(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -493,7 +509,7 @@ public class OrderService : IOrderService
         try
         {
             parent.PriceBook = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -506,8 +522,10 @@ public class OrderService : IOrderService
     }
 
 
-    public async Task<bool> AddToItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "AddToItems",
@@ -515,16 +533,18 @@ public class OrderService : IOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "RemoveFromItems",

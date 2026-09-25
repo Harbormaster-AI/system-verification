@@ -30,8 +30,8 @@ public static class QuoteEndpoints
         group.MapPut("/assignOrder", AssignOrder);
         group.MapPut("/unassignOrder", UnassignOrder);
 
-    group.MapPut("/addToLineItems", AddToLineItems);
-    group.MapPut("/removeFromLineItems", RemoveFromLineItems);
+        group.MapPut("/addToLineItems", AddToLineItems);
+        group.MapPut("/removeFromLineItems", RemoveFromLineItems);
 
 
         return app;
@@ -40,9 +40,10 @@ public static class QuoteEndpoints
     private static async Task<IResult> Create(
         QuoteRequest request,
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToQuote( request );
+        var model = mapRequestToQuote(request);
 
         try
         {
@@ -59,9 +60,10 @@ public static class QuoteEndpoints
     private static async Task<IResult> Update(
         QuoteRequest request,
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToQuote( request );
+        var model = mapRequestToQuote(request);
 
         try
         {
@@ -78,25 +80,28 @@ public static class QuoteEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var quote = await service.Get(identifier, cancellationToken);
-        return quote is null ? Results.NotFound() : Results.Ok( quote );
+        return quote is null ? Results.NotFound() : Results.Ok(quote);
     }
 
 
     private static async Task<IResult> GetAll(
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( QuoteResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(QuoteResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +109,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +118,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IQuoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +127,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> AssignAccount(
         AssociationRequest request,
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -128,7 +136,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> UnassignAccount(
     AssociationRequest request,
     IQuoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -136,7 +145,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> AssignOpportunity(
         AssociationRequest request,
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOpportunity(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -144,7 +154,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> UnassignOpportunity(
     AssociationRequest request,
     IQuoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOpportunity(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -152,7 +163,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> AssignOwner(
         AssociationRequest request,
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOwner(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -160,7 +172,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> UnassignOwner(
     AssociationRequest request,
     IQuoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOwner(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -168,7 +181,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> AssignPriceBook(
         AssociationRequest request,
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPriceBook(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -176,7 +190,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> UnassignPriceBook(
     AssociationRequest request,
     IQuoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPriceBook(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -184,7 +199,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> AssignOrder(
         AssociationRequest request,
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -192,7 +208,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> UnassignOrder(
     AssociationRequest request,
     IQuoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -201,7 +218,8 @@ public static class QuoteEndpoints
     private static async Task<IResult> AddToLineItems(
         MultipleAssociationRequest request,
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLineItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -209,11 +227,13 @@ public static class QuoteEndpoints
     private static async Task<IResult> RemoveFromLineItems(
         MultipleAssociationRequest request,
         IQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLineItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Quote mapRequestToQuote( QuoteRequest request ) {
+    private static Quote mapRequestToQuote(QuoteRequest request)
+    {
         var model = new Quote
         {
             Id = request.Id,

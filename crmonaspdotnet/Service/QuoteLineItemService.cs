@@ -6,9 +6,10 @@ using crmonaspdotnet.Telemetry;
 
 namespace crmonaspdotnet.Service;
 
-public interface IQuoteLineItemService {
+public interface IQuoteLineItemService
+{
 
-    Task Create(QuoteLineItem model , CancellationToken cancellationToken);
+    Task Create(QuoteLineItem model, CancellationToken cancellationToken);
     Task<bool> Update(QuoteLineItem model, CancellationToken cancellationToken);
     Task<QuoteLineItem?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<QuoteLineItem>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class QuoteLineItemService : IQuoteLineItemService
 
     public async Task<bool> Update(QuoteLineItem model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class QuoteLineItemService : IQuoteLineItemService
         return true;
     }
 
-    public async Task<bool> AssignQuote(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignQuote(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class QuoteLineItemService : IQuoteLineItemService
 
             var child = await _serviceResolver.Get<QuoteService>().Get(childRequest, cancellationToken);
             parent.Quote = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class QuoteLineItemService : IQuoteLineItemService
         return true;
     }
 
-    public async Task<bool> UnassignQuote(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignQuote(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class QuoteLineItemService : IQuoteLineItemService
         try
         {
             parent.Quote = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class QuoteLineItemService : IQuoteLineItemService
         return true;
     }
 
-    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class QuoteLineItemService : IQuoteLineItemService
 
             var child = await _serviceResolver.Get<ProductService>().Get(childRequest, cancellationToken);
             parent.Product = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class QuoteLineItemService : IQuoteLineItemService
         return true;
     }
 
-    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class QuoteLineItemService : IQuoteLineItemService
         try
         {
             parent.Product = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,7 +237,8 @@ public class QuoteLineItemService : IQuoteLineItemService
         return true;
     }
 
-    public async Task<bool> AssignPriceBookEntry(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPriceBookEntry(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -249,7 +256,7 @@ public class QuoteLineItemService : IQuoteLineItemService
 
             var child = await _serviceResolver.Get<PriceBookEntryService>().Get(childRequest, cancellationToken);
             parent.PriceBookEntry = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -261,7 +268,8 @@ public class QuoteLineItemService : IQuoteLineItemService
         return true;
     }
 
-    public async Task<bool> UnassignPriceBookEntry(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPriceBookEntry(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -272,7 +280,7 @@ public class QuoteLineItemService : IQuoteLineItemService
         try
         {
             parent.PriceBookEntry = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,7 +292,8 @@ public class QuoteLineItemService : IQuoteLineItemService
         return true;
     }
 
-    public async Task<bool> AssignOpportunityLineItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOpportunityLineItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -302,7 +311,7 @@ public class QuoteLineItemService : IQuoteLineItemService
 
             var child = await _serviceResolver.Get<OpportunityLineItemService>().Get(childRequest, cancellationToken);
             parent.OpportunityLineItem = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -314,7 +323,8 @@ public class QuoteLineItemService : IQuoteLineItemService
         return true;
     }
 
-    public async Task<bool> UnassignOpportunityLineItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOpportunityLineItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -325,7 +335,7 @@ public class QuoteLineItemService : IQuoteLineItemService
         try
         {
             parent.OpportunityLineItem = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

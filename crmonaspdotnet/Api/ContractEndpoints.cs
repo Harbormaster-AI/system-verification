@@ -24,11 +24,11 @@ public static class ContractEndpoints
         group.MapPut("/assignOwner", AssignOwner);
         group.MapPut("/unassignOwner", UnassignOwner);
 
-    group.MapPut("/addToOrders", AddToOrders);
-    group.MapPut("/removeFromOrders", RemoveFromOrders);
+        group.MapPut("/addToOrders", AddToOrders);
+        group.MapPut("/removeFromOrders", RemoveFromOrders);
 
-    group.MapPut("/addToCases", AddToCases);
-    group.MapPut("/removeFromCases", RemoveFromCases);
+        group.MapPut("/addToCases", AddToCases);
+        group.MapPut("/removeFromCases", RemoveFromCases);
 
 
         return app;
@@ -37,9 +37,10 @@ public static class ContractEndpoints
     private static async Task<IResult> Create(
         ContractRequest request,
         IContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToContract( request );
+        var model = mapRequestToContract(request);
 
         try
         {
@@ -56,9 +57,10 @@ public static class ContractEndpoints
     private static async Task<IResult> Update(
         ContractRequest request,
         IContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToContract( request );
+        var model = mapRequestToContract(request);
 
         try
         {
@@ -75,25 +77,28 @@ public static class ContractEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var contract = await service.Get(identifier, cancellationToken);
-        return contract is null ? Results.NotFound() : Results.Ok( contract );
+        return contract is null ? Results.NotFound() : Results.Ok(contract);
     }
 
 
     private static async Task<IResult> GetAll(
         IContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ContractResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ContractResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +106,8 @@ public static class ContractEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +115,8 @@ public static class ContractEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IContractService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,7 +124,8 @@ public static class ContractEndpoints
     private static async Task<IResult> AssignAccount(
         AssociationRequest request,
         IContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -125,7 +133,8 @@ public static class ContractEndpoints
     private static async Task<IResult> UnassignAccount(
     AssociationRequest request,
     IContractService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -133,7 +142,8 @@ public static class ContractEndpoints
     private static async Task<IResult> AssignOwner(
         AssociationRequest request,
         IContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOwner(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -141,7 +151,8 @@ public static class ContractEndpoints
     private static async Task<IResult> UnassignOwner(
     AssociationRequest request,
     IContractService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOwner(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -150,7 +161,8 @@ public static class ContractEndpoints
     private static async Task<IResult> AddToOrders(
         MultipleAssociationRequest request,
         IContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -158,14 +170,16 @@ public static class ContractEndpoints
     private static async Task<IResult> RemoveFromOrders(
         MultipleAssociationRequest request,
         IContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCases(
         MultipleAssociationRequest request,
         IContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCases(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -173,11 +187,13 @@ public static class ContractEndpoints
     private static async Task<IResult> RemoveFromCases(
         MultipleAssociationRequest request,
         IContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCases(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Contract mapRequestToContract( ContractRequest request ) {
+    private static Contract mapRequestToContract(ContractRequest request)
+    {
         var model = new Contract
         {
             Id = request.Id,

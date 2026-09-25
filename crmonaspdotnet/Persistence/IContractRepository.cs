@@ -11,9 +11,9 @@ public interface IContractRepository
     Task UpdateAsync(Contract contract, CancellationToken cancellationToken);
     Task DeleteAsync(Contract contract, CancellationToken cancellationToken);
 
-    Task AddToOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCasesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCasesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCasesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCasesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

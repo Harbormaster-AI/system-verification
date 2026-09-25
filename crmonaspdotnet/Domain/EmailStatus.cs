@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum EmailStatus
 {
-    Draft=1,Sent=2,Delivered=3,Opened=4,Bounced=5,Failed=6,Replied=7
+    Draft = 1, Sent = 2, Delivered = 3, Opened = 4, Bounced = 5, Failed = 6, Replied = 7
 }
 
 /// <summary>

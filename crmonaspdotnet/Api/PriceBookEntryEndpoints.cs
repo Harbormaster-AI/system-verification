@@ -29,9 +29,10 @@ public static class PriceBookEntryEndpoints
     private static async Task<IResult> Create(
         PriceBookEntryRequest request,
         IPriceBookEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPriceBookEntry( request );
+        var model = mapRequestToPriceBookEntry(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class PriceBookEntryEndpoints
     private static async Task<IResult> Update(
         PriceBookEntryRequest request,
         IPriceBookEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPriceBookEntry( request );
+        var model = mapRequestToPriceBookEntry(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class PriceBookEntryEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPriceBookEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var priceBookEntry = await service.Get(identifier, cancellationToken);
-        return priceBookEntry is null ? Results.NotFound() : Results.Ok( priceBookEntry );
+        return priceBookEntry is null ? Results.NotFound() : Results.Ok(priceBookEntry);
     }
 
 
     private static async Task<IResult> GetAll(
         IPriceBookEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PriceBookEntryResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PriceBookEntryResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPriceBookEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class PriceBookEntryEndpoints
     private static async Task<IResult> AssignPriceBook(
         AssociationRequest request,
         IPriceBookEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPriceBook(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class PriceBookEntryEndpoints
     private static async Task<IResult> UnassignPriceBook(
     AssociationRequest request,
     IPriceBookEntryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPriceBook(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class PriceBookEntryEndpoints
     private static async Task<IResult> AssignProduct(
         AssociationRequest request,
         IPriceBookEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProduct(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class PriceBookEntryEndpoints
     private static async Task<IResult> UnassignProduct(
     AssociationRequest request,
     IPriceBookEntryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProduct(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static PriceBookEntry mapRequestToPriceBookEntry( PriceBookEntryRequest request ) {
+    private static PriceBookEntry mapRequestToPriceBookEntry(PriceBookEntryRequest request)
+    {
         var model = new PriceBookEntry
         {
             Id = request.Id,

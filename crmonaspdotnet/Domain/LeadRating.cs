@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum LeadRating
 {
-    Hot=1,Warm=2,Cold=3
+    Hot = 1, Warm = 2, Cold = 3
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum CaseOrigin
 {
-    Email=1,Phone=2,Web=3,Chat=4,Social=5,Community=6
+    Email = 1, Phone = 2, Web = 3, Chat = 4, Social = 5, Community = 6
 }
 
 /// <summary>

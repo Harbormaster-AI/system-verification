@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum LeadStatus
 {
-    New=1,Working=2,Nurturing=3,Qualified=4,Unqualified=5,Converted=6
+    New = 1, Working = 2, Nurturing = 3, Qualified = 4, Unqualified = 5, Converted = 6
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum CampaignType
 {
-    Email=1,Social=2,Event=3,Webinar=4,Advertising=5,ContentMarketing=6,Referral=7
+    Email = 1, Social = 2, Event = 3, Webinar = 4, Advertising = 5, ContentMarketing = 6, Referral = 7
 }
 
 /// <summary>

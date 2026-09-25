@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum EmailDirection
 {
-    Inbound=1,Outbound=2,Internal=3
+    Inbound = 1, Outbound = 2, Internal = 3
 }
 
 /// <summary>

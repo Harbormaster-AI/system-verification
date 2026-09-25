@@ -32,8 +32,8 @@ public static class OrderEndpoints
         group.MapPut("/assignPriceBook", AssignPriceBook);
         group.MapPut("/unassignPriceBook", UnassignPriceBook);
 
-    group.MapPut("/addToItems", AddToItems);
-    group.MapPut("/removeFromItems", RemoveFromItems);
+        group.MapPut("/addToItems", AddToItems);
+        group.MapPut("/removeFromItems", RemoveFromItems);
 
 
         return app;
@@ -42,9 +42,10 @@ public static class OrderEndpoints
     private static async Task<IResult> Create(
         OrderRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOrder( request );
+        var model = mapRequestToOrder(request);
 
         try
         {
@@ -61,9 +62,10 @@ public static class OrderEndpoints
     private static async Task<IResult> Update(
         OrderRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOrder( request );
+        var model = mapRequestToOrder(request);
 
         try
         {
@@ -80,25 +82,28 @@ public static class OrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var order = await service.Get(identifier, cancellationToken);
-        return order is null ? Results.NotFound() : Results.Ok( order );
+        return order is null ? Results.NotFound() : Results.Ok(order);
     }
 
 
     private static async Task<IResult> GetAll(
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( OrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(OrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -106,7 +111,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +120,8 @@ public static class OrderEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -122,7 +129,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AssignAccount(
         AssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -130,7 +138,8 @@ public static class OrderEndpoints
     private static async Task<IResult> UnassignAccount(
     AssociationRequest request,
     IOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -138,7 +147,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AssignOpportunity(
         AssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOpportunity(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -146,7 +156,8 @@ public static class OrderEndpoints
     private static async Task<IResult> UnassignOpportunity(
     AssociationRequest request,
     IOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOpportunity(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -154,7 +165,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AssignQuote(
         AssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignQuote(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -162,7 +174,8 @@ public static class OrderEndpoints
     private static async Task<IResult> UnassignQuote(
     AssociationRequest request,
     IOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignQuote(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -170,7 +183,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AssignOwner(
         AssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOwner(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -178,7 +192,8 @@ public static class OrderEndpoints
     private static async Task<IResult> UnassignOwner(
     AssociationRequest request,
     IOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOwner(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -186,7 +201,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AssignContract(
         AssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignContract(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -194,7 +210,8 @@ public static class OrderEndpoints
     private static async Task<IResult> UnassignContract(
     AssociationRequest request,
     IOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignContract(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -202,7 +219,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AssignPriceBook(
         AssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPriceBook(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -210,7 +228,8 @@ public static class OrderEndpoints
     private static async Task<IResult> UnassignPriceBook(
     AssociationRequest request,
     IOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPriceBook(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -219,7 +238,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AddToItems(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -227,11 +247,13 @@ public static class OrderEndpoints
     private static async Task<IResult> RemoveFromItems(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Order mapRequestToOrder( OrderRequest request ) {
+    private static Order mapRequestToOrder(OrderRequest request)
+    {
         var model = new Order
         {
             Id = request.Id,

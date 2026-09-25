@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum CampaignMemberType
 {
-    Lead=1,Contact=2
+    Lead = 1, Contact = 2
 }
 
 /// <summary>

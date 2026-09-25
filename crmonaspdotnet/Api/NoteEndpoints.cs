@@ -39,9 +39,10 @@ public static class NoteEndpoints
     private static async Task<IResult> Create(
         NoteRequest request,
         INoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToNote( request );
+        var model = mapRequestToNote(request);
 
         try
         {
@@ -58,9 +59,10 @@ public static class NoteEndpoints
     private static async Task<IResult> Update(
         NoteRequest request,
         INoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToNote( request );
+        var model = mapRequestToNote(request);
 
         try
         {
@@ -77,25 +79,28 @@ public static class NoteEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         INoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var note = await service.Get(identifier, cancellationToken);
-        return note is null ? Results.NotFound() : Results.Ok( note );
+        return note is null ? Results.NotFound() : Results.Ok(note);
     }
 
 
     private static async Task<IResult> GetAll(
         INoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( NoteResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(NoteResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         INoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +108,8 @@ public static class NoteEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         INoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +117,8 @@ public static class NoteEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     INoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +126,8 @@ public static class NoteEndpoints
     private static async Task<IResult> AssignOwner(
         AssociationRequest request,
         INoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOwner(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +135,8 @@ public static class NoteEndpoints
     private static async Task<IResult> UnassignOwner(
     AssociationRequest request,
     INoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOwner(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,7 +144,8 @@ public static class NoteEndpoints
     private static async Task<IResult> AssignAccount(
         AssociationRequest request,
         INoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -143,7 +153,8 @@ public static class NoteEndpoints
     private static async Task<IResult> UnassignAccount(
     AssociationRequest request,
     INoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -151,7 +162,8 @@ public static class NoteEndpoints
     private static async Task<IResult> AssignContact(
         AssociationRequest request,
         INoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignContact(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -159,7 +171,8 @@ public static class NoteEndpoints
     private static async Task<IResult> UnassignContact(
     AssociationRequest request,
     INoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignContact(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -167,7 +180,8 @@ public static class NoteEndpoints
     private static async Task<IResult> AssignOpportunity(
         AssociationRequest request,
         INoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOpportunity(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -175,7 +189,8 @@ public static class NoteEndpoints
     private static async Task<IResult> UnassignOpportunity(
     AssociationRequest request,
     INoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOpportunity(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -183,7 +198,8 @@ public static class NoteEndpoints
     private static async Task<IResult> AssignCase_(
         AssociationRequest request,
         INoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCase_(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -191,7 +207,8 @@ public static class NoteEndpoints
     private static async Task<IResult> UnassignCase_(
     AssociationRequest request,
     INoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCase_(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -199,7 +216,8 @@ public static class NoteEndpoints
     private static async Task<IResult> AssignLead(
         AssociationRequest request,
         INoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLead(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -207,13 +225,15 @@ public static class NoteEndpoints
     private static async Task<IResult> UnassignLead(
     AssociationRequest request,
     INoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLead(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Note mapRequestToNote( NoteRequest request ) {
+    private static Note mapRequestToNote(NoteRequest request)
+    {
         var model = new Note
         {
             Id = request.Id,

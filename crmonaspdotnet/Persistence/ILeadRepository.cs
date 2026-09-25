@@ -11,13 +11,13 @@ public interface ILeadRepository
     Task UpdateAsync(Lead lead, CancellationToken cancellationToken);
     Task DeleteAsync(Lead lead, CancellationToken cancellationToken);
 
-    Task AddToActivitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromActivitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCampaignsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCampaignsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToNotesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromNotesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToEmailMessagesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromEmailMessagesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToActivitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromActivitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCampaignsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCampaignsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToNotesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromNotesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToEmailMessagesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromEmailMessagesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -6,9 +6,10 @@ using crmonaspdotnet.Telemetry;
 
 namespace crmonaspdotnet.Service;
 
-public interface IQuoteService {
+public interface IQuoteService
+{
 
-    Task Create(Quote model , CancellationToken cancellationToken);
+    Task Create(Quote model, CancellationToken cancellationToken);
     Task<bool> Update(Quote model, CancellationToken cancellationToken);
     Task<Quote?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Quote>> GetAll(CancellationToken cancellationToken);
@@ -73,7 +74,8 @@ public class QuoteService : IQuoteService
 
     public async Task<bool> Update(Quote model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -134,7 +136,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -152,7 +155,7 @@ public class QuoteService : IQuoteService
 
             var child = await _serviceResolver.Get<OrganizationService>().Get(childRequest, cancellationToken);
             parent.Organization = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -164,7 +167,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -175,7 +179,7 @@ public class QuoteService : IQuoteService
         try
         {
             parent.Organization = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -187,7 +191,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -205,7 +210,7 @@ public class QuoteService : IQuoteService
 
             var child = await _serviceResolver.Get<AccountService>().Get(childRequest, cancellationToken);
             parent.Account = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -217,7 +222,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -228,7 +234,7 @@ public class QuoteService : IQuoteService
         try
         {
             parent.Account = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -240,7 +246,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> AssignOpportunity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOpportunity(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -258,7 +265,7 @@ public class QuoteService : IQuoteService
 
             var child = await _serviceResolver.Get<OpportunityService>().Get(childRequest, cancellationToken);
             parent.Opportunity = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -270,7 +277,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> UnassignOpportunity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOpportunity(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -281,7 +289,7 @@ public class QuoteService : IQuoteService
         try
         {
             parent.Opportunity = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -293,7 +301,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> AssignOwner(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOwner(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -311,7 +320,7 @@ public class QuoteService : IQuoteService
 
             var child = await _serviceResolver.Get<UserService>().Get(childRequest, cancellationToken);
             parent.Owner = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -323,7 +332,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> UnassignOwner(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOwner(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -334,7 +344,7 @@ public class QuoteService : IQuoteService
         try
         {
             parent.Owner = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -346,7 +356,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> AssignPriceBook(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPriceBook(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -364,7 +375,7 @@ public class QuoteService : IQuoteService
 
             var child = await _serviceResolver.Get<PriceBookService>().Get(childRequest, cancellationToken);
             parent.PriceBook = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -376,7 +387,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> UnassignPriceBook(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPriceBook(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -387,7 +399,7 @@ public class QuoteService : IQuoteService
         try
         {
             parent.PriceBook = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -399,7 +411,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -417,7 +430,7 @@ public class QuoteService : IQuoteService
 
             var child = await _serviceResolver.Get<OrderService>().Get(childRequest, cancellationToken);
             parent.Order = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -429,7 +442,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -440,7 +454,7 @@ public class QuoteService : IQuoteService
         try
         {
             parent.Order = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -453,8 +467,10 @@ public class QuoteService : IQuoteService
     }
 
 
-    public async Task<bool> AddToLineItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLineItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Quote",
                 "AddToLineItems",
@@ -462,16 +478,18 @@ public class QuoteService : IQuoteService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLineItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLineItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Quote",
                 "RemoveFromLineItems",

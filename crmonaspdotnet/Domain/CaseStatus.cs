@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum CaseStatus
 {
-    New=1,Open=2,PendingCustomer=3,PendingExternal=4,OnHold=5,Resolved=6,Closed=7,Reopened=8
+    New = 1, Open = 2, PendingCustomer = 3, PendingExternal = 4, OnHold = 5, Resolved = 6, Closed = 7, Reopened = 8
 }
 
 /// <summary>

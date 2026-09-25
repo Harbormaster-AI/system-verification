@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum UnitOfMeasure
 {
-    Each=1,Hour=2,Day=3,Month=4,User=5,Package=6
+    Each = 1, Hour = 2, Day = 3, Month = 4, User = 5, Package = 6
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum TerritoryType
 {
-    Geographic=1,Industry=2,NamedAccount=3,Segment=4,Hybrid=5
+    Geographic = 1, Industry = 2, NamedAccount = 3, Segment = 4, Hybrid = 5
 }
 
 /// <summary>

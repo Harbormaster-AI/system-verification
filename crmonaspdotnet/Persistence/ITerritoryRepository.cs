@@ -11,9 +11,9 @@ public interface ITerritoryRepository
     Task UpdateAsync(Territory territory, CancellationToken cancellationToken);
     Task DeleteAsync(Territory territory, CancellationToken cancellationToken);
 
-    Task AddToAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToUsersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromUsersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToUsersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromUsersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -6,9 +6,10 @@ using crmonaspdotnet.Telemetry;
 
 namespace crmonaspdotnet.Service;
 
-public interface IActivityService {
+public interface IActivityService
+{
 
-    Task Create(Activity model , CancellationToken cancellationToken);
+    Task Create(Activity model, CancellationToken cancellationToken);
     Task<bool> Update(Activity model, CancellationToken cancellationToken);
     Task<Activity?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Activity>> GetAll(CancellationToken cancellationToken);
@@ -75,7 +76,8 @@ public class ActivityService : IActivityService
 
     public async Task<bool> Update(Activity model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -136,7 +138,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -154,7 +157,7 @@ public class ActivityService : IActivityService
 
             var child = await _serviceResolver.Get<OrganizationService>().Get(childRequest, cancellationToken);
             parent.Organization = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -166,7 +169,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -177,7 +181,7 @@ public class ActivityService : IActivityService
         try
         {
             parent.Organization = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -189,7 +193,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> AssignOwner(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOwner(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -207,7 +212,7 @@ public class ActivityService : IActivityService
 
             var child = await _serviceResolver.Get<UserService>().Get(childRequest, cancellationToken);
             parent.Owner = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -219,7 +224,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> UnassignOwner(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOwner(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -230,7 +236,7 @@ public class ActivityService : IActivityService
         try
         {
             parent.Owner = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -242,7 +248,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -260,7 +267,7 @@ public class ActivityService : IActivityService
 
             var child = await _serviceResolver.Get<AccountService>().Get(childRequest, cancellationToken);
             parent.Account = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -272,7 +279,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -283,7 +291,7 @@ public class ActivityService : IActivityService
         try
         {
             parent.Account = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -295,7 +303,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> AssignContact(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignContact(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -313,7 +322,7 @@ public class ActivityService : IActivityService
 
             var child = await _serviceResolver.Get<ContactService>().Get(childRequest, cancellationToken);
             parent.Contact = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -325,7 +334,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> UnassignContact(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignContact(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -336,7 +346,7 @@ public class ActivityService : IActivityService
         try
         {
             parent.Contact = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -348,7 +358,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> AssignLead(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLead(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -366,7 +377,7 @@ public class ActivityService : IActivityService
 
             var child = await _serviceResolver.Get<LeadService>().Get(childRequest, cancellationToken);
             parent.Lead = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -378,7 +389,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> UnassignLead(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLead(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -389,7 +401,7 @@ public class ActivityService : IActivityService
         try
         {
             parent.Lead = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -401,7 +413,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> AssignOpportunity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOpportunity(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -419,7 +432,7 @@ public class ActivityService : IActivityService
 
             var child = await _serviceResolver.Get<OpportunityService>().Get(childRequest, cancellationToken);
             parent.Opportunity = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -431,7 +444,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> UnassignOpportunity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOpportunity(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -442,7 +456,7 @@ public class ActivityService : IActivityService
         try
         {
             parent.Opportunity = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -454,7 +468,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> AssignCase_(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCase_(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -472,7 +487,7 @@ public class ActivityService : IActivityService
 
             var child = await _serviceResolver.Get<Case_Service>().Get(childRequest, cancellationToken);
             parent.Case_ = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -484,7 +499,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> UnassignCase_(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCase_(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -495,7 +511,7 @@ public class ActivityService : IActivityService
         try
         {
             parent.Case_ = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -507,7 +523,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -525,7 +542,7 @@ public class ActivityService : IActivityService
 
             var child = await _serviceResolver.Get<CampaignService>().Get(childRequest, cancellationToken);
             parent.Campaign = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -537,7 +554,8 @@ public class ActivityService : IActivityService
         return true;
     }
 
-    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -548,7 +566,7 @@ public class ActivityService : IActivityService
         try
         {
             parent.Campaign = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

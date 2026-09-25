@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum TeamType
 {
-    Sales=1,Service=2,Marketing=3,AccountTeam=4,DealDesk=5,CrossFunctional=6
+    Sales = 1, Service = 2, Marketing = 3, AccountTeam = 4, DealDesk = 5, CrossFunctional = 6
 }
 
 /// <summary>

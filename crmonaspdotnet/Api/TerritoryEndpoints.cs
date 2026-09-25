@@ -20,11 +20,11 @@ public static class TerritoryEndpoints
         group.MapPut("/assignOrganization", AssignOrganization);
         group.MapPut("/unassignOrganization", UnassignOrganization);
 
-    group.MapPut("/addToAccounts", AddToAccounts);
-    group.MapPut("/removeFromAccounts", RemoveFromAccounts);
+        group.MapPut("/addToAccounts", AddToAccounts);
+        group.MapPut("/removeFromAccounts", RemoveFromAccounts);
 
-    group.MapPut("/addToUsers", AddToUsers);
-    group.MapPut("/removeFromUsers", RemoveFromUsers);
+        group.MapPut("/addToUsers", AddToUsers);
+        group.MapPut("/removeFromUsers", RemoveFromUsers);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class TerritoryEndpoints
     private static async Task<IResult> Create(
         TerritoryRequest request,
         ITerritoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTerritory( request );
+        var model = mapRequestToTerritory(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class TerritoryEndpoints
     private static async Task<IResult> Update(
         TerritoryRequest request,
         ITerritoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTerritory( request );
+        var model = mapRequestToTerritory(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class TerritoryEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITerritoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var territory = await service.Get(identifier, cancellationToken);
-        return territory is null ? Results.NotFound() : Results.Ok( territory );
+        return territory is null ? Results.NotFound() : Results.Ok(territory);
     }
 
 
     private static async Task<IResult> GetAll(
         ITerritoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TerritoryResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TerritoryResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITerritoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class TerritoryEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         ITerritoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class TerritoryEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     ITerritoryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class TerritoryEndpoints
     private static async Task<IResult> AddToAccounts(
         MultipleAssociationRequest request,
         ITerritoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAccounts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class TerritoryEndpoints
     private static async Task<IResult> RemoveFromAccounts(
         MultipleAssociationRequest request,
         ITerritoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAccounts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToUsers(
         MultipleAssociationRequest request,
         ITerritoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToUsers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class TerritoryEndpoints
     private static async Task<IResult> RemoveFromUsers(
         MultipleAssociationRequest request,
         ITerritoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromUsers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Territory mapRequestToTerritory( TerritoryRequest request ) {
+    private static Territory mapRequestToTerritory(TerritoryRequest request)
+    {
         var model = new Territory
         {
             Id = request.Id,

@@ -29,9 +29,10 @@ public static class OpportunityStageHistoryEndpoints
     private static async Task<IResult> Create(
         OpportunityStageHistoryRequest request,
         IOpportunityStageHistoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOpportunityStageHistory( request );
+        var model = mapRequestToOpportunityStageHistory(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class OpportunityStageHistoryEndpoints
     private static async Task<IResult> Update(
         OpportunityStageHistoryRequest request,
         IOpportunityStageHistoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOpportunityStageHistory( request );
+        var model = mapRequestToOpportunityStageHistory(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class OpportunityStageHistoryEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IOpportunityStageHistoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var opportunityStageHistory = await service.Get(identifier, cancellationToken);
-        return opportunityStageHistory is null ? Results.NotFound() : Results.Ok( opportunityStageHistory );
+        return opportunityStageHistory is null ? Results.NotFound() : Results.Ok(opportunityStageHistory);
     }
 
 
     private static async Task<IResult> GetAll(
         IOpportunityStageHistoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( OpportunityStageHistoryResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(OpportunityStageHistoryResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IOpportunityStageHistoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class OpportunityStageHistoryEndpoints
     private static async Task<IResult> AssignOpportunity(
         AssociationRequest request,
         IOpportunityStageHistoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOpportunity(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class OpportunityStageHistoryEndpoints
     private static async Task<IResult> UnassignOpportunity(
     AssociationRequest request,
     IOpportunityStageHistoryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOpportunity(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class OpportunityStageHistoryEndpoints
     private static async Task<IResult> AssignChangedBy(
         AssociationRequest request,
         IOpportunityStageHistoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignChangedBy(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class OpportunityStageHistoryEndpoints
     private static async Task<IResult> UnassignChangedBy(
     AssociationRequest request,
     IOpportunityStageHistoryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignChangedBy(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static OpportunityStageHistory mapRequestToOpportunityStageHistory( OpportunityStageHistoryRequest request ) {
+    private static OpportunityStageHistory mapRequestToOpportunityStageHistory(OpportunityStageHistoryRequest request)
+    {
         var model = new OpportunityStageHistory
         {
             Id = request.Id,

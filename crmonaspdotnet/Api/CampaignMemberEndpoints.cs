@@ -31,9 +31,10 @@ public static class CampaignMemberEndpoints
     private static async Task<IResult> Create(
         CampaignMemberRequest request,
         ICampaignMemberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCampaignMember( request );
+        var model = mapRequestToCampaignMember(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class CampaignMemberEndpoints
     private static async Task<IResult> Update(
         CampaignMemberRequest request,
         ICampaignMemberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCampaignMember( request );
+        var model = mapRequestToCampaignMember(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class CampaignMemberEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICampaignMemberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var campaignMember = await service.Get(identifier, cancellationToken);
-        return campaignMember is null ? Results.NotFound() : Results.Ok( campaignMember );
+        return campaignMember is null ? Results.NotFound() : Results.Ok(campaignMember);
     }
 
 
     private static async Task<IResult> GetAll(
         ICampaignMemberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CampaignMemberResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CampaignMemberResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICampaignMemberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class CampaignMemberEndpoints
     private static async Task<IResult> AssignCampaign(
         AssociationRequest request,
         ICampaignMemberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCampaign(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class CampaignMemberEndpoints
     private static async Task<IResult> UnassignCampaign(
     AssociationRequest request,
     ICampaignMemberService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCampaign(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class CampaignMemberEndpoints
     private static async Task<IResult> AssignLead(
         AssociationRequest request,
         ICampaignMemberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLead(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class CampaignMemberEndpoints
     private static async Task<IResult> UnassignLead(
     AssociationRequest request,
     ICampaignMemberService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLead(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class CampaignMemberEndpoints
     private static async Task<IResult> AssignContact(
         AssociationRequest request,
         ICampaignMemberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignContact(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class CampaignMemberEndpoints
     private static async Task<IResult> UnassignContact(
     AssociationRequest request,
     ICampaignMemberService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignContact(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static CampaignMember mapRequestToCampaignMember( CampaignMemberRequest request ) {
+    private static CampaignMember mapRequestToCampaignMember(CampaignMemberRequest request)
+    {
         var model = new CampaignMember
         {
             Id = request.Id,

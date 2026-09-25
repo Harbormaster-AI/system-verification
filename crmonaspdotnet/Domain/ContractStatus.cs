@@ -36,7 +36,7 @@ namespace crmonaspdotnet.Domain;
 
 public enum ContractStatus
 {
-    Draft=1,Active=2,Suspended=3,Expired=4,Terminated=5,Renewed=6
+    Draft = 1, Active = 2, Suspended = 3, Expired = 4, Terminated = 5, Renewed = 6
 }
 
 /// <summary>
