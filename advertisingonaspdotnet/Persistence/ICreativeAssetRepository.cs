@@ -11,13 +11,13 @@ public interface ICreativeAssetRepository
     Task UpdateAsync(CreativeAsset creativeAsset, CancellationToken cancellationToken);
     Task DeleteAsync(CreativeAsset creativeAsset, CancellationToken cancellationToken);
 
-    Task AddToFilesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromFilesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToApprovalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromApprovalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToVariationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromVariationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToLineItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLineItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToFilesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromFilesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToApprovalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromApprovalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToVariationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromVariationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLineItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLineItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

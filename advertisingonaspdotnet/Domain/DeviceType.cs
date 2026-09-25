@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum DeviceType
 {
-    Desktop=1,Mobile=2,Tablet=3,ConnectedTV=4
+    Desktop = 1, Mobile = 2, Tablet = 3, ConnectedTV = 4
 }
 
 /// <summary>

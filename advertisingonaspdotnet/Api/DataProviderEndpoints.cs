@@ -18,8 +18,8 @@ public static class DataProviderEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToAudienceSegments", AddToAudienceSegments);
-    group.MapPut("/removeFromAudienceSegments", RemoveFromAudienceSegments);
+        group.MapPut("/addToAudienceSegments", AddToAudienceSegments);
+        group.MapPut("/removeFromAudienceSegments", RemoveFromAudienceSegments);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class DataProviderEndpoints
     private static async Task<IResult> Create(
         DataProviderRequest request,
         IDataProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDataProvider( request );
+        var model = mapRequestToDataProvider(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class DataProviderEndpoints
     private static async Task<IResult> Update(
         DataProviderRequest request,
         IDataProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDataProvider( request );
+        var model = mapRequestToDataProvider(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class DataProviderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDataProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var dataProvider = await service.Get(identifier, cancellationToken);
-        return dataProvider is null ? Results.NotFound() : Results.Ok( dataProvider );
+        return dataProvider is null ? Results.NotFound() : Results.Ok(dataProvider);
     }
 
 
     private static async Task<IResult> GetAll(
         IDataProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DataProviderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DataProviderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDataProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class DataProviderEndpoints
     private static async Task<IResult> AddToAudienceSegments(
         MultipleAssociationRequest request,
         IDataProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAudienceSegments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class DataProviderEndpoints
     private static async Task<IResult> RemoveFromAudienceSegments(
         MultipleAssociationRequest request,
         IDataProviderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAudienceSegments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static DataProvider mapRequestToDataProvider( DataProviderRequest request ) {
+    private static DataProvider mapRequestToDataProvider(DataProviderRequest request)
+    {
         var model = new DataProvider
         {
             Id = request.Id,

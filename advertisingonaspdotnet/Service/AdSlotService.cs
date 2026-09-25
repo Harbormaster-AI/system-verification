@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IAdSlotService {
+public interface IAdSlotService
+{
 
-    Task Create(AdSlot model , CancellationToken cancellationToken);
+    Task Create(AdSlot model, CancellationToken cancellationToken);
     Task<bool> Update(AdSlot model, CancellationToken cancellationToken);
     Task<AdSlot?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AdSlot>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class AdSlotService : IAdSlotService
 
     public async Task<bool> Update(AdSlot model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class AdSlotService : IAdSlotService
         return true;
     }
 
-    public async Task<bool> AssignInventorySource(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInventorySource(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class AdSlotService : IAdSlotService
 
             var child = await _serviceResolver.Get<InventorySourceService>().Get(childRequest, cancellationToken);
             parent.InventorySource = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class AdSlotService : IAdSlotService
         return true;
     }
 
-    public async Task<bool> UnassignInventorySource(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInventorySource(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class AdSlotService : IAdSlotService
         try
         {
             parent.InventorySource = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,8 +181,10 @@ public class AdSlotService : IAdSlotService
     }
 
 
-    public async Task<bool> AddToPlacements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPlacements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AdSlot",
                 "AddToPlacements",
@@ -186,16 +192,18 @@ public class AdSlotService : IAdSlotService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPlacements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPlacements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AdSlot",
                 "RemoveFromPlacements",
@@ -211,8 +219,10 @@ public class AdSlotService : IAdSlotService
         return true;
     }
 
-    public async Task<bool> AddToRates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AdSlot",
                 "AddToRates",
@@ -220,16 +230,18 @@ public class AdSlotService : IAdSlotService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AdSlot",
                 "RemoveFromRates",

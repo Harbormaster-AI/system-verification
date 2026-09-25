@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum GeoRegionType
 {
-    Country=1,State=2,Province=3,City=4,DMA=5,PostalCode=6
+    Country = 1, State = 2, Province = 3, City = 4, DMA = 5, PostalCode = 6
 }
 
 /// <summary>

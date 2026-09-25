@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface ICreativeFileService {
+public interface ICreativeFileService
+{
 
-    Task Create(CreativeFile model , CancellationToken cancellationToken);
+    Task Create(CreativeFile model, CancellationToken cancellationToken);
     Task<bool> Update(CreativeFile model, CancellationToken cancellationToken);
     Task<CreativeFile?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CreativeFile>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class CreativeFileService : ICreativeFileService
 
     public async Task<bool> Update(CreativeFile model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class CreativeFileService : ICreativeFileService
         return true;
     }
 
-    public async Task<bool> AssignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class CreativeFileService : ICreativeFileService
 
             var child = await _serviceResolver.Get<CreativeAssetService>().Get(childRequest, cancellationToken);
             parent.CreativeAsset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class CreativeFileService : ICreativeFileService
         return true;
     }
 
-    public async Task<bool> UnassignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class CreativeFileService : ICreativeFileService
         try
         {
             parent.CreativeAsset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

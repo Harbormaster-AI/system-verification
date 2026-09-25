@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface ITargetingProfileService {
+public interface ITargetingProfileService
+{
 
-    Task Create(TargetingProfile model , CancellationToken cancellationToken);
+    Task Create(TargetingProfile model, CancellationToken cancellationToken);
     Task<bool> Update(TargetingProfile model, CancellationToken cancellationToken);
     Task<TargetingProfile?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TargetingProfile>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class TargetingProfileService : ITargetingProfileService
 
     public async Task<bool> Update(TargetingProfile model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class TargetingProfileService : ITargetingProfileService
         return true;
     }
 
-    public async Task<bool> AssignBrandSafetyPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBrandSafetyPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class TargetingProfileService : ITargetingProfileService
 
             var child = await _serviceResolver.Get<BrandSafetyPolicyService>().Get(childRequest, cancellationToken);
             parent.BrandSafetyPolicy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class TargetingProfileService : ITargetingProfileService
         return true;
     }
 
-    public async Task<bool> UnassignBrandSafetyPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBrandSafetyPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class TargetingProfileService : ITargetingProfileService
         try
         {
             parent.BrandSafetyPolicy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,8 +181,10 @@ public class TargetingProfileService : ITargetingProfileService
     }
 
 
-    public async Task<bool> AddToAudienceSegments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAudienceSegments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TargetingProfile",
                 "AddToAudienceSegments",
@@ -186,16 +192,18 @@ public class TargetingProfileService : ITargetingProfileService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAudienceSegments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAudienceSegments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TargetingProfile",
                 "RemoveFromAudienceSegments",
@@ -211,8 +219,10 @@ public class TargetingProfileService : ITargetingProfileService
         return true;
     }
 
-    public async Task<bool> AddToGeoRegions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToGeoRegions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TargetingProfile",
                 "AddToGeoRegions",
@@ -220,16 +230,18 @@ public class TargetingProfileService : ITargetingProfileService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromGeoRegions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromGeoRegions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TargetingProfile",
                 "RemoveFromGeoRegions",
@@ -245,8 +257,10 @@ public class TargetingProfileService : ITargetingProfileService
         return true;
     }
 
-    public async Task<bool> AddToContentCategories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToContentCategories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TargetingProfile",
                 "AddToContentCategories",
@@ -254,16 +268,18 @@ public class TargetingProfileService : ITargetingProfileService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromContentCategories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromContentCategories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TargetingProfile",
                 "RemoveFromContentCategories",
@@ -279,8 +295,10 @@ public class TargetingProfileService : ITargetingProfileService
         return true;
     }
 
-    public async Task<bool> AddToDeviceCriteria(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDeviceCriteria(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TargetingProfile",
                 "AddToDeviceCriteria",
@@ -288,16 +306,18 @@ public class TargetingProfileService : ITargetingProfileService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDeviceCriteria(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDeviceCriteria(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TargetingProfile",
                 "RemoveFromDeviceCriteria",

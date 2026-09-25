@@ -20,8 +20,8 @@ public static class GeoRegionEndpoints
         group.MapPut("/assignParent", AssignParent);
         group.MapPut("/unassignParent", UnassignParent);
 
-    group.MapPut("/addToChildren", AddToChildren);
-    group.MapPut("/removeFromChildren", RemoveFromChildren);
+        group.MapPut("/addToChildren", AddToChildren);
+        group.MapPut("/removeFromChildren", RemoveFromChildren);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class GeoRegionEndpoints
     private static async Task<IResult> Create(
         GeoRegionRequest request,
         IGeoRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToGeoRegion( request );
+        var model = mapRequestToGeoRegion(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class GeoRegionEndpoints
     private static async Task<IResult> Update(
         GeoRegionRequest request,
         IGeoRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToGeoRegion( request );
+        var model = mapRequestToGeoRegion(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class GeoRegionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IGeoRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var geoRegion = await service.Get(identifier, cancellationToken);
-        return geoRegion is null ? Results.NotFound() : Results.Ok( geoRegion );
+        return geoRegion is null ? Results.NotFound() : Results.Ok(geoRegion);
     }
 
 
     private static async Task<IResult> GetAll(
         IGeoRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( GeoRegionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(GeoRegionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IGeoRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class GeoRegionEndpoints
     private static async Task<IResult> AssignParent(
         AssociationRequest request,
         IGeoRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignParent(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class GeoRegionEndpoints
     private static async Task<IResult> UnassignParent(
     AssociationRequest request,
     IGeoRegionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignParent(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class GeoRegionEndpoints
     private static async Task<IResult> AddToChildren(
         MultipleAssociationRequest request,
         IGeoRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToChildren(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class GeoRegionEndpoints
     private static async Task<IResult> RemoveFromChildren(
         MultipleAssociationRequest request,
         IGeoRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromChildren(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static GeoRegion mapRequestToGeoRegion( GeoRegionRequest request ) {
+    private static GeoRegion mapRequestToGeoRegion(GeoRegionRequest request)
+    {
         var model = new GeoRegion
         {
             Id = request.Id,

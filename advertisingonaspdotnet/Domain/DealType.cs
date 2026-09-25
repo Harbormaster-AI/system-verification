@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum DealType
 {
-    OpenAuction=1,PrivateAuction=2,PreferredDeal=3,ProgrammaticGuaranteed=4
+    OpenAuction = 1, PrivateAuction = 2, PreferredDeal = 3, ProgrammaticGuaranteed = 4
 }
 
 /// <summary>

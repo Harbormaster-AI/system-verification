@@ -22,8 +22,8 @@ public static class TrackingPixelEndpoints
         group.MapPut("/assignAdvertiser", AssignAdvertiser);
         group.MapPut("/unassignAdvertiser", UnassignAdvertiser);
 
-    group.MapPut("/addToConversionEvents", AddToConversionEvents);
-    group.MapPut("/removeFromConversionEvents", RemoveFromConversionEvents);
+        group.MapPut("/addToConversionEvents", AddToConversionEvents);
+        group.MapPut("/removeFromConversionEvents", RemoveFromConversionEvents);
 
 
         return app;
@@ -32,9 +32,10 @@ public static class TrackingPixelEndpoints
     private static async Task<IResult> Create(
         TrackingPixelRequest request,
         ITrackingPixelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTrackingPixel( request );
+        var model = mapRequestToTrackingPixel(request);
 
         try
         {
@@ -51,9 +52,10 @@ public static class TrackingPixelEndpoints
     private static async Task<IResult> Update(
         TrackingPixelRequest request,
         ITrackingPixelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTrackingPixel( request );
+        var model = mapRequestToTrackingPixel(request);
 
         try
         {
@@ -70,25 +72,28 @@ public static class TrackingPixelEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITrackingPixelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var trackingPixel = await service.Get(identifier, cancellationToken);
-        return trackingPixel is null ? Results.NotFound() : Results.Ok( trackingPixel );
+        return trackingPixel is null ? Results.NotFound() : Results.Ok(trackingPixel);
     }
 
 
     private static async Task<IResult> GetAll(
         ITrackingPixelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TrackingPixelResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TrackingPixelResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITrackingPixelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class TrackingPixelEndpoints
     private static async Task<IResult> AssignCampaign(
         AssociationRequest request,
         ITrackingPixelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCampaign(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +110,8 @@ public static class TrackingPixelEndpoints
     private static async Task<IResult> UnassignCampaign(
     AssociationRequest request,
     ITrackingPixelService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCampaign(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +119,8 @@ public static class TrackingPixelEndpoints
     private static async Task<IResult> AssignAdvertiser(
         AssociationRequest request,
         ITrackingPixelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAdvertiser(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +128,8 @@ public static class TrackingPixelEndpoints
     private static async Task<IResult> UnassignAdvertiser(
     AssociationRequest request,
     ITrackingPixelService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAdvertiser(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class TrackingPixelEndpoints
     private static async Task<IResult> AddToConversionEvents(
         MultipleAssociationRequest request,
         ITrackingPixelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToConversionEvents(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class TrackingPixelEndpoints
     private static async Task<IResult> RemoveFromConversionEvents(
         MultipleAssociationRequest request,
         ITrackingPixelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromConversionEvents(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static TrackingPixel mapRequestToTrackingPixel( TrackingPixelRequest request ) {
+    private static TrackingPixel mapRequestToTrackingPixel(TrackingPixelRequest request)
+    {
         var model = new TrackingPixel
         {
             Id = request.Id,

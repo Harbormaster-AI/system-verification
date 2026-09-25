@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IKPIService {
+public interface IKPIService
+{
 
-    Task Create(KPI model , CancellationToken cancellationToken);
+    Task Create(KPI model, CancellationToken cancellationToken);
     Task<bool> Update(KPI model, CancellationToken cancellationToken);
     Task<KPI?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<KPI>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class KPIService : IKPIService
 
     public async Task<bool> Update(KPI model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,7 +118,8 @@ public class KPIService : IKPIService
         return true;
     }
 
-    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -134,7 +137,7 @@ public class KPIService : IKPIService
 
             var child = await _serviceResolver.Get<CampaignService>().Get(childRequest, cancellationToken);
             parent.Campaign = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -146,7 +149,8 @@ public class KPIService : IKPIService
         return true;
     }
 
-    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -157,7 +161,7 @@ public class KPIService : IKPIService
         try
         {
             parent.Campaign = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

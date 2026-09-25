@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum PixelType
 {
-    Image=1,JavaScript=2,ServerSide=3
+    Image = 1, JavaScript = 2, ServerSide = 3
 }
 
 /// <summary>

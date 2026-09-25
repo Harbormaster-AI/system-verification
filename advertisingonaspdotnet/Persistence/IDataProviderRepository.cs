@@ -11,7 +11,7 @@ public interface IDataProviderRepository
     Task UpdateAsync(DataProvider dataProvider, CancellationToken cancellationToken);
     Task DeleteAsync(DataProvider dataProvider, CancellationToken cancellationToken);
 
-    Task AddToAudienceSegmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAudienceSegmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAudienceSegmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAudienceSegmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

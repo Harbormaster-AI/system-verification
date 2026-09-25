@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IConversionEventService {
+public interface IConversionEventService
+{
 
-    Task Create(ConversionEvent model , CancellationToken cancellationToken);
+    Task Create(ConversionEvent model, CancellationToken cancellationToken);
     Task<bool> Update(ConversionEvent model, CancellationToken cancellationToken);
     Task<ConversionEvent?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ConversionEvent>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ConversionEventService : IConversionEventService
 
     public async Task<bool> Update(ConversionEvent model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class ConversionEventService : IConversionEventService
         return true;
     }
 
-    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class ConversionEventService : IConversionEventService
 
             var child = await _serviceResolver.Get<CampaignService>().Get(childRequest, cancellationToken);
             parent.Campaign = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class ConversionEventService : IConversionEventService
         return true;
     }
 
-    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class ConversionEventService : IConversionEventService
         try
         {
             parent.Campaign = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class ConversionEventService : IConversionEventService
         return true;
     }
 
-    public async Task<bool> AssignLineItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLineItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class ConversionEventService : IConversionEventService
 
             var child = await _serviceResolver.Get<LineItemService>().Get(childRequest, cancellationToken);
             parent.LineItem = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class ConversionEventService : IConversionEventService
         return true;
     }
 
-    public async Task<bool> UnassignLineItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLineItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class ConversionEventService : IConversionEventService
         try
         {
             parent.LineItem = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class ConversionEventService : IConversionEventService
         return true;
     }
 
-    public async Task<bool> AssignTrackingPixel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTrackingPixel(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class ConversionEventService : IConversionEventService
 
             var child = await _serviceResolver.Get<TrackingPixelService>().Get(childRequest, cancellationToken);
             parent.TrackingPixel = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class ConversionEventService : IConversionEventService
         return true;
     }
 
-    public async Task<bool> UnassignTrackingPixel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTrackingPixel(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class ConversionEventService : IConversionEventService
         try
         {
             parent.TrackingPixel = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

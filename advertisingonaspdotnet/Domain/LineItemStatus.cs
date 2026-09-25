@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum LineItemStatus
 {
-    Draft=1,Scheduled=2,Running=3,Paused=4,Completed=5,Cancelled=6
+    Draft = 1, Scheduled = 2, Running = 3, Paused = 4, Completed = 5, Cancelled = 6
 }
 
 /// <summary>

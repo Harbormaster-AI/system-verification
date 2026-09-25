@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum TargetingOperator
 {
-    Include=1,Exclude=2
+    Include = 1, Exclude = 2
 }
 
 /// <summary>

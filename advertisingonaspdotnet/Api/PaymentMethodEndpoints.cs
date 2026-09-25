@@ -27,9 +27,10 @@ public static class PaymentMethodEndpoints
     private static async Task<IResult> Create(
         PaymentMethodRequest request,
         IPaymentMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPaymentMethod( request );
+        var model = mapRequestToPaymentMethod(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class PaymentMethodEndpoints
     private static async Task<IResult> Update(
         PaymentMethodRequest request,
         IPaymentMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPaymentMethod( request );
+        var model = mapRequestToPaymentMethod(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class PaymentMethodEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPaymentMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var paymentMethod = await service.Get(identifier, cancellationToken);
-        return paymentMethod is null ? Results.NotFound() : Results.Ok( paymentMethod );
+        return paymentMethod is null ? Results.NotFound() : Results.Ok(paymentMethod);
     }
 
 
     private static async Task<IResult> GetAll(
         IPaymentMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PaymentMethodResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PaymentMethodResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPaymentMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class PaymentMethodEndpoints
     private static async Task<IResult> AssignBillingProfile(
         AssociationRequest request,
         IPaymentMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBillingProfile(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class PaymentMethodEndpoints
     private static async Task<IResult> UnassignBillingProfile(
     AssociationRequest request,
     IPaymentMethodService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBillingProfile(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static PaymentMethod mapRequestToPaymentMethod( PaymentMethodRequest request ) {
+    private static PaymentMethod mapRequestToPaymentMethod(PaymentMethodRequest request)
+    {
         var model = new PaymentMethod
         {
             Id = request.Id,

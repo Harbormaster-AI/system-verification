@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IGeoRegionService {
+public interface IGeoRegionService
+{
 
-    Task Create(GeoRegion model , CancellationToken cancellationToken);
+    Task Create(GeoRegion model, CancellationToken cancellationToken);
     Task<bool> Update(GeoRegion model, CancellationToken cancellationToken);
     Task<GeoRegion?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<GeoRegion>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class GeoRegionService : IGeoRegionService
 
     public async Task<bool> Update(GeoRegion model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class GeoRegionService : IGeoRegionService
         return true;
     }
 
-    public async Task<bool> AssignParent(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignParent(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class GeoRegionService : IGeoRegionService
 
             var child = await _serviceResolver.Get<GeoRegionService>().Get(childRequest, cancellationToken);
             parent.Parent = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class GeoRegionService : IGeoRegionService
         return true;
     }
 
-    public async Task<bool> UnassignParent(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignParent(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class GeoRegionService : IGeoRegionService
         try
         {
             parent.Parent = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class GeoRegionService : IGeoRegionService
     }
 
 
-    public async Task<bool> AddToChildren(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToChildren(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "GeoRegion",
                 "AddToChildren",
@@ -182,16 +188,18 @@ public class GeoRegionService : IGeoRegionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromChildren(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromChildren(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "GeoRegion",
                 "RemoveFromChildren",

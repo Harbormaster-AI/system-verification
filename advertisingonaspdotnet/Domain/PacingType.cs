@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum PacingType
 {
-    Even=1,ASAP=2,Smooth=3
+    Even = 1, ASAP = 2, Smooth = 3
 }
 
 /// <summary>

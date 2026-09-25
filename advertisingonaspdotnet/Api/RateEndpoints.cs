@@ -29,9 +29,10 @@ public static class RateEndpoints
     private static async Task<IResult> Create(
         RateRequest request,
         IRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRate( request );
+        var model = mapRequestToRate(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class RateEndpoints
     private static async Task<IResult> Update(
         RateRequest request,
         IRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRate( request );
+        var model = mapRequestToRate(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class RateEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var rate = await service.Get(identifier, cancellationToken);
-        return rate is null ? Results.NotFound() : Results.Ok( rate );
+        return rate is null ? Results.NotFound() : Results.Ok(rate);
     }
 
 
     private static async Task<IResult> GetAll(
         IRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RateResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RateResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class RateEndpoints
     private static async Task<IResult> AssignRateCard(
         AssociationRequest request,
         IRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRateCard(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class RateEndpoints
     private static async Task<IResult> UnassignRateCard(
     AssociationRequest request,
     IRateService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRateCard(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class RateEndpoints
     private static async Task<IResult> AssignAdSlot(
         AssociationRequest request,
         IRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAdSlot(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class RateEndpoints
     private static async Task<IResult> UnassignAdSlot(
     AssociationRequest request,
     IRateService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAdSlot(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Rate mapRequestToRate( RateRequest request ) {
+    private static Rate mapRequestToRate(RateRequest request)
+    {
         var model = new Rate
         {
             Id = request.Id,

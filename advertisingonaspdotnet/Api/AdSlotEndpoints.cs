@@ -20,11 +20,11 @@ public static class AdSlotEndpoints
         group.MapPut("/assignInventorySource", AssignInventorySource);
         group.MapPut("/unassignInventorySource", UnassignInventorySource);
 
-    group.MapPut("/addToPlacements", AddToPlacements);
-    group.MapPut("/removeFromPlacements", RemoveFromPlacements);
+        group.MapPut("/addToPlacements", AddToPlacements);
+        group.MapPut("/removeFromPlacements", RemoveFromPlacements);
 
-    group.MapPut("/addToRates", AddToRates);
-    group.MapPut("/removeFromRates", RemoveFromRates);
+        group.MapPut("/addToRates", AddToRates);
+        group.MapPut("/removeFromRates", RemoveFromRates);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class AdSlotEndpoints
     private static async Task<IResult> Create(
         AdSlotRequest request,
         IAdSlotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAdSlot( request );
+        var model = mapRequestToAdSlot(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class AdSlotEndpoints
     private static async Task<IResult> Update(
         AdSlotRequest request,
         IAdSlotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAdSlot( request );
+        var model = mapRequestToAdSlot(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class AdSlotEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAdSlotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var adSlot = await service.Get(identifier, cancellationToken);
-        return adSlot is null ? Results.NotFound() : Results.Ok( adSlot );
+        return adSlot is null ? Results.NotFound() : Results.Ok(adSlot);
     }
 
 
     private static async Task<IResult> GetAll(
         IAdSlotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AdSlotResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AdSlotResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAdSlotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class AdSlotEndpoints
     private static async Task<IResult> AssignInventorySource(
         AssociationRequest request,
         IAdSlotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInventorySource(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class AdSlotEndpoints
     private static async Task<IResult> UnassignInventorySource(
     AssociationRequest request,
     IAdSlotService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInventorySource(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class AdSlotEndpoints
     private static async Task<IResult> AddToPlacements(
         MultipleAssociationRequest request,
         IAdSlotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPlacements(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class AdSlotEndpoints
     private static async Task<IResult> RemoveFromPlacements(
         MultipleAssociationRequest request,
         IAdSlotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPlacements(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRates(
         MultipleAssociationRequest request,
         IAdSlotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRates(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class AdSlotEndpoints
     private static async Task<IResult> RemoveFromRates(
         MultipleAssociationRequest request,
         IAdSlotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRates(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static AdSlot mapRequestToAdSlot( AdSlotRequest request ) {
+    private static AdSlot mapRequestToAdSlot(AdSlotRequest request)
+    {
         var model = new AdSlot
         {
             Id = request.Id,

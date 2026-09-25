@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum ChannelType
 {
-    Programmatic=1,Direct=2,Search=3,Social=4,Email=5,Affiliate=6,DOOH=7
+    Programmatic = 1, Direct = 2, Search = 3, Social = 4, Email = 5, Affiliate = 6, DOOH = 7
 }
 
 /// <summary>

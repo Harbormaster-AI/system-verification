@@ -27,9 +27,10 @@ public static class DeviceCriterionEndpoints
     private static async Task<IResult> Create(
         DeviceCriterionRequest request,
         IDeviceCriterionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDeviceCriterion( request );
+        var model = mapRequestToDeviceCriterion(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class DeviceCriterionEndpoints
     private static async Task<IResult> Update(
         DeviceCriterionRequest request,
         IDeviceCriterionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDeviceCriterion( request );
+        var model = mapRequestToDeviceCriterion(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class DeviceCriterionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDeviceCriterionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var deviceCriterion = await service.Get(identifier, cancellationToken);
-        return deviceCriterion is null ? Results.NotFound() : Results.Ok( deviceCriterion );
+        return deviceCriterion is null ? Results.NotFound() : Results.Ok(deviceCriterion);
     }
 
 
     private static async Task<IResult> GetAll(
         IDeviceCriterionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DeviceCriterionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DeviceCriterionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDeviceCriterionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class DeviceCriterionEndpoints
     private static async Task<IResult> AssignTargetingProfile(
         AssociationRequest request,
         IDeviceCriterionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTargetingProfile(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class DeviceCriterionEndpoints
     private static async Task<IResult> UnassignTargetingProfile(
     AssociationRequest request,
     IDeviceCriterionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTargetingProfile(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static DeviceCriterion mapRequestToDeviceCriterion( DeviceCriterionRequest request ) {
+    private static DeviceCriterion mapRequestToDeviceCriterion(DeviceCriterionRequest request)
+    {
         var model = new DeviceCriterion
         {
             Id = request.Id,

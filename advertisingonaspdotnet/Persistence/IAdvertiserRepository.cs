@@ -11,13 +11,13 @@ public interface IAdvertiserRepository
     Task UpdateAsync(Advertiser advertiser, CancellationToken cancellationToken);
     Task DeleteAsync(Advertiser advertiser, CancellationToken cancellationToken);
 
-    Task AddToAdAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAdAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToBillingProfilesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromBillingProfilesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCampaignsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCampaignsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTrackingPixelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTrackingPixelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAdAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAdAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToBillingProfilesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromBillingProfilesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCampaignsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCampaignsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTrackingPixelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTrackingPixelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

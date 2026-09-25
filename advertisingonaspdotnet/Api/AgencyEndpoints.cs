@@ -18,17 +18,17 @@ public static class AgencyEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToAdvertisers", AddToAdvertisers);
-    group.MapPut("/removeFromAdvertisers", RemoveFromAdvertisers);
+        group.MapPut("/addToAdvertisers", AddToAdvertisers);
+        group.MapPut("/removeFromAdvertisers", RemoveFromAdvertisers);
 
-    group.MapPut("/addToTeams", AddToTeams);
-    group.MapPut("/removeFromTeams", RemoveFromTeams);
+        group.MapPut("/addToTeams", AddToTeams);
+        group.MapPut("/removeFromTeams", RemoveFromTeams);
 
-    group.MapPut("/addToUsers", AddToUsers);
-    group.MapPut("/removeFromUsers", RemoveFromUsers);
+        group.MapPut("/addToUsers", AddToUsers);
+        group.MapPut("/removeFromUsers", RemoveFromUsers);
 
-    group.MapPut("/addToInsertionOrders", AddToInsertionOrders);
-    group.MapPut("/removeFromInsertionOrders", RemoveFromInsertionOrders);
+        group.MapPut("/addToInsertionOrders", AddToInsertionOrders);
+        group.MapPut("/removeFromInsertionOrders", RemoveFromInsertionOrders);
 
 
         return app;
@@ -37,9 +37,10 @@ public static class AgencyEndpoints
     private static async Task<IResult> Create(
         AgencyRequest request,
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAgency( request );
+        var model = mapRequestToAgency(request);
 
         try
         {
@@ -56,9 +57,10 @@ public static class AgencyEndpoints
     private static async Task<IResult> Update(
         AgencyRequest request,
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAgency( request );
+        var model = mapRequestToAgency(request);
 
         try
         {
@@ -75,25 +77,28 @@ public static class AgencyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var agency = await service.Get(identifier, cancellationToken);
-        return agency is null ? Results.NotFound() : Results.Ok( agency );
+        return agency is null ? Results.NotFound() : Results.Ok(agency);
     }
 
 
     private static async Task<IResult> GetAll(
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AgencyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AgencyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +107,8 @@ public static class AgencyEndpoints
     private static async Task<IResult> AddToAdvertisers(
         MultipleAssociationRequest request,
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAdvertisers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -110,14 +116,16 @@ public static class AgencyEndpoints
     private static async Task<IResult> RemoveFromAdvertisers(
         MultipleAssociationRequest request,
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAdvertisers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToTeams(
         MultipleAssociationRequest request,
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTeams(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -125,14 +133,16 @@ public static class AgencyEndpoints
     private static async Task<IResult> RemoveFromTeams(
         MultipleAssociationRequest request,
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTeams(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToUsers(
         MultipleAssociationRequest request,
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToUsers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class AgencyEndpoints
     private static async Task<IResult> RemoveFromUsers(
         MultipleAssociationRequest request,
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromUsers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToInsertionOrders(
         MultipleAssociationRequest request,
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInsertionOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class AgencyEndpoints
     private static async Task<IResult> RemoveFromInsertionOrders(
         MultipleAssociationRequest request,
         IAgencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInsertionOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Agency mapRequestToAgency( AgencyRequest request ) {
+    private static Agency mapRequestToAgency(AgencyRequest request)
+    {
         var model = new Agency
         {
             Id = request.Id,

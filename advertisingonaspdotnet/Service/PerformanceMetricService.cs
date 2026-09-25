@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IPerformanceMetricService {
+public interface IPerformanceMetricService
+{
 
-    Task Create(PerformanceMetric model , CancellationToken cancellationToken);
+    Task Create(PerformanceMetric model, CancellationToken cancellationToken);
     Task<bool> Update(PerformanceMetric model, CancellationToken cancellationToken);
     Task<PerformanceMetric?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<PerformanceMetric>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class PerformanceMetricService : IPerformanceMetricService
 
     public async Task<bool> Update(PerformanceMetric model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class PerformanceMetricService : IPerformanceMetricService
         return true;
     }
 
-    public async Task<bool> AssignAdAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAdAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class PerformanceMetricService : IPerformanceMetricService
 
             var child = await _serviceResolver.Get<AdAccountService>().Get(childRequest, cancellationToken);
             parent.AdAccount = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class PerformanceMetricService : IPerformanceMetricService
         return true;
     }
 
-    public async Task<bool> UnassignAdAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAdAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class PerformanceMetricService : IPerformanceMetricService
         try
         {
             parent.AdAccount = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class PerformanceMetricService : IPerformanceMetricService
         return true;
     }
 
-    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class PerformanceMetricService : IPerformanceMetricService
 
             var child = await _serviceResolver.Get<CampaignService>().Get(childRequest, cancellationToken);
             parent.Campaign = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class PerformanceMetricService : IPerformanceMetricService
         return true;
     }
 
-    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class PerformanceMetricService : IPerformanceMetricService
         try
         {
             parent.Campaign = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,7 +237,8 @@ public class PerformanceMetricService : IPerformanceMetricService
         return true;
     }
 
-    public async Task<bool> AssignLineItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLineItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -249,7 +256,7 @@ public class PerformanceMetricService : IPerformanceMetricService
 
             var child = await _serviceResolver.Get<LineItemService>().Get(childRequest, cancellationToken);
             parent.LineItem = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -261,7 +268,8 @@ public class PerformanceMetricService : IPerformanceMetricService
         return true;
     }
 
-    public async Task<bool> UnassignLineItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLineItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -272,7 +280,7 @@ public class PerformanceMetricService : IPerformanceMetricService
         try
         {
             parent.LineItem = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,7 +292,8 @@ public class PerformanceMetricService : IPerformanceMetricService
         return true;
     }
 
-    public async Task<bool> AssignPlacement(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPlacement(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -302,7 +311,7 @@ public class PerformanceMetricService : IPerformanceMetricService
 
             var child = await _serviceResolver.Get<PlacementService>().Get(childRequest, cancellationToken);
             parent.Placement = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -314,7 +323,8 @@ public class PerformanceMetricService : IPerformanceMetricService
         return true;
     }
 
-    public async Task<bool> UnassignPlacement(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPlacement(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -325,7 +335,7 @@ public class PerformanceMetricService : IPerformanceMetricService
         try
         {
             parent.Placement = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -337,7 +347,8 @@ public class PerformanceMetricService : IPerformanceMetricService
         return true;
     }
 
-    public async Task<bool> AssignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -355,7 +366,7 @@ public class PerformanceMetricService : IPerformanceMetricService
 
             var child = await _serviceResolver.Get<CreativeAssetService>().Get(childRequest, cancellationToken);
             parent.CreativeAsset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -367,7 +378,8 @@ public class PerformanceMetricService : IPerformanceMetricService
         return true;
     }
 
-    public async Task<bool> UnassignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -378,7 +390,7 @@ public class PerformanceMetricService : IPerformanceMetricService
         try
         {
             parent.CreativeAsset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

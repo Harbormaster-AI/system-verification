@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface ITrackingPixelService {
+public interface ITrackingPixelService
+{
 
-    Task Create(TrackingPixel model , CancellationToken cancellationToken);
+    Task Create(TrackingPixel model, CancellationToken cancellationToken);
     Task<bool> Update(TrackingPixel model, CancellationToken cancellationToken);
     Task<TrackingPixel?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TrackingPixel>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class TrackingPixelService : ITrackingPixelService
 
     public async Task<bool> Update(TrackingPixel model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class TrackingPixelService : ITrackingPixelService
         return true;
     }
 
-    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class TrackingPixelService : ITrackingPixelService
 
             var child = await _serviceResolver.Get<CampaignService>().Get(childRequest, cancellationToken);
             parent.Campaign = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class TrackingPixelService : ITrackingPixelService
         return true;
     }
 
-    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class TrackingPixelService : ITrackingPixelService
         try
         {
             parent.Campaign = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class TrackingPixelService : ITrackingPixelService
         return true;
     }
 
-    public async Task<bool> AssignAdvertiser(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAdvertiser(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class TrackingPixelService : ITrackingPixelService
 
             var child = await _serviceResolver.Get<AdvertiserService>().Get(childRequest, cancellationToken);
             parent.Advertiser = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class TrackingPixelService : ITrackingPixelService
         return true;
     }
 
-    public async Task<bool> UnassignAdvertiser(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAdvertiser(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class TrackingPixelService : ITrackingPixelService
         try
         {
             parent.Advertiser = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,8 +235,10 @@ public class TrackingPixelService : ITrackingPixelService
     }
 
 
-    public async Task<bool> AddToConversionEvents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToConversionEvents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrackingPixel",
                 "AddToConversionEvents",
@@ -238,16 +246,18 @@ public class TrackingPixelService : ITrackingPixelService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromConversionEvents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromConversionEvents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrackingPixel",
                 "RemoveFromConversionEvents",

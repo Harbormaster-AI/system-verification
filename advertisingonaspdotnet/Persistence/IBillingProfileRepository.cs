@@ -11,9 +11,9 @@ public interface IBillingProfileRepository
     Task UpdateAsync(BillingProfile billingProfile, CancellationToken cancellationToken);
     Task DeleteAsync(BillingProfile billingProfile, CancellationToken cancellationToken);
 
-    Task AddToPaymentMethodsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPaymentMethodsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToAdAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAdAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPaymentMethodsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPaymentMethodsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAdAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAdAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

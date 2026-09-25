@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum PaymentTerms
 {
-    Prepaid=1,NetFifteen=2,NetThirty=3,NetSixty=4
+    Prepaid = 1, NetFifteen = 2, NetThirty = 3, NetSixty = 4
 }
 
 /// <summary>

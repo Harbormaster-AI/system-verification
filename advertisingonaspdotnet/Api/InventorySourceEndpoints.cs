@@ -20,11 +20,11 @@ public static class InventorySourceEndpoints
         group.MapPut("/assignPublisher", AssignPublisher);
         group.MapPut("/unassignPublisher", UnassignPublisher);
 
-    group.MapPut("/addToAdSlots", AddToAdSlots);
-    group.MapPut("/removeFromAdSlots", RemoveFromAdSlots);
+        group.MapPut("/addToAdSlots", AddToAdSlots);
+        group.MapPut("/removeFromAdSlots", RemoveFromAdSlots);
 
-    group.MapPut("/addToDeals", AddToDeals);
-    group.MapPut("/removeFromDeals", RemoveFromDeals);
+        group.MapPut("/addToDeals", AddToDeals);
+        group.MapPut("/removeFromDeals", RemoveFromDeals);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class InventorySourceEndpoints
     private static async Task<IResult> Create(
         InventorySourceRequest request,
         IInventorySourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInventorySource( request );
+        var model = mapRequestToInventorySource(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class InventorySourceEndpoints
     private static async Task<IResult> Update(
         InventorySourceRequest request,
         IInventorySourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInventorySource( request );
+        var model = mapRequestToInventorySource(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class InventorySourceEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInventorySourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var inventorySource = await service.Get(identifier, cancellationToken);
-        return inventorySource is null ? Results.NotFound() : Results.Ok( inventorySource );
+        return inventorySource is null ? Results.NotFound() : Results.Ok(inventorySource);
     }
 
 
     private static async Task<IResult> GetAll(
         IInventorySourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InventorySourceResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InventorySourceResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInventorySourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class InventorySourceEndpoints
     private static async Task<IResult> AssignPublisher(
         AssociationRequest request,
         IInventorySourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPublisher(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class InventorySourceEndpoints
     private static async Task<IResult> UnassignPublisher(
     AssociationRequest request,
     IInventorySourceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPublisher(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class InventorySourceEndpoints
     private static async Task<IResult> AddToAdSlots(
         MultipleAssociationRequest request,
         IInventorySourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAdSlots(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class InventorySourceEndpoints
     private static async Task<IResult> RemoveFromAdSlots(
         MultipleAssociationRequest request,
         IInventorySourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAdSlots(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToDeals(
         MultipleAssociationRequest request,
         IInventorySourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDeals(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class InventorySourceEndpoints
     private static async Task<IResult> RemoveFromDeals(
         MultipleAssociationRequest request,
         IInventorySourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDeals(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static InventorySource mapRequestToInventorySource( InventorySourceRequest request ) {
+    private static InventorySource mapRequestToInventorySource(InventorySourceRequest request)
+    {
         var model = new InventorySource
         {
             Id = request.Id,

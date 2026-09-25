@@ -20,11 +20,11 @@ public static class TeamEndpoints
         group.MapPut("/assignAgency", AssignAgency);
         group.MapPut("/unassignAgency", UnassignAgency);
 
-    group.MapPut("/addToUsers", AddToUsers);
-    group.MapPut("/removeFromUsers", RemoveFromUsers);
+        group.MapPut("/addToUsers", AddToUsers);
+        group.MapPut("/removeFromUsers", RemoveFromUsers);
 
-    group.MapPut("/addToAdAccounts", AddToAdAccounts);
-    group.MapPut("/removeFromAdAccounts", RemoveFromAdAccounts);
+        group.MapPut("/addToAdAccounts", AddToAdAccounts);
+        group.MapPut("/removeFromAdAccounts", RemoveFromAdAccounts);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class TeamEndpoints
     private static async Task<IResult> Create(
         TeamRequest request,
         ITeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTeam( request );
+        var model = mapRequestToTeam(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class TeamEndpoints
     private static async Task<IResult> Update(
         TeamRequest request,
         ITeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTeam( request );
+        var model = mapRequestToTeam(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class TeamEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var team = await service.Get(identifier, cancellationToken);
-        return team is null ? Results.NotFound() : Results.Ok( team );
+        return team is null ? Results.NotFound() : Results.Ok(team);
     }
 
 
     private static async Task<IResult> GetAll(
         ITeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TeamResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TeamResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class TeamEndpoints
     private static async Task<IResult> AssignAgency(
         AssociationRequest request,
         ITeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAgency(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class TeamEndpoints
     private static async Task<IResult> UnassignAgency(
     AssociationRequest request,
     ITeamService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAgency(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class TeamEndpoints
     private static async Task<IResult> AddToUsers(
         MultipleAssociationRequest request,
         ITeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToUsers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class TeamEndpoints
     private static async Task<IResult> RemoveFromUsers(
         MultipleAssociationRequest request,
         ITeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromUsers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToAdAccounts(
         MultipleAssociationRequest request,
         ITeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAdAccounts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class TeamEndpoints
     private static async Task<IResult> RemoveFromAdAccounts(
         MultipleAssociationRequest request,
         ITeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAdAccounts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Team mapRequestToTeam( TeamRequest request ) {
+    private static Team mapRequestToTeam(TeamRequest request)
+    {
         var model = new Team
         {
             Id = request.Id,

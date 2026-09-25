@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IAudienceSegmentService {
+public interface IAudienceSegmentService
+{
 
-    Task Create(AudienceSegment model , CancellationToken cancellationToken);
+    Task Create(AudienceSegment model, CancellationToken cancellationToken);
     Task<bool> Update(AudienceSegment model, CancellationToken cancellationToken);
     Task<AudienceSegment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AudienceSegment>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class AudienceSegmentService : IAudienceSegmentService
 
     public async Task<bool> Update(AudienceSegment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class AudienceSegmentService : IAudienceSegmentService
         return true;
     }
 
-    public async Task<bool> AssignProvider(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProvider(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class AudienceSegmentService : IAudienceSegmentService
 
             var child = await _serviceResolver.Get<DataProviderService>().Get(childRequest, cancellationToken);
             parent.Provider = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class AudienceSegmentService : IAudienceSegmentService
         return true;
     }
 
-    public async Task<bool> UnassignProvider(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProvider(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class AudienceSegmentService : IAudienceSegmentService
         try
         {
             parent.Provider = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,8 +178,10 @@ public class AudienceSegmentService : IAudienceSegmentService
     }
 
 
-    public async Task<bool> AddToCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AudienceSegment",
                 "AddToCampaigns",
@@ -183,16 +189,18 @@ public class AudienceSegmentService : IAudienceSegmentService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AudienceSegment",
                 "RemoveFromCampaigns",

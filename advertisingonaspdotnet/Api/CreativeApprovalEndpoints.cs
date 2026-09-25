@@ -29,9 +29,10 @@ public static class CreativeApprovalEndpoints
     private static async Task<IResult> Create(
         CreativeApprovalRequest request,
         ICreativeApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCreativeApproval( request );
+        var model = mapRequestToCreativeApproval(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class CreativeApprovalEndpoints
     private static async Task<IResult> Update(
         CreativeApprovalRequest request,
         ICreativeApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCreativeApproval( request );
+        var model = mapRequestToCreativeApproval(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class CreativeApprovalEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICreativeApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var creativeApproval = await service.Get(identifier, cancellationToken);
-        return creativeApproval is null ? Results.NotFound() : Results.Ok( creativeApproval );
+        return creativeApproval is null ? Results.NotFound() : Results.Ok(creativeApproval);
     }
 
 
     private static async Task<IResult> GetAll(
         ICreativeApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CreativeApprovalResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CreativeApprovalResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICreativeApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class CreativeApprovalEndpoints
     private static async Task<IResult> AssignCreativeAsset(
         AssociationRequest request,
         ICreativeApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCreativeAsset(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class CreativeApprovalEndpoints
     private static async Task<IResult> UnassignCreativeAsset(
     AssociationRequest request,
     ICreativeApprovalService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCreativeAsset(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class CreativeApprovalEndpoints
     private static async Task<IResult> AssignPublisher(
         AssociationRequest request,
         ICreativeApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPublisher(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class CreativeApprovalEndpoints
     private static async Task<IResult> UnassignPublisher(
     AssociationRequest request,
     ICreativeApprovalService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPublisher(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static CreativeApproval mapRequestToCreativeApproval( CreativeApprovalRequest request ) {
+    private static CreativeApproval mapRequestToCreativeApproval(CreativeApprovalRequest request)
+    {
         var model = new CreativeApproval
         {
             Id = request.Id,

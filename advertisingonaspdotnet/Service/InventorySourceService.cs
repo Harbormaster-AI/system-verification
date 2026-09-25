@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IInventorySourceService {
+public interface IInventorySourceService
+{
 
-    Task Create(InventorySource model , CancellationToken cancellationToken);
+    Task Create(InventorySource model, CancellationToken cancellationToken);
     Task<bool> Update(InventorySource model, CancellationToken cancellationToken);
     Task<InventorySource?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InventorySource>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class InventorySourceService : IInventorySourceService
 
     public async Task<bool> Update(InventorySource model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class InventorySourceService : IInventorySourceService
         return true;
     }
 
-    public async Task<bool> AssignPublisher(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPublisher(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class InventorySourceService : IInventorySourceService
 
             var child = await _serviceResolver.Get<PublisherService>().Get(childRequest, cancellationToken);
             parent.Publisher = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class InventorySourceService : IInventorySourceService
         return true;
     }
 
-    public async Task<bool> UnassignPublisher(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPublisher(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class InventorySourceService : IInventorySourceService
         try
         {
             parent.Publisher = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,8 +180,10 @@ public class InventorySourceService : IInventorySourceService
     }
 
 
-    public async Task<bool> AddToAdSlots(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAdSlots(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InventorySource",
                 "AddToAdSlots",
@@ -185,16 +191,18 @@ public class InventorySourceService : IInventorySourceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAdSlots(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAdSlots(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InventorySource",
                 "RemoveFromAdSlots",
@@ -210,8 +218,10 @@ public class InventorySourceService : IInventorySourceService
         return true;
     }
 
-    public async Task<bool> AddToDeals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDeals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InventorySource",
                 "AddToDeals",
@@ -219,16 +229,18 @@ public class InventorySourceService : IInventorySourceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDeals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDeals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InventorySource",
                 "RemoveFromDeals",

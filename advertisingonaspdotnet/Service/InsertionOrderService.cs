@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IInsertionOrderService {
+public interface IInsertionOrderService
+{
 
-    Task Create(InsertionOrder model , CancellationToken cancellationToken);
+    Task Create(InsertionOrder model, CancellationToken cancellationToken);
     Task<bool> Update(InsertionOrder model, CancellationToken cancellationToken);
     Task<InsertionOrder?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InsertionOrder>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class InsertionOrderService : IInsertionOrderService
 
     public async Task<bool> Update(InsertionOrder model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class InsertionOrderService : IInsertionOrderService
         return true;
     }
 
-    public async Task<bool> AssignAdvertiser(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAdvertiser(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class InsertionOrderService : IInsertionOrderService
 
             var child = await _serviceResolver.Get<AdvertiserService>().Get(childRequest, cancellationToken);
             parent.Advertiser = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class InsertionOrderService : IInsertionOrderService
         return true;
     }
 
-    public async Task<bool> UnassignAdvertiser(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAdvertiser(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class InsertionOrderService : IInsertionOrderService
         try
         {
             parent.Advertiser = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class InsertionOrderService : IInsertionOrderService
         return true;
     }
 
-    public async Task<bool> AssignAgency(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAgency(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class InsertionOrderService : IInsertionOrderService
 
             var child = await _serviceResolver.Get<AgencyService>().Get(childRequest, cancellationToken);
             parent.Agency = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class InsertionOrderService : IInsertionOrderService
         return true;
     }
 
-    public async Task<bool> UnassignAgency(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAgency(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class InsertionOrderService : IInsertionOrderService
         try
         {
             parent.Agency = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,7 +236,8 @@ public class InsertionOrderService : IInsertionOrderService
         return true;
     }
 
-    public async Task<bool> AssignPublisher(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPublisher(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -248,7 +255,7 @@ public class InsertionOrderService : IInsertionOrderService
 
             var child = await _serviceResolver.Get<PublisherService>().Get(childRequest, cancellationToken);
             parent.Publisher = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -260,7 +267,8 @@ public class InsertionOrderService : IInsertionOrderService
         return true;
     }
 
-    public async Task<bool> UnassignPublisher(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPublisher(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -271,7 +279,7 @@ public class InsertionOrderService : IInsertionOrderService
         try
         {
             parent.Publisher = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,8 +292,10 @@ public class InsertionOrderService : IInsertionOrderService
     }
 
 
-    public async Task<bool> AddToCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InsertionOrder",
                 "AddToCampaigns",
@@ -293,16 +303,18 @@ public class InsertionOrderService : IInsertionOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InsertionOrder",
                 "RemoveFromCampaigns",

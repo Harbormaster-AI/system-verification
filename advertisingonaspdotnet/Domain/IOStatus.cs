@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum IOStatus
 {
-    Draft=1,Sent=2,Executed=3,OnHold=4,Closed=5,Cancelled=6
+    Draft = 1, Sent = 2, Executed = 3, OnHold = 4, Closed = 5, Cancelled = 6
 }
 
 /// <summary>

@@ -22,20 +22,20 @@ public static class CampaignEndpoints
         group.MapPut("/assignInsertionOrder", AssignInsertionOrder);
         group.MapPut("/unassignInsertionOrder", UnassignInsertionOrder);
 
-    group.MapPut("/addToLineItems", AddToLineItems);
-    group.MapPut("/removeFromLineItems", RemoveFromLineItems);
+        group.MapPut("/addToLineItems", AddToLineItems);
+        group.MapPut("/removeFromLineItems", RemoveFromLineItems);
 
-    group.MapPut("/addToKpis", AddToKpis);
-    group.MapPut("/removeFromKpis", RemoveFromKpis);
+        group.MapPut("/addToKpis", AddToKpis);
+        group.MapPut("/removeFromKpis", RemoveFromKpis);
 
-    group.MapPut("/addToTrackingPixels", AddToTrackingPixels);
-    group.MapPut("/removeFromTrackingPixels", RemoveFromTrackingPixels);
+        group.MapPut("/addToTrackingPixels", AddToTrackingPixels);
+        group.MapPut("/removeFromTrackingPixels", RemoveFromTrackingPixels);
 
-    group.MapPut("/addToAudiences", AddToAudiences);
-    group.MapPut("/removeFromAudiences", RemoveFromAudiences);
+        group.MapPut("/addToAudiences", AddToAudiences);
+        group.MapPut("/removeFromAudiences", RemoveFromAudiences);
 
-    group.MapPut("/addToReports", AddToReports);
-    group.MapPut("/removeFromReports", RemoveFromReports);
+        group.MapPut("/addToReports", AddToReports);
+        group.MapPut("/removeFromReports", RemoveFromReports);
 
 
         return app;
@@ -44,9 +44,10 @@ public static class CampaignEndpoints
     private static async Task<IResult> Create(
         CampaignRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCampaign( request );
+        var model = mapRequestToCampaign(request);
 
         try
         {
@@ -63,9 +64,10 @@ public static class CampaignEndpoints
     private static async Task<IResult> Update(
         CampaignRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCampaign( request );
+        var model = mapRequestToCampaign(request);
 
         try
         {
@@ -82,25 +84,28 @@ public static class CampaignEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var campaign = await service.Get(identifier, cancellationToken);
-        return campaign is null ? Results.NotFound() : Results.Ok( campaign );
+        return campaign is null ? Results.NotFound() : Results.Ok(campaign);
     }
 
 
     private static async Task<IResult> GetAll(
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CampaignResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CampaignResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +113,8 @@ public static class CampaignEndpoints
     private static async Task<IResult> AssignAdAccount(
         AssociationRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAdAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -116,7 +122,8 @@ public static class CampaignEndpoints
     private static async Task<IResult> UnassignAdAccount(
     AssociationRequest request,
     ICampaignService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAdAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -124,7 +131,8 @@ public static class CampaignEndpoints
     private static async Task<IResult> AssignInsertionOrder(
         AssociationRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInsertionOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +140,8 @@ public static class CampaignEndpoints
     private static async Task<IResult> UnassignInsertionOrder(
     AssociationRequest request,
     ICampaignService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInsertionOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -141,7 +150,8 @@ public static class CampaignEndpoints
     private static async Task<IResult> AddToLineItems(
         MultipleAssociationRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLineItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -149,14 +159,16 @@ public static class CampaignEndpoints
     private static async Task<IResult> RemoveFromLineItems(
         MultipleAssociationRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLineItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToKpis(
         MultipleAssociationRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToKpis(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -164,14 +176,16 @@ public static class CampaignEndpoints
     private static async Task<IResult> RemoveFromKpis(
         MultipleAssociationRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromKpis(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToTrackingPixels(
         MultipleAssociationRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTrackingPixels(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -179,14 +193,16 @@ public static class CampaignEndpoints
     private static async Task<IResult> RemoveFromTrackingPixels(
         MultipleAssociationRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTrackingPixels(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToAudiences(
         MultipleAssociationRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAudiences(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -194,14 +210,16 @@ public static class CampaignEndpoints
     private static async Task<IResult> RemoveFromAudiences(
         MultipleAssociationRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAudiences(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToReports(
         MultipleAssociationRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToReports(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -209,11 +227,13 @@ public static class CampaignEndpoints
     private static async Task<IResult> RemoveFromReports(
         MultipleAssociationRequest request,
         ICampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromReports(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Campaign mapRequestToCampaign( CampaignRequest request ) {
+    private static Campaign mapRequestToCampaign(CampaignRequest request)
+    {
         var model = new Campaign
         {
             Id = request.Id,

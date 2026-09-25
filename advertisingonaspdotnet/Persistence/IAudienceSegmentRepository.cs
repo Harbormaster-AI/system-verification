@@ -11,7 +11,7 @@ public interface IAudienceSegmentRepository
     Task UpdateAsync(AudienceSegment audienceSegment, CancellationToken cancellationToken);
     Task DeleteAsync(AudienceSegment audienceSegment, CancellationToken cancellationToken);
 
-    Task AddToCampaignsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCampaignsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCampaignsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCampaignsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

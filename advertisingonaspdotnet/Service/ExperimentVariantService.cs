@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IExperimentVariantService {
+public interface IExperimentVariantService
+{
 
-    Task Create(ExperimentVariant model , CancellationToken cancellationToken);
+    Task Create(ExperimentVariant model, CancellationToken cancellationToken);
     Task<bool> Update(ExperimentVariant model, CancellationToken cancellationToken);
     Task<ExperimentVariant?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ExperimentVariant>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ExperimentVariantService : IExperimentVariantService
 
     public async Task<bool> Update(ExperimentVariant model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class ExperimentVariantService : IExperimentVariantService
         return true;
     }
 
-    public async Task<bool> AssignExperiment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignExperiment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class ExperimentVariantService : IExperimentVariantService
 
             var child = await _serviceResolver.Get<ExperimentService>().Get(childRequest, cancellationToken);
             parent.Experiment = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class ExperimentVariantService : IExperimentVariantService
         return true;
     }
 
-    public async Task<bool> UnassignExperiment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignExperiment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class ExperimentVariantService : IExperimentVariantService
         try
         {
             parent.Experiment = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class ExperimentVariantService : IExperimentVariantService
         return true;
     }
 
-    public async Task<bool> AssignCreativeVariation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCreativeVariation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class ExperimentVariantService : IExperimentVariantService
 
             var child = await _serviceResolver.Get<CreativeVariationService>().Get(childRequest, cancellationToken);
             parent.CreativeVariation = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class ExperimentVariantService : IExperimentVariantService
         return true;
     }
 
-    public async Task<bool> UnassignCreativeVariation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCreativeVariation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class ExperimentVariantService : IExperimentVariantService
         try
         {
             parent.CreativeVariation = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -226,7 +232,8 @@ public class ExperimentVariantService : IExperimentVariantService
         return true;
     }
 
-    public async Task<bool> AssignLineItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLineItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -244,7 +251,7 @@ public class ExperimentVariantService : IExperimentVariantService
 
             var child = await _serviceResolver.Get<LineItemService>().Get(childRequest, cancellationToken);
             parent.LineItem = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -256,7 +263,8 @@ public class ExperimentVariantService : IExperimentVariantService
         return true;
     }
 
-    public async Task<bool> UnassignLineItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLineItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -267,7 +275,7 @@ public class ExperimentVariantService : IExperimentVariantService
         try
         {
             parent.LineItem = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -31,9 +31,10 @@ public static class ReportEndpoints
     private static async Task<IResult> Create(
         ReportRequest request,
         IReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToReport( request );
+        var model = mapRequestToReport(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class ReportEndpoints
     private static async Task<IResult> Update(
         ReportRequest request,
         IReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToReport( request );
+        var model = mapRequestToReport(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class ReportEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var report = await service.Get(identifier, cancellationToken);
-        return report is null ? Results.NotFound() : Results.Ok( report );
+        return report is null ? Results.NotFound() : Results.Ok(report);
     }
 
 
     private static async Task<IResult> GetAll(
         IReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ReportResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ReportResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class ReportEndpoints
     private static async Task<IResult> AssignAdAccount(
         AssociationRequest request,
         IReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAdAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class ReportEndpoints
     private static async Task<IResult> UnassignAdAccount(
     AssociationRequest request,
     IReportService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAdAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ReportEndpoints
     private static async Task<IResult> AssignCampaign(
         AssociationRequest request,
         IReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCampaign(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class ReportEndpoints
     private static async Task<IResult> UnassignCampaign(
     AssociationRequest request,
     IReportService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCampaign(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class ReportEndpoints
     private static async Task<IResult> AssignLineItem(
         AssociationRequest request,
         IReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLineItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class ReportEndpoints
     private static async Task<IResult> UnassignLineItem(
     AssociationRequest request,
     IReportService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLineItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Report mapRequestToReport( ReportRequest request ) {
+    private static Report mapRequestToReport(ReportRequest request)
+    {
         var model = new Report
         {
             Id = request.Id,

@@ -11,11 +11,11 @@ public interface IAdAccountRepository
     Task UpdateAsync(AdAccount adAccount, CancellationToken cancellationToken);
     Task DeleteAsync(AdAccount adAccount, CancellationToken cancellationToken);
 
-    Task AddToUsersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromUsersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCampaignsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCampaignsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToPerformanceMetricsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPerformanceMetricsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToUsersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromUsersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCampaignsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCampaignsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPerformanceMetricsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPerformanceMetricsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

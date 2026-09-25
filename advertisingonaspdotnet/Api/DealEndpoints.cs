@@ -20,11 +20,11 @@ public static class DealEndpoints
         group.MapPut("/assignPublisher", AssignPublisher);
         group.MapPut("/unassignPublisher", UnassignPublisher);
 
-    group.MapPut("/addToInventorySources", AddToInventorySources);
-    group.MapPut("/removeFromInventorySources", RemoveFromInventorySources);
+        group.MapPut("/addToInventorySources", AddToInventorySources);
+        group.MapPut("/removeFromInventorySources", RemoveFromInventorySources);
 
-    group.MapPut("/addToPlacements", AddToPlacements);
-    group.MapPut("/removeFromPlacements", RemoveFromPlacements);
+        group.MapPut("/addToPlacements", AddToPlacements);
+        group.MapPut("/removeFromPlacements", RemoveFromPlacements);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class DealEndpoints
     private static async Task<IResult> Create(
         DealRequest request,
         IDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDeal( request );
+        var model = mapRequestToDeal(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class DealEndpoints
     private static async Task<IResult> Update(
         DealRequest request,
         IDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDeal( request );
+        var model = mapRequestToDeal(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class DealEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var deal = await service.Get(identifier, cancellationToken);
-        return deal is null ? Results.NotFound() : Results.Ok( deal );
+        return deal is null ? Results.NotFound() : Results.Ok(deal);
     }
 
 
     private static async Task<IResult> GetAll(
         IDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DealResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DealResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class DealEndpoints
     private static async Task<IResult> AssignPublisher(
         AssociationRequest request,
         IDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPublisher(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class DealEndpoints
     private static async Task<IResult> UnassignPublisher(
     AssociationRequest request,
     IDealService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPublisher(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class DealEndpoints
     private static async Task<IResult> AddToInventorySources(
         MultipleAssociationRequest request,
         IDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInventorySources(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class DealEndpoints
     private static async Task<IResult> RemoveFromInventorySources(
         MultipleAssociationRequest request,
         IDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInventorySources(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPlacements(
         MultipleAssociationRequest request,
         IDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPlacements(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class DealEndpoints
     private static async Task<IResult> RemoveFromPlacements(
         MultipleAssociationRequest request,
         IDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPlacements(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Deal mapRequestToDeal( DealRequest request ) {
+    private static Deal mapRequestToDeal(DealRequest request)
+    {
         var model = new Deal
         {
             Id = request.Id,

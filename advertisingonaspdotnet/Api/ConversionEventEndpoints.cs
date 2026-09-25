@@ -31,9 +31,10 @@ public static class ConversionEventEndpoints
     private static async Task<IResult> Create(
         ConversionEventRequest request,
         IConversionEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToConversionEvent( request );
+        var model = mapRequestToConversionEvent(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class ConversionEventEndpoints
     private static async Task<IResult> Update(
         ConversionEventRequest request,
         IConversionEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToConversionEvent( request );
+        var model = mapRequestToConversionEvent(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class ConversionEventEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IConversionEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var conversionEvent = await service.Get(identifier, cancellationToken);
-        return conversionEvent is null ? Results.NotFound() : Results.Ok( conversionEvent );
+        return conversionEvent is null ? Results.NotFound() : Results.Ok(conversionEvent);
     }
 
 
     private static async Task<IResult> GetAll(
         IConversionEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ConversionEventResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ConversionEventResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IConversionEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class ConversionEventEndpoints
     private static async Task<IResult> AssignCampaign(
         AssociationRequest request,
         IConversionEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCampaign(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class ConversionEventEndpoints
     private static async Task<IResult> UnassignCampaign(
     AssociationRequest request,
     IConversionEventService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCampaign(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ConversionEventEndpoints
     private static async Task<IResult> AssignLineItem(
         AssociationRequest request,
         IConversionEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLineItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class ConversionEventEndpoints
     private static async Task<IResult> UnassignLineItem(
     AssociationRequest request,
     IConversionEventService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLineItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class ConversionEventEndpoints
     private static async Task<IResult> AssignTrackingPixel(
         AssociationRequest request,
         IConversionEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTrackingPixel(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class ConversionEventEndpoints
     private static async Task<IResult> UnassignTrackingPixel(
     AssociationRequest request,
     IConversionEventService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTrackingPixel(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ConversionEvent mapRequestToConversionEvent( ConversionEventRequest request ) {
+    private static ConversionEvent mapRequestToConversionEvent(ConversionEventRequest request)
+    {
         var model = new ConversionEvent
         {
             Id = request.Id,

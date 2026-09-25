@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IRateService {
+public interface IRateService
+{
 
-    Task Create(Rate model , CancellationToken cancellationToken);
+    Task Create(Rate model, CancellationToken cancellationToken);
     Task<bool> Update(Rate model, CancellationToken cancellationToken);
     Task<Rate?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Rate>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class RateService : IRateService
 
     public async Task<bool> Update(Rate model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class RateService : IRateService
         return true;
     }
 
-    public async Task<bool> AssignRateCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRateCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class RateService : IRateService
 
             var child = await _serviceResolver.Get<RateCardService>().Get(childRequest, cancellationToken);
             parent.RateCard = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class RateService : IRateService
         return true;
     }
 
-    public async Task<bool> UnassignRateCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRateCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class RateService : IRateService
         try
         {
             parent.RateCard = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class RateService : IRateService
         return true;
     }
 
-    public async Task<bool> AssignAdSlot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAdSlot(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class RateService : IRateService
 
             var child = await _serviceResolver.Get<AdSlotService>().Get(childRequest, cancellationToken);
             parent.AdSlot = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class RateService : IRateService
         return true;
     }
 
-    public async Task<bool> UnassignAdSlot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAdSlot(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class RateService : IRateService
         try
         {
             parent.AdSlot = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

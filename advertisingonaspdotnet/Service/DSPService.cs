@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IDSPService {
+public interface IDSPService
+{
 
-    Task Create(DSP model , CancellationToken cancellationToken);
+    Task Create(DSP model, CancellationToken cancellationToken);
     Task<bool> Update(DSP model, CancellationToken cancellationToken);
     Task<DSP?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DSP>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class DSPService : IDSPService
 
     public async Task<bool> Update(DSP model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,8 +120,10 @@ public class DSPService : IDSPService
     }
 
 
-    public async Task<bool> AddToAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DSP",
                 "AddToAdAccounts",
@@ -127,16 +131,18 @@ public class DSPService : IDSPService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DSP",
                 "RemoveFromAdAccounts",

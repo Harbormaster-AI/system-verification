@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IDeviceCriterionService {
+public interface IDeviceCriterionService
+{
 
-    Task Create(DeviceCriterion model , CancellationToken cancellationToken);
+    Task Create(DeviceCriterion model, CancellationToken cancellationToken);
     Task<bool> Update(DeviceCriterion model, CancellationToken cancellationToken);
     Task<DeviceCriterion?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DeviceCriterion>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class DeviceCriterionService : IDeviceCriterionService
 
     public async Task<bool> Update(DeviceCriterion model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class DeviceCriterionService : IDeviceCriterionService
         return true;
     }
 
-    public async Task<bool> AssignTargetingProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTargetingProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class DeviceCriterionService : IDeviceCriterionService
 
             var child = await _serviceResolver.Get<TargetingProfileService>().Get(childRequest, cancellationToken);
             parent.TargetingProfile = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class DeviceCriterionService : IDeviceCriterionService
         return true;
     }
 
-    public async Task<bool> UnassignTargetingProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTargetingProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class DeviceCriterionService : IDeviceCriterionService
         try
         {
             parent.TargetingProfile = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

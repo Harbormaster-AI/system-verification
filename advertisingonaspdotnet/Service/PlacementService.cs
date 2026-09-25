@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IPlacementService {
+public interface IPlacementService
+{
 
-    Task Create(Placement model , CancellationToken cancellationToken);
+    Task Create(Placement model, CancellationToken cancellationToken);
     Task<bool> Update(Placement model, CancellationToken cancellationToken);
     Task<Placement?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Placement>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class PlacementService : IPlacementService
 
     public async Task<bool> Update(Placement model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class PlacementService : IPlacementService
         return true;
     }
 
-    public async Task<bool> AssignLineItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLineItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class PlacementService : IPlacementService
 
             var child = await _serviceResolver.Get<LineItemService>().Get(childRequest, cancellationToken);
             parent.LineItem = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class PlacementService : IPlacementService
         return true;
     }
 
-    public async Task<bool> UnassignLineItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLineItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class PlacementService : IPlacementService
         try
         {
             parent.LineItem = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class PlacementService : IPlacementService
         return true;
     }
 
-    public async Task<bool> AssignAdSlot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAdSlot(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class PlacementService : IPlacementService
 
             var child = await _serviceResolver.Get<AdSlotService>().Get(childRequest, cancellationToken);
             parent.AdSlot = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class PlacementService : IPlacementService
         return true;
     }
 
-    public async Task<bool> UnassignAdSlot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAdSlot(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class PlacementService : IPlacementService
         try
         {
             parent.AdSlot = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -227,7 +233,8 @@ public class PlacementService : IPlacementService
         return true;
     }
 
-    public async Task<bool> AssignDeal(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDeal(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -245,7 +252,7 @@ public class PlacementService : IPlacementService
 
             var child = await _serviceResolver.Get<DealService>().Get(childRequest, cancellationToken);
             parent.Deal = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -257,7 +264,8 @@ public class PlacementService : IPlacementService
         return true;
     }
 
-    public async Task<bool> UnassignDeal(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDeal(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -268,7 +276,7 @@ public class PlacementService : IPlacementService
         try
         {
             parent.Deal = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

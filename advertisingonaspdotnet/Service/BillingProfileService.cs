@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IBillingProfileService {
+public interface IBillingProfileService
+{
 
-    Task Create(BillingProfile model , CancellationToken cancellationToken);
+    Task Create(BillingProfile model, CancellationToken cancellationToken);
     Task<bool> Update(BillingProfile model, CancellationToken cancellationToken);
     Task<BillingProfile?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BillingProfile>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class BillingProfileService : IBillingProfileService
 
     public async Task<bool> Update(BillingProfile model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class BillingProfileService : IBillingProfileService
         return true;
     }
 
-    public async Task<bool> AssignAdvertiser(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAdvertiser(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class BillingProfileService : IBillingProfileService
 
             var child = await _serviceResolver.Get<AdvertiserService>().Get(childRequest, cancellationToken);
             parent.Advertiser = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class BillingProfileService : IBillingProfileService
         return true;
     }
 
-    public async Task<bool> UnassignAdvertiser(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAdvertiser(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class BillingProfileService : IBillingProfileService
         try
         {
             parent.Advertiser = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,8 +180,10 @@ public class BillingProfileService : IBillingProfileService
     }
 
 
-    public async Task<bool> AddToPaymentMethods(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPaymentMethods(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BillingProfile",
                 "AddToPaymentMethods",
@@ -185,16 +191,18 @@ public class BillingProfileService : IBillingProfileService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPaymentMethods(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPaymentMethods(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BillingProfile",
                 "RemoveFromPaymentMethods",
@@ -210,8 +218,10 @@ public class BillingProfileService : IBillingProfileService
         return true;
     }
 
-    public async Task<bool> AddToAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BillingProfile",
                 "AddToAdAccounts",
@@ -219,16 +229,18 @@ public class BillingProfileService : IBillingProfileService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BillingProfile",
                 "RemoveFromAdAccounts",

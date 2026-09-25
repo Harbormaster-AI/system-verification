@@ -11,9 +11,9 @@ public interface IAdSlotRepository
     Task UpdateAsync(AdSlot adSlot, CancellationToken cancellationToken);
     Task DeleteAsync(AdSlot adSlot, CancellationToken cancellationToken);
 
-    Task AddToPlacementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPlacementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToRatesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRatesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPlacementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPlacementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRatesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRatesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

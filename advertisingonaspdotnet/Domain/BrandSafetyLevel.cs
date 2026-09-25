@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum BrandSafetyLevel
 {
-    None=1,Moderate=2,Strict=3
+    None = 1, Moderate = 2, Strict = 3
 }
 
 /// <summary>

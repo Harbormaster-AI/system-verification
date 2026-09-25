@@ -18,8 +18,8 @@ public static class DSPEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToAdAccounts", AddToAdAccounts);
-    group.MapPut("/removeFromAdAccounts", RemoveFromAdAccounts);
+        group.MapPut("/addToAdAccounts", AddToAdAccounts);
+        group.MapPut("/removeFromAdAccounts", RemoveFromAdAccounts);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class DSPEndpoints
     private static async Task<IResult> Create(
         DSPRequest request,
         IDSPService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDSP( request );
+        var model = mapRequestToDSP(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class DSPEndpoints
     private static async Task<IResult> Update(
         DSPRequest request,
         IDSPService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDSP( request );
+        var model = mapRequestToDSP(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class DSPEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDSPService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var dSP = await service.Get(identifier, cancellationToken);
-        return dSP is null ? Results.NotFound() : Results.Ok( dSP );
+        return dSP is null ? Results.NotFound() : Results.Ok(dSP);
     }
 
 
     private static async Task<IResult> GetAll(
         IDSPService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DSPResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DSPResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDSPService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class DSPEndpoints
     private static async Task<IResult> AddToAdAccounts(
         MultipleAssociationRequest request,
         IDSPService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAdAccounts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class DSPEndpoints
     private static async Task<IResult> RemoveFromAdAccounts(
         MultipleAssociationRequest request,
         IDSPService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAdAccounts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static DSP mapRequestToDSP( DSPRequest request ) {
+    private static DSP mapRequestToDSP(DSPRequest request)
+    {
         var model = new DSP
         {
             Id = request.Id,

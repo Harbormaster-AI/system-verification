@@ -24,14 +24,14 @@ public static class LineItemEndpoints
         group.MapPut("/assignDeal", AssignDeal);
         group.MapPut("/unassignDeal", UnassignDeal);
 
-    group.MapPut("/addToPlacements", AddToPlacements);
-    group.MapPut("/removeFromPlacements", RemoveFromPlacements);
+        group.MapPut("/addToPlacements", AddToPlacements);
+        group.MapPut("/removeFromPlacements", RemoveFromPlacements);
 
-    group.MapPut("/addToCreatives", AddToCreatives);
-    group.MapPut("/removeFromCreatives", RemoveFromCreatives);
+        group.MapPut("/addToCreatives", AddToCreatives);
+        group.MapPut("/removeFromCreatives", RemoveFromCreatives);
 
-    group.MapPut("/addToPerformanceMetrics", AddToPerformanceMetrics);
-    group.MapPut("/removeFromPerformanceMetrics", RemoveFromPerformanceMetrics);
+        group.MapPut("/addToPerformanceMetrics", AddToPerformanceMetrics);
+        group.MapPut("/removeFromPerformanceMetrics", RemoveFromPerformanceMetrics);
 
 
         return app;
@@ -40,9 +40,10 @@ public static class LineItemEndpoints
     private static async Task<IResult> Create(
         LineItemRequest request,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLineItem( request );
+        var model = mapRequestToLineItem(request);
 
         try
         {
@@ -59,9 +60,10 @@ public static class LineItemEndpoints
     private static async Task<IResult> Update(
         LineItemRequest request,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLineItem( request );
+        var model = mapRequestToLineItem(request);
 
         try
         {
@@ -78,25 +80,28 @@ public static class LineItemEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var lineItem = await service.Get(identifier, cancellationToken);
-        return lineItem is null ? Results.NotFound() : Results.Ok( lineItem );
+        return lineItem is null ? Results.NotFound() : Results.Ok(lineItem);
     }
 
 
     private static async Task<IResult> GetAll(
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( LineItemResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(LineItemResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +109,8 @@ public static class LineItemEndpoints
     private static async Task<IResult> AssignCampaign(
         AssociationRequest request,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCampaign(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +118,8 @@ public static class LineItemEndpoints
     private static async Task<IResult> UnassignCampaign(
     AssociationRequest request,
     ILineItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCampaign(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +127,8 @@ public static class LineItemEndpoints
     private static async Task<IResult> AssignTargetingProfile(
         AssociationRequest request,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTargetingProfile(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -128,7 +136,8 @@ public static class LineItemEndpoints
     private static async Task<IResult> UnassignTargetingProfile(
     AssociationRequest request,
     ILineItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTargetingProfile(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -136,7 +145,8 @@ public static class LineItemEndpoints
     private static async Task<IResult> AssignDeal(
         AssociationRequest request,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDeal(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -144,7 +154,8 @@ public static class LineItemEndpoints
     private static async Task<IResult> UnassignDeal(
     AssociationRequest request,
     ILineItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDeal(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,7 +164,8 @@ public static class LineItemEndpoints
     private static async Task<IResult> AddToPlacements(
         MultipleAssociationRequest request,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPlacements(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -161,14 +173,16 @@ public static class LineItemEndpoints
     private static async Task<IResult> RemoveFromPlacements(
         MultipleAssociationRequest request,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPlacements(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCreatives(
         MultipleAssociationRequest request,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCreatives(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -176,14 +190,16 @@ public static class LineItemEndpoints
     private static async Task<IResult> RemoveFromCreatives(
         MultipleAssociationRequest request,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCreatives(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPerformanceMetrics(
         MultipleAssociationRequest request,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPerformanceMetrics(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -191,11 +207,13 @@ public static class LineItemEndpoints
     private static async Task<IResult> RemoveFromPerformanceMetrics(
         MultipleAssociationRequest request,
         ILineItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPerformanceMetrics(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static LineItem mapRequestToLineItem( LineItemRequest request ) {
+    private static LineItem mapRequestToLineItem(LineItemRequest request)
+    {
         var model = new LineItem
         {
             Id = request.Id,

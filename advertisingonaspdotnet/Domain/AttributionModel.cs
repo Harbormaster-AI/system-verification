@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum AttributionModel
 {
-    LastClick=1,FirstTouch=2,Linear=3,TimeDecay=4,PositionBased=5,DataDriven=6
+    LastClick = 1, FirstTouch = 2, Linear = 3, TimeDecay = 4, PositionBased = 5, DataDriven = 6
 }
 
 /// <summary>

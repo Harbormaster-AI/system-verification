@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface ITeamService {
+public interface ITeamService
+{
 
-    Task Create(Team model , CancellationToken cancellationToken);
+    Task Create(Team model, CancellationToken cancellationToken);
     Task<bool> Update(Team model, CancellationToken cancellationToken);
     Task<Team?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Team>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class TeamService : ITeamService
 
     public async Task<bool> Update(Team model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class TeamService : ITeamService
         return true;
     }
 
-    public async Task<bool> AssignAgency(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAgency(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class TeamService : ITeamService
 
             var child = await _serviceResolver.Get<AgencyService>().Get(childRequest, cancellationToken);
             parent.Agency = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class TeamService : ITeamService
         return true;
     }
 
-    public async Task<bool> UnassignAgency(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAgency(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class TeamService : ITeamService
         try
         {
             parent.Agency = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class TeamService : ITeamService
     }
 
 
-    public async Task<bool> AddToUsers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToUsers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Team",
                 "AddToUsers",
@@ -182,16 +188,18 @@ public class TeamService : ITeamService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromUsers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromUsers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Team",
                 "RemoveFromUsers",
@@ -207,8 +215,10 @@ public class TeamService : ITeamService
         return true;
     }
 
-    public async Task<bool> AddToAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Team",
                 "AddToAdAccounts",
@@ -216,16 +226,18 @@ public class TeamService : ITeamService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Team",
                 "RemoveFromAdAccounts",

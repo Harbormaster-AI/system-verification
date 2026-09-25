@@ -11,13 +11,13 @@ public interface ITargetingProfileRepository
     Task UpdateAsync(TargetingProfile targetingProfile, CancellationToken cancellationToken);
     Task DeleteAsync(TargetingProfile targetingProfile, CancellationToken cancellationToken);
 
-    Task AddToAudienceSegmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAudienceSegmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToGeoRegionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromGeoRegionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToContentCategoriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromContentCategoriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToDeviceCriteriaAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDeviceCriteriaAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAudienceSegmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAudienceSegmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToGeoRegionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromGeoRegionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToContentCategoriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromContentCategoriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDeviceCriteriaAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDeviceCriteriaAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

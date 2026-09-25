@@ -27,9 +27,10 @@ public static class KPIEndpoints
     private static async Task<IResult> Create(
         KPIRequest request,
         IKPIService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToKPI( request );
+        var model = mapRequestToKPI(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class KPIEndpoints
     private static async Task<IResult> Update(
         KPIRequest request,
         IKPIService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToKPI( request );
+        var model = mapRequestToKPI(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class KPIEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IKPIService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var kPI = await service.Get(identifier, cancellationToken);
-        return kPI is null ? Results.NotFound() : Results.Ok( kPI );
+        return kPI is null ? Results.NotFound() : Results.Ok(kPI);
     }
 
 
     private static async Task<IResult> GetAll(
         IKPIService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( KPIResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(KPIResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IKPIService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class KPIEndpoints
     private static async Task<IResult> AssignCampaign(
         AssociationRequest request,
         IKPIService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCampaign(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class KPIEndpoints
     private static async Task<IResult> UnassignCampaign(
     AssociationRequest request,
     IKPIService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCampaign(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static KPI mapRequestToKPI( KPIRequest request ) {
+    private static KPI mapRequestToKPI(KPIRequest request)
+    {
         var model = new KPI
         {
             Id = request.Id,

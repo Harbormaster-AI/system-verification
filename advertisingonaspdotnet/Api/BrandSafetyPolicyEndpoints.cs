@@ -18,8 +18,8 @@ public static class BrandSafetyPolicyEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToTargetingProfiles", AddToTargetingProfiles);
-    group.MapPut("/removeFromTargetingProfiles", RemoveFromTargetingProfiles);
+        group.MapPut("/addToTargetingProfiles", AddToTargetingProfiles);
+        group.MapPut("/removeFromTargetingProfiles", RemoveFromTargetingProfiles);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class BrandSafetyPolicyEndpoints
     private static async Task<IResult> Create(
         BrandSafetyPolicyRequest request,
         IBrandSafetyPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBrandSafetyPolicy( request );
+        var model = mapRequestToBrandSafetyPolicy(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class BrandSafetyPolicyEndpoints
     private static async Task<IResult> Update(
         BrandSafetyPolicyRequest request,
         IBrandSafetyPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBrandSafetyPolicy( request );
+        var model = mapRequestToBrandSafetyPolicy(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class BrandSafetyPolicyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IBrandSafetyPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var brandSafetyPolicy = await service.Get(identifier, cancellationToken);
-        return brandSafetyPolicy is null ? Results.NotFound() : Results.Ok( brandSafetyPolicy );
+        return brandSafetyPolicy is null ? Results.NotFound() : Results.Ok(brandSafetyPolicy);
     }
 
 
     private static async Task<IResult> GetAll(
         IBrandSafetyPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( BrandSafetyPolicyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(BrandSafetyPolicyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IBrandSafetyPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class BrandSafetyPolicyEndpoints
     private static async Task<IResult> AddToTargetingProfiles(
         MultipleAssociationRequest request,
         IBrandSafetyPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTargetingProfiles(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class BrandSafetyPolicyEndpoints
     private static async Task<IResult> RemoveFromTargetingProfiles(
         MultipleAssociationRequest request,
         IBrandSafetyPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTargetingProfiles(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static BrandSafetyPolicy mapRequestToBrandSafetyPolicy( BrandSafetyPolicyRequest request ) {
+    private static BrandSafetyPolicy mapRequestToBrandSafetyPolicy(BrandSafetyPolicyRequest request)
+    {
         var model = new BrandSafetyPolicy
         {
             Id = request.Id,

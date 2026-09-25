@@ -11,7 +11,7 @@ public interface IInsertionOrderRepository
     Task UpdateAsync(InsertionOrder insertionOrder, CancellationToken cancellationToken);
     Task DeleteAsync(InsertionOrder insertionOrder, CancellationToken cancellationToken);
 
-    Task AddToCampaignsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCampaignsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCampaignsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCampaignsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

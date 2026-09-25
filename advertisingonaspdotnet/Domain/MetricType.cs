@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum MetricType
 {
-    Impressions=1,ViewableImpressions=2,Clicks=3,CTR=4,Reach=5,Frequency=6,VideoStarts=7,VideoCompletions=8,AvgViewTime=9,Conversions=10,ViewThroughConversions=11,Spend=12,CPM=13,CPC=14,CPA=15
+    Impressions = 1, ViewableImpressions = 2, Clicks = 3, CTR = 4, Reach = 5, Frequency = 6, VideoStarts = 7, VideoCompletions = 8, AvgViewTime = 9, Conversions = 10, ViewThroughConversions = 11, Spend = 12, CPM = 13, CPC = 14, CPA = 15
 }
 
 /// <summary>

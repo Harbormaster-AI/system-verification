@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum AdFormat
 {
-    Banner=1,Video=2,Native=3,Audio=4,Interstitial=5,RichMedia=6,SearchText=7,SocialPost=8,CTVVideo=9
+    Banner = 1, Video = 2, Native = 3, Audio = 4, Interstitial = 5, RichMedia = 6, SearchText = 7, SocialPost = 8, CTVVideo = 9
 }
 
 /// <summary>

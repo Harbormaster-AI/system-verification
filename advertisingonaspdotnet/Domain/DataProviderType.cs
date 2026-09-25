@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum DataProviderType
 {
-    FirstParty=1,SecondParty=2,ThirdParty=3
+    FirstParty = 1, SecondParty = 2, ThirdParty = 3
 }
 
 /// <summary>

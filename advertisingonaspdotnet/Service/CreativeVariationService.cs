@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface ICreativeVariationService {
+public interface ICreativeVariationService
+{
 
-    Task Create(CreativeVariation model , CancellationToken cancellationToken);
+    Task Create(CreativeVariation model, CancellationToken cancellationToken);
     Task<bool> Update(CreativeVariation model, CancellationToken cancellationToken);
     Task<CreativeVariation?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CreativeVariation>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class CreativeVariationService : ICreativeVariationService
 
     public async Task<bool> Update(CreativeVariation model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class CreativeVariationService : ICreativeVariationService
         return true;
     }
 
-    public async Task<bool> AssignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class CreativeVariationService : ICreativeVariationService
 
             var child = await _serviceResolver.Get<CreativeAssetService>().Get(childRequest, cancellationToken);
             parent.CreativeAsset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class CreativeVariationService : ICreativeVariationService
         return true;
     }
 
-    public async Task<bool> UnassignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class CreativeVariationService : ICreativeVariationService
         try
         {
             parent.CreativeAsset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

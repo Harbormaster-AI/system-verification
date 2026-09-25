@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum ReportType
 {
-    Performance=1,Delivery=2,Inventory=3,Billing=4
+    Performance = 1, Delivery = 2, Inventory = 3, Billing = 4
 }
 
 /// <summary>

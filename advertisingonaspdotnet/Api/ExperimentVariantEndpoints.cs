@@ -31,9 +31,10 @@ public static class ExperimentVariantEndpoints
     private static async Task<IResult> Create(
         ExperimentVariantRequest request,
         IExperimentVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToExperimentVariant( request );
+        var model = mapRequestToExperimentVariant(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class ExperimentVariantEndpoints
     private static async Task<IResult> Update(
         ExperimentVariantRequest request,
         IExperimentVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToExperimentVariant( request );
+        var model = mapRequestToExperimentVariant(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class ExperimentVariantEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IExperimentVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var experimentVariant = await service.Get(identifier, cancellationToken);
-        return experimentVariant is null ? Results.NotFound() : Results.Ok( experimentVariant );
+        return experimentVariant is null ? Results.NotFound() : Results.Ok(experimentVariant);
     }
 
 
     private static async Task<IResult> GetAll(
         IExperimentVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ExperimentVariantResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ExperimentVariantResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IExperimentVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class ExperimentVariantEndpoints
     private static async Task<IResult> AssignExperiment(
         AssociationRequest request,
         IExperimentVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignExperiment(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class ExperimentVariantEndpoints
     private static async Task<IResult> UnassignExperiment(
     AssociationRequest request,
     IExperimentVariantService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignExperiment(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ExperimentVariantEndpoints
     private static async Task<IResult> AssignCreativeVariation(
         AssociationRequest request,
         IExperimentVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCreativeVariation(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class ExperimentVariantEndpoints
     private static async Task<IResult> UnassignCreativeVariation(
     AssociationRequest request,
     IExperimentVariantService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCreativeVariation(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class ExperimentVariantEndpoints
     private static async Task<IResult> AssignLineItem(
         AssociationRequest request,
         IExperimentVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLineItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class ExperimentVariantEndpoints
     private static async Task<IResult> UnassignLineItem(
     AssociationRequest request,
     IExperimentVariantService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLineItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ExperimentVariant mapRequestToExperimentVariant( ExperimentVariantRequest request ) {
+    private static ExperimentVariant mapRequestToExperimentVariant(ExperimentVariantRequest request)
+    {
         var model = new ExperimentVariant
         {
             Id = request.Id,

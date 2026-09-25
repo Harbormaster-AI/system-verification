@@ -11,7 +11,7 @@ public interface IExperimentRepository
     Task UpdateAsync(Experiment experiment, CancellationToken cancellationToken);
     Task DeleteAsync(Experiment experiment, CancellationToken cancellationToken);
 
-    Task AddToVariantsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromVariantsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToVariantsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromVariantsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

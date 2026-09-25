@@ -11,7 +11,7 @@ public interface IRateCardRepository
     Task UpdateAsync(RateCard rateCard, CancellationToken cancellationToken);
     Task DeleteAsync(RateCard rateCard, CancellationToken cancellationToken);
 
-    Task AddToRatesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRatesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRatesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRatesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

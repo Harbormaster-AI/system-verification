@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum InventoryType
 {
-    Display=1,Video=2,Native=3,Audio=4,Search=5,Social=6,DOOH=7
+    Display = 1, Video = 2, Native = 3, Audio = 4, Search = 5, Social = 6, DOOH = 7
 }
 
 /// <summary>

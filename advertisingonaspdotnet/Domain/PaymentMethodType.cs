@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum PaymentMethodType
 {
-    CreditCard=1,Invoice=2,Wire=3,ACH=4
+    CreditCard = 1, Invoice = 2, Wire = 3, ACH = 4
 }
 
 /// <summary>

@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IBrandSafetyPolicyService {
+public interface IBrandSafetyPolicyService
+{
 
-    Task Create(BrandSafetyPolicy model , CancellationToken cancellationToken);
+    Task Create(BrandSafetyPolicy model, CancellationToken cancellationToken);
     Task<bool> Update(BrandSafetyPolicy model, CancellationToken cancellationToken);
     Task<BrandSafetyPolicy?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BrandSafetyPolicy>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class BrandSafetyPolicyService : IBrandSafetyPolicyService
 
     public async Task<bool> Update(BrandSafetyPolicy model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,8 +119,10 @@ public class BrandSafetyPolicyService : IBrandSafetyPolicyService
     }
 
 
-    public async Task<bool> AddToTargetingProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTargetingProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BrandSafetyPolicy",
                 "AddToTargetingProfiles",
@@ -126,16 +130,18 @@ public class BrandSafetyPolicyService : IBrandSafetyPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTargetingProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTargetingProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BrandSafetyPolicy",
                 "RemoveFromTargetingProfiles",

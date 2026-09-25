@@ -11,7 +11,7 @@ public interface IBrandSafetyPolicyRepository
     Task UpdateAsync(BrandSafetyPolicy brandSafetyPolicy, CancellationToken cancellationToken);
     Task DeleteAsync(BrandSafetyPolicy brandSafetyPolicy, CancellationToken cancellationToken);
 
-    Task AddToTargetingProfilesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTargetingProfilesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTargetingProfilesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTargetingProfilesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

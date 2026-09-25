@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface ILineItemService {
+public interface ILineItemService
+{
 
-    Task Create(LineItem model , CancellationToken cancellationToken);
+    Task Create(LineItem model, CancellationToken cancellationToken);
     Task<bool> Update(LineItem model, CancellationToken cancellationToken);
     Task<LineItem?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<LineItem>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class LineItemService : ILineItemService
 
     public async Task<bool> Update(LineItem model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -132,7 +134,8 @@ public class LineItemService : ILineItemService
         return true;
     }
 
-    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -150,7 +153,7 @@ public class LineItemService : ILineItemService
 
             var child = await _serviceResolver.Get<CampaignService>().Get(childRequest, cancellationToken);
             parent.Campaign = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -162,7 +165,8 @@ public class LineItemService : ILineItemService
         return true;
     }
 
-    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -173,7 +177,7 @@ public class LineItemService : ILineItemService
         try
         {
             parent.Campaign = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -185,7 +189,8 @@ public class LineItemService : ILineItemService
         return true;
     }
 
-    public async Task<bool> AssignTargetingProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTargetingProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -203,7 +208,7 @@ public class LineItemService : ILineItemService
 
             var child = await _serviceResolver.Get<TargetingProfileService>().Get(childRequest, cancellationToken);
             parent.TargetingProfile = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -215,7 +220,8 @@ public class LineItemService : ILineItemService
         return true;
     }
 
-    public async Task<bool> UnassignTargetingProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTargetingProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -226,7 +232,7 @@ public class LineItemService : ILineItemService
         try
         {
             parent.TargetingProfile = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -238,7 +244,8 @@ public class LineItemService : ILineItemService
         return true;
     }
 
-    public async Task<bool> AssignDeal(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDeal(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -256,7 +263,7 @@ public class LineItemService : ILineItemService
 
             var child = await _serviceResolver.Get<DealService>().Get(childRequest, cancellationToken);
             parent.Deal = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -268,7 +275,8 @@ public class LineItemService : ILineItemService
         return true;
     }
 
-    public async Task<bool> UnassignDeal(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDeal(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -279,7 +287,7 @@ public class LineItemService : ILineItemService
         try
         {
             parent.Deal = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -292,8 +300,10 @@ public class LineItemService : ILineItemService
     }
 
 
-    public async Task<bool> AddToPlacements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPlacements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LineItem",
                 "AddToPlacements",
@@ -301,16 +311,18 @@ public class LineItemService : ILineItemService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPlacements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPlacements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LineItem",
                 "RemoveFromPlacements",
@@ -326,8 +338,10 @@ public class LineItemService : ILineItemService
         return true;
     }
 
-    public async Task<bool> AddToCreatives(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCreatives(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LineItem",
                 "AddToCreatives",
@@ -335,16 +349,18 @@ public class LineItemService : ILineItemService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCreatives(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCreatives(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LineItem",
                 "RemoveFromCreatives",
@@ -360,8 +376,10 @@ public class LineItemService : ILineItemService
         return true;
     }
 
-    public async Task<bool> AddToPerformanceMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPerformanceMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LineItem",
                 "AddToPerformanceMetrics",
@@ -369,16 +387,18 @@ public class LineItemService : ILineItemService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPerformanceMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPerformanceMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LineItem",
                 "RemoveFromPerformanceMetrics",

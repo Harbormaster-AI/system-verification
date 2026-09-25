@@ -11,7 +11,7 @@ public interface IGeoRegionRepository
     Task UpdateAsync(GeoRegion geoRegion, CancellationToken cancellationToken);
     Task DeleteAsync(GeoRegion geoRegion, CancellationToken cancellationToken);
 
-    Task AddToChildrenAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromChildrenAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToChildrenAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromChildrenAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

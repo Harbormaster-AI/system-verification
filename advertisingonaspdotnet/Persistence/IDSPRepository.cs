@@ -11,7 +11,7 @@ public interface IDSPRepository
     Task UpdateAsync(DSP dSP, CancellationToken cancellationToken);
     Task DeleteAsync(DSP dSP, CancellationToken cancellationToken);
 
-    Task AddToAdAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAdAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAdAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAdAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

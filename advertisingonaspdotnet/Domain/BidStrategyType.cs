@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum BidStrategyType
 {
-    Manual=1,AutoMaximizeClicks=2,AutoTargetCPA=3,AutoTargetROAS=4
+    Manual = 1, AutoMaximizeClicks = 2, AutoTargetCPA = 3, AutoTargetROAS = 4
 }
 
 /// <summary>

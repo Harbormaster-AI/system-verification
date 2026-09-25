@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IRateCardService {
+public interface IRateCardService
+{
 
-    Task Create(RateCard model , CancellationToken cancellationToken);
+    Task Create(RateCard model, CancellationToken cancellationToken);
     Task<bool> Update(RateCard model, CancellationToken cancellationToken);
     Task<RateCard?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RateCard>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class RateCardService : IRateCardService
 
     public async Task<bool> Update(RateCard model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class RateCardService : IRateCardService
         return true;
     }
 
-    public async Task<bool> AssignPublisher(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPublisher(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class RateCardService : IRateCardService
 
             var child = await _serviceResolver.Get<PublisherService>().Get(childRequest, cancellationToken);
             parent.Publisher = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class RateCardService : IRateCardService
         return true;
     }
 
-    public async Task<bool> UnassignPublisher(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPublisher(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class RateCardService : IRateCardService
         try
         {
             parent.Publisher = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class RateCardService : IRateCardService
     }
 
 
-    public async Task<bool> AddToRates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RateCard",
                 "AddToRates",
@@ -182,16 +188,18 @@ public class RateCardService : IRateCardService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RateCard",
                 "RemoveFromRates",

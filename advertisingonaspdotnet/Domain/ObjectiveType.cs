@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum ObjectiveType
 {
-    Awareness=1,Reach=2,Traffic=3,Engagement=4,Leads=5,Sales=6,AppInstalls=7,VideoViews=8
+    Awareness = 1, Reach = 2, Traffic = 3, Engagement = 4, Leads = 5, Sales = 6, AppInstalls = 7, VideoViews = 8
 }
 
 /// <summary>

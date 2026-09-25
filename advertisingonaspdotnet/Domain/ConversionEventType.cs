@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum ConversionEventType
 {
-    Lead=1,Purchase=2,Signup=3,AddToCart=4,ViewContent=5,AppInstall=6
+    Lead = 1, Purchase = 2, Signup = 3, AddToCart = 4, ViewContent = 5, AppInstall = 6
 }
 
 /// <summary>

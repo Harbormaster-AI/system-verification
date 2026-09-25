@@ -11,9 +11,9 @@ public interface IUserRepository
     Task UpdateAsync(User user, CancellationToken cancellationToken);
     Task DeleteAsync(User user, CancellationToken cancellationToken);
 
-    Task AddToTeamsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTeamsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToAdAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAdAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTeamsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTeamsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAdAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAdAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

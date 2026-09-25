@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum FrequencyPeriod
 {
-    Hour=1,Day=2,Week=3,Month=4,Lifetime=5
+    Hour = 1, Day = 2, Week = 3, Month = 4, Lifetime = 5
 }
 
 /// <summary>

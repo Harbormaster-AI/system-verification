@@ -35,9 +35,10 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> Create(
         PerformanceMetricRequest request,
         IPerformanceMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPerformanceMetric( request );
+        var model = mapRequestToPerformanceMetric(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> Update(
         PerformanceMetricRequest request,
         IPerformanceMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPerformanceMetric( request );
+        var model = mapRequestToPerformanceMetric(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPerformanceMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var performanceMetric = await service.Get(identifier, cancellationToken);
-        return performanceMetric is null ? Results.NotFound() : Results.Ok( performanceMetric );
+        return performanceMetric is null ? Results.NotFound() : Results.Ok(performanceMetric);
     }
 
 
     private static async Task<IResult> GetAll(
         IPerformanceMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PerformanceMetricResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PerformanceMetricResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPerformanceMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> AssignAdAccount(
         AssociationRequest request,
         IPerformanceMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAdAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> UnassignAdAccount(
     AssociationRequest request,
     IPerformanceMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAdAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -115,7 +122,8 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> AssignCampaign(
         AssociationRequest request,
         IPerformanceMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCampaign(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +131,8 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> UnassignCampaign(
     AssociationRequest request,
     IPerformanceMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCampaign(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -131,7 +140,8 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> AssignLineItem(
         AssociationRequest request,
         IPerformanceMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLineItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -139,7 +149,8 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> UnassignLineItem(
     AssociationRequest request,
     IPerformanceMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLineItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -147,7 +158,8 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> AssignPlacement(
         AssociationRequest request,
         IPerformanceMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPlacement(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -155,7 +167,8 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> UnassignPlacement(
     AssociationRequest request,
     IPerformanceMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPlacement(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -163,7 +176,8 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> AssignCreativeAsset(
         AssociationRequest request,
         IPerformanceMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCreativeAsset(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -171,13 +185,15 @@ public static class PerformanceMetricEndpoints
     private static async Task<IResult> UnassignCreativeAsset(
     AssociationRequest request,
     IPerformanceMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCreativeAsset(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static PerformanceMetric mapRequestToPerformanceMetric( PerformanceMetricRequest request ) {
+    private static PerformanceMetric mapRequestToPerformanceMetric(PerformanceMetricRequest request)
+    {
         var model = new PerformanceMetric
         {
             Id = request.Id,

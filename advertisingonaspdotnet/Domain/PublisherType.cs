@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum PublisherType
 {
-    Site=1,App=2,Network=3,CTVApp=4
+    Site = 1, App = 2, Network = 3, CTVApp = 4
 }
 
 /// <summary>

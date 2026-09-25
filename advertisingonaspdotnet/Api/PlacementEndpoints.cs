@@ -31,9 +31,10 @@ public static class PlacementEndpoints
     private static async Task<IResult> Create(
         PlacementRequest request,
         IPlacementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPlacement( request );
+        var model = mapRequestToPlacement(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class PlacementEndpoints
     private static async Task<IResult> Update(
         PlacementRequest request,
         IPlacementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPlacement( request );
+        var model = mapRequestToPlacement(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class PlacementEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPlacementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var placement = await service.Get(identifier, cancellationToken);
-        return placement is null ? Results.NotFound() : Results.Ok( placement );
+        return placement is null ? Results.NotFound() : Results.Ok(placement);
     }
 
 
     private static async Task<IResult> GetAll(
         IPlacementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PlacementResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PlacementResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPlacementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class PlacementEndpoints
     private static async Task<IResult> AssignLineItem(
         AssociationRequest request,
         IPlacementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLineItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class PlacementEndpoints
     private static async Task<IResult> UnassignLineItem(
     AssociationRequest request,
     IPlacementService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLineItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class PlacementEndpoints
     private static async Task<IResult> AssignAdSlot(
         AssociationRequest request,
         IPlacementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAdSlot(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class PlacementEndpoints
     private static async Task<IResult> UnassignAdSlot(
     AssociationRequest request,
     IPlacementService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAdSlot(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class PlacementEndpoints
     private static async Task<IResult> AssignDeal(
         AssociationRequest request,
         IPlacementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDeal(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class PlacementEndpoints
     private static async Task<IResult> UnassignDeal(
     AssociationRequest request,
     IPlacementService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDeal(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Placement mapRequestToPlacement( PlacementRequest request ) {
+    private static Placement mapRequestToPlacement(PlacementRequest request)
+    {
         var model = new Placement
         {
             Id = request.Id,

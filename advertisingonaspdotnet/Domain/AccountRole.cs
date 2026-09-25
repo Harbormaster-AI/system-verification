@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum AccountRole
 {
-    Admin=1,Trader=2,Analyst=3,Viewer=4
+    Admin = 1, Trader = 2, Analyst = 3, Viewer = 4
 }
 
 /// <summary>

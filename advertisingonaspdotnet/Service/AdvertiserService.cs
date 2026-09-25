@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IAdvertiserService {
+public interface IAdvertiserService
+{
 
-    Task Create(Advertiser model , CancellationToken cancellationToken);
+    Task Create(Advertiser model, CancellationToken cancellationToken);
     Task<bool> Update(Advertiser model, CancellationToken cancellationToken);
     Task<Advertiser?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Advertiser>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class AdvertiserService : IAdvertiserService
 
     public async Task<bool> Update(Advertiser model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class AdvertiserService : IAdvertiserService
         return true;
     }
 
-    public async Task<bool> AssignAgency(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAgency(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class AdvertiserService : IAdvertiserService
 
             var child = await _serviceResolver.Get<AgencyService>().Get(childRequest, cancellationToken);
             parent.Agency = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class AdvertiserService : IAdvertiserService
         return true;
     }
 
-    public async Task<bool> UnassignAgency(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAgency(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class AdvertiserService : IAdvertiserService
         try
         {
             parent.Agency = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -180,8 +184,10 @@ public class AdvertiserService : IAdvertiserService
     }
 
 
-    public async Task<bool> AddToAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Advertiser",
                 "AddToAdAccounts",
@@ -189,16 +195,18 @@ public class AdvertiserService : IAdvertiserService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAdAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Advertiser",
                 "RemoveFromAdAccounts",
@@ -214,8 +222,10 @@ public class AdvertiserService : IAdvertiserService
         return true;
     }
 
-    public async Task<bool> AddToBillingProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToBillingProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Advertiser",
                 "AddToBillingProfiles",
@@ -223,16 +233,18 @@ public class AdvertiserService : IAdvertiserService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromBillingProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromBillingProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Advertiser",
                 "RemoveFromBillingProfiles",
@@ -248,8 +260,10 @@ public class AdvertiserService : IAdvertiserService
         return true;
     }
 
-    public async Task<bool> AddToCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Advertiser",
                 "AddToCampaigns",
@@ -257,16 +271,18 @@ public class AdvertiserService : IAdvertiserService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Advertiser",
                 "RemoveFromCampaigns",
@@ -282,8 +298,10 @@ public class AdvertiserService : IAdvertiserService
         return true;
     }
 
-    public async Task<bool> AddToTrackingPixels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTrackingPixels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Advertiser",
                 "AddToTrackingPixels",
@@ -291,16 +309,18 @@ public class AdvertiserService : IAdvertiserService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTrackingPixels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTrackingPixels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Advertiser",
                 "RemoveFromTrackingPixels",

@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface ICreativeAssetService {
+public interface ICreativeAssetService
+{
 
-    Task Create(CreativeAsset model , CancellationToken cancellationToken);
+    Task Create(CreativeAsset model, CancellationToken cancellationToken);
     Task<bool> Update(CreativeAsset model, CancellationToken cancellationToken);
     Task<CreativeAsset?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CreativeAsset>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class CreativeAssetService : ICreativeAssetService
 
     public async Task<bool> Update(CreativeAsset model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -129,8 +131,10 @@ public class CreativeAssetService : ICreativeAssetService
     }
 
 
-    public async Task<bool> AddToFiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CreativeAsset",
                 "AddToFiles",
@@ -138,16 +142,18 @@ public class CreativeAssetService : ICreativeAssetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CreativeAsset",
                 "RemoveFromFiles",
@@ -163,8 +169,10 @@ public class CreativeAssetService : ICreativeAssetService
         return true;
     }
 
-    public async Task<bool> AddToApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CreativeAsset",
                 "AddToApprovals",
@@ -172,16 +180,18 @@ public class CreativeAssetService : ICreativeAssetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CreativeAsset",
                 "RemoveFromApprovals",
@@ -197,8 +207,10 @@ public class CreativeAssetService : ICreativeAssetService
         return true;
     }
 
-    public async Task<bool> AddToVariations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToVariations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CreativeAsset",
                 "AddToVariations",
@@ -206,16 +218,18 @@ public class CreativeAssetService : ICreativeAssetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromVariations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromVariations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CreativeAsset",
                 "RemoveFromVariations",
@@ -231,8 +245,10 @@ public class CreativeAssetService : ICreativeAssetService
         return true;
     }
 
-    public async Task<bool> AddToLineItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLineItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CreativeAsset",
                 "AddToLineItems",
@@ -240,16 +256,18 @@ public class CreativeAssetService : ICreativeAssetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLineItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLineItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CreativeAsset",
                 "RemoveFromLineItems",

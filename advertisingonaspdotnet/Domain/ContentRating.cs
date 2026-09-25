@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum ContentRating
 {
-    G=1,PG=2,PGThirteen=3,R=4,Mature=5,Unrated=6
+    G = 1, PG = 2, PGThirteen = 3, R = 4, Mature = 5, Unrated = 6
 }
 
 /// <summary>

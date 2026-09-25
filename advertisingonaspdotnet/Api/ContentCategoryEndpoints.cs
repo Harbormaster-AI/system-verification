@@ -25,9 +25,10 @@ public static class ContentCategoryEndpoints
     private static async Task<IResult> Create(
         ContentCategoryRequest request,
         IContentCategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToContentCategory( request );
+        var model = mapRequestToContentCategory(request);
 
         try
         {
@@ -44,9 +45,10 @@ public static class ContentCategoryEndpoints
     private static async Task<IResult> Update(
         ContentCategoryRequest request,
         IContentCategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToContentCategory( request );
+        var model = mapRequestToContentCategory(request);
 
         try
         {
@@ -63,31 +65,35 @@ public static class ContentCategoryEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IContentCategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var contentCategory = await service.Get(identifier, cancellationToken);
-        return contentCategory is null ? Results.NotFound() : Results.Ok( contentCategory );
+        return contentCategory is null ? Results.NotFound() : Results.Ok(contentCategory);
     }
 
 
     private static async Task<IResult> GetAll(
         IContentCategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ContentCategoryResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ContentCategoryResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IContentCategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ContentCategory mapRequestToContentCategory( ContentCategoryRequest request ) {
+    private static ContentCategory mapRequestToContentCategory(ContentCategoryRequest request)
+    {
         var model = new ContentCategory
         {
             Id = request.Id,

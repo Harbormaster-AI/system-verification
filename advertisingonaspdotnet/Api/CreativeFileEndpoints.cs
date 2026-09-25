@@ -27,9 +27,10 @@ public static class CreativeFileEndpoints
     private static async Task<IResult> Create(
         CreativeFileRequest request,
         ICreativeFileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCreativeFile( request );
+        var model = mapRequestToCreativeFile(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class CreativeFileEndpoints
     private static async Task<IResult> Update(
         CreativeFileRequest request,
         ICreativeFileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCreativeFile( request );
+        var model = mapRequestToCreativeFile(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class CreativeFileEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICreativeFileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var creativeFile = await service.Get(identifier, cancellationToken);
-        return creativeFile is null ? Results.NotFound() : Results.Ok( creativeFile );
+        return creativeFile is null ? Results.NotFound() : Results.Ok(creativeFile);
     }
 
 
     private static async Task<IResult> GetAll(
         ICreativeFileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CreativeFileResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CreativeFileResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICreativeFileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class CreativeFileEndpoints
     private static async Task<IResult> AssignCreativeAsset(
         AssociationRequest request,
         ICreativeFileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCreativeAsset(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class CreativeFileEndpoints
     private static async Task<IResult> UnassignCreativeAsset(
     AssociationRequest request,
     ICreativeFileService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCreativeAsset(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static CreativeFile mapRequestToCreativeFile( CreativeFileRequest request ) {
+    private static CreativeFile mapRequestToCreativeFile(CreativeFileRequest request)
+    {
         var model = new CreativeFile
         {
             Id = request.Id,

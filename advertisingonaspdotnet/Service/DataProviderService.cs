@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IDataProviderService {
+public interface IDataProviderService
+{
 
-    Task Create(DataProvider model , CancellationToken cancellationToken);
+    Task Create(DataProvider model, CancellationToken cancellationToken);
     Task<bool> Update(DataProvider model, CancellationToken cancellationToken);
     Task<DataProvider?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DataProvider>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class DataProviderService : IDataProviderService
 
     public async Task<bool> Update(DataProvider model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,8 +120,10 @@ public class DataProviderService : IDataProviderService
     }
 
 
-    public async Task<bool> AddToAudienceSegments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAudienceSegments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProvider",
                 "AddToAudienceSegments",
@@ -127,16 +131,18 @@ public class DataProviderService : IDataProviderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAudienceSegments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAudienceSegments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProvider",
                 "RemoveFromAudienceSegments",

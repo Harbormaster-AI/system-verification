@@ -11,9 +11,9 @@ public interface ITeamRepository
     Task UpdateAsync(Team team, CancellationToken cancellationToken);
     Task DeleteAsync(Team team, CancellationToken cancellationToken);
 
-    Task AddToUsersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromUsersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToAdAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAdAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToUsersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromUsersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAdAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAdAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

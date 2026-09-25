@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum CreativeType
 {
-    Image=1,Video=2,HTML5=3,Audio=4
+    Image = 1, Video = 2, HTML5 = 3, Audio = 4
 }
 
 /// <summary>

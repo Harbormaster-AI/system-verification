@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface ICreativeApprovalService {
+public interface ICreativeApprovalService
+{
 
-    Task Create(CreativeApproval model , CancellationToken cancellationToken);
+    Task Create(CreativeApproval model, CancellationToken cancellationToken);
     Task<bool> Update(CreativeApproval model, CancellationToken cancellationToken);
     Task<CreativeApproval?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CreativeApproval>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class CreativeApprovalService : ICreativeApprovalService
 
     public async Task<bool> Update(CreativeApproval model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class CreativeApprovalService : ICreativeApprovalService
         return true;
     }
 
-    public async Task<bool> AssignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class CreativeApprovalService : ICreativeApprovalService
 
             var child = await _serviceResolver.Get<CreativeAssetService>().Get(childRequest, cancellationToken);
             parent.CreativeAsset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class CreativeApprovalService : ICreativeApprovalService
         return true;
     }
 
-    public async Task<bool> UnassignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCreativeAsset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class CreativeApprovalService : ICreativeApprovalService
         try
         {
             parent.CreativeAsset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class CreativeApprovalService : ICreativeApprovalService
         return true;
     }
 
-    public async Task<bool> AssignPublisher(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPublisher(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class CreativeApprovalService : ICreativeApprovalService
 
             var child = await _serviceResolver.Get<PublisherService>().Get(childRequest, cancellationToken);
             parent.Publisher = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class CreativeApprovalService : ICreativeApprovalService
         return true;
     }
 
-    public async Task<bool> UnassignPublisher(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPublisher(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class CreativeApprovalService : ICreativeApprovalService
         try
         {
             parent.Publisher = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

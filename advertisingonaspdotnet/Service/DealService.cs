@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IDealService {
+public interface IDealService
+{
 
-    Task Create(Deal model , CancellationToken cancellationToken);
+    Task Create(Deal model, CancellationToken cancellationToken);
     Task<bool> Update(Deal model, CancellationToken cancellationToken);
     Task<Deal?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Deal>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class DealService : IDealService
 
     public async Task<bool> Update(Deal model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class DealService : IDealService
         return true;
     }
 
-    public async Task<bool> AssignPublisher(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPublisher(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class DealService : IDealService
 
             var child = await _serviceResolver.Get<PublisherService>().Get(childRequest, cancellationToken);
             parent.Publisher = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class DealService : IDealService
         return true;
     }
 
-    public async Task<bool> UnassignPublisher(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPublisher(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class DealService : IDealService
         try
         {
             parent.Publisher = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,8 +178,10 @@ public class DealService : IDealService
     }
 
 
-    public async Task<bool> AddToInventorySources(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInventorySources(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Deal",
                 "AddToInventorySources",
@@ -183,16 +189,18 @@ public class DealService : IDealService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInventorySources(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInventorySources(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Deal",
                 "RemoveFromInventorySources",
@@ -208,8 +216,10 @@ public class DealService : IDealService
         return true;
     }
 
-    public async Task<bool> AddToPlacements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPlacements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Deal",
                 "AddToPlacements",
@@ -217,16 +227,18 @@ public class DealService : IDealService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPlacements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPlacements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Deal",
                 "RemoveFromPlacements",

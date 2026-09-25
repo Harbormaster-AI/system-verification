@@ -20,11 +20,11 @@ public static class BillingProfileEndpoints
         group.MapPut("/assignAdvertiser", AssignAdvertiser);
         group.MapPut("/unassignAdvertiser", UnassignAdvertiser);
 
-    group.MapPut("/addToPaymentMethods", AddToPaymentMethods);
-    group.MapPut("/removeFromPaymentMethods", RemoveFromPaymentMethods);
+        group.MapPut("/addToPaymentMethods", AddToPaymentMethods);
+        group.MapPut("/removeFromPaymentMethods", RemoveFromPaymentMethods);
 
-    group.MapPut("/addToAdAccounts", AddToAdAccounts);
-    group.MapPut("/removeFromAdAccounts", RemoveFromAdAccounts);
+        group.MapPut("/addToAdAccounts", AddToAdAccounts);
+        group.MapPut("/removeFromAdAccounts", RemoveFromAdAccounts);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class BillingProfileEndpoints
     private static async Task<IResult> Create(
         BillingProfileRequest request,
         IBillingProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBillingProfile( request );
+        var model = mapRequestToBillingProfile(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class BillingProfileEndpoints
     private static async Task<IResult> Update(
         BillingProfileRequest request,
         IBillingProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBillingProfile( request );
+        var model = mapRequestToBillingProfile(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class BillingProfileEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IBillingProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var billingProfile = await service.Get(identifier, cancellationToken);
-        return billingProfile is null ? Results.NotFound() : Results.Ok( billingProfile );
+        return billingProfile is null ? Results.NotFound() : Results.Ok(billingProfile);
     }
 
 
     private static async Task<IResult> GetAll(
         IBillingProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( BillingProfileResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(BillingProfileResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IBillingProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class BillingProfileEndpoints
     private static async Task<IResult> AssignAdvertiser(
         AssociationRequest request,
         IBillingProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAdvertiser(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class BillingProfileEndpoints
     private static async Task<IResult> UnassignAdvertiser(
     AssociationRequest request,
     IBillingProfileService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAdvertiser(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class BillingProfileEndpoints
     private static async Task<IResult> AddToPaymentMethods(
         MultipleAssociationRequest request,
         IBillingProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPaymentMethods(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class BillingProfileEndpoints
     private static async Task<IResult> RemoveFromPaymentMethods(
         MultipleAssociationRequest request,
         IBillingProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPaymentMethods(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToAdAccounts(
         MultipleAssociationRequest request,
         IBillingProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAdAccounts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class BillingProfileEndpoints
     private static async Task<IResult> RemoveFromAdAccounts(
         MultipleAssociationRequest request,
         IBillingProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAdAccounts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static BillingProfile mapRequestToBillingProfile( BillingProfileRequest request ) {
+    private static BillingProfile mapRequestToBillingProfile(BillingProfileRequest request)
+    {
         var model = new BillingProfile
         {
             Id = request.Id,

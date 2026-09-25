@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum ExperimentStatus
 {
-    Planned=1,Running=2,Paused=3,Completed=4,Cancelled=5
+    Planned = 1, Running = 2, Paused = 3, Completed = 4, Cancelled = 5
 }
 
 /// <summary>

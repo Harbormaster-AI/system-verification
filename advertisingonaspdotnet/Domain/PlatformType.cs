@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum PlatformType
 {
-    Web=1,MobileApp=2,CTV=3
+    Web = 1, MobileApp = 2, CTV = 3
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum FrequencyScope
 {
-    Campaign=1,LineItem=2,Creative=3
+    Campaign = 1, LineItem = 2, Creative = 3
 }
 
 /// <summary>

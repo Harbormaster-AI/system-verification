@@ -6,9 +6,10 @@ using advertisingonaspdotnet.Telemetry;
 
 namespace advertisingonaspdotnet.Service;
 
-public interface IContentCategoryService {
+public interface IContentCategoryService
+{
 
-    Task Create(ContentCategory model , CancellationToken cancellationToken);
+    Task Create(ContentCategory model, CancellationToken cancellationToken);
     Task<bool> Update(ContentCategory model, CancellationToken cancellationToken);
     Task<ContentCategory?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ContentCategory>> GetAll(CancellationToken cancellationToken);
@@ -59,7 +60,8 @@ public class ContentCategoryService : IContentCategoryService
 
     public async Task<bool> Update(ContentCategory model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {

@@ -11,7 +11,7 @@ public interface ITrackingPixelRepository
     Task UpdateAsync(TrackingPixel trackingPixel, CancellationToken cancellationToken);
     Task DeleteAsync(TrackingPixel trackingPixel, CancellationToken cancellationToken);
 
-    Task AddToConversionEventsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromConversionEventsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToConversionEventsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromConversionEventsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -36,7 +36,7 @@ namespace advertisingonaspdotnet.Domain;
 
 public enum PricingModel
 {
-    CPM=1,CPC=2,CPA=3,CPL=4,CPV=5,FlatFee=6
+    CPM = 1, CPC = 2, CPA = 3, CPL = 4, CPV = 5, FlatFee = 6
 }
 
 /// <summary>
