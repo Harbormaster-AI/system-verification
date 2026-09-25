@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface ICustomerAddressService {
+public interface ICustomerAddressService
+{
 
-    Task Create(CustomerAddress model , CancellationToken cancellationToken);
+    Task Create(CustomerAddress model, CancellationToken cancellationToken);
     Task<bool> Update(CustomerAddress model, CancellationToken cancellationToken);
     Task<CustomerAddress?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CustomerAddress>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class CustomerAddressService : ICustomerAddressService
 
     public async Task<bool> Update(CustomerAddress model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class CustomerAddressService : ICustomerAddressService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class CustomerAddressService : ICustomerAddressService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.Customer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class CustomerAddressService : ICustomerAddressService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class CustomerAddressService : ICustomerAddressService
         try
         {
             parent.Customer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

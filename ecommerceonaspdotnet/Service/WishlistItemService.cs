@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface IWishlistItemService {
+public interface IWishlistItemService
+{
 
-    Task Create(WishlistItem model , CancellationToken cancellationToken);
+    Task Create(WishlistItem model, CancellationToken cancellationToken);
     Task<bool> Update(WishlistItem model, CancellationToken cancellationToken);
     Task<WishlistItem?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<WishlistItem>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class WishlistItemService : IWishlistItemService
 
     public async Task<bool> Update(WishlistItem model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class WishlistItemService : IWishlistItemService
         return true;
     }
 
-    public async Task<bool> AssignWishlist(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWishlist(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class WishlistItemService : IWishlistItemService
 
             var child = await _serviceResolver.Get<WishlistService>().Get(childRequest, cancellationToken);
             parent.Wishlist = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class WishlistItemService : IWishlistItemService
         return true;
     }
 
-    public async Task<bool> UnassignWishlist(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWishlist(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class WishlistItemService : IWishlistItemService
         try
         {
             parent.Wishlist = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -170,7 +174,8 @@ public class WishlistItemService : IWishlistItemService
         return true;
     }
 
-    public async Task<bool> AssignVariant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignVariant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -188,7 +193,7 @@ public class WishlistItemService : IWishlistItemService
 
             var child = await _serviceResolver.Get<ProductVariantService>().Get(childRequest, cancellationToken);
             parent.Variant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -200,7 +205,8 @@ public class WishlistItemService : IWishlistItemService
         return true;
     }
 
-    public async Task<bool> UnassignVariant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignVariant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -211,7 +217,7 @@ public class WishlistItemService : IWishlistItemService
         try
         {
             parent.Variant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

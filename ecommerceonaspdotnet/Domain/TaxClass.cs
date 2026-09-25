@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum TaxClass
 {
-    Standard=1,Reduced=2,Zero=3,Exempt=4,DigitalServices=5,Food=6,Clothing=7
+    Standard = 1, Reduced = 2, Zero = 3, Exempt = 4, DigitalServices = 5, Food = 6, Clothing = 7
 }
 
 /// <summary>

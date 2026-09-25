@@ -27,9 +27,10 @@ public static class InvoiceEndpoints
     private static async Task<IResult> Create(
         InvoiceRequest request,
         IInvoiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInvoice( request );
+        var model = mapRequestToInvoice(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class InvoiceEndpoints
     private static async Task<IResult> Update(
         InvoiceRequest request,
         IInvoiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInvoice( request );
+        var model = mapRequestToInvoice(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class InvoiceEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInvoiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var invoice = await service.Get(identifier, cancellationToken);
-        return invoice is null ? Results.NotFound() : Results.Ok( invoice );
+        return invoice is null ? Results.NotFound() : Results.Ok(invoice);
     }
 
 
     private static async Task<IResult> GetAll(
         IInvoiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InvoiceResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InvoiceResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInvoiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class InvoiceEndpoints
     private static async Task<IResult> AssignOrder(
         AssociationRequest request,
         IInvoiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class InvoiceEndpoints
     private static async Task<IResult> UnassignOrder(
     AssociationRequest request,
     IInvoiceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Invoice mapRequestToInvoice( InvoiceRequest request ) {
+    private static Invoice mapRequestToInvoice(InvoiceRequest request)
+    {
         var model = new Invoice
         {
             Id = request.Id,

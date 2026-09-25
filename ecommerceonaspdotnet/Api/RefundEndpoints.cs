@@ -29,9 +29,10 @@ public static class RefundEndpoints
     private static async Task<IResult> Create(
         RefundRequest request,
         IRefundService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRefund( request );
+        var model = mapRequestToRefund(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class RefundEndpoints
     private static async Task<IResult> Update(
         RefundRequest request,
         IRefundService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRefund( request );
+        var model = mapRequestToRefund(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class RefundEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRefundService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var refund = await service.Get(identifier, cancellationToken);
-        return refund is null ? Results.NotFound() : Results.Ok( refund );
+        return refund is null ? Results.NotFound() : Results.Ok(refund);
     }
 
 
     private static async Task<IResult> GetAll(
         IRefundService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RefundResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RefundResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRefundService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class RefundEndpoints
     private static async Task<IResult> AssignPayment(
         AssociationRequest request,
         IRefundService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPayment(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class RefundEndpoints
     private static async Task<IResult> UnassignPayment(
     AssociationRequest request,
     IRefundService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPayment(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class RefundEndpoints
     private static async Task<IResult> AssignOrder(
         AssociationRequest request,
         IRefundService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class RefundEndpoints
     private static async Task<IResult> UnassignOrder(
     AssociationRequest request,
     IRefundService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Refund mapRequestToRefund( RefundRequest request ) {
+    private static Refund mapRequestToRefund(RefundRequest request)
+    {
         var model = new Refund
         {
             Id = request.Id,

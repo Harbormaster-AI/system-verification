@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum OrderLineStatus
 {
-    Pending=1,Fulfilled=2,Cancelled=3,Backordered=4,Returned=5
+    Pending = 1, Fulfilled = 2, Cancelled = 3, Backordered = 4, Returned = 5
 }
 
 /// <summary>

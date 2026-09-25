@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface IReturnItemService {
+public interface IReturnItemService
+{
 
-    Task Create(ReturnItem model , CancellationToken cancellationToken);
+    Task Create(ReturnItem model, CancellationToken cancellationToken);
     Task<bool> Update(ReturnItem model, CancellationToken cancellationToken);
     Task<ReturnItem?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ReturnItem>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ReturnItemService : IReturnItemService
 
     public async Task<bool> Update(ReturnItem model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class ReturnItemService : IReturnItemService
         return true;
     }
 
-    public async Task<bool> AssignReturnRequest(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignReturnRequest(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class ReturnItemService : IReturnItemService
 
             var child = await _serviceResolver.Get<ReturnRequestService>().Get(childRequest, cancellationToken);
             parent.ReturnRequest = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class ReturnItemService : IReturnItemService
         return true;
     }
 
-    public async Task<bool> UnassignReturnRequest(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignReturnRequest(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class ReturnItemService : IReturnItemService
         try
         {
             parent.ReturnRequest = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class ReturnItemService : IReturnItemService
         return true;
     }
 
-    public async Task<bool> AssignOrderLine(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrderLine(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class ReturnItemService : IReturnItemService
 
             var child = await _serviceResolver.Get<OrderLineService>().Get(childRequest, cancellationToken);
             parent.OrderLine = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class ReturnItemService : IReturnItemService
         return true;
     }
 
-    public async Task<bool> UnassignOrderLine(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrderLine(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class ReturnItemService : IReturnItemService
         try
         {
             parent.OrderLine = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

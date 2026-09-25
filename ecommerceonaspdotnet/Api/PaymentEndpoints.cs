@@ -24,8 +24,8 @@ public static class PaymentEndpoints
         group.MapPut("/assignPaymentProvider", AssignPaymentProvider);
         group.MapPut("/unassignPaymentProvider", UnassignPaymentProvider);
 
-    group.MapPut("/addToRefunds", AddToRefunds);
-    group.MapPut("/removeFromRefunds", RemoveFromRefunds);
+        group.MapPut("/addToRefunds", AddToRefunds);
+        group.MapPut("/removeFromRefunds", RemoveFromRefunds);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class PaymentEndpoints
     private static async Task<IResult> Create(
         PaymentRequest request,
         IPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPayment( request );
+        var model = mapRequestToPayment(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class PaymentEndpoints
     private static async Task<IResult> Update(
         PaymentRequest request,
         IPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPayment( request );
+        var model = mapRequestToPayment(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class PaymentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var payment = await service.Get(identifier, cancellationToken);
-        return payment is null ? Results.NotFound() : Results.Ok( payment );
+        return payment is null ? Results.NotFound() : Results.Ok(payment);
     }
 
 
     private static async Task<IResult> GetAll(
         IPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PaymentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PaymentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -98,7 +103,8 @@ public static class PaymentEndpoints
     private static async Task<IResult> AssignOrder(
         AssociationRequest request,
         IPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -106,7 +112,8 @@ public static class PaymentEndpoints
     private static async Task<IResult> UnassignOrder(
     AssociationRequest request,
     IPaymentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class PaymentEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         IPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -122,7 +130,8 @@ public static class PaymentEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     IPaymentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -130,7 +139,8 @@ public static class PaymentEndpoints
     private static async Task<IResult> AssignPaymentProvider(
         AssociationRequest request,
         IPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPaymentProvider(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -138,7 +148,8 @@ public static class PaymentEndpoints
     private static async Task<IResult> UnassignPaymentProvider(
     AssociationRequest request,
     IPaymentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPaymentProvider(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -147,7 +158,8 @@ public static class PaymentEndpoints
     private static async Task<IResult> AddToRefunds(
         MultipleAssociationRequest request,
         IPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRefunds(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class PaymentEndpoints
     private static async Task<IResult> RemoveFromRefunds(
         MultipleAssociationRequest request,
         IPaymentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRefunds(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Payment mapRequestToPayment( PaymentRequest request ) {
+    private static Payment mapRequestToPayment(PaymentRequest request)
+    {
         var model = new Payment
         {
             Id = request.Id,

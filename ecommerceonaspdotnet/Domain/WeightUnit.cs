@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum WeightUnit
 {
-    Gram=1,Kilogram=2,Ounce=3,Pound=4
+    Gram = 1, Kilogram = 2, Ounce = 3, Pound = 4
 }
 
 /// <summary>

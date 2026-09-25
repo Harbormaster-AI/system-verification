@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum CustomerGroup
 {
-    Retail=1,Wholesale=2,VIP=3,Employee=4
+    Retail = 1, Wholesale = 2, VIP = 3, Employee = 4
 }
 
 /// <summary>

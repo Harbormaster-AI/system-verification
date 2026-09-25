@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum PaymentProviderType
 {
-    PSP=1,Gateway=2,Aggregator=3,Manual=4
+    PSP = 1, Gateway = 2, Aggregator = 3, Manual = 4
 }
 
 /// <summary>

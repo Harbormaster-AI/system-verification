@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum PaymentStatus
 {
-    Authorized=1,Captured=2,PartiallyCaptured=3,Declined=4,Refunded=5,PartiallyRefunded=6,Voided=7,Pending=8
+    Authorized = 1, Captured = 2, PartiallyCaptured = 3, Declined = 4, Refunded = 5, PartiallyRefunded = 6, Voided = 7, Pending = 8
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum ReturnStatus
 {
-    Requested=1,Approved=2,Rejected=3,InTransit=4,Received=5,Refunded=6,Closed=7
+    Requested = 1, Approved = 2, Rejected = 3, InTransit = 4, Received = 5, Refunded = 6, Closed = 7
 }
 
 /// <summary>

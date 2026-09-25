@@ -11,7 +11,7 @@ public interface IShipmentRepository
     Task UpdateAsync(Shipment shipment, CancellationToken cancellationToken);
     Task DeleteAsync(Shipment shipment, CancellationToken cancellationToken);
 
-    Task AddToShipmentItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromShipmentItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToShipmentItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromShipmentItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

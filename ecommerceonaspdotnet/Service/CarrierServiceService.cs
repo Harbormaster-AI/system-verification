@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface ICarrierServiceService {
+public interface ICarrierServiceService
+{
 
-    Task Create(CarrierService model , CancellationToken cancellationToken);
+    Task Create(CarrierService model, CancellationToken cancellationToken);
     Task<bool> Update(CarrierService model, CancellationToken cancellationToken);
     Task<CarrierService?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CarrierService>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class CarrierServiceService : ICarrierServiceService
 
     public async Task<bool> Update(CarrierService model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,8 +121,10 @@ public class CarrierServiceService : ICarrierServiceService
     }
 
 
-    public async Task<bool> AddToShippingMethods(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToShippingMethods(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CarrierService",
                 "AddToShippingMethods",
@@ -128,16 +132,18 @@ public class CarrierServiceService : ICarrierServiceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromShippingMethods(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromShippingMethods(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CarrierService",
                 "RemoveFromShippingMethods",

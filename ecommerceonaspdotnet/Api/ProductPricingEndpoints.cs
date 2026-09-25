@@ -29,9 +29,10 @@ public static class ProductPricingEndpoints
     private static async Task<IResult> Create(
         ProductPricingRequest request,
         IProductPricingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProductPricing( request );
+        var model = mapRequestToProductPricing(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class ProductPricingEndpoints
     private static async Task<IResult> Update(
         ProductPricingRequest request,
         IProductPricingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProductPricing( request );
+        var model = mapRequestToProductPricing(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class ProductPricingEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IProductPricingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var productPricing = await service.Get(identifier, cancellationToken);
-        return productPricing is null ? Results.NotFound() : Results.Ok( productPricing );
+        return productPricing is null ? Results.NotFound() : Results.Ok(productPricing);
     }
 
 
     private static async Task<IResult> GetAll(
         IProductPricingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ProductPricingResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ProductPricingResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IProductPricingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class ProductPricingEndpoints
     private static async Task<IResult> AssignVariant(
         AssociationRequest request,
         IProductPricingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignVariant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class ProductPricingEndpoints
     private static async Task<IResult> UnassignVariant(
     AssociationRequest request,
     IProductPricingService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignVariant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class ProductPricingEndpoints
     private static async Task<IResult> AssignChannel(
         AssociationRequest request,
         IProductPricingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignChannel(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class ProductPricingEndpoints
     private static async Task<IResult> UnassignChannel(
     AssociationRequest request,
     IProductPricingService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignChannel(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ProductPricing mapRequestToProductPricing( ProductPricingRequest request ) {
+    private static ProductPricing mapRequestToProductPricing(ProductPricingRequest request)
+    {
         var model = new ProductPricing
         {
             Id = request.Id,

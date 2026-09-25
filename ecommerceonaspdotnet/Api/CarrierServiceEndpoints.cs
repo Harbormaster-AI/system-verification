@@ -18,8 +18,8 @@ public static class CarrierServiceEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToShippingMethods", AddToShippingMethods);
-    group.MapPut("/removeFromShippingMethods", RemoveFromShippingMethods);
+        group.MapPut("/addToShippingMethods", AddToShippingMethods);
+        group.MapPut("/removeFromShippingMethods", RemoveFromShippingMethods);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class CarrierServiceEndpoints
     private static async Task<IResult> Create(
         CarrierServiceRequest request,
         ICarrierServiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCarrierService( request );
+        var model = mapRequestToCarrierService(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class CarrierServiceEndpoints
     private static async Task<IResult> Update(
         CarrierServiceRequest request,
         ICarrierServiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCarrierService( request );
+        var model = mapRequestToCarrierService(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class CarrierServiceEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICarrierServiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var carrierService = await service.Get(identifier, cancellationToken);
-        return carrierService is null ? Results.NotFound() : Results.Ok( carrierService );
+        return carrierService is null ? Results.NotFound() : Results.Ok(carrierService);
     }
 
 
     private static async Task<IResult> GetAll(
         ICarrierServiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CarrierServiceResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CarrierServiceResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICarrierServiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class CarrierServiceEndpoints
     private static async Task<IResult> AddToShippingMethods(
         MultipleAssociationRequest request,
         ICarrierServiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToShippingMethods(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class CarrierServiceEndpoints
     private static async Task<IResult> RemoveFromShippingMethods(
         MultipleAssociationRequest request,
         ICarrierServiceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromShippingMethods(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static CarrierService mapRequestToCarrierService( CarrierServiceRequest request ) {
+    private static CarrierService mapRequestToCarrierService(CarrierServiceRequest request)
+    {
         var model = new CarrierService
         {
             Id = request.Id,

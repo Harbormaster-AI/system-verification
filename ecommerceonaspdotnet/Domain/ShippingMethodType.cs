@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum ShippingMethodType
 {
-    Standard=1,Expedited=2,Overnight=3,SameDay=4,Pickup=5
+    Standard = 1, Expedited = 2, Overnight = 3, SameDay = 4, Pickup = 5
 }
 
 /// <summary>

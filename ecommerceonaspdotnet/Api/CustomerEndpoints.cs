@@ -18,32 +18,32 @@ public static class CustomerEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToAddresses", AddToAddresses);
-    group.MapPut("/removeFromAddresses", RemoveFromAddresses);
+        group.MapPut("/addToAddresses", AddToAddresses);
+        group.MapPut("/removeFromAddresses", RemoveFromAddresses);
 
-    group.MapPut("/addToCarts", AddToCarts);
-    group.MapPut("/removeFromCarts", RemoveFromCarts);
+        group.MapPut("/addToCarts", AddToCarts);
+        group.MapPut("/removeFromCarts", RemoveFromCarts);
 
-    group.MapPut("/addToOrders", AddToOrders);
-    group.MapPut("/removeFromOrders", RemoveFromOrders);
+        group.MapPut("/addToOrders", AddToOrders);
+        group.MapPut("/removeFromOrders", RemoveFromOrders);
 
-    group.MapPut("/addToPayments", AddToPayments);
-    group.MapPut("/removeFromPayments", RemoveFromPayments);
+        group.MapPut("/addToPayments", AddToPayments);
+        group.MapPut("/removeFromPayments", RemoveFromPayments);
 
-    group.MapPut("/addToReviews", AddToReviews);
-    group.MapPut("/removeFromReviews", RemoveFromReviews);
+        group.MapPut("/addToReviews", AddToReviews);
+        group.MapPut("/removeFromReviews", RemoveFromReviews);
 
-    group.MapPut("/addToWishlists", AddToWishlists);
-    group.MapPut("/removeFromWishlists", RemoveFromWishlists);
+        group.MapPut("/addToWishlists", AddToWishlists);
+        group.MapPut("/removeFromWishlists", RemoveFromWishlists);
 
-    group.MapPut("/addToSubscriptions", AddToSubscriptions);
-    group.MapPut("/removeFromSubscriptions", RemoveFromSubscriptions);
+        group.MapPut("/addToSubscriptions", AddToSubscriptions);
+        group.MapPut("/removeFromSubscriptions", RemoveFromSubscriptions);
 
-    group.MapPut("/addToCouponRedemptions", AddToCouponRedemptions);
-    group.MapPut("/removeFromCouponRedemptions", RemoveFromCouponRedemptions);
+        group.MapPut("/addToCouponRedemptions", AddToCouponRedemptions);
+        group.MapPut("/removeFromCouponRedemptions", RemoveFromCouponRedemptions);
 
-    group.MapPut("/addToGiftCards", AddToGiftCards);
-    group.MapPut("/removeFromGiftCards", RemoveFromGiftCards);
+        group.MapPut("/addToGiftCards", AddToGiftCards);
+        group.MapPut("/removeFromGiftCards", RemoveFromGiftCards);
 
 
         return app;
@@ -52,9 +52,10 @@ public static class CustomerEndpoints
     private static async Task<IResult> Create(
         CustomerRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCustomer( request );
+        var model = mapRequestToCustomer(request);
 
         try
         {
@@ -71,9 +72,10 @@ public static class CustomerEndpoints
     private static async Task<IResult> Update(
         CustomerRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCustomer( request );
+        var model = mapRequestToCustomer(request);
 
         try
         {
@@ -90,25 +92,28 @@ public static class CustomerEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var customer = await service.Get(identifier, cancellationToken);
-        return customer is null ? Results.NotFound() : Results.Ok( customer );
+        return customer is null ? Results.NotFound() : Results.Ok(customer);
     }
 
 
     private static async Task<IResult> GetAll(
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CustomerResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CustomerResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -117,7 +122,8 @@ public static class CustomerEndpoints
     private static async Task<IResult> AddToAddresses(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAddresses(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -125,14 +131,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromAddresses(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAddresses(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCarts(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCarts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +148,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromCarts(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCarts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOrders(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,14 +165,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromOrders(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPayments(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPayments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -170,14 +182,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromPayments(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPayments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToReviews(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToReviews(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -185,14 +199,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromReviews(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromReviews(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToWishlists(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToWishlists(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -200,14 +216,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromWishlists(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromWishlists(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSubscriptions(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSubscriptions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -215,14 +233,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromSubscriptions(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSubscriptions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCouponRedemptions(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCouponRedemptions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -230,14 +250,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromCouponRedemptions(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCouponRedemptions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToGiftCards(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToGiftCards(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -245,11 +267,13 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromGiftCards(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromGiftCards(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Customer mapRequestToCustomer( CustomerRequest request ) {
+    private static Customer mapRequestToCustomer(CustomerRequest request)
+    {
         var model = new Customer
         {
             Id = request.Id,

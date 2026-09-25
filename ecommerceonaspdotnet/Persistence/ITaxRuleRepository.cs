@@ -11,7 +11,7 @@ public interface ITaxRuleRepository
     Task UpdateAsync(TaxRule taxRule, CancellationToken cancellationToken);
     Task DeleteAsync(TaxRule taxRule, CancellationToken cancellationToken);
 
-    Task AddToChannelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromChannelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToChannelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromChannelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

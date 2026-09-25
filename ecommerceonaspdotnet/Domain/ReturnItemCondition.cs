@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum ReturnItemCondition
 {
-    New=1,OpenBox=2,Used=3,Damaged=4,MissingParts=5
+    New = 1, OpenBox = 2, Used = 3, Damaged = 4, MissingParts = 5
 }
 
 /// <summary>

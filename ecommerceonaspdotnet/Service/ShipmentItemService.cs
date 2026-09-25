@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface IShipmentItemService {
+public interface IShipmentItemService
+{
 
-    Task Create(ShipmentItem model , CancellationToken cancellationToken);
+    Task Create(ShipmentItem model, CancellationToken cancellationToken);
     Task<bool> Update(ShipmentItem model, CancellationToken cancellationToken);
     Task<ShipmentItem?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ShipmentItem>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ShipmentItemService : IShipmentItemService
 
     public async Task<bool> Update(ShipmentItem model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class ShipmentItemService : IShipmentItemService
         return true;
     }
 
-    public async Task<bool> AssignShipment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignShipment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class ShipmentItemService : IShipmentItemService
 
             var child = await _serviceResolver.Get<ShipmentService>().Get(childRequest, cancellationToken);
             parent.Shipment = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class ShipmentItemService : IShipmentItemService
         return true;
     }
 
-    public async Task<bool> UnassignShipment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignShipment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class ShipmentItemService : IShipmentItemService
         try
         {
             parent.Shipment = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -170,7 +174,8 @@ public class ShipmentItemService : IShipmentItemService
         return true;
     }
 
-    public async Task<bool> AssignOrderLine(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrderLine(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -188,7 +193,7 @@ public class ShipmentItemService : IShipmentItemService
 
             var child = await _serviceResolver.Get<OrderLineService>().Get(childRequest, cancellationToken);
             parent.OrderLine = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -200,7 +205,8 @@ public class ShipmentItemService : IShipmentItemService
         return true;
     }
 
-    public async Task<bool> UnassignOrderLine(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrderLine(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -211,7 +217,7 @@ public class ShipmentItemService : IShipmentItemService
         try
         {
             parent.OrderLine = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

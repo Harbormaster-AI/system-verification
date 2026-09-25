@@ -11,7 +11,7 @@ public interface IPayoutRepository
     Task UpdateAsync(Payout payout, CancellationToken cancellationToken);
     Task DeleteAsync(Payout payout, CancellationToken cancellationToken);
 
-    Task AddToOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -11,7 +11,7 @@ public interface IShippingMethodRepository
     Task UpdateAsync(ShippingMethod shippingMethod, CancellationToken cancellationToken);
     Task DeleteAsync(ShippingMethod shippingMethod, CancellationToken cancellationToken);
 
-    Task AddToChannelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromChannelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToChannelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromChannelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

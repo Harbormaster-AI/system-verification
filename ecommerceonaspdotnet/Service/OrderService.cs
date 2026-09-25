@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface IOrderService {
+public interface IOrderService
+{
 
-    Task Create(Order model , CancellationToken cancellationToken);
+    Task Create(Order model, CancellationToken cancellationToken);
     Task<bool> Update(Order model, CancellationToken cancellationToken);
     Task<Order?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Order>> GetAll(CancellationToken cancellationToken);
@@ -83,7 +84,8 @@ public class OrderService : IOrderService
 
     public async Task<bool> Update(Order model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -146,7 +148,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -164,7 +167,7 @@ public class OrderService : IOrderService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.Customer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,7 +179,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -187,7 +191,7 @@ public class OrderService : IOrderService
         try
         {
             parent.Customer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -199,7 +203,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AssignChannel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignChannel(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -217,7 +222,7 @@ public class OrderService : IOrderService
 
             var child = await _serviceResolver.Get<ChannelService>().Get(childRequest, cancellationToken);
             parent.Channel = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,7 +234,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> UnassignChannel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignChannel(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -240,7 +246,7 @@ public class OrderService : IOrderService
         try
         {
             parent.Channel = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -252,7 +258,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AssignSeller(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSeller(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -270,7 +277,7 @@ public class OrderService : IOrderService
 
             var child = await _serviceResolver.Get<SellerService>().Get(childRequest, cancellationToken);
             parent.Seller = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -282,7 +289,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> UnassignSeller(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSeller(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -293,7 +301,7 @@ public class OrderService : IOrderService
         try
         {
             parent.Seller = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -305,7 +313,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AssignInvoice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInvoice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -323,7 +332,7 @@ public class OrderService : IOrderService
 
             var child = await _serviceResolver.Get<InvoiceService>().Get(childRequest, cancellationToken);
             parent.Invoice = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -335,7 +344,8 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> UnassignInvoice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInvoice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -346,7 +356,7 @@ public class OrderService : IOrderService
         try
         {
             parent.Invoice = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -359,8 +369,10 @@ public class OrderService : IOrderService
     }
 
 
-    public async Task<bool> AddToOrderLines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOrderLines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "AddToOrderLines",
@@ -368,16 +380,18 @@ public class OrderService : IOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOrderLines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOrderLines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "RemoveFromOrderLines",
@@ -393,8 +407,10 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AddToPayments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPayments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "AddToPayments",
@@ -402,16 +418,18 @@ public class OrderService : IOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPayments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPayments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "RemoveFromPayments",
@@ -427,8 +445,10 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AddToShipments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToShipments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "AddToShipments",
@@ -436,16 +456,18 @@ public class OrderService : IOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromShipments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromShipments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "RemoveFromShipments",
@@ -461,8 +483,10 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AddToRefunds(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRefunds(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "AddToRefunds",
@@ -470,16 +494,18 @@ public class OrderService : IOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRefunds(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRefunds(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "RemoveFromRefunds",
@@ -495,8 +521,10 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AddToAppliedPromotions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAppliedPromotions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "AddToAppliedPromotions",
@@ -504,16 +532,18 @@ public class OrderService : IOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAppliedPromotions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAppliedPromotions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "RemoveFromAppliedPromotions",
@@ -529,8 +559,10 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AddToGiftCardRedemptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToGiftCardRedemptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "AddToGiftCardRedemptions",
@@ -538,16 +570,18 @@ public class OrderService : IOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromGiftCardRedemptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromGiftCardRedemptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "RemoveFromGiftCardRedemptions",
@@ -563,8 +597,10 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AddToCouponRedemptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCouponRedemptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "AddToCouponRedemptions",
@@ -572,16 +608,18 @@ public class OrderService : IOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCouponRedemptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCouponRedemptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "RemoveFromCouponRedemptions",
@@ -597,8 +635,10 @@ public class OrderService : IOrderService
         return true;
     }
 
-    public async Task<bool> AddToReturnRequests(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToReturnRequests(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "AddToReturnRequests",
@@ -606,16 +646,18 @@ public class OrderService : IOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromReturnRequests(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromReturnRequests(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Order",
                 "RemoveFromReturnRequests",

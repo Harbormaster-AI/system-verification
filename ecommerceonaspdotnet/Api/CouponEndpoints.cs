@@ -20,8 +20,8 @@ public static class CouponEndpoints
         group.MapPut("/assignPromotion", AssignPromotion);
         group.MapPut("/unassignPromotion", UnassignPromotion);
 
-    group.MapPut("/addToRedemptions", AddToRedemptions);
-    group.MapPut("/removeFromRedemptions", RemoveFromRedemptions);
+        group.MapPut("/addToRedemptions", AddToRedemptions);
+        group.MapPut("/removeFromRedemptions", RemoveFromRedemptions);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class CouponEndpoints
     private static async Task<IResult> Create(
         CouponRequest request,
         ICouponService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCoupon( request );
+        var model = mapRequestToCoupon(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class CouponEndpoints
     private static async Task<IResult> Update(
         CouponRequest request,
         ICouponService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCoupon( request );
+        var model = mapRequestToCoupon(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class CouponEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICouponService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var coupon = await service.Get(identifier, cancellationToken);
-        return coupon is null ? Results.NotFound() : Results.Ok( coupon );
+        return coupon is null ? Results.NotFound() : Results.Ok(coupon);
     }
 
 
     private static async Task<IResult> GetAll(
         ICouponService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CouponResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CouponResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICouponService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class CouponEndpoints
     private static async Task<IResult> AssignPromotion(
         AssociationRequest request,
         ICouponService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPromotion(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class CouponEndpoints
     private static async Task<IResult> UnassignPromotion(
     AssociationRequest request,
     ICouponService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPromotion(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class CouponEndpoints
     private static async Task<IResult> AddToRedemptions(
         MultipleAssociationRequest request,
         ICouponService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRedemptions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class CouponEndpoints
     private static async Task<IResult> RemoveFromRedemptions(
         MultipleAssociationRequest request,
         ICouponService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRedemptions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Coupon mapRequestToCoupon( CouponRequest request ) {
+    private static Coupon mapRequestToCoupon(CouponRequest request)
+    {
         var model = new Coupon
         {
             Id = request.Id,

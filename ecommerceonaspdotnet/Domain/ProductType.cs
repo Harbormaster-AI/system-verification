@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum ProductType
 {
-    Physical=1,Digital=2,Service=3,Bundle=4,Subscription=5
+    Physical = 1, Digital = 2, Service = 3, Bundle = 4, Subscription = 5
 }
 
 /// <summary>

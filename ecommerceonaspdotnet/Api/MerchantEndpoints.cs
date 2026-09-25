@@ -18,26 +18,26 @@ public static class MerchantEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToChannels", AddToChannels);
-    group.MapPut("/removeFromChannels", RemoveFromChannels);
+        group.MapPut("/addToChannels", AddToChannels);
+        group.MapPut("/removeFromChannels", RemoveFromChannels);
 
-    group.MapPut("/addToBrands", AddToBrands);
-    group.MapPut("/removeFromBrands", RemoveFromBrands);
+        group.MapPut("/addToBrands", AddToBrands);
+        group.MapPut("/removeFromBrands", RemoveFromBrands);
 
-    group.MapPut("/addToFulfillmentCenters", AddToFulfillmentCenters);
-    group.MapPut("/removeFromFulfillmentCenters", RemoveFromFulfillmentCenters);
+        group.MapPut("/addToFulfillmentCenters", AddToFulfillmentCenters);
+        group.MapPut("/removeFromFulfillmentCenters", RemoveFromFulfillmentCenters);
 
-    group.MapPut("/addToTaxRules", AddToTaxRules);
-    group.MapPut("/removeFromTaxRules", RemoveFromTaxRules);
+        group.MapPut("/addToTaxRules", AddToTaxRules);
+        group.MapPut("/removeFromTaxRules", RemoveFromTaxRules);
 
-    group.MapPut("/addToPaymentProviders", AddToPaymentProviders);
-    group.MapPut("/removeFromPaymentProviders", RemoveFromPaymentProviders);
+        group.MapPut("/addToPaymentProviders", AddToPaymentProviders);
+        group.MapPut("/removeFromPaymentProviders", RemoveFromPaymentProviders);
 
-    group.MapPut("/addToSellers", AddToSellers);
-    group.MapPut("/removeFromSellers", RemoveFromSellers);
+        group.MapPut("/addToSellers", AddToSellers);
+        group.MapPut("/removeFromSellers", RemoveFromSellers);
 
-    group.MapPut("/addToPromotions", AddToPromotions);
-    group.MapPut("/removeFromPromotions", RemoveFromPromotions);
+        group.MapPut("/addToPromotions", AddToPromotions);
+        group.MapPut("/removeFromPromotions", RemoveFromPromotions);
 
 
         return app;
@@ -46,9 +46,10 @@ public static class MerchantEndpoints
     private static async Task<IResult> Create(
         MerchantRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMerchant( request );
+        var model = mapRequestToMerchant(request);
 
         try
         {
@@ -65,9 +66,10 @@ public static class MerchantEndpoints
     private static async Task<IResult> Update(
         MerchantRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMerchant( request );
+        var model = mapRequestToMerchant(request);
 
         try
         {
@@ -84,25 +86,28 @@ public static class MerchantEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var merchant = await service.Get(identifier, cancellationToken);
-        return merchant is null ? Results.NotFound() : Results.Ok( merchant );
+        return merchant is null ? Results.NotFound() : Results.Ok(merchant);
     }
 
 
     private static async Task<IResult> GetAll(
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MerchantResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MerchantResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +116,8 @@ public static class MerchantEndpoints
     private static async Task<IResult> AddToChannels(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToChannels(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,14 +125,16 @@ public static class MerchantEndpoints
     private static async Task<IResult> RemoveFromChannels(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromChannels(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToBrands(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToBrands(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -134,14 +142,16 @@ public static class MerchantEndpoints
     private static async Task<IResult> RemoveFromBrands(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromBrands(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToFulfillmentCenters(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToFulfillmentCenters(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -149,14 +159,16 @@ public static class MerchantEndpoints
     private static async Task<IResult> RemoveFromFulfillmentCenters(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromFulfillmentCenters(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToTaxRules(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTaxRules(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -164,14 +176,16 @@ public static class MerchantEndpoints
     private static async Task<IResult> RemoveFromTaxRules(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTaxRules(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPaymentProviders(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPaymentProviders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -179,14 +193,16 @@ public static class MerchantEndpoints
     private static async Task<IResult> RemoveFromPaymentProviders(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPaymentProviders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSellers(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSellers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -194,14 +210,16 @@ public static class MerchantEndpoints
     private static async Task<IResult> RemoveFromSellers(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSellers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPromotions(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPromotions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -209,11 +227,13 @@ public static class MerchantEndpoints
     private static async Task<IResult> RemoveFromPromotions(
         MultipleAssociationRequest request,
         IMerchantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPromotions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Merchant mapRequestToMerchant( MerchantRequest request ) {
+    private static Merchant mapRequestToMerchant(MerchantRequest request)
+    {
         var model = new Merchant
         {
             Id = request.Id,

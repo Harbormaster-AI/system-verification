@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum ReviewStatus
 {
-    Pending=1,Approved=2,Rejected=3,Flagged=4
+    Pending = 1, Approved = 2, Rejected = 3, Flagged = 4
 }
 
 /// <summary>

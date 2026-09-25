@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum ReturnReason
 {
-    Defective=1,Damaged=2,NotAsDescribed=3,WrongItem=4,NoLongerNeeded=5,SizeFitIssue=6,Other=7
+    Defective = 1, Damaged = 2, NotAsDescribed = 3, WrongItem = 4, NoLongerNeeded = 5, SizeFitIssue = 6, Other = 7
 }
 
 /// <summary>

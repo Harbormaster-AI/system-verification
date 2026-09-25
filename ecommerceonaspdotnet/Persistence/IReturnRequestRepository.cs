@@ -11,7 +11,7 @@ public interface IReturnRequestRepository
     Task UpdateAsync(ReturnRequest returnRequest, CancellationToken cancellationToken);
     Task DeleteAsync(ReturnRequest returnRequest, CancellationToken cancellationToken);
 
-    Task AddToItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

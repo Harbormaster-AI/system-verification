@@ -20,14 +20,14 @@ public static class SellerEndpoints
         group.MapPut("/assignMerchant", AssignMerchant);
         group.MapPut("/unassignMerchant", UnassignMerchant);
 
-    group.MapPut("/addToProducts", AddToProducts);
-    group.MapPut("/removeFromProducts", RemoveFromProducts);
+        group.MapPut("/addToProducts", AddToProducts);
+        group.MapPut("/removeFromProducts", RemoveFromProducts);
 
-    group.MapPut("/addToPayouts", AddToPayouts);
-    group.MapPut("/removeFromPayouts", RemoveFromPayouts);
+        group.MapPut("/addToPayouts", AddToPayouts);
+        group.MapPut("/removeFromPayouts", RemoveFromPayouts);
 
-    group.MapPut("/addToOrders", AddToOrders);
-    group.MapPut("/removeFromOrders", RemoveFromOrders);
+        group.MapPut("/addToOrders", AddToOrders);
+        group.MapPut("/removeFromOrders", RemoveFromOrders);
 
 
         return app;
@@ -36,9 +36,10 @@ public static class SellerEndpoints
     private static async Task<IResult> Create(
         SellerRequest request,
         ISellerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSeller( request );
+        var model = mapRequestToSeller(request);
 
         try
         {
@@ -55,9 +56,10 @@ public static class SellerEndpoints
     private static async Task<IResult> Update(
         SellerRequest request,
         ISellerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSeller( request );
+        var model = mapRequestToSeller(request);
 
         try
         {
@@ -74,25 +76,28 @@ public static class SellerEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISellerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var seller = await service.Get(identifier, cancellationToken);
-        return seller is null ? Results.NotFound() : Results.Ok( seller );
+        return seller is null ? Results.NotFound() : Results.Ok(seller);
     }
 
 
     private static async Task<IResult> GetAll(
         ISellerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SellerResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SellerResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISellerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -100,7 +105,8 @@ public static class SellerEndpoints
     private static async Task<IResult> AssignMerchant(
         AssociationRequest request,
         ISellerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMerchant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +114,8 @@ public static class SellerEndpoints
     private static async Task<IResult> UnassignMerchant(
     AssociationRequest request,
     ISellerService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMerchant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,7 +124,8 @@ public static class SellerEndpoints
     private static async Task<IResult> AddToProducts(
         MultipleAssociationRequest request,
         ISellerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToProducts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -125,14 +133,16 @@ public static class SellerEndpoints
     private static async Task<IResult> RemoveFromProducts(
         MultipleAssociationRequest request,
         ISellerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromProducts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPayouts(
         MultipleAssociationRequest request,
         ISellerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPayouts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class SellerEndpoints
     private static async Task<IResult> RemoveFromPayouts(
         MultipleAssociationRequest request,
         ISellerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPayouts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOrders(
         MultipleAssociationRequest request,
         ISellerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class SellerEndpoints
     private static async Task<IResult> RemoveFromOrders(
         MultipleAssociationRequest request,
         ISellerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Seller mapRequestToSeller( SellerRequest request ) {
+    private static Seller mapRequestToSeller(SellerRequest request)
+    {
         var model = new Seller
         {
             Id = request.Id,

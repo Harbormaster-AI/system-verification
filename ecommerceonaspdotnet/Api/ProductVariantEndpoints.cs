@@ -20,26 +20,26 @@ public static class ProductVariantEndpoints
         group.MapPut("/assignProduct", AssignProduct);
         group.MapPut("/unassignProduct", UnassignProduct);
 
-    group.MapPut("/addToPricing", AddToPricing);
-    group.MapPut("/removeFromPricing", RemoveFromPricing);
+        group.MapPut("/addToPricing", AddToPricing);
+        group.MapPut("/removeFromPricing", RemoveFromPricing);
 
-    group.MapPut("/addToInventoryItems", AddToInventoryItems);
-    group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
+        group.MapPut("/addToInventoryItems", AddToInventoryItems);
+        group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
 
-    group.MapPut("/addToMediaAssets", AddToMediaAssets);
-    group.MapPut("/removeFromMediaAssets", RemoveFromMediaAssets);
+        group.MapPut("/addToMediaAssets", AddToMediaAssets);
+        group.MapPut("/removeFromMediaAssets", RemoveFromMediaAssets);
 
-    group.MapPut("/addToSubscriptions", AddToSubscriptions);
-    group.MapPut("/removeFromSubscriptions", RemoveFromSubscriptions);
+        group.MapPut("/addToSubscriptions", AddToSubscriptions);
+        group.MapPut("/removeFromSubscriptions", RemoveFromSubscriptions);
 
-    group.MapPut("/addToCartItems", AddToCartItems);
-    group.MapPut("/removeFromCartItems", RemoveFromCartItems);
+        group.MapPut("/addToCartItems", AddToCartItems);
+        group.MapPut("/removeFromCartItems", RemoveFromCartItems);
 
-    group.MapPut("/addToOrderLines", AddToOrderLines);
-    group.MapPut("/removeFromOrderLines", RemoveFromOrderLines);
+        group.MapPut("/addToOrderLines", AddToOrderLines);
+        group.MapPut("/removeFromOrderLines", RemoveFromOrderLines);
 
-    group.MapPut("/addToWishlistItems", AddToWishlistItems);
-    group.MapPut("/removeFromWishlistItems", RemoveFromWishlistItems);
+        group.MapPut("/addToWishlistItems", AddToWishlistItems);
+        group.MapPut("/removeFromWishlistItems", RemoveFromWishlistItems);
 
 
         return app;
@@ -48,9 +48,10 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> Create(
         ProductVariantRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProductVariant( request );
+        var model = mapRequestToProductVariant(request);
 
         try
         {
@@ -67,9 +68,10 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> Update(
         ProductVariantRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProductVariant( request );
+        var model = mapRequestToProductVariant(request);
 
         try
         {
@@ -86,25 +88,28 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var productVariant = await service.Get(identifier, cancellationToken);
-        return productVariant is null ? Results.NotFound() : Results.Ok( productVariant );
+        return productVariant is null ? Results.NotFound() : Results.Ok(productVariant);
     }
 
 
     private static async Task<IResult> GetAll(
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ProductVariantResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ProductVariantResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +117,8 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> AssignProduct(
         AssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProduct(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +126,8 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> UnassignProduct(
     AssociationRequest request,
     IProductVariantService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProduct(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +136,8 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> AddToPricing(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPricing(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,14 +145,16 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> RemoveFromPricing(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPricing(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToInventoryItems(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInventoryItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -152,14 +162,16 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> RemoveFromInventoryItems(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInventoryItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToMediaAssets(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToMediaAssets(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -167,14 +179,16 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> RemoveFromMediaAssets(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromMediaAssets(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSubscriptions(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSubscriptions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -182,14 +196,16 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> RemoveFromSubscriptions(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSubscriptions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCartItems(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCartItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -197,14 +213,16 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> RemoveFromCartItems(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCartItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOrderLines(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOrderLines(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -212,14 +230,16 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> RemoveFromOrderLines(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOrderLines(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToWishlistItems(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToWishlistItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -227,11 +247,13 @@ public static class ProductVariantEndpoints
     private static async Task<IResult> RemoveFromWishlistItems(
         MultipleAssociationRequest request,
         IProductVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromWishlistItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static ProductVariant mapRequestToProductVariant( ProductVariantRequest request ) {
+    private static ProductVariant mapRequestToProductVariant(ProductVariantRequest request)
+    {
         var model = new ProductVariant
         {
             Id = request.Id,

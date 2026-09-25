@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum GiftCardStatus
 {
-    Active=1,Redeemed=2,Expired=3,Disabled=4
+    Active = 1, Redeemed = 2, Expired = 3, Disabled = 4
 }
 
 /// <summary>

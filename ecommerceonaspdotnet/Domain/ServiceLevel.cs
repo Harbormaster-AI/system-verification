@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum ServiceLevel
 {
-    Economy=1,Standard=2,Express=3,Priority=4,NextDay=5
+    Economy = 1, Standard = 2, Express = 3, Priority = 4, NextDay = 5
 }
 
 /// <summary>

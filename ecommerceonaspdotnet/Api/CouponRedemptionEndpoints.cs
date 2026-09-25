@@ -31,9 +31,10 @@ public static class CouponRedemptionEndpoints
     private static async Task<IResult> Create(
         CouponRedemptionRequest request,
         ICouponRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCouponRedemption( request );
+        var model = mapRequestToCouponRedemption(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class CouponRedemptionEndpoints
     private static async Task<IResult> Update(
         CouponRedemptionRequest request,
         ICouponRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCouponRedemption( request );
+        var model = mapRequestToCouponRedemption(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class CouponRedemptionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICouponRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var couponRedemption = await service.Get(identifier, cancellationToken);
-        return couponRedemption is null ? Results.NotFound() : Results.Ok( couponRedemption );
+        return couponRedemption is null ? Results.NotFound() : Results.Ok(couponRedemption);
     }
 
 
     private static async Task<IResult> GetAll(
         ICouponRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CouponRedemptionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CouponRedemptionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICouponRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class CouponRedemptionEndpoints
     private static async Task<IResult> AssignCoupon(
         AssociationRequest request,
         ICouponRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCoupon(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class CouponRedemptionEndpoints
     private static async Task<IResult> UnassignCoupon(
     AssociationRequest request,
     ICouponRedemptionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCoupon(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class CouponRedemptionEndpoints
     private static async Task<IResult> AssignOrder(
         AssociationRequest request,
         ICouponRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class CouponRedemptionEndpoints
     private static async Task<IResult> UnassignOrder(
     AssociationRequest request,
     ICouponRedemptionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class CouponRedemptionEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         ICouponRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class CouponRedemptionEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     ICouponRedemptionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static CouponRedemption mapRequestToCouponRedemption( CouponRedemptionRequest request ) {
+    private static CouponRedemption mapRequestToCouponRedemption(CouponRedemptionRequest request)
+    {
         var model = new CouponRedemption
         {
             Id = request.Id,

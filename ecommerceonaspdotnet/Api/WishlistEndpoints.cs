@@ -20,8 +20,8 @@ public static class WishlistEndpoints
         group.MapPut("/assignCustomer", AssignCustomer);
         group.MapPut("/unassignCustomer", UnassignCustomer);
 
-    group.MapPut("/addToItems", AddToItems);
-    group.MapPut("/removeFromItems", RemoveFromItems);
+        group.MapPut("/addToItems", AddToItems);
+        group.MapPut("/removeFromItems", RemoveFromItems);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class WishlistEndpoints
     private static async Task<IResult> Create(
         WishlistRequest request,
         IWishlistService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWishlist( request );
+        var model = mapRequestToWishlist(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class WishlistEndpoints
     private static async Task<IResult> Update(
         WishlistRequest request,
         IWishlistService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWishlist( request );
+        var model = mapRequestToWishlist(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class WishlistEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IWishlistService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var wishlist = await service.Get(identifier, cancellationToken);
-        return wishlist is null ? Results.NotFound() : Results.Ok( wishlist );
+        return wishlist is null ? Results.NotFound() : Results.Ok(wishlist);
     }
 
 
     private static async Task<IResult> GetAll(
         IWishlistService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( WishlistResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(WishlistResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IWishlistService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class WishlistEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         IWishlistService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class WishlistEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     IWishlistService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class WishlistEndpoints
     private static async Task<IResult> AddToItems(
         MultipleAssociationRequest request,
         IWishlistService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class WishlistEndpoints
     private static async Task<IResult> RemoveFromItems(
         MultipleAssociationRequest request,
         IWishlistService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Wishlist mapRequestToWishlist( WishlistRequest request ) {
+    private static Wishlist mapRequestToWishlist(WishlistRequest request)
+    {
         var model = new Wishlist
         {
             Id = request.Id,

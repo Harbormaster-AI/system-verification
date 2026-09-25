@@ -11,9 +11,9 @@ public interface ISupplierRepository
     Task UpdateAsync(Supplier supplier, CancellationToken cancellationToken);
     Task DeleteAsync(Supplier supplier, CancellationToken cancellationToken);
 
-    Task AddToProductsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromProductsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToFulfillmentCentersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromFulfillmentCentersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToProductsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromProductsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToFulfillmentCentersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromFulfillmentCentersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

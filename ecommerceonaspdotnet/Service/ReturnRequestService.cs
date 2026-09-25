@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface IReturnRequestService {
+public interface IReturnRequestService
+{
 
-    Task Create(ReturnRequest model , CancellationToken cancellationToken);
+    Task Create(ReturnRequest model, CancellationToken cancellationToken);
     Task<bool> Update(ReturnRequest model, CancellationToken cancellationToken);
     Task<ReturnRequest?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ReturnRequest>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class ReturnRequestService : IReturnRequestService
 
     public async Task<bool> Update(ReturnRequest model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class ReturnRequestService : IReturnRequestService
         return true;
     }
 
-    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class ReturnRequestService : IReturnRequestService
 
             var child = await _serviceResolver.Get<OrderService>().Get(childRequest, cancellationToken);
             parent.Order = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class ReturnRequestService : IReturnRequestService
         return true;
     }
 
-    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class ReturnRequestService : IReturnRequestService
         try
         {
             parent.Order = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class ReturnRequestService : IReturnRequestService
         return true;
     }
 
-    public async Task<bool> AssignRefund(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRefund(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class ReturnRequestService : IReturnRequestService
 
             var child = await _serviceResolver.Get<RefundService>().Get(childRequest, cancellationToken);
             parent.Refund = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class ReturnRequestService : IReturnRequestService
         return true;
     }
 
-    public async Task<bool> UnassignRefund(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRefund(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class ReturnRequestService : IReturnRequestService
         try
         {
             parent.Refund = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,7 +236,8 @@ public class ReturnRequestService : IReturnRequestService
         return true;
     }
 
-    public async Task<bool> AssignShipment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignShipment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -248,7 +255,7 @@ public class ReturnRequestService : IReturnRequestService
 
             var child = await _serviceResolver.Get<ShipmentService>().Get(childRequest, cancellationToken);
             parent.Shipment = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -260,7 +267,8 @@ public class ReturnRequestService : IReturnRequestService
         return true;
     }
 
-    public async Task<bool> UnassignShipment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignShipment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -271,7 +279,7 @@ public class ReturnRequestService : IReturnRequestService
         try
         {
             parent.Shipment = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,8 +292,10 @@ public class ReturnRequestService : IReturnRequestService
     }
 
 
-    public async Task<bool> AddToItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ReturnRequest",
                 "AddToItems",
@@ -293,16 +303,18 @@ public class ReturnRequestService : IReturnRequestService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ReturnRequest",
                 "RemoveFromItems",

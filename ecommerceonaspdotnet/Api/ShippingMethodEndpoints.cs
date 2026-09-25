@@ -20,8 +20,8 @@ public static class ShippingMethodEndpoints
         group.MapPut("/assignCarrierService", AssignCarrierService);
         group.MapPut("/unassignCarrierService", UnassignCarrierService);
 
-    group.MapPut("/addToChannels", AddToChannels);
-    group.MapPut("/removeFromChannels", RemoveFromChannels);
+        group.MapPut("/addToChannels", AddToChannels);
+        group.MapPut("/removeFromChannels", RemoveFromChannels);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class ShippingMethodEndpoints
     private static async Task<IResult> Create(
         ShippingMethodRequest request,
         IShippingMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToShippingMethod( request );
+        var model = mapRequestToShippingMethod(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class ShippingMethodEndpoints
     private static async Task<IResult> Update(
         ShippingMethodRequest request,
         IShippingMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToShippingMethod( request );
+        var model = mapRequestToShippingMethod(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class ShippingMethodEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IShippingMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var shippingMethod = await service.Get(identifier, cancellationToken);
-        return shippingMethod is null ? Results.NotFound() : Results.Ok( shippingMethod );
+        return shippingMethod is null ? Results.NotFound() : Results.Ok(shippingMethod);
     }
 
 
     private static async Task<IResult> GetAll(
         IShippingMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ShippingMethodResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ShippingMethodResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IShippingMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class ShippingMethodEndpoints
     private static async Task<IResult> AssignCarrierService(
         AssociationRequest request,
         IShippingMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCarrierService(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class ShippingMethodEndpoints
     private static async Task<IResult> UnassignCarrierService(
     AssociationRequest request,
     IShippingMethodService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCarrierService(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ShippingMethodEndpoints
     private static async Task<IResult> AddToChannels(
         MultipleAssociationRequest request,
         IShippingMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToChannels(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class ShippingMethodEndpoints
     private static async Task<IResult> RemoveFromChannels(
         MultipleAssociationRequest request,
         IShippingMethodService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromChannels(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static ShippingMethod mapRequestToShippingMethod( ShippingMethodRequest request ) {
+    private static ShippingMethod mapRequestToShippingMethod(ShippingMethodRequest request)
+    {
         var model = new ShippingMethod
         {
             Id = request.Id,

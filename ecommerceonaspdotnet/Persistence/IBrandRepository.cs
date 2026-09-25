@@ -11,7 +11,7 @@ public interface IBrandRepository
     Task UpdateAsync(Brand brand, CancellationToken cancellationToken);
     Task DeleteAsync(Brand brand, CancellationToken cancellationToken);
 
-    Task AddToProductsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromProductsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToProductsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromProductsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -26,29 +26,29 @@ public static class OrderEndpoints
         group.MapPut("/assignInvoice", AssignInvoice);
         group.MapPut("/unassignInvoice", UnassignInvoice);
 
-    group.MapPut("/addToOrderLines", AddToOrderLines);
-    group.MapPut("/removeFromOrderLines", RemoveFromOrderLines);
+        group.MapPut("/addToOrderLines", AddToOrderLines);
+        group.MapPut("/removeFromOrderLines", RemoveFromOrderLines);
 
-    group.MapPut("/addToPayments", AddToPayments);
-    group.MapPut("/removeFromPayments", RemoveFromPayments);
+        group.MapPut("/addToPayments", AddToPayments);
+        group.MapPut("/removeFromPayments", RemoveFromPayments);
 
-    group.MapPut("/addToShipments", AddToShipments);
-    group.MapPut("/removeFromShipments", RemoveFromShipments);
+        group.MapPut("/addToShipments", AddToShipments);
+        group.MapPut("/removeFromShipments", RemoveFromShipments);
 
-    group.MapPut("/addToRefunds", AddToRefunds);
-    group.MapPut("/removeFromRefunds", RemoveFromRefunds);
+        group.MapPut("/addToRefunds", AddToRefunds);
+        group.MapPut("/removeFromRefunds", RemoveFromRefunds);
 
-    group.MapPut("/addToAppliedPromotions", AddToAppliedPromotions);
-    group.MapPut("/removeFromAppliedPromotions", RemoveFromAppliedPromotions);
+        group.MapPut("/addToAppliedPromotions", AddToAppliedPromotions);
+        group.MapPut("/removeFromAppliedPromotions", RemoveFromAppliedPromotions);
 
-    group.MapPut("/addToGiftCardRedemptions", AddToGiftCardRedemptions);
-    group.MapPut("/removeFromGiftCardRedemptions", RemoveFromGiftCardRedemptions);
+        group.MapPut("/addToGiftCardRedemptions", AddToGiftCardRedemptions);
+        group.MapPut("/removeFromGiftCardRedemptions", RemoveFromGiftCardRedemptions);
 
-    group.MapPut("/addToCouponRedemptions", AddToCouponRedemptions);
-    group.MapPut("/removeFromCouponRedemptions", RemoveFromCouponRedemptions);
+        group.MapPut("/addToCouponRedemptions", AddToCouponRedemptions);
+        group.MapPut("/removeFromCouponRedemptions", RemoveFromCouponRedemptions);
 
-    group.MapPut("/addToReturnRequests", AddToReturnRequests);
-    group.MapPut("/removeFromReturnRequests", RemoveFromReturnRequests);
+        group.MapPut("/addToReturnRequests", AddToReturnRequests);
+        group.MapPut("/removeFromReturnRequests", RemoveFromReturnRequests);
 
 
         return app;
@@ -57,9 +57,10 @@ public static class OrderEndpoints
     private static async Task<IResult> Create(
         OrderRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOrder( request );
+        var model = mapRequestToOrder(request);
 
         try
         {
@@ -76,9 +77,10 @@ public static class OrderEndpoints
     private static async Task<IResult> Update(
         OrderRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOrder( request );
+        var model = mapRequestToOrder(request);
 
         try
         {
@@ -95,25 +97,28 @@ public static class OrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var order = await service.Get(identifier, cancellationToken);
-        return order is null ? Results.NotFound() : Results.Ok( order );
+        return order is null ? Results.NotFound() : Results.Ok(order);
     }
 
 
     private static async Task<IResult> GetAll(
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( OrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(OrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +126,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +135,8 @@ public static class OrderEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     IOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +144,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AssignChannel(
         AssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignChannel(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +153,8 @@ public static class OrderEndpoints
     private static async Task<IResult> UnassignChannel(
     AssociationRequest request,
     IOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignChannel(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,7 +162,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AssignSeller(
         AssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSeller(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -161,7 +171,8 @@ public static class OrderEndpoints
     private static async Task<IResult> UnassignSeller(
     AssociationRequest request,
     IOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSeller(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -169,7 +180,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AssignInvoice(
         AssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInvoice(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -177,7 +189,8 @@ public static class OrderEndpoints
     private static async Task<IResult> UnassignInvoice(
     AssociationRequest request,
     IOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInvoice(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -186,7 +199,8 @@ public static class OrderEndpoints
     private static async Task<IResult> AddToOrderLines(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOrderLines(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -194,14 +208,16 @@ public static class OrderEndpoints
     private static async Task<IResult> RemoveFromOrderLines(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOrderLines(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPayments(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPayments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -209,14 +225,16 @@ public static class OrderEndpoints
     private static async Task<IResult> RemoveFromPayments(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPayments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToShipments(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToShipments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -224,14 +242,16 @@ public static class OrderEndpoints
     private static async Task<IResult> RemoveFromShipments(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromShipments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRefunds(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRefunds(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -239,14 +259,16 @@ public static class OrderEndpoints
     private static async Task<IResult> RemoveFromRefunds(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRefunds(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToAppliedPromotions(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAppliedPromotions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -254,14 +276,16 @@ public static class OrderEndpoints
     private static async Task<IResult> RemoveFromAppliedPromotions(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAppliedPromotions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToGiftCardRedemptions(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToGiftCardRedemptions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -269,14 +293,16 @@ public static class OrderEndpoints
     private static async Task<IResult> RemoveFromGiftCardRedemptions(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromGiftCardRedemptions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCouponRedemptions(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCouponRedemptions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -284,14 +310,16 @@ public static class OrderEndpoints
     private static async Task<IResult> RemoveFromCouponRedemptions(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCouponRedemptions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToReturnRequests(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToReturnRequests(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -299,11 +327,13 @@ public static class OrderEndpoints
     private static async Task<IResult> RemoveFromReturnRequests(
         MultipleAssociationRequest request,
         IOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromReturnRequests(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Order mapRequestToOrder( OrderRequest request ) {
+    private static Order mapRequestToOrder(OrderRequest request)
+    {
         var model = new Order
         {
             Id = request.Id,

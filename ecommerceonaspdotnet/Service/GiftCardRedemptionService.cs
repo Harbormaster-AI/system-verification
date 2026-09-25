@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface IGiftCardRedemptionService {
+public interface IGiftCardRedemptionService
+{
 
-    Task Create(GiftCardRedemption model , CancellationToken cancellationToken);
+    Task Create(GiftCardRedemption model, CancellationToken cancellationToken);
     Task<bool> Update(GiftCardRedemption model, CancellationToken cancellationToken);
     Task<GiftCardRedemption?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<GiftCardRedemption>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class GiftCardRedemptionService : IGiftCardRedemptionService
 
     public async Task<bool> Update(GiftCardRedemption model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class GiftCardRedemptionService : IGiftCardRedemptionService
         return true;
     }
 
-    public async Task<bool> AssignGiftCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignGiftCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class GiftCardRedemptionService : IGiftCardRedemptionService
 
             var child = await _serviceResolver.Get<GiftCardService>().Get(childRequest, cancellationToken);
             parent.GiftCard = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class GiftCardRedemptionService : IGiftCardRedemptionService
         return true;
     }
 
-    public async Task<bool> UnassignGiftCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignGiftCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class GiftCardRedemptionService : IGiftCardRedemptionService
         try
         {
             parent.GiftCard = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -171,7 +175,8 @@ public class GiftCardRedemptionService : IGiftCardRedemptionService
         return true;
     }
 
-    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -189,7 +194,7 @@ public class GiftCardRedemptionService : IGiftCardRedemptionService
 
             var child = await _serviceResolver.Get<OrderService>().Get(childRequest, cancellationToken);
             parent.Order = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -201,7 +206,8 @@ public class GiftCardRedemptionService : IGiftCardRedemptionService
         return true;
     }
 
-    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -212,7 +218,7 @@ public class GiftCardRedemptionService : IGiftCardRedemptionService
         try
         {
             parent.Order = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

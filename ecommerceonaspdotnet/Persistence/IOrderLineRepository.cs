@@ -11,7 +11,7 @@ public interface IOrderLineRepository
     Task UpdateAsync(OrderLine orderLine, CancellationToken cancellationToken);
     Task DeleteAsync(OrderLine orderLine, CancellationToken cancellationToken);
 
-    Task AddToAppliedPromotionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAppliedPromotionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAppliedPromotionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAppliedPromotionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

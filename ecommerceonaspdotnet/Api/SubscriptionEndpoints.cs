@@ -33,9 +33,10 @@ public static class SubscriptionEndpoints
     private static async Task<IResult> Create(
         SubscriptionRequest request,
         ISubscriptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSubscription( request );
+        var model = mapRequestToSubscription(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class SubscriptionEndpoints
     private static async Task<IResult> Update(
         SubscriptionRequest request,
         ISubscriptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSubscription( request );
+        var model = mapRequestToSubscription(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class SubscriptionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISubscriptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var subscription = await service.Get(identifier, cancellationToken);
-        return subscription is null ? Results.NotFound() : Results.Ok( subscription );
+        return subscription is null ? Results.NotFound() : Results.Ok(subscription);
     }
 
 
     private static async Task<IResult> GetAll(
         ISubscriptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SubscriptionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SubscriptionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISubscriptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class SubscriptionEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         ISubscriptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class SubscriptionEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     ISubscriptionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class SubscriptionEndpoints
     private static async Task<IResult> AssignVariant(
         AssociationRequest request,
         ISubscriptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignVariant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class SubscriptionEndpoints
     private static async Task<IResult> UnassignVariant(
     AssociationRequest request,
     ISubscriptionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignVariant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class SubscriptionEndpoints
     private static async Task<IResult> AssignPaymentProvider(
         AssociationRequest request,
         ISubscriptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPaymentProvider(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class SubscriptionEndpoints
     private static async Task<IResult> UnassignPaymentProvider(
     AssociationRequest request,
     ISubscriptionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPaymentProvider(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class SubscriptionEndpoints
     private static async Task<IResult> AssignChannel(
         AssociationRequest request,
         ISubscriptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignChannel(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class SubscriptionEndpoints
     private static async Task<IResult> UnassignChannel(
     AssociationRequest request,
     ISubscriptionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignChannel(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Subscription mapRequestToSubscription( SubscriptionRequest request ) {
+    private static Subscription mapRequestToSubscription(SubscriptionRequest request)
+    {
         var model = new Subscription
         {
             Id = request.Id,

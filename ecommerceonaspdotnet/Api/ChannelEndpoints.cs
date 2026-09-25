@@ -20,17 +20,17 @@ public static class ChannelEndpoints
         group.MapPut("/assignMerchant", AssignMerchant);
         group.MapPut("/unassignMerchant", UnassignMerchant);
 
-    group.MapPut("/addToCatalogs", AddToCatalogs);
-    group.MapPut("/removeFromCatalogs", RemoveFromCatalogs);
+        group.MapPut("/addToCatalogs", AddToCatalogs);
+        group.MapPut("/removeFromCatalogs", RemoveFromCatalogs);
 
-    group.MapPut("/addToPromotions", AddToPromotions);
-    group.MapPut("/removeFromPromotions", RemoveFromPromotions);
+        group.MapPut("/addToPromotions", AddToPromotions);
+        group.MapPut("/removeFromPromotions", RemoveFromPromotions);
 
-    group.MapPut("/addToShippingMethods", AddToShippingMethods);
-    group.MapPut("/removeFromShippingMethods", RemoveFromShippingMethods);
+        group.MapPut("/addToShippingMethods", AddToShippingMethods);
+        group.MapPut("/removeFromShippingMethods", RemoveFromShippingMethods);
 
-    group.MapPut("/addToPaymentProviders", AddToPaymentProviders);
-    group.MapPut("/removeFromPaymentProviders", RemoveFromPaymentProviders);
+        group.MapPut("/addToPaymentProviders", AddToPaymentProviders);
+        group.MapPut("/removeFromPaymentProviders", RemoveFromPaymentProviders);
 
 
         return app;
@@ -39,9 +39,10 @@ public static class ChannelEndpoints
     private static async Task<IResult> Create(
         ChannelRequest request,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToChannel( request );
+        var model = mapRequestToChannel(request);
 
         try
         {
@@ -58,9 +59,10 @@ public static class ChannelEndpoints
     private static async Task<IResult> Update(
         ChannelRequest request,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToChannel( request );
+        var model = mapRequestToChannel(request);
 
         try
         {
@@ -77,25 +79,28 @@ public static class ChannelEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var channel = await service.Get(identifier, cancellationToken);
-        return channel is null ? Results.NotFound() : Results.Ok( channel );
+        return channel is null ? Results.NotFound() : Results.Ok(channel);
     }
 
 
     private static async Task<IResult> GetAll(
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ChannelResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ChannelResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +108,8 @@ public static class ChannelEndpoints
     private static async Task<IResult> AssignMerchant(
         AssociationRequest request,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMerchant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +117,8 @@ public static class ChannelEndpoints
     private static async Task<IResult> UnassignMerchant(
     AssociationRequest request,
     IChannelService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMerchant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +127,8 @@ public static class ChannelEndpoints
     private static async Task<IResult> AddToCatalogs(
         MultipleAssociationRequest request,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCatalogs(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -128,14 +136,16 @@ public static class ChannelEndpoints
     private static async Task<IResult> RemoveFromCatalogs(
         MultipleAssociationRequest request,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCatalogs(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPromotions(
         MultipleAssociationRequest request,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPromotions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -143,14 +153,16 @@ public static class ChannelEndpoints
     private static async Task<IResult> RemoveFromPromotions(
         MultipleAssociationRequest request,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPromotions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToShippingMethods(
         MultipleAssociationRequest request,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToShippingMethods(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -158,14 +170,16 @@ public static class ChannelEndpoints
     private static async Task<IResult> RemoveFromShippingMethods(
         MultipleAssociationRequest request,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromShippingMethods(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPaymentProviders(
         MultipleAssociationRequest request,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPaymentProviders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -173,11 +187,13 @@ public static class ChannelEndpoints
     private static async Task<IResult> RemoveFromPaymentProviders(
         MultipleAssociationRequest request,
         IChannelService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPaymentProviders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Channel mapRequestToChannel( ChannelRequest request ) {
+    private static Channel mapRequestToChannel(ChannelRequest request)
+    {
         var model = new Channel
         {
             Id = request.Id,

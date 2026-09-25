@@ -20,8 +20,8 @@ public static class PayoutEndpoints
         group.MapPut("/assignSeller", AssignSeller);
         group.MapPut("/unassignSeller", UnassignSeller);
 
-    group.MapPut("/addToOrders", AddToOrders);
-    group.MapPut("/removeFromOrders", RemoveFromOrders);
+        group.MapPut("/addToOrders", AddToOrders);
+        group.MapPut("/removeFromOrders", RemoveFromOrders);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class PayoutEndpoints
     private static async Task<IResult> Create(
         PayoutRequest request,
         IPayoutService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPayout( request );
+        var model = mapRequestToPayout(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class PayoutEndpoints
     private static async Task<IResult> Update(
         PayoutRequest request,
         IPayoutService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPayout( request );
+        var model = mapRequestToPayout(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class PayoutEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPayoutService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var payout = await service.Get(identifier, cancellationToken);
-        return payout is null ? Results.NotFound() : Results.Ok( payout );
+        return payout is null ? Results.NotFound() : Results.Ok(payout);
     }
 
 
     private static async Task<IResult> GetAll(
         IPayoutService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PayoutResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PayoutResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPayoutService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class PayoutEndpoints
     private static async Task<IResult> AssignSeller(
         AssociationRequest request,
         IPayoutService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSeller(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class PayoutEndpoints
     private static async Task<IResult> UnassignSeller(
     AssociationRequest request,
     IPayoutService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSeller(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class PayoutEndpoints
     private static async Task<IResult> AddToOrders(
         MultipleAssociationRequest request,
         IPayoutService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class PayoutEndpoints
     private static async Task<IResult> RemoveFromOrders(
         MultipleAssociationRequest request,
         IPayoutService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Payout mapRequestToPayout( PayoutRequest request ) {
+    private static Payout mapRequestToPayout(PayoutRequest request)
+    {
         var model = new Payout
         {
             Id = request.Id,

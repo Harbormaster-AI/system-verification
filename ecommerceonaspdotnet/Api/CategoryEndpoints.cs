@@ -22,11 +22,11 @@ public static class CategoryEndpoints
         group.MapPut("/assignParentCategory", AssignParentCategory);
         group.MapPut("/unassignParentCategory", UnassignParentCategory);
 
-    group.MapPut("/addToSubcategories", AddToSubcategories);
-    group.MapPut("/removeFromSubcategories", RemoveFromSubcategories);
+        group.MapPut("/addToSubcategories", AddToSubcategories);
+        group.MapPut("/removeFromSubcategories", RemoveFromSubcategories);
 
-    group.MapPut("/addToProducts", AddToProducts);
-    group.MapPut("/removeFromProducts", RemoveFromProducts);
+        group.MapPut("/addToProducts", AddToProducts);
+        group.MapPut("/removeFromProducts", RemoveFromProducts);
 
 
         return app;
@@ -35,9 +35,10 @@ public static class CategoryEndpoints
     private static async Task<IResult> Create(
         CategoryRequest request,
         ICategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCategory( request );
+        var model = mapRequestToCategory(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class CategoryEndpoints
     private static async Task<IResult> Update(
         CategoryRequest request,
         ICategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCategory( request );
+        var model = mapRequestToCategory(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class CategoryEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var category = await service.Get(identifier, cancellationToken);
-        return category is null ? Results.NotFound() : Results.Ok( category );
+        return category is null ? Results.NotFound() : Results.Ok(category);
     }
 
 
     private static async Task<IResult> GetAll(
         ICategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CategoryResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CategoryResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class CategoryEndpoints
     private static async Task<IResult> AssignCatalog(
         AssociationRequest request,
         ICategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCatalog(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class CategoryEndpoints
     private static async Task<IResult> UnassignCatalog(
     AssociationRequest request,
     ICategoryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCatalog(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -115,7 +122,8 @@ public static class CategoryEndpoints
     private static async Task<IResult> AssignParentCategory(
         AssociationRequest request,
         ICategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignParentCategory(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +131,8 @@ public static class CategoryEndpoints
     private static async Task<IResult> UnassignParentCategory(
     AssociationRequest request,
     ICategoryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignParentCategory(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +141,8 @@ public static class CategoryEndpoints
     private static async Task<IResult> AddToSubcategories(
         MultipleAssociationRequest request,
         ICategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSubcategories(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class CategoryEndpoints
     private static async Task<IResult> RemoveFromSubcategories(
         MultipleAssociationRequest request,
         ICategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSubcategories(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToProducts(
         MultipleAssociationRequest request,
         ICategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToProducts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class CategoryEndpoints
     private static async Task<IResult> RemoveFromProducts(
         MultipleAssociationRequest request,
         ICategoryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromProducts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Category mapRequestToCategory( CategoryRequest request ) {
+    private static Category mapRequestToCategory(CategoryRequest request)
+    {
         var model = new Category
         {
             Id = request.Id,

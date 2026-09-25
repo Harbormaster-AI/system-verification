@@ -22,8 +22,8 @@ public static class CartItemEndpoints
         group.MapPut("/assignVariant", AssignVariant);
         group.MapPut("/unassignVariant", UnassignVariant);
 
-    group.MapPut("/addToAppliedPromotions", AddToAppliedPromotions);
-    group.MapPut("/removeFromAppliedPromotions", RemoveFromAppliedPromotions);
+        group.MapPut("/addToAppliedPromotions", AddToAppliedPromotions);
+        group.MapPut("/removeFromAppliedPromotions", RemoveFromAppliedPromotions);
 
 
         return app;
@@ -32,9 +32,10 @@ public static class CartItemEndpoints
     private static async Task<IResult> Create(
         CartItemRequest request,
         ICartItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCartItem( request );
+        var model = mapRequestToCartItem(request);
 
         try
         {
@@ -51,9 +52,10 @@ public static class CartItemEndpoints
     private static async Task<IResult> Update(
         CartItemRequest request,
         ICartItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCartItem( request );
+        var model = mapRequestToCartItem(request);
 
         try
         {
@@ -70,25 +72,28 @@ public static class CartItemEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICartItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var cartItem = await service.Get(identifier, cancellationToken);
-        return cartItem is null ? Results.NotFound() : Results.Ok( cartItem );
+        return cartItem is null ? Results.NotFound() : Results.Ok(cartItem);
     }
 
 
     private static async Task<IResult> GetAll(
         ICartItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CartItemResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CartItemResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICartItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class CartItemEndpoints
     private static async Task<IResult> AssignCart(
         AssociationRequest request,
         ICartItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCart(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +110,8 @@ public static class CartItemEndpoints
     private static async Task<IResult> UnassignCart(
     AssociationRequest request,
     ICartItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCart(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +119,8 @@ public static class CartItemEndpoints
     private static async Task<IResult> AssignVariant(
         AssociationRequest request,
         ICartItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignVariant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +128,8 @@ public static class CartItemEndpoints
     private static async Task<IResult> UnassignVariant(
     AssociationRequest request,
     ICartItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignVariant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class CartItemEndpoints
     private static async Task<IResult> AddToAppliedPromotions(
         MultipleAssociationRequest request,
         ICartItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAppliedPromotions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class CartItemEndpoints
     private static async Task<IResult> RemoveFromAppliedPromotions(
         MultipleAssociationRequest request,
         ICartItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAppliedPromotions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static CartItem mapRequestToCartItem( CartItemRequest request ) {
+    private static CartItem mapRequestToCartItem(CartItemRequest request)
+    {
         var model = new CartItem
         {
             Id = request.Id,

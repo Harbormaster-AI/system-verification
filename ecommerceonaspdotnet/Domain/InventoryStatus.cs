@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum InventoryStatus
 {
-    InStock=1,LowStock=2,OutOfStock=3,Backorder=4,Preorder=5
+    InStock = 1, LowStock = 2, OutOfStock = 3, Backorder = 4, Preorder = 5
 }
 
 /// <summary>

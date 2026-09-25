@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface ICatalogService {
+public interface ICatalogService
+{
 
-    Task Create(Catalog model , CancellationToken cancellationToken);
+    Task Create(Catalog model, CancellationToken cancellationToken);
     Task<bool> Update(Catalog model, CancellationToken cancellationToken);
     Task<Catalog?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Catalog>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class CatalogService : ICatalogService
 
     public async Task<bool> Update(Catalog model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class CatalogService : ICatalogService
         return true;
     }
 
-    public async Task<bool> AssignChannel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignChannel(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class CatalogService : ICatalogService
 
             var child = await _serviceResolver.Get<ChannelService>().Get(childRequest, cancellationToken);
             parent.Channel = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class CatalogService : ICatalogService
         return true;
     }
 
-    public async Task<bool> UnassignChannel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignChannel(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class CatalogService : ICatalogService
         try
         {
             parent.Channel = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class CatalogService : ICatalogService
     }
 
 
-    public async Task<bool> AddToCategories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCategories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Catalog",
                 "AddToCategories",
@@ -182,16 +188,18 @@ public class CatalogService : ICatalogService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCategories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCategories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Catalog",
                 "RemoveFromCategories",

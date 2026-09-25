@@ -11,7 +11,7 @@ public interface ICouponRepository
     Task UpdateAsync(Coupon coupon, CancellationToken cancellationToken);
     Task DeleteAsync(Coupon coupon, CancellationToken cancellationToken);
 
-    Task AddToRedemptionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRedemptionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRedemptionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRedemptionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

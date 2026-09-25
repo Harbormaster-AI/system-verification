@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum CouponStatus
 {
-    Active=1,Expired=2,Disabled=3,Exhausted=4
+    Active = 1, Expired = 2, Disabled = 3, Exhausted = 4
 }
 
 /// <summary>

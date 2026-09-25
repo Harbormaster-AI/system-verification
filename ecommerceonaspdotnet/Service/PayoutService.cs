@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface IPayoutService {
+public interface IPayoutService
+{
 
-    Task Create(Payout model , CancellationToken cancellationToken);
+    Task Create(Payout model, CancellationToken cancellationToken);
     Task<bool> Update(Payout model, CancellationToken cancellationToken);
     Task<Payout?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Payout>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class PayoutService : IPayoutService
 
     public async Task<bool> Update(Payout model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class PayoutService : IPayoutService
         return true;
     }
 
-    public async Task<bool> AssignSeller(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSeller(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class PayoutService : IPayoutService
 
             var child = await _serviceResolver.Get<SellerService>().Get(childRequest, cancellationToken);
             parent.Seller = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class PayoutService : IPayoutService
         return true;
     }
 
-    public async Task<bool> UnassignSeller(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSeller(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class PayoutService : IPayoutService
         try
         {
             parent.Seller = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class PayoutService : IPayoutService
     }
 
 
-    public async Task<bool> AddToOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Payout",
                 "AddToOrders",
@@ -184,16 +190,18 @@ public class PayoutService : IPayoutService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Payout",
                 "RemoveFromOrders",

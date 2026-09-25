@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum PaymentMethodType
 {
-    CreditCard=1,DebitCard=2,PayPal=3,BankTransfer=4,CashOnDelivery=5,GiftCard=6,ApplePay=7,GooglePay=8,BuyNowPayLater=9
+    CreditCard = 1, DebitCard = 2, PayPal = 3, BankTransfer = 4, CashOnDelivery = 5, GiftCard = 6, ApplePay = 7, GooglePay = 8, BuyNowPayLater = 9
 }
 
 /// <summary>

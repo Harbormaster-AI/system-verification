@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface ICouponService {
+public interface ICouponService
+{
 
-    Task Create(Coupon model , CancellationToken cancellationToken);
+    Task Create(Coupon model, CancellationToken cancellationToken);
     Task<bool> Update(Coupon model, CancellationToken cancellationToken);
     Task<Coupon?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Coupon>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class CouponService : ICouponService
 
     public async Task<bool> Update(Coupon model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class CouponService : ICouponService
         return true;
     }
 
-    public async Task<bool> AssignPromotion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPromotion(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class CouponService : ICouponService
 
             var child = await _serviceResolver.Get<PromotionService>().Get(childRequest, cancellationToken);
             parent.Promotion = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class CouponService : ICouponService
         return true;
     }
 
-    public async Task<bool> UnassignPromotion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPromotion(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class CouponService : ICouponService
         try
         {
             parent.Promotion = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class CouponService : ICouponService
     }
 
 
-    public async Task<bool> AddToRedemptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRedemptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Coupon",
                 "AddToRedemptions",
@@ -184,16 +190,18 @@ public class CouponService : ICouponService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRedemptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRedemptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Coupon",
                 "RemoveFromRedemptions",

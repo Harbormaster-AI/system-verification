@@ -11,7 +11,7 @@ public interface ICartItemRepository
     Task UpdateAsync(CartItem cartItem, CancellationToken cancellationToken);
     Task DeleteAsync(CartItem cartItem, CancellationToken cancellationToken);
 
-    Task AddToAppliedPromotionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAppliedPromotionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAppliedPromotionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAppliedPromotionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

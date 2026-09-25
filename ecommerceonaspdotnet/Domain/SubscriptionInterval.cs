@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum SubscriptionInterval
 {
-    Weekly=1,BiWeekly=2,Monthly=3,Quarterly=4,SemiAnnual=5,Annual=6
+    Weekly = 1, BiWeekly = 2, Monthly = 3, Quarterly = 4, SemiAnnual = 5, Annual = 6
 }
 
 /// <summary>

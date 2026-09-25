@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum OrderStatus
 {
-    Pending=1,Confirmed=2,Paid=3,PartiallyShipped=4,Shipped=5,Delivered=6,Cancelled=7,Refunded=8,PartiallyRefunded=9
+    Pending = 1, Confirmed = 2, Paid = 3, PartiallyShipped = 4, Shipped = 5, Delivered = 6, Cancelled = 7, Refunded = 8, PartiallyRefunded = 9
 }
 
 /// <summary>

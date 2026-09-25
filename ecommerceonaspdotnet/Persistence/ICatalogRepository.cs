@@ -11,7 +11,7 @@ public interface ICatalogRepository
     Task UpdateAsync(Catalog catalog, CancellationToken cancellationToken);
     Task DeleteAsync(Catalog catalog, CancellationToken cancellationToken);
 
-    Task AddToCategoriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCategoriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCategoriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCategoriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface ICategoryService {
+public interface ICategoryService
+{
 
-    Task Create(Category model , CancellationToken cancellationToken);
+    Task Create(Category model, CancellationToken cancellationToken);
     Task<bool> Update(Category model, CancellationToken cancellationToken);
     Task<Category?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Category>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class CategoryService : ICategoryService
 
     public async Task<bool> Update(Category model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class CategoryService : ICategoryService
         return true;
     }
 
-    public async Task<bool> AssignCatalog(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCatalog(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class CategoryService : ICategoryService
 
             var child = await _serviceResolver.Get<CatalogService>().Get(childRequest, cancellationToken);
             parent.Catalog = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class CategoryService : ICategoryService
         return true;
     }
 
-    public async Task<bool> UnassignCatalog(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCatalog(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class CategoryService : ICategoryService
         try
         {
             parent.Catalog = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class CategoryService : ICategoryService
         return true;
     }
 
-    public async Task<bool> AssignParentCategory(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignParentCategory(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class CategoryService : ICategoryService
 
             var child = await _serviceResolver.Get<CategoryService>().Get(childRequest, cancellationToken);
             parent.ParentCategory = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class CategoryService : ICategoryService
         return true;
     }
 
-    public async Task<bool> UnassignParentCategory(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignParentCategory(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class CategoryService : ICategoryService
         try
         {
             parent.ParentCategory = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,8 +237,10 @@ public class CategoryService : ICategoryService
     }
 
 
-    public async Task<bool> AddToSubcategories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSubcategories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Category",
                 "AddToSubcategories",
@@ -240,16 +248,18 @@ public class CategoryService : ICategoryService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSubcategories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSubcategories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Category",
                 "RemoveFromSubcategories",
@@ -265,8 +275,10 @@ public class CategoryService : ICategoryService
         return true;
     }
 
-    public async Task<bool> AddToProducts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToProducts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Category",
                 "AddToProducts",
@@ -274,16 +286,18 @@ public class CategoryService : ICategoryService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromProducts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromProducts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Category",
                 "RemoveFromProducts",

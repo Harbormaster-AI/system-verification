@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface IShippingMethodService {
+public interface IShippingMethodService
+{
 
-    Task Create(ShippingMethod model , CancellationToken cancellationToken);
+    Task Create(ShippingMethod model, CancellationToken cancellationToken);
     Task<bool> Update(ShippingMethod model, CancellationToken cancellationToken);
     Task<ShippingMethod?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ShippingMethod>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ShippingMethodService : IShippingMethodService
 
     public async Task<bool> Update(ShippingMethod model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class ShippingMethodService : IShippingMethodService
         return true;
     }
 
-    public async Task<bool> AssignCarrierService(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCarrierService(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class ShippingMethodService : IShippingMethodService
 
             var child = await _serviceResolver.Get<CarrierServiceService>().Get(childRequest, cancellationToken);
             parent.CarrierService = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class ShippingMethodService : IShippingMethodService
         return true;
     }
 
-    public async Task<bool> UnassignCarrierService(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCarrierService(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class ShippingMethodService : IShippingMethodService
         try
         {
             parent.CarrierService = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class ShippingMethodService : IShippingMethodService
     }
 
 
-    public async Task<bool> AddToChannels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToChannels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ShippingMethod",
                 "AddToChannels",
@@ -184,16 +190,18 @@ public class ShippingMethodService : IShippingMethodService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromChannels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromChannels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ShippingMethod",
                 "RemoveFromChannels",

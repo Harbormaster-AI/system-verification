@@ -29,9 +29,10 @@ public static class MediaAssetEndpoints
     private static async Task<IResult> Create(
         MediaAssetRequest request,
         IMediaAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMediaAsset( request );
+        var model = mapRequestToMediaAsset(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class MediaAssetEndpoints
     private static async Task<IResult> Update(
         MediaAssetRequest request,
         IMediaAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMediaAsset( request );
+        var model = mapRequestToMediaAsset(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class MediaAssetEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMediaAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var mediaAsset = await service.Get(identifier, cancellationToken);
-        return mediaAsset is null ? Results.NotFound() : Results.Ok( mediaAsset );
+        return mediaAsset is null ? Results.NotFound() : Results.Ok(mediaAsset);
     }
 
 
     private static async Task<IResult> GetAll(
         IMediaAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MediaAssetResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MediaAssetResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMediaAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class MediaAssetEndpoints
     private static async Task<IResult> AssignProduct(
         AssociationRequest request,
         IMediaAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProduct(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class MediaAssetEndpoints
     private static async Task<IResult> UnassignProduct(
     AssociationRequest request,
     IMediaAssetService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProduct(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class MediaAssetEndpoints
     private static async Task<IResult> AssignVariant(
         AssociationRequest request,
         IMediaAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignVariant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class MediaAssetEndpoints
     private static async Task<IResult> UnassignVariant(
     AssociationRequest request,
     IMediaAssetService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignVariant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static MediaAsset mapRequestToMediaAsset( MediaAssetRequest request ) {
+    private static MediaAsset mapRequestToMediaAsset(MediaAssetRequest request)
+    {
         var model = new MediaAsset
         {
             Id = request.Id,

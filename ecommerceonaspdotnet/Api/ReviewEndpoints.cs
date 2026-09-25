@@ -31,9 +31,10 @@ public static class ReviewEndpoints
     private static async Task<IResult> Create(
         ReviewRequest request,
         IReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToReview( request );
+        var model = mapRequestToReview(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class ReviewEndpoints
     private static async Task<IResult> Update(
         ReviewRequest request,
         IReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToReview( request );
+        var model = mapRequestToReview(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class ReviewEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var review = await service.Get(identifier, cancellationToken);
-        return review is null ? Results.NotFound() : Results.Ok( review );
+        return review is null ? Results.NotFound() : Results.Ok(review);
     }
 
 
     private static async Task<IResult> GetAll(
         IReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ReviewResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ReviewResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class ReviewEndpoints
     private static async Task<IResult> AssignProduct(
         AssociationRequest request,
         IReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProduct(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class ReviewEndpoints
     private static async Task<IResult> UnassignProduct(
     AssociationRequest request,
     IReviewService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProduct(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ReviewEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         IReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class ReviewEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     IReviewService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class ReviewEndpoints
     private static async Task<IResult> AssignOrder(
         AssociationRequest request,
         IReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class ReviewEndpoints
     private static async Task<IResult> UnassignOrder(
     AssociationRequest request,
     IReviewService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Review mapRequestToReview( ReviewRequest request ) {
+    private static Review mapRequestToReview(ReviewRequest request)
+    {
         var model = new Review
         {
             Id = request.Id,

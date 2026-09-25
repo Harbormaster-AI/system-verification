@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum ChannelType
 {
-    Web=1,MobileApp=2,Marketplace=3,Social=4,POS=5
+    Web = 1, MobileApp = 2, Marketplace = 3, Social = 4, POS = 5
 }
 
 /// <summary>

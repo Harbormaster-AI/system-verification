@@ -29,9 +29,10 @@ public static class GiftCardRedemptionEndpoints
     private static async Task<IResult> Create(
         GiftCardRedemptionRequest request,
         IGiftCardRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToGiftCardRedemption( request );
+        var model = mapRequestToGiftCardRedemption(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class GiftCardRedemptionEndpoints
     private static async Task<IResult> Update(
         GiftCardRedemptionRequest request,
         IGiftCardRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToGiftCardRedemption( request );
+        var model = mapRequestToGiftCardRedemption(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class GiftCardRedemptionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IGiftCardRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var giftCardRedemption = await service.Get(identifier, cancellationToken);
-        return giftCardRedemption is null ? Results.NotFound() : Results.Ok( giftCardRedemption );
+        return giftCardRedemption is null ? Results.NotFound() : Results.Ok(giftCardRedemption);
     }
 
 
     private static async Task<IResult> GetAll(
         IGiftCardRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( GiftCardRedemptionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(GiftCardRedemptionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IGiftCardRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class GiftCardRedemptionEndpoints
     private static async Task<IResult> AssignGiftCard(
         AssociationRequest request,
         IGiftCardRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignGiftCard(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class GiftCardRedemptionEndpoints
     private static async Task<IResult> UnassignGiftCard(
     AssociationRequest request,
     IGiftCardRedemptionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignGiftCard(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class GiftCardRedemptionEndpoints
     private static async Task<IResult> AssignOrder(
         AssociationRequest request,
         IGiftCardRedemptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class GiftCardRedemptionEndpoints
     private static async Task<IResult> UnassignOrder(
     AssociationRequest request,
     IGiftCardRedemptionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static GiftCardRedemption mapRequestToGiftCardRedemption( GiftCardRedemptionRequest request ) {
+    private static GiftCardRedemption mapRequestToGiftCardRedemption(GiftCardRedemptionRequest request)
+    {
         var model = new GiftCardRedemption
         {
             Id = request.Id,

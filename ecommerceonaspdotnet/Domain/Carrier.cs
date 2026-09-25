@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum Carrier
 {
-    UPS=1,FedEx=2,USPS=3,DHL=4,RoyalMail=5,CanadaPost=6,LocalCourier=7,Other=8
+    UPS = 1, FedEx = 2, USPS = 3, DHL = 4, RoyalMail = 5, CanadaPost = 6, LocalCourier = 7, Other = 8
 }
 
 /// <summary>

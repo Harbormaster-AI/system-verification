@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum ShipmentStatus
 {
-    Pending=1,Packed=2,Shipped=3,InTransit=4,Delivered=5,Delayed=6,Returned=7,Cancelled=8
+    Pending = 1, Packed = 2, Shipped = 3, InTransit = 4, Delivered = 5, Delayed = 6, Returned = 7, Cancelled = 8
 }
 
 /// <summary>

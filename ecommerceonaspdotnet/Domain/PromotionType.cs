@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum PromotionType
 {
-    Catalog=1,Cart=2,Shipping=3
+    Catalog = 1, Cart = 2, Shipping = 3
 }
 
 /// <summary>

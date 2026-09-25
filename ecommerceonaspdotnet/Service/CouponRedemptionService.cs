@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface ICouponRedemptionService {
+public interface ICouponRedemptionService
+{
 
-    Task Create(CouponRedemption model , CancellationToken cancellationToken);
+    Task Create(CouponRedemption model, CancellationToken cancellationToken);
     Task<bool> Update(CouponRedemption model, CancellationToken cancellationToken);
     Task<CouponRedemption?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CouponRedemption>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class CouponRedemptionService : ICouponRedemptionService
 
     public async Task<bool> Update(CouponRedemption model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class CouponRedemptionService : ICouponRedemptionService
         return true;
     }
 
-    public async Task<bool> AssignCoupon(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCoupon(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class CouponRedemptionService : ICouponRedemptionService
 
             var child = await _serviceResolver.Get<CouponService>().Get(childRequest, cancellationToken);
             parent.Coupon = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class CouponRedemptionService : ICouponRedemptionService
         return true;
     }
 
-    public async Task<bool> UnassignCoupon(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCoupon(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class CouponRedemptionService : ICouponRedemptionService
         try
         {
             parent.Coupon = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class CouponRedemptionService : ICouponRedemptionService
         return true;
     }
 
-    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class CouponRedemptionService : ICouponRedemptionService
 
             var child = await _serviceResolver.Get<OrderService>().Get(childRequest, cancellationToken);
             parent.Order = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class CouponRedemptionService : ICouponRedemptionService
         return true;
     }
 
-    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class CouponRedemptionService : ICouponRedemptionService
         try
         {
             parent.Order = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -225,7 +231,8 @@ public class CouponRedemptionService : ICouponRedemptionService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -243,7 +250,7 @@ public class CouponRedemptionService : ICouponRedemptionService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.Customer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -255,7 +262,8 @@ public class CouponRedemptionService : ICouponRedemptionService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -266,7 +274,7 @@ public class CouponRedemptionService : ICouponRedemptionService
         try
         {
             parent.Customer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

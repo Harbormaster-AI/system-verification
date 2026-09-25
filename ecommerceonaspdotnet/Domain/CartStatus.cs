@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum CartStatus
 {
-    Active=1,Merged=2,Ordered=3,Abandoned=4
+    Active = 1, Merged = 2, Ordered = 3, Abandoned = 4
 }
 
 /// <summary>

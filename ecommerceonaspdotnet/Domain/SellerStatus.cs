@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum SellerStatus
 {
-    Active=1,Inactive=2,Suspended=3
+    Active = 1, Inactive = 2, Suspended = 3
 }
 
 /// <summary>

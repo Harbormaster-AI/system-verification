@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface IProductPricingService {
+public interface IProductPricingService
+{
 
-    Task Create(ProductPricing model , CancellationToken cancellationToken);
+    Task Create(ProductPricing model, CancellationToken cancellationToken);
     Task<bool> Update(ProductPricing model, CancellationToken cancellationToken);
     Task<ProductPricing?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ProductPricing>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ProductPricingService : IProductPricingService
 
     public async Task<bool> Update(ProductPricing model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class ProductPricingService : IProductPricingService
         return true;
     }
 
-    public async Task<bool> AssignVariant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignVariant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class ProductPricingService : IProductPricingService
 
             var child = await _serviceResolver.Get<ProductVariantService>().Get(childRequest, cancellationToken);
             parent.Variant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class ProductPricingService : IProductPricingService
         return true;
     }
 
-    public async Task<bool> UnassignVariant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignVariant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class ProductPricingService : IProductPricingService
         try
         {
             parent.Variant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class ProductPricingService : IProductPricingService
         return true;
     }
 
-    public async Task<bool> AssignChannel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignChannel(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class ProductPricingService : IProductPricingService
 
             var child = await _serviceResolver.Get<ChannelService>().Get(childRequest, cancellationToken);
             parent.Channel = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class ProductPricingService : IProductPricingService
         return true;
     }
 
-    public async Task<bool> UnassignChannel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignChannel(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class ProductPricingService : IProductPricingService
         try
         {
             parent.Channel = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

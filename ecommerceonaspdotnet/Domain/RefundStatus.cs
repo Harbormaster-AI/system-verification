@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum RefundStatus
 {
-    Requested=1,Approved=2,Declined=3,Processed=4
+    Requested = 1, Approved = 2, Declined = 3, Processed = 4
 }
 
 /// <summary>

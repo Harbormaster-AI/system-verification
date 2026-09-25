@@ -11,7 +11,7 @@ public interface IWishlistRepository
     Task UpdateAsync(Wishlist wishlist, CancellationToken cancellationToken);
     Task DeleteAsync(Wishlist wishlist, CancellationToken cancellationToken);
 
-    Task AddToItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

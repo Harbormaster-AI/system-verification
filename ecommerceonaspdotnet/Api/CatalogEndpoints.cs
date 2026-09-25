@@ -20,8 +20,8 @@ public static class CatalogEndpoints
         group.MapPut("/assignChannel", AssignChannel);
         group.MapPut("/unassignChannel", UnassignChannel);
 
-    group.MapPut("/addToCategories", AddToCategories);
-    group.MapPut("/removeFromCategories", RemoveFromCategories);
+        group.MapPut("/addToCategories", AddToCategories);
+        group.MapPut("/removeFromCategories", RemoveFromCategories);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class CatalogEndpoints
     private static async Task<IResult> Create(
         CatalogRequest request,
         ICatalogService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCatalog( request );
+        var model = mapRequestToCatalog(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class CatalogEndpoints
     private static async Task<IResult> Update(
         CatalogRequest request,
         ICatalogService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCatalog( request );
+        var model = mapRequestToCatalog(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class CatalogEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICatalogService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var catalog = await service.Get(identifier, cancellationToken);
-        return catalog is null ? Results.NotFound() : Results.Ok( catalog );
+        return catalog is null ? Results.NotFound() : Results.Ok(catalog);
     }
 
 
     private static async Task<IResult> GetAll(
         ICatalogService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CatalogResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CatalogResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICatalogService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class CatalogEndpoints
     private static async Task<IResult> AssignChannel(
         AssociationRequest request,
         ICatalogService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignChannel(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class CatalogEndpoints
     private static async Task<IResult> UnassignChannel(
     AssociationRequest request,
     ICatalogService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignChannel(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class CatalogEndpoints
     private static async Task<IResult> AddToCategories(
         MultipleAssociationRequest request,
         ICatalogService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCategories(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class CatalogEndpoints
     private static async Task<IResult> RemoveFromCategories(
         MultipleAssociationRequest request,
         ICatalogService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCategories(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Catalog mapRequestToCatalog( CatalogRequest request ) {
+    private static Catalog mapRequestToCatalog(CatalogRequest request)
+    {
         var model = new Catalog
         {
             Id = request.Id,

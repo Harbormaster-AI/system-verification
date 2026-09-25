@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum PayoutStatus
 {
-    Pending=1,Scheduled=2,Paid=3,Failed=4,Cancelled=5
+    Pending = 1, Scheduled = 2, Paid = 3, Failed = 4, Cancelled = 5
 }
 
 /// <summary>

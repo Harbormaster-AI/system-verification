@@ -36,7 +36,7 @@ namespace ecommerceonaspdotnet.Domain;
 
 public enum DiscountType
 {
-    AmountOff=1,PercentOff=2,BuyXGetY=3,FreeShipping=4
+    AmountOff = 1, PercentOff = 2, BuyXGetY = 3, FreeShipping = 4
 }
 
 /// <summary>

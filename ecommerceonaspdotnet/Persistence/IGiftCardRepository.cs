@@ -11,7 +11,7 @@ public interface IGiftCardRepository
     Task UpdateAsync(GiftCard giftCard, CancellationToken cancellationToken);
     Task DeleteAsync(GiftCard giftCard, CancellationToken cancellationToken);
 
-    Task AddToRedemptionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRedemptionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRedemptionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRedemptionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

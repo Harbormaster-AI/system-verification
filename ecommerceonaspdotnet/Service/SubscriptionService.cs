@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface ISubscriptionService {
+public interface ISubscriptionService
+{
 
-    Task Create(Subscription model , CancellationToken cancellationToken);
+    Task Create(Subscription model, CancellationToken cancellationToken);
     Task<bool> Update(Subscription model, CancellationToken cancellationToken);
     Task<Subscription?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Subscription>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class SubscriptionService : ISubscriptionService
 
     public async Task<bool> Update(Subscription model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class SubscriptionService : ISubscriptionService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class SubscriptionService : ISubscriptionService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.Customer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class SubscriptionService : ISubscriptionService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class SubscriptionService : ISubscriptionService
         try
         {
             parent.Customer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,7 +183,8 @@ public class SubscriptionService : ISubscriptionService
         return true;
     }
 
-    public async Task<bool> AssignVariant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignVariant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,7 +202,7 @@ public class SubscriptionService : ISubscriptionService
 
             var child = await _serviceResolver.Get<ProductVariantService>().Get(childRequest, cancellationToken);
             parent.Variant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class SubscriptionService : ISubscriptionService
         return true;
     }
 
-    public async Task<bool> UnassignVariant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignVariant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class SubscriptionService : ISubscriptionService
         try
         {
             parent.Variant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -232,7 +238,8 @@ public class SubscriptionService : ISubscriptionService
         return true;
     }
 
-    public async Task<bool> AssignPaymentProvider(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPaymentProvider(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -250,7 +257,7 @@ public class SubscriptionService : ISubscriptionService
 
             var child = await _serviceResolver.Get<PaymentProviderService>().Get(childRequest, cancellationToken);
             parent.PaymentProvider = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -262,7 +269,8 @@ public class SubscriptionService : ISubscriptionService
         return true;
     }
 
-    public async Task<bool> UnassignPaymentProvider(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPaymentProvider(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -273,7 +281,7 @@ public class SubscriptionService : ISubscriptionService
         try
         {
             parent.PaymentProvider = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -285,7 +293,8 @@ public class SubscriptionService : ISubscriptionService
         return true;
     }
 
-    public async Task<bool> AssignChannel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignChannel(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -303,7 +312,7 @@ public class SubscriptionService : ISubscriptionService
 
             var child = await _serviceResolver.Get<ChannelService>().Get(childRequest, cancellationToken);
             parent.Channel = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -315,7 +324,8 @@ public class SubscriptionService : ISubscriptionService
         return true;
     }
 
-    public async Task<bool> UnassignChannel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignChannel(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -326,7 +336,7 @@ public class SubscriptionService : ISubscriptionService
         try
         {
             parent.Channel = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

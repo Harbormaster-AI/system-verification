@@ -29,9 +29,10 @@ public static class ReturnItemEndpoints
     private static async Task<IResult> Create(
         ReturnItemRequest request,
         IReturnItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToReturnItem( request );
+        var model = mapRequestToReturnItem(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class ReturnItemEndpoints
     private static async Task<IResult> Update(
         ReturnItemRequest request,
         IReturnItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToReturnItem( request );
+        var model = mapRequestToReturnItem(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class ReturnItemEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IReturnItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var returnItem = await service.Get(identifier, cancellationToken);
-        return returnItem is null ? Results.NotFound() : Results.Ok( returnItem );
+        return returnItem is null ? Results.NotFound() : Results.Ok(returnItem);
     }
 
 
     private static async Task<IResult> GetAll(
         IReturnItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ReturnItemResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ReturnItemResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IReturnItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class ReturnItemEndpoints
     private static async Task<IResult> AssignReturnRequest(
         AssociationRequest request,
         IReturnItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignReturnRequest(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class ReturnItemEndpoints
     private static async Task<IResult> UnassignReturnRequest(
     AssociationRequest request,
     IReturnItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignReturnRequest(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class ReturnItemEndpoints
     private static async Task<IResult> AssignOrderLine(
         AssociationRequest request,
         IReturnItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrderLine(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class ReturnItemEndpoints
     private static async Task<IResult> UnassignOrderLine(
     AssociationRequest request,
     IReturnItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrderLine(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ReturnItem mapRequestToReturnItem( ReturnItemRequest request ) {
+    private static ReturnItem mapRequestToReturnItem(ReturnItemRequest request)
+    {
         var model = new ReturnItem
         {
             Id = request.Id,

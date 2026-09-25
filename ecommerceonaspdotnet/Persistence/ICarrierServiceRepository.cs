@@ -11,7 +11,7 @@ public interface ICarrierServiceRepository
     Task UpdateAsync(CarrierService carrierService, CancellationToken cancellationToken);
     Task DeleteAsync(CarrierService carrierService, CancellationToken cancellationToken);
 
-    Task AddToShippingMethodsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromShippingMethodsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToShippingMethodsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromShippingMethodsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

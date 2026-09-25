@@ -6,9 +6,10 @@ using ecommerceonaspdotnet.Telemetry;
 
 namespace ecommerceonaspdotnet.Service;
 
-public interface IShipmentService {
+public interface IShipmentService
+{
 
-    Task Create(Shipment model , CancellationToken cancellationToken);
+    Task Create(Shipment model, CancellationToken cancellationToken);
     Task<bool> Update(Shipment model, CancellationToken cancellationToken);
     Task<Shipment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Shipment>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ShipmentService : IShipmentService
 
     public async Task<bool> Update(Shipment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class ShipmentService : IShipmentService
         return true;
     }
 
-    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class ShipmentService : IShipmentService
 
             var child = await _serviceResolver.Get<OrderService>().Get(childRequest, cancellationToken);
             parent.Order = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class ShipmentService : IShipmentService
         return true;
     }
 
-    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class ShipmentService : IShipmentService
         try
         {
             parent.Order = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class ShipmentService : IShipmentService
         return true;
     }
 
-    public async Task<bool> AssignFulfillmentCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFulfillmentCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class ShipmentService : IShipmentService
 
             var child = await _serviceResolver.Get<FulfillmentCenterService>().Get(childRequest, cancellationToken);
             parent.FulfillmentCenter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class ShipmentService : IShipmentService
         return true;
     }
 
-    public async Task<bool> UnassignFulfillmentCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFulfillmentCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class ShipmentService : IShipmentService
         try
         {
             parent.FulfillmentCenter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -232,8 +238,10 @@ public class ShipmentService : IShipmentService
     }
 
 
-    public async Task<bool> AddToShipmentItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToShipmentItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Shipment",
                 "AddToShipmentItems",
@@ -241,16 +249,18 @@ public class ShipmentService : IShipmentService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromShipmentItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromShipmentItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Shipment",
                 "RemoveFromShipmentItems",
