@@ -52,7 +52,7 @@ public class PaymentCardRepository : IPaymentCardRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task AddToTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _db.Transactions
             .Where(transaction => request.ChildIds.Contains(transaction.Id))
@@ -62,7 +62,7 @@ public class PaymentCardRepository : IPaymentCardRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _db.Transactions
             .Where(transaction =>

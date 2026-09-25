@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IFeeChargeService {
+public interface IFeeChargeService
+{
 
-    Task Create(FeeCharge model , CancellationToken cancellationToken);
+    Task Create(FeeCharge model, CancellationToken cancellationToken);
     Task<bool> Update(FeeCharge model, CancellationToken cancellationToken);
     Task<FeeCharge?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FeeCharge>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class FeeChargeService : IFeeChargeService
 
     public async Task<bool> Update(FeeCharge model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class FeeChargeService : IFeeChargeService
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,9 +139,9 @@ public class FeeChargeService : IFeeChargeService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.Get(<AccountService>()).Get( childRequest , cancellationToken );
+            var child = _serviceResolver.Get(< AccountService > ()).Get(childRequest, cancellationToken);
             parent.Account = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class FeeChargeService : IFeeChargeService
         return true;
     }
 
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class FeeChargeService : IFeeChargeService
         try
         {
             parent.Account = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class FeeChargeService : IFeeChargeService
         return true;
     }
 
-    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -189,9 +194,9 @@ public class FeeChargeService : IFeeChargeService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.Get(<LoanAccountService>()).Get( childRequest , cancellationToken );
+            var child = _serviceResolver.Get(< LoanAccountService > ()).Get(childRequest, cancellationToken);
             parent.LoanAccount = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class FeeChargeService : IFeeChargeService
         return true;
     }
 
-    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class FeeChargeService : IFeeChargeService
         try
         {
             parent.LoanAccount = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {

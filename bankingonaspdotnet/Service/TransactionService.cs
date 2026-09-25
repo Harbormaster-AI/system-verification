@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface ITransactionService {
+public interface ITransactionService
+{
 
-    Task Create(Transaction model , CancellationToken cancellationToken);
+    Task Create(Transaction model, CancellationToken cancellationToken);
     Task<bool> Update(Transaction model, CancellationToken cancellationToken);
     Task<Transaction?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Transaction>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class TransactionService : ITransactionService
 
     public async Task<bool> Update(Transaction model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -132,7 +134,8 @@ public class TransactionService : ITransactionService
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -148,9 +151,9 @@ public class TransactionService : ITransactionService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.Get(<AccountService>()).Get( childRequest , cancellationToken );
+            var child = _serviceResolver.Get(< AccountService > ()).Get(childRequest, cancellationToken);
             parent.Account = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -162,7 +165,8 @@ public class TransactionService : ITransactionService
         return true;
     }
 
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -173,7 +177,7 @@ public class TransactionService : ITransactionService
         try
         {
             parent.Account = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -185,7 +189,8 @@ public class TransactionService : ITransactionService
         return true;
     }
 
-    public async Task<bool> AssignExternalCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignExternalCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -201,9 +206,9 @@ public class TransactionService : ITransactionService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.Get(<ExternalAccountService>()).Get( childRequest , cancellationToken );
+            var child = _serviceResolver.Get(< ExternalAccountService > ()).Get(childRequest, cancellationToken);
             parent.ExternalCounterparty = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -215,7 +220,8 @@ public class TransactionService : ITransactionService
         return true;
     }
 
-    public async Task<bool> UnassignExternalCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignExternalCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -226,7 +232,7 @@ public class TransactionService : ITransactionService
         try
         {
             parent.ExternalCounterparty = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -238,7 +244,8 @@ public class TransactionService : ITransactionService
         return true;
     }
 
-    public async Task<bool> AssignPaymentCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPaymentCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -254,9 +261,9 @@ public class TransactionService : ITransactionService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.Get(<PaymentCardService>()).Get( childRequest , cancellationToken );
+            var child = _serviceResolver.Get(< PaymentCardService > ()).Get(childRequest, cancellationToken);
             parent.PaymentCard = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -268,7 +275,8 @@ public class TransactionService : ITransactionService
         return true;
     }
 
-    public async Task<bool> UnassignPaymentCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPaymentCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -279,7 +287,7 @@ public class TransactionService : ITransactionService
         try
         {
             parent.PaymentCard = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -291,7 +299,8 @@ public class TransactionService : ITransactionService
         return true;
     }
 
-    public async Task<bool> AssignFundsTransfer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFundsTransfer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -307,9 +316,9 @@ public class TransactionService : ITransactionService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.Get(<FundsTransferService>()).Get( childRequest , cancellationToken );
+            var child = _serviceResolver.Get(< FundsTransferService > ()).Get(childRequest, cancellationToken);
             parent.FundsTransfer = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -321,7 +330,8 @@ public class TransactionService : ITransactionService
         return true;
     }
 
-    public async Task<bool> UnassignFundsTransfer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFundsTransfer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -332,7 +342,7 @@ public class TransactionService : ITransactionService
         try
         {
             parent.FundsTransfer = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -344,7 +354,8 @@ public class TransactionService : ITransactionService
         return true;
     }
 
-    public async Task<bool> AssignFxTrade(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFxTrade(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -360,9 +371,9 @@ public class TransactionService : ITransactionService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.Get(<FXTradeService>()).Get( childRequest , cancellationToken );
+            var child = _serviceResolver.Get(< FXTradeService > ()).Get(childRequest, cancellationToken);
             parent.FxTrade = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -374,7 +385,8 @@ public class TransactionService : ITransactionService
         return true;
     }
 
-    public async Task<bool> UnassignFxTrade(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFxTrade(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -385,7 +397,7 @@ public class TransactionService : ITransactionService
         try
         {
             parent.FxTrade = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -397,7 +409,8 @@ public class TransactionService : ITransactionService
         return true;
     }
 
-    public async Task<bool> AssignDispute(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDispute(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -413,9 +426,9 @@ public class TransactionService : ITransactionService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.Get(<DisputeService>()).Get( childRequest , cancellationToken );
+            var child = _serviceResolver.Get(< DisputeService > ()).Get(childRequest, cancellationToken);
             parent.Dispute = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -427,7 +440,8 @@ public class TransactionService : ITransactionService
         return true;
     }
 
-    public async Task<bool> UnassignDispute(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDispute(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -438,7 +452,7 @@ public class TransactionService : ITransactionService
         try
         {
             parent.Dispute = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
