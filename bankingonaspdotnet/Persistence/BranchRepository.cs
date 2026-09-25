@@ -46,7 +46,7 @@ public class BranchRepository : IBranchRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task AddToAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Accounts
             .Where(account => request.ChildIds.Contains(account.Id))
@@ -56,7 +56,7 @@ public class BranchRepository : IBranchRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Accounts
             .Where(account =>
@@ -68,7 +68,7 @@ public class BranchRepository : IBranchRepository
                     (Guid?)null));
     }
 
-    public async Task AddToLoanAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToLoanAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.LoanAccounts
             .Where(loanAccount => request.ChildIds.Contains(loanAccount.Id))
@@ -78,7 +78,7 @@ public class BranchRepository : IBranchRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromLoanAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromLoanAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.LoanAccounts
             .Where(loanAccount =>
@@ -90,7 +90,7 @@ public class BranchRepository : IBranchRepository
                     (Guid?)null));
     }
 
-    public async Task AddToAtmsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToAtmsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Atms
             .Where(aTM => request.ChildIds.Contains(aTM.Id))
@@ -100,7 +100,7 @@ public class BranchRepository : IBranchRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromAtmsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromAtmsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Atms
             .Where(aTM =>

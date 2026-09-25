@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IAccountService {
+public interface IAccountService
+{
 
-    Task Create(Account model , CancellationToken cancellationToken);
+    Task Create(Account model, CancellationToken cancellationToken);
     Task<bool> Update(Account model, CancellationToken cancellationToken);
     Task<Account?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Account>> GetAll(CancellationToken cancellationToken);
@@ -74,7 +75,8 @@ public class AccountService : IAccountService
 
     public async Task<bool> Update(Account model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -132,7 +134,8 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -148,9 +151,9 @@ public class AccountService : IAccountService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(BankService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(BankService).get(childRequest, cancellationToken)
             parent.Bank = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -160,7 +163,8 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -171,7 +175,7 @@ public class AccountService : IAccountService
         try
         {
             parent.Bank = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -181,7 +185,8 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> AssignBranch(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBranch(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,9 +202,9 @@ public class AccountService : IAccountService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(BranchService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(BranchService).get(childRequest, cancellationToken)
             parent.Branch = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> UnassignBranch(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBranch(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class AccountService : IAccountService
         try
         {
             parent.Branch = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -230,7 +236,8 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,9 +253,9 @@ public class AccountService : IAccountService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(BankingProductService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(BankingProductService).get(childRequest, cancellationToken)
             parent.Product = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class AccountService : IAccountService
         try
         {
             parent.Product = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -280,8 +288,10 @@ public class AccountService : IAccountService
     }
 
 
-    public async Task<bool> AddToOwners(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOwners(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Account",
                 "AddToOwners",
@@ -295,8 +305,10 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> RemoveFromOwners(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOwners(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Account",
                 "RemoveFromOwners",
@@ -310,8 +322,10 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Account",
                 "AddToTransactions",
@@ -325,8 +339,10 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Account",
                 "RemoveFromTransactions",
@@ -340,8 +356,10 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> AddToStatements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToStatements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Account",
                 "AddToStatements",
@@ -355,8 +373,10 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> RemoveFromStatements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromStatements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Account",
                 "RemoveFromStatements",
@@ -370,8 +390,10 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> AddToStandingInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToStandingInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Account",
                 "AddToStandingInstructions",
@@ -385,8 +407,10 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> RemoveFromStandingInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromStandingInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Account",
                 "RemoveFromStandingInstructions",
@@ -400,8 +424,10 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> AddToFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Account",
                 "AddToFeeCharges",
@@ -415,8 +441,10 @@ public class AccountService : IAccountService
         return true;
     }
 
-    public async Task<bool> RemoveFromFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Account",
                 "RemoveFromFeeCharges",

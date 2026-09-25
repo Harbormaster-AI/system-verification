@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface ICollateralService {
+public interface ICollateralService
+{
 
-    Task Create(Collateral model , CancellationToken cancellationToken);
+    Task Create(Collateral model, CancellationToken cancellationToken);
     Task<bool> Update(Collateral model, CancellationToken cancellationToken);
     Task<Collateral?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Collateral>> GetAll(CancellationToken cancellationToken);
@@ -60,7 +61,8 @@ public class CollateralService : ICollateralService
 
     public async Task<bool> Update(Collateral model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -114,7 +116,8 @@ public class CollateralService : ICollateralService
         return true;
     }
 
-    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -130,9 +133,9 @@ public class CollateralService : ICollateralService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(LoanAccountService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(LoanAccountService).get(childRequest, cancellationToken)
             parent.LoanAccount = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -142,7 +145,8 @@ public class CollateralService : ICollateralService
         return true;
     }
 
-    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -153,7 +157,7 @@ public class CollateralService : ICollateralService
         try
         {
             parent.LoanAccount = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {

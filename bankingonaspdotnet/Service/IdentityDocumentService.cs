@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IIdentityDocumentService {
+public interface IIdentityDocumentService
+{
 
-    Task Create(IdentityDocument model , CancellationToken cancellationToken);
+    Task Create(IdentityDocument model, CancellationToken cancellationToken);
     Task<bool> Update(IdentityDocument model, CancellationToken cancellationToken);
     Task<IdentityDocument?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<IdentityDocument>> GetAll(CancellationToken cancellationToken);
@@ -60,7 +61,8 @@ public class IdentityDocumentService : IIdentityDocumentService
 
     public async Task<bool> Update(IdentityDocument model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -113,7 +115,8 @@ public class IdentityDocumentService : IIdentityDocumentService
         return true;
     }
 
-    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -129,9 +132,9 @@ public class IdentityDocumentService : IIdentityDocumentService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(KycProfileService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(KycProfileService).get(childRequest, cancellationToken)
             parent.KycProfile = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -141,7 +144,8 @@ public class IdentityDocumentService : IIdentityDocumentService
         return true;
     }
 
-    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -152,7 +156,7 @@ public class IdentityDocumentService : IIdentityDocumentService
         try
         {
             parent.KycProfile = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {

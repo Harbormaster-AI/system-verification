@@ -46,7 +46,7 @@ public class BankingProductRepository : IBankingProductRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task AddToAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Accounts
             .Where(account => request.ChildIds.Contains(account.Id))
@@ -56,7 +56,7 @@ public class BankingProductRepository : IBankingProductRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Accounts
             .Where(account =>
@@ -68,7 +68,7 @@ public class BankingProductRepository : IBankingProductRepository
                     (Guid?)null));
     }
 
-    public async Task AddToLoanAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToLoanAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.LoanAccounts
             .Where(loanAccount => request.ChildIds.Contains(loanAccount.Id))
@@ -78,7 +78,7 @@ public class BankingProductRepository : IBankingProductRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromLoanAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromLoanAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.LoanAccounts
             .Where(loanAccount =>
@@ -90,7 +90,7 @@ public class BankingProductRepository : IBankingProductRepository
                     (Guid?)null));
     }
 
-    public async Task AddToPaymentCardsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToPaymentCardsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.PaymentCards
             .Where(paymentCard => request.ChildIds.Contains(paymentCard.Id))
@@ -100,7 +100,7 @@ public class BankingProductRepository : IBankingProductRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromPaymentCardsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromPaymentCardsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.PaymentCards
             .Where(paymentCard =>

@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IFundsTransferService {
+public interface IFundsTransferService
+{
 
-    Task Create(FundsTransfer model , CancellationToken cancellationToken);
+    Task Create(FundsTransfer model, CancellationToken cancellationToken);
     Task<bool> Update(FundsTransfer model, CancellationToken cancellationToken);
     Task<FundsTransfer?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FundsTransfer>> GetAll(CancellationToken cancellationToken);
@@ -68,7 +69,8 @@ public class FundsTransferService : IFundsTransferService
 
     public async Task<bool> Update(FundsTransfer model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class FundsTransferService : IFundsTransferService
         return true;
     }
 
-    public async Task<bool> AssignSourceAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSourceAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,9 +144,9 @@ public class FundsTransferService : IFundsTransferService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(AccountService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(AccountService).get(childRequest, cancellationToken)
             parent.SourceAccount = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class FundsTransferService : IFundsTransferService
         return true;
     }
 
-    public async Task<bool> UnassignSourceAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSourceAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class FundsTransferService : IFundsTransferService
         try
         {
             parent.SourceAccount = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class FundsTransferService : IFundsTransferService
         return true;
     }
 
-    public async Task<bool> AssignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,9 +195,9 @@ public class FundsTransferService : IFundsTransferService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(AccountService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(AccountService).get(childRequest, cancellationToken)
             parent.DestinationAccount = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class FundsTransferService : IFundsTransferService
         return true;
     }
 
-    public async Task<bool> UnassignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class FundsTransferService : IFundsTransferService
         try
         {
             parent.DestinationAccount = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -223,7 +229,8 @@ public class FundsTransferService : IFundsTransferService
         return true;
     }
 
-    public async Task<bool> AssignExternalBeneficiary(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignExternalBeneficiary(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -239,9 +246,9 @@ public class FundsTransferService : IFundsTransferService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(ExternalAccountService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(ExternalAccountService).get(childRequest, cancellationToken)
             parent.ExternalBeneficiary = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -251,7 +258,8 @@ public class FundsTransferService : IFundsTransferService
         return true;
     }
 
-    public async Task<bool> UnassignExternalBeneficiary(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignExternalBeneficiary(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -262,7 +270,7 @@ public class FundsTransferService : IFundsTransferService
         try
         {
             parent.ExternalBeneficiary = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -272,7 +280,8 @@ public class FundsTransferService : IFundsTransferService
         return true;
     }
 
-    public async Task<bool> AssignInitiatedBy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInitiatedBy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -288,9 +297,9 @@ public class FundsTransferService : IFundsTransferService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(CustomerService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(CustomerService).get(childRequest, cancellationToken)
             parent.InitiatedBy = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -300,7 +309,8 @@ public class FundsTransferService : IFundsTransferService
         return true;
     }
 
-    public async Task<bool> UnassignInitiatedBy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInitiatedBy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -311,7 +321,7 @@ public class FundsTransferService : IFundsTransferService
         try
         {
             parent.InitiatedBy = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -322,8 +332,10 @@ public class FundsTransferService : IFundsTransferService
     }
 
 
-    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FundsTransfer",
                 "AddToTransactions",
@@ -337,8 +349,10 @@ public class FundsTransferService : IFundsTransferService
         return true;
     }
 
-    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FundsTransfer",
                 "RemoveFromTransactions",

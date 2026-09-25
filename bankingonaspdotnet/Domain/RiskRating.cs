@@ -36,7 +36,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum RiskRating
 {
-    Low=1,Medium=2,High=3
+    Low = 1, Medium = 2, High = 3
 }
 
 /// <summary>
