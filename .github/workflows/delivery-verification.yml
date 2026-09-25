@@ -304,63 +304,6 @@ jobs:
 
           fi
 
-      ###############################################################################
-      # Normalize Dockerfile for Go root-layout samples (before docker build)
-      ###############################################################################
-
-      - name: Prepare Go Dockerfile If Needed
-
-        shell: bash
-
-        run: |
-          source .github/actions/common/report.sh
-
-          # HarborMaster Go samples may ship a broken Dockerfile (e.g. WORKDIR src/demo,
-          # apt-get on alpine) while sources live at repo root with module path "demo/...".
-          if [ -f main.go ] && { [ -d internal ] || [ -f go.mod ]; }; then
-              if [ ! -d src/demo ] || grep -Eq 'apt-get|WORKDIR[[:space:]]+src/demo' Dockerfile 2>/dev/null; then
-                  MODULE_NAME="app"
-                  INFERRED=$(grep -RhoE '"[a-zA-Z0-9._-]+/internal/' --include='*.go' . 2>/dev/null | head -1 | sed -E 's/^"([^/]+)\/.*/\1/' || true)
-                  if [ -n "${INFERRED}" ]; then
-                      MODULE_NAME="${INFERRED}"
-                  fi
-                  echo "Writing verification Dockerfile for Go root-layout application (module ${MODULE_NAME})..."
-                  cat > Dockerfile <<EOF
-          FROM golang:1.22-alpine AS builder
-          WORKDIR /app
-          RUN apk add --no-cache git
-          COPY . .
-          RUN if [ ! -f go.mod ]; then go mod init ${MODULE_NAME}; fi \\
-           && go mod tidy \\
-           && CGO_ENABLED=0 GOOS=linux go build -o /out/app .
-          FROM alpine:3.20
-          WORKDIR /app
-          RUN apk add --no-cache ca-certificates \\
-           && printf '%s\\n' \\
-                'APP_PORT=8080' \\
-                'DB_USER_NAME=root' \\
-                'DB_PASSWORD=root' \\
-                'DB_NAME=harbormaster' \\
-                'DB_HOST=127.0.0.1' \\
-                'DB_PORT=3306' \\
-                'DB_TYPE=mysql' \\
-                'DB_ARGS=charset=utf8&parseTime=True&loc=Local' \\
-                'DB_DISABLE_FK_CONSTRAINTS=true' \\
-                > .env
-          COPY --from=builder /out/app /app/app
-          EXPOSE 8080
-          CMD ["/app/app"]
-          EOF
-                  sed -i 's/^          //' Dockerfile
-              fi
-          fi
-
-          post_pass \
-              "DELIVERY" \
-              "PREPARE_DOCKERFILE" \
-              0 \
-              "Dockerfile ready for image build." \
-              ""
 
       ###############################################################################
       # Docker Build
@@ -549,21 +492,11 @@ jobs:
           
           echo "===== Docker Logs ====="
           docker logs ${APP_NAME}
-          
-          echo "===== ACTUATOR HEALTH ====="
-          curl -i http://localhost:8080/actuator/health
-          echo "Actuator exit code: $?"
-          
-          docker exec ${APP_NAME} sh -c 'env | grep -E "SERVER_PORT|APP_PORT|hm.security"'
-          
-          echo "===== ACTUATOR HEALTH inside docker running the image ====="
-          docker exec ${APP_NAME} wget -S -O - http://localhost:8080/actuator/health
-          
+
+          echo "===== Next test health url outside the docker container====="                    
           for i in {1..90}; do
           
-              # Support Spring (/actuator/health) and Go (/health) without language branching.
-              if curl -fs http://localhost:8080/actuator/health >/dev/null \
-                 || curl -fs http://localhost:8080/health >/dev/null; then
+              if curl -fs http://localhost:8080/health >/dev/null; then
           
                   post_pass \
                       "DELIVERY" \
@@ -583,7 +516,10 @@ jobs:
           LOG=$(docker logs ${APP_NAME} | tail -20 | tr '\n' ' ')
           sleep 60
           docker logs ${APP_NAME}
-          
+
+          echo "===== If failed,  test health url inside the docker container====="          
+          docker exec ${APP_NAME} wget -S -O - http://localhost:8080/health
+                    
           post_fail \
               "DELIVERY" \
               "CONTAINER_HEALTH" \
