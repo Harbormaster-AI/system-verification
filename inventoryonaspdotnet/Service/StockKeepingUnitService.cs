@@ -6,9 +6,10 @@ using inventoryonaspdotnet.Telemetry;
 
 namespace inventoryonaspdotnet.Service;
 
-public interface IStockKeepingUnitService {
+public interface IStockKeepingUnitService
+{
 
-    Task Create(StockKeepingUnit model , CancellationToken cancellationToken);
+    Task Create(StockKeepingUnit model, CancellationToken cancellationToken);
     Task<bool> Update(StockKeepingUnit model, CancellationToken cancellationToken);
     Task<StockKeepingUnit?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<StockKeepingUnit>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class StockKeepingUnitService : IStockKeepingUnitService
 
     public async Task<bool> Update(StockKeepingUnit model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -133,8 +135,10 @@ public class StockKeepingUnitService : IStockKeepingUnitService
     }
 
 
-    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StockKeepingUnit",
                 "AddToInventoryItems",
@@ -142,16 +146,18 @@ public class StockKeepingUnitService : IStockKeepingUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StockKeepingUnit",
                 "RemoveFromInventoryItems",
@@ -167,8 +173,10 @@ public class StockKeepingUnitService : IStockKeepingUnitService
         return true;
     }
 
-    public async Task<bool> AddToUomConversions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToUomConversions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StockKeepingUnit",
                 "AddToUomConversions",
@@ -176,16 +184,18 @@ public class StockKeepingUnitService : IStockKeepingUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromUomConversions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromUomConversions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StockKeepingUnit",
                 "RemoveFromUomConversions",
@@ -201,8 +211,10 @@ public class StockKeepingUnitService : IStockKeepingUnitService
         return true;
     }
 
-    public async Task<bool> AddToReplenishmentPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToReplenishmentPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StockKeepingUnit",
                 "AddToReplenishmentPolicies",
@@ -210,16 +222,18 @@ public class StockKeepingUnitService : IStockKeepingUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromReplenishmentPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromReplenishmentPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StockKeepingUnit",
                 "RemoveFromReplenishmentPolicies",
@@ -235,8 +249,10 @@ public class StockKeepingUnitService : IStockKeepingUnitService
         return true;
     }
 
-    public async Task<bool> AddToLots(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLots(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StockKeepingUnit",
                 "AddToLots",
@@ -244,16 +260,18 @@ public class StockKeepingUnitService : IStockKeepingUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLots(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLots(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StockKeepingUnit",
                 "RemoveFromLots",
@@ -269,8 +287,10 @@ public class StockKeepingUnitService : IStockKeepingUnitService
         return true;
     }
 
-    public async Task<bool> AddToSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StockKeepingUnit",
                 "AddToSerialNumbers",
@@ -278,16 +298,18 @@ public class StockKeepingUnitService : IStockKeepingUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StockKeepingUnit",
                 "RemoveFromSerialNumbers",

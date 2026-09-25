@@ -11,7 +11,7 @@ public interface IReservationRepository
     Task UpdateAsync(Reservation reservation, CancellationToken cancellationToken);
     Task DeleteAsync(Reservation reservation, CancellationToken cancellationToken);
 
-    Task AddToSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

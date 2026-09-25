@@ -11,9 +11,9 @@ public interface ITransferOrderRepository
     Task UpdateAsync(TransferOrder transferOrder, CancellationToken cancellationToken);
     Task DeleteAsync(TransferOrder transferOrder, CancellationToken cancellationToken);
 
-    Task AddToLinesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLinesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLinesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLinesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

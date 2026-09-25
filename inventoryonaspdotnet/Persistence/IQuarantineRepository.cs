@@ -11,9 +11,9 @@ public interface IQuarantineRepository
     Task UpdateAsync(Quarantine quarantine, CancellationToken cancellationToken);
     Task DeleteAsync(Quarantine quarantine, CancellationToken cancellationToken);
 
-    Task AddToItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum AdjustmentType
 {
-    Increase=1,Decrease=2,Reclassification=3
+    Increase = 1, Decrease = 2, Reclassification = 3
 }
 
 /// <summary>

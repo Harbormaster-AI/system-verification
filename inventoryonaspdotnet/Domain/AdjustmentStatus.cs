@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum AdjustmentStatus
 {
-    Draft=1,Approved=2,Posted=3,Cancelled=4
+    Draft = 1, Approved = 2, Posted = 3, Cancelled = 4
 }
 
 /// <summary>

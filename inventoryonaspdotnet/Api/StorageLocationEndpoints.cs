@@ -22,11 +22,11 @@ public static class StorageLocationEndpoints
         group.MapPut("/assignParentLocation", AssignParentLocation);
         group.MapPut("/unassignParentLocation", UnassignParentLocation);
 
-    group.MapPut("/addToChildLocations", AddToChildLocations);
-    group.MapPut("/removeFromChildLocations", RemoveFromChildLocations);
+        group.MapPut("/addToChildLocations", AddToChildLocations);
+        group.MapPut("/removeFromChildLocations", RemoveFromChildLocations);
 
-    group.MapPut("/addToInventoryItems", AddToInventoryItems);
-    group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
+        group.MapPut("/addToInventoryItems", AddToInventoryItems);
+        group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
 
 
         return app;
@@ -35,9 +35,10 @@ public static class StorageLocationEndpoints
     private static async Task<IResult> Create(
         StorageLocationRequest request,
         IStorageLocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToStorageLocation( request );
+        var model = mapRequestToStorageLocation(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class StorageLocationEndpoints
     private static async Task<IResult> Update(
         StorageLocationRequest request,
         IStorageLocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToStorageLocation( request );
+        var model = mapRequestToStorageLocation(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class StorageLocationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IStorageLocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var storageLocation = await service.Get(identifier, cancellationToken);
-        return storageLocation is null ? Results.NotFound() : Results.Ok( storageLocation );
+        return storageLocation is null ? Results.NotFound() : Results.Ok(storageLocation);
     }
 
 
     private static async Task<IResult> GetAll(
         IStorageLocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( StorageLocationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(StorageLocationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IStorageLocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class StorageLocationEndpoints
     private static async Task<IResult> AssignWarehouse(
         AssociationRequest request,
         IStorageLocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWarehouse(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class StorageLocationEndpoints
     private static async Task<IResult> UnassignWarehouse(
     AssociationRequest request,
     IStorageLocationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWarehouse(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -115,7 +122,8 @@ public static class StorageLocationEndpoints
     private static async Task<IResult> AssignParentLocation(
         AssociationRequest request,
         IStorageLocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignParentLocation(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +131,8 @@ public static class StorageLocationEndpoints
     private static async Task<IResult> UnassignParentLocation(
     AssociationRequest request,
     IStorageLocationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignParentLocation(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +141,8 @@ public static class StorageLocationEndpoints
     private static async Task<IResult> AddToChildLocations(
         MultipleAssociationRequest request,
         IStorageLocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToChildLocations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class StorageLocationEndpoints
     private static async Task<IResult> RemoveFromChildLocations(
         MultipleAssociationRequest request,
         IStorageLocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromChildLocations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToInventoryItems(
         MultipleAssociationRequest request,
         IStorageLocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInventoryItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class StorageLocationEndpoints
     private static async Task<IResult> RemoveFromInventoryItems(
         MultipleAssociationRequest request,
         IStorageLocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInventoryItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static StorageLocation mapRequestToStorageLocation( StorageLocationRequest request ) {
+    private static StorageLocation mapRequestToStorageLocation(StorageLocationRequest request)
+    {
         var model = new StorageLocation
         {
             Id = request.Id,

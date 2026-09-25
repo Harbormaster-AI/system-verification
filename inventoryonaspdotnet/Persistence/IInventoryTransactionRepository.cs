@@ -11,7 +11,7 @@ public interface IInventoryTransactionRepository
     Task UpdateAsync(InventoryTransaction inventoryTransaction, CancellationToken cancellationToken);
     Task DeleteAsync(InventoryTransaction inventoryTransaction, CancellationToken cancellationToken);
 
-    Task AddToSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -6,9 +6,10 @@ using inventoryonaspdotnet.Telemetry;
 
 namespace inventoryonaspdotnet.Service;
 
-public interface IInventoryThresholdAlertService {
+public interface IInventoryThresholdAlertService
+{
 
-    Task Create(InventoryThresholdAlert model , CancellationToken cancellationToken);
+    Task Create(InventoryThresholdAlert model, CancellationToken cancellationToken);
     Task<bool> Update(InventoryThresholdAlert model, CancellationToken cancellationToken);
     Task<InventoryThresholdAlert?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InventoryThresholdAlert>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
 
     public async Task<bool> Update(InventoryThresholdAlert model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
         return true;
     }
 
-    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
 
             var child = await _serviceResolver.Get<StockKeepingUnitService>().Get(childRequest, cancellationToken);
             parent.Sku = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
         return true;
     }
 
-    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
         try
         {
             parent.Sku = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
         return true;
     }
 
-    public async Task<bool> AssignWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
 
             var child = await _serviceResolver.Get<WarehouseService>().Get(childRequest, cancellationToken);
             parent.Warehouse = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
         return true;
     }
 
-    public async Task<bool> UnassignWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
         try
         {
             parent.Warehouse = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,7 +237,8 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
         return true;
     }
 
-    public async Task<bool> AssignLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -249,7 +256,7 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
 
             var child = await _serviceResolver.Get<StorageLocationService>().Get(childRequest, cancellationToken);
             parent.Location = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -261,7 +268,8 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
         return true;
     }
 
-    public async Task<bool> UnassignLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -272,7 +280,7 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
         try
         {
             parent.Location = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,7 +292,8 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
         return true;
     }
 
-    public async Task<bool> AssignRelatedPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRelatedPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -302,7 +311,7 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
 
             var child = await _serviceResolver.Get<ReplenishmentPolicyService>().Get(childRequest, cancellationToken);
             parent.RelatedPolicy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -314,7 +323,8 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
         return true;
     }
 
-    public async Task<bool> UnassignRelatedPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRelatedPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -325,7 +335,7 @@ public class InventoryThresholdAlertService : IInventoryThresholdAlertService
         try
         {
             parent.RelatedPolicy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

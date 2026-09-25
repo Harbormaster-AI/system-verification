@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum TransactionType
 {
-    Receipt=1,Issue=2,AdjustmentIncrease=3,AdjustmentDecrease=4,Reclassification=5,TransferOut=6,TransferIn=7,CountIncrease=8,CountDecrease=9,Putaway=10,Pick=11
+    Receipt = 1, Issue = 2, AdjustmentIncrease = 3, AdjustmentDecrease = 4, Reclassification = 5, TransferOut = 6, TransferIn = 7, CountIncrease = 8, CountDecrease = 9, Putaway = 10, Pick = 11
 }
 
 /// <summary>

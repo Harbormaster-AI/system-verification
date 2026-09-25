@@ -6,9 +6,10 @@ using inventoryonaspdotnet.Telemetry;
 
 namespace inventoryonaspdotnet.Service;
 
-public interface ITransferOrderService {
+public interface ITransferOrderService
+{
 
-    Task Create(TransferOrder model , CancellationToken cancellationToken);
+    Task Create(TransferOrder model, CancellationToken cancellationToken);
     Task<bool> Update(TransferOrder model, CancellationToken cancellationToken);
     Task<TransferOrder?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TransferOrder>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class TransferOrderService : ITransferOrderService
 
     public async Task<bool> Update(TransferOrder model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class TransferOrderService : ITransferOrderService
         return true;
     }
 
-    public async Task<bool> AssignOriginWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOriginWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class TransferOrderService : ITransferOrderService
 
             var child = await _serviceResolver.Get<WarehouseService>().Get(childRequest, cancellationToken);
             parent.OriginWarehouse = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class TransferOrderService : ITransferOrderService
         return true;
     }
 
-    public async Task<bool> UnassignOriginWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOriginWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class TransferOrderService : ITransferOrderService
         try
         {
             parent.OriginWarehouse = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,7 +183,8 @@ public class TransferOrderService : ITransferOrderService
         return true;
     }
 
-    public async Task<bool> AssignDestinationWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDestinationWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,7 +202,7 @@ public class TransferOrderService : ITransferOrderService
 
             var child = await _serviceResolver.Get<WarehouseService>().Get(childRequest, cancellationToken);
             parent.DestinationWarehouse = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class TransferOrderService : ITransferOrderService
         return true;
     }
 
-    public async Task<bool> UnassignDestinationWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDestinationWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class TransferOrderService : ITransferOrderService
         try
         {
             parent.DestinationWarehouse = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -233,8 +239,10 @@ public class TransferOrderService : ITransferOrderService
     }
 
 
-    public async Task<bool> AddToLines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TransferOrder",
                 "AddToLines",
@@ -242,16 +250,18 @@ public class TransferOrderService : ITransferOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TransferOrder",
                 "RemoveFromLines",
@@ -267,8 +277,10 @@ public class TransferOrderService : ITransferOrderService
         return true;
     }
 
-    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TransferOrder",
                 "AddToTransactions",
@@ -276,16 +288,18 @@ public class TransferOrderService : ITransferOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TransferOrder",
                 "RemoveFromTransactions",

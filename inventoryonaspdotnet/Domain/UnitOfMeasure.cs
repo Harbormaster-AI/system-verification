@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum UnitOfMeasure
 {
-    Each=1,Case=2,Pallet=3,Dozen=4,Gram=5,Kilogram=6,Pound=7,Ounce=8,Milliliter=9,Liter=10,CubicMeter=11,Meter=12,Foot=13,SquareMeter=14
+    Each = 1, Case = 2, Pallet = 3, Dozen = 4, Gram = 5, Kilogram = 6, Pound = 7, Ounce = 8, Milliliter = 9, Liter = 10, CubicMeter = 11, Meter = 12, Foot = 13, SquareMeter = 14
 }
 
 /// <summary>

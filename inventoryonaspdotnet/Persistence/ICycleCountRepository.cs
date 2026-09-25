@@ -11,11 +11,11 @@ public interface ICycleCountRepository
     Task UpdateAsync(CycleCount cycleCount, CancellationToken cancellationToken);
     Task DeleteAsync(CycleCount cycleCount, CancellationToken cancellationToken);
 
-    Task AddToLocationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLocationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToEntriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromEntriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLocationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLocationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToEntriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromEntriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

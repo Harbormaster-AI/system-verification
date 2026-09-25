@@ -6,9 +6,10 @@ using inventoryonaspdotnet.Telemetry;
 
 namespace inventoryonaspdotnet.Service;
 
-public interface ITransferOrderLineService {
+public interface ITransferOrderLineService
+{
 
-    Task Create(TransferOrderLine model , CancellationToken cancellationToken);
+    Task Create(TransferOrderLine model, CancellationToken cancellationToken);
     Task<bool> Update(TransferOrderLine model, CancellationToken cancellationToken);
     Task<TransferOrderLine?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TransferOrderLine>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class TransferOrderLineService : ITransferOrderLineService
 
     public async Task<bool> Update(TransferOrderLine model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -128,7 +130,8 @@ public class TransferOrderLineService : ITransferOrderLineService
         return true;
     }
 
-    public async Task<bool> AssignTransferOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTransferOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -146,7 +149,7 @@ public class TransferOrderLineService : ITransferOrderLineService
 
             var child = await _serviceResolver.Get<TransferOrderService>().Get(childRequest, cancellationToken);
             parent.TransferOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -158,7 +161,8 @@ public class TransferOrderLineService : ITransferOrderLineService
         return true;
     }
 
-    public async Task<bool> UnassignTransferOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTransferOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -169,7 +173,7 @@ public class TransferOrderLineService : ITransferOrderLineService
         try
         {
             parent.TransferOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -181,7 +185,8 @@ public class TransferOrderLineService : ITransferOrderLineService
         return true;
     }
 
-    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -199,7 +204,7 @@ public class TransferOrderLineService : ITransferOrderLineService
 
             var child = await _serviceResolver.Get<StockKeepingUnitService>().Get(childRequest, cancellationToken);
             parent.Sku = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -211,7 +216,8 @@ public class TransferOrderLineService : ITransferOrderLineService
         return true;
     }
 
-    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -222,7 +228,7 @@ public class TransferOrderLineService : ITransferOrderLineService
         try
         {
             parent.Sku = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -234,7 +240,8 @@ public class TransferOrderLineService : ITransferOrderLineService
         return true;
     }
 
-    public async Task<bool> AssignLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -252,7 +259,7 @@ public class TransferOrderLineService : ITransferOrderLineService
 
             var child = await _serviceResolver.Get<LotService>().Get(childRequest, cancellationToken);
             parent.Lot = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -264,7 +271,8 @@ public class TransferOrderLineService : ITransferOrderLineService
         return true;
     }
 
-    public async Task<bool> UnassignLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -275,7 +283,7 @@ public class TransferOrderLineService : ITransferOrderLineService
         try
         {
             parent.Lot = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -287,7 +295,8 @@ public class TransferOrderLineService : ITransferOrderLineService
         return true;
     }
 
-    public async Task<bool> AssignFromLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFromLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -305,7 +314,7 @@ public class TransferOrderLineService : ITransferOrderLineService
 
             var child = await _serviceResolver.Get<StorageLocationService>().Get(childRequest, cancellationToken);
             parent.FromLocation = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -317,7 +326,8 @@ public class TransferOrderLineService : ITransferOrderLineService
         return true;
     }
 
-    public async Task<bool> UnassignFromLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFromLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -328,7 +338,7 @@ public class TransferOrderLineService : ITransferOrderLineService
         try
         {
             parent.FromLocation = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -340,7 +350,8 @@ public class TransferOrderLineService : ITransferOrderLineService
         return true;
     }
 
-    public async Task<bool> AssignToLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignToLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -358,7 +369,7 @@ public class TransferOrderLineService : ITransferOrderLineService
 
             var child = await _serviceResolver.Get<StorageLocationService>().Get(childRequest, cancellationToken);
             parent.ToLocation = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -370,7 +381,8 @@ public class TransferOrderLineService : ITransferOrderLineService
         return true;
     }
 
-    public async Task<bool> UnassignToLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignToLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -381,7 +393,7 @@ public class TransferOrderLineService : ITransferOrderLineService
         try
         {
             parent.ToLocation = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -394,8 +406,10 @@ public class TransferOrderLineService : ITransferOrderLineService
     }
 
 
-    public async Task<bool> AddToSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TransferOrderLine",
                 "AddToSerialNumbers",
@@ -403,16 +417,18 @@ public class TransferOrderLineService : ITransferOrderLineService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TransferOrderLine",
                 "RemoveFromSerialNumbers",

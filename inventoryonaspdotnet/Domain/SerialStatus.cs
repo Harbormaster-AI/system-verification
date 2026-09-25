@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum SerialStatus
 {
-    Active=1,Assigned=2,InTransit=3,Consumed=4,Returned=5,Scrapped=6
+    Active = 1, Assigned = 2, InTransit = 3, Consumed = 4, Returned = 5, Scrapped = 6
 }
 
 /// <summary>

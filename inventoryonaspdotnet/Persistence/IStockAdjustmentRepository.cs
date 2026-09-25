@@ -11,9 +11,9 @@ public interface IStockAdjustmentRepository
     Task UpdateAsync(StockAdjustment stockAdjustment, CancellationToken cancellationToken);
     Task DeleteAsync(StockAdjustment stockAdjustment, CancellationToken cancellationToken);
 
-    Task AddToLinesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLinesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLinesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLinesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

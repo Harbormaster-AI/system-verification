@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum InboundShipmentStatus
 {
-    Planned=1,Arrived=2,Received=3,Closed=4,Cancelled=5
+    Planned = 1, Arrived = 2, Received = 3, Closed = 4, Cancelled = 5
 }
 
 /// <summary>

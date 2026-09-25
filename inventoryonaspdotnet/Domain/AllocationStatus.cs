@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum AllocationStatus
 {
-    Proposed=1,Confirmed=2,Picked=3,Short=4,Cancelled=5
+    Proposed = 1, Confirmed = 2, Picked = 3, Short = 4, Cancelled = 5
 }
 
 /// <summary>

@@ -20,8 +20,8 @@ public static class DemandSignalEndpoints
         group.MapPut("/assignSku", AssignSku);
         group.MapPut("/unassignSku", UnassignSku);
 
-    group.MapPut("/addToReservations", AddToReservations);
-    group.MapPut("/removeFromReservations", RemoveFromReservations);
+        group.MapPut("/addToReservations", AddToReservations);
+        group.MapPut("/removeFromReservations", RemoveFromReservations);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class DemandSignalEndpoints
     private static async Task<IResult> Create(
         DemandSignalRequest request,
         IDemandSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDemandSignal( request );
+        var model = mapRequestToDemandSignal(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class DemandSignalEndpoints
     private static async Task<IResult> Update(
         DemandSignalRequest request,
         IDemandSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDemandSignal( request );
+        var model = mapRequestToDemandSignal(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class DemandSignalEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDemandSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var demandSignal = await service.Get(identifier, cancellationToken);
-        return demandSignal is null ? Results.NotFound() : Results.Ok( demandSignal );
+        return demandSignal is null ? Results.NotFound() : Results.Ok(demandSignal);
     }
 
 
     private static async Task<IResult> GetAll(
         IDemandSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DemandSignalResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DemandSignalResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDemandSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class DemandSignalEndpoints
     private static async Task<IResult> AssignSku(
         AssociationRequest request,
         IDemandSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSku(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class DemandSignalEndpoints
     private static async Task<IResult> UnassignSku(
     AssociationRequest request,
     IDemandSignalService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSku(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class DemandSignalEndpoints
     private static async Task<IResult> AddToReservations(
         MultipleAssociationRequest request,
         IDemandSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToReservations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class DemandSignalEndpoints
     private static async Task<IResult> RemoveFromReservations(
         MultipleAssociationRequest request,
         IDemandSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromReservations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static DemandSignal mapRequestToDemandSignal( DemandSignalRequest request ) {
+    private static DemandSignal mapRequestToDemandSignal(DemandSignalRequest request)
+    {
         var model = new DemandSignal
         {
             Id = request.Id,

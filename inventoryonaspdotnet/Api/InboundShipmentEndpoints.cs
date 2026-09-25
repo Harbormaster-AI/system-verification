@@ -20,11 +20,11 @@ public static class InboundShipmentEndpoints
         group.MapPut("/assignWarehouse", AssignWarehouse);
         group.MapPut("/unassignWarehouse", UnassignWarehouse);
 
-    group.MapPut("/addToLines", AddToLines);
-    group.MapPut("/removeFromLines", RemoveFromLines);
+        group.MapPut("/addToLines", AddToLines);
+        group.MapPut("/removeFromLines", RemoveFromLines);
 
-    group.MapPut("/addToTransactions", AddToTransactions);
-    group.MapPut("/removeFromTransactions", RemoveFromTransactions);
+        group.MapPut("/addToTransactions", AddToTransactions);
+        group.MapPut("/removeFromTransactions", RemoveFromTransactions);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class InboundShipmentEndpoints
     private static async Task<IResult> Create(
         InboundShipmentRequest request,
         IInboundShipmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInboundShipment( request );
+        var model = mapRequestToInboundShipment(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class InboundShipmentEndpoints
     private static async Task<IResult> Update(
         InboundShipmentRequest request,
         IInboundShipmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInboundShipment( request );
+        var model = mapRequestToInboundShipment(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class InboundShipmentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInboundShipmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var inboundShipment = await service.Get(identifier, cancellationToken);
-        return inboundShipment is null ? Results.NotFound() : Results.Ok( inboundShipment );
+        return inboundShipment is null ? Results.NotFound() : Results.Ok(inboundShipment);
     }
 
 
     private static async Task<IResult> GetAll(
         IInboundShipmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InboundShipmentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InboundShipmentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInboundShipmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class InboundShipmentEndpoints
     private static async Task<IResult> AssignWarehouse(
         AssociationRequest request,
         IInboundShipmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWarehouse(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class InboundShipmentEndpoints
     private static async Task<IResult> UnassignWarehouse(
     AssociationRequest request,
     IInboundShipmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWarehouse(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class InboundShipmentEndpoints
     private static async Task<IResult> AddToLines(
         MultipleAssociationRequest request,
         IInboundShipmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLines(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class InboundShipmentEndpoints
     private static async Task<IResult> RemoveFromLines(
         MultipleAssociationRequest request,
         IInboundShipmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLines(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToTransactions(
         MultipleAssociationRequest request,
         IInboundShipmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTransactions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class InboundShipmentEndpoints
     private static async Task<IResult> RemoveFromTransactions(
         MultipleAssociationRequest request,
         IInboundShipmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTransactions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static InboundShipment mapRequestToInboundShipment( InboundShipmentRequest request ) {
+    private static InboundShipment mapRequestToInboundShipment(InboundShipmentRequest request)
+    {
         var model = new InboundShipment
         {
             Id = request.Id,

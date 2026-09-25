@@ -6,9 +6,10 @@ using inventoryonaspdotnet.Telemetry;
 
 namespace inventoryonaspdotnet.Service;
 
-public interface IExpirationPolicyService {
+public interface IExpirationPolicyService
+{
 
-    Task Create(ExpirationPolicy model , CancellationToken cancellationToken);
+    Task Create(ExpirationPolicy model, CancellationToken cancellationToken);
     Task<bool> Update(ExpirationPolicy model, CancellationToken cancellationToken);
     Task<ExpirationPolicy?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ExpirationPolicy>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ExpirationPolicyService : IExpirationPolicyService
 
     public async Task<bool> Update(ExpirationPolicy model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class ExpirationPolicyService : IExpirationPolicyService
         return true;
     }
 
-    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class ExpirationPolicyService : IExpirationPolicyService
 
             var child = await _serviceResolver.Get<StockKeepingUnitService>().Get(childRequest, cancellationToken);
             parent.Sku = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class ExpirationPolicyService : IExpirationPolicyService
         return true;
     }
 
-    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class ExpirationPolicyService : IExpirationPolicyService
         try
         {
             parent.Sku = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class ExpirationPolicyService : IExpirationPolicyService
         return true;
     }
 
-    public async Task<bool> AssignWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class ExpirationPolicyService : IExpirationPolicyService
 
             var child = await _serviceResolver.Get<WarehouseService>().Get(childRequest, cancellationToken);
             parent.Warehouse = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class ExpirationPolicyService : IExpirationPolicyService
         return true;
     }
 
-    public async Task<bool> UnassignWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class ExpirationPolicyService : IExpirationPolicyService
         try
         {
             parent.Warehouse = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

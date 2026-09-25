@@ -27,9 +27,10 @@ public static class UoMConversionEndpoints
     private static async Task<IResult> Create(
         UoMConversionRequest request,
         IUoMConversionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToUoMConversion( request );
+        var model = mapRequestToUoMConversion(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class UoMConversionEndpoints
     private static async Task<IResult> Update(
         UoMConversionRequest request,
         IUoMConversionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToUoMConversion( request );
+        var model = mapRequestToUoMConversion(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class UoMConversionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IUoMConversionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var uoMConversion = await service.Get(identifier, cancellationToken);
-        return uoMConversion is null ? Results.NotFound() : Results.Ok( uoMConversion );
+        return uoMConversion is null ? Results.NotFound() : Results.Ok(uoMConversion);
     }
 
 
     private static async Task<IResult> GetAll(
         IUoMConversionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( UoMConversionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(UoMConversionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IUoMConversionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class UoMConversionEndpoints
     private static async Task<IResult> AssignSku(
         AssociationRequest request,
         IUoMConversionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSku(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class UoMConversionEndpoints
     private static async Task<IResult> UnassignSku(
     AssociationRequest request,
     IUoMConversionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSku(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static UoMConversion mapRequestToUoMConversion( UoMConversionRequest request ) {
+    private static UoMConversion mapRequestToUoMConversion(UoMConversionRequest request)
+    {
         var model = new UoMConversion
         {
             Id = request.Id,

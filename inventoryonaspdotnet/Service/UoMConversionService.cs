@@ -6,9 +6,10 @@ using inventoryonaspdotnet.Telemetry;
 
 namespace inventoryonaspdotnet.Service;
 
-public interface IUoMConversionService {
+public interface IUoMConversionService
+{
 
-    Task Create(UoMConversion model , CancellationToken cancellationToken);
+    Task Create(UoMConversion model, CancellationToken cancellationToken);
     Task<bool> Update(UoMConversion model, CancellationToken cancellationToken);
     Task<UoMConversion?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<UoMConversion>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class UoMConversionService : IUoMConversionService
 
     public async Task<bool> Update(UoMConversion model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class UoMConversionService : IUoMConversionService
         return true;
     }
 
-    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class UoMConversionService : IUoMConversionService
 
             var child = await _serviceResolver.Get<StockKeepingUnitService>().Get(childRequest, cancellationToken);
             parent.Sku = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class UoMConversionService : IUoMConversionService
         return true;
     }
 
-    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class UoMConversionService : IUoMConversionService
         try
         {
             parent.Sku = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

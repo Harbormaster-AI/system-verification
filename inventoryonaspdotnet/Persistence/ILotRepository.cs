@@ -11,7 +11,7 @@ public interface ILotRepository
     Task UpdateAsync(Lot lot, CancellationToken cancellationToken);
     Task DeleteAsync(Lot lot, CancellationToken cancellationToken);
 
-    Task AddToInventoryItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInventoryItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInventoryItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInventoryItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

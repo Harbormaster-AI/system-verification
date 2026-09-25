@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum LotStatus
 {
-    Released=1,Quarantined=2,Expired=3,Blocked=4,PendingTest=5
+    Released = 1, Quarantined = 2, Expired = 3, Blocked = 4, PendingTest = 5
 }
 
 /// <summary>

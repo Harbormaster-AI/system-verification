@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum ReplenishmentPolicyType
 {
-    MinMax=1,ReorderPoint=2,EOQ=3,Kanban=4
+    MinMax = 1, ReorderPoint = 2, EOQ = 3, Kanban = 4
 }
 
 /// <summary>

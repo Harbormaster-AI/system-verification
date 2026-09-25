@@ -6,9 +6,10 @@ using inventoryonaspdotnet.Telemetry;
 
 namespace inventoryonaspdotnet.Service;
 
-public interface IReservationService {
+public interface IReservationService
+{
 
-    Task Create(Reservation model , CancellationToken cancellationToken);
+    Task Create(Reservation model, CancellationToken cancellationToken);
     Task<bool> Update(Reservation model, CancellationToken cancellationToken);
     Task<Reservation?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Reservation>> GetAll(CancellationToken cancellationToken);
@@ -73,7 +74,8 @@ public class ReservationService : IReservationService
 
     public async Task<bool> Update(Reservation model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -131,7 +133,8 @@ public class ReservationService : IReservationService
         return true;
     }
 
-    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -149,7 +152,7 @@ public class ReservationService : IReservationService
 
             var child = await _serviceResolver.Get<StockKeepingUnitService>().Get(childRequest, cancellationToken);
             parent.Sku = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -161,7 +164,8 @@ public class ReservationService : IReservationService
         return true;
     }
 
-    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -172,7 +176,7 @@ public class ReservationService : IReservationService
         try
         {
             parent.Sku = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -184,7 +188,8 @@ public class ReservationService : IReservationService
         return true;
     }
 
-    public async Task<bool> AssignWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -202,7 +207,7 @@ public class ReservationService : IReservationService
 
             var child = await _serviceResolver.Get<WarehouseService>().Get(childRequest, cancellationToken);
             parent.Warehouse = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -214,7 +219,8 @@ public class ReservationService : IReservationService
         return true;
     }
 
-    public async Task<bool> UnassignWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -225,7 +231,7 @@ public class ReservationService : IReservationService
         try
         {
             parent.Warehouse = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -237,7 +243,8 @@ public class ReservationService : IReservationService
         return true;
     }
 
-    public async Task<bool> AssignLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -255,7 +262,7 @@ public class ReservationService : IReservationService
 
             var child = await _serviceResolver.Get<StorageLocationService>().Get(childRequest, cancellationToken);
             parent.Location = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -267,7 +274,8 @@ public class ReservationService : IReservationService
         return true;
     }
 
-    public async Task<bool> UnassignLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -278,7 +286,7 @@ public class ReservationService : IReservationService
         try
         {
             parent.Location = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -290,7 +298,8 @@ public class ReservationService : IReservationService
         return true;
     }
 
-    public async Task<bool> AssignInventoryItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInventoryItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -308,7 +317,7 @@ public class ReservationService : IReservationService
 
             var child = await _serviceResolver.Get<InventoryItemService>().Get(childRequest, cancellationToken);
             parent.InventoryItem = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -320,7 +329,8 @@ public class ReservationService : IReservationService
         return true;
     }
 
-    public async Task<bool> UnassignInventoryItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInventoryItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -331,7 +341,7 @@ public class ReservationService : IReservationService
         try
         {
             parent.InventoryItem = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -343,7 +353,8 @@ public class ReservationService : IReservationService
         return true;
     }
 
-    public async Task<bool> AssignLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -361,7 +372,7 @@ public class ReservationService : IReservationService
 
             var child = await _serviceResolver.Get<LotService>().Get(childRequest, cancellationToken);
             parent.Lot = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -373,7 +384,8 @@ public class ReservationService : IReservationService
         return true;
     }
 
-    public async Task<bool> UnassignLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -384,7 +396,7 @@ public class ReservationService : IReservationService
         try
         {
             parent.Lot = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -396,7 +408,8 @@ public class ReservationService : IReservationService
         return true;
     }
 
-    public async Task<bool> AssignDemandSignal(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDemandSignal(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -414,7 +427,7 @@ public class ReservationService : IReservationService
 
             var child = await _serviceResolver.Get<DemandSignalService>().Get(childRequest, cancellationToken);
             parent.DemandSignal = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -426,7 +439,8 @@ public class ReservationService : IReservationService
         return true;
     }
 
-    public async Task<bool> UnassignDemandSignal(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDemandSignal(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -437,7 +451,7 @@ public class ReservationService : IReservationService
         try
         {
             parent.DemandSignal = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -450,8 +464,10 @@ public class ReservationService : IReservationService
     }
 
 
-    public async Task<bool> AddToSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Reservation",
                 "AddToSerialNumbers",
@@ -459,16 +475,18 @@ public class ReservationService : IReservationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Reservation",
                 "RemoveFromSerialNumbers",

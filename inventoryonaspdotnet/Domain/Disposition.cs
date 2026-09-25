@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum Disposition
 {
-    Release=1,Scrap=2,ReturnToVendor=3,Rework=4
+    Release = 1, Scrap = 2, ReturnToVendor = 3, Rework = 4
 }
 
 /// <summary>

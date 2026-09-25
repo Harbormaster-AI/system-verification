@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum RotationMethod
 {
-    FIFO=1,LIFO=2,FEFO=3
+    FIFO = 1, LIFO = 2, FEFO = 3
 }
 
 /// <summary>

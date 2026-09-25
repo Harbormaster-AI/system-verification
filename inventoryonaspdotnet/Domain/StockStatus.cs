@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum StockStatus
 {
-    Available=1,Reserved=2,Damaged=3,Hold=4,Quarantined=5,InTransit=6,PendingInspection=7
+    Available = 1, Reserved = 2, Damaged = 3, Hold = 4, Quarantined = 5, InTransit = 6, PendingInspection = 7
 }
 
 /// <summary>

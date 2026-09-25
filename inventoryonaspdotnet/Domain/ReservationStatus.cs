@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum ReservationStatus
 {
-    Draft=1,Confirmed=2,Released=3,Fulfilled=4,Cancelled=5,Expired=6
+    Draft = 1, Confirmed = 2, Released = 3, Fulfilled = 4, Cancelled = 5, Expired = 6
 }
 
 /// <summary>

@@ -22,11 +22,11 @@ public static class QuarantineEndpoints
         group.MapPut("/assignLot", AssignLot);
         group.MapPut("/unassignLot", UnassignLot);
 
-    group.MapPut("/addToItems", AddToItems);
-    group.MapPut("/removeFromItems", RemoveFromItems);
+        group.MapPut("/addToItems", AddToItems);
+        group.MapPut("/removeFromItems", RemoveFromItems);
 
-    group.MapPut("/addToSerialNumbers", AddToSerialNumbers);
-    group.MapPut("/removeFromSerialNumbers", RemoveFromSerialNumbers);
+        group.MapPut("/addToSerialNumbers", AddToSerialNumbers);
+        group.MapPut("/removeFromSerialNumbers", RemoveFromSerialNumbers);
 
 
         return app;
@@ -35,9 +35,10 @@ public static class QuarantineEndpoints
     private static async Task<IResult> Create(
         QuarantineRequest request,
         IQuarantineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToQuarantine( request );
+        var model = mapRequestToQuarantine(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class QuarantineEndpoints
     private static async Task<IResult> Update(
         QuarantineRequest request,
         IQuarantineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToQuarantine( request );
+        var model = mapRequestToQuarantine(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class QuarantineEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IQuarantineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var quarantine = await service.Get(identifier, cancellationToken);
-        return quarantine is null ? Results.NotFound() : Results.Ok( quarantine );
+        return quarantine is null ? Results.NotFound() : Results.Ok(quarantine);
     }
 
 
     private static async Task<IResult> GetAll(
         IQuarantineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( QuarantineResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(QuarantineResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IQuarantineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class QuarantineEndpoints
     private static async Task<IResult> AssignWarehouse(
         AssociationRequest request,
         IQuarantineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWarehouse(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class QuarantineEndpoints
     private static async Task<IResult> UnassignWarehouse(
     AssociationRequest request,
     IQuarantineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWarehouse(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -115,7 +122,8 @@ public static class QuarantineEndpoints
     private static async Task<IResult> AssignLot(
         AssociationRequest request,
         IQuarantineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLot(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +131,8 @@ public static class QuarantineEndpoints
     private static async Task<IResult> UnassignLot(
     AssociationRequest request,
     IQuarantineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLot(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +141,8 @@ public static class QuarantineEndpoints
     private static async Task<IResult> AddToItems(
         MultipleAssociationRequest request,
         IQuarantineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class QuarantineEndpoints
     private static async Task<IResult> RemoveFromItems(
         MultipleAssociationRequest request,
         IQuarantineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSerialNumbers(
         MultipleAssociationRequest request,
         IQuarantineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSerialNumbers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class QuarantineEndpoints
     private static async Task<IResult> RemoveFromSerialNumbers(
         MultipleAssociationRequest request,
         IQuarantineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSerialNumbers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Quarantine mapRequestToQuarantine( QuarantineRequest request ) {
+    private static Quarantine mapRequestToQuarantine(QuarantineRequest request)
+    {
         var model = new Quarantine
         {
             Id = request.Id,

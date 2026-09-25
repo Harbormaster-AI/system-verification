@@ -11,11 +11,11 @@ public interface IInventoryItemRepository
     Task UpdateAsync(InventoryItem inventoryItem, CancellationToken cancellationToken);
     Task DeleteAsync(InventoryItem inventoryItem, CancellationToken cancellationToken);
 
-    Task AddToSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToReservationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromReservationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToReservationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromReservationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

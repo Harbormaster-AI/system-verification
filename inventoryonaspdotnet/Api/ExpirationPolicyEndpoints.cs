@@ -29,9 +29,10 @@ public static class ExpirationPolicyEndpoints
     private static async Task<IResult> Create(
         ExpirationPolicyRequest request,
         IExpirationPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToExpirationPolicy( request );
+        var model = mapRequestToExpirationPolicy(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class ExpirationPolicyEndpoints
     private static async Task<IResult> Update(
         ExpirationPolicyRequest request,
         IExpirationPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToExpirationPolicy( request );
+        var model = mapRequestToExpirationPolicy(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class ExpirationPolicyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IExpirationPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var expirationPolicy = await service.Get(identifier, cancellationToken);
-        return expirationPolicy is null ? Results.NotFound() : Results.Ok( expirationPolicy );
+        return expirationPolicy is null ? Results.NotFound() : Results.Ok(expirationPolicy);
     }
 
 
     private static async Task<IResult> GetAll(
         IExpirationPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ExpirationPolicyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ExpirationPolicyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IExpirationPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class ExpirationPolicyEndpoints
     private static async Task<IResult> AssignSku(
         AssociationRequest request,
         IExpirationPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSku(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class ExpirationPolicyEndpoints
     private static async Task<IResult> UnassignSku(
     AssociationRequest request,
     IExpirationPolicyService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSku(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class ExpirationPolicyEndpoints
     private static async Task<IResult> AssignWarehouse(
         AssociationRequest request,
         IExpirationPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWarehouse(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class ExpirationPolicyEndpoints
     private static async Task<IResult> UnassignWarehouse(
     AssociationRequest request,
     IExpirationPolicyService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWarehouse(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ExpirationPolicy mapRequestToExpirationPolicy( ExpirationPolicyRequest request ) {
+    private static ExpirationPolicy mapRequestToExpirationPolicy(ExpirationPolicyRequest request)
+    {
         var model = new ExpirationPolicy
         {
             Id = request.Id,

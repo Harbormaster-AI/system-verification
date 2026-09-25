@@ -33,9 +33,10 @@ public static class InventoryThresholdAlertEndpoints
     private static async Task<IResult> Create(
         InventoryThresholdAlertRequest request,
         IInventoryThresholdAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInventoryThresholdAlert( request );
+        var model = mapRequestToInventoryThresholdAlert(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class InventoryThresholdAlertEndpoints
     private static async Task<IResult> Update(
         InventoryThresholdAlertRequest request,
         IInventoryThresholdAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInventoryThresholdAlert( request );
+        var model = mapRequestToInventoryThresholdAlert(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class InventoryThresholdAlertEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInventoryThresholdAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var inventoryThresholdAlert = await service.Get(identifier, cancellationToken);
-        return inventoryThresholdAlert is null ? Results.NotFound() : Results.Ok( inventoryThresholdAlert );
+        return inventoryThresholdAlert is null ? Results.NotFound() : Results.Ok(inventoryThresholdAlert);
     }
 
 
     private static async Task<IResult> GetAll(
         IInventoryThresholdAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InventoryThresholdAlertResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InventoryThresholdAlertResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInventoryThresholdAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class InventoryThresholdAlertEndpoints
     private static async Task<IResult> AssignSku(
         AssociationRequest request,
         IInventoryThresholdAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSku(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class InventoryThresholdAlertEndpoints
     private static async Task<IResult> UnassignSku(
     AssociationRequest request,
     IInventoryThresholdAlertService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSku(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class InventoryThresholdAlertEndpoints
     private static async Task<IResult> AssignWarehouse(
         AssociationRequest request,
         IInventoryThresholdAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWarehouse(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class InventoryThresholdAlertEndpoints
     private static async Task<IResult> UnassignWarehouse(
     AssociationRequest request,
     IInventoryThresholdAlertService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWarehouse(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class InventoryThresholdAlertEndpoints
     private static async Task<IResult> AssignLocation(
         AssociationRequest request,
         IInventoryThresholdAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLocation(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class InventoryThresholdAlertEndpoints
     private static async Task<IResult> UnassignLocation(
     AssociationRequest request,
     IInventoryThresholdAlertService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLocation(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class InventoryThresholdAlertEndpoints
     private static async Task<IResult> AssignRelatedPolicy(
         AssociationRequest request,
         IInventoryThresholdAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRelatedPolicy(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class InventoryThresholdAlertEndpoints
     private static async Task<IResult> UnassignRelatedPolicy(
     AssociationRequest request,
     IInventoryThresholdAlertService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRelatedPolicy(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static InventoryThresholdAlert mapRequestToInventoryThresholdAlert( InventoryThresholdAlertRequest request ) {
+    private static InventoryThresholdAlert mapRequestToInventoryThresholdAlert(InventoryThresholdAlertRequest request)
+    {
         var model = new InventoryThresholdAlert
         {
             Id = request.Id,

@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum DemandType
 {
-    SalesOrder=1,WorkOrder=2,TransferOrder=3,Forecast=4,SampleRequest=5
+    SalesOrder = 1, WorkOrder = 2, TransferOrder = 3, Forecast = 4, SampleRequest = 5
 }
 
 /// <summary>

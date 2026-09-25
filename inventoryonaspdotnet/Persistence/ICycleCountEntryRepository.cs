@@ -11,7 +11,7 @@ public interface ICycleCountEntryRepository
     Task UpdateAsync(CycleCountEntry cycleCountEntry, CancellationToken cancellationToken);
     Task DeleteAsync(CycleCountEntry cycleCountEntry, CancellationToken cancellationToken);
 
-    Task AddToSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

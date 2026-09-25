@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum LocationType
 {
-    Bin=1,Bulk=2,Staging=3,Dock=4,Picking=5,Packing=6,Quality=7,Return=8,ColdStorage=9
+    Bin = 1, Bulk = 2, Staging = 3, Dock = 4, Picking = 5, Packing = 6, Quality = 7, Return = 8, ColdStorage = 9
 }
 
 /// <summary>

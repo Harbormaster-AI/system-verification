@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum CountStatus
 {
-    Planned=1,InProgress=2,Completed=3,Posted=4,Cancelled=5
+    Planned = 1, InProgress = 2, Completed = 3, Posted = 4, Cancelled = 5
 }
 
 /// <summary>

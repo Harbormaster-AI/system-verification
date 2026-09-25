@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum InventoryAlertType
 {
-    BelowMin=1,AboveMax=2,StockoutRisk=3,ExcessStock=4,ExpiryRisk=5
+    BelowMin = 1, AboveMax = 2, StockoutRisk = 3, ExcessStock = 4, ExpiryRisk = 5
 }
 
 /// <summary>

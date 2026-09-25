@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum ItemType
 {
-    FinishedGood=1,Component=2,RawMaterial=3,Packaging=4,SparePart=5,Consumable=6
+    FinishedGood = 1, Component = 2, RawMaterial = 3, Packaging = 4, SparePart = 5, Consumable = 6
 }
 
 /// <summary>

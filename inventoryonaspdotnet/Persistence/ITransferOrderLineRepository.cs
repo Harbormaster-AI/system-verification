@@ -11,7 +11,7 @@ public interface ITransferOrderLineRepository
     Task UpdateAsync(TransferOrderLine transferOrderLine, CancellationToken cancellationToken);
     Task DeleteAsync(TransferOrderLine transferOrderLine, CancellationToken cancellationToken);
 
-    Task AddToSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -11,7 +11,7 @@ public interface IInboundShipmentLineRepository
     Task UpdateAsync(InboundShipmentLine inboundShipmentLine, CancellationToken cancellationToken);
     Task DeleteAsync(InboundShipmentLine inboundShipmentLine, CancellationToken cancellationToken);
 
-    Task AddToSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSerialNumbersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSerialNumbersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

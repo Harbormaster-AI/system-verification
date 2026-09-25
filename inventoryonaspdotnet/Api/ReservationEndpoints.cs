@@ -30,8 +30,8 @@ public static class ReservationEndpoints
         group.MapPut("/assignDemandSignal", AssignDemandSignal);
         group.MapPut("/unassignDemandSignal", UnassignDemandSignal);
 
-    group.MapPut("/addToSerialNumbers", AddToSerialNumbers);
-    group.MapPut("/removeFromSerialNumbers", RemoveFromSerialNumbers);
+        group.MapPut("/addToSerialNumbers", AddToSerialNumbers);
+        group.MapPut("/removeFromSerialNumbers", RemoveFromSerialNumbers);
 
 
         return app;
@@ -40,9 +40,10 @@ public static class ReservationEndpoints
     private static async Task<IResult> Create(
         ReservationRequest request,
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToReservation( request );
+        var model = mapRequestToReservation(request);
 
         try
         {
@@ -59,9 +60,10 @@ public static class ReservationEndpoints
     private static async Task<IResult> Update(
         ReservationRequest request,
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToReservation( request );
+        var model = mapRequestToReservation(request);
 
         try
         {
@@ -78,25 +80,28 @@ public static class ReservationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var reservation = await service.Get(identifier, cancellationToken);
-        return reservation is null ? Results.NotFound() : Results.Ok( reservation );
+        return reservation is null ? Results.NotFound() : Results.Ok(reservation);
     }
 
 
     private static async Task<IResult> GetAll(
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ReservationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ReservationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +109,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> AssignSku(
         AssociationRequest request,
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSku(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +118,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> UnassignSku(
     AssociationRequest request,
     IReservationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSku(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +127,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> AssignWarehouse(
         AssociationRequest request,
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWarehouse(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -128,7 +136,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> UnassignWarehouse(
     AssociationRequest request,
     IReservationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWarehouse(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -136,7 +145,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> AssignLocation(
         AssociationRequest request,
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLocation(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -144,7 +154,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> UnassignLocation(
     AssociationRequest request,
     IReservationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLocation(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -152,7 +163,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> AssignInventoryItem(
         AssociationRequest request,
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInventoryItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -160,7 +172,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> UnassignInventoryItem(
     AssociationRequest request,
     IReservationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInventoryItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -168,7 +181,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> AssignLot(
         AssociationRequest request,
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLot(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -176,7 +190,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> UnassignLot(
     AssociationRequest request,
     IReservationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLot(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -184,7 +199,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> AssignDemandSignal(
         AssociationRequest request,
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDemandSignal(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -192,7 +208,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> UnassignDemandSignal(
     AssociationRequest request,
     IReservationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDemandSignal(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -201,7 +218,8 @@ public static class ReservationEndpoints
     private static async Task<IResult> AddToSerialNumbers(
         MultipleAssociationRequest request,
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSerialNumbers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -209,11 +227,13 @@ public static class ReservationEndpoints
     private static async Task<IResult> RemoveFromSerialNumbers(
         MultipleAssociationRequest request,
         IReservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSerialNumbers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Reservation mapRequestToReservation( ReservationRequest request ) {
+    private static Reservation mapRequestToReservation(ReservationRequest request)
+    {
         var model = new Reservation
         {
             Id = request.Id,

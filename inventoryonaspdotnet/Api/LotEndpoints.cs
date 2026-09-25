@@ -20,8 +20,8 @@ public static class LotEndpoints
         group.MapPut("/assignSku", AssignSku);
         group.MapPut("/unassignSku", UnassignSku);
 
-    group.MapPut("/addToInventoryItems", AddToInventoryItems);
-    group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
+        group.MapPut("/addToInventoryItems", AddToInventoryItems);
+        group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class LotEndpoints
     private static async Task<IResult> Create(
         LotRequest request,
         ILotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLot( request );
+        var model = mapRequestToLot(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class LotEndpoints
     private static async Task<IResult> Update(
         LotRequest request,
         ILotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLot( request );
+        var model = mapRequestToLot(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class LotEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ILotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var lot = await service.Get(identifier, cancellationToken);
-        return lot is null ? Results.NotFound() : Results.Ok( lot );
+        return lot is null ? Results.NotFound() : Results.Ok(lot);
     }
 
 
     private static async Task<IResult> GetAll(
         ILotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( LotResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(LotResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ILotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class LotEndpoints
     private static async Task<IResult> AssignSku(
         AssociationRequest request,
         ILotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSku(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class LotEndpoints
     private static async Task<IResult> UnassignSku(
     AssociationRequest request,
     ILotService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSku(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class LotEndpoints
     private static async Task<IResult> AddToInventoryItems(
         MultipleAssociationRequest request,
         ILotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInventoryItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class LotEndpoints
     private static async Task<IResult> RemoveFromInventoryItems(
         MultipleAssociationRequest request,
         ILotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInventoryItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Lot mapRequestToLot( LotRequest request ) {
+    private static Lot mapRequestToLot(LotRequest request)
+    {
         var model = new Lot
         {
             Id = request.Id,

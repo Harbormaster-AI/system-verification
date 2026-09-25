@@ -6,9 +6,10 @@ using inventoryonaspdotnet.Telemetry;
 
 namespace inventoryonaspdotnet.Service;
 
-public interface IStorageLocationService {
+public interface IStorageLocationService
+{
 
-    Task Create(StorageLocation model , CancellationToken cancellationToken);
+    Task Create(StorageLocation model, CancellationToken cancellationToken);
     Task<bool> Update(StorageLocation model, CancellationToken cancellationToken);
     Task<StorageLocation?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<StorageLocation>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class StorageLocationService : IStorageLocationService
 
     public async Task<bool> Update(StorageLocation model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class StorageLocationService : IStorageLocationService
         return true;
     }
 
-    public async Task<bool> AssignWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class StorageLocationService : IStorageLocationService
 
             var child = await _serviceResolver.Get<WarehouseService>().Get(childRequest, cancellationToken);
             parent.Warehouse = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class StorageLocationService : IStorageLocationService
         return true;
     }
 
-    public async Task<bool> UnassignWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class StorageLocationService : IStorageLocationService
         try
         {
             parent.Warehouse = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class StorageLocationService : IStorageLocationService
         return true;
     }
 
-    public async Task<bool> AssignParentLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignParentLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class StorageLocationService : IStorageLocationService
 
             var child = await _serviceResolver.Get<StorageLocationService>().Get(childRequest, cancellationToken);
             parent.ParentLocation = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class StorageLocationService : IStorageLocationService
         return true;
     }
 
-    public async Task<bool> UnassignParentLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignParentLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class StorageLocationService : IStorageLocationService
         try
         {
             parent.ParentLocation = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -232,8 +238,10 @@ public class StorageLocationService : IStorageLocationService
     }
 
 
-    public async Task<bool> AddToChildLocations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToChildLocations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StorageLocation",
                 "AddToChildLocations",
@@ -241,16 +249,18 @@ public class StorageLocationService : IStorageLocationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromChildLocations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromChildLocations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StorageLocation",
                 "RemoveFromChildLocations",
@@ -266,8 +276,10 @@ public class StorageLocationService : IStorageLocationService
         return true;
     }
 
-    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StorageLocation",
                 "AddToInventoryItems",
@@ -275,16 +287,18 @@ public class StorageLocationService : IStorageLocationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StorageLocation",
                 "RemoveFromInventoryItems",

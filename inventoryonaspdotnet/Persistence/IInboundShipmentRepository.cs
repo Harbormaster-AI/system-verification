@@ -11,9 +11,9 @@ public interface IInboundShipmentRepository
     Task UpdateAsync(InboundShipment inboundShipment, CancellationToken cancellationToken);
     Task DeleteAsync(InboundShipment inboundShipment, CancellationToken cancellationToken);
 
-    Task AddToLinesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLinesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLinesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLinesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

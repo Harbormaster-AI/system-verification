@@ -11,7 +11,7 @@ public interface IDemandSignalRepository
     Task UpdateAsync(DemandSignal demandSignal, CancellationToken cancellationToken);
     Task DeleteAsync(DemandSignal demandSignal, CancellationToken cancellationToken);
 
-    Task AddToReservationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromReservationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToReservationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromReservationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

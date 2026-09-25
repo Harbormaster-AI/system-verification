@@ -31,9 +31,10 @@ public static class ReplenishmentPolicyEndpoints
     private static async Task<IResult> Create(
         ReplenishmentPolicyRequest request,
         IReplenishmentPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToReplenishmentPolicy( request );
+        var model = mapRequestToReplenishmentPolicy(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class ReplenishmentPolicyEndpoints
     private static async Task<IResult> Update(
         ReplenishmentPolicyRequest request,
         IReplenishmentPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToReplenishmentPolicy( request );
+        var model = mapRequestToReplenishmentPolicy(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class ReplenishmentPolicyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IReplenishmentPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var replenishmentPolicy = await service.Get(identifier, cancellationToken);
-        return replenishmentPolicy is null ? Results.NotFound() : Results.Ok( replenishmentPolicy );
+        return replenishmentPolicy is null ? Results.NotFound() : Results.Ok(replenishmentPolicy);
     }
 
 
     private static async Task<IResult> GetAll(
         IReplenishmentPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ReplenishmentPolicyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ReplenishmentPolicyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IReplenishmentPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class ReplenishmentPolicyEndpoints
     private static async Task<IResult> AssignSku(
         AssociationRequest request,
         IReplenishmentPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSku(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class ReplenishmentPolicyEndpoints
     private static async Task<IResult> UnassignSku(
     AssociationRequest request,
     IReplenishmentPolicyService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSku(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ReplenishmentPolicyEndpoints
     private static async Task<IResult> AssignWarehouse(
         AssociationRequest request,
         IReplenishmentPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWarehouse(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class ReplenishmentPolicyEndpoints
     private static async Task<IResult> UnassignWarehouse(
     AssociationRequest request,
     IReplenishmentPolicyService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWarehouse(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class ReplenishmentPolicyEndpoints
     private static async Task<IResult> AssignLocation(
         AssociationRequest request,
         IReplenishmentPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLocation(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class ReplenishmentPolicyEndpoints
     private static async Task<IResult> UnassignLocation(
     AssociationRequest request,
     IReplenishmentPolicyService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLocation(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ReplenishmentPolicy mapRequestToReplenishmentPolicy( ReplenishmentPolicyRequest request ) {
+    private static ReplenishmentPolicy mapRequestToReplenishmentPolicy(ReplenishmentPolicyRequest request)
+    {
         var model = new ReplenishmentPolicy
         {
             Id = request.Id,

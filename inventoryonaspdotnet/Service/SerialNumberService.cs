@@ -6,9 +6,10 @@ using inventoryonaspdotnet.Telemetry;
 
 namespace inventoryonaspdotnet.Service;
 
-public interface ISerialNumberService {
+public interface ISerialNumberService
+{
 
-    Task Create(SerialNumber model , CancellationToken cancellationToken);
+    Task Create(SerialNumber model, CancellationToken cancellationToken);
     Task<bool> Update(SerialNumber model, CancellationToken cancellationToken);
     Task<SerialNumber?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SerialNumber>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class SerialNumberService : ISerialNumberService
 
     public async Task<bool> Update(SerialNumber model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class SerialNumberService : ISerialNumberService
         return true;
     }
 
-    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class SerialNumberService : ISerialNumberService
 
             var child = await _serviceResolver.Get<StockKeepingUnitService>().Get(childRequest, cancellationToken);
             parent.Sku = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class SerialNumberService : ISerialNumberService
         return true;
     }
 
-    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class SerialNumberService : ISerialNumberService
         try
         {
             parent.Sku = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class SerialNumberService : ISerialNumberService
         return true;
     }
 
-    public async Task<bool> AssignCurrentInventoryItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCurrentInventoryItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class SerialNumberService : ISerialNumberService
 
             var child = await _serviceResolver.Get<InventoryItemService>().Get(childRequest, cancellationToken);
             parent.CurrentInventoryItem = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class SerialNumberService : ISerialNumberService
         return true;
     }
 
-    public async Task<bool> UnassignCurrentInventoryItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCurrentInventoryItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class SerialNumberService : ISerialNumberService
         try
         {
             parent.CurrentInventoryItem = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -227,7 +233,8 @@ public class SerialNumberService : ISerialNumberService
         return true;
     }
 
-    public async Task<bool> AssignLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -245,7 +252,7 @@ public class SerialNumberService : ISerialNumberService
 
             var child = await _serviceResolver.Get<LotService>().Get(childRequest, cancellationToken);
             parent.Lot = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -257,7 +264,8 @@ public class SerialNumberService : ISerialNumberService
         return true;
     }
 
-    public async Task<bool> UnassignLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -268,7 +276,7 @@ public class SerialNumberService : ISerialNumberService
         try
         {
             parent.Lot = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

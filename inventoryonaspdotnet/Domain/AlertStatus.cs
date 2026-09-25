@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum AlertStatus
 {
-    New=1,Acknowledged=2,Resolved=3,Dismissed=4
+    New = 1, Acknowledged = 2, Resolved = 3, Dismissed = 4
 }
 
 /// <summary>

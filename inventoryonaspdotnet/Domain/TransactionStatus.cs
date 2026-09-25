@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum TransactionStatus
 {
-    Pending=1,Posted=2,Voided=3
+    Pending = 1, Posted = 2, Voided = 3
 }
 
 /// <summary>

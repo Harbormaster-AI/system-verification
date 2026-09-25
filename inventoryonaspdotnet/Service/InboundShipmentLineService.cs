@@ -6,9 +6,10 @@ using inventoryonaspdotnet.Telemetry;
 
 namespace inventoryonaspdotnet.Service;
 
-public interface IInboundShipmentLineService {
+public interface IInboundShipmentLineService
+{
 
-    Task Create(InboundShipmentLine model , CancellationToken cancellationToken);
+    Task Create(InboundShipmentLine model, CancellationToken cancellationToken);
     Task<bool> Update(InboundShipmentLine model, CancellationToken cancellationToken);
     Task<InboundShipmentLine?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InboundShipmentLine>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class InboundShipmentLineService : IInboundShipmentLineService
 
     public async Task<bool> Update(InboundShipmentLine model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         return true;
     }
 
-    public async Task<bool> AssignInboundShipment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInboundShipment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class InboundShipmentLineService : IInboundShipmentLineService
 
             var child = await _serviceResolver.Get<InboundShipmentService>().Get(childRequest, cancellationToken);
             parent.InboundShipment = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         return true;
     }
 
-    public async Task<bool> UnassignInboundShipment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInboundShipment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         try
         {
             parent.InboundShipment = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,7 +183,8 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         return true;
     }
 
-    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,7 +202,7 @@ public class InboundShipmentLineService : IInboundShipmentLineService
 
             var child = await _serviceResolver.Get<StockKeepingUnitService>().Get(childRequest, cancellationToken);
             parent.Sku = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         return true;
     }
 
-    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         try
         {
             parent.Sku = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -232,7 +238,8 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         return true;
     }
 
-    public async Task<bool> AssignLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -250,7 +257,7 @@ public class InboundShipmentLineService : IInboundShipmentLineService
 
             var child = await _serviceResolver.Get<LotService>().Get(childRequest, cancellationToken);
             parent.Lot = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -262,7 +269,8 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         return true;
     }
 
-    public async Task<bool> UnassignLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -273,7 +281,7 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         try
         {
             parent.Lot = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -285,7 +293,8 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         return true;
     }
 
-    public async Task<bool> AssignDestinationLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDestinationLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -303,7 +312,7 @@ public class InboundShipmentLineService : IInboundShipmentLineService
 
             var child = await _serviceResolver.Get<StorageLocationService>().Get(childRequest, cancellationToken);
             parent.DestinationLocation = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -315,7 +324,8 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         return true;
     }
 
-    public async Task<bool> UnassignDestinationLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDestinationLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -326,7 +336,7 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         try
         {
             parent.DestinationLocation = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -339,8 +349,10 @@ public class InboundShipmentLineService : IInboundShipmentLineService
     }
 
 
-    public async Task<bool> AddToSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InboundShipmentLine",
                 "AddToSerialNumbers",
@@ -348,16 +360,18 @@ public class InboundShipmentLineService : IInboundShipmentLineService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InboundShipmentLine",
                 "RemoveFromSerialNumbers",

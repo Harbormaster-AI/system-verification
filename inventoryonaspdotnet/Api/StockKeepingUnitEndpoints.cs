@@ -18,20 +18,20 @@ public static class StockKeepingUnitEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToInventoryItems", AddToInventoryItems);
-    group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
+        group.MapPut("/addToInventoryItems", AddToInventoryItems);
+        group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
 
-    group.MapPut("/addToUomConversions", AddToUomConversions);
-    group.MapPut("/removeFromUomConversions", RemoveFromUomConversions);
+        group.MapPut("/addToUomConversions", AddToUomConversions);
+        group.MapPut("/removeFromUomConversions", RemoveFromUomConversions);
 
-    group.MapPut("/addToReplenishmentPolicies", AddToReplenishmentPolicies);
-    group.MapPut("/removeFromReplenishmentPolicies", RemoveFromReplenishmentPolicies);
+        group.MapPut("/addToReplenishmentPolicies", AddToReplenishmentPolicies);
+        group.MapPut("/removeFromReplenishmentPolicies", RemoveFromReplenishmentPolicies);
 
-    group.MapPut("/addToLots", AddToLots);
-    group.MapPut("/removeFromLots", RemoveFromLots);
+        group.MapPut("/addToLots", AddToLots);
+        group.MapPut("/removeFromLots", RemoveFromLots);
 
-    group.MapPut("/addToSerialNumbers", AddToSerialNumbers);
-    group.MapPut("/removeFromSerialNumbers", RemoveFromSerialNumbers);
+        group.MapPut("/addToSerialNumbers", AddToSerialNumbers);
+        group.MapPut("/removeFromSerialNumbers", RemoveFromSerialNumbers);
 
 
         return app;
@@ -40,9 +40,10 @@ public static class StockKeepingUnitEndpoints
     private static async Task<IResult> Create(
         StockKeepingUnitRequest request,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToStockKeepingUnit( request );
+        var model = mapRequestToStockKeepingUnit(request);
 
         try
         {
@@ -59,9 +60,10 @@ public static class StockKeepingUnitEndpoints
     private static async Task<IResult> Update(
         StockKeepingUnitRequest request,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToStockKeepingUnit( request );
+        var model = mapRequestToStockKeepingUnit(request);
 
         try
         {
@@ -78,25 +80,28 @@ public static class StockKeepingUnitEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var stockKeepingUnit = await service.Get(identifier, cancellationToken);
-        return stockKeepingUnit is null ? Results.NotFound() : Results.Ok( stockKeepingUnit );
+        return stockKeepingUnit is null ? Results.NotFound() : Results.Ok(stockKeepingUnit);
     }
 
 
     private static async Task<IResult> GetAll(
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( StockKeepingUnitResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(StockKeepingUnitResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +110,8 @@ public static class StockKeepingUnitEndpoints
     private static async Task<IResult> AddToInventoryItems(
         MultipleAssociationRequest request,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInventoryItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -113,14 +119,16 @@ public static class StockKeepingUnitEndpoints
     private static async Task<IResult> RemoveFromInventoryItems(
         MultipleAssociationRequest request,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInventoryItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToUomConversions(
         MultipleAssociationRequest request,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToUomConversions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -128,14 +136,16 @@ public static class StockKeepingUnitEndpoints
     private static async Task<IResult> RemoveFromUomConversions(
         MultipleAssociationRequest request,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromUomConversions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToReplenishmentPolicies(
         MultipleAssociationRequest request,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToReplenishmentPolicies(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -143,14 +153,16 @@ public static class StockKeepingUnitEndpoints
     private static async Task<IResult> RemoveFromReplenishmentPolicies(
         MultipleAssociationRequest request,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromReplenishmentPolicies(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToLots(
         MultipleAssociationRequest request,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLots(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -158,14 +170,16 @@ public static class StockKeepingUnitEndpoints
     private static async Task<IResult> RemoveFromLots(
         MultipleAssociationRequest request,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLots(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSerialNumbers(
         MultipleAssociationRequest request,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSerialNumbers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -173,11 +187,13 @@ public static class StockKeepingUnitEndpoints
     private static async Task<IResult> RemoveFromSerialNumbers(
         MultipleAssociationRequest request,
         IStockKeepingUnitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSerialNumbers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static StockKeepingUnit mapRequestToStockKeepingUnit( StockKeepingUnitRequest request ) {
+    private static StockKeepingUnit mapRequestToStockKeepingUnit(StockKeepingUnitRequest request)
+    {
         var model = new StockKeepingUnit
         {
             Id = request.Id,

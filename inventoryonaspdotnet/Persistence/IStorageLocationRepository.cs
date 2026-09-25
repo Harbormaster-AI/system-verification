@@ -11,9 +11,9 @@ public interface IStorageLocationRepository
     Task UpdateAsync(StorageLocation storageLocation, CancellationToken cancellationToken);
     Task DeleteAsync(StorageLocation storageLocation, CancellationToken cancellationToken);
 
-    Task AddToChildLocationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromChildLocationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToInventoryItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInventoryItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToChildLocationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromChildLocationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInventoryItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInventoryItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

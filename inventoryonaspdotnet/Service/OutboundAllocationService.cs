@@ -6,9 +6,10 @@ using inventoryonaspdotnet.Telemetry;
 
 namespace inventoryonaspdotnet.Service;
 
-public interface IOutboundAllocationService {
+public interface IOutboundAllocationService
+{
 
-    Task Create(OutboundAllocation model , CancellationToken cancellationToken);
+    Task Create(OutboundAllocation model, CancellationToken cancellationToken);
     Task<bool> Update(OutboundAllocation model, CancellationToken cancellationToken);
     Task<OutboundAllocation?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<OutboundAllocation>> GetAll(CancellationToken cancellationToken);
@@ -73,7 +74,8 @@ public class OutboundAllocationService : IOutboundAllocationService
 
     public async Task<bool> Update(OutboundAllocation model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -130,7 +132,8 @@ public class OutboundAllocationService : IOutboundAllocationService
         return true;
     }
 
-    public async Task<bool> AssignWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -148,7 +151,7 @@ public class OutboundAllocationService : IOutboundAllocationService
 
             var child = await _serviceResolver.Get<WarehouseService>().Get(childRequest, cancellationToken);
             parent.Warehouse = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -160,7 +163,8 @@ public class OutboundAllocationService : IOutboundAllocationService
         return true;
     }
 
-    public async Task<bool> UnassignWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -171,7 +175,7 @@ public class OutboundAllocationService : IOutboundAllocationService
         try
         {
             parent.Warehouse = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -183,7 +187,8 @@ public class OutboundAllocationService : IOutboundAllocationService
         return true;
     }
 
-    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -201,7 +206,7 @@ public class OutboundAllocationService : IOutboundAllocationService
 
             var child = await _serviceResolver.Get<StockKeepingUnitService>().Get(childRequest, cancellationToken);
             parent.Sku = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -213,7 +218,8 @@ public class OutboundAllocationService : IOutboundAllocationService
         return true;
     }
 
-    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSku(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -224,7 +230,7 @@ public class OutboundAllocationService : IOutboundAllocationService
         try
         {
             parent.Sku = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -236,7 +242,8 @@ public class OutboundAllocationService : IOutboundAllocationService
         return true;
     }
 
-    public async Task<bool> AssignInventoryItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInventoryItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -254,7 +261,7 @@ public class OutboundAllocationService : IOutboundAllocationService
 
             var child = await _serviceResolver.Get<InventoryItemService>().Get(childRequest, cancellationToken);
             parent.InventoryItem = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -266,7 +273,8 @@ public class OutboundAllocationService : IOutboundAllocationService
         return true;
     }
 
-    public async Task<bool> UnassignInventoryItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInventoryItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -277,7 +285,7 @@ public class OutboundAllocationService : IOutboundAllocationService
         try
         {
             parent.InventoryItem = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -289,7 +297,8 @@ public class OutboundAllocationService : IOutboundAllocationService
         return true;
     }
 
-    public async Task<bool> AssignReservation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignReservation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -307,7 +316,7 @@ public class OutboundAllocationService : IOutboundAllocationService
 
             var child = await _serviceResolver.Get<ReservationService>().Get(childRequest, cancellationToken);
             parent.Reservation = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -319,7 +328,8 @@ public class OutboundAllocationService : IOutboundAllocationService
         return true;
     }
 
-    public async Task<bool> UnassignReservation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignReservation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -330,7 +340,7 @@ public class OutboundAllocationService : IOutboundAllocationService
         try
         {
             parent.Reservation = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -342,7 +352,8 @@ public class OutboundAllocationService : IOutboundAllocationService
         return true;
     }
 
-    public async Task<bool> AssignLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -360,7 +371,7 @@ public class OutboundAllocationService : IOutboundAllocationService
 
             var child = await _serviceResolver.Get<LotService>().Get(childRequest, cancellationToken);
             parent.Lot = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -372,7 +383,8 @@ public class OutboundAllocationService : IOutboundAllocationService
         return true;
     }
 
-    public async Task<bool> UnassignLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -383,7 +395,7 @@ public class OutboundAllocationService : IOutboundAllocationService
         try
         {
             parent.Lot = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -395,7 +407,8 @@ public class OutboundAllocationService : IOutboundAllocationService
         return true;
     }
 
-    public async Task<bool> AssignSourceLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSourceLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -413,7 +426,7 @@ public class OutboundAllocationService : IOutboundAllocationService
 
             var child = await _serviceResolver.Get<StorageLocationService>().Get(childRequest, cancellationToken);
             parent.SourceLocation = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -425,7 +438,8 @@ public class OutboundAllocationService : IOutboundAllocationService
         return true;
     }
 
-    public async Task<bool> UnassignSourceLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSourceLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -436,7 +450,7 @@ public class OutboundAllocationService : IOutboundAllocationService
         try
         {
             parent.SourceLocation = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -449,8 +463,10 @@ public class OutboundAllocationService : IOutboundAllocationService
     }
 
 
-    public async Task<bool> AddToSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "OutboundAllocation",
                 "AddToSerialNumbers",
@@ -458,16 +474,18 @@ public class OutboundAllocationService : IOutboundAllocationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSerialNumbers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "OutboundAllocation",
                 "RemoveFromSerialNumbers",

@@ -36,7 +36,7 @@ namespace inventoryonaspdotnet.Domain;
 
 public enum ReservationType
 {
-    SalesOrder=1,WorkOrder=2,TransferOrder=3,ServiceOrder=4,Other=5
+    SalesOrder = 1, WorkOrder = 2, TransferOrder = 3, ServiceOrder = 4, Other = 5
 }
 
 /// <summary>

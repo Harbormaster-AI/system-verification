@@ -31,9 +31,10 @@ public static class SerialNumberEndpoints
     private static async Task<IResult> Create(
         SerialNumberRequest request,
         ISerialNumberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSerialNumber( request );
+        var model = mapRequestToSerialNumber(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class SerialNumberEndpoints
     private static async Task<IResult> Update(
         SerialNumberRequest request,
         ISerialNumberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSerialNumber( request );
+        var model = mapRequestToSerialNumber(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class SerialNumberEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISerialNumberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var serialNumber = await service.Get(identifier, cancellationToken);
-        return serialNumber is null ? Results.NotFound() : Results.Ok( serialNumber );
+        return serialNumber is null ? Results.NotFound() : Results.Ok(serialNumber);
     }
 
 
     private static async Task<IResult> GetAll(
         ISerialNumberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SerialNumberResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SerialNumberResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISerialNumberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class SerialNumberEndpoints
     private static async Task<IResult> AssignSku(
         AssociationRequest request,
         ISerialNumberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSku(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class SerialNumberEndpoints
     private static async Task<IResult> UnassignSku(
     AssociationRequest request,
     ISerialNumberService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSku(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class SerialNumberEndpoints
     private static async Task<IResult> AssignCurrentInventoryItem(
         AssociationRequest request,
         ISerialNumberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCurrentInventoryItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class SerialNumberEndpoints
     private static async Task<IResult> UnassignCurrentInventoryItem(
     AssociationRequest request,
     ISerialNumberService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCurrentInventoryItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class SerialNumberEndpoints
     private static async Task<IResult> AssignLot(
         AssociationRequest request,
         ISerialNumberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLot(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class SerialNumberEndpoints
     private static async Task<IResult> UnassignLot(
     AssociationRequest request,
     ISerialNumberService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLot(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static SerialNumber mapRequestToSerialNumber( SerialNumberRequest request ) {
+    private static SerialNumber mapRequestToSerialNumber(SerialNumberRequest request)
+    {
         var model = new SerialNumber
         {
             Id = request.Id,

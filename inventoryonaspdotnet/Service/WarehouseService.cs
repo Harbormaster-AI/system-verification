@@ -6,9 +6,10 @@ using inventoryonaspdotnet.Telemetry;
 
 namespace inventoryonaspdotnet.Service;
 
-public interface IWarehouseService {
+public interface IWarehouseService
+{
 
-    Task Create(Warehouse model , CancellationToken cancellationToken);
+    Task Create(Warehouse model, CancellationToken cancellationToken);
     Task<bool> Update(Warehouse model, CancellationToken cancellationToken);
     Task<Warehouse?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Warehouse>> GetAll(CancellationToken cancellationToken);
@@ -73,7 +74,8 @@ public class WarehouseService : IWarehouseService
 
     public async Task<bool> Update(Warehouse model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -132,8 +134,10 @@ public class WarehouseService : IWarehouseService
     }
 
 
-    public async Task<bool> AddToStorageLocations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToStorageLocations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "AddToStorageLocations",
@@ -141,16 +145,18 @@ public class WarehouseService : IWarehouseService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromStorageLocations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromStorageLocations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "RemoveFromStorageLocations",
@@ -166,8 +172,10 @@ public class WarehouseService : IWarehouseService
         return true;
     }
 
-    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "AddToInventoryItems",
@@ -175,16 +183,18 @@ public class WarehouseService : IWarehouseService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "RemoveFromInventoryItems",
@@ -200,8 +210,10 @@ public class WarehouseService : IWarehouseService
         return true;
     }
 
-    public async Task<bool> AddToInboundShipments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInboundShipments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "AddToInboundShipments",
@@ -209,16 +221,18 @@ public class WarehouseService : IWarehouseService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInboundShipments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInboundShipments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "RemoveFromInboundShipments",
@@ -234,8 +248,10 @@ public class WarehouseService : IWarehouseService
         return true;
     }
 
-    public async Task<bool> AddToOutboundAllocations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOutboundAllocations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "AddToOutboundAllocations",
@@ -243,16 +259,18 @@ public class WarehouseService : IWarehouseService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOutboundAllocations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOutboundAllocations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "RemoveFromOutboundAllocations",
@@ -268,8 +286,10 @@ public class WarehouseService : IWarehouseService
         return true;
     }
 
-    public async Task<bool> AddToOriginTransfers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOriginTransfers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "AddToOriginTransfers",
@@ -277,16 +297,18 @@ public class WarehouseService : IWarehouseService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOriginTransfers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOriginTransfers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "RemoveFromOriginTransfers",
@@ -302,8 +324,10 @@ public class WarehouseService : IWarehouseService
         return true;
     }
 
-    public async Task<bool> AddToDestinationTransfers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDestinationTransfers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "AddToDestinationTransfers",
@@ -311,16 +335,18 @@ public class WarehouseService : IWarehouseService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDestinationTransfers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDestinationTransfers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "RemoveFromDestinationTransfers",
@@ -336,8 +362,10 @@ public class WarehouseService : IWarehouseService
         return true;
     }
 
-    public async Task<bool> AddToCycleCounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCycleCounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "AddToCycleCounts",
@@ -345,16 +373,18 @@ public class WarehouseService : IWarehouseService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCycleCounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCycleCounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "RemoveFromCycleCounts",
