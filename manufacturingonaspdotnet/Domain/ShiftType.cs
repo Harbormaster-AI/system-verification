@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum ShiftType
 {
-    Day=1,Swing=2,Night=3,Weekend=4
+    Day = 1, Swing = 2, Night = 3, Weekend = 4
 }
 
 /// <summary>

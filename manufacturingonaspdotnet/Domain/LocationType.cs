@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum LocationType
 {
-    Bin=1,Dock=2,Staging=3,QAHold=4,Scrap=5
+    Bin = 1, Dock = 2, Staging = 3, QAHold = 4, Scrap = 5
 }
 
 /// <summary>

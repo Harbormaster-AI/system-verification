@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface INonconformanceService {
+public interface INonconformanceService
+{
 
-    Task Create(Nonconformance model , CancellationToken cancellationToken);
+    Task Create(Nonconformance model, CancellationToken cancellationToken);
     Task<bool> Update(Nonconformance model, CancellationToken cancellationToken);
     Task<Nonconformance?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Nonconformance>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class NonconformanceService : INonconformanceService
 
     public async Task<bool> Update(Nonconformance model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class NonconformanceService : INonconformanceService
         return true;
     }
 
-    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class NonconformanceService : INonconformanceService
 
             var child = await _serviceResolver.Get<ItemService>().Get(childRequest, cancellationToken);
             parent.Item = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class NonconformanceService : INonconformanceService
         return true;
     }
 
-    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class NonconformanceService : INonconformanceService
         try
         {
             parent.Item = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,7 +183,8 @@ public class NonconformanceService : INonconformanceService
         return true;
     }
 
-    public async Task<bool> AssignWorkOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,7 +202,7 @@ public class NonconformanceService : INonconformanceService
 
             var child = await _serviceResolver.Get<WorkOrderService>().Get(childRequest, cancellationToken);
             parent.WorkOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class NonconformanceService : INonconformanceService
         return true;
     }
 
-    public async Task<bool> UnassignWorkOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class NonconformanceService : INonconformanceService
         try
         {
             parent.WorkOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -232,7 +238,8 @@ public class NonconformanceService : INonconformanceService
         return true;
     }
 
-    public async Task<bool> AssignInspectionLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInspectionLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -250,7 +257,7 @@ public class NonconformanceService : INonconformanceService
 
             var child = await _serviceResolver.Get<InspectionLotService>().Get(childRequest, cancellationToken);
             parent.InspectionLot = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -262,7 +269,8 @@ public class NonconformanceService : INonconformanceService
         return true;
     }
 
-    public async Task<bool> UnassignInspectionLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInspectionLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -273,7 +281,7 @@ public class NonconformanceService : INonconformanceService
         try
         {
             parent.InspectionLot = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -285,7 +293,8 @@ public class NonconformanceService : INonconformanceService
         return true;
     }
 
-    public async Task<bool> AssignCorrectiveAction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCorrectiveAction(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -303,7 +312,7 @@ public class NonconformanceService : INonconformanceService
 
             var child = await _serviceResolver.Get<CorrectiveActionService>().Get(childRequest, cancellationToken);
             parent.CorrectiveAction = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -315,7 +324,8 @@ public class NonconformanceService : INonconformanceService
         return true;
     }
 
-    public async Task<bool> UnassignCorrectiveAction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCorrectiveAction(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -326,7 +336,7 @@ public class NonconformanceService : INonconformanceService
         try
         {
             parent.CorrectiveAction = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

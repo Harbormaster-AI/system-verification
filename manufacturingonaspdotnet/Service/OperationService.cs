@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IOperationService {
+public interface IOperationService
+{
 
-    Task Create(Operation model , CancellationToken cancellationToken);
+    Task Create(Operation model, CancellationToken cancellationToken);
     Task<bool> Update(Operation model, CancellationToken cancellationToken);
     Task<Operation?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Operation>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class OperationService : IOperationService
 
     public async Task<bool> Update(Operation model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class OperationService : IOperationService
         return true;
     }
 
-    public async Task<bool> AssignRouting(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRouting(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class OperationService : IOperationService
 
             var child = await _serviceResolver.Get<RoutingService>().Get(childRequest, cancellationToken);
             parent.Routing = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class OperationService : IOperationService
         return true;
     }
 
-    public async Task<bool> UnassignRouting(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRouting(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class OperationService : IOperationService
         try
         {
             parent.Routing = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,7 +180,8 @@ public class OperationService : IOperationService
         return true;
     }
 
-    public async Task<bool> AssignWorkCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -194,7 +199,7 @@ public class OperationService : IOperationService
 
             var child = await _serviceResolver.Get<WorkCenterService>().Get(childRequest, cancellationToken);
             parent.WorkCenter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -206,7 +211,8 @@ public class OperationService : IOperationService
         return true;
     }
 
-    public async Task<bool> UnassignWorkCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -217,7 +223,7 @@ public class OperationService : IOperationService
         try
         {
             parent.WorkCenter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,7 +235,8 @@ public class OperationService : IOperationService
         return true;
     }
 
-    public async Task<bool> AssignInspectionPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInspectionPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -247,7 +254,7 @@ public class OperationService : IOperationService
 
             var child = await _serviceResolver.Get<InspectionPlanService>().Get(childRequest, cancellationToken);
             parent.InspectionPlan = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -259,7 +266,8 @@ public class OperationService : IOperationService
         return true;
     }
 
-    public async Task<bool> UnassignInspectionPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInspectionPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -270,7 +278,7 @@ public class OperationService : IOperationService
         try
         {
             parent.InspectionPlan = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

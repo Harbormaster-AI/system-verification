@@ -11,9 +11,9 @@ public interface IEmployeeRepository
     Task UpdateAsync(Employee employee, CancellationToken cancellationToken);
     Task DeleteAsync(Employee employee, CancellationToken cancellationToken);
 
-    Task AddToShiftAssignmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromShiftAssignmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCorrectiveActionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCorrectiveActionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToShiftAssignmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromShiftAssignmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCorrectiveActionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCorrectiveActionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

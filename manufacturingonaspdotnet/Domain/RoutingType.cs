@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum RoutingType
 {
-    Standard=1,Alternate=2,Rework=3
+    Standard = 1, Alternate = 2, Rework = 3
 }
 
 /// <summary>

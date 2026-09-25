@@ -11,7 +11,7 @@ public interface IProductionScheduleRepository
     Task UpdateAsync(ProductionSchedule productionSchedule, CancellationToken cancellationToken);
     Task DeleteAsync(ProductionSchedule productionSchedule, CancellationToken cancellationToken);
 
-    Task AddToWorkOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromWorkOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToWorkOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromWorkOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

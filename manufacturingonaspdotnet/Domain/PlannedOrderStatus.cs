@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum PlannedOrderStatus
 {
-    Planned=1,Firmed=2,Released=3,Cancelled=4
+    Planned = 1, Firmed = 2, Released = 3, Cancelled = 4
 }
 
 /// <summary>

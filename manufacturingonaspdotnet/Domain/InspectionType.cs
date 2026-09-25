@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum InspectionType
 {
-    Incoming=1,InProcess=2,Final=3,Audit=4
+    Incoming = 1, InProcess = 2, Final = 3, Audit = 4
 }
 
 /// <summary>

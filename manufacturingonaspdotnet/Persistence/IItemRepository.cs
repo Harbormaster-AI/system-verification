@@ -11,15 +11,15 @@ public interface IItemRepository
     Task UpdateAsync(Item item, CancellationToken cancellationToken);
     Task DeleteAsync(Item item, CancellationToken cancellationToken);
 
-    Task AddToBomsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromBomsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToRoutingsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRoutingsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToSuppliersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSuppliersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToQualitySpecificationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromQualitySpecificationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToInventoryItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInventoryItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToBomsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromBomsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRoutingsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRoutingsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSuppliersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSuppliersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToQualitySpecificationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromQualitySpecificationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInventoryItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInventoryItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum QualitySeverity
 {
-    Minor=1,Major=2,Critical=3
+    Minor = 1, Major = 2, Critical = 3
 }
 
 /// <summary>

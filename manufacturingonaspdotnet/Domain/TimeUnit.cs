@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum TimeUnit
 {
-    Second=1,Minute=2,Hour=3,Day=4
+    Second = 1, Minute = 2, Hour = 3, Day = 4
 }
 
 /// <summary>

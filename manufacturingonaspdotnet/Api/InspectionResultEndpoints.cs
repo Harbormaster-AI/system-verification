@@ -29,9 +29,10 @@ public static class InspectionResultEndpoints
     private static async Task<IResult> Create(
         InspectionResultRequest request,
         IInspectionResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInspectionResult( request );
+        var model = mapRequestToInspectionResult(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class InspectionResultEndpoints
     private static async Task<IResult> Update(
         InspectionResultRequest request,
         IInspectionResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInspectionResult( request );
+        var model = mapRequestToInspectionResult(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class InspectionResultEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInspectionResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var inspectionResult = await service.Get(identifier, cancellationToken);
-        return inspectionResult is null ? Results.NotFound() : Results.Ok( inspectionResult );
+        return inspectionResult is null ? Results.NotFound() : Results.Ok(inspectionResult);
     }
 
 
     private static async Task<IResult> GetAll(
         IInspectionResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InspectionResultResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InspectionResultResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInspectionResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class InspectionResultEndpoints
     private static async Task<IResult> AssignInspectionLot(
         AssociationRequest request,
         IInspectionResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInspectionLot(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class InspectionResultEndpoints
     private static async Task<IResult> UnassignInspectionLot(
     AssociationRequest request,
     IInspectionResultService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInspectionLot(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class InspectionResultEndpoints
     private static async Task<IResult> AssignCharacteristic(
         AssociationRequest request,
         IInspectionResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCharacteristic(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class InspectionResultEndpoints
     private static async Task<IResult> UnassignCharacteristic(
     AssociationRequest request,
     IInspectionResultService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCharacteristic(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static InspectionResult mapRequestToInspectionResult( InspectionResultRequest request ) {
+    private static InspectionResult mapRequestToInspectionResult(InspectionResultRequest request)
+    {
         var model = new InspectionResult
         {
             Id = request.Id,

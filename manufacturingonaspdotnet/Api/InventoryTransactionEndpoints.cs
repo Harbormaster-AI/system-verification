@@ -35,9 +35,10 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> Create(
         InventoryTransactionRequest request,
         IInventoryTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInventoryTransaction( request );
+        var model = mapRequestToInventoryTransaction(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> Update(
         InventoryTransactionRequest request,
         IInventoryTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInventoryTransaction( request );
+        var model = mapRequestToInventoryTransaction(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInventoryTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var inventoryTransaction = await service.Get(identifier, cancellationToken);
-        return inventoryTransaction is null ? Results.NotFound() : Results.Ok( inventoryTransaction );
+        return inventoryTransaction is null ? Results.NotFound() : Results.Ok(inventoryTransaction);
     }
 
 
     private static async Task<IResult> GetAll(
         IInventoryTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InventoryTransactionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InventoryTransactionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInventoryTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> AssignItem(
         AssociationRequest request,
         IInventoryTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> UnassignItem(
     AssociationRequest request,
     IInventoryTransactionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -115,7 +122,8 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> AssignLocation(
         AssociationRequest request,
         IInventoryTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLocation(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +131,8 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> UnassignLocation(
     AssociationRequest request,
     IInventoryTransactionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLocation(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -131,7 +140,8 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> AssignWorkOrder(
         AssociationRequest request,
         IInventoryTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -139,7 +149,8 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> UnassignWorkOrder(
     AssociationRequest request,
     IInventoryTransactionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -147,7 +158,8 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> AssignPurchaseOrder(
         AssociationRequest request,
         IInventoryTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPurchaseOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -155,7 +167,8 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> UnassignPurchaseOrder(
     AssociationRequest request,
     IInventoryTransactionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPurchaseOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -163,7 +176,8 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> AssignSalesOrder(
         AssociationRequest request,
         IInventoryTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSalesOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -171,13 +185,15 @@ public static class InventoryTransactionEndpoints
     private static async Task<IResult> UnassignSalesOrder(
     AssociationRequest request,
     IInventoryTransactionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSalesOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static InventoryTransaction mapRequestToInventoryTransaction( InventoryTransactionRequest request ) {
+    private static InventoryTransaction mapRequestToInventoryTransaction(InventoryTransactionRequest request)
+    {
         var model = new InventoryTransaction
         {
             Id = request.Id,

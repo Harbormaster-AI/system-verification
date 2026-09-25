@@ -29,9 +29,10 @@ public static class ForecastLineEndpoints
     private static async Task<IResult> Create(
         ForecastLineRequest request,
         IForecastLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToForecastLine( request );
+        var model = mapRequestToForecastLine(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class ForecastLineEndpoints
     private static async Task<IResult> Update(
         ForecastLineRequest request,
         IForecastLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToForecastLine( request );
+        var model = mapRequestToForecastLine(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class ForecastLineEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IForecastLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var forecastLine = await service.Get(identifier, cancellationToken);
-        return forecastLine is null ? Results.NotFound() : Results.Ok( forecastLine );
+        return forecastLine is null ? Results.NotFound() : Results.Ok(forecastLine);
     }
 
 
     private static async Task<IResult> GetAll(
         IForecastLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ForecastLineResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ForecastLineResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IForecastLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class ForecastLineEndpoints
     private static async Task<IResult> AssignForecast(
         AssociationRequest request,
         IForecastLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignForecast(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class ForecastLineEndpoints
     private static async Task<IResult> UnassignForecast(
     AssociationRequest request,
     IForecastLineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignForecast(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class ForecastLineEndpoints
     private static async Task<IResult> AssignItem(
         AssociationRequest request,
         IForecastLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class ForecastLineEndpoints
     private static async Task<IResult> UnassignItem(
     AssociationRequest request,
     IForecastLineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ForecastLine mapRequestToForecastLine( ForecastLineRequest request ) {
+    private static ForecastLine mapRequestToForecastLine(ForecastLineRequest request)
+    {
         var model = new ForecastLine
         {
             Id = request.Id,

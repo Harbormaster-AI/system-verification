@@ -24,8 +24,8 @@ public static class InspectionLotEndpoints
         group.MapPut("/assignGoodsReceipt", AssignGoodsReceipt);
         group.MapPut("/unassignGoodsReceipt", UnassignGoodsReceipt);
 
-    group.MapPut("/addToResults", AddToResults);
-    group.MapPut("/removeFromResults", RemoveFromResults);
+        group.MapPut("/addToResults", AddToResults);
+        group.MapPut("/removeFromResults", RemoveFromResults);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class InspectionLotEndpoints
     private static async Task<IResult> Create(
         InspectionLotRequest request,
         IInspectionLotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInspectionLot( request );
+        var model = mapRequestToInspectionLot(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class InspectionLotEndpoints
     private static async Task<IResult> Update(
         InspectionLotRequest request,
         IInspectionLotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInspectionLot( request );
+        var model = mapRequestToInspectionLot(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class InspectionLotEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInspectionLotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var inspectionLot = await service.Get(identifier, cancellationToken);
-        return inspectionLot is null ? Results.NotFound() : Results.Ok( inspectionLot );
+        return inspectionLot is null ? Results.NotFound() : Results.Ok(inspectionLot);
     }
 
 
     private static async Task<IResult> GetAll(
         IInspectionLotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InspectionLotResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InspectionLotResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInspectionLotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -98,7 +103,8 @@ public static class InspectionLotEndpoints
     private static async Task<IResult> AssignItem(
         AssociationRequest request,
         IInspectionLotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -106,7 +112,8 @@ public static class InspectionLotEndpoints
     private static async Task<IResult> UnassignItem(
     AssociationRequest request,
     IInspectionLotService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class InspectionLotEndpoints
     private static async Task<IResult> AssignWorkOrder(
         AssociationRequest request,
         IInspectionLotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -122,7 +130,8 @@ public static class InspectionLotEndpoints
     private static async Task<IResult> UnassignWorkOrder(
     AssociationRequest request,
     IInspectionLotService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -130,7 +139,8 @@ public static class InspectionLotEndpoints
     private static async Task<IResult> AssignGoodsReceipt(
         AssociationRequest request,
         IInspectionLotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignGoodsReceipt(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -138,7 +148,8 @@ public static class InspectionLotEndpoints
     private static async Task<IResult> UnassignGoodsReceipt(
     AssociationRequest request,
     IInspectionLotService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignGoodsReceipt(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -147,7 +158,8 @@ public static class InspectionLotEndpoints
     private static async Task<IResult> AddToResults(
         MultipleAssociationRequest request,
         IInspectionLotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToResults(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class InspectionLotEndpoints
     private static async Task<IResult> RemoveFromResults(
         MultipleAssociationRequest request,
         IInspectionLotService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromResults(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static InspectionLot mapRequestToInspectionLot( InspectionLotRequest request ) {
+    private static InspectionLot mapRequestToInspectionLot(InspectionLotRequest request)
+    {
         var model = new InspectionLot
         {
             Id = request.Id,

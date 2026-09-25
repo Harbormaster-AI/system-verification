@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IInspectionLotService {
+public interface IInspectionLotService
+{
 
-    Task Create(InspectionLot model , CancellationToken cancellationToken);
+    Task Create(InspectionLot model, CancellationToken cancellationToken);
     Task<bool> Update(InspectionLot model, CancellationToken cancellationToken);
     Task<InspectionLot?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InspectionLot>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class InspectionLotService : IInspectionLotService
 
     public async Task<bool> Update(InspectionLot model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class InspectionLotService : IInspectionLotService
         return true;
     }
 
-    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class InspectionLotService : IInspectionLotService
 
             var child = await _serviceResolver.Get<ItemService>().Get(childRequest, cancellationToken);
             parent.Item = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class InspectionLotService : IInspectionLotService
         return true;
     }
 
-    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class InspectionLotService : IInspectionLotService
         try
         {
             parent.Item = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,7 +183,8 @@ public class InspectionLotService : IInspectionLotService
         return true;
     }
 
-    public async Task<bool> AssignWorkOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,7 +202,7 @@ public class InspectionLotService : IInspectionLotService
 
             var child = await _serviceResolver.Get<WorkOrderService>().Get(childRequest, cancellationToken);
             parent.WorkOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class InspectionLotService : IInspectionLotService
         return true;
     }
 
-    public async Task<bool> UnassignWorkOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class InspectionLotService : IInspectionLotService
         try
         {
             parent.WorkOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -232,7 +238,8 @@ public class InspectionLotService : IInspectionLotService
         return true;
     }
 
-    public async Task<bool> AssignGoodsReceipt(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignGoodsReceipt(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -250,7 +257,7 @@ public class InspectionLotService : IInspectionLotService
 
             var child = await _serviceResolver.Get<GoodsReceiptService>().Get(childRequest, cancellationToken);
             parent.GoodsReceipt = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -262,7 +269,8 @@ public class InspectionLotService : IInspectionLotService
         return true;
     }
 
-    public async Task<bool> UnassignGoodsReceipt(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignGoodsReceipt(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -273,7 +281,7 @@ public class InspectionLotService : IInspectionLotService
         try
         {
             parent.GoodsReceipt = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -286,8 +294,10 @@ public class InspectionLotService : IInspectionLotService
     }
 
 
-    public async Task<bool> AddToResults(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToResults(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InspectionLot",
                 "AddToResults",
@@ -295,16 +305,18 @@ public class InspectionLotService : IInspectionLotService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromResults(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromResults(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InspectionLot",
                 "RemoveFromResults",

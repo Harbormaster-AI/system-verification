@@ -11,7 +11,7 @@ public interface IInspectionLotRepository
     Task UpdateAsync(InspectionLot inspectionLot, CancellationToken cancellationToken);
     Task DeleteAsync(InspectionLot inspectionLot, CancellationToken cancellationToken);
 
-    Task AddToResultsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromResultsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToResultsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromResultsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

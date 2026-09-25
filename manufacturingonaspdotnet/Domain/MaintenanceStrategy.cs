@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum MaintenanceStrategy
 {
-    TimeBased=1,UsageBased=2,ConditionBased=3,Predictive=4,Corrective=5
+    TimeBased = 1, UsageBased = 2, ConditionBased = 3, Predictive = 4, Corrective = 5
 }
 
 /// <summary>

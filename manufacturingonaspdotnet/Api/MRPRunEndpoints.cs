@@ -20,8 +20,8 @@ public static class MRPRunEndpoints
         group.MapPut("/assignPlant", AssignPlant);
         group.MapPut("/unassignPlant", UnassignPlant);
 
-    group.MapPut("/addToPlannedOrders", AddToPlannedOrders);
-    group.MapPut("/removeFromPlannedOrders", RemoveFromPlannedOrders);
+        group.MapPut("/addToPlannedOrders", AddToPlannedOrders);
+        group.MapPut("/removeFromPlannedOrders", RemoveFromPlannedOrders);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class MRPRunEndpoints
     private static async Task<IResult> Create(
         MRPRunRequest request,
         IMRPRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMRPRun( request );
+        var model = mapRequestToMRPRun(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class MRPRunEndpoints
     private static async Task<IResult> Update(
         MRPRunRequest request,
         IMRPRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMRPRun( request );
+        var model = mapRequestToMRPRun(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class MRPRunEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMRPRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var mRPRun = await service.Get(identifier, cancellationToken);
-        return mRPRun is null ? Results.NotFound() : Results.Ok( mRPRun );
+        return mRPRun is null ? Results.NotFound() : Results.Ok(mRPRun);
     }
 
 
     private static async Task<IResult> GetAll(
         IMRPRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MRPRunResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MRPRunResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMRPRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class MRPRunEndpoints
     private static async Task<IResult> AssignPlant(
         AssociationRequest request,
         IMRPRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPlant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class MRPRunEndpoints
     private static async Task<IResult> UnassignPlant(
     AssociationRequest request,
     IMRPRunService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPlant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class MRPRunEndpoints
     private static async Task<IResult> AddToPlannedOrders(
         MultipleAssociationRequest request,
         IMRPRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPlannedOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class MRPRunEndpoints
     private static async Task<IResult> RemoveFromPlannedOrders(
         MultipleAssociationRequest request,
         IMRPRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPlannedOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static MRPRun mapRequestToMRPRun( MRPRunRequest request ) {
+    private static MRPRun mapRequestToMRPRun(MRPRunRequest request)
+    {
         var model = new MRPRun
         {
             Id = request.Id,

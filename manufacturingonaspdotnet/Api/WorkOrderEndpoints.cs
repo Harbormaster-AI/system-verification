@@ -37,9 +37,10 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> Create(
         WorkOrderRequest request,
         IWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWorkOrder( request );
+        var model = mapRequestToWorkOrder(request);
 
         try
         {
@@ -56,9 +57,10 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> Update(
         WorkOrderRequest request,
         IWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWorkOrder( request );
+        var model = mapRequestToWorkOrder(request);
 
         try
         {
@@ -75,25 +77,28 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var workOrder = await service.Get(identifier, cancellationToken);
-        return workOrder is null ? Results.NotFound() : Results.Ok( workOrder );
+        return workOrder is null ? Results.NotFound() : Results.Ok(workOrder);
     }
 
 
     private static async Task<IResult> GetAll(
         IWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( WorkOrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(WorkOrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +106,8 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> AssignItem(
         AssociationRequest request,
         IWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +115,8 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> UnassignItem(
     AssociationRequest request,
     IWorkOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,7 +124,8 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> AssignPlant(
         AssociationRequest request,
         IWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPlant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -125,7 +133,8 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> UnassignPlant(
     AssociationRequest request,
     IWorkOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPlant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -133,7 +142,8 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> AssignRouting(
         AssociationRequest request,
         IWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRouting(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -141,7 +151,8 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> UnassignRouting(
     AssociationRequest request,
     IWorkOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRouting(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -149,7 +160,8 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> AssignBom(
         AssociationRequest request,
         IWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBom(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -157,7 +169,8 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> UnassignBom(
     AssociationRequest request,
     IWorkOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBom(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -165,7 +178,8 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> AssignProductionSchedule(
         AssociationRequest request,
         IWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProductionSchedule(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -173,7 +187,8 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> UnassignProductionSchedule(
     AssociationRequest request,
     IWorkOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProductionSchedule(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -181,7 +196,8 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> AssignSalesOrder(
         AssociationRequest request,
         IWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSalesOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -189,13 +205,15 @@ public static class WorkOrderEndpoints
     private static async Task<IResult> UnassignSalesOrder(
     AssociationRequest request,
     IWorkOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSalesOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static WorkOrder mapRequestToWorkOrder( WorkOrderRequest request ) {
+    private static WorkOrder mapRequestToWorkOrder(WorkOrderRequest request)
+    {
         var model = new WorkOrder
         {
             Id = request.Id,

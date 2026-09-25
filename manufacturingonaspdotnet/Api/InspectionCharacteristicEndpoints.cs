@@ -27,9 +27,10 @@ public static class InspectionCharacteristicEndpoints
     private static async Task<IResult> Create(
         InspectionCharacteristicRequest request,
         IInspectionCharacteristicService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInspectionCharacteristic( request );
+        var model = mapRequestToInspectionCharacteristic(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class InspectionCharacteristicEndpoints
     private static async Task<IResult> Update(
         InspectionCharacteristicRequest request,
         IInspectionCharacteristicService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInspectionCharacteristic( request );
+        var model = mapRequestToInspectionCharacteristic(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class InspectionCharacteristicEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInspectionCharacteristicService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var inspectionCharacteristic = await service.Get(identifier, cancellationToken);
-        return inspectionCharacteristic is null ? Results.NotFound() : Results.Ok( inspectionCharacteristic );
+        return inspectionCharacteristic is null ? Results.NotFound() : Results.Ok(inspectionCharacteristic);
     }
 
 
     private static async Task<IResult> GetAll(
         IInspectionCharacteristicService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InspectionCharacteristicResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InspectionCharacteristicResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInspectionCharacteristicService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class InspectionCharacteristicEndpoints
     private static async Task<IResult> AssignInspectionPlan(
         AssociationRequest request,
         IInspectionCharacteristicService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInspectionPlan(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class InspectionCharacteristicEndpoints
     private static async Task<IResult> UnassignInspectionPlan(
     AssociationRequest request,
     IInspectionCharacteristicService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInspectionPlan(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static InspectionCharacteristic mapRequestToInspectionCharacteristic( InspectionCharacteristicRequest request ) {
+    private static InspectionCharacteristic mapRequestToInspectionCharacteristic(InspectionCharacteristicRequest request)
+    {
         var model = new InspectionCharacteristic
         {
             Id = request.Id,

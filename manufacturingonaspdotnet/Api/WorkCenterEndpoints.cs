@@ -20,11 +20,11 @@ public static class WorkCenterEndpoints
         group.MapPut("/assignProductionLine", AssignProductionLine);
         group.MapPut("/unassignProductionLine", UnassignProductionLine);
 
-    group.MapPut("/addToAssets", AddToAssets);
-    group.MapPut("/removeFromAssets", RemoveFromAssets);
+        group.MapPut("/addToAssets", AddToAssets);
+        group.MapPut("/removeFromAssets", RemoveFromAssets);
 
-    group.MapPut("/addToMaintenanceOrders", AddToMaintenanceOrders);
-    group.MapPut("/removeFromMaintenanceOrders", RemoveFromMaintenanceOrders);
+        group.MapPut("/addToMaintenanceOrders", AddToMaintenanceOrders);
+        group.MapPut("/removeFromMaintenanceOrders", RemoveFromMaintenanceOrders);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class WorkCenterEndpoints
     private static async Task<IResult> Create(
         WorkCenterRequest request,
         IWorkCenterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWorkCenter( request );
+        var model = mapRequestToWorkCenter(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class WorkCenterEndpoints
     private static async Task<IResult> Update(
         WorkCenterRequest request,
         IWorkCenterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWorkCenter( request );
+        var model = mapRequestToWorkCenter(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class WorkCenterEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IWorkCenterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var workCenter = await service.Get(identifier, cancellationToken);
-        return workCenter is null ? Results.NotFound() : Results.Ok( workCenter );
+        return workCenter is null ? Results.NotFound() : Results.Ok(workCenter);
     }
 
 
     private static async Task<IResult> GetAll(
         IWorkCenterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( WorkCenterResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(WorkCenterResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IWorkCenterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class WorkCenterEndpoints
     private static async Task<IResult> AssignProductionLine(
         AssociationRequest request,
         IWorkCenterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProductionLine(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class WorkCenterEndpoints
     private static async Task<IResult> UnassignProductionLine(
     AssociationRequest request,
     IWorkCenterService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProductionLine(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class WorkCenterEndpoints
     private static async Task<IResult> AddToAssets(
         MultipleAssociationRequest request,
         IWorkCenterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAssets(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class WorkCenterEndpoints
     private static async Task<IResult> RemoveFromAssets(
         MultipleAssociationRequest request,
         IWorkCenterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAssets(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToMaintenanceOrders(
         MultipleAssociationRequest request,
         IWorkCenterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToMaintenanceOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class WorkCenterEndpoints
     private static async Task<IResult> RemoveFromMaintenanceOrders(
         MultipleAssociationRequest request,
         IWorkCenterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromMaintenanceOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static WorkCenter mapRequestToWorkCenter( WorkCenterRequest request ) {
+    private static WorkCenter mapRequestToWorkCenter(WorkCenterRequest request)
+    {
         var model = new WorkCenter
         {
             Id = request.Id,

@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IGoodsReceiptLineService {
+public interface IGoodsReceiptLineService
+{
 
-    Task Create(GoodsReceiptLine model , CancellationToken cancellationToken);
+    Task Create(GoodsReceiptLine model, CancellationToken cancellationToken);
     Task<bool> Update(GoodsReceiptLine model, CancellationToken cancellationToken);
     Task<GoodsReceiptLine?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<GoodsReceiptLine>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
 
     public async Task<bool> Update(GoodsReceiptLine model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
         return true;
     }
 
-    public async Task<bool> AssignGoodsReceipt(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignGoodsReceipt(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
 
             var child = await _serviceResolver.Get<GoodsReceiptService>().Get(childRequest, cancellationToken);
             parent.GoodsReceipt = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
         return true;
     }
 
-    public async Task<bool> UnassignGoodsReceipt(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignGoodsReceipt(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
         try
         {
             parent.GoodsReceipt = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,7 +180,8 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
         return true;
     }
 
-    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -194,7 +199,7 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
 
             var child = await _serviceResolver.Get<ItemService>().Get(childRequest, cancellationToken);
             parent.Item = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -206,7 +211,8 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
         return true;
     }
 
-    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -217,7 +223,7 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
         try
         {
             parent.Item = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,7 +235,8 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
         return true;
     }
 
-    public async Task<bool> AssignInventoryTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInventoryTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -247,7 +254,7 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
 
             var child = await _serviceResolver.Get<InventoryTransactionService>().Get(childRequest, cancellationToken);
             parent.InventoryTransaction = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -259,7 +266,8 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
         return true;
     }
 
-    public async Task<bool> UnassignInventoryTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInventoryTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -270,7 +278,7 @@ public class GoodsReceiptLineService : IGoodsReceiptLineService
         try
         {
             parent.InventoryTransaction = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

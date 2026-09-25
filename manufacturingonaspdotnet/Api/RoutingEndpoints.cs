@@ -20,8 +20,8 @@ public static class RoutingEndpoints
         group.MapPut("/assignItem", AssignItem);
         group.MapPut("/unassignItem", UnassignItem);
 
-    group.MapPut("/addToOperations", AddToOperations);
-    group.MapPut("/removeFromOperations", RemoveFromOperations);
+        group.MapPut("/addToOperations", AddToOperations);
+        group.MapPut("/removeFromOperations", RemoveFromOperations);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class RoutingEndpoints
     private static async Task<IResult> Create(
         RoutingRequest request,
         IRoutingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRouting( request );
+        var model = mapRequestToRouting(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class RoutingEndpoints
     private static async Task<IResult> Update(
         RoutingRequest request,
         IRoutingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRouting( request );
+        var model = mapRequestToRouting(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class RoutingEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRoutingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var routing = await service.Get(identifier, cancellationToken);
-        return routing is null ? Results.NotFound() : Results.Ok( routing );
+        return routing is null ? Results.NotFound() : Results.Ok(routing);
     }
 
 
     private static async Task<IResult> GetAll(
         IRoutingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RoutingResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RoutingResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRoutingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class RoutingEndpoints
     private static async Task<IResult> AssignItem(
         AssociationRequest request,
         IRoutingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class RoutingEndpoints
     private static async Task<IResult> UnassignItem(
     AssociationRequest request,
     IRoutingService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class RoutingEndpoints
     private static async Task<IResult> AddToOperations(
         MultipleAssociationRequest request,
         IRoutingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOperations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class RoutingEndpoints
     private static async Task<IResult> RemoveFromOperations(
         MultipleAssociationRequest request,
         IRoutingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOperations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Routing mapRequestToRouting( RoutingRequest request ) {
+    private static Routing mapRequestToRouting(RoutingRequest request)
+    {
         var model = new Routing
         {
             Id = request.Id,

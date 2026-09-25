@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IBOMService {
+public interface IBOMService
+{
 
-    Task Create(BOM model , CancellationToken cancellationToken);
+    Task Create(BOM model, CancellationToken cancellationToken);
     Task<bool> Update(BOM model, CancellationToken cancellationToken);
     Task<BOM?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BOM>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class BOMService : IBOMService
 
     public async Task<bool> Update(BOM model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class BOMService : IBOMService
         return true;
     }
 
-    public async Task<bool> AssignParentItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignParentItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class BOMService : IBOMService
 
             var child = await _serviceResolver.Get<ItemService>().Get(childRequest, cancellationToken);
             parent.ParentItem = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class BOMService : IBOMService
         return true;
     }
 
-    public async Task<bool> UnassignParentItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignParentItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class BOMService : IBOMService
         try
         {
             parent.ParentItem = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class BOMService : IBOMService
     }
 
 
-    public async Task<bool> AddToBomItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToBomItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BOM",
                 "AddToBomItems",
@@ -184,16 +190,18 @@ public class BOMService : IBOMService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromBomItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromBomItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BOM",
                 "RemoveFromBomItems",

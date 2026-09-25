@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum MaintenanceOrderStatus
 {
-    Created=1,Approved=2,Scheduled=3,InProgress=4,Completed=5,Cancelled=6
+    Created = 1, Approved = 2, Scheduled = 3, InProgress = 4, Completed = 5, Cancelled = 6
 }
 
 /// <summary>

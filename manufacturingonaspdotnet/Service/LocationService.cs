@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface ILocationService {
+public interface ILocationService
+{
 
-    Task Create(Location model , CancellationToken cancellationToken);
+    Task Create(Location model, CancellationToken cancellationToken);
     Task<bool> Update(Location model, CancellationToken cancellationToken);
     Task<Location?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Location>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class LocationService : ILocationService
 
     public async Task<bool> Update(Location model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class LocationService : ILocationService
         return true;
     }
 
-    public async Task<bool> AssignWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class LocationService : ILocationService
 
             var child = await _serviceResolver.Get<WarehouseService>().Get(childRequest, cancellationToken);
             parent.Warehouse = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class LocationService : ILocationService
         return true;
     }
 
-    public async Task<bool> UnassignWarehouse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWarehouse(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class LocationService : ILocationService
         try
         {
             parent.Warehouse = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class LocationService : ILocationService
     }
 
 
-    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Location",
                 "AddToInventoryItems",
@@ -182,16 +188,18 @@ public class LocationService : ILocationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Location",
                 "RemoveFromInventoryItems",

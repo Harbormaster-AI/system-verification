@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum CAPAStatus
 {
-    Proposed=1,Approved=2,Implemented=3,Verified=4,Closed=5
+    Proposed = 1, Approved = 2, Implemented = 3, Verified = 4, Closed = 5
 }
 
 /// <summary>

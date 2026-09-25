@@ -11,7 +11,7 @@ public interface IForecastRepository
     Task UpdateAsync(Forecast forecast, CancellationToken cancellationToken);
     Task DeleteAsync(Forecast forecast, CancellationToken cancellationToken);
 
-    Task AddToLinesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLinesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLinesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLinesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

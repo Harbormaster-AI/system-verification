@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface ISalesOrderService {
+public interface ISalesOrderService
+{
 
-    Task Create(SalesOrder model , CancellationToken cancellationToken);
+    Task Create(SalesOrder model, CancellationToken cancellationToken);
     Task<bool> Update(SalesOrder model, CancellationToken cancellationToken);
     Task<SalesOrder?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SalesOrder>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class SalesOrderService : ISalesOrderService
 
     public async Task<bool> Update(SalesOrder model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class SalesOrderService : ISalesOrderService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class SalesOrderService : ISalesOrderService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.Customer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class SalesOrderService : ISalesOrderService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class SalesOrderService : ISalesOrderService
         try
         {
             parent.Customer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class SalesOrderService : ISalesOrderService
         return true;
     }
 
-    public async Task<bool> AssignPlant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPlant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class SalesOrderService : ISalesOrderService
 
             var child = await _serviceResolver.Get<PlantService>().Get(childRequest, cancellationToken);
             parent.Plant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class SalesOrderService : ISalesOrderService
         return true;
     }
 
-    public async Task<bool> UnassignPlant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPlant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class SalesOrderService : ISalesOrderService
         try
         {
             parent.Plant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,8 +237,10 @@ public class SalesOrderService : ISalesOrderService
     }
 
 
-    public async Task<bool> AddToLines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SalesOrder",
                 "AddToLines",
@@ -240,16 +248,18 @@ public class SalesOrderService : ISalesOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SalesOrder",
                 "RemoveFromLines",
@@ -265,8 +275,10 @@ public class SalesOrderService : ISalesOrderService
         return true;
     }
 
-    public async Task<bool> AddToWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SalesOrder",
                 "AddToWorkOrders",
@@ -274,16 +286,18 @@ public class SalesOrderService : ISalesOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SalesOrder",
                 "RemoveFromWorkOrders",

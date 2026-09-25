@@ -11,9 +11,9 @@ public interface IAssetRepository
     Task UpdateAsync(Asset asset, CancellationToken cancellationToken);
     Task DeleteAsync(Asset asset, CancellationToken cancellationToken);
 
-    Task AddToMaintenanceOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromMaintenanceOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToMaintenancePlansAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromMaintenancePlansAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToMaintenanceOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromMaintenanceOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToMaintenancePlansAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromMaintenancePlansAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

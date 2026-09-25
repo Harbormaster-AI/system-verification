@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum MeasurementType
 {
-    Attribute=1,Variable=2
+    Attribute = 1, Variable = 2
 }
 
 /// <summary>

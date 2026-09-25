@@ -31,9 +31,10 @@ public static class PlannedOrderEndpoints
     private static async Task<IResult> Create(
         PlannedOrderRequest request,
         IPlannedOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPlannedOrder( request );
+        var model = mapRequestToPlannedOrder(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class PlannedOrderEndpoints
     private static async Task<IResult> Update(
         PlannedOrderRequest request,
         IPlannedOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPlannedOrder( request );
+        var model = mapRequestToPlannedOrder(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class PlannedOrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPlannedOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var plannedOrder = await service.Get(identifier, cancellationToken);
-        return plannedOrder is null ? Results.NotFound() : Results.Ok( plannedOrder );
+        return plannedOrder is null ? Results.NotFound() : Results.Ok(plannedOrder);
     }
 
 
     private static async Task<IResult> GetAll(
         IPlannedOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PlannedOrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PlannedOrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPlannedOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class PlannedOrderEndpoints
     private static async Task<IResult> AssignMrpRun(
         AssociationRequest request,
         IPlannedOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMrpRun(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class PlannedOrderEndpoints
     private static async Task<IResult> UnassignMrpRun(
     AssociationRequest request,
     IPlannedOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMrpRun(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class PlannedOrderEndpoints
     private static async Task<IResult> AssignItem(
         AssociationRequest request,
         IPlannedOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class PlannedOrderEndpoints
     private static async Task<IResult> UnassignItem(
     AssociationRequest request,
     IPlannedOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class PlannedOrderEndpoints
     private static async Task<IResult> AssignPlant(
         AssociationRequest request,
         IPlannedOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPlant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class PlannedOrderEndpoints
     private static async Task<IResult> UnassignPlant(
     AssociationRequest request,
     IPlannedOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPlant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static PlannedOrder mapRequestToPlannedOrder( PlannedOrderRequest request ) {
+    private static PlannedOrder mapRequestToPlannedOrder(PlannedOrderRequest request)
+    {
         var model = new PlannedOrder
         {
             Id = request.Id,

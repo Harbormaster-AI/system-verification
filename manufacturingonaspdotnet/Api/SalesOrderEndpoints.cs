@@ -22,11 +22,11 @@ public static class SalesOrderEndpoints
         group.MapPut("/assignPlant", AssignPlant);
         group.MapPut("/unassignPlant", UnassignPlant);
 
-    group.MapPut("/addToLines", AddToLines);
-    group.MapPut("/removeFromLines", RemoveFromLines);
+        group.MapPut("/addToLines", AddToLines);
+        group.MapPut("/removeFromLines", RemoveFromLines);
 
-    group.MapPut("/addToWorkOrders", AddToWorkOrders);
-    group.MapPut("/removeFromWorkOrders", RemoveFromWorkOrders);
+        group.MapPut("/addToWorkOrders", AddToWorkOrders);
+        group.MapPut("/removeFromWorkOrders", RemoveFromWorkOrders);
 
 
         return app;
@@ -35,9 +35,10 @@ public static class SalesOrderEndpoints
     private static async Task<IResult> Create(
         SalesOrderRequest request,
         ISalesOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSalesOrder( request );
+        var model = mapRequestToSalesOrder(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class SalesOrderEndpoints
     private static async Task<IResult> Update(
         SalesOrderRequest request,
         ISalesOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSalesOrder( request );
+        var model = mapRequestToSalesOrder(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class SalesOrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISalesOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var salesOrder = await service.Get(identifier, cancellationToken);
-        return salesOrder is null ? Results.NotFound() : Results.Ok( salesOrder );
+        return salesOrder is null ? Results.NotFound() : Results.Ok(salesOrder);
     }
 
 
     private static async Task<IResult> GetAll(
         ISalesOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SalesOrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SalesOrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISalesOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class SalesOrderEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         ISalesOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class SalesOrderEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     ISalesOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -115,7 +122,8 @@ public static class SalesOrderEndpoints
     private static async Task<IResult> AssignPlant(
         AssociationRequest request,
         ISalesOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPlant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +131,8 @@ public static class SalesOrderEndpoints
     private static async Task<IResult> UnassignPlant(
     AssociationRequest request,
     ISalesOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPlant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +141,8 @@ public static class SalesOrderEndpoints
     private static async Task<IResult> AddToLines(
         MultipleAssociationRequest request,
         ISalesOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLines(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class SalesOrderEndpoints
     private static async Task<IResult> RemoveFromLines(
         MultipleAssociationRequest request,
         ISalesOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLines(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToWorkOrders(
         MultipleAssociationRequest request,
         ISalesOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToWorkOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class SalesOrderEndpoints
     private static async Task<IResult> RemoveFromWorkOrders(
         MultipleAssociationRequest request,
         ISalesOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromWorkOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static SalesOrder mapRequestToSalesOrder( SalesOrderRequest request ) {
+    private static SalesOrder mapRequestToSalesOrder(SalesOrderRequest request)
+    {
         var model = new SalesOrder
         {
             Id = request.Id,

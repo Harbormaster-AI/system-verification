@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum WorkCenterType
 {
-    Machining=1,Assembly=2,Painting=3,Packaging=4,Test=5,Warehouse=6
+    Machining = 1, Assembly = 2, Painting = 3, Packaging = 4, Test = 5, Warehouse = 6
 }
 
 /// <summary>

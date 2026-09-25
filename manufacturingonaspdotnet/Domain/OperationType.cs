@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum OperationType
 {
-    Setup=1,Run=2,Teardown=3,Inspection=4,Transfer=5
+    Setup = 1, Run = 2, Teardown = 3, Inspection = 4, Transfer = 5
 }
 
 /// <summary>

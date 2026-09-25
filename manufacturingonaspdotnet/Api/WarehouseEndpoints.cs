@@ -20,11 +20,11 @@ public static class WarehouseEndpoints
         group.MapPut("/assignPlant", AssignPlant);
         group.MapPut("/unassignPlant", UnassignPlant);
 
-    group.MapPut("/addToLocations", AddToLocations);
-    group.MapPut("/removeFromLocations", RemoveFromLocations);
+        group.MapPut("/addToLocations", AddToLocations);
+        group.MapPut("/removeFromLocations", RemoveFromLocations);
 
-    group.MapPut("/addToInventoryItems", AddToInventoryItems);
-    group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
+        group.MapPut("/addToInventoryItems", AddToInventoryItems);
+        group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class WarehouseEndpoints
     private static async Task<IResult> Create(
         WarehouseRequest request,
         IWarehouseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWarehouse( request );
+        var model = mapRequestToWarehouse(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class WarehouseEndpoints
     private static async Task<IResult> Update(
         WarehouseRequest request,
         IWarehouseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWarehouse( request );
+        var model = mapRequestToWarehouse(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class WarehouseEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IWarehouseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var warehouse = await service.Get(identifier, cancellationToken);
-        return warehouse is null ? Results.NotFound() : Results.Ok( warehouse );
+        return warehouse is null ? Results.NotFound() : Results.Ok(warehouse);
     }
 
 
     private static async Task<IResult> GetAll(
         IWarehouseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( WarehouseResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(WarehouseResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IWarehouseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class WarehouseEndpoints
     private static async Task<IResult> AssignPlant(
         AssociationRequest request,
         IWarehouseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPlant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class WarehouseEndpoints
     private static async Task<IResult> UnassignPlant(
     AssociationRequest request,
     IWarehouseService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPlant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class WarehouseEndpoints
     private static async Task<IResult> AddToLocations(
         MultipleAssociationRequest request,
         IWarehouseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLocations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class WarehouseEndpoints
     private static async Task<IResult> RemoveFromLocations(
         MultipleAssociationRequest request,
         IWarehouseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLocations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToInventoryItems(
         MultipleAssociationRequest request,
         IWarehouseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInventoryItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class WarehouseEndpoints
     private static async Task<IResult> RemoveFromInventoryItems(
         MultipleAssociationRequest request,
         IWarehouseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInventoryItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Warehouse mapRequestToWarehouse( WarehouseRequest request ) {
+    private static Warehouse mapRequestToWarehouse(WarehouseRequest request)
+    {
         var model = new Warehouse
         {
             Id = request.Id,

@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum ForecastMethod
 {
-    MovingAverage=1,ExponentialSmoothing=2,Croston=3,ARIMA=4,Manual=5
+    MovingAverage = 1, ExponentialSmoothing = 2, Croston = 3, ARIMA = 4, Manual = 5
 }
 
 /// <summary>

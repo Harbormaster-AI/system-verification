@@ -18,14 +18,14 @@ public static class SupplierEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToEnterprises", AddToEnterprises);
-    group.MapPut("/removeFromEnterprises", RemoveFromEnterprises);
+        group.MapPut("/addToEnterprises", AddToEnterprises);
+        group.MapPut("/removeFromEnterprises", RemoveFromEnterprises);
 
-    group.MapPut("/addToItems", AddToItems);
-    group.MapPut("/removeFromItems", RemoveFromItems);
+        group.MapPut("/addToItems", AddToItems);
+        group.MapPut("/removeFromItems", RemoveFromItems);
 
-    group.MapPut("/addToPurchaseOrders", AddToPurchaseOrders);
-    group.MapPut("/removeFromPurchaseOrders", RemoveFromPurchaseOrders);
+        group.MapPut("/addToPurchaseOrders", AddToPurchaseOrders);
+        group.MapPut("/removeFromPurchaseOrders", RemoveFromPurchaseOrders);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class SupplierEndpoints
     private static async Task<IResult> Create(
         SupplierRequest request,
         ISupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSupplier( request );
+        var model = mapRequestToSupplier(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class SupplierEndpoints
     private static async Task<IResult> Update(
         SupplierRequest request,
         ISupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSupplier( request );
+        var model = mapRequestToSupplier(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class SupplierEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var supplier = await service.Get(identifier, cancellationToken);
-        return supplier is null ? Results.NotFound() : Results.Ok( supplier );
+        return supplier is null ? Results.NotFound() : Results.Ok(supplier);
     }
 
 
     private static async Task<IResult> GetAll(
         ISupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SupplierResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SupplierResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class SupplierEndpoints
     private static async Task<IResult> AddToEnterprises(
         MultipleAssociationRequest request,
         ISupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToEnterprises(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -107,14 +113,16 @@ public static class SupplierEndpoints
     private static async Task<IResult> RemoveFromEnterprises(
         MultipleAssociationRequest request,
         ISupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromEnterprises(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToItems(
         MultipleAssociationRequest request,
         ISupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class SupplierEndpoints
     private static async Task<IResult> RemoveFromItems(
         MultipleAssociationRequest request,
         ISupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPurchaseOrders(
         MultipleAssociationRequest request,
         ISupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPurchaseOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class SupplierEndpoints
     private static async Task<IResult> RemoveFromPurchaseOrders(
         MultipleAssociationRequest request,
         ISupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPurchaseOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Supplier mapRequestToSupplier( SupplierRequest request ) {
+    private static Supplier mapRequestToSupplier(SupplierRequest request)
+    {
         var model = new Supplier
         {
             Id = request.Id,

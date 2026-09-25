@@ -18,11 +18,11 @@ public static class CustomerEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToEnterprises", AddToEnterprises);
-    group.MapPut("/removeFromEnterprises", RemoveFromEnterprises);
+        group.MapPut("/addToEnterprises", AddToEnterprises);
+        group.MapPut("/removeFromEnterprises", RemoveFromEnterprises);
 
-    group.MapPut("/addToSalesOrders", AddToSalesOrders);
-    group.MapPut("/removeFromSalesOrders", RemoveFromSalesOrders);
+        group.MapPut("/addToSalesOrders", AddToSalesOrders);
+        group.MapPut("/removeFromSalesOrders", RemoveFromSalesOrders);
 
 
         return app;
@@ -31,9 +31,10 @@ public static class CustomerEndpoints
     private static async Task<IResult> Create(
         CustomerRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCustomer( request );
+        var model = mapRequestToCustomer(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class CustomerEndpoints
     private static async Task<IResult> Update(
         CustomerRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCustomer( request );
+        var model = mapRequestToCustomer(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class CustomerEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var customer = await service.Get(identifier, cancellationToken);
-        return customer is null ? Results.NotFound() : Results.Ok( customer );
+        return customer is null ? Results.NotFound() : Results.Ok(customer);
     }
 
 
     private static async Task<IResult> GetAll(
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CustomerResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CustomerResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class CustomerEndpoints
     private static async Task<IResult> AddToEnterprises(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToEnterprises(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -104,14 +110,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromEnterprises(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromEnterprises(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSalesOrders(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSalesOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromSalesOrders(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSalesOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Customer mapRequestToCustomer( CustomerRequest request ) {
+    private static Customer mapRequestToCustomer(CustomerRequest request)
+    {
         var model = new Customer
         {
             Id = request.Id,

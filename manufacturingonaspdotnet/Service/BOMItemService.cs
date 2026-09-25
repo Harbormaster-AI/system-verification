@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IBOMItemService {
+public interface IBOMItemService
+{
 
-    Task Create(BOMItem model , CancellationToken cancellationToken);
+    Task Create(BOMItem model, CancellationToken cancellationToken);
     Task<bool> Update(BOMItem model, CancellationToken cancellationToken);
     Task<BOMItem?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BOMItem>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class BOMItemService : IBOMItemService
 
     public async Task<bool> Update(BOMItem model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class BOMItemService : IBOMItemService
         return true;
     }
 
-    public async Task<bool> AssignBom(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBom(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class BOMItemService : IBOMItemService
 
             var child = await _serviceResolver.Get<BOMService>().Get(childRequest, cancellationToken);
             parent.Bom = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class BOMItemService : IBOMItemService
         return true;
     }
 
-    public async Task<bool> UnassignBom(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBom(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class BOMItemService : IBOMItemService
         try
         {
             parent.Bom = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class BOMItemService : IBOMItemService
         return true;
     }
 
-    public async Task<bool> AssignComponent(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignComponent(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class BOMItemService : IBOMItemService
 
             var child = await _serviceResolver.Get<ItemService>().Get(childRequest, cancellationToken);
             parent.Component = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class BOMItemService : IBOMItemService
         return true;
     }
 
-    public async Task<bool> UnassignComponent(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignComponent(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class BOMItemService : IBOMItemService
         try
         {
             parent.Component = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

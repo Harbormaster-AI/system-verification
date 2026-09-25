@@ -33,9 +33,10 @@ public static class NonconformanceEndpoints
     private static async Task<IResult> Create(
         NonconformanceRequest request,
         INonconformanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToNonconformance( request );
+        var model = mapRequestToNonconformance(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class NonconformanceEndpoints
     private static async Task<IResult> Update(
         NonconformanceRequest request,
         INonconformanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToNonconformance( request );
+        var model = mapRequestToNonconformance(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class NonconformanceEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         INonconformanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var nonconformance = await service.Get(identifier, cancellationToken);
-        return nonconformance is null ? Results.NotFound() : Results.Ok( nonconformance );
+        return nonconformance is null ? Results.NotFound() : Results.Ok(nonconformance);
     }
 
 
     private static async Task<IResult> GetAll(
         INonconformanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( NonconformanceResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(NonconformanceResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         INonconformanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class NonconformanceEndpoints
     private static async Task<IResult> AssignItem(
         AssociationRequest request,
         INonconformanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class NonconformanceEndpoints
     private static async Task<IResult> UnassignItem(
     AssociationRequest request,
     INonconformanceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class NonconformanceEndpoints
     private static async Task<IResult> AssignWorkOrder(
         AssociationRequest request,
         INonconformanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class NonconformanceEndpoints
     private static async Task<IResult> UnassignWorkOrder(
     AssociationRequest request,
     INonconformanceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class NonconformanceEndpoints
     private static async Task<IResult> AssignInspectionLot(
         AssociationRequest request,
         INonconformanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInspectionLot(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class NonconformanceEndpoints
     private static async Task<IResult> UnassignInspectionLot(
     AssociationRequest request,
     INonconformanceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInspectionLot(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class NonconformanceEndpoints
     private static async Task<IResult> AssignCorrectiveAction(
         AssociationRequest request,
         INonconformanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCorrectiveAction(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class NonconformanceEndpoints
     private static async Task<IResult> UnassignCorrectiveAction(
     AssociationRequest request,
     INonconformanceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCorrectiveAction(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Nonconformance mapRequestToNonconformance( NonconformanceRequest request ) {
+    private static Nonconformance mapRequestToNonconformance(NonconformanceRequest request)
+    {
         var model = new Nonconformance
         {
             Id = request.Id,

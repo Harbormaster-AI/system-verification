@@ -20,8 +20,8 @@ public static class MaintenancePlanEndpoints
         group.MapPut("/assignAsset", AssignAsset);
         group.MapPut("/unassignAsset", UnassignAsset);
 
-    group.MapPut("/addToMaintenanceOrders", AddToMaintenanceOrders);
-    group.MapPut("/removeFromMaintenanceOrders", RemoveFromMaintenanceOrders);
+        group.MapPut("/addToMaintenanceOrders", AddToMaintenanceOrders);
+        group.MapPut("/removeFromMaintenanceOrders", RemoveFromMaintenanceOrders);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class MaintenancePlanEndpoints
     private static async Task<IResult> Create(
         MaintenancePlanRequest request,
         IMaintenancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMaintenancePlan( request );
+        var model = mapRequestToMaintenancePlan(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class MaintenancePlanEndpoints
     private static async Task<IResult> Update(
         MaintenancePlanRequest request,
         IMaintenancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMaintenancePlan( request );
+        var model = mapRequestToMaintenancePlan(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class MaintenancePlanEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMaintenancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var maintenancePlan = await service.Get(identifier, cancellationToken);
-        return maintenancePlan is null ? Results.NotFound() : Results.Ok( maintenancePlan );
+        return maintenancePlan is null ? Results.NotFound() : Results.Ok(maintenancePlan);
     }
 
 
     private static async Task<IResult> GetAll(
         IMaintenancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MaintenancePlanResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MaintenancePlanResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMaintenancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class MaintenancePlanEndpoints
     private static async Task<IResult> AssignAsset(
         AssociationRequest request,
         IMaintenancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAsset(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class MaintenancePlanEndpoints
     private static async Task<IResult> UnassignAsset(
     AssociationRequest request,
     IMaintenancePlanService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAsset(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class MaintenancePlanEndpoints
     private static async Task<IResult> AddToMaintenanceOrders(
         MultipleAssociationRequest request,
         IMaintenancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToMaintenanceOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class MaintenancePlanEndpoints
     private static async Task<IResult> RemoveFromMaintenanceOrders(
         MultipleAssociationRequest request,
         IMaintenancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromMaintenanceOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static MaintenancePlan mapRequestToMaintenancePlan( MaintenancePlanRequest request ) {
+    private static MaintenancePlan mapRequestToMaintenancePlan(MaintenancePlanRequest request)
+    {
         var model = new MaintenancePlan
         {
             Id = request.Id,

@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IProductionScheduleService {
+public interface IProductionScheduleService
+{
 
-    Task Create(ProductionSchedule model , CancellationToken cancellationToken);
+    Task Create(ProductionSchedule model, CancellationToken cancellationToken);
     Task<bool> Update(ProductionSchedule model, CancellationToken cancellationToken);
     Task<ProductionSchedule?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ProductionSchedule>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ProductionScheduleService : IProductionScheduleService
 
     public async Task<bool> Update(ProductionSchedule model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class ProductionScheduleService : IProductionScheduleService
         return true;
     }
 
-    public async Task<bool> AssignPlant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPlant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class ProductionScheduleService : IProductionScheduleService
 
             var child = await _serviceResolver.Get<PlantService>().Get(childRequest, cancellationToken);
             parent.Plant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class ProductionScheduleService : IProductionScheduleService
         return true;
     }
 
-    public async Task<bool> UnassignPlant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPlant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class ProductionScheduleService : IProductionScheduleService
         try
         {
             parent.Plant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,8 +178,10 @@ public class ProductionScheduleService : IProductionScheduleService
     }
 
 
-    public async Task<bool> AddToWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ProductionSchedule",
                 "AddToWorkOrders",
@@ -183,16 +189,18 @@ public class ProductionScheduleService : IProductionScheduleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ProductionSchedule",
                 "RemoveFromWorkOrders",

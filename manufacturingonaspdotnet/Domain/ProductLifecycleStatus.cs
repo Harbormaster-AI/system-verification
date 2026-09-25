@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum ProductLifecycleStatus
 {
-    Active=1,PendingApproval=2,Discontinued=3,Obsolete=4
+    Active = 1, PendingApproval = 2, Discontinued = 3, Obsolete = 4
 }
 
 /// <summary>

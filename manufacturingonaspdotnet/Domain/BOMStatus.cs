@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum BOMStatus
 {
-    Draft=1,Released=2,Obsolete=3
+    Draft = 1, Released = 2, Obsolete = 3
 }
 
 /// <summary>

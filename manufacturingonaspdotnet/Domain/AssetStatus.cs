@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum AssetStatus
 {
-    Commissioned=1,Available=2,InMaintenance=3,Down=4,Retired=5
+    Commissioned = 1, Available = 2, InMaintenance = 3, Down = 4, Retired = 5
 }
 
 /// <summary>

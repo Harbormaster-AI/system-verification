@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum ProcurementType
 {
-    MakeToStock=1,MakeToOrder=2,Purchase=3,Kanban=4,Outsourced=5
+    MakeToStock = 1, MakeToOrder = 2, Purchase = 3, Kanban = 4, Outsourced = 5
 }
 
 /// <summary>

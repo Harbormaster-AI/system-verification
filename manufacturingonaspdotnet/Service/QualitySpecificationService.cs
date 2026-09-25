@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IQualitySpecificationService {
+public interface IQualitySpecificationService
+{
 
-    Task Create(QualitySpecification model , CancellationToken cancellationToken);
+    Task Create(QualitySpecification model, CancellationToken cancellationToken);
     Task<bool> Update(QualitySpecification model, CancellationToken cancellationToken);
     Task<QualitySpecification?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<QualitySpecification>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class QualitySpecificationService : IQualitySpecificationService
 
     public async Task<bool> Update(QualitySpecification model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class QualitySpecificationService : IQualitySpecificationService
         return true;
     }
 
-    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class QualitySpecificationService : IQualitySpecificationService
 
             var child = await _serviceResolver.Get<ItemService>().Get(childRequest, cancellationToken);
             parent.Item = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class QualitySpecificationService : IQualitySpecificationService
         return true;
     }
 
-    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class QualitySpecificationService : IQualitySpecificationService
         try
         {
             parent.Item = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

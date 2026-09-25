@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum InventoryTransactionType
 {
-    Receipt=1,Issue=2,Return=3,Adjustment=4,Transfer=5,Consumption=6,ProductionReceipt=7,Scrap=8
+    Receipt = 1, Issue = 2, Return = 3, Adjustment = 4, Transfer = 5, Consumption = 6, ProductionReceipt = 7, Scrap = 8
 }
 
 /// <summary>

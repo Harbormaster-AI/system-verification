@@ -11,7 +11,7 @@ public interface IMaintenancePlanRepository
     Task UpdateAsync(MaintenancePlan maintenancePlan, CancellationToken cancellationToken);
     Task DeleteAsync(MaintenancePlan maintenancePlan, CancellationToken cancellationToken);
 
-    Task AddToMaintenanceOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromMaintenanceOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToMaintenanceOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromMaintenanceOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -20,8 +20,8 @@ public static class InspectionPlanEndpoints
         group.MapPut("/assignItem", AssignItem);
         group.MapPut("/unassignItem", UnassignItem);
 
-    group.MapPut("/addToCharacteristics", AddToCharacteristics);
-    group.MapPut("/removeFromCharacteristics", RemoveFromCharacteristics);
+        group.MapPut("/addToCharacteristics", AddToCharacteristics);
+        group.MapPut("/removeFromCharacteristics", RemoveFromCharacteristics);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class InspectionPlanEndpoints
     private static async Task<IResult> Create(
         InspectionPlanRequest request,
         IInspectionPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInspectionPlan( request );
+        var model = mapRequestToInspectionPlan(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class InspectionPlanEndpoints
     private static async Task<IResult> Update(
         InspectionPlanRequest request,
         IInspectionPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInspectionPlan( request );
+        var model = mapRequestToInspectionPlan(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class InspectionPlanEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInspectionPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var inspectionPlan = await service.Get(identifier, cancellationToken);
-        return inspectionPlan is null ? Results.NotFound() : Results.Ok( inspectionPlan );
+        return inspectionPlan is null ? Results.NotFound() : Results.Ok(inspectionPlan);
     }
 
 
     private static async Task<IResult> GetAll(
         IInspectionPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InspectionPlanResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InspectionPlanResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInspectionPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class InspectionPlanEndpoints
     private static async Task<IResult> AssignItem(
         AssociationRequest request,
         IInspectionPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class InspectionPlanEndpoints
     private static async Task<IResult> UnassignItem(
     AssociationRequest request,
     IInspectionPlanService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class InspectionPlanEndpoints
     private static async Task<IResult> AddToCharacteristics(
         MultipleAssociationRequest request,
         IInspectionPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCharacteristics(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class InspectionPlanEndpoints
     private static async Task<IResult> RemoveFromCharacteristics(
         MultipleAssociationRequest request,
         IInspectionPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCharacteristics(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static InspectionPlan mapRequestToInspectionPlan( InspectionPlanRequest request ) {
+    private static InspectionPlan mapRequestToInspectionPlan(InspectionPlanRequest request)
+    {
         var model = new InspectionPlan
         {
             Id = request.Id,

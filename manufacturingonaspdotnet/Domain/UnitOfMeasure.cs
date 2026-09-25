@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum UnitOfMeasure
 {
-    Each=1,Kilogram=2,Gram=3,Pound=4,Liter=5,Meter=6,Centimeter=7,Millimeter=8,Hour=9,Minute=10,Box=11,Pallet=12
+    Each = 1, Kilogram = 2, Gram = 3, Pound = 4, Liter = 5, Meter = 6, Centimeter = 7, Millimeter = 8, Hour = 9, Minute = 10, Box = 11, Pallet = 12
 }
 
 /// <summary>

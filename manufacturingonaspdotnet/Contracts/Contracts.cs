@@ -19,18 +19,22 @@ public class MultipleAssociationRequest
     public List<Guid> ChildIds { get; set; } = new();
 }
 
-public class EnterpriseRequest {
+public class EnterpriseRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? Name { get; set; } 
- public virtual string? LegalName { get; set; } 
- public virtual string? RegistrationCountry { get; set; } 
- public virtual string? Website { get; set; } 
- public virtual string? TaxId { get; set; } 
+    public virtual string? Name { get; set; }
+    public virtual string? LegalName { get; set; }
+    public virtual string? RegistrationCountry { get; set; }
+    public virtual string? Website { get; set; }
+    public virtual string? TaxId { get; set; }
 }
 
-public class EnterpriseResponse : EnterpriseRequest {
-    public static EnterpriseResponse FromModel(Enterprise model) {
-        return new EnterpriseResponse {
+public class EnterpriseResponse : EnterpriseRequest
+{
+    public static EnterpriseResponse FromModel(Enterprise model)
+    {
+        return new EnterpriseResponse
+        {
             Id = model.Id,
             Name = model.Name,
             LegalName = model.LegalName,
@@ -41,16 +45,20 @@ public class EnterpriseResponse : EnterpriseRequest {
     }
 }
 
-public class BusinessUnitRequest {
+public class BusinessUnitRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? Name { get; set; } 
- public virtual string? Code { get; set; } 
- public virtual BusinessUnitCategory? Category { get; set; } 
+    public virtual string? Name { get; set; }
+    public virtual string? Code { get; set; }
+    public virtual BusinessUnitCategory? Category { get; set; }
 }
 
-public class BusinessUnitResponse : BusinessUnitRequest {
-    public static BusinessUnitResponse FromModel(BusinessUnit model) {
-        return new BusinessUnitResponse {
+public class BusinessUnitResponse : BusinessUnitRequest
+{
+    public static BusinessUnitResponse FromModel(BusinessUnit model)
+    {
+        return new BusinessUnitResponse
+        {
             Id = model.Id,
             Name = model.Name,
             Code = model.Code,
@@ -59,17 +67,21 @@ public class BusinessUnitResponse : BusinessUnitRequest {
     }
 }
 
-public class PlantRequest {
+public class PlantRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? Name { get; set; } 
- public virtual string? PlantCode { get; set; } 
- public virtual Address? Address { get; set; } 
- public virtual string? TimeZone { get; set; } 
+    public virtual string? Name { get; set; }
+    public virtual string? PlantCode { get; set; }
+    public virtual Address? Address { get; set; }
+    public virtual string? TimeZone { get; set; }
 }
 
-public class PlantResponse : PlantRequest {
-    public static PlantResponse FromModel(Plant model) {
-        return new PlantResponse {
+public class PlantResponse : PlantRequest
+{
+    public static PlantResponse FromModel(Plant model)
+    {
+        return new PlantResponse
+        {
             Id = model.Id,
             Name = model.Name,
             PlantCode = model.PlantCode,
@@ -79,16 +91,20 @@ public class PlantResponse : PlantRequest {
     }
 }
 
-public class ProductionLineRequest {
+public class ProductionLineRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? Name { get; set; } 
- public virtual string? LineCode { get; set; } 
- public virtual ProductionLineType? LineType { get; set; } 
+    public virtual string? Name { get; set; }
+    public virtual string? LineCode { get; set; }
+    public virtual ProductionLineType? LineType { get; set; }
 }
 
-public class ProductionLineResponse : ProductionLineRequest {
-    public static ProductionLineResponse FromModel(ProductionLine model) {
-        return new ProductionLineResponse {
+public class ProductionLineResponse : ProductionLineRequest
+{
+    public static ProductionLineResponse FromModel(ProductionLine model)
+    {
+        return new ProductionLineResponse
+        {
             Id = model.Id,
             Name = model.Name,
             LineCode = model.LineCode,
@@ -97,18 +113,22 @@ public class ProductionLineResponse : ProductionLineRequest {
     }
 }
 
-public class WorkCenterRequest {
+public class WorkCenterRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? Name { get; set; } 
- public virtual string? Code { get; set; } 
- public virtual int? CapacityPerHour { get; set; } 
- public virtual Percentage? OeeTarget { get; set; } 
- public virtual WorkCenterType? WorkCenterType { get; set; } 
+    public virtual string? Name { get; set; }
+    public virtual string? Code { get; set; }
+    public virtual int? CapacityPerHour { get; set; }
+    public virtual Percentage? OeeTarget { get; set; }
+    public virtual WorkCenterType? WorkCenterType { get; set; }
 }
 
-public class WorkCenterResponse : WorkCenterRequest {
-    public static WorkCenterResponse FromModel(WorkCenter model) {
-        return new WorkCenterResponse {
+public class WorkCenterResponse : WorkCenterRequest
+{
+    public static WorkCenterResponse FromModel(WorkCenter model)
+    {
+        return new WorkCenterResponse
+        {
             Id = model.Id,
             Name = model.Name,
             Code = model.Code,
@@ -119,22 +139,26 @@ public class WorkCenterResponse : WorkCenterRequest {
     }
 }
 
-public class ItemRequest {
+public class ItemRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? ItemNumber { get; set; } 
- public virtual string? Name { get; set; } 
- public virtual Money? StandardCost { get; set; } 
- public virtual Measurement? Weight { get; set; } 
- public virtual bool? AsSerialControlled { get; set; } 
- public virtual ItemType? ItemType { get; set; } 
- public virtual ProcurementType? ProcurementType { get; set; } 
- public virtual UnitOfMeasure? UnitOfMeasure { get; set; } 
- public virtual ProductLifecycleStatus? LifecycleStatus { get; set; } 
+    public virtual string? ItemNumber { get; set; }
+    public virtual string? Name { get; set; }
+    public virtual Money? StandardCost { get; set; }
+    public virtual Measurement? Weight { get; set; }
+    public virtual bool? AsSerialControlled { get; set; }
+    public virtual ItemType? ItemType { get; set; }
+    public virtual ProcurementType? ProcurementType { get; set; }
+    public virtual UnitOfMeasure? UnitOfMeasure { get; set; }
+    public virtual ProductLifecycleStatus? LifecycleStatus { get; set; }
 }
 
-public class ItemResponse : ItemRequest {
-    public static ItemResponse FromModel(Item model) {
-        return new ItemResponse {
+public class ItemResponse : ItemRequest
+{
+    public static ItemResponse FromModel(Item model)
+    {
+        return new ItemResponse
+        {
             Id = model.Id,
             ItemNumber = model.ItemNumber,
             Name = model.Name,
@@ -149,18 +173,22 @@ public class ItemResponse : ItemRequest {
     }
 }
 
-public class BOMRequest {
+public class BOMRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? BomNumber { get; set; } 
- public virtual string? Revision { get; set; } 
- public virtual DateOnly? EffectivityStart { get; set; } 
- public virtual DateOnly? EffectivityEnd { get; set; } 
- public virtual BOMStatus? Status { get; set; } 
+    public virtual string? BomNumber { get; set; }
+    public virtual string? Revision { get; set; }
+    public virtual DateOnly? EffectivityStart { get; set; }
+    public virtual DateOnly? EffectivityEnd { get; set; }
+    public virtual BOMStatus? Status { get; set; }
 }
 
-public class BOMResponse : BOMRequest {
-    public static BOMResponse FromModel(BOM model) {
-        return new BOMResponse {
+public class BOMResponse : BOMRequest
+{
+    public static BOMResponse FromModel(BOM model)
+    {
+        return new BOMResponse
+        {
             Id = model.Id,
             BomNumber = model.BomNumber,
             Revision = model.Revision,
@@ -171,16 +199,20 @@ public class BOMResponse : BOMRequest {
     }
 }
 
-public class BOMItemRequest {
+public class BOMItemRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual int? LineNumber { get; set; } 
- public virtual Quantity? Quantity { get; set; } 
- public virtual Percentage? ScrapPercent { get; set; } 
+    public virtual int? LineNumber { get; set; }
+    public virtual Quantity? Quantity { get; set; }
+    public virtual Percentage? ScrapPercent { get; set; }
 }
 
-public class BOMItemResponse : BOMItemRequest {
-    public static BOMItemResponse FromModel(BOMItem model) {
-        return new BOMItemResponse {
+public class BOMItemResponse : BOMItemRequest
+{
+    public static BOMItemResponse FromModel(BOMItem model)
+    {
+        return new BOMItemResponse
+        {
             Id = model.Id,
             LineNumber = model.LineNumber,
             Quantity = model.Quantity,
@@ -189,19 +221,23 @@ public class BOMItemResponse : BOMItemRequest {
     }
 }
 
-public class RoutingRequest {
+public class RoutingRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? RoutingNumber { get; set; } 
- public virtual string? Revision { get; set; } 
- public virtual DateOnly? EffectivityStart { get; set; } 
- public virtual DateOnly? EffectivityEnd { get; set; } 
- public virtual RoutingType? RoutingType { get; set; } 
- public virtual RoutingStatus? Status { get; set; } 
+    public virtual string? RoutingNumber { get; set; }
+    public virtual string? Revision { get; set; }
+    public virtual DateOnly? EffectivityStart { get; set; }
+    public virtual DateOnly? EffectivityEnd { get; set; }
+    public virtual RoutingType? RoutingType { get; set; }
+    public virtual RoutingStatus? Status { get; set; }
 }
 
-public class RoutingResponse : RoutingRequest {
-    public static RoutingResponse FromModel(Routing model) {
-        return new RoutingResponse {
+public class RoutingResponse : RoutingRequest
+{
+    public static RoutingResponse FromModel(Routing model)
+    {
+        return new RoutingResponse
+        {
             Id = model.Id,
             RoutingNumber = model.RoutingNumber,
             Revision = model.Revision,
@@ -213,18 +249,22 @@ public class RoutingResponse : RoutingRequest {
     }
 }
 
-public class OperationRequest {
+public class OperationRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? OperationNumber { get; set; } 
- public virtual string? Name { get; set; } 
- public virtual TimeDuration? SetupTime { get; set; } 
- public virtual TimeDuration? StandardCycleTime { get; set; } 
- public virtual OperationType? OperationType { get; set; } 
+    public virtual string? OperationNumber { get; set; }
+    public virtual string? Name { get; set; }
+    public virtual TimeDuration? SetupTime { get; set; }
+    public virtual TimeDuration? StandardCycleTime { get; set; }
+    public virtual OperationType? OperationType { get; set; }
 }
 
-public class OperationResponse : OperationRequest {
-    public static OperationResponse FromModel(Operation model) {
-        return new OperationResponse {
+public class OperationResponse : OperationRequest
+{
+    public static OperationResponse FromModel(Operation model)
+    {
+        return new OperationResponse
+        {
             Id = model.Id,
             OperationNumber = model.OperationNumber,
             Name = model.Name,
@@ -235,19 +275,23 @@ public class OperationResponse : OperationRequest {
     }
 }
 
-public class WorkOrderRequest {
+public class WorkOrderRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? WorkOrderNumber { get; set; } 
- public virtual DateTime? PlannedStart { get; set; } 
- public virtual DateTime? PlannedEnd { get; set; } 
- public virtual Quantity? Quantity { get; set; } 
- public virtual int? Priority { get; set; } 
- public virtual WorkOrderStatus? Status { get; set; } 
+    public virtual string? WorkOrderNumber { get; set; }
+    public virtual DateTime? PlannedStart { get; set; }
+    public virtual DateTime? PlannedEnd { get; set; }
+    public virtual Quantity? Quantity { get; set; }
+    public virtual int? Priority { get; set; }
+    public virtual WorkOrderStatus? Status { get; set; }
 }
 
-public class WorkOrderResponse : WorkOrderRequest {
-    public static WorkOrderResponse FromModel(WorkOrder model) {
-        return new WorkOrderResponse {
+public class WorkOrderResponse : WorkOrderRequest
+{
+    public static WorkOrderResponse FromModel(WorkOrder model)
+    {
+        return new WorkOrderResponse
+        {
             Id = model.Id,
             WorkOrderNumber = model.WorkOrderNumber,
             PlannedStart = model.PlannedStart,
@@ -259,17 +303,21 @@ public class WorkOrderResponse : WorkOrderRequest {
     }
 }
 
-public class ProductionScheduleRequest {
+public class ProductionScheduleRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? ScheduleNumber { get; set; } 
- public virtual DateOnly? HorizonStart { get; set; } 
- public virtual DateOnly? HorizonEnd { get; set; } 
- public virtual ScheduleStatus? Status { get; set; } 
+    public virtual string? ScheduleNumber { get; set; }
+    public virtual DateOnly? HorizonStart { get; set; }
+    public virtual DateOnly? HorizonEnd { get; set; }
+    public virtual ScheduleStatus? Status { get; set; }
 }
 
-public class ProductionScheduleResponse : ProductionScheduleRequest {
-    public static ProductionScheduleResponse FromModel(ProductionSchedule model) {
-        return new ProductionScheduleResponse {
+public class ProductionScheduleResponse : ProductionScheduleRequest
+{
+    public static ProductionScheduleResponse FromModel(ProductionSchedule model)
+    {
+        return new ProductionScheduleResponse
+        {
             Id = model.Id,
             ScheduleNumber = model.ScheduleNumber,
             HorizonStart = model.HorizonStart,
@@ -279,18 +327,22 @@ public class ProductionScheduleResponse : ProductionScheduleRequest {
     }
 }
 
-public class SupplierRequest {
+public class SupplierRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? Name { get; set; } 
- public virtual string? SupplierCode { get; set; } 
- public virtual Address? Address { get; set; } 
- public virtual SupplierTier? SupplierTier { get; set; } 
- public virtual PaymentTerms? PaymentTerms { get; set; } 
+    public virtual string? Name { get; set; }
+    public virtual string? SupplierCode { get; set; }
+    public virtual Address? Address { get; set; }
+    public virtual SupplierTier? SupplierTier { get; set; }
+    public virtual PaymentTerms? PaymentTerms { get; set; }
 }
 
-public class SupplierResponse : SupplierRequest {
-    public static SupplierResponse FromModel(Supplier model) {
-        return new SupplierResponse {
+public class SupplierResponse : SupplierRequest
+{
+    public static SupplierResponse FromModel(Supplier model)
+    {
+        return new SupplierResponse
+        {
             Id = model.Id,
             Name = model.Name,
             SupplierCode = model.SupplierCode,
@@ -301,17 +353,21 @@ public class SupplierResponse : SupplierRequest {
     }
 }
 
-public class PurchaseOrderRequest {
+public class PurchaseOrderRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? PoNumber { get; set; } 
- public virtual DateOnly? OrderDate { get; set; } 
- public virtual Money? TotalAmount { get; set; } 
- public virtual PurchaseOrderStatus? Status { get; set; } 
+    public virtual string? PoNumber { get; set; }
+    public virtual DateOnly? OrderDate { get; set; }
+    public virtual Money? TotalAmount { get; set; }
+    public virtual PurchaseOrderStatus? Status { get; set; }
 }
 
-public class PurchaseOrderResponse : PurchaseOrderRequest {
-    public static PurchaseOrderResponse FromModel(PurchaseOrder model) {
-        return new PurchaseOrderResponse {
+public class PurchaseOrderResponse : PurchaseOrderRequest
+{
+    public static PurchaseOrderResponse FromModel(PurchaseOrder model)
+    {
+        return new PurchaseOrderResponse
+        {
             Id = model.Id,
             PoNumber = model.PoNumber,
             OrderDate = model.OrderDate,
@@ -321,17 +377,21 @@ public class PurchaseOrderResponse : PurchaseOrderRequest {
     }
 }
 
-public class PurchaseOrderLineRequest {
+public class PurchaseOrderLineRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual int? LineNumber { get; set; } 
- public virtual Quantity? Quantity { get; set; } 
- public virtual Money? UnitPrice { get; set; } 
- public virtual DateOnly? DueDate { get; set; } 
+    public virtual int? LineNumber { get; set; }
+    public virtual Quantity? Quantity { get; set; }
+    public virtual Money? UnitPrice { get; set; }
+    public virtual DateOnly? DueDate { get; set; }
 }
 
-public class PurchaseOrderLineResponse : PurchaseOrderLineRequest {
-    public static PurchaseOrderLineResponse FromModel(PurchaseOrderLine model) {
-        return new PurchaseOrderLineResponse {
+public class PurchaseOrderLineResponse : PurchaseOrderLineRequest
+{
+    public static PurchaseOrderLineResponse FromModel(PurchaseOrderLine model)
+    {
+        return new PurchaseOrderLineResponse
+        {
             Id = model.Id,
             LineNumber = model.LineNumber,
             Quantity = model.Quantity,
@@ -341,16 +401,20 @@ public class PurchaseOrderLineResponse : PurchaseOrderLineRequest {
     }
 }
 
-public class GoodsReceiptRequest {
+public class GoodsReceiptRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? ReceiptNumber { get; set; } 
- public virtual DateOnly? ReceiptDate { get; set; } 
- public virtual ReceiptStatus? Status { get; set; } 
+    public virtual string? ReceiptNumber { get; set; }
+    public virtual DateOnly? ReceiptDate { get; set; }
+    public virtual ReceiptStatus? Status { get; set; }
 }
 
-public class GoodsReceiptResponse : GoodsReceiptRequest {
-    public static GoodsReceiptResponse FromModel(GoodsReceipt model) {
-        return new GoodsReceiptResponse {
+public class GoodsReceiptResponse : GoodsReceiptRequest
+{
+    public static GoodsReceiptResponse FromModel(GoodsReceipt model)
+    {
+        return new GoodsReceiptResponse
+        {
             Id = model.Id,
             ReceiptNumber = model.ReceiptNumber,
             ReceiptDate = model.ReceiptDate,
@@ -359,18 +423,22 @@ public class GoodsReceiptResponse : GoodsReceiptRequest {
     }
 }
 
-public class GoodsReceiptLineRequest {
+public class GoodsReceiptLineRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual int? LineNumber { get; set; } 
- public virtual Quantity? ReceivedQuantity { get; set; } 
- public virtual Quantity? AcceptedQuantity { get; set; } 
- public virtual Quantity? RejectedQuantity { get; set; } 
- public virtual LotId? Lot { get; set; } 
+    public virtual int? LineNumber { get; set; }
+    public virtual Quantity? ReceivedQuantity { get; set; }
+    public virtual Quantity? AcceptedQuantity { get; set; }
+    public virtual Quantity? RejectedQuantity { get; set; }
+    public virtual LotId? Lot { get; set; }
 }
 
-public class GoodsReceiptLineResponse : GoodsReceiptLineRequest {
-    public static GoodsReceiptLineResponse FromModel(GoodsReceiptLine model) {
-        return new GoodsReceiptLineResponse {
+public class GoodsReceiptLineResponse : GoodsReceiptLineRequest
+{
+    public static GoodsReceiptLineResponse FromModel(GoodsReceiptLine model)
+    {
+        return new GoodsReceiptLineResponse
+        {
             Id = model.Id,
             LineNumber = model.LineNumber,
             ReceivedQuantity = model.ReceivedQuantity,
@@ -381,17 +449,21 @@ public class GoodsReceiptLineResponse : GoodsReceiptLineRequest {
     }
 }
 
-public class WarehouseRequest {
+public class WarehouseRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? Name { get; set; } 
- public virtual string? WarehouseCode { get; set; } 
- public virtual Address? Address { get; set; } 
- public virtual WarehouseType? WarehouseType { get; set; } 
+    public virtual string? Name { get; set; }
+    public virtual string? WarehouseCode { get; set; }
+    public virtual Address? Address { get; set; }
+    public virtual WarehouseType? WarehouseType { get; set; }
 }
 
-public class WarehouseResponse : WarehouseRequest {
-    public static WarehouseResponse FromModel(Warehouse model) {
-        return new WarehouseResponse {
+public class WarehouseResponse : WarehouseRequest
+{
+    public static WarehouseResponse FromModel(Warehouse model)
+    {
+        return new WarehouseResponse
+        {
             Id = model.Id,
             Name = model.Name,
             WarehouseCode = model.WarehouseCode,
@@ -401,16 +473,20 @@ public class WarehouseResponse : WarehouseRequest {
     }
 }
 
-public class LocationRequest {
+public class LocationRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? LocationCode { get; set; } 
- public virtual string? Description { get; set; } 
- public virtual LocationType? LocationType { get; set; } 
+    public virtual string? LocationCode { get; set; }
+    public virtual string? Description { get; set; }
+    public virtual LocationType? LocationType { get; set; }
 }
 
-public class LocationResponse : LocationRequest {
-    public static LocationResponse FromModel(Location model) {
-        return new LocationResponse {
+public class LocationResponse : LocationRequest
+{
+    public static LocationResponse FromModel(Location model)
+    {
+        return new LocationResponse
+        {
             Id = model.Id,
             LocationCode = model.LocationCode,
             Description = model.Description,
@@ -419,17 +495,21 @@ public class LocationResponse : LocationRequest {
     }
 }
 
-public class InventoryItemRequest {
+public class InventoryItemRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual Quantity? QuantityOnHand { get; set; } 
- public virtual Quantity? QuantityReserved { get; set; } 
- public virtual LotId? LotNumber { get; set; } 
- public virtual SerialId? SerialNumber { get; set; } 
+    public virtual Quantity? QuantityOnHand { get; set; }
+    public virtual Quantity? QuantityReserved { get; set; }
+    public virtual LotId? LotNumber { get; set; }
+    public virtual SerialId? SerialNumber { get; set; }
 }
 
-public class InventoryItemResponse : InventoryItemRequest {
-    public static InventoryItemResponse FromModel(InventoryItem model) {
-        return new InventoryItemResponse {
+public class InventoryItemResponse : InventoryItemRequest
+{
+    public static InventoryItemResponse FromModel(InventoryItem model)
+    {
+        return new InventoryItemResponse
+        {
             Id = model.Id,
             QuantityOnHand = model.QuantityOnHand,
             QuantityReserved = model.QuantityReserved,
@@ -439,18 +519,22 @@ public class InventoryItemResponse : InventoryItemRequest {
     }
 }
 
-public class InventoryTransactionRequest {
+public class InventoryTransactionRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? TransactionNumber { get; set; } 
- public virtual Quantity? Quantity { get; set; } 
- public virtual DateTime? TransactionDateTime { get; set; } 
- public virtual string? ReferenceDocument { get; set; } 
- public virtual InventoryTransactionType? TransactionType { get; set; } 
+    public virtual string? TransactionNumber { get; set; }
+    public virtual Quantity? Quantity { get; set; }
+    public virtual DateTime? TransactionDateTime { get; set; }
+    public virtual string? ReferenceDocument { get; set; }
+    public virtual InventoryTransactionType? TransactionType { get; set; }
 }
 
-public class InventoryTransactionResponse : InventoryTransactionRequest {
-    public static InventoryTransactionResponse FromModel(InventoryTransaction model) {
-        return new InventoryTransactionResponse {
+public class InventoryTransactionResponse : InventoryTransactionRequest
+{
+    public static InventoryTransactionResponse FromModel(InventoryTransaction model)
+    {
+        return new InventoryTransactionResponse
+        {
             Id = model.Id,
             TransactionNumber = model.TransactionNumber,
             Quantity = model.Quantity,
@@ -461,17 +545,21 @@ public class InventoryTransactionResponse : InventoryTransactionRequest {
     }
 }
 
-public class CustomerRequest {
+public class CustomerRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? Name { get; set; } 
- public virtual string? CustomerCode { get; set; } 
- public virtual Address? Address { get; set; } 
- public virtual CustomerType? CustomerType { get; set; } 
+    public virtual string? Name { get; set; }
+    public virtual string? CustomerCode { get; set; }
+    public virtual Address? Address { get; set; }
+    public virtual CustomerType? CustomerType { get; set; }
 }
 
-public class CustomerResponse : CustomerRequest {
-    public static CustomerResponse FromModel(Customer model) {
-        return new CustomerResponse {
+public class CustomerResponse : CustomerRequest
+{
+    public static CustomerResponse FromModel(Customer model)
+    {
+        return new CustomerResponse
+        {
             Id = model.Id,
             Name = model.Name,
             CustomerCode = model.CustomerCode,
@@ -481,17 +569,21 @@ public class CustomerResponse : CustomerRequest {
     }
 }
 
-public class SalesOrderRequest {
+public class SalesOrderRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? OrderNumber { get; set; } 
- public virtual DateOnly? OrderDate { get; set; } 
- public virtual Money? TotalAmount { get; set; } 
- public virtual SalesOrderStatus? Status { get; set; } 
+    public virtual string? OrderNumber { get; set; }
+    public virtual DateOnly? OrderDate { get; set; }
+    public virtual Money? TotalAmount { get; set; }
+    public virtual SalesOrderStatus? Status { get; set; }
 }
 
-public class SalesOrderResponse : SalesOrderRequest {
-    public static SalesOrderResponse FromModel(SalesOrder model) {
-        return new SalesOrderResponse {
+public class SalesOrderResponse : SalesOrderRequest
+{
+    public static SalesOrderResponse FromModel(SalesOrder model)
+    {
+        return new SalesOrderResponse
+        {
             Id = model.Id,
             OrderNumber = model.OrderNumber,
             OrderDate = model.OrderDate,
@@ -501,17 +593,21 @@ public class SalesOrderResponse : SalesOrderRequest {
     }
 }
 
-public class SalesOrderLineRequest {
+public class SalesOrderLineRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual int? LineNumber { get; set; } 
- public virtual Quantity? Quantity { get; set; } 
- public virtual Money? UnitPrice { get; set; } 
- public virtual DateOnly? DueDate { get; set; } 
+    public virtual int? LineNumber { get; set; }
+    public virtual Quantity? Quantity { get; set; }
+    public virtual Money? UnitPrice { get; set; }
+    public virtual DateOnly? DueDate { get; set; }
 }
 
-public class SalesOrderLineResponse : SalesOrderLineRequest {
-    public static SalesOrderLineResponse FromModel(SalesOrderLine model) {
-        return new SalesOrderLineResponse {
+public class SalesOrderLineResponse : SalesOrderLineRequest
+{
+    public static SalesOrderLineResponse FromModel(SalesOrderLine model)
+    {
+        return new SalesOrderLineResponse
+        {
             Id = model.Id,
             LineNumber = model.LineNumber,
             Quantity = model.Quantity,
@@ -521,16 +617,20 @@ public class SalesOrderLineResponse : SalesOrderLineRequest {
     }
 }
 
-public class QualitySpecificationRequest {
+public class QualitySpecificationRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? SpecCode { get; set; } 
- public virtual string? Name { get; set; } 
- public virtual string? Version { get; set; } 
+    public virtual string? SpecCode { get; set; }
+    public virtual string? Name { get; set; }
+    public virtual string? Version { get; set; }
 }
 
-public class QualitySpecificationResponse : QualitySpecificationRequest {
-    public static QualitySpecificationResponse FromModel(QualitySpecification model) {
-        return new QualitySpecificationResponse {
+public class QualitySpecificationResponse : QualitySpecificationRequest
+{
+    public static QualitySpecificationResponse FromModel(QualitySpecification model)
+    {
+        return new QualitySpecificationResponse
+        {
             Id = model.Id,
             SpecCode = model.SpecCode,
             Name = model.Name,
@@ -539,17 +639,21 @@ public class QualitySpecificationResponse : QualitySpecificationRequest {
     }
 }
 
-public class InspectionPlanRequest {
+public class InspectionPlanRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? PlanNumber { get; set; } 
- public virtual string? Revision { get; set; } 
- public virtual SamplingPlanType? SamplingPlan { get; set; } 
- public virtual QualityPlanStatus? Status { get; set; } 
+    public virtual string? PlanNumber { get; set; }
+    public virtual string? Revision { get; set; }
+    public virtual SamplingPlanType? SamplingPlan { get; set; }
+    public virtual QualityPlanStatus? Status { get; set; }
 }
 
-public class InspectionPlanResponse : InspectionPlanRequest {
-    public static InspectionPlanResponse FromModel(InspectionPlan model) {
-        return new InspectionPlanResponse {
+public class InspectionPlanResponse : InspectionPlanRequest
+{
+    public static InspectionPlanResponse FromModel(InspectionPlan model)
+    {
+        return new InspectionPlanResponse
+        {
             Id = model.Id,
             PlanNumber = model.PlanNumber,
             Revision = model.Revision,
@@ -559,19 +663,23 @@ public class InspectionPlanResponse : InspectionPlanRequest {
     }
 }
 
-public class InspectionCharacteristicRequest {
+public class InspectionCharacteristicRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? CharacteristicCode { get; set; } 
- public virtual string? Name { get; set; } 
- public virtual Measurement? LowerSpecLimit { get; set; } 
- public virtual Measurement? UpperSpecLimit { get; set; } 
- public virtual Measurement? Target { get; set; } 
- public virtual MeasurementType? MeasurementType { get; set; } 
+    public virtual string? CharacteristicCode { get; set; }
+    public virtual string? Name { get; set; }
+    public virtual Measurement? LowerSpecLimit { get; set; }
+    public virtual Measurement? UpperSpecLimit { get; set; }
+    public virtual Measurement? Target { get; set; }
+    public virtual MeasurementType? MeasurementType { get; set; }
 }
 
-public class InspectionCharacteristicResponse : InspectionCharacteristicRequest {
-    public static InspectionCharacteristicResponse FromModel(InspectionCharacteristic model) {
-        return new InspectionCharacteristicResponse {
+public class InspectionCharacteristicResponse : InspectionCharacteristicRequest
+{
+    public static InspectionCharacteristicResponse FromModel(InspectionCharacteristic model)
+    {
+        return new InspectionCharacteristicResponse
+        {
             Id = model.Id,
             CharacteristicCode = model.CharacteristicCode,
             Name = model.Name,
@@ -583,19 +691,23 @@ public class InspectionCharacteristicResponse : InspectionCharacteristicRequest 
     }
 }
 
-public class InspectionLotRequest {
+public class InspectionLotRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? LotNumber { get; set; } 
- public virtual Quantity? Quantity { get; set; } 
- public virtual int? SampleSize { get; set; } 
- public virtual DateTime? CreatedOn { get; set; } 
- public virtual InspectionType? InspectionType { get; set; } 
- public virtual InspectionStatus? Status { get; set; } 
+    public virtual string? LotNumber { get; set; }
+    public virtual Quantity? Quantity { get; set; }
+    public virtual int? SampleSize { get; set; }
+    public virtual DateTime? CreatedOn { get; set; }
+    public virtual InspectionType? InspectionType { get; set; }
+    public virtual InspectionStatus? Status { get; set; }
 }
 
-public class InspectionLotResponse : InspectionLotRequest {
-    public static InspectionLotResponse FromModel(InspectionLot model) {
-        return new InspectionLotResponse {
+public class InspectionLotResponse : InspectionLotRequest
+{
+    public static InspectionLotResponse FromModel(InspectionLot model)
+    {
+        return new InspectionLotResponse
+        {
             Id = model.Id,
             LotNumber = model.LotNumber,
             Quantity = model.Quantity,
@@ -607,17 +719,21 @@ public class InspectionLotResponse : InspectionLotRequest {
     }
 }
 
-public class InspectionResultRequest {
+public class InspectionResultRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual Measurement? ResultValue { get; set; } 
- public virtual DateTime? RecordedOn { get; set; } 
- public virtual string? Notes { get; set; } 
- public virtual InspectionResultStatus? ResultStatus { get; set; } 
+    public virtual Measurement? ResultValue { get; set; }
+    public virtual DateTime? RecordedOn { get; set; }
+    public virtual string? Notes { get; set; }
+    public virtual InspectionResultStatus? ResultStatus { get; set; }
 }
 
-public class InspectionResultResponse : InspectionResultRequest {
-    public static InspectionResultResponse FromModel(InspectionResult model) {
-        return new InspectionResultResponse {
+public class InspectionResultResponse : InspectionResultRequest
+{
+    public static InspectionResultResponse FromModel(InspectionResult model)
+    {
+        return new InspectionResultResponse
+        {
             Id = model.Id,
             ResultValue = model.ResultValue,
             RecordedOn = model.RecordedOn,
@@ -627,19 +743,23 @@ public class InspectionResultResponse : InspectionResultRequest {
     }
 }
 
-public class NonconformanceRequest {
+public class NonconformanceRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? NcNumber { get; set; } 
- public virtual string? Description { get; set; } 
- public virtual string? ContainmentAction { get; set; } 
- public virtual NonconformanceType? NcType { get; set; } 
- public virtual QualitySeverity? Severity { get; set; } 
- public virtual NonconformanceStatus? Status { get; set; } 
+    public virtual string? NcNumber { get; set; }
+    public virtual string? Description { get; set; }
+    public virtual string? ContainmentAction { get; set; }
+    public virtual NonconformanceType? NcType { get; set; }
+    public virtual QualitySeverity? Severity { get; set; }
+    public virtual NonconformanceStatus? Status { get; set; }
 }
 
-public class NonconformanceResponse : NonconformanceRequest {
-    public static NonconformanceResponse FromModel(Nonconformance model) {
-        return new NonconformanceResponse {
+public class NonconformanceResponse : NonconformanceRequest
+{
+    public static NonconformanceResponse FromModel(Nonconformance model)
+    {
+        return new NonconformanceResponse
+        {
             Id = model.Id,
             NcNumber = model.NcNumber,
             Description = model.Description,
@@ -651,18 +771,22 @@ public class NonconformanceResponse : NonconformanceRequest {
     }
 }
 
-public class CorrectiveActionRequest {
+public class CorrectiveActionRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? CapaNumber { get; set; } 
- public virtual string? RootCause { get; set; } 
- public virtual string? CorrectiveAction_ { get; set; } 
- public virtual DateOnly? VerificationDate { get; set; } 
- public virtual CAPAStatus? Status { get; set; } 
+    public virtual string? CapaNumber { get; set; }
+    public virtual string? RootCause { get; set; }
+    public virtual string? CorrectiveAction_ { get; set; }
+    public virtual DateOnly? VerificationDate { get; set; }
+    public virtual CAPAStatus? Status { get; set; }
 }
 
-public class CorrectiveActionResponse : CorrectiveActionRequest {
-    public static CorrectiveActionResponse FromModel(CorrectiveAction model) {
-        return new CorrectiveActionResponse {
+public class CorrectiveActionResponse : CorrectiveActionRequest
+{
+    public static CorrectiveActionResponse FromModel(CorrectiveAction model)
+    {
+        return new CorrectiveActionResponse
+        {
             Id = model.Id,
             CapaNumber = model.CapaNumber,
             RootCause = model.RootCause,
@@ -673,17 +797,21 @@ public class CorrectiveActionResponse : CorrectiveActionRequest {
     }
 }
 
-public class AssetRequest {
+public class AssetRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? AssetTag { get; set; } 
- public virtual string? AssetName { get; set; } 
- public virtual DateOnly? CommissioningDate { get; set; } 
- public virtual AssetStatus? AssetStatus { get; set; } 
+    public virtual string? AssetTag { get; set; }
+    public virtual string? AssetName { get; set; }
+    public virtual DateOnly? CommissioningDate { get; set; }
+    public virtual AssetStatus? AssetStatus { get; set; }
 }
 
-public class AssetResponse : AssetRequest {
-    public static AssetResponse FromModel(Asset model) {
-        return new AssetResponse {
+public class AssetResponse : AssetRequest
+{
+    public static AssetResponse FromModel(Asset model)
+    {
+        return new AssetResponse
+        {
             Id = model.Id,
             AssetTag = model.AssetTag,
             AssetName = model.AssetName,
@@ -693,17 +821,21 @@ public class AssetResponse : AssetRequest {
     }
 }
 
-public class MaintenancePlanRequest {
+public class MaintenancePlanRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? PlanNumber { get; set; } 
- public virtual TimeDuration? Interval { get; set; } 
- public virtual DateOnly? LastServiceDate { get; set; } 
- public virtual MaintenanceStrategy? Strategy { get; set; } 
+    public virtual string? PlanNumber { get; set; }
+    public virtual TimeDuration? Interval { get; set; }
+    public virtual DateOnly? LastServiceDate { get; set; }
+    public virtual MaintenanceStrategy? Strategy { get; set; }
 }
 
-public class MaintenancePlanResponse : MaintenancePlanRequest {
-    public static MaintenancePlanResponse FromModel(MaintenancePlan model) {
-        return new MaintenancePlanResponse {
+public class MaintenancePlanResponse : MaintenancePlanRequest
+{
+    public static MaintenancePlanResponse FromModel(MaintenancePlan model)
+    {
+        return new MaintenancePlanResponse
+        {
             Id = model.Id,
             PlanNumber = model.PlanNumber,
             Interval = model.Interval,
@@ -713,18 +845,22 @@ public class MaintenancePlanResponse : MaintenancePlanRequest {
     }
 }
 
-public class MaintenanceOrderRequest {
+public class MaintenanceOrderRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? OrderNumber { get; set; } 
- public virtual int? Priority { get; set; } 
- public virtual DateOnly? RequestedDate { get; set; } 
- public virtual DateOnly? CompletionDate { get; set; } 
- public virtual MaintenanceOrderStatus? Status { get; set; } 
+    public virtual string? OrderNumber { get; set; }
+    public virtual int? Priority { get; set; }
+    public virtual DateOnly? RequestedDate { get; set; }
+    public virtual DateOnly? CompletionDate { get; set; }
+    public virtual MaintenanceOrderStatus? Status { get; set; }
 }
 
-public class MaintenanceOrderResponse : MaintenanceOrderRequest {
-    public static MaintenanceOrderResponse FromModel(MaintenanceOrder model) {
-        return new MaintenanceOrderResponse {
+public class MaintenanceOrderResponse : MaintenanceOrderRequest
+{
+    public static MaintenanceOrderResponse FromModel(MaintenanceOrder model)
+    {
+        return new MaintenanceOrderResponse
+        {
             Id = model.Id,
             OrderNumber = model.OrderNumber,
             Priority = model.Priority,
@@ -735,17 +871,21 @@ public class MaintenanceOrderResponse : MaintenanceOrderRequest {
     }
 }
 
-public class EmployeeRequest {
+public class EmployeeRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? FirstName { get; set; } 
- public virtual string? LastName { get; set; } 
- public virtual EmployeeRole? Role { get; set; } 
- public virtual SkillLevel? SkillLevel { get; set; } 
+    public virtual string? FirstName { get; set; }
+    public virtual string? LastName { get; set; }
+    public virtual EmployeeRole? Role { get; set; }
+    public virtual SkillLevel? SkillLevel { get; set; }
 }
 
-public class EmployeeResponse : EmployeeRequest {
-    public static EmployeeResponse FromModel(Employee model) {
-        return new EmployeeResponse {
+public class EmployeeResponse : EmployeeRequest
+{
+    public static EmployeeResponse FromModel(Employee model)
+    {
+        return new EmployeeResponse
+        {
             Id = model.Id,
             FirstName = model.FirstName,
             LastName = model.LastName,
@@ -755,17 +895,21 @@ public class EmployeeResponse : EmployeeRequest {
     }
 }
 
-public class ShiftRequest {
+public class ShiftRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? ShiftName { get; set; } 
- public virtual string? StartTime { get; set; } 
- public virtual string? EndTime { get; set; } 
- public virtual ShiftType? ShiftType { get; set; } 
+    public virtual string? ShiftName { get; set; }
+    public virtual string? StartTime { get; set; }
+    public virtual string? EndTime { get; set; }
+    public virtual ShiftType? ShiftType { get; set; }
 }
 
-public class ShiftResponse : ShiftRequest {
-    public static ShiftResponse FromModel(Shift model) {
-        return new ShiftResponse {
+public class ShiftResponse : ShiftRequest
+{
+    public static ShiftResponse FromModel(Shift model)
+    {
+        return new ShiftResponse
+        {
             Id = model.Id,
             ShiftName = model.ShiftName,
             StartTime = model.StartTime,
@@ -775,31 +919,39 @@ public class ShiftResponse : ShiftRequest {
     }
 }
 
-public class ShiftAssignmentRequest {
+public class ShiftAssignmentRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual DateOnly? AssignmentDate { get; set; } 
+    public virtual DateOnly? AssignmentDate { get; set; }
 }
 
-public class ShiftAssignmentResponse : ShiftAssignmentRequest {
-    public static ShiftAssignmentResponse FromModel(ShiftAssignment model) {
-        return new ShiftAssignmentResponse {
+public class ShiftAssignmentResponse : ShiftAssignmentRequest
+{
+    public static ShiftAssignmentResponse FromModel(ShiftAssignment model)
+    {
+        return new ShiftAssignmentResponse
+        {
             Id = model.Id,
             AssignmentDate = model.AssignmentDate,
         };
     }
 }
 
-public class ForecastRequest {
+public class ForecastRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? ForecastNumber { get; set; } 
- public virtual DateOnly? ForecastHorizonStart { get; set; } 
- public virtual DateOnly? ForecastHorizonEnd { get; set; } 
- public virtual ForecastMethod? Method { get; set; } 
+    public virtual string? ForecastNumber { get; set; }
+    public virtual DateOnly? ForecastHorizonStart { get; set; }
+    public virtual DateOnly? ForecastHorizonEnd { get; set; }
+    public virtual ForecastMethod? Method { get; set; }
 }
 
-public class ForecastResponse : ForecastRequest {
-    public static ForecastResponse FromModel(Forecast model) {
-        return new ForecastResponse {
+public class ForecastResponse : ForecastRequest
+{
+    public static ForecastResponse FromModel(Forecast model)
+    {
+        return new ForecastResponse
+        {
             Id = model.Id,
             ForecastNumber = model.ForecastNumber,
             ForecastHorizonStart = model.ForecastHorizonStart,
@@ -809,16 +961,20 @@ public class ForecastResponse : ForecastRequest {
     }
 }
 
-public class ForecastLineRequest {
+public class ForecastLineRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual DateOnly? Period { get; set; } 
- public virtual Quantity? Quantity { get; set; } 
- public virtual Percentage? Confidence { get; set; } 
+    public virtual DateOnly? Period { get; set; }
+    public virtual Quantity? Quantity { get; set; }
+    public virtual Percentage? Confidence { get; set; }
 }
 
-public class ForecastLineResponse : ForecastLineRequest {
-    public static ForecastLineResponse FromModel(ForecastLine model) {
-        return new ForecastLineResponse {
+public class ForecastLineResponse : ForecastLineRequest
+{
+    public static ForecastLineResponse FromModel(ForecastLine model)
+    {
+        return new ForecastLineResponse
+        {
             Id = model.Id,
             Period = model.Period,
             Quantity = model.Quantity,
@@ -827,17 +983,21 @@ public class ForecastLineResponse : ForecastLineRequest {
     }
 }
 
-public class MRPRunRequest {
+public class MRPRunRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? RunNumber { get; set; } 
- public virtual DateTime? RunDateTime { get; set; } 
- public virtual int? PlanningHorizonDays { get; set; } 
- public virtual MRPRunStatus? Status { get; set; } 
+    public virtual string? RunNumber { get; set; }
+    public virtual DateTime? RunDateTime { get; set; }
+    public virtual int? PlanningHorizonDays { get; set; }
+    public virtual MRPRunStatus? Status { get; set; }
 }
 
-public class MRPRunResponse : MRPRunRequest {
-    public static MRPRunResponse FromModel(MRPRun model) {
-        return new MRPRunResponse {
+public class MRPRunResponse : MRPRunRequest
+{
+    public static MRPRunResponse FromModel(MRPRun model)
+    {
+        return new MRPRunResponse
+        {
             Id = model.Id,
             RunNumber = model.RunNumber,
             RunDateTime = model.RunDateTime,
@@ -847,18 +1007,22 @@ public class MRPRunResponse : MRPRunRequest {
     }
 }
 
-public class PlannedOrderRequest {
+public class PlannedOrderRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- public virtual string? PlannedOrderNumber { get; set; } 
- public virtual Quantity? Quantity { get; set; } 
- public virtual DateOnly? DueDate { get; set; } 
- public virtual PlannedOrderType? OrderType { get; set; } 
- public virtual PlannedOrderStatus? Status { get; set; } 
+    public virtual string? PlannedOrderNumber { get; set; }
+    public virtual Quantity? Quantity { get; set; }
+    public virtual DateOnly? DueDate { get; set; }
+    public virtual PlannedOrderType? OrderType { get; set; }
+    public virtual PlannedOrderStatus? Status { get; set; }
 }
 
-public class PlannedOrderResponse : PlannedOrderRequest {
-    public static PlannedOrderResponse FromModel(PlannedOrder model) {
-        return new PlannedOrderResponse {
+public class PlannedOrderResponse : PlannedOrderRequest
+{
+    public static PlannedOrderResponse FromModel(PlannedOrder model)
+    {
+        return new PlannedOrderResponse
+        {
             Id = model.Id,
             PlannedOrderNumber = model.PlannedOrderNumber,
             Quantity = model.Quantity,

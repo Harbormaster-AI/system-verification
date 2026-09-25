@@ -11,9 +11,9 @@ public interface IBusinessUnitRepository
     Task UpdateAsync(BusinessUnit businessUnit, CancellationToken cancellationToken);
     Task DeleteAsync(BusinessUnit businessUnit, CancellationToken cancellationToken);
 
-    Task AddToItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToPlantsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPlantsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPlantsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPlantsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

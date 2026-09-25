@@ -20,8 +20,8 @@ public static class ShiftEndpoints
         group.MapPut("/assignPlant", AssignPlant);
         group.MapPut("/unassignPlant", UnassignPlant);
 
-    group.MapPut("/addToAssignments", AddToAssignments);
-    group.MapPut("/removeFromAssignments", RemoveFromAssignments);
+        group.MapPut("/addToAssignments", AddToAssignments);
+        group.MapPut("/removeFromAssignments", RemoveFromAssignments);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class ShiftEndpoints
     private static async Task<IResult> Create(
         ShiftRequest request,
         IShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToShift( request );
+        var model = mapRequestToShift(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class ShiftEndpoints
     private static async Task<IResult> Update(
         ShiftRequest request,
         IShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToShift( request );
+        var model = mapRequestToShift(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class ShiftEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var shift = await service.Get(identifier, cancellationToken);
-        return shift is null ? Results.NotFound() : Results.Ok( shift );
+        return shift is null ? Results.NotFound() : Results.Ok(shift);
     }
 
 
     private static async Task<IResult> GetAll(
         IShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ShiftResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ShiftResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class ShiftEndpoints
     private static async Task<IResult> AssignPlant(
         AssociationRequest request,
         IShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPlant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class ShiftEndpoints
     private static async Task<IResult> UnassignPlant(
     AssociationRequest request,
     IShiftService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPlant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ShiftEndpoints
     private static async Task<IResult> AddToAssignments(
         MultipleAssociationRequest request,
         IShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAssignments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class ShiftEndpoints
     private static async Task<IResult> RemoveFromAssignments(
         MultipleAssociationRequest request,
         IShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAssignments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Shift mapRequestToShift( ShiftRequest request ) {
+    private static Shift mapRequestToShift(ShiftRequest request)
+    {
         var model = new Shift
         {
             Id = request.Id,

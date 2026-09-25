@@ -31,9 +31,10 @@ public static class ShiftAssignmentEndpoints
     private static async Task<IResult> Create(
         ShiftAssignmentRequest request,
         IShiftAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToShiftAssignment( request );
+        var model = mapRequestToShiftAssignment(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class ShiftAssignmentEndpoints
     private static async Task<IResult> Update(
         ShiftAssignmentRequest request,
         IShiftAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToShiftAssignment( request );
+        var model = mapRequestToShiftAssignment(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class ShiftAssignmentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IShiftAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var shiftAssignment = await service.Get(identifier, cancellationToken);
-        return shiftAssignment is null ? Results.NotFound() : Results.Ok( shiftAssignment );
+        return shiftAssignment is null ? Results.NotFound() : Results.Ok(shiftAssignment);
     }
 
 
     private static async Task<IResult> GetAll(
         IShiftAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ShiftAssignmentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ShiftAssignmentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IShiftAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class ShiftAssignmentEndpoints
     private static async Task<IResult> AssignShift(
         AssociationRequest request,
         IShiftAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignShift(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class ShiftAssignmentEndpoints
     private static async Task<IResult> UnassignShift(
     AssociationRequest request,
     IShiftAssignmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignShift(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ShiftAssignmentEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         IShiftAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class ShiftAssignmentEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     IShiftAssignmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class ShiftAssignmentEndpoints
     private static async Task<IResult> AssignWorkCenter(
         AssociationRequest request,
         IShiftAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkCenter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class ShiftAssignmentEndpoints
     private static async Task<IResult> UnassignWorkCenter(
     AssociationRequest request,
     IShiftAssignmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkCenter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ShiftAssignment mapRequestToShiftAssignment( ShiftAssignmentRequest request ) {
+    private static ShiftAssignment mapRequestToShiftAssignment(ShiftAssignmentRequest request)
+    {
         var model = new ShiftAssignment
         {
             Id = request.Id,

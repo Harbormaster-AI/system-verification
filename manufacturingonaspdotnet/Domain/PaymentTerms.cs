@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum PaymentTerms
 {
-    Net30=1,Net45=2,Net60=3,Prepaid=4,COD=5
+    Net30 = 1, Net45 = 2, Net60 = 3, Prepaid = 4, COD = 5
 }
 
 /// <summary>

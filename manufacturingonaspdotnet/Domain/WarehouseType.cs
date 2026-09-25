@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum WarehouseType
 {
-    RawMaterial=1,WIP=2,FinishedGoods=3,Distribution=4
+    RawMaterial = 1, WIP = 2, FinishedGoods = 3, Distribution = 4
 }
 
 /// <summary>

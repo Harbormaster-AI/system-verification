@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum InspectionStatus
 {
-    Open=1,InProgress=2,Completed=3,Accepted=4,Rejected=5
+    Open = 1, InProgress = 2, Completed = 3, Accepted = 4, Rejected = 5
 }
 
 /// <summary>

@@ -27,9 +27,10 @@ public static class QualitySpecificationEndpoints
     private static async Task<IResult> Create(
         QualitySpecificationRequest request,
         IQualitySpecificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToQualitySpecification( request );
+        var model = mapRequestToQualitySpecification(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class QualitySpecificationEndpoints
     private static async Task<IResult> Update(
         QualitySpecificationRequest request,
         IQualitySpecificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToQualitySpecification( request );
+        var model = mapRequestToQualitySpecification(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class QualitySpecificationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IQualitySpecificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var qualitySpecification = await service.Get(identifier, cancellationToken);
-        return qualitySpecification is null ? Results.NotFound() : Results.Ok( qualitySpecification );
+        return qualitySpecification is null ? Results.NotFound() : Results.Ok(qualitySpecification);
     }
 
 
     private static async Task<IResult> GetAll(
         IQualitySpecificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( QualitySpecificationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(QualitySpecificationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IQualitySpecificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class QualitySpecificationEndpoints
     private static async Task<IResult> AssignItem(
         AssociationRequest request,
         IQualitySpecificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class QualitySpecificationEndpoints
     private static async Task<IResult> UnassignItem(
     AssociationRequest request,
     IQualitySpecificationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static QualitySpecification mapRequestToQualitySpecification( QualitySpecificationRequest request ) {
+    private static QualitySpecification mapRequestToQualitySpecification(QualitySpecificationRequest request)
+    {
         var model = new QualitySpecification
         {
             Id = request.Id,

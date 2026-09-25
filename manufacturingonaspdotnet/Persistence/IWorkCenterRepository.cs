@@ -11,9 +11,9 @@ public interface IWorkCenterRepository
     Task UpdateAsync(WorkCenter workCenter, CancellationToken cancellationToken);
     Task DeleteAsync(WorkCenter workCenter, CancellationToken cancellationToken);
 
-    Task AddToAssetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAssetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToMaintenanceOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromMaintenanceOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAssetsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAssetsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToMaintenanceOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromMaintenanceOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

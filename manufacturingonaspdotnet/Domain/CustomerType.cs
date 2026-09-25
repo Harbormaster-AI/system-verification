@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum CustomerType
 {
-    Distributor=1,OEM=2,Retailer=3,Direct=4
+    Distributor = 1, OEM = 2, Retailer = 3, Direct = 4
 }
 
 /// <summary>

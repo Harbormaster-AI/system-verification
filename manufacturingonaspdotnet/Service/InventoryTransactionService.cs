@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IInventoryTransactionService {
+public interface IInventoryTransactionService
+{
 
-    Task Create(InventoryTransaction model , CancellationToken cancellationToken);
+    Task Create(InventoryTransaction model, CancellationToken cancellationToken);
     Task<bool> Update(InventoryTransaction model, CancellationToken cancellationToken);
     Task<InventoryTransaction?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InventoryTransaction>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class InventoryTransactionService : IInventoryTransactionService
 
     public async Task<bool> Update(InventoryTransaction model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -127,7 +129,8 @@ public class InventoryTransactionService : IInventoryTransactionService
         return true;
     }
 
-    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -145,7 +148,7 @@ public class InventoryTransactionService : IInventoryTransactionService
 
             var child = await _serviceResolver.Get<ItemService>().Get(childRequest, cancellationToken);
             parent.Item = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -157,7 +160,8 @@ public class InventoryTransactionService : IInventoryTransactionService
         return true;
     }
 
-    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -168,7 +172,7 @@ public class InventoryTransactionService : IInventoryTransactionService
         try
         {
             parent.Item = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -180,7 +184,8 @@ public class InventoryTransactionService : IInventoryTransactionService
         return true;
     }
 
-    public async Task<bool> AssignLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -198,7 +203,7 @@ public class InventoryTransactionService : IInventoryTransactionService
 
             var child = await _serviceResolver.Get<LocationService>().Get(childRequest, cancellationToken);
             parent.Location = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -210,7 +215,8 @@ public class InventoryTransactionService : IInventoryTransactionService
         return true;
     }
 
-    public async Task<bool> UnassignLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -221,7 +227,7 @@ public class InventoryTransactionService : IInventoryTransactionService
         try
         {
             parent.Location = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -233,7 +239,8 @@ public class InventoryTransactionService : IInventoryTransactionService
         return true;
     }
 
-    public async Task<bool> AssignWorkOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -251,7 +258,7 @@ public class InventoryTransactionService : IInventoryTransactionService
 
             var child = await _serviceResolver.Get<WorkOrderService>().Get(childRequest, cancellationToken);
             parent.WorkOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -263,7 +270,8 @@ public class InventoryTransactionService : IInventoryTransactionService
         return true;
     }
 
-    public async Task<bool> UnassignWorkOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -274,7 +282,7 @@ public class InventoryTransactionService : IInventoryTransactionService
         try
         {
             parent.WorkOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -286,7 +294,8 @@ public class InventoryTransactionService : IInventoryTransactionService
         return true;
     }
 
-    public async Task<bool> AssignPurchaseOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPurchaseOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -304,7 +313,7 @@ public class InventoryTransactionService : IInventoryTransactionService
 
             var child = await _serviceResolver.Get<PurchaseOrderService>().Get(childRequest, cancellationToken);
             parent.PurchaseOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -316,7 +325,8 @@ public class InventoryTransactionService : IInventoryTransactionService
         return true;
     }
 
-    public async Task<bool> UnassignPurchaseOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPurchaseOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -327,7 +337,7 @@ public class InventoryTransactionService : IInventoryTransactionService
         try
         {
             parent.PurchaseOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -339,7 +349,8 @@ public class InventoryTransactionService : IInventoryTransactionService
         return true;
     }
 
-    public async Task<bool> AssignSalesOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSalesOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -357,7 +368,7 @@ public class InventoryTransactionService : IInventoryTransactionService
 
             var child = await _serviceResolver.Get<SalesOrderService>().Get(childRequest, cancellationToken);
             parent.SalesOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -369,7 +380,8 @@ public class InventoryTransactionService : IInventoryTransactionService
         return true;
     }
 
-    public async Task<bool> UnassignSalesOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSalesOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -380,7 +392,7 @@ public class InventoryTransactionService : IInventoryTransactionService
         try
         {
             parent.SalesOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

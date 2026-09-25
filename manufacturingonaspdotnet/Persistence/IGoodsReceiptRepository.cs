@@ -11,7 +11,7 @@ public interface IGoodsReceiptRepository
     Task UpdateAsync(GoodsReceipt goodsReceipt, CancellationToken cancellationToken);
     Task DeleteAsync(GoodsReceipt goodsReceipt, CancellationToken cancellationToken);
 
-    Task AddToLinesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLinesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLinesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLinesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

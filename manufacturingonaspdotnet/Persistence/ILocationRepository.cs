@@ -11,7 +11,7 @@ public interface ILocationRepository
     Task UpdateAsync(Location location, CancellationToken cancellationToken);
     Task DeleteAsync(Location location, CancellationToken cancellationToken);
 
-    Task AddToInventoryItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInventoryItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInventoryItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInventoryItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

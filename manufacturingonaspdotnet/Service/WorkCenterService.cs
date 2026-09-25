@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IWorkCenterService {
+public interface IWorkCenterService
+{
 
-    Task Create(WorkCenter model , CancellationToken cancellationToken);
+    Task Create(WorkCenter model, CancellationToken cancellationToken);
     Task<bool> Update(WorkCenter model, CancellationToken cancellationToken);
     Task<WorkCenter?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<WorkCenter>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class WorkCenterService : IWorkCenterService
 
     public async Task<bool> Update(WorkCenter model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class WorkCenterService : IWorkCenterService
         return true;
     }
 
-    public async Task<bool> AssignProductionLine(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProductionLine(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class WorkCenterService : IWorkCenterService
 
             var child = await _serviceResolver.Get<ProductionLineService>().Get(childRequest, cancellationToken);
             parent.ProductionLine = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class WorkCenterService : IWorkCenterService
         return true;
     }
 
-    public async Task<bool> UnassignProductionLine(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProductionLine(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class WorkCenterService : IWorkCenterService
         try
         {
             parent.ProductionLine = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,8 +181,10 @@ public class WorkCenterService : IWorkCenterService
     }
 
 
-    public async Task<bool> AddToAssets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAssets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "WorkCenter",
                 "AddToAssets",
@@ -186,16 +192,18 @@ public class WorkCenterService : IWorkCenterService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAssets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAssets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "WorkCenter",
                 "RemoveFromAssets",
@@ -211,8 +219,10 @@ public class WorkCenterService : IWorkCenterService
         return true;
     }
 
-    public async Task<bool> AddToMaintenanceOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToMaintenanceOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "WorkCenter",
                 "AddToMaintenanceOrders",
@@ -220,16 +230,18 @@ public class WorkCenterService : IWorkCenterService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromMaintenanceOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromMaintenanceOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "WorkCenter",
                 "RemoveFromMaintenanceOrders",

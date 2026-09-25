@@ -11,7 +11,7 @@ public interface IMRPRunRepository
     Task UpdateAsync(MRPRun mRPRun, CancellationToken cancellationToken);
     Task DeleteAsync(MRPRun mRPRun, CancellationToken cancellationToken);
 
-    Task AddToPlannedOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPlannedOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPlannedOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPlannedOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

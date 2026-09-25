@@ -20,8 +20,8 @@ public static class LocationEndpoints
         group.MapPut("/assignWarehouse", AssignWarehouse);
         group.MapPut("/unassignWarehouse", UnassignWarehouse);
 
-    group.MapPut("/addToInventoryItems", AddToInventoryItems);
-    group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
+        group.MapPut("/addToInventoryItems", AddToInventoryItems);
+        group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class LocationEndpoints
     private static async Task<IResult> Create(
         LocationRequest request,
         ILocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLocation( request );
+        var model = mapRequestToLocation(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class LocationEndpoints
     private static async Task<IResult> Update(
         LocationRequest request,
         ILocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLocation( request );
+        var model = mapRequestToLocation(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class LocationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ILocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var location = await service.Get(identifier, cancellationToken);
-        return location is null ? Results.NotFound() : Results.Ok( location );
+        return location is null ? Results.NotFound() : Results.Ok(location);
     }
 
 
     private static async Task<IResult> GetAll(
         ILocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( LocationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(LocationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ILocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class LocationEndpoints
     private static async Task<IResult> AssignWarehouse(
         AssociationRequest request,
         ILocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWarehouse(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class LocationEndpoints
     private static async Task<IResult> UnassignWarehouse(
     AssociationRequest request,
     ILocationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWarehouse(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class LocationEndpoints
     private static async Task<IResult> AddToInventoryItems(
         MultipleAssociationRequest request,
         ILocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInventoryItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class LocationEndpoints
     private static async Task<IResult> RemoveFromInventoryItems(
         MultipleAssociationRequest request,
         ILocationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInventoryItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Location mapRequestToLocation( LocationRequest request ) {
+    private static Location mapRequestToLocation(LocationRequest request)
+    {
         var model = new Location
         {
             Id = request.Id,

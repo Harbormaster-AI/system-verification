@@ -22,11 +22,11 @@ public static class AssetEndpoints
         group.MapPut("/assignWorkCenter", AssignWorkCenter);
         group.MapPut("/unassignWorkCenter", UnassignWorkCenter);
 
-    group.MapPut("/addToMaintenanceOrders", AddToMaintenanceOrders);
-    group.MapPut("/removeFromMaintenanceOrders", RemoveFromMaintenanceOrders);
+        group.MapPut("/addToMaintenanceOrders", AddToMaintenanceOrders);
+        group.MapPut("/removeFromMaintenanceOrders", RemoveFromMaintenanceOrders);
 
-    group.MapPut("/addToMaintenancePlans", AddToMaintenancePlans);
-    group.MapPut("/removeFromMaintenancePlans", RemoveFromMaintenancePlans);
+        group.MapPut("/addToMaintenancePlans", AddToMaintenancePlans);
+        group.MapPut("/removeFromMaintenancePlans", RemoveFromMaintenancePlans);
 
 
         return app;
@@ -35,9 +35,10 @@ public static class AssetEndpoints
     private static async Task<IResult> Create(
         AssetRequest request,
         IAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAsset( request );
+        var model = mapRequestToAsset(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class AssetEndpoints
     private static async Task<IResult> Update(
         AssetRequest request,
         IAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAsset( request );
+        var model = mapRequestToAsset(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class AssetEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var asset = await service.Get(identifier, cancellationToken);
-        return asset is null ? Results.NotFound() : Results.Ok( asset );
+        return asset is null ? Results.NotFound() : Results.Ok(asset);
     }
 
 
     private static async Task<IResult> GetAll(
         IAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AssetResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AssetResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class AssetEndpoints
     private static async Task<IResult> AssignPlant(
         AssociationRequest request,
         IAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPlant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class AssetEndpoints
     private static async Task<IResult> UnassignPlant(
     AssociationRequest request,
     IAssetService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPlant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -115,7 +122,8 @@ public static class AssetEndpoints
     private static async Task<IResult> AssignWorkCenter(
         AssociationRequest request,
         IAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkCenter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +131,8 @@ public static class AssetEndpoints
     private static async Task<IResult> UnassignWorkCenter(
     AssociationRequest request,
     IAssetService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkCenter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +141,8 @@ public static class AssetEndpoints
     private static async Task<IResult> AddToMaintenanceOrders(
         MultipleAssociationRequest request,
         IAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToMaintenanceOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class AssetEndpoints
     private static async Task<IResult> RemoveFromMaintenanceOrders(
         MultipleAssociationRequest request,
         IAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromMaintenanceOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToMaintenancePlans(
         MultipleAssociationRequest request,
         IAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToMaintenancePlans(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class AssetEndpoints
     private static async Task<IResult> RemoveFromMaintenancePlans(
         MultipleAssociationRequest request,
         IAssetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromMaintenancePlans(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Asset mapRequestToAsset( AssetRequest request ) {
+    private static Asset mapRequestToAsset(AssetRequest request)
+    {
         var model = new Asset
         {
             Id = request.Id,

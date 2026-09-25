@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum ReceiptStatus
 {
-    Open=1,PartiallyProcessed=2,Completed=3,Rejected=4
+    Open = 1, PartiallyProcessed = 2, Completed = 3, Rejected = 4
 }
 
 /// <summary>

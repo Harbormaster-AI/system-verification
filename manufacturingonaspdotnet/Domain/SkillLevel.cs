@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum SkillLevel
 {
-    Novice=1,Competent=2,Proficient=3,Expert=4
+    Novice = 1, Competent = 2, Proficient = 3, Expert = 4
 }
 
 /// <summary>

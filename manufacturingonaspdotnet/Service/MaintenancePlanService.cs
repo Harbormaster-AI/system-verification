@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IMaintenancePlanService {
+public interface IMaintenancePlanService
+{
 
-    Task Create(MaintenancePlan model , CancellationToken cancellationToken);
+    Task Create(MaintenancePlan model, CancellationToken cancellationToken);
     Task<bool> Update(MaintenancePlan model, CancellationToken cancellationToken);
     Task<MaintenancePlan?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<MaintenancePlan>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class MaintenancePlanService : IMaintenancePlanService
 
     public async Task<bool> Update(MaintenancePlan model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class MaintenancePlanService : IMaintenancePlanService
         return true;
     }
 
-    public async Task<bool> AssignAsset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAsset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class MaintenancePlanService : IMaintenancePlanService
 
             var child = await _serviceResolver.Get<AssetService>().Get(childRequest, cancellationToken);
             parent.Asset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class MaintenancePlanService : IMaintenancePlanService
         return true;
     }
 
-    public async Task<bool> UnassignAsset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAsset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class MaintenancePlanService : IMaintenancePlanService
         try
         {
             parent.Asset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,8 +178,10 @@ public class MaintenancePlanService : IMaintenancePlanService
     }
 
 
-    public async Task<bool> AddToMaintenanceOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToMaintenanceOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MaintenancePlan",
                 "AddToMaintenanceOrders",
@@ -183,16 +189,18 @@ public class MaintenancePlanService : IMaintenancePlanService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromMaintenanceOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromMaintenanceOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MaintenancePlan",
                 "RemoveFromMaintenanceOrders",

@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum ScheduleStatus
 {
-    Draft=1,Approved=2,Frozen=3,Completed=4
+    Draft = 1, Approved = 2, Frozen = 3, Completed = 4
 }
 
 /// <summary>

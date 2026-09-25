@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum PlannedOrderType
 {
-    WorkOrder=1,PurchaseRequisition=2,TransferOrder=3
+    WorkOrder = 1, PurchaseRequisition = 2, TransferOrder = 3
 }
 
 /// <summary>

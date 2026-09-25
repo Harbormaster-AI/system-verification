@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum SalesOrderStatus
 {
-    Draft=1,Confirmed=2,Allocated=3,InProduction=4,Shipped=5,Invoiced=6,Closed=7,Cancelled=8
+    Draft = 1, Confirmed = 2, Allocated = 3, InProduction = 4, Shipped = 5, Invoiced = 6, Closed = 7, Cancelled = 8
 }
 
 /// <summary>

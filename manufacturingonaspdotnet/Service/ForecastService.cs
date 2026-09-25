@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IForecastService {
+public interface IForecastService
+{
 
-    Task Create(Forecast model , CancellationToken cancellationToken);
+    Task Create(Forecast model, CancellationToken cancellationToken);
     Task<bool> Update(Forecast model, CancellationToken cancellationToken);
     Task<Forecast?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Forecast>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class ForecastService : IForecastService
 
     public async Task<bool> Update(Forecast model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,8 +121,10 @@ public class ForecastService : IForecastService
     }
 
 
-    public async Task<bool> AddToLines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Forecast",
                 "AddToLines",
@@ -128,16 +132,18 @@ public class ForecastService : IForecastService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Forecast",
                 "RemoveFromLines",

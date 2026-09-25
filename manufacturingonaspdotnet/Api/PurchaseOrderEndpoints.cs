@@ -22,11 +22,11 @@ public static class PurchaseOrderEndpoints
         group.MapPut("/assignPlant", AssignPlant);
         group.MapPut("/unassignPlant", UnassignPlant);
 
-    group.MapPut("/addToLines", AddToLines);
-    group.MapPut("/removeFromLines", RemoveFromLines);
+        group.MapPut("/addToLines", AddToLines);
+        group.MapPut("/removeFromLines", RemoveFromLines);
 
-    group.MapPut("/addToGoodsReceipts", AddToGoodsReceipts);
-    group.MapPut("/removeFromGoodsReceipts", RemoveFromGoodsReceipts);
+        group.MapPut("/addToGoodsReceipts", AddToGoodsReceipts);
+        group.MapPut("/removeFromGoodsReceipts", RemoveFromGoodsReceipts);
 
 
         return app;
@@ -35,9 +35,10 @@ public static class PurchaseOrderEndpoints
     private static async Task<IResult> Create(
         PurchaseOrderRequest request,
         IPurchaseOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPurchaseOrder( request );
+        var model = mapRequestToPurchaseOrder(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class PurchaseOrderEndpoints
     private static async Task<IResult> Update(
         PurchaseOrderRequest request,
         IPurchaseOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPurchaseOrder( request );
+        var model = mapRequestToPurchaseOrder(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class PurchaseOrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPurchaseOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var purchaseOrder = await service.Get(identifier, cancellationToken);
-        return purchaseOrder is null ? Results.NotFound() : Results.Ok( purchaseOrder );
+        return purchaseOrder is null ? Results.NotFound() : Results.Ok(purchaseOrder);
     }
 
 
     private static async Task<IResult> GetAll(
         IPurchaseOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PurchaseOrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PurchaseOrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPurchaseOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class PurchaseOrderEndpoints
     private static async Task<IResult> AssignSupplier(
         AssociationRequest request,
         IPurchaseOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSupplier(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class PurchaseOrderEndpoints
     private static async Task<IResult> UnassignSupplier(
     AssociationRequest request,
     IPurchaseOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSupplier(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -115,7 +122,8 @@ public static class PurchaseOrderEndpoints
     private static async Task<IResult> AssignPlant(
         AssociationRequest request,
         IPurchaseOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPlant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +131,8 @@ public static class PurchaseOrderEndpoints
     private static async Task<IResult> UnassignPlant(
     AssociationRequest request,
     IPurchaseOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPlant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +141,8 @@ public static class PurchaseOrderEndpoints
     private static async Task<IResult> AddToLines(
         MultipleAssociationRequest request,
         IPurchaseOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLines(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class PurchaseOrderEndpoints
     private static async Task<IResult> RemoveFromLines(
         MultipleAssociationRequest request,
         IPurchaseOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLines(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToGoodsReceipts(
         MultipleAssociationRequest request,
         IPurchaseOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToGoodsReceipts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class PurchaseOrderEndpoints
     private static async Task<IResult> RemoveFromGoodsReceipts(
         MultipleAssociationRequest request,
         IPurchaseOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromGoodsReceipts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static PurchaseOrder mapRequestToPurchaseOrder( PurchaseOrderRequest request ) {
+    private static PurchaseOrder mapRequestToPurchaseOrder(PurchaseOrderRequest request)
+    {
         var model = new PurchaseOrder
         {
             Id = request.Id,

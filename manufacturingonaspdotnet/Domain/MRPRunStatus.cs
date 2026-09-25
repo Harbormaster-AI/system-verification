@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum MRPRunStatus
 {
-    Started=1,Completed=2,Failed=3,Cancelled=4
+    Started = 1, Completed = 2, Failed = 3, Cancelled = 4
 }
 
 /// <summary>

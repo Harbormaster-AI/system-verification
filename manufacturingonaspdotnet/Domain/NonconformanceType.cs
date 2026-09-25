@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum NonconformanceType
 {
-    Dimension=1,Functional=2,Cosmetic=3,Documentation=4,Supplier=5,Process=6
+    Dimension = 1, Functional = 2, Cosmetic = 3, Documentation = 4, Supplier = 5, Process = 6
 }
 
 /// <summary>

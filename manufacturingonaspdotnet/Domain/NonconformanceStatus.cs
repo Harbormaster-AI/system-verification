@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum NonconformanceStatus
 {
-    Open=1,Contained=2,UnderInvestigation=3,Dispositioned=4,Closed=5
+    Open = 1, Contained = 2, UnderInvestigation = 3, Dispositioned = 4, Closed = 5
 }
 
 /// <summary>

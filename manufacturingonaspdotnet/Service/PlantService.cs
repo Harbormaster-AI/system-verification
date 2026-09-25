@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IPlantService {
+public interface IPlantService
+{
 
-    Task Create(Plant model , CancellationToken cancellationToken);
+    Task Create(Plant model, CancellationToken cancellationToken);
     Task<bool> Update(Plant model, CancellationToken cancellationToken);
     Task<Plant?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Plant>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class PlantService : IPlantService
 
     public async Task<bool> Update(Plant model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -128,7 +130,8 @@ public class PlantService : IPlantService
         return true;
     }
 
-    public async Task<bool> AssignEnterprise(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEnterprise(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -146,7 +149,7 @@ public class PlantService : IPlantService
 
             var child = await _serviceResolver.Get<EnterpriseService>().Get(childRequest, cancellationToken);
             parent.Enterprise = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -158,7 +161,8 @@ public class PlantService : IPlantService
         return true;
     }
 
-    public async Task<bool> UnassignEnterprise(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEnterprise(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -169,7 +173,7 @@ public class PlantService : IPlantService
         try
         {
             parent.Enterprise = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -182,8 +186,10 @@ public class PlantService : IPlantService
     }
 
 
-    public async Task<bool> AddToProductionLines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToProductionLines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Plant",
                 "AddToProductionLines",
@@ -191,16 +197,18 @@ public class PlantService : IPlantService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromProductionLines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromProductionLines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Plant",
                 "RemoveFromProductionLines",
@@ -216,8 +224,10 @@ public class PlantService : IPlantService
         return true;
     }
 
-    public async Task<bool> AddToWorkCenters(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToWorkCenters(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Plant",
                 "AddToWorkCenters",
@@ -225,16 +235,18 @@ public class PlantService : IPlantService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromWorkCenters(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromWorkCenters(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Plant",
                 "RemoveFromWorkCenters",
@@ -250,8 +262,10 @@ public class PlantService : IPlantService
         return true;
     }
 
-    public async Task<bool> AddToWarehouses(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToWarehouses(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Plant",
                 "AddToWarehouses",
@@ -259,16 +273,18 @@ public class PlantService : IPlantService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromWarehouses(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromWarehouses(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Plant",
                 "RemoveFromWarehouses",
@@ -284,8 +300,10 @@ public class PlantService : IPlantService
         return true;
     }
 
-    public async Task<bool> AddToAssets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAssets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Plant",
                 "AddToAssets",
@@ -293,16 +311,18 @@ public class PlantService : IPlantService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAssets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAssets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Plant",
                 "RemoveFromAssets",
@@ -318,8 +338,10 @@ public class PlantService : IPlantService
         return true;
     }
 
-    public async Task<bool> AddToProductionSchedules(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToProductionSchedules(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Plant",
                 "AddToProductionSchedules",
@@ -327,16 +349,18 @@ public class PlantService : IPlantService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromProductionSchedules(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromProductionSchedules(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Plant",
                 "RemoveFromProductionSchedules",

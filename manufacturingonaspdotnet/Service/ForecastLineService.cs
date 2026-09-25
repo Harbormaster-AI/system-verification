@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IForecastLineService {
+public interface IForecastLineService
+{
 
-    Task Create(ForecastLine model , CancellationToken cancellationToken);
+    Task Create(ForecastLine model, CancellationToken cancellationToken);
     Task<bool> Update(ForecastLine model, CancellationToken cancellationToken);
     Task<ForecastLine?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ForecastLine>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ForecastLineService : IForecastLineService
 
     public async Task<bool> Update(ForecastLine model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class ForecastLineService : IForecastLineService
         return true;
     }
 
-    public async Task<bool> AssignForecast(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignForecast(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class ForecastLineService : IForecastLineService
 
             var child = await _serviceResolver.Get<ForecastService>().Get(childRequest, cancellationToken);
             parent.Forecast = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class ForecastLineService : IForecastLineService
         return true;
     }
 
-    public async Task<bool> UnassignForecast(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignForecast(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class ForecastLineService : IForecastLineService
         try
         {
             parent.Forecast = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class ForecastLineService : IForecastLineService
         return true;
     }
 
-    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class ForecastLineService : IForecastLineService
 
             var child = await _serviceResolver.Get<ItemService>().Get(childRequest, cancellationToken);
             parent.Item = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class ForecastLineService : IForecastLineService
         return true;
     }
 
-    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class ForecastLineService : IForecastLineService
         try
         {
             parent.Item = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

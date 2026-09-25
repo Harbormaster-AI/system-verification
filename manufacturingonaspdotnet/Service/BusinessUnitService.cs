@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IBusinessUnitService {
+public interface IBusinessUnitService
+{
 
-    Task Create(BusinessUnit model , CancellationToken cancellationToken);
+    Task Create(BusinessUnit model, CancellationToken cancellationToken);
     Task<bool> Update(BusinessUnit model, CancellationToken cancellationToken);
     Task<BusinessUnit?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BusinessUnit>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class BusinessUnitService : IBusinessUnitService
 
     public async Task<bool> Update(BusinessUnit model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class BusinessUnitService : IBusinessUnitService
         return true;
     }
 
-    public async Task<bool> AssignEnterprise(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEnterprise(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class BusinessUnitService : IBusinessUnitService
 
             var child = await _serviceResolver.Get<EnterpriseService>().Get(childRequest, cancellationToken);
             parent.Enterprise = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class BusinessUnitService : IBusinessUnitService
         return true;
     }
 
-    public async Task<bool> UnassignEnterprise(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEnterprise(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class BusinessUnitService : IBusinessUnitService
         try
         {
             parent.Enterprise = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class BusinessUnitService : IBusinessUnitService
     }
 
 
-    public async Task<bool> AddToItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessUnit",
                 "AddToItems",
@@ -184,16 +190,18 @@ public class BusinessUnitService : IBusinessUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessUnit",
                 "RemoveFromItems",
@@ -209,8 +217,10 @@ public class BusinessUnitService : IBusinessUnitService
         return true;
     }
 
-    public async Task<bool> AddToPlants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPlants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessUnit",
                 "AddToPlants",
@@ -218,16 +228,18 @@ public class BusinessUnitService : IBusinessUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPlants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPlants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessUnit",
                 "RemoveFromPlants",

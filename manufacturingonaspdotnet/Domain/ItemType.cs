@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum ItemType
 {
-    FinishedGood=1,Subassembly=2,Component=3,RawMaterial=4,Consumable=5,Service=6
+    FinishedGood = 1, Subassembly = 2, Component = 3, RawMaterial = 4, Consumable = 5, Service = 6
 }
 
 /// <summary>

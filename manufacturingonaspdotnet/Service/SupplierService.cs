@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface ISupplierService {
+public interface ISupplierService
+{
 
-    Task Create(Supplier model , CancellationToken cancellationToken);
+    Task Create(Supplier model, CancellationToken cancellationToken);
     Task<bool> Update(Supplier model, CancellationToken cancellationToken);
     Task<Supplier?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Supplier>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class SupplierService : ISupplierService
 
     public async Task<bool> Update(Supplier model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,8 +126,10 @@ public class SupplierService : ISupplierService
     }
 
 
-    public async Task<bool> AddToEnterprises(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEnterprises(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Supplier",
                 "AddToEnterprises",
@@ -133,16 +137,18 @@ public class SupplierService : ISupplierService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEnterprises(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEnterprises(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Supplier",
                 "RemoveFromEnterprises",
@@ -158,8 +164,10 @@ public class SupplierService : ISupplierService
         return true;
     }
 
-    public async Task<bool> AddToItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Supplier",
                 "AddToItems",
@@ -167,16 +175,18 @@ public class SupplierService : ISupplierService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Supplier",
                 "RemoveFromItems",
@@ -192,8 +202,10 @@ public class SupplierService : ISupplierService
         return true;
     }
 
-    public async Task<bool> AddToPurchaseOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPurchaseOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Supplier",
                 "AddToPurchaseOrders",
@@ -201,16 +213,18 @@ public class SupplierService : ISupplierService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPurchaseOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPurchaseOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Supplier",
                 "RemoveFromPurchaseOrders",

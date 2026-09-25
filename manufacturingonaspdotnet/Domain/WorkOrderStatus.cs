@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum WorkOrderStatus
 {
-    Planned=1,Released=2,InProcess=3,Hold=4,Completed=5,Closed=6,Cancelled=7
+    Planned = 1, Released = 2, InProcess = 3, Hold = 4, Completed = 5, Closed = 6, Cancelled = 7
 }
 
 /// <summary>

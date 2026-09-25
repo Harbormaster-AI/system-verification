@@ -11,7 +11,7 @@ public interface IShiftRepository
     Task UpdateAsync(Shift shift, CancellationToken cancellationToken);
     Task DeleteAsync(Shift shift, CancellationToken cancellationToken);
 
-    Task AddToAssignmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAssignmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAssignmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAssignmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

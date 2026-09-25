@@ -29,9 +29,10 @@ public static class PurchaseOrderLineEndpoints
     private static async Task<IResult> Create(
         PurchaseOrderLineRequest request,
         IPurchaseOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPurchaseOrderLine( request );
+        var model = mapRequestToPurchaseOrderLine(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class PurchaseOrderLineEndpoints
     private static async Task<IResult> Update(
         PurchaseOrderLineRequest request,
         IPurchaseOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPurchaseOrderLine( request );
+        var model = mapRequestToPurchaseOrderLine(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class PurchaseOrderLineEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPurchaseOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var purchaseOrderLine = await service.Get(identifier, cancellationToken);
-        return purchaseOrderLine is null ? Results.NotFound() : Results.Ok( purchaseOrderLine );
+        return purchaseOrderLine is null ? Results.NotFound() : Results.Ok(purchaseOrderLine);
     }
 
 
     private static async Task<IResult> GetAll(
         IPurchaseOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PurchaseOrderLineResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PurchaseOrderLineResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPurchaseOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class PurchaseOrderLineEndpoints
     private static async Task<IResult> AssignPurchaseOrder(
         AssociationRequest request,
         IPurchaseOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPurchaseOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class PurchaseOrderLineEndpoints
     private static async Task<IResult> UnassignPurchaseOrder(
     AssociationRequest request,
     IPurchaseOrderLineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPurchaseOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class PurchaseOrderLineEndpoints
     private static async Task<IResult> AssignItem(
         AssociationRequest request,
         IPurchaseOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class PurchaseOrderLineEndpoints
     private static async Task<IResult> UnassignItem(
     AssociationRequest request,
     IPurchaseOrderLineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static PurchaseOrderLine mapRequestToPurchaseOrderLine( PurchaseOrderLineRequest request ) {
+    private static PurchaseOrderLine mapRequestToPurchaseOrderLine(PurchaseOrderLineRequest request)
+    {
         var model = new PurchaseOrderLine
         {
             Id = request.Id,

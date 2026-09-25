@@ -20,11 +20,11 @@ public static class EmployeeEndpoints
         group.MapPut("/assignWorkCenter", AssignWorkCenter);
         group.MapPut("/unassignWorkCenter", UnassignWorkCenter);
 
-    group.MapPut("/addToShiftAssignments", AddToShiftAssignments);
-    group.MapPut("/removeFromShiftAssignments", RemoveFromShiftAssignments);
+        group.MapPut("/addToShiftAssignments", AddToShiftAssignments);
+        group.MapPut("/removeFromShiftAssignments", RemoveFromShiftAssignments);
 
-    group.MapPut("/addToCorrectiveActions", AddToCorrectiveActions);
-    group.MapPut("/removeFromCorrectiveActions", RemoveFromCorrectiveActions);
+        group.MapPut("/addToCorrectiveActions", AddToCorrectiveActions);
+        group.MapPut("/removeFromCorrectiveActions", RemoveFromCorrectiveActions);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class EmployeeEndpoints
     private static async Task<IResult> Create(
         EmployeeRequest request,
         IEmployeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEmployee( request );
+        var model = mapRequestToEmployee(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class EmployeeEndpoints
     private static async Task<IResult> Update(
         EmployeeRequest request,
         IEmployeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEmployee( request );
+        var model = mapRequestToEmployee(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class EmployeeEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IEmployeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var employee = await service.Get(identifier, cancellationToken);
-        return employee is null ? Results.NotFound() : Results.Ok( employee );
+        return employee is null ? Results.NotFound() : Results.Ok(employee);
     }
 
 
     private static async Task<IResult> GetAll(
         IEmployeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( EmployeeResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(EmployeeResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IEmployeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class EmployeeEndpoints
     private static async Task<IResult> AssignWorkCenter(
         AssociationRequest request,
         IEmployeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkCenter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class EmployeeEndpoints
     private static async Task<IResult> UnassignWorkCenter(
     AssociationRequest request,
     IEmployeeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkCenter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class EmployeeEndpoints
     private static async Task<IResult> AddToShiftAssignments(
         MultipleAssociationRequest request,
         IEmployeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToShiftAssignments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class EmployeeEndpoints
     private static async Task<IResult> RemoveFromShiftAssignments(
         MultipleAssociationRequest request,
         IEmployeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromShiftAssignments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCorrectiveActions(
         MultipleAssociationRequest request,
         IEmployeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCorrectiveActions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class EmployeeEndpoints
     private static async Task<IResult> RemoveFromCorrectiveActions(
         MultipleAssociationRequest request,
         IEmployeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCorrectiveActions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Employee mapRequestToEmployee( EmployeeRequest request ) {
+    private static Employee mapRequestToEmployee(EmployeeRequest request)
+    {
         var model = new Employee
         {
             Id = request.Id,

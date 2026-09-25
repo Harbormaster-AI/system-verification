@@ -31,9 +31,10 @@ public static class GoodsReceiptLineEndpoints
     private static async Task<IResult> Create(
         GoodsReceiptLineRequest request,
         IGoodsReceiptLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToGoodsReceiptLine( request );
+        var model = mapRequestToGoodsReceiptLine(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class GoodsReceiptLineEndpoints
     private static async Task<IResult> Update(
         GoodsReceiptLineRequest request,
         IGoodsReceiptLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToGoodsReceiptLine( request );
+        var model = mapRequestToGoodsReceiptLine(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class GoodsReceiptLineEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IGoodsReceiptLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var goodsReceiptLine = await service.Get(identifier, cancellationToken);
-        return goodsReceiptLine is null ? Results.NotFound() : Results.Ok( goodsReceiptLine );
+        return goodsReceiptLine is null ? Results.NotFound() : Results.Ok(goodsReceiptLine);
     }
 
 
     private static async Task<IResult> GetAll(
         IGoodsReceiptLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( GoodsReceiptLineResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(GoodsReceiptLineResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IGoodsReceiptLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class GoodsReceiptLineEndpoints
     private static async Task<IResult> AssignGoodsReceipt(
         AssociationRequest request,
         IGoodsReceiptLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignGoodsReceipt(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class GoodsReceiptLineEndpoints
     private static async Task<IResult> UnassignGoodsReceipt(
     AssociationRequest request,
     IGoodsReceiptLineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignGoodsReceipt(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class GoodsReceiptLineEndpoints
     private static async Task<IResult> AssignItem(
         AssociationRequest request,
         IGoodsReceiptLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class GoodsReceiptLineEndpoints
     private static async Task<IResult> UnassignItem(
     AssociationRequest request,
     IGoodsReceiptLineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class GoodsReceiptLineEndpoints
     private static async Task<IResult> AssignInventoryTransaction(
         AssociationRequest request,
         IGoodsReceiptLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInventoryTransaction(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class GoodsReceiptLineEndpoints
     private static async Task<IResult> UnassignInventoryTransaction(
     AssociationRequest request,
     IGoodsReceiptLineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInventoryTransaction(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static GoodsReceiptLine mapRequestToGoodsReceiptLine( GoodsReceiptLineRequest request ) {
+    private static GoodsReceiptLine mapRequestToGoodsReceiptLine(GoodsReceiptLineRequest request)
+    {
         var model = new GoodsReceiptLine
         {
             Id = request.Id,

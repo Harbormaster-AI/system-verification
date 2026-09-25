@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum BusinessUnitCategory
 {
-    ConsumerGoods=1,IndustrialEquipment=2,Electronics=3,Pharmaceuticals=4,FoodBeverage=5
+    ConsumerGoods = 1, IndustrialEquipment = 2, Electronics = 3, Pharmaceuticals = 4, FoodBeverage = 5
 }
 
 /// <summary>

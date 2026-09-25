@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IShiftAssignmentService {
+public interface IShiftAssignmentService
+{
 
-    Task Create(ShiftAssignment model , CancellationToken cancellationToken);
+    Task Create(ShiftAssignment model, CancellationToken cancellationToken);
     Task<bool> Update(ShiftAssignment model, CancellationToken cancellationToken);
     Task<ShiftAssignment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ShiftAssignment>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ShiftAssignmentService : IShiftAssignmentService
 
     public async Task<bool> Update(ShiftAssignment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class ShiftAssignmentService : IShiftAssignmentService
         return true;
     }
 
-    public async Task<bool> AssignShift(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignShift(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class ShiftAssignmentService : IShiftAssignmentService
 
             var child = await _serviceResolver.Get<ShiftService>().Get(childRequest, cancellationToken);
             parent.Shift = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class ShiftAssignmentService : IShiftAssignmentService
         return true;
     }
 
-    public async Task<bool> UnassignShift(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignShift(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class ShiftAssignmentService : IShiftAssignmentService
         try
         {
             parent.Shift = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class ShiftAssignmentService : IShiftAssignmentService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class ShiftAssignmentService : IShiftAssignmentService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class ShiftAssignmentService : IShiftAssignmentService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class ShiftAssignmentService : IShiftAssignmentService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -225,7 +231,8 @@ public class ShiftAssignmentService : IShiftAssignmentService
         return true;
     }
 
-    public async Task<bool> AssignWorkCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -243,7 +250,7 @@ public class ShiftAssignmentService : IShiftAssignmentService
 
             var child = await _serviceResolver.Get<WorkCenterService>().Get(childRequest, cancellationToken);
             parent.WorkCenter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -255,7 +262,8 @@ public class ShiftAssignmentService : IShiftAssignmentService
         return true;
     }
 
-    public async Task<bool> UnassignWorkCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -266,7 +274,7 @@ public class ShiftAssignmentService : IShiftAssignmentService
         try
         {
             parent.WorkCenter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

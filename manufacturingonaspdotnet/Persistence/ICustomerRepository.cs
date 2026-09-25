@@ -11,9 +11,9 @@ public interface ICustomerRepository
     Task UpdateAsync(Customer customer, CancellationToken cancellationToken);
     Task DeleteAsync(Customer customer, CancellationToken cancellationToken);
 
-    Task AddToEnterprisesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromEnterprisesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToSalesOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSalesOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToEnterprisesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromEnterprisesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSalesOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSalesOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

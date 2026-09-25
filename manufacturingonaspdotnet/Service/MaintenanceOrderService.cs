@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IMaintenanceOrderService {
+public interface IMaintenanceOrderService
+{
 
-    Task Create(MaintenanceOrder model , CancellationToken cancellationToken);
+    Task Create(MaintenanceOrder model, CancellationToken cancellationToken);
     Task<bool> Update(MaintenanceOrder model, CancellationToken cancellationToken);
     Task<MaintenanceOrder?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<MaintenanceOrder>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class MaintenanceOrderService : IMaintenanceOrderService
 
     public async Task<bool> Update(MaintenanceOrder model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class MaintenanceOrderService : IMaintenanceOrderService
         return true;
     }
 
-    public async Task<bool> AssignAsset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAsset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class MaintenanceOrderService : IMaintenanceOrderService
 
             var child = await _serviceResolver.Get<AssetService>().Get(childRequest, cancellationToken);
             parent.Asset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class MaintenanceOrderService : IMaintenanceOrderService
         return true;
     }
 
-    public async Task<bool> UnassignAsset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAsset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class MaintenanceOrderService : IMaintenanceOrderService
         try
         {
             parent.Asset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,7 +180,8 @@ public class MaintenanceOrderService : IMaintenanceOrderService
         return true;
     }
 
-    public async Task<bool> AssignPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -194,7 +199,7 @@ public class MaintenanceOrderService : IMaintenanceOrderService
 
             var child = await _serviceResolver.Get<MaintenancePlanService>().Get(childRequest, cancellationToken);
             parent.Plan = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -206,7 +211,8 @@ public class MaintenanceOrderService : IMaintenanceOrderService
         return true;
     }
 
-    public async Task<bool> UnassignPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -217,7 +223,7 @@ public class MaintenanceOrderService : IMaintenanceOrderService
         try
         {
             parent.Plan = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,7 +235,8 @@ public class MaintenanceOrderService : IMaintenanceOrderService
         return true;
     }
 
-    public async Task<bool> AssignWorkCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -247,7 +254,7 @@ public class MaintenanceOrderService : IMaintenanceOrderService
 
             var child = await _serviceResolver.Get<WorkCenterService>().Get(childRequest, cancellationToken);
             parent.WorkCenter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -259,7 +266,8 @@ public class MaintenanceOrderService : IMaintenanceOrderService
         return true;
     }
 
-    public async Task<bool> UnassignWorkCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -270,7 +278,7 @@ public class MaintenanceOrderService : IMaintenanceOrderService
         try
         {
             parent.WorkCenter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

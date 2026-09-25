@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum InspectionResultStatus
 {
-    Pass=1,Fail=2,Rework=3,Scrap=4
+    Pass = 1, Fail = 2, Rework = 3, Scrap = 4
 }
 
 /// <summary>

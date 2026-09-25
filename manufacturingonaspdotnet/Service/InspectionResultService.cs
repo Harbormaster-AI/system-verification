@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IInspectionResultService {
+public interface IInspectionResultService
+{
 
-    Task Create(InspectionResult model , CancellationToken cancellationToken);
+    Task Create(InspectionResult model, CancellationToken cancellationToken);
     Task<bool> Update(InspectionResult model, CancellationToken cancellationToken);
     Task<InspectionResult?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InspectionResult>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class InspectionResultService : IInspectionResultService
 
     public async Task<bool> Update(InspectionResult model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class InspectionResultService : IInspectionResultService
         return true;
     }
 
-    public async Task<bool> AssignInspectionLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInspectionLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class InspectionResultService : IInspectionResultService
 
             var child = await _serviceResolver.Get<InspectionLotService>().Get(childRequest, cancellationToken);
             parent.InspectionLot = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class InspectionResultService : IInspectionResultService
         return true;
     }
 
-    public async Task<bool> UnassignInspectionLot(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInspectionLot(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class InspectionResultService : IInspectionResultService
         try
         {
             parent.InspectionLot = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class InspectionResultService : IInspectionResultService
         return true;
     }
 
-    public async Task<bool> AssignCharacteristic(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCharacteristic(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class InspectionResultService : IInspectionResultService
 
             var child = await _serviceResolver.Get<InspectionCharacteristicService>().Get(childRequest, cancellationToken);
             parent.Characteristic = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class InspectionResultService : IInspectionResultService
         return true;
     }
 
-    public async Task<bool> UnassignCharacteristic(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCharacteristic(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class InspectionResultService : IInspectionResultService
         try
         {
             parent.Characteristic = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

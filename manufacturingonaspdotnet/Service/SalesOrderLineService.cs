@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface ISalesOrderLineService {
+public interface ISalesOrderLineService
+{
 
-    Task Create(SalesOrderLine model , CancellationToken cancellationToken);
+    Task Create(SalesOrderLine model, CancellationToken cancellationToken);
     Task<bool> Update(SalesOrderLine model, CancellationToken cancellationToken);
     Task<SalesOrderLine?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SalesOrderLine>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class SalesOrderLineService : ISalesOrderLineService
 
     public async Task<bool> Update(SalesOrderLine model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class SalesOrderLineService : ISalesOrderLineService
         return true;
     }
 
-    public async Task<bool> AssignSalesOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSalesOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class SalesOrderLineService : ISalesOrderLineService
 
             var child = await _serviceResolver.Get<SalesOrderService>().Get(childRequest, cancellationToken);
             parent.SalesOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class SalesOrderLineService : ISalesOrderLineService
         return true;
     }
 
-    public async Task<bool> UnassignSalesOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSalesOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class SalesOrderLineService : ISalesOrderLineService
         try
         {
             parent.SalesOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class SalesOrderLineService : ISalesOrderLineService
         return true;
     }
 
-    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class SalesOrderLineService : ISalesOrderLineService
 
             var child = await _serviceResolver.Get<ItemService>().Get(childRequest, cancellationToken);
             parent.Item = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class SalesOrderLineService : ISalesOrderLineService
         return true;
     }
 
-    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class SalesOrderLineService : ISalesOrderLineService
         try
         {
             parent.Item = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

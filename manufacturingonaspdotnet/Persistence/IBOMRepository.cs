@@ -11,7 +11,7 @@ public interface IBOMRepository
     Task UpdateAsync(BOM bOM, CancellationToken cancellationToken);
     Task DeleteAsync(BOM bOM, CancellationToken cancellationToken);
 
-    Task AddToBomItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromBomItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToBomItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromBomItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

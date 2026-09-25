@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum SamplingPlanType
 {
-    Fixed=1,Percentage=2,C0=3
+    Fixed = 1, Percentage = 2, C0 = 3
 }
 
 /// <summary>

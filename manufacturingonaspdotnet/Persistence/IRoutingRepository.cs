@@ -11,7 +11,7 @@ public interface IRoutingRepository
     Task UpdateAsync(Routing routing, CancellationToken cancellationToken);
     Task DeleteAsync(Routing routing, CancellationToken cancellationToken);
 
-    Task AddToOperationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromOperationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToOperationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromOperationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

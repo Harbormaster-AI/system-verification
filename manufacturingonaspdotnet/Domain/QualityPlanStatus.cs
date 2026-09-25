@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum QualityPlanStatus
 {
-    Draft=1,Released=2,Retired=3
+    Draft = 1, Released = 2, Retired = 3
 }
 
 /// <summary>

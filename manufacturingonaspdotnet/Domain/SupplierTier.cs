@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum SupplierTier
 {
-    Tier1=1,Tier2=2,Tier3=3
+    Tier1 = 1, Tier2 = 2, Tier3 = 3
 }
 
 /// <summary>

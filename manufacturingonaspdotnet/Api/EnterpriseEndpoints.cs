@@ -18,17 +18,17 @@ public static class EnterpriseEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToBusinessUnits", AddToBusinessUnits);
-    group.MapPut("/removeFromBusinessUnits", RemoveFromBusinessUnits);
+        group.MapPut("/addToBusinessUnits", AddToBusinessUnits);
+        group.MapPut("/removeFromBusinessUnits", RemoveFromBusinessUnits);
 
-    group.MapPut("/addToPlants", AddToPlants);
-    group.MapPut("/removeFromPlants", RemoveFromPlants);
+        group.MapPut("/addToPlants", AddToPlants);
+        group.MapPut("/removeFromPlants", RemoveFromPlants);
 
-    group.MapPut("/addToSuppliers", AddToSuppliers);
-    group.MapPut("/removeFromSuppliers", RemoveFromSuppliers);
+        group.MapPut("/addToSuppliers", AddToSuppliers);
+        group.MapPut("/removeFromSuppliers", RemoveFromSuppliers);
 
-    group.MapPut("/addToCustomers", AddToCustomers);
-    group.MapPut("/removeFromCustomers", RemoveFromCustomers);
+        group.MapPut("/addToCustomers", AddToCustomers);
+        group.MapPut("/removeFromCustomers", RemoveFromCustomers);
 
 
         return app;
@@ -37,9 +37,10 @@ public static class EnterpriseEndpoints
     private static async Task<IResult> Create(
         EnterpriseRequest request,
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEnterprise( request );
+        var model = mapRequestToEnterprise(request);
 
         try
         {
@@ -56,9 +57,10 @@ public static class EnterpriseEndpoints
     private static async Task<IResult> Update(
         EnterpriseRequest request,
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEnterprise( request );
+        var model = mapRequestToEnterprise(request);
 
         try
         {
@@ -75,25 +77,28 @@ public static class EnterpriseEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var enterprise = await service.Get(identifier, cancellationToken);
-        return enterprise is null ? Results.NotFound() : Results.Ok( enterprise );
+        return enterprise is null ? Results.NotFound() : Results.Ok(enterprise);
     }
 
 
     private static async Task<IResult> GetAll(
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( EnterpriseResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(EnterpriseResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +107,8 @@ public static class EnterpriseEndpoints
     private static async Task<IResult> AddToBusinessUnits(
         MultipleAssociationRequest request,
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToBusinessUnits(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -110,14 +116,16 @@ public static class EnterpriseEndpoints
     private static async Task<IResult> RemoveFromBusinessUnits(
         MultipleAssociationRequest request,
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromBusinessUnits(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPlants(
         MultipleAssociationRequest request,
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPlants(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -125,14 +133,16 @@ public static class EnterpriseEndpoints
     private static async Task<IResult> RemoveFromPlants(
         MultipleAssociationRequest request,
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPlants(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSuppliers(
         MultipleAssociationRequest request,
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSuppliers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class EnterpriseEndpoints
     private static async Task<IResult> RemoveFromSuppliers(
         MultipleAssociationRequest request,
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSuppliers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCustomers(
         MultipleAssociationRequest request,
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCustomers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class EnterpriseEndpoints
     private static async Task<IResult> RemoveFromCustomers(
         MultipleAssociationRequest request,
         IEnterpriseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCustomers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Enterprise mapRequestToEnterprise( EnterpriseRequest request ) {
+    private static Enterprise mapRequestToEnterprise(EnterpriseRequest request)
+    {
         var model = new Enterprise
         {
             Id = request.Id,

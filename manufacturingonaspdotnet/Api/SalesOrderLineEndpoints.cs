@@ -29,9 +29,10 @@ public static class SalesOrderLineEndpoints
     private static async Task<IResult> Create(
         SalesOrderLineRequest request,
         ISalesOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSalesOrderLine( request );
+        var model = mapRequestToSalesOrderLine(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class SalesOrderLineEndpoints
     private static async Task<IResult> Update(
         SalesOrderLineRequest request,
         ISalesOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSalesOrderLine( request );
+        var model = mapRequestToSalesOrderLine(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class SalesOrderLineEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISalesOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var salesOrderLine = await service.Get(identifier, cancellationToken);
-        return salesOrderLine is null ? Results.NotFound() : Results.Ok( salesOrderLine );
+        return salesOrderLine is null ? Results.NotFound() : Results.Ok(salesOrderLine);
     }
 
 
     private static async Task<IResult> GetAll(
         ISalesOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SalesOrderLineResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SalesOrderLineResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISalesOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class SalesOrderLineEndpoints
     private static async Task<IResult> AssignSalesOrder(
         AssociationRequest request,
         ISalesOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSalesOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class SalesOrderLineEndpoints
     private static async Task<IResult> UnassignSalesOrder(
     AssociationRequest request,
     ISalesOrderLineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSalesOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class SalesOrderLineEndpoints
     private static async Task<IResult> AssignItem(
         AssociationRequest request,
         ISalesOrderLineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class SalesOrderLineEndpoints
     private static async Task<IResult> UnassignItem(
     AssociationRequest request,
     ISalesOrderLineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static SalesOrderLine mapRequestToSalesOrderLine( SalesOrderLineRequest request ) {
+    private static SalesOrderLine mapRequestToSalesOrderLine(SalesOrderLineRequest request)
+    {
         var model = new SalesOrderLine
         {
             Id = request.Id,

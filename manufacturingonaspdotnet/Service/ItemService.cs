@@ -6,9 +6,10 @@ using manufacturingonaspdotnet.Telemetry;
 
 namespace manufacturingonaspdotnet.Service;
 
-public interface IItemService {
+public interface IItemService
+{
 
-    Task Create(Item model , CancellationToken cancellationToken);
+    Task Create(Item model, CancellationToken cancellationToken);
     Task<bool> Update(Item model, CancellationToken cancellationToken);
     Task<Item?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Item>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class ItemService : IItemService
 
     public async Task<bool> Update(Item model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -133,7 +135,8 @@ public class ItemService : IItemService
         return true;
     }
 
-    public async Task<bool> AssignBusinessUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBusinessUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -151,7 +154,7 @@ public class ItemService : IItemService
 
             var child = await _serviceResolver.Get<BusinessUnitService>().Get(childRequest, cancellationToken);
             parent.BusinessUnit = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -163,7 +166,8 @@ public class ItemService : IItemService
         return true;
     }
 
-    public async Task<bool> UnassignBusinessUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBusinessUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -174,7 +178,7 @@ public class ItemService : IItemService
         try
         {
             parent.BusinessUnit = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -187,8 +191,10 @@ public class ItemService : IItemService
     }
 
 
-    public async Task<bool> AddToBoms(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToBoms(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Item",
                 "AddToBoms",
@@ -196,16 +202,18 @@ public class ItemService : IItemService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromBoms(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromBoms(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Item",
                 "RemoveFromBoms",
@@ -221,8 +229,10 @@ public class ItemService : IItemService
         return true;
     }
 
-    public async Task<bool> AddToRoutings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRoutings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Item",
                 "AddToRoutings",
@@ -230,16 +240,18 @@ public class ItemService : IItemService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRoutings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRoutings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Item",
                 "RemoveFromRoutings",
@@ -255,8 +267,10 @@ public class ItemService : IItemService
         return true;
     }
 
-    public async Task<bool> AddToSuppliers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSuppliers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Item",
                 "AddToSuppliers",
@@ -264,16 +278,18 @@ public class ItemService : IItemService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSuppliers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSuppliers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Item",
                 "RemoveFromSuppliers",
@@ -289,8 +305,10 @@ public class ItemService : IItemService
         return true;
     }
 
-    public async Task<bool> AddToQualitySpecifications(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToQualitySpecifications(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Item",
                 "AddToQualitySpecifications",
@@ -298,16 +316,18 @@ public class ItemService : IItemService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromQualitySpecifications(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromQualitySpecifications(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Item",
                 "RemoveFromQualitySpecifications",
@@ -323,8 +343,10 @@ public class ItemService : IItemService
         return true;
     }
 
-    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Item",
                 "AddToInventoryItems",
@@ -332,16 +354,18 @@ public class ItemService : IItemService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Item",
                 "RemoveFromInventoryItems",

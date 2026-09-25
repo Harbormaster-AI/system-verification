@@ -36,7 +36,7 @@ namespace manufacturingonaspdotnet.Domain;
 
 public enum ProductionLineType
 {
-    Discrete=1,Batch=2,Continuous=3,FlexibleCell=4
+    Discrete = 1, Batch = 2, Continuous = 3, FlexibleCell = 4
 }
 
 /// <summary>
