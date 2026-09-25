@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum TestStatus
 {
-    Planned=1,InProgress=2,Completed=3,Blocked=4,Cancelled=5
+    Planned = 1, InProgress = 2, Completed = 3, Blocked = 4, Cancelled = 5
 }
 
 /// <summary>

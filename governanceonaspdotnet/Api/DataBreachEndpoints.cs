@@ -22,14 +22,14 @@ public static class DataBreachEndpoints
         group.MapPut("/assignMatter", AssignMatter);
         group.MapPut("/unassignMatter", UnassignMatter);
 
-    group.MapPut("/addToProcessingActivities", AddToProcessingActivities);
-    group.MapPut("/removeFromProcessingActivities", RemoveFromProcessingActivities);
+        group.MapPut("/addToProcessingActivities", AddToProcessingActivities);
+        group.MapPut("/removeFromProcessingActivities", RemoveFromProcessingActivities);
 
-    group.MapPut("/addToDataCategories", AddToDataCategories);
-    group.MapPut("/removeFromDataCategories", RemoveFromDataCategories);
+        group.MapPut("/addToDataCategories", AddToDataCategories);
+        group.MapPut("/removeFromDataCategories", RemoveFromDataCategories);
 
-    group.MapPut("/addToThirdParties", AddToThirdParties);
-    group.MapPut("/removeFromThirdParties", RemoveFromThirdParties);
+        group.MapPut("/addToThirdParties", AddToThirdParties);
+        group.MapPut("/removeFromThirdParties", RemoveFromThirdParties);
 
 
         return app;
@@ -38,9 +38,10 @@ public static class DataBreachEndpoints
     private static async Task<IResult> Create(
         DataBreachRequest request,
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDataBreach( request );
+        var model = mapRequestToDataBreach(request);
 
         try
         {
@@ -57,9 +58,10 @@ public static class DataBreachEndpoints
     private static async Task<IResult> Update(
         DataBreachRequest request,
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDataBreach( request );
+        var model = mapRequestToDataBreach(request);
 
         try
         {
@@ -76,25 +78,28 @@ public static class DataBreachEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var dataBreach = await service.Get(identifier, cancellationToken);
-        return dataBreach is null ? Results.NotFound() : Results.Ok( dataBreach );
+        return dataBreach is null ? Results.NotFound() : Results.Ok(dataBreach);
     }
 
 
     private static async Task<IResult> GetAll(
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DataBreachResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DataBreachResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +107,8 @@ public static class DataBreachEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -110,7 +116,8 @@ public static class DataBreachEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IDataBreachService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -118,7 +125,8 @@ public static class DataBreachEndpoints
     private static async Task<IResult> AssignMatter(
         AssociationRequest request,
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMatter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -126,7 +134,8 @@ public static class DataBreachEndpoints
     private static async Task<IResult> UnassignMatter(
     AssociationRequest request,
     IDataBreachService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMatter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,7 +144,8 @@ public static class DataBreachEndpoints
     private static async Task<IResult> AddToProcessingActivities(
         MultipleAssociationRequest request,
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToProcessingActivities(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -143,14 +153,16 @@ public static class DataBreachEndpoints
     private static async Task<IResult> RemoveFromProcessingActivities(
         MultipleAssociationRequest request,
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromProcessingActivities(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToDataCategories(
         MultipleAssociationRequest request,
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDataCategories(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -158,14 +170,16 @@ public static class DataBreachEndpoints
     private static async Task<IResult> RemoveFromDataCategories(
         MultipleAssociationRequest request,
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDataCategories(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToThirdParties(
         MultipleAssociationRequest request,
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToThirdParties(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -173,11 +187,13 @@ public static class DataBreachEndpoints
     private static async Task<IResult> RemoveFromThirdParties(
         MultipleAssociationRequest request,
         IDataBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromThirdParties(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static DataBreach mapRequestToDataBreach( DataBreachRequest request ) {
+    private static DataBreach mapRequestToDataBreach(DataBreachRequest request)
+    {
         var model = new DataBreach
         {
             Id = request.Id,

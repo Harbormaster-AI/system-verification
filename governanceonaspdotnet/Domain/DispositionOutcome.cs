@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum DispositionOutcome
 {
-    Approved=1,Deferred=2,Rejected=3,Executed=4
+    Approved = 1, Deferred = 2, Rejected = 3, Executed = 4
 }
 
 /// <summary>

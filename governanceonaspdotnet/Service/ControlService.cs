@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IControlService {
+public interface IControlService
+{
 
-    Task Create(Control model , CancellationToken cancellationToken);
+    Task Create(Control model, CancellationToken cancellationToken);
     Task<bool> Update(Control model, CancellationToken cancellationToken);
     Task<Control?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Control>> GetAll(CancellationToken cancellationToken);
@@ -73,7 +74,8 @@ public class ControlService : IControlService
 
     public async Task<bool> Update(Control model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -132,7 +134,8 @@ public class ControlService : IControlService
         return true;
     }
 
-    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -150,7 +153,7 @@ public class ControlService : IControlService
 
             var child = await _serviceResolver.Get<PolicyService>().Get(childRequest, cancellationToken);
             parent.Policy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -162,7 +165,8 @@ public class ControlService : IControlService
         return true;
     }
 
-    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -173,7 +177,7 @@ public class ControlService : IControlService
         try
         {
             parent.Policy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -186,8 +190,10 @@ public class ControlService : IControlService
     }
 
 
-    public async Task<bool> AddToControlTests(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToControlTests(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Control",
                 "AddToControlTests",
@@ -195,16 +201,18 @@ public class ControlService : IControlService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromControlTests(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromControlTests(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Control",
                 "RemoveFromControlTests",
@@ -220,8 +228,10 @@ public class ControlService : IControlService
         return true;
     }
 
-    public async Task<bool> AddToEvidence(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEvidence(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Control",
                 "AddToEvidence",
@@ -229,16 +239,18 @@ public class ControlService : IControlService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEvidence(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEvidence(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Control",
                 "RemoveFromEvidence",
@@ -254,8 +266,10 @@ public class ControlService : IControlService
         return true;
     }
 
-    public async Task<bool> AddToRisks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRisks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Control",
                 "AddToRisks",
@@ -263,16 +277,18 @@ public class ControlService : IControlService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRisks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRisks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Control",
                 "RemoveFromRisks",
@@ -288,8 +304,10 @@ public class ControlService : IControlService
         return true;
     }
 
-    public async Task<bool> AddToObligations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToObligations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Control",
                 "AddToObligations",
@@ -297,16 +315,18 @@ public class ControlService : IControlService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromObligations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromObligations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Control",
                 "RemoveFromObligations",
@@ -322,8 +342,10 @@ public class ControlService : IControlService
         return true;
     }
 
-    public async Task<bool> AddToProcedures(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToProcedures(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Control",
                 "AddToProcedures",
@@ -331,16 +353,18 @@ public class ControlService : IControlService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromProcedures(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromProcedures(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Control",
                 "RemoveFromProcedures",
@@ -356,8 +380,10 @@ public class ControlService : IControlService
         return true;
     }
 
-    public async Task<bool> AddToIssues(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToIssues(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Control",
                 "AddToIssues",
@@ -365,16 +391,18 @@ public class ControlService : IControlService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromIssues(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromIssues(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Control",
                 "RemoveFromIssues",

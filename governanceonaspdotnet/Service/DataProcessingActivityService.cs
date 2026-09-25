@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IDataProcessingActivityService {
+public interface IDataProcessingActivityService
+{
 
-    Task Create(DataProcessingActivity model , CancellationToken cancellationToken);
+    Task Create(DataProcessingActivity model, CancellationToken cancellationToken);
     Task<bool> Update(DataProcessingActivity model, CancellationToken cancellationToken);
     Task<DataProcessingActivity?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DataProcessingActivity>> GetAll(CancellationToken cancellationToken);
@@ -77,7 +78,8 @@ public class DataProcessingActivityService : IDataProcessingActivityService
 
     public async Task<bool> Update(DataProcessingActivity model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -134,7 +136,8 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         return true;
     }
 
-    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -152,7 +155,7 @@ public class DataProcessingActivityService : IDataProcessingActivityService
 
             var child = await _serviceResolver.Get<OrganizationService>().Get(childRequest, cancellationToken);
             parent.Organization = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -164,7 +167,8 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         return true;
     }
 
-    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -175,7 +179,7 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         try
         {
             parent.Organization = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -188,8 +192,10 @@ public class DataProcessingActivityService : IDataProcessingActivityService
     }
 
 
-    public async Task<bool> AddToDataCategories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDataCategories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "AddToDataCategories",
@@ -197,16 +203,18 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDataCategories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDataCategories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "RemoveFromDataCategories",
@@ -222,8 +230,10 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         return true;
     }
 
-    public async Task<bool> AddToSystems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSystems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "AddToSystems",
@@ -231,16 +241,18 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSystems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSystems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "RemoveFromSystems",
@@ -256,8 +268,10 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         return true;
     }
 
-    public async Task<bool> AddToRecords(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRecords(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "AddToRecords",
@@ -265,16 +279,18 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRecords(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRecords(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "RemoveFromRecords",
@@ -290,8 +306,10 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         return true;
     }
 
-    public async Task<bool> AddToPrivacyNotices(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPrivacyNotices(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "AddToPrivacyNotices",
@@ -299,16 +317,18 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPrivacyNotices(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPrivacyNotices(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "RemoveFromPrivacyNotices",
@@ -324,8 +344,10 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         return true;
     }
 
-    public async Task<bool> AddToThirdParties(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToThirdParties(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "AddToThirdParties",
@@ -333,16 +355,18 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromThirdParties(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromThirdParties(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "RemoveFromThirdParties",
@@ -358,8 +382,10 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         return true;
     }
 
-    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "AddToConsents",
@@ -367,16 +393,18 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "RemoveFromConsents",
@@ -392,8 +420,10 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         return true;
     }
 
-    public async Task<bool> AddToDataBreaches(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDataBreaches(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "AddToDataBreaches",
@@ -401,16 +431,18 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDataBreaches(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDataBreaches(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "RemoveFromDataBreaches",
@@ -426,8 +458,10 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         return true;
     }
 
-    public async Task<bool> AddToDataSubjectRequests(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDataSubjectRequests(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "AddToDataSubjectRequests",
@@ -435,16 +469,18 @@ public class DataProcessingActivityService : IDataProcessingActivityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDataSubjectRequests(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDataSubjectRequests(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataProcessingActivity",
                 "RemoveFromDataSubjectRequests",

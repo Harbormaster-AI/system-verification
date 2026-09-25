@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IRetentionScheduleService {
+public interface IRetentionScheduleService
+{
 
-    Task Create(RetentionSchedule model , CancellationToken cancellationToken);
+    Task Create(RetentionSchedule model, CancellationToken cancellationToken);
     Task<bool> Update(RetentionSchedule model, CancellationToken cancellationToken);
     Task<RetentionSchedule?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RetentionSchedule>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class RetentionScheduleService : IRetentionScheduleService
 
     public async Task<bool> Update(RetentionSchedule model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,8 +128,10 @@ public class RetentionScheduleService : IRetentionScheduleService
     }
 
 
-    public async Task<bool> AddToRepositories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRepositories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RetentionSchedule",
                 "AddToRepositories",
@@ -135,16 +139,18 @@ public class RetentionScheduleService : IRetentionScheduleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRepositories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRepositories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RetentionSchedule",
                 "RemoveFromRepositories",
@@ -160,8 +166,10 @@ public class RetentionScheduleService : IRetentionScheduleService
         return true;
     }
 
-    public async Task<bool> AddToRecords(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRecords(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RetentionSchedule",
                 "AddToRecords",
@@ -169,16 +177,18 @@ public class RetentionScheduleService : IRetentionScheduleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRecords(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRecords(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RetentionSchedule",
                 "RemoveFromRecords",
@@ -194,8 +204,10 @@ public class RetentionScheduleService : IRetentionScheduleService
         return true;
     }
 
-    public async Task<bool> AddToExceptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToExceptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RetentionSchedule",
                 "AddToExceptions",
@@ -203,16 +215,18 @@ public class RetentionScheduleService : IRetentionScheduleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromExceptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromExceptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RetentionSchedule",
                 "RemoveFromExceptions",
@@ -228,8 +242,10 @@ public class RetentionScheduleService : IRetentionScheduleService
         return true;
     }
 
-    public async Task<bool> AddToDispositionReviews(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDispositionReviews(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RetentionSchedule",
                 "AddToDispositionReviews",
@@ -237,16 +253,18 @@ public class RetentionScheduleService : IRetentionScheduleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDispositionReviews(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDispositionReviews(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RetentionSchedule",
                 "RemoveFromDispositionReviews",

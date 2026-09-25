@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IComplianceRequirementService {
+public interface IComplianceRequirementService
+{
 
-    Task Create(ComplianceRequirement model , CancellationToken cancellationToken);
+    Task Create(ComplianceRequirement model, CancellationToken cancellationToken);
     Task<bool> Update(ComplianceRequirement model, CancellationToken cancellationToken);
     Task<ComplianceRequirement?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ComplianceRequirement>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class ComplianceRequirementService : IComplianceRequirementService
 
     public async Task<bool> Update(ComplianceRequirement model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class ComplianceRequirementService : IComplianceRequirementService
         return true;
     }
 
-    public async Task<bool> AssignComplianceProgram(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignComplianceProgram(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class ComplianceRequirementService : IComplianceRequirementService
 
             var child = await _serviceResolver.Get<ComplianceProgramService>().Get(childRequest, cancellationToken);
             parent.ComplianceProgram = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class ComplianceRequirementService : IComplianceRequirementService
         return true;
     }
 
-    public async Task<bool> UnassignComplianceProgram(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignComplianceProgram(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class ComplianceRequirementService : IComplianceRequirementService
         try
         {
             parent.ComplianceProgram = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,8 +183,10 @@ public class ComplianceRequirementService : IComplianceRequirementService
     }
 
 
-    public async Task<bool> AddToPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ComplianceRequirement",
                 "AddToPolicies",
@@ -188,16 +194,18 @@ public class ComplianceRequirementService : IComplianceRequirementService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ComplianceRequirement",
                 "RemoveFromPolicies",
@@ -213,8 +221,10 @@ public class ComplianceRequirementService : IComplianceRequirementService
         return true;
     }
 
-    public async Task<bool> AddToControls(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToControls(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ComplianceRequirement",
                 "AddToControls",
@@ -222,16 +232,18 @@ public class ComplianceRequirementService : IComplianceRequirementService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromControls(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromControls(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ComplianceRequirement",
                 "RemoveFromControls",
@@ -247,8 +259,10 @@ public class ComplianceRequirementService : IComplianceRequirementService
         return true;
     }
 
-    public async Task<bool> AddToObligations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToObligations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ComplianceRequirement",
                 "AddToObligations",
@@ -256,16 +270,18 @@ public class ComplianceRequirementService : IComplianceRequirementService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromObligations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromObligations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ComplianceRequirement",
                 "RemoveFromObligations",

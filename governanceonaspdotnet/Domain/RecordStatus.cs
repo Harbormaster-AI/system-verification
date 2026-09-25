@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum RecordStatus
 {
-    Active=1,Archived=2,PendingDisposition=3,Disposed=4,OnHold=5
+    Active = 1, Archived = 2, PendingDisposition = 3, Disposed = 4, OnHold = 5
 }
 
 /// <summary>

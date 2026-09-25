@@ -11,9 +11,9 @@ public interface ILegalHoldRepository
     Task UpdateAsync(LegalHold legalHold, CancellationToken cancellationToken);
     Task DeleteAsync(LegalHold legalHold, CancellationToken cancellationToken);
 
-    Task AddToRepositoriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRepositoriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToRecordsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRecordsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRepositoriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRepositoriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRecordsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRecordsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

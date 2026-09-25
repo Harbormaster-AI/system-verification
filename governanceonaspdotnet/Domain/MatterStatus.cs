@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum MatterStatus
 {
-    Open=1,ActiveDiscovery=2,Negotiation=3,Settled=4,Closed=5
+    Open = 1, ActiveDiscovery = 2, Negotiation = 3, Settled = 4, Closed = 5
 }
 
 /// <summary>

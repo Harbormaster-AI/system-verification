@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum DataSubjectRequestType
 {
-    Access=1,Rectification=2,Erasure=3,Restriction=4,Portability=5,Objection=6,AutomatedDecisioningReview=7
+    Access = 1, Rectification = 2, Erasure = 3, Restriction = 4, Portability = 5, Objection = 6, AutomatedDecisioningReview = 7
 }
 
 /// <summary>

@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IObligationService {
+public interface IObligationService
+{
 
-    Task Create(Obligation model , CancellationToken cancellationToken);
+    Task Create(Obligation model, CancellationToken cancellationToken);
     Task<bool> Update(Obligation model, CancellationToken cancellationToken);
     Task<Obligation?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Obligation>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class ObligationService : IObligationService
 
     public async Task<bool> Update(Obligation model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class ObligationService : IObligationService
         return true;
     }
 
-    public async Task<bool> AssignRegulation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRegulation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class ObligationService : IObligationService
 
             var child = await _serviceResolver.Get<RegulationService>().Get(childRequest, cancellationToken);
             parent.Regulation = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class ObligationService : IObligationService
         return true;
     }
 
-    public async Task<bool> UnassignRegulation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRegulation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class ObligationService : IObligationService
         try
         {
             parent.Regulation = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,8 +182,10 @@ public class ObligationService : IObligationService
     }
 
 
-    public async Task<bool> AddToControls(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToControls(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Obligation",
                 "AddToControls",
@@ -187,16 +193,18 @@ public class ObligationService : IObligationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromControls(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromControls(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Obligation",
                 "RemoveFromControls",
@@ -212,8 +220,10 @@ public class ObligationService : IObligationService
         return true;
     }
 
-    public async Task<bool> AddToPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Obligation",
                 "AddToPolicies",
@@ -221,16 +231,18 @@ public class ObligationService : IObligationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Obligation",
                 "RemoveFromPolicies",
@@ -246,8 +258,10 @@ public class ObligationService : IObligationService
         return true;
     }
 
-    public async Task<bool> AddToContracts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToContracts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Obligation",
                 "AddToContracts",
@@ -255,16 +269,18 @@ public class ObligationService : IObligationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromContracts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromContracts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Obligation",
                 "RemoveFromContracts",

@@ -33,9 +33,10 @@ public static class RoleAssignmentEndpoints
     private static async Task<IResult> Create(
         RoleAssignmentRequest request,
         IRoleAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRoleAssignment( request );
+        var model = mapRequestToRoleAssignment(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class RoleAssignmentEndpoints
     private static async Task<IResult> Update(
         RoleAssignmentRequest request,
         IRoleAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRoleAssignment( request );
+        var model = mapRequestToRoleAssignment(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class RoleAssignmentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRoleAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var roleAssignment = await service.Get(identifier, cancellationToken);
-        return roleAssignment is null ? Results.NotFound() : Results.Ok( roleAssignment );
+        return roleAssignment is null ? Results.NotFound() : Results.Ok(roleAssignment);
     }
 
 
     private static async Task<IResult> GetAll(
         IRoleAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RoleAssignmentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RoleAssignmentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRoleAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class RoleAssignmentEndpoints
     private static async Task<IResult> AssignPerson(
         AssociationRequest request,
         IRoleAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPerson(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class RoleAssignmentEndpoints
     private static async Task<IResult> UnassignPerson(
     AssociationRequest request,
     IRoleAssignmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPerson(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class RoleAssignmentEndpoints
     private static async Task<IResult> AssignRole(
         AssociationRequest request,
         IRoleAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRole(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class RoleAssignmentEndpoints
     private static async Task<IResult> UnassignRole(
     AssociationRequest request,
     IRoleAssignmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRole(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class RoleAssignmentEndpoints
     private static async Task<IResult> AssignGovernanceBody(
         AssociationRequest request,
         IRoleAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignGovernanceBody(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class RoleAssignmentEndpoints
     private static async Task<IResult> UnassignGovernanceBody(
     AssociationRequest request,
     IRoleAssignmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignGovernanceBody(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class RoleAssignmentEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IRoleAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class RoleAssignmentEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IRoleAssignmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static RoleAssignment mapRequestToRoleAssignment( RoleAssignmentRequest request ) {
+    private static RoleAssignment mapRequestToRoleAssignment(RoleAssignmentRequest request)
+    {
         var model = new RoleAssignment
         {
             Id = request.Id,

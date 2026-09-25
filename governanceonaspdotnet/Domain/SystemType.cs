@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum SystemType
 {
-    Application=1,Database=2,DataWarehouse=3,SaaS=4,Infrastructure=5,Endpoint=6
+    Application = 1, Database = 2, DataWarehouse = 3, SaaS = 4, Infrastructure = 5, Endpoint = 6
 }
 
 /// <summary>

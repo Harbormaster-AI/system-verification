@@ -11,7 +11,7 @@ public interface IProcedureRepository
     Task UpdateAsync(Procedure procedure, CancellationToken cancellationToken);
     Task DeleteAsync(Procedure procedure, CancellationToken cancellationToken);
 
-    Task AddToControlsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromControlsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToControlsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromControlsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

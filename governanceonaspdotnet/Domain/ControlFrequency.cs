@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ControlFrequency
 {
-    Continuous=1,Daily=2,Weekly=3,Monthly=4,Quarterly=5,Annually=6,AdHoc=7
+    Continuous = 1, Daily = 2, Weekly = 3, Monthly = 4, Quarterly = 5, Annually = 6, AdHoc = 7
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum FindingStatus
 {
-    Open=1,InRemediation=2,Validated=3,Closed=4
+    Open = 1, InRemediation = 2, Validated = 3, Closed = 4
 }
 
 /// <summary>

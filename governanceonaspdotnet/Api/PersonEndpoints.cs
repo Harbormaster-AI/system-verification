@@ -18,14 +18,14 @@ public static class PersonEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToRoleAssignments", AddToRoleAssignments);
-    group.MapPut("/removeFromRoleAssignments", RemoveFromRoleAssignments);
+        group.MapPut("/addToRoleAssignments", AddToRoleAssignments);
+        group.MapPut("/removeFromRoleAssignments", RemoveFromRoleAssignments);
 
-    group.MapPut("/addToOwnedPolicies", AddToOwnedPolicies);
-    group.MapPut("/removeFromOwnedPolicies", RemoveFromOwnedPolicies);
+        group.MapPut("/addToOwnedPolicies", AddToOwnedPolicies);
+        group.MapPut("/removeFromOwnedPolicies", RemoveFromOwnedPolicies);
 
-    group.MapPut("/addToCorrectiveActions", AddToCorrectiveActions);
-    group.MapPut("/removeFromCorrectiveActions", RemoveFromCorrectiveActions);
+        group.MapPut("/addToCorrectiveActions", AddToCorrectiveActions);
+        group.MapPut("/removeFromCorrectiveActions", RemoveFromCorrectiveActions);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class PersonEndpoints
     private static async Task<IResult> Create(
         PersonRequest request,
         IPersonService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPerson( request );
+        var model = mapRequestToPerson(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class PersonEndpoints
     private static async Task<IResult> Update(
         PersonRequest request,
         IPersonService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPerson( request );
+        var model = mapRequestToPerson(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class PersonEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPersonService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var person = await service.Get(identifier, cancellationToken);
-        return person is null ? Results.NotFound() : Results.Ok( person );
+        return person is null ? Results.NotFound() : Results.Ok(person);
     }
 
 
     private static async Task<IResult> GetAll(
         IPersonService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PersonResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PersonResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPersonService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class PersonEndpoints
     private static async Task<IResult> AddToRoleAssignments(
         MultipleAssociationRequest request,
         IPersonService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRoleAssignments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -107,14 +113,16 @@ public static class PersonEndpoints
     private static async Task<IResult> RemoveFromRoleAssignments(
         MultipleAssociationRequest request,
         IPersonService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRoleAssignments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOwnedPolicies(
         MultipleAssociationRequest request,
         IPersonService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOwnedPolicies(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class PersonEndpoints
     private static async Task<IResult> RemoveFromOwnedPolicies(
         MultipleAssociationRequest request,
         IPersonService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOwnedPolicies(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCorrectiveActions(
         MultipleAssociationRequest request,
         IPersonService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCorrectiveActions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class PersonEndpoints
     private static async Task<IResult> RemoveFromCorrectiveActions(
         MultipleAssociationRequest request,
         IPersonService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCorrectiveActions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Person mapRequestToPerson( PersonRequest request ) {
+    private static Person mapRequestToPerson(PersonRequest request)
+    {
         var model = new Person
         {
             Id = request.Id,

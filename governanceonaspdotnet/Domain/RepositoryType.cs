@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum RepositoryType
 {
-    DocumentManagement=1,RecordsArchive=2,EmailArchive=3,FileShare=4,ContentServices=5,DataLake=6
+    DocumentManagement = 1, RecordsArchive = 2, EmailArchive = 3, FileShare = 4, ContentServices = 5, DataLake = 6
 }
 
 /// <summary>

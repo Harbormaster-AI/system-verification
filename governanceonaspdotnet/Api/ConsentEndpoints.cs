@@ -20,8 +20,8 @@ public static class ConsentEndpoints
         group.MapPut("/assignPrivacyNotice", AssignPrivacyNotice);
         group.MapPut("/unassignPrivacyNotice", UnassignPrivacyNotice);
 
-    group.MapPut("/addToProcessingActivities", AddToProcessingActivities);
-    group.MapPut("/removeFromProcessingActivities", RemoveFromProcessingActivities);
+        group.MapPut("/addToProcessingActivities", AddToProcessingActivities);
+        group.MapPut("/removeFromProcessingActivities", RemoveFromProcessingActivities);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class ConsentEndpoints
     private static async Task<IResult> Create(
         ConsentRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToConsent( request );
+        var model = mapRequestToConsent(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class ConsentEndpoints
     private static async Task<IResult> Update(
         ConsentRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToConsent( request );
+        var model = mapRequestToConsent(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class ConsentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var consent = await service.Get(identifier, cancellationToken);
-        return consent is null ? Results.NotFound() : Results.Ok( consent );
+        return consent is null ? Results.NotFound() : Results.Ok(consent);
     }
 
 
     private static async Task<IResult> GetAll(
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ConsentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ConsentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> AssignPrivacyNotice(
         AssociationRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPrivacyNotice(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> UnassignPrivacyNotice(
     AssociationRequest request,
     IConsentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPrivacyNotice(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> AddToProcessingActivities(
         MultipleAssociationRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToProcessingActivities(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class ConsentEndpoints
     private static async Task<IResult> RemoveFromProcessingActivities(
         MultipleAssociationRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromProcessingActivities(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Consent mapRequestToConsent( ConsentRequest request ) {
+    private static Consent mapRequestToConsent(ConsentRequest request)
+    {
         var model = new Consent
         {
             Id = request.Id,

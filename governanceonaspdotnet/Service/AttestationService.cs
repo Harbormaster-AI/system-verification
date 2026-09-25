@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IAttestationService {
+public interface IAttestationService
+{
 
-    Task Create(Attestation model , CancellationToken cancellationToken);
+    Task Create(Attestation model, CancellationToken cancellationToken);
     Task<bool> Update(Attestation model, CancellationToken cancellationToken);
     Task<Attestation?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Attestation>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class AttestationService : IAttestationService
 
     public async Task<bool> Update(Attestation model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class AttestationService : IAttestationService
         return true;
     }
 
-    public async Task<bool> AssignControl(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignControl(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class AttestationService : IAttestationService
 
             var child = await _serviceResolver.Get<ControlService>().Get(childRequest, cancellationToken);
             parent.Control = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class AttestationService : IAttestationService
         return true;
     }
 
-    public async Task<bool> UnassignControl(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignControl(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class AttestationService : IAttestationService
         try
         {
             parent.Control = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class AttestationService : IAttestationService
         return true;
     }
 
-    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class AttestationService : IAttestationService
 
             var child = await _serviceResolver.Get<PolicyService>().Get(childRequest, cancellationToken);
             parent.Policy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class AttestationService : IAttestationService
         return true;
     }
 
-    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class AttestationService : IAttestationService
         try
         {
             parent.Policy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class AttestationService : IAttestationService
         return true;
     }
 
-    public async Task<bool> AssignComplianceProgram(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignComplianceProgram(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class AttestationService : IAttestationService
 
             var child = await _serviceResolver.Get<ComplianceProgramService>().Get(childRequest, cancellationToken);
             parent.ComplianceProgram = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class AttestationService : IAttestationService
         return true;
     }
 
-    public async Task<bool> UnassignComplianceProgram(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignComplianceProgram(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class AttestationService : IAttestationService
         try
         {
             parent.ComplianceProgram = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

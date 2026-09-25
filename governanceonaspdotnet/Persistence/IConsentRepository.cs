@@ -11,7 +11,7 @@ public interface IConsentRepository
     Task UpdateAsync(Consent consent, CancellationToken cancellationToken);
     Task DeleteAsync(Consent consent, CancellationToken cancellationToken);
 
-    Task AddToProcessingActivitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromProcessingActivitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToProcessingActivitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromProcessingActivitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

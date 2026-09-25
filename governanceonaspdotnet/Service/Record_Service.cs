@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IRecord_Service {
+public interface IRecord_Service
+{
 
-    Task Create(Record_ model , CancellationToken cancellationToken);
+    Task Create(Record_ model, CancellationToken cancellationToken);
     Task<bool> Update(Record_ model, CancellationToken cancellationToken);
     Task<Record_?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Record_>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class Record_Service : IRecord_Service
 
     public async Task<bool> Update(Record_ model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -129,7 +131,8 @@ public class Record_Service : IRecord_Service
         return true;
     }
 
-    public async Task<bool> AssignRepository(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRepository(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -147,7 +150,7 @@ public class Record_Service : IRecord_Service
 
             var child = await _serviceResolver.Get<RecordsRepositoryService>().Get(childRequest, cancellationToken);
             parent.Repository = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -159,7 +162,8 @@ public class Record_Service : IRecord_Service
         return true;
     }
 
-    public async Task<bool> UnassignRepository(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRepository(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -170,7 +174,7 @@ public class Record_Service : IRecord_Service
         try
         {
             parent.Repository = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -182,7 +186,8 @@ public class Record_Service : IRecord_Service
         return true;
     }
 
-    public async Task<bool> AssignRetentionSchedule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRetentionSchedule(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -200,7 +205,7 @@ public class Record_Service : IRecord_Service
 
             var child = await _serviceResolver.Get<RetentionScheduleService>().Get(childRequest, cancellationToken);
             parent.RetentionSchedule = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -212,7 +217,8 @@ public class Record_Service : IRecord_Service
         return true;
     }
 
-    public async Task<bool> UnassignRetentionSchedule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRetentionSchedule(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -223,7 +229,7 @@ public class Record_Service : IRecord_Service
         try
         {
             parent.RetentionSchedule = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -236,8 +242,10 @@ public class Record_Service : IRecord_Service
     }
 
 
-    public async Task<bool> AddToProcessingActivities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToProcessingActivities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Record_",
                 "AddToProcessingActivities",
@@ -245,16 +253,18 @@ public class Record_Service : IRecord_Service
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromProcessingActivities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromProcessingActivities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Record_",
                 "RemoveFromProcessingActivities",
@@ -270,8 +280,10 @@ public class Record_Service : IRecord_Service
         return true;
     }
 
-    public async Task<bool> AddToDataCategories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDataCategories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Record_",
                 "AddToDataCategories",
@@ -279,16 +291,18 @@ public class Record_Service : IRecord_Service
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDataCategories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDataCategories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Record_",
                 "RemoveFromDataCategories",
@@ -304,8 +318,10 @@ public class Record_Service : IRecord_Service
         return true;
     }
 
-    public async Task<bool> AddToLegalHolds(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLegalHolds(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Record_",
                 "AddToLegalHolds",
@@ -313,16 +329,18 @@ public class Record_Service : IRecord_Service
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLegalHolds(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLegalHolds(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Record_",
                 "RemoveFromLegalHolds",
@@ -338,8 +356,10 @@ public class Record_Service : IRecord_Service
         return true;
     }
 
-    public async Task<bool> AddToDataSubjectRequests(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDataSubjectRequests(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Record_",
                 "AddToDataSubjectRequests",
@@ -347,16 +367,18 @@ public class Record_Service : IRecord_Service
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDataSubjectRequests(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDataSubjectRequests(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Record_",
                 "RemoveFromDataSubjectRequests",

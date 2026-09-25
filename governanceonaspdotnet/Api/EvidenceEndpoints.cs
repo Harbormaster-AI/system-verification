@@ -33,9 +33,10 @@ public static class EvidenceEndpoints
     private static async Task<IResult> Create(
         EvidenceRequest request,
         IEvidenceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEvidence( request );
+        var model = mapRequestToEvidence(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class EvidenceEndpoints
     private static async Task<IResult> Update(
         EvidenceRequest request,
         IEvidenceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEvidence( request );
+        var model = mapRequestToEvidence(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class EvidenceEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IEvidenceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var evidence = await service.Get(identifier, cancellationToken);
-        return evidence is null ? Results.NotFound() : Results.Ok( evidence );
+        return evidence is null ? Results.NotFound() : Results.Ok(evidence);
     }
 
 
     private static async Task<IResult> GetAll(
         IEvidenceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( EvidenceResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(EvidenceResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IEvidenceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class EvidenceEndpoints
     private static async Task<IResult> AssignControlTest(
         AssociationRequest request,
         IEvidenceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignControlTest(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class EvidenceEndpoints
     private static async Task<IResult> UnassignControlTest(
     AssociationRequest request,
     IEvidenceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignControlTest(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class EvidenceEndpoints
     private static async Task<IResult> AssignControl(
         AssociationRequest request,
         IEvidenceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignControl(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class EvidenceEndpoints
     private static async Task<IResult> UnassignControl(
     AssociationRequest request,
     IEvidenceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignControl(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class EvidenceEndpoints
     private static async Task<IResult> AssignObligation(
         AssociationRequest request,
         IEvidenceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignObligation(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class EvidenceEndpoints
     private static async Task<IResult> UnassignObligation(
     AssociationRequest request,
     IEvidenceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignObligation(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class EvidenceEndpoints
     private static async Task<IResult> AssignWorkpaper(
         AssociationRequest request,
         IEvidenceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkpaper(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class EvidenceEndpoints
     private static async Task<IResult> UnassignWorkpaper(
     AssociationRequest request,
     IEvidenceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkpaper(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Evidence mapRequestToEvidence( EvidenceRequest request ) {
+    private static Evidence mapRequestToEvidence(EvidenceRequest request)
+    {
         var model = new Evidence
         {
             Id = request.Id,

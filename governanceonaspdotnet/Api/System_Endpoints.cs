@@ -18,11 +18,11 @@ public static class System_Endpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToProcessingActivities", AddToProcessingActivities);
-    group.MapPut("/removeFromProcessingActivities", RemoveFromProcessingActivities);
+        group.MapPut("/addToProcessingActivities", AddToProcessingActivities);
+        group.MapPut("/removeFromProcessingActivities", RemoveFromProcessingActivities);
 
-    group.MapPut("/addToRecordsRepositories", AddToRecordsRepositories);
-    group.MapPut("/removeFromRecordsRepositories", RemoveFromRecordsRepositories);
+        group.MapPut("/addToRecordsRepositories", AddToRecordsRepositories);
+        group.MapPut("/removeFromRecordsRepositories", RemoveFromRecordsRepositories);
 
 
         return app;
@@ -31,9 +31,10 @@ public static class System_Endpoints
     private static async Task<IResult> Create(
         System_Request request,
         ISystem_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSystem_( request );
+        var model = mapRequestToSystem_(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class System_Endpoints
     private static async Task<IResult> Update(
         System_Request request,
         ISystem_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSystem_( request );
+        var model = mapRequestToSystem_(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class System_Endpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISystem_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var system_ = await service.Get(identifier, cancellationToken);
-        return system_ is null ? Results.NotFound() : Results.Ok( system_ );
+        return system_ is null ? Results.NotFound() : Results.Ok(system_);
     }
 
 
     private static async Task<IResult> GetAll(
         ISystem_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( System_Response.FromModel ) );
-        }
+        return Results.Ok(all.Select(System_Response.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISystem_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class System_Endpoints
     private static async Task<IResult> AddToProcessingActivities(
         MultipleAssociationRequest request,
         ISystem_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToProcessingActivities(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -104,14 +110,16 @@ public static class System_Endpoints
     private static async Task<IResult> RemoveFromProcessingActivities(
         MultipleAssociationRequest request,
         ISystem_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromProcessingActivities(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRecordsRepositories(
         MultipleAssociationRequest request,
         ISystem_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRecordsRepositories(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class System_Endpoints
     private static async Task<IResult> RemoveFromRecordsRepositories(
         MultipleAssociationRequest request,
         ISystem_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRecordsRepositories(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static System_ mapRequestToSystem_( System_Request request ) {
+    private static System_ mapRequestToSystem_(System_Request request)
+    {
         var model = new System_
         {
             Id = request.Id,

@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum FindingSeverity
 {
-    Low=1,Medium=2,High=3,Critical=4
+    Low = 1, Medium = 2, High = 3, Critical = 4
 }
 
 /// <summary>

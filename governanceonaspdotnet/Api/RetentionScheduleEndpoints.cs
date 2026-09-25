@@ -18,17 +18,17 @@ public static class RetentionScheduleEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToRepositories", AddToRepositories);
-    group.MapPut("/removeFromRepositories", RemoveFromRepositories);
+        group.MapPut("/addToRepositories", AddToRepositories);
+        group.MapPut("/removeFromRepositories", RemoveFromRepositories);
 
-    group.MapPut("/addToRecords", AddToRecords);
-    group.MapPut("/removeFromRecords", RemoveFromRecords);
+        group.MapPut("/addToRecords", AddToRecords);
+        group.MapPut("/removeFromRecords", RemoveFromRecords);
 
-    group.MapPut("/addToExceptions", AddToExceptions);
-    group.MapPut("/removeFromExceptions", RemoveFromExceptions);
+        group.MapPut("/addToExceptions", AddToExceptions);
+        group.MapPut("/removeFromExceptions", RemoveFromExceptions);
 
-    group.MapPut("/addToDispositionReviews", AddToDispositionReviews);
-    group.MapPut("/removeFromDispositionReviews", RemoveFromDispositionReviews);
+        group.MapPut("/addToDispositionReviews", AddToDispositionReviews);
+        group.MapPut("/removeFromDispositionReviews", RemoveFromDispositionReviews);
 
 
         return app;
@@ -37,9 +37,10 @@ public static class RetentionScheduleEndpoints
     private static async Task<IResult> Create(
         RetentionScheduleRequest request,
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRetentionSchedule( request );
+        var model = mapRequestToRetentionSchedule(request);
 
         try
         {
@@ -56,9 +57,10 @@ public static class RetentionScheduleEndpoints
     private static async Task<IResult> Update(
         RetentionScheduleRequest request,
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRetentionSchedule( request );
+        var model = mapRequestToRetentionSchedule(request);
 
         try
         {
@@ -75,25 +77,28 @@ public static class RetentionScheduleEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var retentionSchedule = await service.Get(identifier, cancellationToken);
-        return retentionSchedule is null ? Results.NotFound() : Results.Ok( retentionSchedule );
+        return retentionSchedule is null ? Results.NotFound() : Results.Ok(retentionSchedule);
     }
 
 
     private static async Task<IResult> GetAll(
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RetentionScheduleResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RetentionScheduleResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +107,8 @@ public static class RetentionScheduleEndpoints
     private static async Task<IResult> AddToRepositories(
         MultipleAssociationRequest request,
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRepositories(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -110,14 +116,16 @@ public static class RetentionScheduleEndpoints
     private static async Task<IResult> RemoveFromRepositories(
         MultipleAssociationRequest request,
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRepositories(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRecords(
         MultipleAssociationRequest request,
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRecords(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -125,14 +133,16 @@ public static class RetentionScheduleEndpoints
     private static async Task<IResult> RemoveFromRecords(
         MultipleAssociationRequest request,
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRecords(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToExceptions(
         MultipleAssociationRequest request,
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToExceptions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class RetentionScheduleEndpoints
     private static async Task<IResult> RemoveFromExceptions(
         MultipleAssociationRequest request,
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromExceptions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToDispositionReviews(
         MultipleAssociationRequest request,
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDispositionReviews(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class RetentionScheduleEndpoints
     private static async Task<IResult> RemoveFromDispositionReviews(
         MultipleAssociationRequest request,
         IRetentionScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDispositionReviews(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static RetentionSchedule mapRequestToRetentionSchedule( RetentionScheduleRequest request ) {
+    private static RetentionSchedule mapRequestToRetentionSchedule(RetentionScheduleRequest request)
+    {
         var model = new RetentionSchedule
         {
             Id = request.Id,

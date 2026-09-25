@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IIssueService {
+public interface IIssueService
+{
 
-    Task Create(Issue model , CancellationToken cancellationToken);
+    Task Create(Issue model, CancellationToken cancellationToken);
     Task<bool> Update(Issue model, CancellationToken cancellationToken);
     Task<Issue?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Issue>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class IssueService : IIssueService
 
     public async Task<bool> Update(Issue model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class IssueService : IIssueService
         return true;
     }
 
-    public async Task<bool> AssignRisk(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRisk(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class IssueService : IIssueService
 
             var child = await _serviceResolver.Get<RiskService>().Get(childRequest, cancellationToken);
             parent.Risk = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class IssueService : IIssueService
         return true;
     }
 
-    public async Task<bool> UnassignRisk(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRisk(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class IssueService : IIssueService
         try
         {
             parent.Risk = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,7 +183,8 @@ public class IssueService : IIssueService
         return true;
     }
 
-    public async Task<bool> AssignFinding(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFinding(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,7 +202,7 @@ public class IssueService : IIssueService
 
             var child = await _serviceResolver.Get<AuditFindingService>().Get(childRequest, cancellationToken);
             parent.Finding = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class IssueService : IIssueService
         return true;
     }
 
-    public async Task<bool> UnassignFinding(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFinding(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class IssueService : IIssueService
         try
         {
             parent.Finding = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -232,7 +238,8 @@ public class IssueService : IIssueService
         return true;
     }
 
-    public async Task<bool> AssignControl(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignControl(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -250,7 +257,7 @@ public class IssueService : IIssueService
 
             var child = await _serviceResolver.Get<ControlService>().Get(childRequest, cancellationToken);
             parent.Control = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -262,7 +269,8 @@ public class IssueService : IIssueService
         return true;
     }
 
-    public async Task<bool> UnassignControl(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignControl(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -273,7 +281,7 @@ public class IssueService : IIssueService
         try
         {
             parent.Control = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -286,8 +294,10 @@ public class IssueService : IIssueService
     }
 
 
-    public async Task<bool> AddToCorrectiveActions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCorrectiveActions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Issue",
                 "AddToCorrectiveActions",
@@ -295,16 +305,18 @@ public class IssueService : IIssueService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCorrectiveActions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCorrectiveActions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Issue",
                 "RemoveFromCorrectiveActions",

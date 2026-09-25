@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ControlEffectiveness
 {
-    Effective=1,PartiallyEffective=2,Ineffective=3,NotTested=4
+    Effective = 1, PartiallyEffective = 2, Ineffective = 3, NotTested = 4
 }
 
 /// <summary>

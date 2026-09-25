@@ -20,8 +20,8 @@ public static class ThirdPartyAssessmentEndpoints
         group.MapPut("/assignThirdParty", AssignThirdParty);
         group.MapPut("/unassignThirdParty", UnassignThirdParty);
 
-    group.MapPut("/addToIssues", AddToIssues);
-    group.MapPut("/removeFromIssues", RemoveFromIssues);
+        group.MapPut("/addToIssues", AddToIssues);
+        group.MapPut("/removeFromIssues", RemoveFromIssues);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class ThirdPartyAssessmentEndpoints
     private static async Task<IResult> Create(
         ThirdPartyAssessmentRequest request,
         IThirdPartyAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToThirdPartyAssessment( request );
+        var model = mapRequestToThirdPartyAssessment(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class ThirdPartyAssessmentEndpoints
     private static async Task<IResult> Update(
         ThirdPartyAssessmentRequest request,
         IThirdPartyAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToThirdPartyAssessment( request );
+        var model = mapRequestToThirdPartyAssessment(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class ThirdPartyAssessmentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IThirdPartyAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var thirdPartyAssessment = await service.Get(identifier, cancellationToken);
-        return thirdPartyAssessment is null ? Results.NotFound() : Results.Ok( thirdPartyAssessment );
+        return thirdPartyAssessment is null ? Results.NotFound() : Results.Ok(thirdPartyAssessment);
     }
 
 
     private static async Task<IResult> GetAll(
         IThirdPartyAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ThirdPartyAssessmentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ThirdPartyAssessmentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IThirdPartyAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class ThirdPartyAssessmentEndpoints
     private static async Task<IResult> AssignThirdParty(
         AssociationRequest request,
         IThirdPartyAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignThirdParty(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class ThirdPartyAssessmentEndpoints
     private static async Task<IResult> UnassignThirdParty(
     AssociationRequest request,
     IThirdPartyAssessmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignThirdParty(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ThirdPartyAssessmentEndpoints
     private static async Task<IResult> AddToIssues(
         MultipleAssociationRequest request,
         IThirdPartyAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToIssues(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class ThirdPartyAssessmentEndpoints
     private static async Task<IResult> RemoveFromIssues(
         MultipleAssociationRequest request,
         IThirdPartyAssessmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromIssues(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static ThirdPartyAssessment mapRequestToThirdPartyAssessment( ThirdPartyAssessmentRequest request ) {
+    private static ThirdPartyAssessment mapRequestToThirdPartyAssessment(ThirdPartyAssessmentRequest request)
+    {
         var model = new ThirdPartyAssessment
         {
             Id = request.Id,

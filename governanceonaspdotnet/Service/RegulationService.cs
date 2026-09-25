@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IRegulationService {
+public interface IRegulationService
+{
 
-    Task Create(Regulation model , CancellationToken cancellationToken);
+    Task Create(Regulation model, CancellationToken cancellationToken);
     Task<bool> Update(Regulation model, CancellationToken cancellationToken);
     Task<Regulation?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Regulation>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class RegulationService : IRegulationService
 
     public async Task<bool> Update(Regulation model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,8 +123,10 @@ public class RegulationService : IRegulationService
     }
 
 
-    public async Task<bool> AddToObligations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToObligations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Regulation",
                 "AddToObligations",
@@ -130,16 +134,18 @@ public class RegulationService : IRegulationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromObligations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromObligations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Regulation",
                 "RemoveFromObligations",
@@ -155,8 +161,10 @@ public class RegulationService : IRegulationService
         return true;
     }
 
-    public async Task<bool> AddToCompliancePrograms(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCompliancePrograms(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Regulation",
                 "AddToCompliancePrograms",
@@ -164,16 +172,18 @@ public class RegulationService : IRegulationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCompliancePrograms(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCompliancePrograms(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Regulation",
                 "RemoveFromCompliancePrograms",

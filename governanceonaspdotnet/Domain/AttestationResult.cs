@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum AttestationResult
 {
-    Affirmative=1,Negative=2,Qualified=3
+    Affirmative = 1, Negative = 2, Qualified = 3
 }
 
 /// <summary>

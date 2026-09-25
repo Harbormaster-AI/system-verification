@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum TestType
 {
-    DesignEffectiveness=1,OperatingEffectiveness=2,Walkthrough=3,Reperformance=4,Inquiry=5,Observation=6,Inspection=7,DataAnalysis=8
+    DesignEffectiveness = 1, OperatingEffectiveness = 2, Walkthrough = 3, Reperformance = 4, Inquiry = 5, Observation = 6, Inspection = 7, DataAnalysis = 8
 }
 
 /// <summary>

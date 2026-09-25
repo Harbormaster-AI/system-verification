@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface ILegalHoldService {
+public interface ILegalHoldService
+{
 
-    Task Create(LegalHold model , CancellationToken cancellationToken);
+    Task Create(LegalHold model, CancellationToken cancellationToken);
     Task<bool> Update(LegalHold model, CancellationToken cancellationToken);
     Task<LegalHold?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<LegalHold>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class LegalHoldService : ILegalHoldService
 
     public async Task<bool> Update(LegalHold model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class LegalHoldService : ILegalHoldService
         return true;
     }
 
-    public async Task<bool> AssignMatter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMatter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class LegalHoldService : ILegalHoldService
 
             var child = await _serviceResolver.Get<MatterService>().Get(childRequest, cancellationToken);
             parent.Matter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class LegalHoldService : ILegalHoldService
         return true;
     }
 
-    public async Task<bool> UnassignMatter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMatter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class LegalHoldService : ILegalHoldService
         try
         {
             parent.Matter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,8 +181,10 @@ public class LegalHoldService : ILegalHoldService
     }
 
 
-    public async Task<bool> AddToRepositories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRepositories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LegalHold",
                 "AddToRepositories",
@@ -186,16 +192,18 @@ public class LegalHoldService : ILegalHoldService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRepositories(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRepositories(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LegalHold",
                 "RemoveFromRepositories",
@@ -211,8 +219,10 @@ public class LegalHoldService : ILegalHoldService
         return true;
     }
 
-    public async Task<bool> AddToRecords(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRecords(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LegalHold",
                 "AddToRecords",
@@ -220,16 +230,18 @@ public class LegalHoldService : ILegalHoldService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRecords(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRecords(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LegalHold",
                 "RemoveFromRecords",

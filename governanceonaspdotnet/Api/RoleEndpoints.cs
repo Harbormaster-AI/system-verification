@@ -18,8 +18,8 @@ public static class RoleEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToAssignments", AddToAssignments);
-    group.MapPut("/removeFromAssignments", RemoveFromAssignments);
+        group.MapPut("/addToAssignments", AddToAssignments);
+        group.MapPut("/removeFromAssignments", RemoveFromAssignments);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class RoleEndpoints
     private static async Task<IResult> Create(
         RoleRequest request,
         IRoleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRole( request );
+        var model = mapRequestToRole(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class RoleEndpoints
     private static async Task<IResult> Update(
         RoleRequest request,
         IRoleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRole( request );
+        var model = mapRequestToRole(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class RoleEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRoleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var role = await service.Get(identifier, cancellationToken);
-        return role is null ? Results.NotFound() : Results.Ok( role );
+        return role is null ? Results.NotFound() : Results.Ok(role);
     }
 
 
     private static async Task<IResult> GetAll(
         IRoleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RoleResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RoleResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRoleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class RoleEndpoints
     private static async Task<IResult> AddToAssignments(
         MultipleAssociationRequest request,
         IRoleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAssignments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class RoleEndpoints
     private static async Task<IResult> RemoveFromAssignments(
         MultipleAssociationRequest request,
         IRoleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAssignments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Role mapRequestToRole( RoleRequest request ) {
+    private static Role mapRequestToRole(RoleRequest request)
+    {
         var model = new Role
         {
             Id = request.Id,

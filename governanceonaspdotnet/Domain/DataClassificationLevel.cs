@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum DataClassificationLevel
 {
-    Public=1,Internal=2,Confidential=3,Restricted=4,HighlyRestricted=5
+    Public = 1, Internal = 2, Confidential = 3, Restricted = 4, HighlyRestricted = 5
 }
 
 /// <summary>

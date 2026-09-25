@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum RecordType
 {
-    PolicyRecord=1,ContractRecord=2,FinancialRecord=3,HRRecord=4,CustomerRecord=5,TechnicalRecord=6,AuditRecord=7,LegalRecord=8
+    PolicyRecord = 1, ContractRecord = 2, FinancialRecord = 3, HRRecord = 4, CustomerRecord = 5, TechnicalRecord = 6, AuditRecord = 7, LegalRecord = 8
 }
 
 /// <summary>

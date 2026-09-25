@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IRoleService {
+public interface IRoleService
+{
 
-    Task Create(Role model , CancellationToken cancellationToken);
+    Task Create(Role model, CancellationToken cancellationToken);
     Task<bool> Update(Role model, CancellationToken cancellationToken);
     Task<Role?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Role>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class RoleService : IRoleService
 
     public async Task<bool> Update(Role model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,8 +119,10 @@ public class RoleService : IRoleService
     }
 
 
-    public async Task<bool> AddToAssignments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAssignments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Role",
                 "AddToAssignments",
@@ -126,16 +130,18 @@ public class RoleService : IRoleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAssignments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAssignments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Role",
                 "RemoveFromAssignments",

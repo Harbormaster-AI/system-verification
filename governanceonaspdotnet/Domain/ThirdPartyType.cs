@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ThirdPartyType
 {
-    Vendor=1,Processor=2,JointController=3,Subprocessor=4,Partner=5,Consultant=6
+    Vendor = 1, Processor = 2, JointController = 3, Subprocessor = 4, Partner = 5, Consultant = 6
 }
 
 /// <summary>

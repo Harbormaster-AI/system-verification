@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum AuditCycle
 {
-    Annual=1,SemiAnnual=2,Quarterly=3,Continuous=4,OneTime=5
+    Annual = 1, SemiAnnual = 2, Quarterly = 3, Continuous = 4, OneTime = 5
 }
 
 /// <summary>

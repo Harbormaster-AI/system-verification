@@ -29,9 +29,10 @@ public static class DispositionReviewEndpoints
     private static async Task<IResult> Create(
         DispositionReviewRequest request,
         IDispositionReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDispositionReview( request );
+        var model = mapRequestToDispositionReview(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class DispositionReviewEndpoints
     private static async Task<IResult> Update(
         DispositionReviewRequest request,
         IDispositionReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDispositionReview( request );
+        var model = mapRequestToDispositionReview(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class DispositionReviewEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDispositionReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var dispositionReview = await service.Get(identifier, cancellationToken);
-        return dispositionReview is null ? Results.NotFound() : Results.Ok( dispositionReview );
+        return dispositionReview is null ? Results.NotFound() : Results.Ok(dispositionReview);
     }
 
 
     private static async Task<IResult> GetAll(
         IDispositionReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DispositionReviewResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DispositionReviewResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDispositionReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class DispositionReviewEndpoints
     private static async Task<IResult> AssignRecord(
         AssociationRequest request,
         IDispositionReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRecord(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class DispositionReviewEndpoints
     private static async Task<IResult> UnassignRecord(
     AssociationRequest request,
     IDispositionReviewService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRecord(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class DispositionReviewEndpoints
     private static async Task<IResult> AssignRetentionSchedule(
         AssociationRequest request,
         IDispositionReviewService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRetentionSchedule(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class DispositionReviewEndpoints
     private static async Task<IResult> UnassignRetentionSchedule(
     AssociationRequest request,
     IDispositionReviewService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRetentionSchedule(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static DispositionReview mapRequestToDispositionReview( DispositionReviewRequest request ) {
+    private static DispositionReview mapRequestToDispositionReview(DispositionReviewRequest request)
+    {
         var model = new DispositionReview
         {
             Id = request.Id,

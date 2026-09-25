@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IDispositionReviewService {
+public interface IDispositionReviewService
+{
 
-    Task Create(DispositionReview model , CancellationToken cancellationToken);
+    Task Create(DispositionReview model, CancellationToken cancellationToken);
     Task<bool> Update(DispositionReview model, CancellationToken cancellationToken);
     Task<DispositionReview?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DispositionReview>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class DispositionReviewService : IDispositionReviewService
 
     public async Task<bool> Update(DispositionReview model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class DispositionReviewService : IDispositionReviewService
         return true;
     }
 
-    public async Task<bool> AssignRecord(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRecord(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class DispositionReviewService : IDispositionReviewService
 
             var child = await _serviceResolver.Get<Record_Service>().Get(childRequest, cancellationToken);
             parent.Record = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class DispositionReviewService : IDispositionReviewService
         return true;
     }
 
-    public async Task<bool> UnassignRecord(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRecord(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class DispositionReviewService : IDispositionReviewService
         try
         {
             parent.Record = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class DispositionReviewService : IDispositionReviewService
         return true;
     }
 
-    public async Task<bool> AssignRetentionSchedule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRetentionSchedule(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class DispositionReviewService : IDispositionReviewService
 
             var child = await _serviceResolver.Get<RetentionScheduleService>().Get(childRequest, cancellationToken);
             parent.RetentionSchedule = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class DispositionReviewService : IDispositionReviewService
         return true;
     }
 
-    public async Task<bool> UnassignRetentionSchedule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRetentionSchedule(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class DispositionReviewService : IDispositionReviewService
         try
         {
             parent.RetentionSchedule = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

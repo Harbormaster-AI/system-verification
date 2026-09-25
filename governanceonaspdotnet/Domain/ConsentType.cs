@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ConsentType
 {
-    Marketing=1,Profiling=2,Cookies=3,Location=4,Biometric=5
+    Marketing = 1, Profiling = 2, Cookies = 3, Location = 4, Biometric = 5
 }
 
 /// <summary>

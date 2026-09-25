@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum GovernanceBodyType
 {
-    Board=1,Committee=2,Council=3,WorkingGroup=4
+    Board = 1, Committee = 2, Council = 3, WorkingGroup = 4
 }
 
 /// <summary>

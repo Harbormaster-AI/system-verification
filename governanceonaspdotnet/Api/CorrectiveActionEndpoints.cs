@@ -29,9 +29,10 @@ public static class CorrectiveActionEndpoints
     private static async Task<IResult> Create(
         CorrectiveActionRequest request,
         ICorrectiveActionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCorrectiveAction( request );
+        var model = mapRequestToCorrectiveAction(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class CorrectiveActionEndpoints
     private static async Task<IResult> Update(
         CorrectiveActionRequest request,
         ICorrectiveActionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCorrectiveAction( request );
+        var model = mapRequestToCorrectiveAction(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class CorrectiveActionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICorrectiveActionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var correctiveAction = await service.Get(identifier, cancellationToken);
-        return correctiveAction is null ? Results.NotFound() : Results.Ok( correctiveAction );
+        return correctiveAction is null ? Results.NotFound() : Results.Ok(correctiveAction);
     }
 
 
     private static async Task<IResult> GetAll(
         ICorrectiveActionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CorrectiveActionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CorrectiveActionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICorrectiveActionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class CorrectiveActionEndpoints
     private static async Task<IResult> AssignFinding(
         AssociationRequest request,
         ICorrectiveActionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignFinding(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class CorrectiveActionEndpoints
     private static async Task<IResult> UnassignFinding(
     AssociationRequest request,
     ICorrectiveActionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignFinding(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class CorrectiveActionEndpoints
     private static async Task<IResult> AssignIssue(
         AssociationRequest request,
         ICorrectiveActionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignIssue(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class CorrectiveActionEndpoints
     private static async Task<IResult> UnassignIssue(
     AssociationRequest request,
     ICorrectiveActionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignIssue(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static CorrectiveAction mapRequestToCorrectiveAction( CorrectiveActionRequest request ) {
+    private static CorrectiveAction mapRequestToCorrectiveAction(CorrectiveActionRequest request)
+    {
         var model = new CorrectiveAction
         {
             Id = request.Id,

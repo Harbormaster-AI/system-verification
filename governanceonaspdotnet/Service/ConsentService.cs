@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IConsentService {
+public interface IConsentService
+{
 
-    Task Create(Consent model , CancellationToken cancellationToken);
+    Task Create(Consent model, CancellationToken cancellationToken);
     Task<bool> Update(Consent model, CancellationToken cancellationToken);
     Task<Consent?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Consent>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ConsentService : IConsentService
 
     public async Task<bool> Update(Consent model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class ConsentService : IConsentService
         return true;
     }
 
-    public async Task<bool> AssignPrivacyNotice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPrivacyNotice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class ConsentService : IConsentService
 
             var child = await _serviceResolver.Get<PrivacyNoticeService>().Get(childRequest, cancellationToken);
             parent.PrivacyNotice = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class ConsentService : IConsentService
         return true;
     }
 
-    public async Task<bool> UnassignPrivacyNotice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPrivacyNotice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class ConsentService : IConsentService
         try
         {
             parent.PrivacyNotice = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class ConsentService : IConsentService
     }
 
 
-    public async Task<bool> AddToProcessingActivities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToProcessingActivities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Consent",
                 "AddToProcessingActivities",
@@ -184,16 +190,18 @@ public class ConsentService : IConsentService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromProcessingActivities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromProcessingActivities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Consent",
                 "RemoveFromProcessingActivities",

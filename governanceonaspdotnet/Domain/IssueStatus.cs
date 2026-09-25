@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum IssueStatus
 {
-    Open=1,Investigating=2,RemediationPlanned=3,RemediationInProgress=4,Verified=5,Closed=6
+    Open = 1, Investigating = 2, RemediationPlanned = 3, RemediationInProgress = 4, Verified = 5, Closed = 6
 }
 
 /// <summary>

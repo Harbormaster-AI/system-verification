@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface ICorrectiveActionService {
+public interface ICorrectiveActionService
+{
 
-    Task Create(CorrectiveAction model , CancellationToken cancellationToken);
+    Task Create(CorrectiveAction model, CancellationToken cancellationToken);
     Task<bool> Update(CorrectiveAction model, CancellationToken cancellationToken);
     Task<CorrectiveAction?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CorrectiveAction>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class CorrectiveActionService : ICorrectiveActionService
 
     public async Task<bool> Update(CorrectiveAction model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class CorrectiveActionService : ICorrectiveActionService
         return true;
     }
 
-    public async Task<bool> AssignFinding(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFinding(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class CorrectiveActionService : ICorrectiveActionService
 
             var child = await _serviceResolver.Get<AuditFindingService>().Get(childRequest, cancellationToken);
             parent.Finding = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class CorrectiveActionService : ICorrectiveActionService
         return true;
     }
 
-    public async Task<bool> UnassignFinding(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFinding(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class CorrectiveActionService : ICorrectiveActionService
         try
         {
             parent.Finding = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class CorrectiveActionService : ICorrectiveActionService
         return true;
     }
 
-    public async Task<bool> AssignIssue(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignIssue(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class CorrectiveActionService : ICorrectiveActionService
 
             var child = await _serviceResolver.Get<IssueService>().Get(childRequest, cancellationToken);
             parent.Issue = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class CorrectiveActionService : ICorrectiveActionService
         return true;
     }
 
-    public async Task<bool> UnassignIssue(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignIssue(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class CorrectiveActionService : ICorrectiveActionService
         try
         {
             parent.Issue = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

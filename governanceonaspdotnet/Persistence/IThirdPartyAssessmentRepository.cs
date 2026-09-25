@@ -11,7 +11,7 @@ public interface IThirdPartyAssessmentRepository
     Task UpdateAsync(ThirdPartyAssessment thirdPartyAssessment, CancellationToken cancellationToken);
     Task DeleteAsync(ThirdPartyAssessment thirdPartyAssessment, CancellationToken cancellationToken);
 
-    Task AddToIssuesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromIssuesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToIssuesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromIssuesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

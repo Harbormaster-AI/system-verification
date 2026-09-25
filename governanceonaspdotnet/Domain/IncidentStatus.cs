@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum IncidentStatus
 {
-    Identified=1,Contained=2,Notified=3,Resolved=4,Closed=5
+    Identified = 1, Contained = 2, Notified = 3, Resolved = 4, Closed = 5
 }
 
 /// <summary>

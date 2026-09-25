@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IRoleAssignmentService {
+public interface IRoleAssignmentService
+{
 
-    Task Create(RoleAssignment model , CancellationToken cancellationToken);
+    Task Create(RoleAssignment model, CancellationToken cancellationToken);
     Task<bool> Update(RoleAssignment model, CancellationToken cancellationToken);
     Task<RoleAssignment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RoleAssignment>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class RoleAssignmentService : IRoleAssignmentService
 
     public async Task<bool> Update(RoleAssignment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class RoleAssignmentService : IRoleAssignmentService
         return true;
     }
 
-    public async Task<bool> AssignPerson(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPerson(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class RoleAssignmentService : IRoleAssignmentService
 
             var child = await _serviceResolver.Get<PersonService>().Get(childRequest, cancellationToken);
             parent.Person = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class RoleAssignmentService : IRoleAssignmentService
         return true;
     }
 
-    public async Task<bool> UnassignPerson(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPerson(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class RoleAssignmentService : IRoleAssignmentService
         try
         {
             parent.Person = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class RoleAssignmentService : IRoleAssignmentService
         return true;
     }
 
-    public async Task<bool> AssignRole(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRole(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class RoleAssignmentService : IRoleAssignmentService
 
             var child = await _serviceResolver.Get<RoleService>().Get(childRequest, cancellationToken);
             parent.Role = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class RoleAssignmentService : IRoleAssignmentService
         return true;
     }
 
-    public async Task<bool> UnassignRole(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRole(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class RoleAssignmentService : IRoleAssignmentService
         try
         {
             parent.Role = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class RoleAssignmentService : IRoleAssignmentService
         return true;
     }
 
-    public async Task<bool> AssignGovernanceBody(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignGovernanceBody(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class RoleAssignmentService : IRoleAssignmentService
 
             var child = await _serviceResolver.Get<GovernanceBodyService>().Get(childRequest, cancellationToken);
             parent.GovernanceBody = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class RoleAssignmentService : IRoleAssignmentService
         return true;
     }
 
-    public async Task<bool> UnassignGovernanceBody(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignGovernanceBody(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class RoleAssignmentService : IRoleAssignmentService
         try
         {
             parent.GovernanceBody = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -281,7 +289,8 @@ public class RoleAssignmentService : IRoleAssignmentService
         return true;
     }
 
-    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -299,7 +308,7 @@ public class RoleAssignmentService : IRoleAssignmentService
 
             var child = await _serviceResolver.Get<OrganizationService>().Get(childRequest, cancellationToken);
             parent.Organization = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -311,7 +320,8 @@ public class RoleAssignmentService : IRoleAssignmentService
         return true;
     }
 
-    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -322,7 +332,7 @@ public class RoleAssignmentService : IRoleAssignmentService
         try
         {
             parent.Organization = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

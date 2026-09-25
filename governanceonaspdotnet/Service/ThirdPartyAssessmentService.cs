@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IThirdPartyAssessmentService {
+public interface IThirdPartyAssessmentService
+{
 
-    Task Create(ThirdPartyAssessment model , CancellationToken cancellationToken);
+    Task Create(ThirdPartyAssessment model, CancellationToken cancellationToken);
     Task<bool> Update(ThirdPartyAssessment model, CancellationToken cancellationToken);
     Task<ThirdPartyAssessment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ThirdPartyAssessment>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ThirdPartyAssessmentService : IThirdPartyAssessmentService
 
     public async Task<bool> Update(ThirdPartyAssessment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class ThirdPartyAssessmentService : IThirdPartyAssessmentService
         return true;
     }
 
-    public async Task<bool> AssignThirdParty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignThirdParty(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class ThirdPartyAssessmentService : IThirdPartyAssessmentService
 
             var child = await _serviceResolver.Get<ThirdPartyService>().Get(childRequest, cancellationToken);
             parent.ThirdParty = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class ThirdPartyAssessmentService : IThirdPartyAssessmentService
         return true;
     }
 
-    public async Task<bool> UnassignThirdParty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignThirdParty(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class ThirdPartyAssessmentService : IThirdPartyAssessmentService
         try
         {
             parent.ThirdParty = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,8 +178,10 @@ public class ThirdPartyAssessmentService : IThirdPartyAssessmentService
     }
 
 
-    public async Task<bool> AddToIssues(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToIssues(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ThirdPartyAssessment",
                 "AddToIssues",
@@ -183,16 +189,18 @@ public class ThirdPartyAssessmentService : IThirdPartyAssessmentService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromIssues(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromIssues(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ThirdPartyAssessment",
                 "RemoveFromIssues",

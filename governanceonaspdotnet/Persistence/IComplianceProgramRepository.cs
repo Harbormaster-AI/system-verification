@@ -11,13 +11,13 @@ public interface IComplianceProgramRepository
     Task UpdateAsync(ComplianceProgram complianceProgram, CancellationToken cancellationToken);
     Task DeleteAsync(ComplianceProgram complianceProgram, CancellationToken cancellationToken);
 
-    Task AddToRequirementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRequirementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToControlsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromControlsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToAttestationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAttestationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToRegulationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRegulationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRequirementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRequirementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToControlsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromControlsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAttestationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAttestationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRegulationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRegulationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

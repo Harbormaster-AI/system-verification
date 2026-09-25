@@ -33,9 +33,10 @@ public static class Exception_Endpoints
     private static async Task<IResult> Create(
         Exception_Request request,
         IException_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToException_( request );
+        var model = mapRequestToException_(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class Exception_Endpoints
     private static async Task<IResult> Update(
         Exception_Request request,
         IException_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToException_( request );
+        var model = mapRequestToException_(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class Exception_Endpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IException_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var exception_ = await service.Get(identifier, cancellationToken);
-        return exception_ is null ? Results.NotFound() : Results.Ok( exception_ );
+        return exception_ is null ? Results.NotFound() : Results.Ok(exception_);
     }
 
 
     private static async Task<IResult> GetAll(
         IException_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( Exception_Response.FromModel ) );
-        }
+        return Results.Ok(all.Select(Exception_Response.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IException_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class Exception_Endpoints
     private static async Task<IResult> AssignRetentionSchedule(
         AssociationRequest request,
         IException_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRetentionSchedule(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class Exception_Endpoints
     private static async Task<IResult> UnassignRetentionSchedule(
     AssociationRequest request,
     IException_Service service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRetentionSchedule(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class Exception_Endpoints
     private static async Task<IResult> AssignPolicy(
         AssociationRequest request,
         IException_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPolicy(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class Exception_Endpoints
     private static async Task<IResult> UnassignPolicy(
     AssociationRequest request,
     IException_Service service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPolicy(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class Exception_Endpoints
     private static async Task<IResult> AssignControl(
         AssociationRequest request,
         IException_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignControl(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class Exception_Endpoints
     private static async Task<IResult> UnassignControl(
     AssociationRequest request,
     IException_Service service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignControl(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class Exception_Endpoints
     private static async Task<IResult> AssignRisk(
         AssociationRequest request,
         IException_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRisk(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class Exception_Endpoints
     private static async Task<IResult> UnassignRisk(
     AssociationRequest request,
     IException_Service service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRisk(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Exception_ mapRequestToException_( Exception_Request request ) {
+    private static Exception_ mapRequestToException_(Exception_Request request)
+    {
         var model = new Exception_
         {
             Id = request.Id,

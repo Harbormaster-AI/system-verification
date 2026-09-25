@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum LawfulBasis
 {
-    Consent=1,Contract=2,LegalObligation=3,VitalInterests=4,PublicTask=5,LegitimateInterests=6
+    Consent = 1, Contract = 2, LegalObligation = 3, VitalInterests = 4, PublicTask = 5, LegitimateInterests = 6
 }
 
 /// <summary>

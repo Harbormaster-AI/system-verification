@@ -11,11 +11,11 @@ public interface IComplianceRequirementRepository
     Task UpdateAsync(ComplianceRequirement complianceRequirement, CancellationToken cancellationToken);
     Task DeleteAsync(ComplianceRequirement complianceRequirement, CancellationToken cancellationToken);
 
-    Task AddToPoliciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPoliciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToControlsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromControlsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToObligationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromObligationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPoliciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPoliciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToControlsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromControlsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToObligationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromObligationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

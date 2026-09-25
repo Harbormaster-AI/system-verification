@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum AssessmentType
 {
-    SelfAssessment=1,InternalAssessment=2,ExternalAssessment=3,ReadinessReview=4
+    SelfAssessment = 1, InternalAssessment = 2, ExternalAssessment = 3, ReadinessReview = 4
 }
 
 /// <summary>

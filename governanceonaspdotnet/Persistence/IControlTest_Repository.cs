@@ -11,7 +11,7 @@ public interface IControlTest_Repository
     Task UpdateAsync(ControlTest_ controlTest_, CancellationToken cancellationToken);
     Task DeleteAsync(ControlTest_ controlTest_, CancellationToken cancellationToken);
 
-    Task AddToEvidenceAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromEvidenceAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToEvidenceAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromEvidenceAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

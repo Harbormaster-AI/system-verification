@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum RetentionTrigger
 {
-    CreationDate=1,LastModified=2,Termination=3,ContractEnd=4,EventCompletion=5,FiscalYearEnd=6
+    CreationDate = 1, LastModified = 2, Termination = 3, ContractEnd = 4, EventCompletion = 5, FiscalYearEnd = 6
 }
 
 /// <summary>

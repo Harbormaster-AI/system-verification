@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IAuditEngagementService {
+public interface IAuditEngagementService
+{
 
-    Task Create(AuditEngagement model , CancellationToken cancellationToken);
+    Task Create(AuditEngagement model, CancellationToken cancellationToken);
     Task<bool> Update(AuditEngagement model, CancellationToken cancellationToken);
     Task<AuditEngagement?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AuditEngagement>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class AuditEngagementService : IAuditEngagementService
 
     public async Task<bool> Update(AuditEngagement model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class AuditEngagementService : IAuditEngagementService
         return true;
     }
 
-    public async Task<bool> AssignAuditProgram(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAuditProgram(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class AuditEngagementService : IAuditEngagementService
 
             var child = await _serviceResolver.Get<AuditProgramService>().Get(childRequest, cancellationToken);
             parent.AuditProgram = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class AuditEngagementService : IAuditEngagementService
         return true;
     }
 
-    public async Task<bool> UnassignAuditProgram(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAuditProgram(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class AuditEngagementService : IAuditEngagementService
         try
         {
             parent.AuditProgram = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -180,8 +184,10 @@ public class AuditEngagementService : IAuditEngagementService
     }
 
 
-    public async Task<bool> AddToBusinessUnits(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToBusinessUnits(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditEngagement",
                 "AddToBusinessUnits",
@@ -189,16 +195,18 @@ public class AuditEngagementService : IAuditEngagementService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromBusinessUnits(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromBusinessUnits(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditEngagement",
                 "RemoveFromBusinessUnits",
@@ -214,8 +222,10 @@ public class AuditEngagementService : IAuditEngagementService
         return true;
     }
 
-    public async Task<bool> AddToControlTests(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToControlTests(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditEngagement",
                 "AddToControlTests",
@@ -223,16 +233,18 @@ public class AuditEngagementService : IAuditEngagementService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromControlTests(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromControlTests(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditEngagement",
                 "RemoveFromControlTests",
@@ -248,8 +260,10 @@ public class AuditEngagementService : IAuditEngagementService
         return true;
     }
 
-    public async Task<bool> AddToWorkpapers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToWorkpapers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditEngagement",
                 "AddToWorkpapers",
@@ -257,16 +271,18 @@ public class AuditEngagementService : IAuditEngagementService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromWorkpapers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromWorkpapers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditEngagement",
                 "RemoveFromWorkpapers",
@@ -282,8 +298,10 @@ public class AuditEngagementService : IAuditEngagementService
         return true;
     }
 
-    public async Task<bool> AddToFindings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFindings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditEngagement",
                 "AddToFindings",
@@ -291,16 +309,18 @@ public class AuditEngagementService : IAuditEngagementService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFindings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFindings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditEngagement",
                 "RemoveFromFindings",

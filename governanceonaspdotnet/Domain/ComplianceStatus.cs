@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ComplianceStatus
 {
-    NotStarted=1,InProgress=2,Compliant=3,NonCompliant=4,Waived=5
+    NotStarted = 1, InProgress = 2, Compliant = 3, NonCompliant = 4, Waived = 5
 }
 
 /// <summary>

@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IControlTest_Service {
+public interface IControlTest_Service
+{
 
-    Task Create(ControlTest_ model , CancellationToken cancellationToken);
+    Task Create(ControlTest_ model, CancellationToken cancellationToken);
     Task<bool> Update(ControlTest_ model, CancellationToken cancellationToken);
     Task<ControlTest_?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ControlTest_>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ControlTest_Service : IControlTest_Service
 
     public async Task<bool> Update(ControlTest_ model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class ControlTest_Service : IControlTest_Service
         return true;
     }
 
-    public async Task<bool> AssignControl(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignControl(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class ControlTest_Service : IControlTest_Service
 
             var child = await _serviceResolver.Get<ControlService>().Get(childRequest, cancellationToken);
             parent.Control = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class ControlTest_Service : IControlTest_Service
         return true;
     }
 
-    public async Task<bool> UnassignControl(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignControl(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class ControlTest_Service : IControlTest_Service
         try
         {
             parent.Control = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class ControlTest_Service : IControlTest_Service
         return true;
     }
 
-    public async Task<bool> AssignEngagement(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEngagement(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class ControlTest_Service : IControlTest_Service
 
             var child = await _serviceResolver.Get<AuditEngagementService>().Get(childRequest, cancellationToken);
             parent.Engagement = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class ControlTest_Service : IControlTest_Service
         return true;
     }
 
-    public async Task<bool> UnassignEngagement(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEngagement(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class ControlTest_Service : IControlTest_Service
         try
         {
             parent.Engagement = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -232,8 +238,10 @@ public class ControlTest_Service : IControlTest_Service
     }
 
 
-    public async Task<bool> AddToEvidence(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEvidence(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ControlTest_",
                 "AddToEvidence",
@@ -241,16 +249,18 @@ public class ControlTest_Service : IControlTest_Service
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEvidence(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEvidence(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ControlTest_",
                 "RemoveFromEvidence",

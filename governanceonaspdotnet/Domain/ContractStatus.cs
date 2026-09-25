@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ContractStatus
 {
-    Draft=1,Active=2,Expiring=3,Terminated=4,Archived=5
+    Draft = 1, Active = 2, Expiring = 3, Terminated = 4, Archived = 5
 }
 
 /// <summary>

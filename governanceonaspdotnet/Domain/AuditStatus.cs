@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum AuditStatus
 {
-    Planned=1,Fieldwork=2,Reporting=3,Closed=4,OnHold=5
+    Planned = 1, Fieldwork = 2, Reporting = 3, Closed = 4, OnHold = 5
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum RiskImpact
 {
-    Insignificant=1,Minor=2,Moderate=3,Major=4,Severe=5
+    Insignificant = 1, Minor = 2, Moderate = 3, Major = 4, Severe = 5
 }
 
 /// <summary>

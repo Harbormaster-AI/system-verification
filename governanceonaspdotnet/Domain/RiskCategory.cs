@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum RiskCategory
 {
-    Strategic=1,Operational=2,Financial=3,Compliance=4,Reputational=5,Privacy=6,Cybersecurity=7,ThirdParty=8
+    Strategic = 1, Operational = 2, Financial = 3, Compliance = 4, Reputational = 5, Privacy = 6, Cybersecurity = 7, ThirdParty = 8
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum PolicyType
 {
-    InformationSecurity=1,DataProtection=2,Ethics=3,RecordsManagement=4,RiskManagement=5,Compliance=6,Privacy=7,AcceptableUse=8
+    InformationSecurity = 1, DataProtection = 2, Ethics = 3, RecordsManagement = 4, RiskManagement = 5, Compliance = 6, Privacy = 7, AcceptableUse = 8
 }
 
 /// <summary>

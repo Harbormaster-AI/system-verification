@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum EvidenceType
 {
-    Document=1,Screenshot=2,LogExport=3,SystemReport=4,Ticket=5,Attestation=6,Configuration=7,Dataset=8
+    Document = 1, Screenshot = 2, LogExport = 3, SystemReport = 4, Ticket = 5, Attestation = 6, Configuration = 7, Dataset = 8
 }
 
 /// <summary>

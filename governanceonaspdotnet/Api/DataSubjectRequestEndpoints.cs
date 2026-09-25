@@ -20,11 +20,11 @@ public static class DataSubjectRequestEndpoints
         group.MapPut("/assignOrganization", AssignOrganization);
         group.MapPut("/unassignOrganization", UnassignOrganization);
 
-    group.MapPut("/addToProcessingActivities", AddToProcessingActivities);
-    group.MapPut("/removeFromProcessingActivities", RemoveFromProcessingActivities);
+        group.MapPut("/addToProcessingActivities", AddToProcessingActivities);
+        group.MapPut("/removeFromProcessingActivities", RemoveFromProcessingActivities);
 
-    group.MapPut("/addToRecords", AddToRecords);
-    group.MapPut("/removeFromRecords", RemoveFromRecords);
+        group.MapPut("/addToRecords", AddToRecords);
+        group.MapPut("/removeFromRecords", RemoveFromRecords);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class DataSubjectRequestEndpoints
     private static async Task<IResult> Create(
         DataSubjectRequestRequest request,
         IDataSubjectRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDataSubjectRequest( request );
+        var model = mapRequestToDataSubjectRequest(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class DataSubjectRequestEndpoints
     private static async Task<IResult> Update(
         DataSubjectRequestRequest request,
         IDataSubjectRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDataSubjectRequest( request );
+        var model = mapRequestToDataSubjectRequest(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class DataSubjectRequestEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDataSubjectRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var dataSubjectRequest = await service.Get(identifier, cancellationToken);
-        return dataSubjectRequest is null ? Results.NotFound() : Results.Ok( dataSubjectRequest );
+        return dataSubjectRequest is null ? Results.NotFound() : Results.Ok(dataSubjectRequest);
     }
 
 
     private static async Task<IResult> GetAll(
         IDataSubjectRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DataSubjectRequestResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DataSubjectRequestResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDataSubjectRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class DataSubjectRequestEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IDataSubjectRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class DataSubjectRequestEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IDataSubjectRequestService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class DataSubjectRequestEndpoints
     private static async Task<IResult> AddToProcessingActivities(
         MultipleAssociationRequest request,
         IDataSubjectRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToProcessingActivities(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class DataSubjectRequestEndpoints
     private static async Task<IResult> RemoveFromProcessingActivities(
         MultipleAssociationRequest request,
         IDataSubjectRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromProcessingActivities(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRecords(
         MultipleAssociationRequest request,
         IDataSubjectRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRecords(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class DataSubjectRequestEndpoints
     private static async Task<IResult> RemoveFromRecords(
         MultipleAssociationRequest request,
         IDataSubjectRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRecords(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static DataSubjectRequest mapRequestToDataSubjectRequest( DataSubjectRequestRequest request ) {
+    private static DataSubjectRequest mapRequestToDataSubjectRequest(DataSubjectRequestRequest request)
+    {
         var model = new DataSubjectRequest
         {
             Id = request.Id,

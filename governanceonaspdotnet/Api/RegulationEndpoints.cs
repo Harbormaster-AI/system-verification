@@ -18,11 +18,11 @@ public static class RegulationEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToObligations", AddToObligations);
-    group.MapPut("/removeFromObligations", RemoveFromObligations);
+        group.MapPut("/addToObligations", AddToObligations);
+        group.MapPut("/removeFromObligations", RemoveFromObligations);
 
-    group.MapPut("/addToCompliancePrograms", AddToCompliancePrograms);
-    group.MapPut("/removeFromCompliancePrograms", RemoveFromCompliancePrograms);
+        group.MapPut("/addToCompliancePrograms", AddToCompliancePrograms);
+        group.MapPut("/removeFromCompliancePrograms", RemoveFromCompliancePrograms);
 
 
         return app;
@@ -31,9 +31,10 @@ public static class RegulationEndpoints
     private static async Task<IResult> Create(
         RegulationRequest request,
         IRegulationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRegulation( request );
+        var model = mapRequestToRegulation(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class RegulationEndpoints
     private static async Task<IResult> Update(
         RegulationRequest request,
         IRegulationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRegulation( request );
+        var model = mapRequestToRegulation(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class RegulationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRegulationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var regulation = await service.Get(identifier, cancellationToken);
-        return regulation is null ? Results.NotFound() : Results.Ok( regulation );
+        return regulation is null ? Results.NotFound() : Results.Ok(regulation);
     }
 
 
     private static async Task<IResult> GetAll(
         IRegulationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RegulationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RegulationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRegulationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class RegulationEndpoints
     private static async Task<IResult> AddToObligations(
         MultipleAssociationRequest request,
         IRegulationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToObligations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -104,14 +110,16 @@ public static class RegulationEndpoints
     private static async Task<IResult> RemoveFromObligations(
         MultipleAssociationRequest request,
         IRegulationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromObligations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCompliancePrograms(
         MultipleAssociationRequest request,
         IRegulationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCompliancePrograms(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class RegulationEndpoints
     private static async Task<IResult> RemoveFromCompliancePrograms(
         MultipleAssociationRequest request,
         IRegulationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCompliancePrograms(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Regulation mapRequestToRegulation( RegulationRequest request ) {
+    private static Regulation mapRequestToRegulation(RegulationRequest request)
+    {
         var model = new Regulation
         {
             Id = request.Id,

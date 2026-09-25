@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IContractService {
+public interface IContractService
+{
 
-    Task Create(Contract model , CancellationToken cancellationToken);
+    Task Create(Contract model, CancellationToken cancellationToken);
     Task<bool> Update(Contract model, CancellationToken cancellationToken);
     Task<Contract?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Contract>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class ContractService : IContractService
 
     public async Task<bool> Update(Contract model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class ContractService : IContractService
         return true;
     }
 
-    public async Task<bool> AssignThirdParty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignThirdParty(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class ContractService : IContractService
 
             var child = await _serviceResolver.Get<ThirdPartyService>().Get(childRequest, cancellationToken);
             parent.ThirdParty = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class ContractService : IContractService
         return true;
     }
 
-    public async Task<bool> UnassignThirdParty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignThirdParty(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class ContractService : IContractService
         try
         {
             parent.ThirdParty = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class ContractService : IContractService
         return true;
     }
 
-    public async Task<bool> AssignMatter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMatter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class ContractService : IContractService
 
             var child = await _serviceResolver.Get<MatterService>().Get(childRequest, cancellationToken);
             parent.Matter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class ContractService : IContractService
         return true;
     }
 
-    public async Task<bool> UnassignMatter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMatter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class ContractService : IContractService
         try
         {
             parent.Matter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -232,8 +238,10 @@ public class ContractService : IContractService
     }
 
 
-    public async Task<bool> AddToObligations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToObligations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Contract",
                 "AddToObligations",
@@ -241,16 +249,18 @@ public class ContractService : IContractService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromObligations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromObligations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Contract",
                 "RemoveFromObligations",
@@ -266,8 +276,10 @@ public class ContractService : IContractService
         return true;
     }
 
-    public async Task<bool> AddToDataProcessingActivities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDataProcessingActivities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Contract",
                 "AddToDataProcessingActivities",
@@ -275,16 +287,18 @@ public class ContractService : IContractService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDataProcessingActivities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDataProcessingActivities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Contract",
                 "RemoveFromDataProcessingActivities",

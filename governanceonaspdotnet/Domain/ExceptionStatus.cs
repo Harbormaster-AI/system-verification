@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ExceptionStatus
 {
-    Draft=1,Submitted=2,Approved=3,Rejected=4,Expired=5
+    Draft = 1, Submitted = 2, Approved = 3, Rejected = 4, Expired = 5
 }
 
 /// <summary>

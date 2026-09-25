@@ -11,11 +11,11 @@ public interface IPersonRepository
     Task UpdateAsync(Person person, CancellationToken cancellationToken);
     Task DeleteAsync(Person person, CancellationToken cancellationToken);
 
-    Task AddToRoleAssignmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRoleAssignmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToOwnedPoliciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromOwnedPoliciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCorrectiveActionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCorrectiveActionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRoleAssignmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRoleAssignmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToOwnedPoliciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromOwnedPoliciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCorrectiveActionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCorrectiveActionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

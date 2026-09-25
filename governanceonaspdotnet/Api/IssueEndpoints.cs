@@ -24,8 +24,8 @@ public static class IssueEndpoints
         group.MapPut("/assignControl", AssignControl);
         group.MapPut("/unassignControl", UnassignControl);
 
-    group.MapPut("/addToCorrectiveActions", AddToCorrectiveActions);
-    group.MapPut("/removeFromCorrectiveActions", RemoveFromCorrectiveActions);
+        group.MapPut("/addToCorrectiveActions", AddToCorrectiveActions);
+        group.MapPut("/removeFromCorrectiveActions", RemoveFromCorrectiveActions);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class IssueEndpoints
     private static async Task<IResult> Create(
         IssueRequest request,
         IIssueService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToIssue( request );
+        var model = mapRequestToIssue(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class IssueEndpoints
     private static async Task<IResult> Update(
         IssueRequest request,
         IIssueService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToIssue( request );
+        var model = mapRequestToIssue(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class IssueEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IIssueService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var issue = await service.Get(identifier, cancellationToken);
-        return issue is null ? Results.NotFound() : Results.Ok( issue );
+        return issue is null ? Results.NotFound() : Results.Ok(issue);
     }
 
 
     private static async Task<IResult> GetAll(
         IIssueService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( IssueResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(IssueResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IIssueService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -98,7 +103,8 @@ public static class IssueEndpoints
     private static async Task<IResult> AssignRisk(
         AssociationRequest request,
         IIssueService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRisk(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -106,7 +112,8 @@ public static class IssueEndpoints
     private static async Task<IResult> UnassignRisk(
     AssociationRequest request,
     IIssueService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRisk(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class IssueEndpoints
     private static async Task<IResult> AssignFinding(
         AssociationRequest request,
         IIssueService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignFinding(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -122,7 +130,8 @@ public static class IssueEndpoints
     private static async Task<IResult> UnassignFinding(
     AssociationRequest request,
     IIssueService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignFinding(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -130,7 +139,8 @@ public static class IssueEndpoints
     private static async Task<IResult> AssignControl(
         AssociationRequest request,
         IIssueService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignControl(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -138,7 +148,8 @@ public static class IssueEndpoints
     private static async Task<IResult> UnassignControl(
     AssociationRequest request,
     IIssueService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignControl(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -147,7 +158,8 @@ public static class IssueEndpoints
     private static async Task<IResult> AddToCorrectiveActions(
         MultipleAssociationRequest request,
         IIssueService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCorrectiveActions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class IssueEndpoints
     private static async Task<IResult> RemoveFromCorrectiveActions(
         MultipleAssociationRequest request,
         IIssueService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCorrectiveActions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Issue mapRequestToIssue( IssueRequest request ) {
+    private static Issue mapRequestToIssue(IssueRequest request)
+    {
         var model = new Issue
         {
             Id = request.Id,

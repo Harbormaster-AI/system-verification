@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum LegalHoldStatus
 {
-    Active=1,Released=2,Superseded=3
+    Active = 1, Released = 2, Superseded = 3
 }
 
 /// <summary>

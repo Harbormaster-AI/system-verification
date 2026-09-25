@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ControlType
 {
-    Preventive=1,Detective=2,Corrective=3,Directive=4
+    Preventive = 1, Detective = 2, Corrective = 3, Directive = 4
 }
 
 /// <summary>

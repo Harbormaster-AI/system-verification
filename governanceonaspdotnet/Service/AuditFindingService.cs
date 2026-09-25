@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IAuditFindingService {
+public interface IAuditFindingService
+{
 
-    Task Create(AuditFinding model , CancellationToken cancellationToken);
+    Task Create(AuditFinding model, CancellationToken cancellationToken);
     Task<bool> Update(AuditFinding model, CancellationToken cancellationToken);
     Task<AuditFinding?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AuditFinding>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class AuditFindingService : IAuditFindingService
 
     public async Task<bool> Update(AuditFinding model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -129,7 +131,8 @@ public class AuditFindingService : IAuditFindingService
         return true;
     }
 
-    public async Task<bool> AssignEngagement(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEngagement(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -147,7 +150,7 @@ public class AuditFindingService : IAuditFindingService
 
             var child = await _serviceResolver.Get<AuditEngagementService>().Get(childRequest, cancellationToken);
             parent.Engagement = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -159,7 +162,8 @@ public class AuditFindingService : IAuditFindingService
         return true;
     }
 
-    public async Task<bool> UnassignEngagement(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEngagement(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -170,7 +174,7 @@ public class AuditFindingService : IAuditFindingService
         try
         {
             parent.Engagement = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -182,7 +186,8 @@ public class AuditFindingService : IAuditFindingService
         return true;
     }
 
-    public async Task<bool> AssignWorkpaper(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkpaper(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -200,7 +205,7 @@ public class AuditFindingService : IAuditFindingService
 
             var child = await _serviceResolver.Get<AuditWorkpaperService>().Get(childRequest, cancellationToken);
             parent.Workpaper = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -212,7 +217,8 @@ public class AuditFindingService : IAuditFindingService
         return true;
     }
 
-    public async Task<bool> UnassignWorkpaper(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkpaper(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -223,7 +229,7 @@ public class AuditFindingService : IAuditFindingService
         try
         {
             parent.Workpaper = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -236,8 +242,10 @@ public class AuditFindingService : IAuditFindingService
     }
 
 
-    public async Task<bool> AddToCorrectiveActions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCorrectiveActions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditFinding",
                 "AddToCorrectiveActions",
@@ -245,16 +253,18 @@ public class AuditFindingService : IAuditFindingService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCorrectiveActions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCorrectiveActions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditFinding",
                 "RemoveFromCorrectiveActions",
@@ -270,8 +280,10 @@ public class AuditFindingService : IAuditFindingService
         return true;
     }
 
-    public async Task<bool> AddToRelatedRisks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRelatedRisks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditFinding",
                 "AddToRelatedRisks",
@@ -279,16 +291,18 @@ public class AuditFindingService : IAuditFindingService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRelatedRisks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRelatedRisks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditFinding",
                 "RemoveFromRelatedRisks",
@@ -304,8 +318,10 @@ public class AuditFindingService : IAuditFindingService
         return true;
     }
 
-    public async Task<bool> AddToRelatedControls(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRelatedControls(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditFinding",
                 "AddToRelatedControls",
@@ -313,16 +329,18 @@ public class AuditFindingService : IAuditFindingService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRelatedControls(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRelatedControls(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditFinding",
                 "RemoveFromRelatedControls",
@@ -338,8 +356,10 @@ public class AuditFindingService : IAuditFindingService
         return true;
     }
 
-    public async Task<bool> AddToIssues(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToIssues(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditFinding",
                 "AddToIssues",
@@ -347,16 +367,18 @@ public class AuditFindingService : IAuditFindingService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromIssues(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromIssues(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditFinding",
                 "RemoveFromIssues",

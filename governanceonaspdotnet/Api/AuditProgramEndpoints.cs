@@ -20,8 +20,8 @@ public static class AuditProgramEndpoints
         group.MapPut("/assignOrganization", AssignOrganization);
         group.MapPut("/unassignOrganization", UnassignOrganization);
 
-    group.MapPut("/addToEngagements", AddToEngagements);
-    group.MapPut("/removeFromEngagements", RemoveFromEngagements);
+        group.MapPut("/addToEngagements", AddToEngagements);
+        group.MapPut("/removeFromEngagements", RemoveFromEngagements);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class AuditProgramEndpoints
     private static async Task<IResult> Create(
         AuditProgramRequest request,
         IAuditProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAuditProgram( request );
+        var model = mapRequestToAuditProgram(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class AuditProgramEndpoints
     private static async Task<IResult> Update(
         AuditProgramRequest request,
         IAuditProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAuditProgram( request );
+        var model = mapRequestToAuditProgram(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class AuditProgramEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAuditProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var auditProgram = await service.Get(identifier, cancellationToken);
-        return auditProgram is null ? Results.NotFound() : Results.Ok( auditProgram );
+        return auditProgram is null ? Results.NotFound() : Results.Ok(auditProgram);
     }
 
 
     private static async Task<IResult> GetAll(
         IAuditProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AuditProgramResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AuditProgramResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAuditProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class AuditProgramEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IAuditProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class AuditProgramEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IAuditProgramService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class AuditProgramEndpoints
     private static async Task<IResult> AddToEngagements(
         MultipleAssociationRequest request,
         IAuditProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToEngagements(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class AuditProgramEndpoints
     private static async Task<IResult> RemoveFromEngagements(
         MultipleAssociationRequest request,
         IAuditProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromEngagements(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static AuditProgram mapRequestToAuditProgram( AuditProgramRequest request ) {
+    private static AuditProgram mapRequestToAuditProgram(AuditProgramRequest request)
+    {
         var model = new AuditProgram
         {
             Id = request.Id,

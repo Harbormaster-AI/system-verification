@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IRecordsRepositoryService {
+public interface IRecordsRepositoryService
+{
 
-    Task Create(RecordsRepository model , CancellationToken cancellationToken);
+    Task Create(RecordsRepository model, CancellationToken cancellationToken);
     Task<bool> Update(RecordsRepository model, CancellationToken cancellationToken);
     Task<RecordsRepository?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RecordsRepository>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class RecordsRepositoryService : IRecordsRepositoryService
 
     public async Task<bool> Update(RecordsRepository model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class RecordsRepositoryService : IRecordsRepositoryService
         return true;
     }
 
-    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class RecordsRepositoryService : IRecordsRepositoryService
 
             var child = await _serviceResolver.Get<OrganizationService>().Get(childRequest, cancellationToken);
             parent.Organization = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class RecordsRepositoryService : IRecordsRepositoryService
         return true;
     }
 
-    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class RecordsRepositoryService : IRecordsRepositoryService
         try
         {
             parent.Organization = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -180,8 +184,10 @@ public class RecordsRepositoryService : IRecordsRepositoryService
     }
 
 
-    public async Task<bool> AddToRecords(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRecords(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecordsRepository",
                 "AddToRecords",
@@ -189,16 +195,18 @@ public class RecordsRepositoryService : IRecordsRepositoryService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRecords(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRecords(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecordsRepository",
                 "RemoveFromRecords",
@@ -214,8 +222,10 @@ public class RecordsRepositoryService : IRecordsRepositoryService
         return true;
     }
 
-    public async Task<bool> AddToSystems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSystems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecordsRepository",
                 "AddToSystems",
@@ -223,16 +233,18 @@ public class RecordsRepositoryService : IRecordsRepositoryService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSystems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSystems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecordsRepository",
                 "RemoveFromSystems",
@@ -248,8 +260,10 @@ public class RecordsRepositoryService : IRecordsRepositoryService
         return true;
     }
 
-    public async Task<bool> AddToRetentionSchedules(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRetentionSchedules(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecordsRepository",
                 "AddToRetentionSchedules",
@@ -257,16 +271,18 @@ public class RecordsRepositoryService : IRecordsRepositoryService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRetentionSchedules(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRetentionSchedules(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecordsRepository",
                 "RemoveFromRetentionSchedules",
@@ -282,8 +298,10 @@ public class RecordsRepositoryService : IRecordsRepositoryService
         return true;
     }
 
-    public async Task<bool> AddToLegalHolds(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLegalHolds(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecordsRepository",
                 "AddToLegalHolds",
@@ -291,16 +309,18 @@ public class RecordsRepositoryService : IRecordsRepositoryService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLegalHolds(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLegalHolds(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecordsRepository",
                 "RemoveFromLegalHolds",

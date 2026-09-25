@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum AssessmentResult
 {
-    Pass=1,ConditionalPass=2,Fail=3
+    Pass = 1, ConditionalPass = 2, Fail = 3
 }
 
 /// <summary>

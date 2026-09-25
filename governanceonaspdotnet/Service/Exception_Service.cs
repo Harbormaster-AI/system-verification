@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IException_Service {
+public interface IException_Service
+{
 
-    Task Create(Exception_ model , CancellationToken cancellationToken);
+    Task Create(Exception_ model, CancellationToken cancellationToken);
     Task<bool> Update(Exception_ model, CancellationToken cancellationToken);
     Task<Exception_?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Exception_>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class Exception_Service : IException_Service
 
     public async Task<bool> Update(Exception_ model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class Exception_Service : IException_Service
         return true;
     }
 
-    public async Task<bool> AssignRetentionSchedule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRetentionSchedule(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class Exception_Service : IException_Service
 
             var child = await _serviceResolver.Get<RetentionScheduleService>().Get(childRequest, cancellationToken);
             parent.RetentionSchedule = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class Exception_Service : IException_Service
         return true;
     }
 
-    public async Task<bool> UnassignRetentionSchedule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRetentionSchedule(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class Exception_Service : IException_Service
         try
         {
             parent.RetentionSchedule = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,7 +183,8 @@ public class Exception_Service : IException_Service
         return true;
     }
 
-    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,7 +202,7 @@ public class Exception_Service : IException_Service
 
             var child = await _serviceResolver.Get<PolicyService>().Get(childRequest, cancellationToken);
             parent.Policy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class Exception_Service : IException_Service
         return true;
     }
 
-    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class Exception_Service : IException_Service
         try
         {
             parent.Policy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -232,7 +238,8 @@ public class Exception_Service : IException_Service
         return true;
     }
 
-    public async Task<bool> AssignControl(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignControl(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -250,7 +257,7 @@ public class Exception_Service : IException_Service
 
             var child = await _serviceResolver.Get<ControlService>().Get(childRequest, cancellationToken);
             parent.Control = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -262,7 +269,8 @@ public class Exception_Service : IException_Service
         return true;
     }
 
-    public async Task<bool> UnassignControl(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignControl(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -273,7 +281,7 @@ public class Exception_Service : IException_Service
         try
         {
             parent.Control = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -285,7 +293,8 @@ public class Exception_Service : IException_Service
         return true;
     }
 
-    public async Task<bool> AssignRisk(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRisk(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -303,7 +312,7 @@ public class Exception_Service : IException_Service
 
             var child = await _serviceResolver.Get<RiskService>().Get(childRequest, cancellationToken);
             parent.Risk = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -315,7 +324,8 @@ public class Exception_Service : IException_Service
         return true;
     }
 
-    public async Task<bool> UnassignRisk(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRisk(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -326,7 +336,7 @@ public class Exception_Service : IException_Service
         try
         {
             parent.Risk = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

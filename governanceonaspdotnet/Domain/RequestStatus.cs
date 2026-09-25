@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum RequestStatus
 {
-    Received=1,InValidation=2,InProgress=3,OnHold=4,Fulfilled=5,Rejected=6
+    Received = 1, InValidation = 2, InProgress = 3, OnHold = 4, Fulfilled = 5, Rejected = 6
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum Applicability
 {
-    Mandatory=1,Recommended=2,NotApplicable=3
+    Mandatory = 1, Recommended = 2, NotApplicable = 3
 }
 
 /// <summary>

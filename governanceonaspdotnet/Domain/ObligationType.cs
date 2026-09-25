@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ObligationType
 {
-    Regulatory=1,Contractual=2,PolicyDerived=3,IndustryStandard=4
+    Regulatory = 1, Contractual = 2, PolicyDerived = 3, IndustryStandard = 4
 }
 
 /// <summary>

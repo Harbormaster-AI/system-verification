@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum MatterType
 {
-    Litigation=1,Investigation=2,RegulatoryInquiry=3,Complaint=4,Arbitration=5
+    Litigation = 1, Investigation = 2, RegulatoryInquiry = 3, Complaint = 4, Arbitration = 5
 }
 
 /// <summary>

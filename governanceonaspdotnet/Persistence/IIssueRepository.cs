@@ -11,7 +11,7 @@ public interface IIssueRepository
     Task UpdateAsync(Issue issue, CancellationToken cancellationToken);
     Task DeleteAsync(Issue issue, CancellationToken cancellationToken);
 
-    Task AddToCorrectiveActionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCorrectiveActionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCorrectiveActionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCorrectiveActionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

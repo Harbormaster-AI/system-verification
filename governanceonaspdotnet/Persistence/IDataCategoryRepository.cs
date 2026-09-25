@@ -11,11 +11,11 @@ public interface IDataCategoryRepository
     Task UpdateAsync(DataCategory dataCategory, CancellationToken cancellationToken);
     Task DeleteAsync(DataCategory dataCategory, CancellationToken cancellationToken);
 
-    Task AddToProcessingActivitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromProcessingActivitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToRecordsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRecordsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToDataBreachesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDataBreachesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToProcessingActivitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromProcessingActivitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRecordsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRecordsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDataBreachesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDataBreachesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ConsentStatus
 {
-    Granted=1,Withdrawn=2,Expired=3,NotRequired=4
+    Granted = 1, Withdrawn = 2, Expired = 3, NotRequired = 4
 }
 
 /// <summary>

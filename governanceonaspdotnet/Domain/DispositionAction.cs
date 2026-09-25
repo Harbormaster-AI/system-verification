@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum DispositionAction
 {
-    Destroy=1,TransferToArchive=2,Review=3,SecureDelete=4,ReturnToOwner=5
+    Destroy = 1, TransferToArchive = 2, Review = 3, SecureDelete = 4, ReturnToOwner = 5
 }
 
 /// <summary>

@@ -6,9 +6,10 @@ using governanceonaspdotnet.Telemetry;
 
 namespace governanceonaspdotnet.Service;
 
-public interface IAuditWorkpaperService {
+public interface IAuditWorkpaperService
+{
 
-    Task Create(AuditWorkpaper model , CancellationToken cancellationToken);
+    Task Create(AuditWorkpaper model, CancellationToken cancellationToken);
     Task<bool> Update(AuditWorkpaper model, CancellationToken cancellationToken);
     Task<AuditWorkpaper?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AuditWorkpaper>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class AuditWorkpaperService : IAuditWorkpaperService
 
     public async Task<bool> Update(AuditWorkpaper model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class AuditWorkpaperService : IAuditWorkpaperService
         return true;
     }
 
-    public async Task<bool> AssignEngagement(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEngagement(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class AuditWorkpaperService : IAuditWorkpaperService
 
             var child = await _serviceResolver.Get<AuditEngagementService>().Get(childRequest, cancellationToken);
             parent.Engagement = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class AuditWorkpaperService : IAuditWorkpaperService
         return true;
     }
 
-    public async Task<bool> UnassignEngagement(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEngagement(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class AuditWorkpaperService : IAuditWorkpaperService
         try
         {
             parent.Engagement = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class AuditWorkpaperService : IAuditWorkpaperService
     }
 
 
-    public async Task<bool> AddToEvidence(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEvidence(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditWorkpaper",
                 "AddToEvidence",
@@ -184,16 +190,18 @@ public class AuditWorkpaperService : IAuditWorkpaperService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEvidence(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEvidence(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditWorkpaper",
                 "RemoveFromEvidence",
@@ -209,8 +217,10 @@ public class AuditWorkpaperService : IAuditWorkpaperService
         return true;
     }
 
-    public async Task<bool> AddToFindings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFindings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditWorkpaper",
                 "AddToFindings",
@@ -218,16 +228,18 @@ public class AuditWorkpaperService : IAuditWorkpaperService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFindings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFindings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AuditWorkpaper",
                 "RemoveFromFindings",

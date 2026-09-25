@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ControlStatus
 {
-    Designed=1,Implemented=2,Operating=3,Retired=4
+    Designed = 1, Implemented = 2, Operating = 3, Retired = 4
 }
 
 /// <summary>

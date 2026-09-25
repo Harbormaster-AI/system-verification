@@ -20,23 +20,23 @@ public static class PolicyEndpoints
         group.MapPut("/assignOrganization", AssignOrganization);
         group.MapPut("/unassignOrganization", UnassignOrganization);
 
-    group.MapPut("/addToOwners", AddToOwners);
-    group.MapPut("/removeFromOwners", RemoveFromOwners);
+        group.MapPut("/addToOwners", AddToOwners);
+        group.MapPut("/removeFromOwners", RemoveFromOwners);
 
-    group.MapPut("/addToRelatedRequirements", AddToRelatedRequirements);
-    group.MapPut("/removeFromRelatedRequirements", RemoveFromRelatedRequirements);
+        group.MapPut("/addToRelatedRequirements", AddToRelatedRequirements);
+        group.MapPut("/removeFromRelatedRequirements", RemoveFromRelatedRequirements);
 
-    group.MapPut("/addToControls", AddToControls);
-    group.MapPut("/removeFromControls", RemoveFromControls);
+        group.MapPut("/addToControls", AddToControls);
+        group.MapPut("/removeFromControls", RemoveFromControls);
 
-    group.MapPut("/addToProcedures", AddToProcedures);
-    group.MapPut("/removeFromProcedures", RemoveFromProcedures);
+        group.MapPut("/addToProcedures", AddToProcedures);
+        group.MapPut("/removeFromProcedures", RemoveFromProcedures);
 
-    group.MapPut("/addToExceptions", AddToExceptions);
-    group.MapPut("/removeFromExceptions", RemoveFromExceptions);
+        group.MapPut("/addToExceptions", AddToExceptions);
+        group.MapPut("/removeFromExceptions", RemoveFromExceptions);
 
-    group.MapPut("/addToAttestations", AddToAttestations);
-    group.MapPut("/removeFromAttestations", RemoveFromAttestations);
+        group.MapPut("/addToAttestations", AddToAttestations);
+        group.MapPut("/removeFromAttestations", RemoveFromAttestations);
 
 
         return app;
@@ -45,9 +45,10 @@ public static class PolicyEndpoints
     private static async Task<IResult> Create(
         PolicyRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPolicy( request );
+        var model = mapRequestToPolicy(request);
 
         try
         {
@@ -64,9 +65,10 @@ public static class PolicyEndpoints
     private static async Task<IResult> Update(
         PolicyRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPolicy( request );
+        var model = mapRequestToPolicy(request);
 
         try
         {
@@ -83,25 +85,28 @@ public static class PolicyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var policy = await service.Get(identifier, cancellationToken);
-        return policy is null ? Results.NotFound() : Results.Ok( policy );
+        return policy is null ? Results.NotFound() : Results.Ok(policy);
     }
 
 
     private static async Task<IResult> GetAll(
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PolicyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PolicyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +114,8 @@ public static class PolicyEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,7 +123,8 @@ public static class PolicyEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IPolicyService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -126,7 +133,8 @@ public static class PolicyEndpoints
     private static async Task<IResult> AddToOwners(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOwners(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -134,14 +142,16 @@ public static class PolicyEndpoints
     private static async Task<IResult> RemoveFromOwners(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOwners(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRelatedRequirements(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRelatedRequirements(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -149,14 +159,16 @@ public static class PolicyEndpoints
     private static async Task<IResult> RemoveFromRelatedRequirements(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRelatedRequirements(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToControls(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToControls(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -164,14 +176,16 @@ public static class PolicyEndpoints
     private static async Task<IResult> RemoveFromControls(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromControls(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToProcedures(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToProcedures(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -179,14 +193,16 @@ public static class PolicyEndpoints
     private static async Task<IResult> RemoveFromProcedures(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromProcedures(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToExceptions(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToExceptions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -194,14 +210,16 @@ public static class PolicyEndpoints
     private static async Task<IResult> RemoveFromExceptions(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromExceptions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToAttestations(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAttestations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -209,11 +227,13 @@ public static class PolicyEndpoints
     private static async Task<IResult> RemoveFromAttestations(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAttestations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Policy mapRequestToPolicy( PolicyRequest request ) {
+    private static Policy mapRequestToPolicy(PolicyRequest request)
+    {
         var model = new Policy
         {
             Id = request.Id,

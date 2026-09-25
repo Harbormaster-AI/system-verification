@@ -22,17 +22,17 @@ public static class AuditFindingEndpoints
         group.MapPut("/assignWorkpaper", AssignWorkpaper);
         group.MapPut("/unassignWorkpaper", UnassignWorkpaper);
 
-    group.MapPut("/addToCorrectiveActions", AddToCorrectiveActions);
-    group.MapPut("/removeFromCorrectiveActions", RemoveFromCorrectiveActions);
+        group.MapPut("/addToCorrectiveActions", AddToCorrectiveActions);
+        group.MapPut("/removeFromCorrectiveActions", RemoveFromCorrectiveActions);
 
-    group.MapPut("/addToRelatedRisks", AddToRelatedRisks);
-    group.MapPut("/removeFromRelatedRisks", RemoveFromRelatedRisks);
+        group.MapPut("/addToRelatedRisks", AddToRelatedRisks);
+        group.MapPut("/removeFromRelatedRisks", RemoveFromRelatedRisks);
 
-    group.MapPut("/addToRelatedControls", AddToRelatedControls);
-    group.MapPut("/removeFromRelatedControls", RemoveFromRelatedControls);
+        group.MapPut("/addToRelatedControls", AddToRelatedControls);
+        group.MapPut("/removeFromRelatedControls", RemoveFromRelatedControls);
 
-    group.MapPut("/addToIssues", AddToIssues);
-    group.MapPut("/removeFromIssues", RemoveFromIssues);
+        group.MapPut("/addToIssues", AddToIssues);
+        group.MapPut("/removeFromIssues", RemoveFromIssues);
 
 
         return app;
@@ -41,9 +41,10 @@ public static class AuditFindingEndpoints
     private static async Task<IResult> Create(
         AuditFindingRequest request,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAuditFinding( request );
+        var model = mapRequestToAuditFinding(request);
 
         try
         {
@@ -60,9 +61,10 @@ public static class AuditFindingEndpoints
     private static async Task<IResult> Update(
         AuditFindingRequest request,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAuditFinding( request );
+        var model = mapRequestToAuditFinding(request);
 
         try
         {
@@ -79,25 +81,28 @@ public static class AuditFindingEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var auditFinding = await service.Get(identifier, cancellationToken);
-        return auditFinding is null ? Results.NotFound() : Results.Ok( auditFinding );
+        return auditFinding is null ? Results.NotFound() : Results.Ok(auditFinding);
     }
 
 
     private static async Task<IResult> GetAll(
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AuditFindingResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AuditFindingResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +110,8 @@ public static class AuditFindingEndpoints
     private static async Task<IResult> AssignEngagement(
         AssociationRequest request,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEngagement(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +119,8 @@ public static class AuditFindingEndpoints
     private static async Task<IResult> UnassignEngagement(
     AssociationRequest request,
     IAuditFindingService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEngagement(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +128,8 @@ public static class AuditFindingEndpoints
     private static async Task<IResult> AssignWorkpaper(
         AssociationRequest request,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkpaper(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +137,8 @@ public static class AuditFindingEndpoints
     private static async Task<IResult> UnassignWorkpaper(
     AssociationRequest request,
     IAuditFindingService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkpaper(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -138,7 +147,8 @@ public static class AuditFindingEndpoints
     private static async Task<IResult> AddToCorrectiveActions(
         MultipleAssociationRequest request,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCorrectiveActions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -146,14 +156,16 @@ public static class AuditFindingEndpoints
     private static async Task<IResult> RemoveFromCorrectiveActions(
         MultipleAssociationRequest request,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCorrectiveActions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRelatedRisks(
         MultipleAssociationRequest request,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRelatedRisks(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -161,14 +173,16 @@ public static class AuditFindingEndpoints
     private static async Task<IResult> RemoveFromRelatedRisks(
         MultipleAssociationRequest request,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRelatedRisks(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRelatedControls(
         MultipleAssociationRequest request,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRelatedControls(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -176,14 +190,16 @@ public static class AuditFindingEndpoints
     private static async Task<IResult> RemoveFromRelatedControls(
         MultipleAssociationRequest request,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRelatedControls(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToIssues(
         MultipleAssociationRequest request,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToIssues(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -191,11 +207,13 @@ public static class AuditFindingEndpoints
     private static async Task<IResult> RemoveFromIssues(
         MultipleAssociationRequest request,
         IAuditFindingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromIssues(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static AuditFinding mapRequestToAuditFinding( AuditFindingRequest request ) {
+    private static AuditFinding mapRequestToAuditFinding(AuditFindingRequest request)
+    {
         var model = new AuditFinding
         {
             Id = request.Id,

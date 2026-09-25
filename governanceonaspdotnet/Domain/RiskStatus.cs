@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum RiskStatus
 {
-    Identified=1,Assessed=2,Mitigated=3,Accepted=4,Transferred=5,Closed=6
+    Identified = 1, Assessed = 2, Mitigated = 3, Accepted = 4, Transferred = 5, Closed = 6
 }
 
 /// <summary>

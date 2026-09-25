@@ -11,7 +11,7 @@ public interface IBusinessUnitRepository
     Task UpdateAsync(BusinessUnit businessUnit, CancellationToken cancellationToken);
     Task DeleteAsync(BusinessUnit businessUnit, CancellationToken cancellationToken);
 
-    Task AddToAuditsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAuditsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAuditsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAuditsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

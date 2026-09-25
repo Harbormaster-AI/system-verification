@@ -11,9 +11,9 @@ public interface IDataSubjectRequestRepository
     Task UpdateAsync(DataSubjectRequest dataSubjectRequest, CancellationToken cancellationToken);
     Task DeleteAsync(DataSubjectRequest dataSubjectRequest, CancellationToken cancellationToken);
 
-    Task AddToProcessingActivitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromProcessingActivitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToRecordsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRecordsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToProcessingActivitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromProcessingActivitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRecordsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRecordsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

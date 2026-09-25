@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum IssueType
 {
-    ControlDeficiency=1,ProcessGap=2,ComplianceBreach=3,SecurityIncident=4,DataQualityIssue=5,ThirdPartyIssue=6
+    ControlDeficiency = 1, ProcessGap = 2, ComplianceBreach = 3, SecurityIncident = 4, DataQualityIssue = 5, ThirdPartyIssue = 6
 }
 
 /// <summary>

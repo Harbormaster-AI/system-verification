@@ -20,11 +20,11 @@ public static class AuditWorkpaperEndpoints
         group.MapPut("/assignEngagement", AssignEngagement);
         group.MapPut("/unassignEngagement", UnassignEngagement);
 
-    group.MapPut("/addToEvidence", AddToEvidence);
-    group.MapPut("/removeFromEvidence", RemoveFromEvidence);
+        group.MapPut("/addToEvidence", AddToEvidence);
+        group.MapPut("/removeFromEvidence", RemoveFromEvidence);
 
-    group.MapPut("/addToFindings", AddToFindings);
-    group.MapPut("/removeFromFindings", RemoveFromFindings);
+        group.MapPut("/addToFindings", AddToFindings);
+        group.MapPut("/removeFromFindings", RemoveFromFindings);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class AuditWorkpaperEndpoints
     private static async Task<IResult> Create(
         AuditWorkpaperRequest request,
         IAuditWorkpaperService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAuditWorkpaper( request );
+        var model = mapRequestToAuditWorkpaper(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class AuditWorkpaperEndpoints
     private static async Task<IResult> Update(
         AuditWorkpaperRequest request,
         IAuditWorkpaperService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAuditWorkpaper( request );
+        var model = mapRequestToAuditWorkpaper(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class AuditWorkpaperEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAuditWorkpaperService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var auditWorkpaper = await service.Get(identifier, cancellationToken);
-        return auditWorkpaper is null ? Results.NotFound() : Results.Ok( auditWorkpaper );
+        return auditWorkpaper is null ? Results.NotFound() : Results.Ok(auditWorkpaper);
     }
 
 
     private static async Task<IResult> GetAll(
         IAuditWorkpaperService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AuditWorkpaperResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AuditWorkpaperResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAuditWorkpaperService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class AuditWorkpaperEndpoints
     private static async Task<IResult> AssignEngagement(
         AssociationRequest request,
         IAuditWorkpaperService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEngagement(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class AuditWorkpaperEndpoints
     private static async Task<IResult> UnassignEngagement(
     AssociationRequest request,
     IAuditWorkpaperService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEngagement(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class AuditWorkpaperEndpoints
     private static async Task<IResult> AddToEvidence(
         MultipleAssociationRequest request,
         IAuditWorkpaperService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToEvidence(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class AuditWorkpaperEndpoints
     private static async Task<IResult> RemoveFromEvidence(
         MultipleAssociationRequest request,
         IAuditWorkpaperService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromEvidence(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToFindings(
         MultipleAssociationRequest request,
         IAuditWorkpaperService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToFindings(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class AuditWorkpaperEndpoints
     private static async Task<IResult> RemoveFromFindings(
         MultipleAssociationRequest request,
         IAuditWorkpaperService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromFindings(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static AuditWorkpaper mapRequestToAuditWorkpaper( AuditWorkpaperRequest request ) {
+    private static AuditWorkpaper mapRequestToAuditWorkpaper(AuditWorkpaperRequest request)
+    {
         var model = new AuditWorkpaper
         {
             Id = request.Id,

@@ -20,11 +20,11 @@ public static class LegalHoldEndpoints
         group.MapPut("/assignMatter", AssignMatter);
         group.MapPut("/unassignMatter", UnassignMatter);
 
-    group.MapPut("/addToRepositories", AddToRepositories);
-    group.MapPut("/removeFromRepositories", RemoveFromRepositories);
+        group.MapPut("/addToRepositories", AddToRepositories);
+        group.MapPut("/removeFromRepositories", RemoveFromRepositories);
 
-    group.MapPut("/addToRecords", AddToRecords);
-    group.MapPut("/removeFromRecords", RemoveFromRecords);
+        group.MapPut("/addToRecords", AddToRecords);
+        group.MapPut("/removeFromRecords", RemoveFromRecords);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class LegalHoldEndpoints
     private static async Task<IResult> Create(
         LegalHoldRequest request,
         ILegalHoldService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLegalHold( request );
+        var model = mapRequestToLegalHold(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class LegalHoldEndpoints
     private static async Task<IResult> Update(
         LegalHoldRequest request,
         ILegalHoldService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLegalHold( request );
+        var model = mapRequestToLegalHold(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class LegalHoldEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ILegalHoldService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var legalHold = await service.Get(identifier, cancellationToken);
-        return legalHold is null ? Results.NotFound() : Results.Ok( legalHold );
+        return legalHold is null ? Results.NotFound() : Results.Ok(legalHold);
     }
 
 
     private static async Task<IResult> GetAll(
         ILegalHoldService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( LegalHoldResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(LegalHoldResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ILegalHoldService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class LegalHoldEndpoints
     private static async Task<IResult> AssignMatter(
         AssociationRequest request,
         ILegalHoldService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMatter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class LegalHoldEndpoints
     private static async Task<IResult> UnassignMatter(
     AssociationRequest request,
     ILegalHoldService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMatter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class LegalHoldEndpoints
     private static async Task<IResult> AddToRepositories(
         MultipleAssociationRequest request,
         ILegalHoldService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRepositories(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class LegalHoldEndpoints
     private static async Task<IResult> RemoveFromRepositories(
         MultipleAssociationRequest request,
         ILegalHoldService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRepositories(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRecords(
         MultipleAssociationRequest request,
         ILegalHoldService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRecords(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class LegalHoldEndpoints
     private static async Task<IResult> RemoveFromRecords(
         MultipleAssociationRequest request,
         ILegalHoldService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRecords(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static LegalHold mapRequestToLegalHold( LegalHoldRequest request ) {
+    private static LegalHold mapRequestToLegalHold(LegalHoldRequest request)
+    {
         var model = new LegalHold
         {
             Id = request.Id,

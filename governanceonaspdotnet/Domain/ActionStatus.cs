@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ActionStatus
 {
-    NotStarted=1,InProgress=2,Deferred=3,Completed=4,Cancelled=5
+    NotStarted = 1, InProgress = 2, Deferred = 3, Completed = 4, Cancelled = 5
 }
 
 /// <summary>

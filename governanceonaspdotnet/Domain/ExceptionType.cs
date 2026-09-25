@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum ExceptionType
 {
-    PolicyException=1,ControlException=2,RetentionException=3,RiskAcceptance=4,ComplianceWaiver=5
+    PolicyException = 1, ControlException = 2, RetentionException = 3, RiskAcceptance = 4, ComplianceWaiver = 5
 }
 
 /// <summary>

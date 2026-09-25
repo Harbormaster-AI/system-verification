@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum RetentionStatus
 {
-    Draft=1,Approved=2,InEffect=3,Suspended=4,Retired=5
+    Draft = 1, Approved = 2, InEffect = 3, Suspended = 4, Retired = 5
 }
 
 /// <summary>

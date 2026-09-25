@@ -11,7 +11,7 @@ public interface IRoleRepository
     Task UpdateAsync(Role role, CancellationToken cancellationToken);
     Task DeleteAsync(Role role, CancellationToken cancellationToken);
 
-    Task AddToAssignmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAssignmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAssignmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAssignmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

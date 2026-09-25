@@ -11,9 +11,9 @@ public interface ISystem_Repository
     Task UpdateAsync(System_ system_, CancellationToken cancellationToken);
     Task DeleteAsync(System_ system_, CancellationToken cancellationToken);
 
-    Task AddToProcessingActivitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromProcessingActivitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToRecordsRepositoriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRecordsRepositoriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToProcessingActivitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromProcessingActivitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRecordsRepositoriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRecordsRepositoriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

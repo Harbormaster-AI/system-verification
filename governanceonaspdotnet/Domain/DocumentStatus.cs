@@ -36,7 +36,7 @@ namespace governanceonaspdotnet.Domain;
 
 public enum DocumentStatus
 {
-    Draft=1,InReview=2,Approved=3,Retired=4
+    Draft = 1, InReview = 2, Approved = 3, Retired = 4
 }
 
 /// <summary>
