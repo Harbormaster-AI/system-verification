@@ -45,17 +45,18 @@ public class ExternalAccountRepository : IExternalAccountRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task AddToTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Transactions
             .Where(transaction => request.ChildIds.Contains(transaction.Id))
             .ExecuteUpdateAsync(setters =>
                 setters.SetProperty(
-                    transaction => transaction.{roleName}_Id,
+                    transaction => transaction.{ roleName}
+        _Id,
                     request.ParentId));
     }
 
-    public async Task RemoveFromTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Transactions
             .Where(transaction =>

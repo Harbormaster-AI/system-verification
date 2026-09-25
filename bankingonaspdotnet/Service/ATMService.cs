@@ -5,9 +5,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IATMService {
+public interface IATMService
+{
 
-    Task Create(ATM model , CancellationToken cancellationToken);
+    Task Create(ATM model, CancellationToken cancellationToken);
     Task<bool> Update(ATM model, CancellationToken cancellationToken);
     Task<ATM?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ATM>> GetAll(CancellationToken cancellationToken);
@@ -59,7 +60,8 @@ public class ATMService : IATMService
 
     public async Task<bool> Update(ATM model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -111,7 +113,8 @@ public class ATMService : IATMService
         return true;
     }
 
-    public async Task<bool> AssignBranch(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBranch(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -127,9 +130,9 @@ public class ATMService : IATMService
                 Id = request.ChildId;
             };
 
-            var child = serviceResolver.get(BranchService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(BranchService).get(childRequest, cancellationToken)
             parent.Branch = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -139,7 +142,8 @@ public class ATMService : IATMService
         return true;
     }
 
-    public async Task<bool> UnassignBranch(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBranch(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -150,7 +154,7 @@ public class ATMService : IATMService
         try
         {
             parent.Branch = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {

@@ -45,17 +45,18 @@ public class BranchRepository : IBranchRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task AddToAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Accounts
             .Where(account => request.ChildIds.Contains(account.Id))
             .ExecuteUpdateAsync(setters =>
                 setters.SetProperty(
-                    account => account.{roleName}_Id,
+                    account => account.{ roleName}
+        _Id,
                     request.ParentId));
     }
 
-    public async Task RemoveFromAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Accounts
             .Where(account =>
@@ -67,17 +68,18 @@ public class BranchRepository : IBranchRepository
                     (Guid?)null));
     }
 
-    public async Task AddToLoanAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToLoanAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.LoanAccounts
             .Where(loanAccount => request.ChildIds.Contains(loanAccount.Id))
             .ExecuteUpdateAsync(setters =>
                 setters.SetProperty(
-                    loanAccount => loanAccount.{roleName}_Id,
+                    loanAccount => loanAccount.{ roleName}
+        _Id,
                     request.ParentId));
     }
 
-    public async Task RemoveFromLoanAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromLoanAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.LoanAccounts
             .Where(loanAccount =>
@@ -89,17 +91,18 @@ public class BranchRepository : IBranchRepository
                     (Guid?)null));
     }
 
-    public async Task AddToAtmsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToAtmsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Atms
             .Where(aTM => request.ChildIds.Contains(aTM.Id))
             .ExecuteUpdateAsync(setters =>
                 setters.SetProperty(
-                    aTM => aTM.{roleName}_Id,
+                    aTM => aTM.{ roleName}
+        _Id,
                     request.ParentId));
     }
 
-    public async Task RemoveFromAtmsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromAtmsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Atms
             .Where(aTM =>

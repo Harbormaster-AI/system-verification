@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum ScreeningOutcome
 {
-    Clear=1,Match=2,Review=3
+    Clear = 1, Match = 2, Review = 3
 }
 
 /// <summary>

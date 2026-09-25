@@ -5,9 +5,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IBankingProductService {
+public interface IBankingProductService
+{
 
-    Task Create(BankingProduct model , CancellationToken cancellationToken);
+    Task Create(BankingProduct model, CancellationToken cancellationToken);
     Task<bool> Update(BankingProduct model, CancellationToken cancellationToken);
     Task<BankingProduct?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BankingProduct>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class BankingProductService : IBankingProductService
 
     public async Task<bool> Update(BankingProduct model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class BankingProductService : IBankingProductService
         return true;
     }
 
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -134,9 +137,9 @@ public class BankingProductService : IBankingProductService
                 Id = request.ChildId;
             };
 
-            var child = serviceResolver.get(BankService).get( childRequest , cancellationToken )
+            var child = serviceResolver.get(BankService).get(childRequest, cancellationToken)
             parent.Bank = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -146,7 +149,8 @@ public class BankingProductService : IBankingProductService
         return true;
     }
 
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -157,7 +161,7 @@ public class BankingProductService : IBankingProductService
         try
         {
             parent.Bank = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -168,8 +172,10 @@ public class BankingProductService : IBankingProductService
     }
 
 
-    public async Task<bool> AddToAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BankingProduct",
                 "AddToAccounts",
@@ -183,8 +189,10 @@ public class BankingProductService : IBankingProductService
         return true;
     }
 
-    public async Task<bool> RemoveFromAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BankingProduct",
                 "RemoveFromAccounts",
@@ -198,8 +206,10 @@ public class BankingProductService : IBankingProductService
         return true;
     }
 
-    public async Task<bool> AddToLoanAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLoanAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BankingProduct",
                 "AddToLoanAccounts",
@@ -213,8 +223,10 @@ public class BankingProductService : IBankingProductService
         return true;
     }
 
-    public async Task<bool> RemoveFromLoanAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLoanAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BankingProduct",
                 "RemoveFromLoanAccounts",
@@ -228,8 +240,10 @@ public class BankingProductService : IBankingProductService
         return true;
     }
 
-    public async Task<bool> AddToPaymentCards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPaymentCards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BankingProduct",
                 "AddToPaymentCards",
@@ -243,8 +257,10 @@ public class BankingProductService : IBankingProductService
         return true;
     }
 
-    public async Task<bool> RemoveFromPaymentCards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPaymentCards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BankingProduct",
                 "RemoveFromPaymentCards",
