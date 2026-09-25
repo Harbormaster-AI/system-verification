@@ -198,28 +198,43 @@ jobs:
         run: |
           
           source .github/actions/common/report.sh
+                  
+          if [ -f "Dockerfile" ]; then
           
-          if [ -f Dockerfile ]; then
+            DOCKERFILE_PATH="Dockerfile"
+            
+            post_pass \
+              "DELIVERY" \
+              "VERIFY_DOCKERFILE" \
+              5 \
+              "Dockerfile located at repository root." \
+              "VERIFY_DOCKERFILE: ${DOCKERFILE_PATH}"
           
-              post_pass \
-                  "DELIVERY" \
-                  "VERIFY_DOCKERFILE" \
-                  5 \
-                  "Dockerfile located." \
-                  "VERIFY_DOCKERFILE: Dockerfile exists."
+          elif [ -f "${APP_NAME}/Dockerfile" ]; then
+          
+            DOCKERFILE_PATH="${APP_NAME}/Dockerfile"
+            
+            post_pass \
+              "DELIVERY" \
+              "VERIFY_DOCKERFILE" \
+              5 \
+              "Dockerfile located in application directory." \
+              "VERIFY_DOCKERFILE: ${DOCKERFILE_PATH}"
           
           else
           
-              post_fail \
-                  "DELIVERY" \
-                  "VERIFY_DOCKERFILE" \
-                  0 \
-                  "Dockerfile not found." \
-                  "VERIFY_DOCKERFILE: Unable to locate Dockerfile."
-          
-              post_terminate_delivery
+            post_fail \
+              "DELIVERY" \
+              "VERIFY_DOCKERFILE" \
+              5 \
+              "Dockerfile not found." \
+              "Expected Dockerfile at ./Dockerfile or ./${APP_NAME}/Dockerfile."
+            
+            post_terminate_delivery
           
           fi
+          
+          echo "DOCKERFILE_PATH=${DOCKERFILE_PATH}" >> "$GITHUB_ENV"
 
       ###############################################################################
       # Setting up Docker
@@ -319,7 +334,7 @@ jobs:
                              
           echo "Running docker build..."
                     
-          docker build --progress=plain -t "${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}" .
+          docker build --progress=plain -t "${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}" -f "${DOCKERFILE_PATH}"
                     
           if [ $? -eq 0 ]; then
           
