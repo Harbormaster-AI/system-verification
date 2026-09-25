@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IDepartmentService {
+public interface IDepartmentService
+{
 
-    Task Create(Department model , CancellationToken cancellationToken);
+    Task Create(Department model, CancellationToken cancellationToken);
     Task<bool> Update(Department model, CancellationToken cancellationToken);
     Task<Department?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Department>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class DepartmentService : IDepartmentService
 
     public async Task<bool> Update(Department model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class DepartmentService : IDepartmentService
         return true;
     }
 
-    public async Task<bool> AssignFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class DepartmentService : IDepartmentService
 
             var child = await _serviceResolver.Get<FacilityService>().Get(childRequest, cancellationToken);
             parent.Facility = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class DepartmentService : IDepartmentService
         return true;
     }
 
-    public async Task<bool> UnassignFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class DepartmentService : IDepartmentService
         try
         {
             parent.Facility = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,8 +176,10 @@ public class DepartmentService : IDepartmentService
     }
 
 
-    public async Task<bool> AddToCareTeams(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCareTeams(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Department",
                 "AddToCareTeams",
@@ -181,16 +187,18 @@ public class DepartmentService : IDepartmentService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCareTeams(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCareTeams(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Department",
                 "RemoveFromCareTeams",

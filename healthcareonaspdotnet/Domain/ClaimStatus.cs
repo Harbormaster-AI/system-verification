@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum ClaimStatus
 {
-    Submitted=1,InProcess=2,Paid=3,Denied=4,Adjusted=5,Void=6
+    Submitted = 1, InProcess = 2, Paid = 3, Denied = 4, Adjusted = 5, Void = 6
 }
 
 /// <summary>

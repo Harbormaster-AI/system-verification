@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IDiagnosisService {
+public interface IDiagnosisService
+{
 
-    Task Create(Diagnosis model , CancellationToken cancellationToken);
+    Task Create(Diagnosis model, CancellationToken cancellationToken);
     Task<bool> Update(Diagnosis model, CancellationToken cancellationToken);
     Task<Diagnosis?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Diagnosis>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class DiagnosisService : IDiagnosisService
 
     public async Task<bool> Update(Diagnosis model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class DiagnosisService : IDiagnosisService
         return true;
     }
 
-    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class DiagnosisService : IDiagnosisService
 
             var child = await _serviceResolver.Get<EncounterService>().Get(childRequest, cancellationToken);
             parent.Encounter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class DiagnosisService : IDiagnosisService
         return true;
     }
 
-    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class DiagnosisService : IDiagnosisService
         try
         {
             parent.Encounter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class DiagnosisService : IDiagnosisService
         return true;
     }
 
-    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class DiagnosisService : IDiagnosisService
 
             var child = await _serviceResolver.Get<PatientService>().Get(childRequest, cancellationToken);
             parent.Patient = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class DiagnosisService : IDiagnosisService
         return true;
     }
 
-    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class DiagnosisService : IDiagnosisService
         try
         {
             parent.Patient = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

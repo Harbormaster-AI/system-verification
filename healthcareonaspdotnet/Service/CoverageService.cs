@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface ICoverageService {
+public interface ICoverageService
+{
 
-    Task Create(Coverage model , CancellationToken cancellationToken);
+    Task Create(Coverage model, CancellationToken cancellationToken);
     Task<bool> Update(Coverage model, CancellationToken cancellationToken);
     Task<Coverage?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Coverage>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class CoverageService : ICoverageService
 
     public async Task<bool> Update(Coverage model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class CoverageService : ICoverageService
         return true;
     }
 
-    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class CoverageService : ICoverageService
 
             var child = await _serviceResolver.Get<PatientService>().Get(childRequest, cancellationToken);
             parent.Patient = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class CoverageService : ICoverageService
         return true;
     }
 
-    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class CoverageService : ICoverageService
         try
         {
             parent.Patient = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class CoverageService : ICoverageService
         return true;
     }
 
-    public async Task<bool> AssignPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class CoverageService : ICoverageService
 
             var child = await _serviceResolver.Get<InsurancePlanService>().Get(childRequest, cancellationToken);
             parent.Plan = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class CoverageService : ICoverageService
         return true;
     }
 
-    public async Task<bool> UnassignPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class CoverageService : ICoverageService
         try
         {
             parent.Plan = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -232,8 +238,10 @@ public class CoverageService : ICoverageService
     }
 
 
-    public async Task<bool> AddToClaims(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToClaims(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Coverage",
                 "AddToClaims",
@@ -241,16 +249,18 @@ public class CoverageService : ICoverageService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromClaims(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromClaims(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Coverage",
                 "RemoveFromClaims",
@@ -266,8 +276,10 @@ public class CoverageService : ICoverageService
         return true;
     }
 
-    public async Task<bool> AddToAuthorizations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAuthorizations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Coverage",
                 "AddToAuthorizations",
@@ -275,16 +287,18 @@ public class CoverageService : ICoverageService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAuthorizations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAuthorizations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Coverage",
                 "RemoveFromAuthorizations",

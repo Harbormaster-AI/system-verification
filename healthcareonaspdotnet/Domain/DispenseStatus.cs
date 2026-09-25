@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum DispenseStatus
 {
-    Preparation=1,InProgress=2,Completed=3,Cancelled=4
+    Preparation = 1, InProgress = 2, Completed = 3, Cancelled = 4
 }
 
 /// <summary>

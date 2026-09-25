@@ -29,9 +29,10 @@ public static class DiagnosisEndpoints
     private static async Task<IResult> Create(
         DiagnosisRequest request,
         IDiagnosisService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDiagnosis( request );
+        var model = mapRequestToDiagnosis(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class DiagnosisEndpoints
     private static async Task<IResult> Update(
         DiagnosisRequest request,
         IDiagnosisService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDiagnosis( request );
+        var model = mapRequestToDiagnosis(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class DiagnosisEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDiagnosisService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var diagnosis = await service.Get(identifier, cancellationToken);
-        return diagnosis is null ? Results.NotFound() : Results.Ok( diagnosis );
+        return diagnosis is null ? Results.NotFound() : Results.Ok(diagnosis);
     }
 
 
     private static async Task<IResult> GetAll(
         IDiagnosisService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DiagnosisResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DiagnosisResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDiagnosisService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class DiagnosisEndpoints
     private static async Task<IResult> AssignEncounter(
         AssociationRequest request,
         IDiagnosisService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEncounter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class DiagnosisEndpoints
     private static async Task<IResult> UnassignEncounter(
     AssociationRequest request,
     IDiagnosisService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEncounter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class DiagnosisEndpoints
     private static async Task<IResult> AssignPatient(
         AssociationRequest request,
         IDiagnosisService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPatient(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class DiagnosisEndpoints
     private static async Task<IResult> UnassignPatient(
     AssociationRequest request,
     IDiagnosisService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPatient(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Diagnosis mapRequestToDiagnosis( DiagnosisRequest request ) {
+    private static Diagnosis mapRequestToDiagnosis(DiagnosisRequest request)
+    {
         var model = new Diagnosis
         {
             Id = request.Id,

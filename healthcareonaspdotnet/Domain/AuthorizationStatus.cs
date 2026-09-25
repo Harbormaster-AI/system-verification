@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum AuthorizationStatus
 {
-    Requested=1,PendingReview=2,Approved=3,Denied=4,Expired=5
+    Requested = 1, PendingReview = 2, Approved = 3, Denied = 4, Expired = 5
 }
 
 /// <summary>

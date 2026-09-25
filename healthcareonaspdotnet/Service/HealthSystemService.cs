@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IHealthSystemService {
+public interface IHealthSystemService
+{
 
-    Task Create(HealthSystem model , CancellationToken cancellationToken);
+    Task Create(HealthSystem model, CancellationToken cancellationToken);
     Task<bool> Update(HealthSystem model, CancellationToken cancellationToken);
     Task<HealthSystem?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<HealthSystem>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class HealthSystemService : IHealthSystemService
 
     public async Task<bool> Update(HealthSystem model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,8 +123,10 @@ public class HealthSystemService : IHealthSystemService
     }
 
 
-    public async Task<bool> AddToFacilities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFacilities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "HealthSystem",
                 "AddToFacilities",
@@ -130,16 +134,18 @@ public class HealthSystemService : IHealthSystemService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFacilities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFacilities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "HealthSystem",
                 "RemoveFromFacilities",
@@ -155,8 +161,10 @@ public class HealthSystemService : IHealthSystemService
         return true;
     }
 
-    public async Task<bool> AddToSuppliers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSuppliers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "HealthSystem",
                 "AddToSuppliers",
@@ -164,16 +172,18 @@ public class HealthSystemService : IHealthSystemService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSuppliers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSuppliers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "HealthSystem",
                 "RemoveFromSuppliers",

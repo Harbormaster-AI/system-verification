@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum DiagnosisCertainty
 {
-    Suspected=1,Presumptive=2,Confirmed=3,RuledOut=4
+    Suspected = 1, Presumptive = 2, Confirmed = 3, RuledOut = 4
 }
 
 /// <summary>

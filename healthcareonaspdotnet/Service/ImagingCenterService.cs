@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IImagingCenterService {
+public interface IImagingCenterService
+{
 
-    Task Create(ImagingCenter model , CancellationToken cancellationToken);
+    Task Create(ImagingCenter model, CancellationToken cancellationToken);
     Task<bool> Update(ImagingCenter model, CancellationToken cancellationToken);
     Task<ImagingCenter?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ImagingCenter>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ImagingCenterService : IImagingCenterService
 
     public async Task<bool> Update(ImagingCenter model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class ImagingCenterService : IImagingCenterService
         return true;
     }
 
-    public async Task<bool> AssignFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class ImagingCenterService : IImagingCenterService
 
             var child = await _serviceResolver.Get<FacilityService>().Get(childRequest, cancellationToken);
             parent.Facility = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class ImagingCenterService : IImagingCenterService
         return true;
     }
 
-    public async Task<bool> UnassignFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class ImagingCenterService : IImagingCenterService
         try
         {
             parent.Facility = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class ImagingCenterService : IImagingCenterService
     }
 
 
-    public async Task<bool> AddToImagingOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToImagingOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ImagingCenter",
                 "AddToImagingOrders",
@@ -182,16 +188,18 @@ public class ImagingCenterService : IImagingCenterService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromImagingOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromImagingOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ImagingCenter",
                 "RemoveFromImagingOrders",
@@ -207,8 +215,10 @@ public class ImagingCenterService : IImagingCenterService
         return true;
     }
 
-    public async Task<bool> AddToImagingReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToImagingReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ImagingCenter",
                 "AddToImagingReports",
@@ -216,16 +226,18 @@ public class ImagingCenterService : IImagingCenterService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromImagingReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromImagingReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ImagingCenter",
                 "RemoveFromImagingReports",

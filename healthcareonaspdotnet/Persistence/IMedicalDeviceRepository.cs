@@ -11,9 +11,9 @@ public interface IMedicalDeviceRepository
     Task UpdateAsync(MedicalDevice medicalDevice, CancellationToken cancellationToken);
     Task DeleteAsync(MedicalDevice medicalDevice, CancellationToken cancellationToken);
 
-    Task AddToObservationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromObservationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToSoftwareUpdatesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSoftwareUpdatesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToObservationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromObservationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSoftwareUpdatesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSoftwareUpdatesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

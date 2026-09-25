@@ -11,7 +11,7 @@ public interface ILaboratoryOrderRepository
     Task UpdateAsync(LaboratoryOrder laboratoryOrder, CancellationToken cancellationToken);
     Task DeleteAsync(LaboratoryOrder laboratoryOrder, CancellationToken cancellationToken);
 
-    Task AddToResultsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromResultsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToResultsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromResultsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum DischargeDisposition
 {
-    Home=1,HomeWithHomeCare=2,SkilledNursingFacility=3,AcuteCareFacility=4,Expired=5,AgainstMedicalAdvice=6
+    Home = 1, HomeWithHomeCare = 2, SkilledNursingFacility = 3, AcuteCareFacility = 4, Expired = 5, AgainstMedicalAdvice = 6
 }
 
 /// <summary>

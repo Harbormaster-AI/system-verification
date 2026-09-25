@@ -31,9 +31,10 @@ public static class ProcedureOrderEndpoints
     private static async Task<IResult> Create(
         ProcedureOrderRequest request,
         IProcedureOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProcedureOrder( request );
+        var model = mapRequestToProcedureOrder(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class ProcedureOrderEndpoints
     private static async Task<IResult> Update(
         ProcedureOrderRequest request,
         IProcedureOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProcedureOrder( request );
+        var model = mapRequestToProcedureOrder(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class ProcedureOrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IProcedureOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var procedureOrder = await service.Get(identifier, cancellationToken);
-        return procedureOrder is null ? Results.NotFound() : Results.Ok( procedureOrder );
+        return procedureOrder is null ? Results.NotFound() : Results.Ok(procedureOrder);
     }
 
 
     private static async Task<IResult> GetAll(
         IProcedureOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ProcedureOrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ProcedureOrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IProcedureOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class ProcedureOrderEndpoints
     private static async Task<IResult> AssignOrder(
         AssociationRequest request,
         IProcedureOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class ProcedureOrderEndpoints
     private static async Task<IResult> UnassignOrder(
     AssociationRequest request,
     IProcedureOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ProcedureOrderEndpoints
     private static async Task<IResult> AssignFacility(
         AssociationRequest request,
         IProcedureOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignFacility(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class ProcedureOrderEndpoints
     private static async Task<IResult> UnassignFacility(
     AssociationRequest request,
     IProcedureOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignFacility(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class ProcedureOrderEndpoints
     private static async Task<IResult> AssignProcedure(
         AssociationRequest request,
         IProcedureOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProcedure(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class ProcedureOrderEndpoints
     private static async Task<IResult> UnassignProcedure(
     AssociationRequest request,
     IProcedureOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProcedure(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ProcedureOrder mapRequestToProcedureOrder( ProcedureOrderRequest request ) {
+    private static ProcedureOrder mapRequestToProcedureOrder(ProcedureOrderRequest request)
+    {
         var model = new ProcedureOrder
         {
             Id = request.Id,

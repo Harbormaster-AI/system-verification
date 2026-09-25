@@ -11,7 +11,7 @@ public interface ILabResultRepository
     Task UpdateAsync(LabResult labResult, CancellationToken cancellationToken);
     Task DeleteAsync(LabResult labResult, CancellationToken cancellationToken);
 
-    Task AddToObservationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromObservationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToObservationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromObservationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

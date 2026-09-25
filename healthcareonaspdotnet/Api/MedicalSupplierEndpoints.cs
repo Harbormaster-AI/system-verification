@@ -18,11 +18,11 @@ public static class MedicalSupplierEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToFacilities", AddToFacilities);
-    group.MapPut("/removeFromFacilities", RemoveFromFacilities);
+        group.MapPut("/addToFacilities", AddToFacilities);
+        group.MapPut("/removeFromFacilities", RemoveFromFacilities);
 
-    group.MapPut("/addToInventoryItems", AddToInventoryItems);
-    group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
+        group.MapPut("/addToInventoryItems", AddToInventoryItems);
+        group.MapPut("/removeFromInventoryItems", RemoveFromInventoryItems);
 
 
         return app;
@@ -31,9 +31,10 @@ public static class MedicalSupplierEndpoints
     private static async Task<IResult> Create(
         MedicalSupplierRequest request,
         IMedicalSupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMedicalSupplier( request );
+        var model = mapRequestToMedicalSupplier(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class MedicalSupplierEndpoints
     private static async Task<IResult> Update(
         MedicalSupplierRequest request,
         IMedicalSupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMedicalSupplier( request );
+        var model = mapRequestToMedicalSupplier(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class MedicalSupplierEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMedicalSupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var medicalSupplier = await service.Get(identifier, cancellationToken);
-        return medicalSupplier is null ? Results.NotFound() : Results.Ok( medicalSupplier );
+        return medicalSupplier is null ? Results.NotFound() : Results.Ok(medicalSupplier);
     }
 
 
     private static async Task<IResult> GetAll(
         IMedicalSupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MedicalSupplierResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MedicalSupplierResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMedicalSupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class MedicalSupplierEndpoints
     private static async Task<IResult> AddToFacilities(
         MultipleAssociationRequest request,
         IMedicalSupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToFacilities(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -104,14 +110,16 @@ public static class MedicalSupplierEndpoints
     private static async Task<IResult> RemoveFromFacilities(
         MultipleAssociationRequest request,
         IMedicalSupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromFacilities(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToInventoryItems(
         MultipleAssociationRequest request,
         IMedicalSupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInventoryItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class MedicalSupplierEndpoints
     private static async Task<IResult> RemoveFromInventoryItems(
         MultipleAssociationRequest request,
         IMedicalSupplierService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInventoryItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static MedicalSupplier mapRequestToMedicalSupplier( MedicalSupplierRequest request ) {
+    private static MedicalSupplier mapRequestToMedicalSupplier(MedicalSupplierRequest request)
+    {
         var model = new MedicalSupplier
         {
             Id = request.Id,

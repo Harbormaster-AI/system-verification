@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum EncounterStatus
 {
-    Planned=1,InProgress=2,OnHold=3,Discharged=4,Cancelled=5
+    Planned = 1, InProgress = 2, OnHold = 3, Discharged = 4, Cancelled = 5
 }
 
 /// <summary>

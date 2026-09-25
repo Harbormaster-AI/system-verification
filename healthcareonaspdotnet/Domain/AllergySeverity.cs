@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum AllergySeverity
 {
-    Mild=1,Moderate=2,Severe=3,LifeThreatening=4
+    Mild = 1, Moderate = 2, Severe = 3, LifeThreatening = 4
 }
 
 /// <summary>

@@ -18,11 +18,11 @@ public static class HealthSystemEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToFacilities", AddToFacilities);
-    group.MapPut("/removeFromFacilities", RemoveFromFacilities);
+        group.MapPut("/addToFacilities", AddToFacilities);
+        group.MapPut("/removeFromFacilities", RemoveFromFacilities);
 
-    group.MapPut("/addToSuppliers", AddToSuppliers);
-    group.MapPut("/removeFromSuppliers", RemoveFromSuppliers);
+        group.MapPut("/addToSuppliers", AddToSuppliers);
+        group.MapPut("/removeFromSuppliers", RemoveFromSuppliers);
 
 
         return app;
@@ -31,9 +31,10 @@ public static class HealthSystemEndpoints
     private static async Task<IResult> Create(
         HealthSystemRequest request,
         IHealthSystemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToHealthSystem( request );
+        var model = mapRequestToHealthSystem(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class HealthSystemEndpoints
     private static async Task<IResult> Update(
         HealthSystemRequest request,
         IHealthSystemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToHealthSystem( request );
+        var model = mapRequestToHealthSystem(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class HealthSystemEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IHealthSystemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var healthSystem = await service.Get(identifier, cancellationToken);
-        return healthSystem is null ? Results.NotFound() : Results.Ok( healthSystem );
+        return healthSystem is null ? Results.NotFound() : Results.Ok(healthSystem);
     }
 
 
     private static async Task<IResult> GetAll(
         IHealthSystemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( HealthSystemResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(HealthSystemResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IHealthSystemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class HealthSystemEndpoints
     private static async Task<IResult> AddToFacilities(
         MultipleAssociationRequest request,
         IHealthSystemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToFacilities(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -104,14 +110,16 @@ public static class HealthSystemEndpoints
     private static async Task<IResult> RemoveFromFacilities(
         MultipleAssociationRequest request,
         IHealthSystemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromFacilities(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSuppliers(
         MultipleAssociationRequest request,
         IHealthSystemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSuppliers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class HealthSystemEndpoints
     private static async Task<IResult> RemoveFromSuppliers(
         MultipleAssociationRequest request,
         IHealthSystemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSuppliers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static HealthSystem mapRequestToHealthSystem( HealthSystemRequest request ) {
+    private static HealthSystem mapRequestToHealthSystem(HealthSystemRequest request)
+    {
         var model = new HealthSystem
         {
             Id = request.Id,

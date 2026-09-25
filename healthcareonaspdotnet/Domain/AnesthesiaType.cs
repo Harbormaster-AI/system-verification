@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum AnesthesiaType
 {
-    None=1,Local=2,Regional=3,General=4,Sedation=5
+    None = 1, Local = 2, Regional = 3, General = 4, Sedation = 5
 }
 
 /// <summary>

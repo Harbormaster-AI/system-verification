@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum ImagingModality
 {
-    XRay=1,CT=2,MRI=3,Ultrasound=4,PET=5,Mammography=6
+    XRay = 1, CT = 2, MRI = 3, Ultrasound = 4, PET = 5, Mammography = 6
 }
 
 /// <summary>

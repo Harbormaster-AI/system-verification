@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum EncounterType
 {
-    Inpatient=1,Outpatient=2,Emergency=3,Observation=4,Telemedicine=5
+    Inpatient = 1, Outpatient = 2, Emergency = 3, Observation = 4, Telemedicine = 5
 }
 
 /// <summary>

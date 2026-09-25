@@ -27,9 +27,10 @@ public static class SoftwareUpdateEndpoints
     private static async Task<IResult> Create(
         SoftwareUpdateRequest request,
         ISoftwareUpdateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSoftwareUpdate( request );
+        var model = mapRequestToSoftwareUpdate(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class SoftwareUpdateEndpoints
     private static async Task<IResult> Update(
         SoftwareUpdateRequest request,
         ISoftwareUpdateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSoftwareUpdate( request );
+        var model = mapRequestToSoftwareUpdate(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class SoftwareUpdateEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISoftwareUpdateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var softwareUpdate = await service.Get(identifier, cancellationToken);
-        return softwareUpdate is null ? Results.NotFound() : Results.Ok( softwareUpdate );
+        return softwareUpdate is null ? Results.NotFound() : Results.Ok(softwareUpdate);
     }
 
 
     private static async Task<IResult> GetAll(
         ISoftwareUpdateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SoftwareUpdateResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SoftwareUpdateResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISoftwareUpdateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class SoftwareUpdateEndpoints
     private static async Task<IResult> AssignDevice(
         AssociationRequest request,
         ISoftwareUpdateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDevice(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class SoftwareUpdateEndpoints
     private static async Task<IResult> UnassignDevice(
     AssociationRequest request,
     ISoftwareUpdateService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDevice(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static SoftwareUpdate mapRequestToSoftwareUpdate( SoftwareUpdateRequest request ) {
+    private static SoftwareUpdate mapRequestToSoftwareUpdate(SoftwareUpdateRequest request)
+    {
         var model = new SoftwareUpdate
         {
             Id = request.Id,

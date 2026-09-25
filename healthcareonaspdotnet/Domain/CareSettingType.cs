@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum CareSettingType
 {
-    Inpatient=1,Outpatient=2,Emergency=3,HomeHealth=4,Telehealth=5
+    Inpatient = 1, Outpatient = 2, Emergency = 3, HomeHealth = 4, Telehealth = 5
 }
 
 /// <summary>

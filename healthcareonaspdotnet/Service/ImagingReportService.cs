@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IImagingReportService {
+public interface IImagingReportService
+{
 
-    Task Create(ImagingReport model , CancellationToken cancellationToken);
+    Task Create(ImagingReport model, CancellationToken cancellationToken);
     Task<bool> Update(ImagingReport model, CancellationToken cancellationToken);
     Task<ImagingReport?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ImagingReport>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class ImagingReportService : IImagingReportService
 
     public async Task<bool> Update(ImagingReport model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class ImagingReportService : IImagingReportService
         return true;
     }
 
-    public async Task<bool> AssignImagingOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignImagingOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class ImagingReportService : IImagingReportService
 
             var child = await _serviceResolver.Get<ImagingOrderService>().Get(childRequest, cancellationToken);
             parent.ImagingOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class ImagingReportService : IImagingReportService
         return true;
     }
 
-    public async Task<bool> UnassignImagingOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignImagingOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class ImagingReportService : IImagingReportService
         try
         {
             parent.ImagingOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class ImagingReportService : IImagingReportService
         return true;
     }
 
-    public async Task<bool> AssignClinician(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignClinician(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class ImagingReportService : IImagingReportService
 
             var child = await _serviceResolver.Get<ClinicianService>().Get(childRequest, cancellationToken);
             parent.Clinician = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class ImagingReportService : IImagingReportService
         return true;
     }
 
-    public async Task<bool> UnassignClinician(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignClinician(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class ImagingReportService : IImagingReportService
         try
         {
             parent.Clinician = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,7 +236,8 @@ public class ImagingReportService : IImagingReportService
         return true;
     }
 
-    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -248,7 +255,7 @@ public class ImagingReportService : IImagingReportService
 
             var child = await _serviceResolver.Get<EncounterService>().Get(childRequest, cancellationToken);
             parent.Encounter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -260,7 +267,8 @@ public class ImagingReportService : IImagingReportService
         return true;
     }
 
-    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -271,7 +279,7 @@ public class ImagingReportService : IImagingReportService
         try
         {
             parent.Encounter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -283,7 +291,8 @@ public class ImagingReportService : IImagingReportService
         return true;
     }
 
-    public async Task<bool> AssignImagingCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignImagingCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -301,7 +310,7 @@ public class ImagingReportService : IImagingReportService
 
             var child = await _serviceResolver.Get<ImagingCenterService>().Get(childRequest, cancellationToken);
             parent.ImagingCenter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -313,7 +322,8 @@ public class ImagingReportService : IImagingReportService
         return true;
     }
 
-    public async Task<bool> UnassignImagingCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignImagingCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -324,7 +334,7 @@ public class ImagingReportService : IImagingReportService
         try
         {
             parent.ImagingCenter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IClaimService {
+public interface IClaimService
+{
 
-    Task Create(Claim model , CancellationToken cancellationToken);
+    Task Create(Claim model, CancellationToken cancellationToken);
     Task<bool> Update(Claim model, CancellationToken cancellationToken);
     Task<Claim?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Claim>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class ClaimService : IClaimService
 
     public async Task<bool> Update(Claim model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class ClaimService : IClaimService
 
             var child = await _serviceResolver.Get<PatientService>().Get(childRequest, cancellationToken);
             parent.Patient = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class ClaimService : IClaimService
         try
         {
             parent.Patient = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> AssignCoverage(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCoverage(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class ClaimService : IClaimService
 
             var child = await _serviceResolver.Get<CoverageService>().Get(childRequest, cancellationToken);
             parent.Coverage = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> UnassignCoverage(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCoverage(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class ClaimService : IClaimService
         try
         {
             parent.Coverage = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,7 +237,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -249,7 +256,7 @@ public class ClaimService : IClaimService
 
             var child = await _serviceResolver.Get<EncounterService>().Get(childRequest, cancellationToken);
             parent.Encounter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -261,7 +268,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -272,7 +280,7 @@ public class ClaimService : IClaimService
         try
         {
             parent.Encounter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,7 +292,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> AssignPayer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPayer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -302,7 +311,7 @@ public class ClaimService : IClaimService
 
             var child = await _serviceResolver.Get<InsurancePayerService>().Get(childRequest, cancellationToken);
             parent.Payer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -314,7 +323,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> UnassignPayer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPayer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -325,7 +335,7 @@ public class ClaimService : IClaimService
         try
         {
             parent.Payer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -338,8 +348,10 @@ public class ClaimService : IClaimService
     }
 
 
-    public async Task<bool> AddToInvoices(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInvoices(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Claim",
                 "AddToInvoices",
@@ -347,16 +359,18 @@ public class ClaimService : IClaimService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInvoices(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInvoices(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Claim",
                 "RemoveFromInvoices",

@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum ResultStatus
 {
-    Registered=1,Partial=2,Final=3,Corrected=4,Cancelled=5
+    Registered = 1, Partial = 2, Final = 3, Corrected = 4, Cancelled = 5
 }
 
 /// <summary>

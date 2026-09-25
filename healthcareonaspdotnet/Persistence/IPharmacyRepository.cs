@@ -11,9 +11,9 @@ public interface IPharmacyRepository
     Task UpdateAsync(Pharmacy pharmacy, CancellationToken cancellationToken);
     Task DeleteAsync(Pharmacy pharmacy, CancellationToken cancellationToken);
 
-    Task AddToMedicationDispensesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromMedicationDispensesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToMedicationOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromMedicationOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToMedicationDispensesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromMedicationDispensesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToMedicationOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromMedicationOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

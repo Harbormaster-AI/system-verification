@@ -33,9 +33,10 @@ public static class ImagingReportEndpoints
     private static async Task<IResult> Create(
         ImagingReportRequest request,
         IImagingReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToImagingReport( request );
+        var model = mapRequestToImagingReport(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class ImagingReportEndpoints
     private static async Task<IResult> Update(
         ImagingReportRequest request,
         IImagingReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToImagingReport( request );
+        var model = mapRequestToImagingReport(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class ImagingReportEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IImagingReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var imagingReport = await service.Get(identifier, cancellationToken);
-        return imagingReport is null ? Results.NotFound() : Results.Ok( imagingReport );
+        return imagingReport is null ? Results.NotFound() : Results.Ok(imagingReport);
     }
 
 
     private static async Task<IResult> GetAll(
         IImagingReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ImagingReportResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ImagingReportResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IImagingReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class ImagingReportEndpoints
     private static async Task<IResult> AssignImagingOrder(
         AssociationRequest request,
         IImagingReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignImagingOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class ImagingReportEndpoints
     private static async Task<IResult> UnassignImagingOrder(
     AssociationRequest request,
     IImagingReportService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignImagingOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class ImagingReportEndpoints
     private static async Task<IResult> AssignClinician(
         AssociationRequest request,
         IImagingReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignClinician(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class ImagingReportEndpoints
     private static async Task<IResult> UnassignClinician(
     AssociationRequest request,
     IImagingReportService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignClinician(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class ImagingReportEndpoints
     private static async Task<IResult> AssignEncounter(
         AssociationRequest request,
         IImagingReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEncounter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class ImagingReportEndpoints
     private static async Task<IResult> UnassignEncounter(
     AssociationRequest request,
     IImagingReportService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEncounter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class ImagingReportEndpoints
     private static async Task<IResult> AssignImagingCenter(
         AssociationRequest request,
         IImagingReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignImagingCenter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class ImagingReportEndpoints
     private static async Task<IResult> UnassignImagingCenter(
     AssociationRequest request,
     IImagingReportService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignImagingCenter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ImagingReport mapRequestToImagingReport( ImagingReportRequest request ) {
+    private static ImagingReport mapRequestToImagingReport(ImagingReportRequest request)
+    {
         var model = new ImagingReport
         {
             Id = request.Id,

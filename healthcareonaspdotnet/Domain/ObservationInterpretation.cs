@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum ObservationInterpretation
 {
-    Normal=1,AbnormalLow=2,AbnormalHigh=3,CriticalLow=4,CriticalHigh=5,Reactive=6,Nonreactive=7,Positive=8,Negative=9
+    Normal = 1, AbnormalLow = 2, AbnormalHigh = 3, CriticalLow = 4, CriticalHigh = 5, Reactive = 6, Nonreactive = 7, Positive = 8, Negative = 9
 }
 
 /// <summary>

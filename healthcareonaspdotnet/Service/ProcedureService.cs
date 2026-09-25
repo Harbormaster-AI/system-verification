@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IProcedureService {
+public interface IProcedureService
+{
 
-    Task Create(Procedure model , CancellationToken cancellationToken);
+    Task Create(Procedure model, CancellationToken cancellationToken);
     Task<bool> Update(Procedure model, CancellationToken cancellationToken);
     Task<Procedure?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Procedure>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ProcedureService : IProcedureService
 
     public async Task<bool> Update(Procedure model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class ProcedureService : IProcedureService
         return true;
     }
 
-    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class ProcedureService : IProcedureService
 
             var child = await _serviceResolver.Get<EncounterService>().Get(childRequest, cancellationToken);
             parent.Encounter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class ProcedureService : IProcedureService
         return true;
     }
 
-    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class ProcedureService : IProcedureService
         try
         {
             parent.Encounter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class ProcedureService : IProcedureService
         return true;
     }
 
-    public async Task<bool> AssignPerformer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPerformer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class ProcedureService : IProcedureService
 
             var child = await _serviceResolver.Get<ClinicianService>().Get(childRequest, cancellationToken);
             parent.Performer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class ProcedureService : IProcedureService
         return true;
     }
 
-    public async Task<bool> UnassignPerformer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPerformer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class ProcedureService : IProcedureService
         try
         {
             parent.Performer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class ProcedureService : IProcedureService
         return true;
     }
 
-    public async Task<bool> AssignProcedureOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProcedureOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class ProcedureService : IProcedureService
 
             var child = await _serviceResolver.Get<ProcedureOrderService>().Get(childRequest, cancellationToken);
             parent.ProcedureOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class ProcedureService : IProcedureService
         return true;
     }
 
-    public async Task<bool> UnassignProcedureOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProcedureOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class ProcedureService : IProcedureService
         try
         {
             parent.ProcedureOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

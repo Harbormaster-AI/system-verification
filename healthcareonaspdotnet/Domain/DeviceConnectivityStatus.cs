@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum DeviceConnectivityStatus
 {
-    Connected=1,Disconnected=2,Standby=3,Fault=4
+    Connected = 1, Disconnected = 2, Standby = 3, Fault = 4
 }
 
 /// <summary>

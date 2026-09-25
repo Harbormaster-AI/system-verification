@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IAllergyService {
+public interface IAllergyService
+{
 
-    Task Create(Allergy model , CancellationToken cancellationToken);
+    Task Create(Allergy model, CancellationToken cancellationToken);
     Task<bool> Update(Allergy model, CancellationToken cancellationToken);
     Task<Allergy?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Allergy>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class AllergyService : IAllergyService
 
     public async Task<bool> Update(Allergy model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class AllergyService : IAllergyService
         return true;
     }
 
-    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class AllergyService : IAllergyService
 
             var child = await _serviceResolver.Get<PatientService>().Get(childRequest, cancellationToken);
             parent.Patient = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class AllergyService : IAllergyService
         return true;
     }
 
-    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class AllergyService : IAllergyService
         try
         {
             parent.Patient = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

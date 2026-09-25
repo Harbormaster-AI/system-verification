@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum AppointmentStatus
 {
-    Proposed=1,Booked=2,Arrived=3,Fulfilled=4,Cancelled=5,NoShow=6,EnteredInError=7
+    Proposed = 1, Booked = 2, Arrived = 3, Fulfilled = 4, Cancelled = 5, NoShow = 6, EnteredInError = 7
 }
 
 /// <summary>

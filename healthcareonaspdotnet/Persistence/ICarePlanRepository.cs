@@ -11,9 +11,9 @@ public interface ICarePlanRepository
     Task UpdateAsync(CarePlan carePlan, CancellationToken cancellationToken);
     Task DeleteAsync(CarePlan carePlan, CancellationToken cancellationToken);
 
-    Task AddToEncountersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromEncountersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTasksAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTasksAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToEncountersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromEncountersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTasksAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTasksAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

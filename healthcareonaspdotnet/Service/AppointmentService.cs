@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IAppointmentService {
+public interface IAppointmentService
+{
 
-    Task Create(Appointment model , CancellationToken cancellationToken);
+    Task Create(Appointment model, CancellationToken cancellationToken);
     Task<bool> Update(Appointment model, CancellationToken cancellationToken);
     Task<Appointment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Appointment>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class AppointmentService : IAppointmentService
 
     public async Task<bool> Update(Appointment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class AppointmentService : IAppointmentService
         return true;
     }
 
-    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class AppointmentService : IAppointmentService
 
             var child = await _serviceResolver.Get<PatientService>().Get(childRequest, cancellationToken);
             parent.Patient = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class AppointmentService : IAppointmentService
         return true;
     }
 
-    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class AppointmentService : IAppointmentService
         try
         {
             parent.Patient = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class AppointmentService : IAppointmentService
         return true;
     }
 
-    public async Task<bool> AssignClinician(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignClinician(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class AppointmentService : IAppointmentService
 
             var child = await _serviceResolver.Get<ClinicianService>().Get(childRequest, cancellationToken);
             parent.Clinician = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class AppointmentService : IAppointmentService
         return true;
     }
 
-    public async Task<bool> UnassignClinician(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignClinician(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class AppointmentService : IAppointmentService
         try
         {
             parent.Clinician = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,7 +236,8 @@ public class AppointmentService : IAppointmentService
         return true;
     }
 
-    public async Task<bool> AssignFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -248,7 +255,7 @@ public class AppointmentService : IAppointmentService
 
             var child = await _serviceResolver.Get<FacilityService>().Get(childRequest, cancellationToken);
             parent.Facility = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -260,7 +267,8 @@ public class AppointmentService : IAppointmentService
         return true;
     }
 
-    public async Task<bool> UnassignFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -271,7 +279,7 @@ public class AppointmentService : IAppointmentService
         try
         {
             parent.Facility = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -283,7 +291,8 @@ public class AppointmentService : IAppointmentService
         return true;
     }
 
-    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -301,7 +310,7 @@ public class AppointmentService : IAppointmentService
 
             var child = await _serviceResolver.Get<EncounterService>().Get(childRequest, cancellationToken);
             parent.Encounter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -313,7 +322,8 @@ public class AppointmentService : IAppointmentService
         return true;
     }
 
-    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -324,7 +334,7 @@ public class AppointmentService : IAppointmentService
         try
         {
             parent.Encounter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

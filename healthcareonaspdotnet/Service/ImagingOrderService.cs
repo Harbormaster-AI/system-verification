@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IImagingOrderService {
+public interface IImagingOrderService
+{
 
-    Task Create(ImagingOrder model , CancellationToken cancellationToken);
+    Task Create(ImagingOrder model, CancellationToken cancellationToken);
     Task<bool> Update(ImagingOrder model, CancellationToken cancellationToken);
     Task<ImagingOrder?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ImagingOrder>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ImagingOrderService : IImagingOrderService
 
     public async Task<bool> Update(ImagingOrder model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class ImagingOrderService : IImagingOrderService
         return true;
     }
 
-    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class ImagingOrderService : IImagingOrderService
 
             var child = await _serviceResolver.Get<ClinicalOrderService>().Get(childRequest, cancellationToken);
             parent.Order = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class ImagingOrderService : IImagingOrderService
         return true;
     }
 
-    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class ImagingOrderService : IImagingOrderService
         try
         {
             parent.Order = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class ImagingOrderService : IImagingOrderService
         return true;
     }
 
-    public async Task<bool> AssignImagingCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignImagingCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class ImagingOrderService : IImagingOrderService
 
             var child = await _serviceResolver.Get<ImagingCenterService>().Get(childRequest, cancellationToken);
             parent.ImagingCenter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class ImagingOrderService : IImagingOrderService
         return true;
     }
 
-    public async Task<bool> UnassignImagingCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignImagingCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class ImagingOrderService : IImagingOrderService
         try
         {
             parent.ImagingCenter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,8 +234,10 @@ public class ImagingOrderService : IImagingOrderService
     }
 
 
-    public async Task<bool> AddToReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ImagingOrder",
                 "AddToReports",
@@ -237,16 +245,18 @@ public class ImagingOrderService : IImagingOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ImagingOrder",
                 "RemoveFromReports",

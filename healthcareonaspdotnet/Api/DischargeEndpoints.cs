@@ -27,9 +27,10 @@ public static class DischargeEndpoints
     private static async Task<IResult> Create(
         DischargeRequest request,
         IDischargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDischarge( request );
+        var model = mapRequestToDischarge(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class DischargeEndpoints
     private static async Task<IResult> Update(
         DischargeRequest request,
         IDischargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDischarge( request );
+        var model = mapRequestToDischarge(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class DischargeEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDischargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var discharge = await service.Get(identifier, cancellationToken);
-        return discharge is null ? Results.NotFound() : Results.Ok( discharge );
+        return discharge is null ? Results.NotFound() : Results.Ok(discharge);
     }
 
 
     private static async Task<IResult> GetAll(
         IDischargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DischargeResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DischargeResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDischargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class DischargeEndpoints
     private static async Task<IResult> AssignEncounter(
         AssociationRequest request,
         IDischargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEncounter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class DischargeEndpoints
     private static async Task<IResult> UnassignEncounter(
     AssociationRequest request,
     IDischargeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEncounter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Discharge mapRequestToDischarge( DischargeRequest request ) {
+    private static Discharge mapRequestToDischarge(DischargeRequest request)
+    {
         var model = new Discharge
         {
             Id = request.Id,

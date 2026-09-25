@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IInsurancePlanService {
+public interface IInsurancePlanService
+{
 
-    Task Create(InsurancePlan model , CancellationToken cancellationToken);
+    Task Create(InsurancePlan model, CancellationToken cancellationToken);
     Task<bool> Update(InsurancePlan model, CancellationToken cancellationToken);
     Task<InsurancePlan?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InsurancePlan>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class InsurancePlanService : IInsurancePlanService
 
     public async Task<bool> Update(InsurancePlan model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class InsurancePlanService : IInsurancePlanService
         return true;
     }
 
-    public async Task<bool> AssignPayer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPayer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class InsurancePlanService : IInsurancePlanService
 
             var child = await _serviceResolver.Get<InsurancePayerService>().Get(childRequest, cancellationToken);
             parent.Payer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class InsurancePlanService : IInsurancePlanService
         return true;
     }
 
-    public async Task<bool> UnassignPayer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPayer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class InsurancePlanService : IInsurancePlanService
         try
         {
             parent.Payer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class InsurancePlanService : IInsurancePlanService
     }
 
 
-    public async Task<bool> AddToCoverages(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCoverages(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InsurancePlan",
                 "AddToCoverages",
@@ -182,16 +188,18 @@ public class InsurancePlanService : IInsurancePlanService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCoverages(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCoverages(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InsurancePlan",
                 "RemoveFromCoverages",

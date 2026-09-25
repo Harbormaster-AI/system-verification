@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum ProcedureStatus
 {
-    Planned=1,InProgress=2,Completed=3,Aborted=4
+    Planned = 1, InProgress = 2, Completed = 3, Aborted = 4
 }
 
 /// <summary>

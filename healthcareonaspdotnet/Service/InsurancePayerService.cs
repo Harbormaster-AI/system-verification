@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IInsurancePayerService {
+public interface IInsurancePayerService
+{
 
-    Task Create(InsurancePayer model , CancellationToken cancellationToken);
+    Task Create(InsurancePayer model, CancellationToken cancellationToken);
     Task<bool> Update(InsurancePayer model, CancellationToken cancellationToken);
     Task<InsurancePayer?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InsurancePayer>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class InsurancePayerService : IInsurancePayerService
 
     public async Task<bool> Update(InsurancePayer model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,8 +122,10 @@ public class InsurancePayerService : IInsurancePayerService
     }
 
 
-    public async Task<bool> AddToPlans(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPlans(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InsurancePayer",
                 "AddToPlans",
@@ -129,16 +133,18 @@ public class InsurancePayerService : IInsurancePayerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPlans(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPlans(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InsurancePayer",
                 "RemoveFromPlans",
@@ -154,8 +160,10 @@ public class InsurancePayerService : IInsurancePayerService
         return true;
     }
 
-    public async Task<bool> AddToClaims(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToClaims(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InsurancePayer",
                 "AddToClaims",
@@ -163,16 +171,18 @@ public class InsurancePayerService : IInsurancePayerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromClaims(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromClaims(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InsurancePayer",
                 "RemoveFromClaims",

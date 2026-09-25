@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum AdministrativeSex
 {
-    Male=1,Female=2,Unknown=3
+    Male = 1, Female = 2, Unknown = 3
 }
 
 /// <summary>

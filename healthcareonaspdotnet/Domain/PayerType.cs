@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum PayerType
 {
-    Commercial=1,Government=2,SelfInsured=3
+    Commercial = 1, Government = 2, SelfInsured = 3
 }
 
 /// <summary>

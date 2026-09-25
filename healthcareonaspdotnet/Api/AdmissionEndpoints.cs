@@ -29,9 +29,10 @@ public static class AdmissionEndpoints
     private static async Task<IResult> Create(
         AdmissionRequest request,
         IAdmissionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAdmission( request );
+        var model = mapRequestToAdmission(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class AdmissionEndpoints
     private static async Task<IResult> Update(
         AdmissionRequest request,
         IAdmissionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAdmission( request );
+        var model = mapRequestToAdmission(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class AdmissionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAdmissionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var admission = await service.Get(identifier, cancellationToken);
-        return admission is null ? Results.NotFound() : Results.Ok( admission );
+        return admission is null ? Results.NotFound() : Results.Ok(admission);
     }
 
 
     private static async Task<IResult> GetAll(
         IAdmissionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AdmissionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AdmissionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAdmissionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class AdmissionEndpoints
     private static async Task<IResult> AssignEncounter(
         AssociationRequest request,
         IAdmissionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEncounter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class AdmissionEndpoints
     private static async Task<IResult> UnassignEncounter(
     AssociationRequest request,
     IAdmissionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEncounter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class AdmissionEndpoints
     private static async Task<IResult> AssignFacility(
         AssociationRequest request,
         IAdmissionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignFacility(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class AdmissionEndpoints
     private static async Task<IResult> UnassignFacility(
     AssociationRequest request,
     IAdmissionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignFacility(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Admission mapRequestToAdmission( AdmissionRequest request ) {
+    private static Admission mapRequestToAdmission(AdmissionRequest request)
+    {
         var model = new Admission
         {
             Id = request.Id,

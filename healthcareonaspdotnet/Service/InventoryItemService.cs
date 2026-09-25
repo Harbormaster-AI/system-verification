@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IInventoryItemService {
+public interface IInventoryItemService
+{
 
-    Task Create(InventoryItem model , CancellationToken cancellationToken);
+    Task Create(InventoryItem model, CancellationToken cancellationToken);
     Task<bool> Update(InventoryItem model, CancellationToken cancellationToken);
     Task<InventoryItem?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InventoryItem>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class InventoryItemService : IInventoryItemService
 
     public async Task<bool> Update(InventoryItem model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class InventoryItemService : IInventoryItemService
         return true;
     }
 
-    public async Task<bool> AssignFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class InventoryItemService : IInventoryItemService
 
             var child = await _serviceResolver.Get<FacilityService>().Get(childRequest, cancellationToken);
             parent.Facility = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class InventoryItemService : IInventoryItemService
         return true;
     }
 
-    public async Task<bool> UnassignFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class InventoryItemService : IInventoryItemService
         try
         {
             parent.Facility = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class InventoryItemService : IInventoryItemService
         return true;
     }
 
-    public async Task<bool> AssignSupplier(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSupplier(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class InventoryItemService : IInventoryItemService
 
             var child = await _serviceResolver.Get<MedicalSupplierService>().Get(childRequest, cancellationToken);
             parent.Supplier = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class InventoryItemService : IInventoryItemService
         return true;
     }
 
-    public async Task<bool> UnassignSupplier(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSupplier(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class InventoryItemService : IInventoryItemService
         try
         {
             parent.Supplier = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

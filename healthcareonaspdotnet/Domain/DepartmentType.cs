@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum DepartmentType
 {
-    Emergency=1,Cardiology=2,Oncology=3,Orthopedics=4,Pediatrics=5,Radiology=6,Pathology=7,Pharmacy=8,IntensiveCare=9
+    Emergency = 1, Cardiology = 2, Oncology = 3, Orthopedics = 4, Pediatrics = 5, Radiology = 6, Pathology = 7, Pharmacy = 8, IntensiveCare = 9
 }
 
 /// <summary>

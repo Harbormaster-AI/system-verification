@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum ClinicalOrderType
 {
-    Medication=1,Laboratory=2,Imaging=3,Procedure=4,Consultation=5
+    Medication = 1, Laboratory = 2, Imaging = 3, Procedure = 4, Consultation = 5
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum OrderStatus
 {
-    Draft=1,Active=2,OnHold=3,Completed=4,Cancelled=5
+    Draft = 1, Active = 2, OnHold = 3, Completed = 4, Cancelled = 5
 }
 
 /// <summary>

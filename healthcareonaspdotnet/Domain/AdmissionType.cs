@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum AdmissionType
 {
-    Elective=1,Emergency=2,Urgent=3,Newborn=4,Trauma=5
+    Elective = 1, Emergency = 2, Urgent = 3, Newborn = 4, Trauma = 5
 }
 
 /// <summary>

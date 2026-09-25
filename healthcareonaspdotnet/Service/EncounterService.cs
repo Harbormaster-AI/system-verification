@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IEncounterService {
+public interface IEncounterService
+{
 
-    Task Create(Encounter model , CancellationToken cancellationToken);
+    Task Create(Encounter model, CancellationToken cancellationToken);
     Task<bool> Update(Encounter model, CancellationToken cancellationToken);
     Task<Encounter?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Encounter>> GetAll(CancellationToken cancellationToken);
@@ -79,7 +80,8 @@ public class EncounterService : IEncounterService
 
     public async Task<bool> Update(Encounter model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -137,7 +139,8 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -155,7 +158,7 @@ public class EncounterService : IEncounterService
 
             var child = await _serviceResolver.Get<PatientService>().Get(childRequest, cancellationToken);
             parent.Patient = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -167,7 +170,8 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -178,7 +182,7 @@ public class EncounterService : IEncounterService
         try
         {
             parent.Patient = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -190,7 +194,8 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> AssignClinician(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignClinician(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -208,7 +213,7 @@ public class EncounterService : IEncounterService
 
             var child = await _serviceResolver.Get<ClinicianService>().Get(childRequest, cancellationToken);
             parent.Clinician = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -220,7 +225,8 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> UnassignClinician(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignClinician(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -231,7 +237,7 @@ public class EncounterService : IEncounterService
         try
         {
             parent.Clinician = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -243,7 +249,8 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> AssignFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -261,7 +268,7 @@ public class EncounterService : IEncounterService
 
             var child = await _serviceResolver.Get<FacilityService>().Get(childRequest, cancellationToken);
             parent.Facility = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -273,7 +280,8 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> UnassignFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -284,7 +292,7 @@ public class EncounterService : IEncounterService
         try
         {
             parent.Facility = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -296,7 +304,8 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> AssignAppointment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAppointment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -314,7 +323,7 @@ public class EncounterService : IEncounterService
 
             var child = await _serviceResolver.Get<AppointmentService>().Get(childRequest, cancellationToken);
             parent.Appointment = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -326,7 +335,8 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> UnassignAppointment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAppointment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -337,7 +347,7 @@ public class EncounterService : IEncounterService
         try
         {
             parent.Appointment = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -349,7 +359,8 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> AssignAdmission(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAdmission(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -367,7 +378,7 @@ public class EncounterService : IEncounterService
 
             var child = await _serviceResolver.Get<AdmissionService>().Get(childRequest, cancellationToken);
             parent.Admission = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -379,7 +390,8 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> UnassignAdmission(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAdmission(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -390,7 +402,7 @@ public class EncounterService : IEncounterService
         try
         {
             parent.Admission = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -402,7 +414,8 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> AssignDischarge(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDischarge(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -420,7 +433,7 @@ public class EncounterService : IEncounterService
 
             var child = await _serviceResolver.Get<DischargeService>().Get(childRequest, cancellationToken);
             parent.Discharge = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -432,7 +445,8 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> UnassignDischarge(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDischarge(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -443,7 +457,7 @@ public class EncounterService : IEncounterService
         try
         {
             parent.Discharge = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -456,8 +470,10 @@ public class EncounterService : IEncounterService
     }
 
 
-    public async Task<bool> AddToDiagnoses(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDiagnoses(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Encounter",
                 "AddToDiagnoses",
@@ -465,16 +481,18 @@ public class EncounterService : IEncounterService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDiagnoses(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDiagnoses(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Encounter",
                 "RemoveFromDiagnoses",
@@ -490,8 +508,10 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> AddToProcedures(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToProcedures(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Encounter",
                 "AddToProcedures",
@@ -499,16 +519,18 @@ public class EncounterService : IEncounterService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromProcedures(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromProcedures(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Encounter",
                 "RemoveFromProcedures",
@@ -524,8 +546,10 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> AddToObservations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToObservations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Encounter",
                 "AddToObservations",
@@ -533,16 +557,18 @@ public class EncounterService : IEncounterService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromObservations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromObservations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Encounter",
                 "RemoveFromObservations",
@@ -558,8 +584,10 @@ public class EncounterService : IEncounterService
         return true;
     }
 
-    public async Task<bool> AddToOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Encounter",
                 "AddToOrders",
@@ -567,16 +595,18 @@ public class EncounterService : IEncounterService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Encounter",
                 "RemoveFromOrders",

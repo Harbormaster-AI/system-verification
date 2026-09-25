@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum ClinicianSpecialty
 {
-    InternalMedicine=1,FamilyMedicine=2,Cardiology=3,Oncology=4,Orthopedics=5,Pediatrics=6,Radiology=7,Pathology=8,Anesthesiology=9,Surgery=10,Psychiatry=11
+    InternalMedicine = 1, FamilyMedicine = 2, Cardiology = 3, Oncology = 4, Orthopedics = 5, Pediatrics = 6, Radiology = 7, Pathology = 8, Anesthesiology = 9, Surgery = 10, Psychiatry = 11
 }
 
 /// <summary>

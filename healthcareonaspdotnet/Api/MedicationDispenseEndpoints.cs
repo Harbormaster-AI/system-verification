@@ -31,9 +31,10 @@ public static class MedicationDispenseEndpoints
     private static async Task<IResult> Create(
         MedicationDispenseRequest request,
         IMedicationDispenseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMedicationDispense( request );
+        var model = mapRequestToMedicationDispense(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class MedicationDispenseEndpoints
     private static async Task<IResult> Update(
         MedicationDispenseRequest request,
         IMedicationDispenseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMedicationDispense( request );
+        var model = mapRequestToMedicationDispense(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class MedicationDispenseEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMedicationDispenseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var medicationDispense = await service.Get(identifier, cancellationToken);
-        return medicationDispense is null ? Results.NotFound() : Results.Ok( medicationDispense );
+        return medicationDispense is null ? Results.NotFound() : Results.Ok(medicationDispense);
     }
 
 
     private static async Task<IResult> GetAll(
         IMedicationDispenseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MedicationDispenseResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MedicationDispenseResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMedicationDispenseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class MedicationDispenseEndpoints
     private static async Task<IResult> AssignMedicationOrder(
         AssociationRequest request,
         IMedicationDispenseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMedicationOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class MedicationDispenseEndpoints
     private static async Task<IResult> UnassignMedicationOrder(
     AssociationRequest request,
     IMedicationDispenseService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMedicationOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class MedicationDispenseEndpoints
     private static async Task<IResult> AssignPharmacy(
         AssociationRequest request,
         IMedicationDispenseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPharmacy(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class MedicationDispenseEndpoints
     private static async Task<IResult> UnassignPharmacy(
     AssociationRequest request,
     IMedicationDispenseService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPharmacy(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class MedicationDispenseEndpoints
     private static async Task<IResult> AssignPatient(
         AssociationRequest request,
         IMedicationDispenseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPatient(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class MedicationDispenseEndpoints
     private static async Task<IResult> UnassignPatient(
     AssociationRequest request,
     IMedicationDispenseService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPatient(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static MedicationDispense mapRequestToMedicationDispense( MedicationDispenseRequest request ) {
+    private static MedicationDispense mapRequestToMedicationDispense(MedicationDispenseRequest request)
+    {
         var model = new MedicationDispense
         {
             Id = request.Id,

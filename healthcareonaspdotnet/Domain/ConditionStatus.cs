@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum ConditionStatus
 {
-    Active=1,Recurrence=2,Relapse=3,Remission=4,Resolved=5
+    Active = 1, Recurrence = 2, Relapse = 3, Remission = 4, Resolved = 5
 }
 
 /// <summary>

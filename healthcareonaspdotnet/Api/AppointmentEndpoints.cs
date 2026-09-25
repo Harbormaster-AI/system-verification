@@ -33,9 +33,10 @@ public static class AppointmentEndpoints
     private static async Task<IResult> Create(
         AppointmentRequest request,
         IAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAppointment( request );
+        var model = mapRequestToAppointment(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class AppointmentEndpoints
     private static async Task<IResult> Update(
         AppointmentRequest request,
         IAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAppointment( request );
+        var model = mapRequestToAppointment(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class AppointmentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var appointment = await service.Get(identifier, cancellationToken);
-        return appointment is null ? Results.NotFound() : Results.Ok( appointment );
+        return appointment is null ? Results.NotFound() : Results.Ok(appointment);
     }
 
 
     private static async Task<IResult> GetAll(
         IAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AppointmentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AppointmentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class AppointmentEndpoints
     private static async Task<IResult> AssignPatient(
         AssociationRequest request,
         IAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPatient(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class AppointmentEndpoints
     private static async Task<IResult> UnassignPatient(
     AssociationRequest request,
     IAppointmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPatient(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class AppointmentEndpoints
     private static async Task<IResult> AssignClinician(
         AssociationRequest request,
         IAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignClinician(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class AppointmentEndpoints
     private static async Task<IResult> UnassignClinician(
     AssociationRequest request,
     IAppointmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignClinician(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class AppointmentEndpoints
     private static async Task<IResult> AssignFacility(
         AssociationRequest request,
         IAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignFacility(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class AppointmentEndpoints
     private static async Task<IResult> UnassignFacility(
     AssociationRequest request,
     IAppointmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignFacility(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class AppointmentEndpoints
     private static async Task<IResult> AssignEncounter(
         AssociationRequest request,
         IAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEncounter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class AppointmentEndpoints
     private static async Task<IResult> UnassignEncounter(
     AssociationRequest request,
     IAppointmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEncounter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Appointment mapRequestToAppointment( AppointmentRequest request ) {
+    private static Appointment mapRequestToAppointment(AppointmentRequest request)
+    {
         var model = new Appointment
         {
             Id = request.Id,

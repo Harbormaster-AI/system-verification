@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum Priority
 {
-    Routine=1,Urgent=2,Stat=3
+    Routine = 1, Urgent = 2, Stat = 3
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum DeviceType
 {
-    Pacemaker=1,InsulinPump=2,BloodPressureMonitor=3,GlucoseMeter=4,PulseOximeter=5,Ventilator=6,InfusionPump=7,WearableTracker=8
+    Pacemaker = 1, InsulinPump = 2, BloodPressureMonitor = 3, GlucoseMeter = 4, PulseOximeter = 5, Ventilator = 6, InfusionPump = 7, WearableTracker = 8
 }
 
 /// <summary>

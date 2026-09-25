@@ -22,11 +22,11 @@ public static class CoverageEndpoints
         group.MapPut("/assignPlan", AssignPlan);
         group.MapPut("/unassignPlan", UnassignPlan);
 
-    group.MapPut("/addToClaims", AddToClaims);
-    group.MapPut("/removeFromClaims", RemoveFromClaims);
+        group.MapPut("/addToClaims", AddToClaims);
+        group.MapPut("/removeFromClaims", RemoveFromClaims);
 
-    group.MapPut("/addToAuthorizations", AddToAuthorizations);
-    group.MapPut("/removeFromAuthorizations", RemoveFromAuthorizations);
+        group.MapPut("/addToAuthorizations", AddToAuthorizations);
+        group.MapPut("/removeFromAuthorizations", RemoveFromAuthorizations);
 
 
         return app;
@@ -35,9 +35,10 @@ public static class CoverageEndpoints
     private static async Task<IResult> Create(
         CoverageRequest request,
         ICoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCoverage( request );
+        var model = mapRequestToCoverage(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class CoverageEndpoints
     private static async Task<IResult> Update(
         CoverageRequest request,
         ICoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCoverage( request );
+        var model = mapRequestToCoverage(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class CoverageEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var coverage = await service.Get(identifier, cancellationToken);
-        return coverage is null ? Results.NotFound() : Results.Ok( coverage );
+        return coverage is null ? Results.NotFound() : Results.Ok(coverage);
     }
 
 
     private static async Task<IResult> GetAll(
         ICoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CoverageResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CoverageResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class CoverageEndpoints
     private static async Task<IResult> AssignPatient(
         AssociationRequest request,
         ICoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPatient(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class CoverageEndpoints
     private static async Task<IResult> UnassignPatient(
     AssociationRequest request,
     ICoverageService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPatient(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -115,7 +122,8 @@ public static class CoverageEndpoints
     private static async Task<IResult> AssignPlan(
         AssociationRequest request,
         ICoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPlan(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +131,8 @@ public static class CoverageEndpoints
     private static async Task<IResult> UnassignPlan(
     AssociationRequest request,
     ICoverageService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPlan(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +141,8 @@ public static class CoverageEndpoints
     private static async Task<IResult> AddToClaims(
         MultipleAssociationRequest request,
         ICoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToClaims(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class CoverageEndpoints
     private static async Task<IResult> RemoveFromClaims(
         MultipleAssociationRequest request,
         ICoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromClaims(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToAuthorizations(
         MultipleAssociationRequest request,
         ICoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAuthorizations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class CoverageEndpoints
     private static async Task<IResult> RemoveFromAuthorizations(
         MultipleAssociationRequest request,
         ICoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAuthorizations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Coverage mapRequestToCoverage( CoverageRequest request ) {
+    private static Coverage mapRequestToCoverage(CoverageRequest request)
+    {
         var model = new Coverage
         {
             Id = request.Id,

@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum SoftwareUpdateType
 {
-    SecurityPatch=1,FeatureUpdate=2,BugFix=3,FirmwareUpgrade=4
+    SecurityPatch = 1, FeatureUpdate = 2, BugFix = 3, FirmwareUpgrade = 4
 }
 
 /// <summary>

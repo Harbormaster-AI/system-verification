@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum InsurancePlanType
 {
-    HMO=1,PPO=2,EPO=3,POS=4,Indemnity=5,MedicareAdvantage=6,MedicaidManagedCare=7
+    HMO = 1, PPO = 2, EPO = 3, POS = 4, Indemnity = 5, MedicareAdvantage = 6, MedicaidManagedCare = 7
 }
 
 /// <summary>

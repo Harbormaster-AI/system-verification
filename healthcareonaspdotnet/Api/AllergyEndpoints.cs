@@ -27,9 +27,10 @@ public static class AllergyEndpoints
     private static async Task<IResult> Create(
         AllergyRequest request,
         IAllergyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAllergy( request );
+        var model = mapRequestToAllergy(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class AllergyEndpoints
     private static async Task<IResult> Update(
         AllergyRequest request,
         IAllergyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAllergy( request );
+        var model = mapRequestToAllergy(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class AllergyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAllergyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var allergy = await service.Get(identifier, cancellationToken);
-        return allergy is null ? Results.NotFound() : Results.Ok( allergy );
+        return allergy is null ? Results.NotFound() : Results.Ok(allergy);
     }
 
 
     private static async Task<IResult> GetAll(
         IAllergyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AllergyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AllergyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAllergyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class AllergyEndpoints
     private static async Task<IResult> AssignPatient(
         AssociationRequest request,
         IAllergyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPatient(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class AllergyEndpoints
     private static async Task<IResult> UnassignPatient(
     AssociationRequest request,
     IAllergyService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPatient(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Allergy mapRequestToAllergy( AllergyRequest request ) {
+    private static Allergy mapRequestToAllergy(AllergyRequest request)
+    {
         var model = new Allergy
         {
             Id = request.Id,

@@ -20,11 +20,11 @@ public static class MedicalDeviceEndpoints
         group.MapPut("/assignPatient", AssignPatient);
         group.MapPut("/unassignPatient", UnassignPatient);
 
-    group.MapPut("/addToObservations", AddToObservations);
-    group.MapPut("/removeFromObservations", RemoveFromObservations);
+        group.MapPut("/addToObservations", AddToObservations);
+        group.MapPut("/removeFromObservations", RemoveFromObservations);
 
-    group.MapPut("/addToSoftwareUpdates", AddToSoftwareUpdates);
-    group.MapPut("/removeFromSoftwareUpdates", RemoveFromSoftwareUpdates);
+        group.MapPut("/addToSoftwareUpdates", AddToSoftwareUpdates);
+        group.MapPut("/removeFromSoftwareUpdates", RemoveFromSoftwareUpdates);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class MedicalDeviceEndpoints
     private static async Task<IResult> Create(
         MedicalDeviceRequest request,
         IMedicalDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMedicalDevice( request );
+        var model = mapRequestToMedicalDevice(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class MedicalDeviceEndpoints
     private static async Task<IResult> Update(
         MedicalDeviceRequest request,
         IMedicalDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMedicalDevice( request );
+        var model = mapRequestToMedicalDevice(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class MedicalDeviceEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMedicalDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var medicalDevice = await service.Get(identifier, cancellationToken);
-        return medicalDevice is null ? Results.NotFound() : Results.Ok( medicalDevice );
+        return medicalDevice is null ? Results.NotFound() : Results.Ok(medicalDevice);
     }
 
 
     private static async Task<IResult> GetAll(
         IMedicalDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MedicalDeviceResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MedicalDeviceResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMedicalDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class MedicalDeviceEndpoints
     private static async Task<IResult> AssignPatient(
         AssociationRequest request,
         IMedicalDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPatient(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class MedicalDeviceEndpoints
     private static async Task<IResult> UnassignPatient(
     AssociationRequest request,
     IMedicalDeviceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPatient(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class MedicalDeviceEndpoints
     private static async Task<IResult> AddToObservations(
         MultipleAssociationRequest request,
         IMedicalDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToObservations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class MedicalDeviceEndpoints
     private static async Task<IResult> RemoveFromObservations(
         MultipleAssociationRequest request,
         IMedicalDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromObservations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSoftwareUpdates(
         MultipleAssociationRequest request,
         IMedicalDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSoftwareUpdates(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class MedicalDeviceEndpoints
     private static async Task<IResult> RemoveFromSoftwareUpdates(
         MultipleAssociationRequest request,
         IMedicalDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSoftwareUpdates(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static MedicalDevice mapRequestToMedicalDevice( MedicalDeviceRequest request ) {
+    private static MedicalDevice mapRequestToMedicalDevice(MedicalDeviceRequest request)
+    {
         var model = new MedicalDevice
         {
             Id = request.Id,

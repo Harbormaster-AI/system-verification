@@ -33,9 +33,10 @@ public static class ObservationEndpoints
     private static async Task<IResult> Create(
         ObservationRequest request,
         IObservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToObservation( request );
+        var model = mapRequestToObservation(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class ObservationEndpoints
     private static async Task<IResult> Update(
         ObservationRequest request,
         IObservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToObservation( request );
+        var model = mapRequestToObservation(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class ObservationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IObservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var observation = await service.Get(identifier, cancellationToken);
-        return observation is null ? Results.NotFound() : Results.Ok( observation );
+        return observation is null ? Results.NotFound() : Results.Ok(observation);
     }
 
 
     private static async Task<IResult> GetAll(
         IObservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ObservationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ObservationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IObservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class ObservationEndpoints
     private static async Task<IResult> AssignEncounter(
         AssociationRequest request,
         IObservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEncounter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class ObservationEndpoints
     private static async Task<IResult> UnassignEncounter(
     AssociationRequest request,
     IObservationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEncounter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class ObservationEndpoints
     private static async Task<IResult> AssignPatient(
         AssociationRequest request,
         IObservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPatient(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class ObservationEndpoints
     private static async Task<IResult> UnassignPatient(
     AssociationRequest request,
     IObservationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPatient(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class ObservationEndpoints
     private static async Task<IResult> AssignDevice(
         AssociationRequest request,
         IObservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDevice(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class ObservationEndpoints
     private static async Task<IResult> UnassignDevice(
     AssociationRequest request,
     IObservationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDevice(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class ObservationEndpoints
     private static async Task<IResult> AssignLabResult(
         AssociationRequest request,
         IObservationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLabResult(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class ObservationEndpoints
     private static async Task<IResult> UnassignLabResult(
     AssociationRequest request,
     IObservationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLabResult(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Observation mapRequestToObservation( ObservationRequest request ) {
+    private static Observation mapRequestToObservation(ObservationRequest request)
+    {
         var model = new Observation
         {
             Id = request.Id,

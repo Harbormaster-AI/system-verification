@@ -29,9 +29,10 @@ public static class AuthorizationEndpoints
     private static async Task<IResult> Create(
         AuthorizationRequest request,
         IAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAuthorization( request );
+        var model = mapRequestToAuthorization(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class AuthorizationEndpoints
     private static async Task<IResult> Update(
         AuthorizationRequest request,
         IAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAuthorization( request );
+        var model = mapRequestToAuthorization(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class AuthorizationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var authorization = await service.Get(identifier, cancellationToken);
-        return authorization is null ? Results.NotFound() : Results.Ok( authorization );
+        return authorization is null ? Results.NotFound() : Results.Ok(authorization);
     }
 
 
     private static async Task<IResult> GetAll(
         IAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AuthorizationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AuthorizationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class AuthorizationEndpoints
     private static async Task<IResult> AssignCoverage(
         AssociationRequest request,
         IAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCoverage(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class AuthorizationEndpoints
     private static async Task<IResult> UnassignCoverage(
     AssociationRequest request,
     IAuthorizationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCoverage(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class AuthorizationEndpoints
     private static async Task<IResult> AssignOrder(
         AssociationRequest request,
         IAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class AuthorizationEndpoints
     private static async Task<IResult> UnassignOrder(
     AssociationRequest request,
     IAuthorizationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Authorization mapRequestToAuthorization( AuthorizationRequest request ) {
+    private static Authorization mapRequestToAuthorization(AuthorizationRequest request)
+    {
         var model = new Authorization
         {
             Id = request.Id,

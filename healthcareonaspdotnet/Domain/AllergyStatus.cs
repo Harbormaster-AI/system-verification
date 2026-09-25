@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum AllergyStatus
 {
-    Active=1,Inactive=2,Resolved=3,EnteredInError=4
+    Active = 1, Inactive = 2, Resolved = 3, EnteredInError = 4
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum PaymentMethod
 {
-    ACH=1,Check=2,CreditCard=3,EFT=4,Cash=5
+    ACH = 1, Check = 2, CreditCard = 3, EFT = 4, Cash = 5
 }
 
 /// <summary>

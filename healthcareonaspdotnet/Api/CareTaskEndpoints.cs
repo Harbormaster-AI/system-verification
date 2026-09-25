@@ -31,9 +31,10 @@ public static class CareTaskEndpoints
     private static async Task<IResult> Create(
         CareTaskRequest request,
         ICareTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCareTask( request );
+        var model = mapRequestToCareTask(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class CareTaskEndpoints
     private static async Task<IResult> Update(
         CareTaskRequest request,
         ICareTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCareTask( request );
+        var model = mapRequestToCareTask(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class CareTaskEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICareTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var careTask = await service.Get(identifier, cancellationToken);
-        return careTask is null ? Results.NotFound() : Results.Ok( careTask );
+        return careTask is null ? Results.NotFound() : Results.Ok(careTask);
     }
 
 
     private static async Task<IResult> GetAll(
         ICareTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CareTaskResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CareTaskResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICareTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class CareTaskEndpoints
     private static async Task<IResult> AssignCarePlan(
         AssociationRequest request,
         ICareTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCarePlan(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class CareTaskEndpoints
     private static async Task<IResult> UnassignCarePlan(
     AssociationRequest request,
     ICareTaskService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCarePlan(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class CareTaskEndpoints
     private static async Task<IResult> AssignAssignedTo(
         AssociationRequest request,
         ICareTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAssignedTo(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class CareTaskEndpoints
     private static async Task<IResult> UnassignAssignedTo(
     AssociationRequest request,
     ICareTaskService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAssignedTo(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class CareTaskEndpoints
     private static async Task<IResult> AssignEncounter(
         AssociationRequest request,
         ICareTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEncounter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class CareTaskEndpoints
     private static async Task<IResult> UnassignEncounter(
     AssociationRequest request,
     ICareTaskService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEncounter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static CareTask mapRequestToCareTask( CareTaskRequest request ) {
+    private static CareTask mapRequestToCareTask(CareTaskRequest request)
+    {
         var model = new CareTask
         {
             Id = request.Id,

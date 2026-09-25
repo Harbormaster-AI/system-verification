@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IProcedureOrderService {
+public interface IProcedureOrderService
+{
 
-    Task Create(ProcedureOrder model , CancellationToken cancellationToken);
+    Task Create(ProcedureOrder model, CancellationToken cancellationToken);
     Task<bool> Update(ProcedureOrder model, CancellationToken cancellationToken);
     Task<ProcedureOrder?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ProcedureOrder>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ProcedureOrderService : IProcedureOrderService
 
     public async Task<bool> Update(ProcedureOrder model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class ProcedureOrderService : IProcedureOrderService
         return true;
     }
 
-    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class ProcedureOrderService : IProcedureOrderService
 
             var child = await _serviceResolver.Get<ClinicalOrderService>().Get(childRequest, cancellationToken);
             parent.Order = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class ProcedureOrderService : IProcedureOrderService
         return true;
     }
 
-    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class ProcedureOrderService : IProcedureOrderService
         try
         {
             parent.Order = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class ProcedureOrderService : IProcedureOrderService
         return true;
     }
 
-    public async Task<bool> AssignFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class ProcedureOrderService : IProcedureOrderService
 
             var child = await _serviceResolver.Get<FacilityService>().Get(childRequest, cancellationToken);
             parent.Facility = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class ProcedureOrderService : IProcedureOrderService
         return true;
     }
 
-    public async Task<bool> UnassignFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class ProcedureOrderService : IProcedureOrderService
         try
         {
             parent.Facility = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -227,7 +233,8 @@ public class ProcedureOrderService : IProcedureOrderService
         return true;
     }
 
-    public async Task<bool> AssignProcedure(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProcedure(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -245,7 +252,7 @@ public class ProcedureOrderService : IProcedureOrderService
 
             var child = await _serviceResolver.Get<ProcedureService>().Get(childRequest, cancellationToken);
             parent.Procedure = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -257,7 +264,8 @@ public class ProcedureOrderService : IProcedureOrderService
         return true;
     }
 
-    public async Task<bool> UnassignProcedure(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProcedure(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -268,7 +276,7 @@ public class ProcedureOrderService : IProcedureOrderService
         try
         {
             parent.Procedure = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

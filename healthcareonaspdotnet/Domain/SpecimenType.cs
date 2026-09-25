@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum SpecimenType
 {
-    Blood=1,Urine=2,Saliva=3,Sputum=4,Tissue=5,CSF=6,Stool=7
+    Blood = 1, Urine = 2, Saliva = 3, Sputum = 4, Tissue = 5, CSF = 6, Stool = 7
 }
 
 /// <summary>

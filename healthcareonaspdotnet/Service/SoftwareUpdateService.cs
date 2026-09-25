@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface ISoftwareUpdateService {
+public interface ISoftwareUpdateService
+{
 
-    Task Create(SoftwareUpdate model , CancellationToken cancellationToken);
+    Task Create(SoftwareUpdate model, CancellationToken cancellationToken);
     Task<bool> Update(SoftwareUpdate model, CancellationToken cancellationToken);
     Task<SoftwareUpdate?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SoftwareUpdate>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class SoftwareUpdateService : ISoftwareUpdateService
 
     public async Task<bool> Update(SoftwareUpdate model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class SoftwareUpdateService : ISoftwareUpdateService
         return true;
     }
 
-    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class SoftwareUpdateService : ISoftwareUpdateService
 
             var child = await _serviceResolver.Get<MedicalDeviceService>().Get(childRequest, cancellationToken);
             parent.Device = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class SoftwareUpdateService : ISoftwareUpdateService
         return true;
     }
 
-    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class SoftwareUpdateService : ISoftwareUpdateService
         try
         {
             parent.Device = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -22,8 +22,8 @@ public static class LaboratoryOrderEndpoints
         group.MapPut("/assignLaboratory", AssignLaboratory);
         group.MapPut("/unassignLaboratory", UnassignLaboratory);
 
-    group.MapPut("/addToResults", AddToResults);
-    group.MapPut("/removeFromResults", RemoveFromResults);
+        group.MapPut("/addToResults", AddToResults);
+        group.MapPut("/removeFromResults", RemoveFromResults);
 
 
         return app;
@@ -32,9 +32,10 @@ public static class LaboratoryOrderEndpoints
     private static async Task<IResult> Create(
         LaboratoryOrderRequest request,
         ILaboratoryOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLaboratoryOrder( request );
+        var model = mapRequestToLaboratoryOrder(request);
 
         try
         {
@@ -51,9 +52,10 @@ public static class LaboratoryOrderEndpoints
     private static async Task<IResult> Update(
         LaboratoryOrderRequest request,
         ILaboratoryOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLaboratoryOrder( request );
+        var model = mapRequestToLaboratoryOrder(request);
 
         try
         {
@@ -70,25 +72,28 @@ public static class LaboratoryOrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ILaboratoryOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var laboratoryOrder = await service.Get(identifier, cancellationToken);
-        return laboratoryOrder is null ? Results.NotFound() : Results.Ok( laboratoryOrder );
+        return laboratoryOrder is null ? Results.NotFound() : Results.Ok(laboratoryOrder);
     }
 
 
     private static async Task<IResult> GetAll(
         ILaboratoryOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( LaboratoryOrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(LaboratoryOrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ILaboratoryOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class LaboratoryOrderEndpoints
     private static async Task<IResult> AssignOrder(
         AssociationRequest request,
         ILaboratoryOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +110,8 @@ public static class LaboratoryOrderEndpoints
     private static async Task<IResult> UnassignOrder(
     AssociationRequest request,
     ILaboratoryOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +119,8 @@ public static class LaboratoryOrderEndpoints
     private static async Task<IResult> AssignLaboratory(
         AssociationRequest request,
         ILaboratoryOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLaboratory(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +128,8 @@ public static class LaboratoryOrderEndpoints
     private static async Task<IResult> UnassignLaboratory(
     AssociationRequest request,
     ILaboratoryOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLaboratory(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class LaboratoryOrderEndpoints
     private static async Task<IResult> AddToResults(
         MultipleAssociationRequest request,
         ILaboratoryOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToResults(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class LaboratoryOrderEndpoints
     private static async Task<IResult> RemoveFromResults(
         MultipleAssociationRequest request,
         ILaboratoryOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromResults(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static LaboratoryOrder mapRequestToLaboratoryOrder( LaboratoryOrderRequest request ) {
+    private static LaboratoryOrder mapRequestToLaboratoryOrder(LaboratoryOrderRequest request)
+    {
         var model = new LaboratoryOrder
         {
             Id = request.Id,

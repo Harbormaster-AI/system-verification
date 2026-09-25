@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum CoverageType
 {
-    Medical=1,Pharmacy=2,Dental=3,Vision=4,BehavioralHealth=5
+    Medical = 1, Pharmacy = 2, Dental = 3, Vision = 4, BehavioralHealth = 5
 }
 
 /// <summary>

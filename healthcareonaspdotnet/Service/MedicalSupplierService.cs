@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IMedicalSupplierService {
+public interface IMedicalSupplierService
+{
 
-    Task Create(MedicalSupplier model , CancellationToken cancellationToken);
+    Task Create(MedicalSupplier model, CancellationToken cancellationToken);
     Task<bool> Update(MedicalSupplier model, CancellationToken cancellationToken);
     Task<MedicalSupplier?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<MedicalSupplier>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class MedicalSupplierService : IMedicalSupplierService
 
     public async Task<bool> Update(MedicalSupplier model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,8 +122,10 @@ public class MedicalSupplierService : IMedicalSupplierService
     }
 
 
-    public async Task<bool> AddToFacilities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFacilities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MedicalSupplier",
                 "AddToFacilities",
@@ -129,16 +133,18 @@ public class MedicalSupplierService : IMedicalSupplierService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFacilities(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFacilities(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MedicalSupplier",
                 "RemoveFromFacilities",
@@ -154,8 +160,10 @@ public class MedicalSupplierService : IMedicalSupplierService
         return true;
     }
 
-    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MedicalSupplier",
                 "AddToInventoryItems",
@@ -163,16 +171,18 @@ public class MedicalSupplierService : IMedicalSupplierService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MedicalSupplier",
                 "RemoveFromInventoryItems",

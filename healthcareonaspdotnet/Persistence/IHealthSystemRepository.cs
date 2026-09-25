@@ -11,9 +11,9 @@ public interface IHealthSystemRepository
     Task UpdateAsync(HealthSystem healthSystem, CancellationToken cancellationToken);
     Task DeleteAsync(HealthSystem healthSystem, CancellationToken cancellationToken);
 
-    Task AddToFacilitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromFacilitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToSuppliersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSuppliersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToFacilitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromFacilitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSuppliersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSuppliersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

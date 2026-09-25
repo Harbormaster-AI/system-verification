@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IClinicalOrderService {
+public interface IClinicalOrderService
+{
 
-    Task Create(ClinicalOrder model , CancellationToken cancellationToken);
+    Task Create(ClinicalOrder model, CancellationToken cancellationToken);
     Task<bool> Update(ClinicalOrder model, CancellationToken cancellationToken);
     Task<ClinicalOrder?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ClinicalOrder>> GetAll(CancellationToken cancellationToken);
@@ -75,7 +76,8 @@ public class ClinicalOrderService : IClinicalOrderService
 
     public async Task<bool> Update(ClinicalOrder model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -132,7 +134,8 @@ public class ClinicalOrderService : IClinicalOrderService
         return true;
     }
 
-    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -150,7 +153,7 @@ public class ClinicalOrderService : IClinicalOrderService
 
             var child = await _serviceResolver.Get<PatientService>().Get(childRequest, cancellationToken);
             parent.Patient = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -162,7 +165,8 @@ public class ClinicalOrderService : IClinicalOrderService
         return true;
     }
 
-    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPatient(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -173,7 +177,7 @@ public class ClinicalOrderService : IClinicalOrderService
         try
         {
             parent.Patient = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -185,7 +189,8 @@ public class ClinicalOrderService : IClinicalOrderService
         return true;
     }
 
-    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -203,7 +208,7 @@ public class ClinicalOrderService : IClinicalOrderService
 
             var child = await _serviceResolver.Get<EncounterService>().Get(childRequest, cancellationToken);
             parent.Encounter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -215,7 +220,8 @@ public class ClinicalOrderService : IClinicalOrderService
         return true;
     }
 
-    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -226,7 +232,7 @@ public class ClinicalOrderService : IClinicalOrderService
         try
         {
             parent.Encounter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -238,7 +244,8 @@ public class ClinicalOrderService : IClinicalOrderService
         return true;
     }
 
-    public async Task<bool> AssignOrderingClinician(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrderingClinician(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -256,7 +263,7 @@ public class ClinicalOrderService : IClinicalOrderService
 
             var child = await _serviceResolver.Get<ClinicianService>().Get(childRequest, cancellationToken);
             parent.OrderingClinician = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -268,7 +275,8 @@ public class ClinicalOrderService : IClinicalOrderService
         return true;
     }
 
-    public async Task<bool> UnassignOrderingClinician(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrderingClinician(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -279,7 +287,7 @@ public class ClinicalOrderService : IClinicalOrderService
         try
         {
             parent.OrderingClinician = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -292,8 +300,10 @@ public class ClinicalOrderService : IClinicalOrderService
     }
 
 
-    public async Task<bool> AddToMedicationOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToMedicationOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ClinicalOrder",
                 "AddToMedicationOrders",
@@ -301,16 +311,18 @@ public class ClinicalOrderService : IClinicalOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromMedicationOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromMedicationOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ClinicalOrder",
                 "RemoveFromMedicationOrders",
@@ -326,8 +338,10 @@ public class ClinicalOrderService : IClinicalOrderService
         return true;
     }
 
-    public async Task<bool> AddToLaboratoryOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLaboratoryOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ClinicalOrder",
                 "AddToLaboratoryOrders",
@@ -335,16 +349,18 @@ public class ClinicalOrderService : IClinicalOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLaboratoryOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLaboratoryOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ClinicalOrder",
                 "RemoveFromLaboratoryOrders",
@@ -360,8 +376,10 @@ public class ClinicalOrderService : IClinicalOrderService
         return true;
     }
 
-    public async Task<bool> AddToImagingOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToImagingOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ClinicalOrder",
                 "AddToImagingOrders",
@@ -369,16 +387,18 @@ public class ClinicalOrderService : IClinicalOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromImagingOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromImagingOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ClinicalOrder",
                 "RemoveFromImagingOrders",
@@ -394,8 +414,10 @@ public class ClinicalOrderService : IClinicalOrderService
         return true;
     }
 
-    public async Task<bool> AddToProcedureOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToProcedureOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ClinicalOrder",
                 "AddToProcedureOrders",
@@ -403,16 +425,18 @@ public class ClinicalOrderService : IClinicalOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromProcedureOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromProcedureOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ClinicalOrder",
                 "RemoveFromProcedureOrders",
@@ -428,8 +452,10 @@ public class ClinicalOrderService : IClinicalOrderService
         return true;
     }
 
-    public async Task<bool> AddToAuthorizations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAuthorizations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ClinicalOrder",
                 "AddToAuthorizations",
@@ -437,16 +463,18 @@ public class ClinicalOrderService : IClinicalOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAuthorizations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAuthorizations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ClinicalOrder",
                 "RemoveFromAuthorizations",

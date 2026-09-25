@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum CarePlanStatus
 {
-    Draft=1,Active=2,Suspended=3,Completed=4,Cancelled=5
+    Draft = 1, Active = 2, Suspended = 3, Completed = 4, Cancelled = 5
 }
 
 /// <summary>

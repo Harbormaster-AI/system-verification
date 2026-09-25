@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IAuthorizationService {
+public interface IAuthorizationService
+{
 
-    Task Create(Authorization model , CancellationToken cancellationToken);
+    Task Create(Authorization model, CancellationToken cancellationToken);
     Task<bool> Update(Authorization model, CancellationToken cancellationToken);
     Task<Authorization?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Authorization>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class AuthorizationService : IAuthorizationService
 
     public async Task<bool> Update(Authorization model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class AuthorizationService : IAuthorizationService
         return true;
     }
 
-    public async Task<bool> AssignCoverage(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCoverage(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class AuthorizationService : IAuthorizationService
 
             var child = await _serviceResolver.Get<CoverageService>().Get(childRequest, cancellationToken);
             parent.Coverage = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class AuthorizationService : IAuthorizationService
         return true;
     }
 
-    public async Task<bool> UnassignCoverage(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCoverage(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class AuthorizationService : IAuthorizationService
         try
         {
             parent.Coverage = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class AuthorizationService : IAuthorizationService
         return true;
     }
 
-    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class AuthorizationService : IAuthorizationService
 
             var child = await _serviceResolver.Get<ClinicalOrderService>().Get(childRequest, cancellationToken);
             parent.Order = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class AuthorizationService : IAuthorizationService
         return true;
     }
 
-    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class AuthorizationService : IAuthorizationService
         try
         {
             parent.Order = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface IMedicationOrderService {
+public interface IMedicationOrderService
+{
 
-    Task Create(MedicationOrder model , CancellationToken cancellationToken);
+    Task Create(MedicationOrder model, CancellationToken cancellationToken);
     Task<bool> Update(MedicationOrder model, CancellationToken cancellationToken);
     Task<MedicationOrder?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<MedicationOrder>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class MedicationOrderService : IMedicationOrderService
 
     public async Task<bool> Update(MedicationOrder model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class MedicationOrderService : IMedicationOrderService
         return true;
     }
 
-    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class MedicationOrderService : IMedicationOrderService
 
             var child = await _serviceResolver.Get<ClinicalOrderService>().Get(childRequest, cancellationToken);
             parent.Order = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class MedicationOrderService : IMedicationOrderService
         return true;
     }
 
-    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class MedicationOrderService : IMedicationOrderService
         try
         {
             parent.Order = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,7 +180,8 @@ public class MedicationOrderService : IMedicationOrderService
         return true;
     }
 
-    public async Task<bool> AssignPharmacy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPharmacy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -194,7 +199,7 @@ public class MedicationOrderService : IMedicationOrderService
 
             var child = await _serviceResolver.Get<PharmacyService>().Get(childRequest, cancellationToken);
             parent.Pharmacy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -206,7 +211,8 @@ public class MedicationOrderService : IMedicationOrderService
         return true;
     }
 
-    public async Task<bool> UnassignPharmacy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPharmacy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -217,7 +223,7 @@ public class MedicationOrderService : IMedicationOrderService
         try
         {
             parent.Pharmacy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,8 +236,10 @@ public class MedicationOrderService : IMedicationOrderService
     }
 
 
-    public async Task<bool> AddToDispenses(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDispenses(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MedicationOrder",
                 "AddToDispenses",
@@ -239,16 +247,18 @@ public class MedicationOrderService : IMedicationOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDispenses(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDispenses(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MedicationOrder",
                 "RemoveFromDispenses",

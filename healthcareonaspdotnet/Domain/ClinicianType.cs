@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum ClinicianType
 {
-    Physician=1,NursePractitioner=2,PhysicianAssistant=3,RegisteredNurse=4,Pharmacist=5,Therapist=6,Technician=7
+    Physician = 1, NursePractitioner = 2, PhysicianAssistant = 3, RegisteredNurse = 4, Pharmacist = 5, Therapist = 6, Technician = 7
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum SupplierTier
 {
-    Primary=1,Secondary=2,Distributor=3
+    Primary = 1, Secondary = 2, Distributor = 3
 }
 
 /// <summary>

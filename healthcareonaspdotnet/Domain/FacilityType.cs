@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum FacilityType
 {
-    Hospital=1,Clinic=2,AmbulatorySurgeryCenter=3,UrgentCare=4,Laboratory=5,ImagingCenter=6,Pharmacy=7
+    Hospital = 1, Clinic = 2, AmbulatorySurgeryCenter = 3, UrgentCare = 4, Laboratory = 5, ImagingCenter = 6, Pharmacy = 7
 }
 
 /// <summary>

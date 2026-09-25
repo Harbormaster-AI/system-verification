@@ -36,7 +36,7 @@ namespace healthcareonaspdotnet.Domain;
 
 public enum RouteOfAdministration
 {
-    Oral=1,Intravenous=2,Subcutaneous=3,Intramuscular=4,Topical=5,Inhalation=6
+    Oral = 1, Intravenous = 2, Subcutaneous = 3, Intramuscular = 4, Topical = 5, Inhalation = 6
 }
 
 /// <summary>

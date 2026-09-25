@@ -26,8 +26,8 @@ public static class ClaimEndpoints
         group.MapPut("/assignPayer", AssignPayer);
         group.MapPut("/unassignPayer", UnassignPayer);
 
-    group.MapPut("/addToInvoices", AddToInvoices);
-    group.MapPut("/removeFromInvoices", RemoveFromInvoices);
+        group.MapPut("/addToInvoices", AddToInvoices);
+        group.MapPut("/removeFromInvoices", RemoveFromInvoices);
 
 
         return app;
@@ -36,9 +36,10 @@ public static class ClaimEndpoints
     private static async Task<IResult> Create(
         ClaimRequest request,
         IClaimService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToClaim( request );
+        var model = mapRequestToClaim(request);
 
         try
         {
@@ -55,9 +56,10 @@ public static class ClaimEndpoints
     private static async Task<IResult> Update(
         ClaimRequest request,
         IClaimService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToClaim( request );
+        var model = mapRequestToClaim(request);
 
         try
         {
@@ -74,25 +76,28 @@ public static class ClaimEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IClaimService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var claim = await service.Get(identifier, cancellationToken);
-        return claim is null ? Results.NotFound() : Results.Ok( claim );
+        return claim is null ? Results.NotFound() : Results.Ok(claim);
     }
 
 
     private static async Task<IResult> GetAll(
         IClaimService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ClaimResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ClaimResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IClaimService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -100,7 +105,8 @@ public static class ClaimEndpoints
     private static async Task<IResult> AssignPatient(
         AssociationRequest request,
         IClaimService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPatient(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +114,8 @@ public static class ClaimEndpoints
     private static async Task<IResult> UnassignPatient(
     AssociationRequest request,
     IClaimService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPatient(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -116,7 +123,8 @@ public static class ClaimEndpoints
     private static async Task<IResult> AssignCoverage(
         AssociationRequest request,
         IClaimService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCoverage(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -124,7 +132,8 @@ public static class ClaimEndpoints
     private static async Task<IResult> UnassignCoverage(
     AssociationRequest request,
     IClaimService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCoverage(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +141,8 @@ public static class ClaimEndpoints
     private static async Task<IResult> AssignEncounter(
         AssociationRequest request,
         IClaimService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEncounter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -140,7 +150,8 @@ public static class ClaimEndpoints
     private static async Task<IResult> UnassignEncounter(
     AssociationRequest request,
     IClaimService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEncounter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -148,7 +159,8 @@ public static class ClaimEndpoints
     private static async Task<IResult> AssignPayer(
         AssociationRequest request,
         IClaimService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPayer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -156,7 +168,8 @@ public static class ClaimEndpoints
     private static async Task<IResult> UnassignPayer(
     AssociationRequest request,
     IClaimService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPayer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -165,7 +178,8 @@ public static class ClaimEndpoints
     private static async Task<IResult> AddToInvoices(
         MultipleAssociationRequest request,
         IClaimService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInvoices(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -173,11 +187,13 @@ public static class ClaimEndpoints
     private static async Task<IResult> RemoveFromInvoices(
         MultipleAssociationRequest request,
         IClaimService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInvoices(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Claim mapRequestToClaim( ClaimRequest request ) {
+    private static Claim mapRequestToClaim(ClaimRequest request)
+    {
         var model = new Claim
         {
             Id = request.Id,

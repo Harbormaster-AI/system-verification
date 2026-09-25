@@ -11,9 +11,9 @@ public interface IMedicalSupplierRepository
     Task UpdateAsync(MedicalSupplier medicalSupplier, CancellationToken cancellationToken);
     Task DeleteAsync(MedicalSupplier medicalSupplier, CancellationToken cancellationToken);
 
-    Task AddToFacilitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromFacilitiesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToInventoryItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInventoryItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToFacilitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromFacilitiesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInventoryItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInventoryItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

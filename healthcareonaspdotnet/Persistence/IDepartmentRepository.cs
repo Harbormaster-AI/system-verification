@@ -11,7 +11,7 @@ public interface IDepartmentRepository
     Task UpdateAsync(Department department, CancellationToken cancellationToken);
     Task DeleteAsync(Department department, CancellationToken cancellationToken);
 
-    Task AddToCareTeamsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCareTeamsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCareTeamsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCareTeamsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -11,7 +11,7 @@ public interface IInsurancePlanRepository
     Task UpdateAsync(InsurancePlan insurancePlan, CancellationToken cancellationToken);
     Task DeleteAsync(InsurancePlan insurancePlan, CancellationToken cancellationToken);
 
-    Task AddToCoveragesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCoveragesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCoveragesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCoveragesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

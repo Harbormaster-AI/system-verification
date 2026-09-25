@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface ILaboratoryOrderService {
+public interface ILaboratoryOrderService
+{
 
-    Task Create(LaboratoryOrder model , CancellationToken cancellationToken);
+    Task Create(LaboratoryOrder model, CancellationToken cancellationToken);
     Task<bool> Update(LaboratoryOrder model, CancellationToken cancellationToken);
     Task<LaboratoryOrder?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<LaboratoryOrder>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class LaboratoryOrderService : ILaboratoryOrderService
 
     public async Task<bool> Update(LaboratoryOrder model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class LaboratoryOrderService : ILaboratoryOrderService
         return true;
     }
 
-    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class LaboratoryOrderService : ILaboratoryOrderService
 
             var child = await _serviceResolver.Get<ClinicalOrderService>().Get(childRequest, cancellationToken);
             parent.Order = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class LaboratoryOrderService : ILaboratoryOrderService
         return true;
     }
 
-    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class LaboratoryOrderService : ILaboratoryOrderService
         try
         {
             parent.Order = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class LaboratoryOrderService : ILaboratoryOrderService
         return true;
     }
 
-    public async Task<bool> AssignLaboratory(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLaboratory(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class LaboratoryOrderService : ILaboratoryOrderService
 
             var child = await _serviceResolver.Get<LaboratoryService>().Get(childRequest, cancellationToken);
             parent.Laboratory = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class LaboratoryOrderService : ILaboratoryOrderService
         return true;
     }
 
-    public async Task<bool> UnassignLaboratory(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLaboratory(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class LaboratoryOrderService : ILaboratoryOrderService
         try
         {
             parent.Laboratory = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,8 +234,10 @@ public class LaboratoryOrderService : ILaboratoryOrderService
     }
 
 
-    public async Task<bool> AddToResults(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToResults(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LaboratoryOrder",
                 "AddToResults",
@@ -237,16 +245,18 @@ public class LaboratoryOrderService : ILaboratoryOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromResults(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromResults(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LaboratoryOrder",
                 "RemoveFromResults",

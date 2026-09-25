@@ -20,8 +20,8 @@ public static class InsurancePlanEndpoints
         group.MapPut("/assignPayer", AssignPayer);
         group.MapPut("/unassignPayer", UnassignPayer);
 
-    group.MapPut("/addToCoverages", AddToCoverages);
-    group.MapPut("/removeFromCoverages", RemoveFromCoverages);
+        group.MapPut("/addToCoverages", AddToCoverages);
+        group.MapPut("/removeFromCoverages", RemoveFromCoverages);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class InsurancePlanEndpoints
     private static async Task<IResult> Create(
         InsurancePlanRequest request,
         IInsurancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInsurancePlan( request );
+        var model = mapRequestToInsurancePlan(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class InsurancePlanEndpoints
     private static async Task<IResult> Update(
         InsurancePlanRequest request,
         IInsurancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInsurancePlan( request );
+        var model = mapRequestToInsurancePlan(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class InsurancePlanEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInsurancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var insurancePlan = await service.Get(identifier, cancellationToken);
-        return insurancePlan is null ? Results.NotFound() : Results.Ok( insurancePlan );
+        return insurancePlan is null ? Results.NotFound() : Results.Ok(insurancePlan);
     }
 
 
     private static async Task<IResult> GetAll(
         IInsurancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InsurancePlanResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InsurancePlanResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInsurancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class InsurancePlanEndpoints
     private static async Task<IResult> AssignPayer(
         AssociationRequest request,
         IInsurancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPayer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class InsurancePlanEndpoints
     private static async Task<IResult> UnassignPayer(
     AssociationRequest request,
     IInsurancePlanService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPayer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class InsurancePlanEndpoints
     private static async Task<IResult> AddToCoverages(
         MultipleAssociationRequest request,
         IInsurancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCoverages(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class InsurancePlanEndpoints
     private static async Task<IResult> RemoveFromCoverages(
         MultipleAssociationRequest request,
         IInsurancePlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCoverages(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static InsurancePlan mapRequestToInsurancePlan( InsurancePlanRequest request ) {
+    private static InsurancePlan mapRequestToInsurancePlan(InsurancePlanRequest request)
+    {
         var model = new InsurancePlan
         {
             Id = request.Id,

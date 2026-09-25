@@ -11,7 +11,7 @@ public interface IMedicationOrderRepository
     Task UpdateAsync(MedicationOrder medicationOrder, CancellationToken cancellationToken);
     Task DeleteAsync(MedicationOrder medicationOrder, CancellationToken cancellationToken);
 
-    Task AddToDispensesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDispensesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDispensesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDispensesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

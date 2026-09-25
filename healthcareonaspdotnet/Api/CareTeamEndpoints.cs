@@ -20,11 +20,11 @@ public static class CareTeamEndpoints
         group.MapPut("/assignDepartment", AssignDepartment);
         group.MapPut("/unassignDepartment", UnassignDepartment);
 
-    group.MapPut("/addToClinicians", AddToClinicians);
-    group.MapPut("/removeFromClinicians", RemoveFromClinicians);
+        group.MapPut("/addToClinicians", AddToClinicians);
+        group.MapPut("/removeFromClinicians", RemoveFromClinicians);
 
-    group.MapPut("/addToPatients", AddToPatients);
-    group.MapPut("/removeFromPatients", RemoveFromPatients);
+        group.MapPut("/addToPatients", AddToPatients);
+        group.MapPut("/removeFromPatients", RemoveFromPatients);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class CareTeamEndpoints
     private static async Task<IResult> Create(
         CareTeamRequest request,
         ICareTeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCareTeam( request );
+        var model = mapRequestToCareTeam(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class CareTeamEndpoints
     private static async Task<IResult> Update(
         CareTeamRequest request,
         ICareTeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCareTeam( request );
+        var model = mapRequestToCareTeam(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class CareTeamEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICareTeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var careTeam = await service.Get(identifier, cancellationToken);
-        return careTeam is null ? Results.NotFound() : Results.Ok( careTeam );
+        return careTeam is null ? Results.NotFound() : Results.Ok(careTeam);
     }
 
 
     private static async Task<IResult> GetAll(
         ICareTeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CareTeamResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CareTeamResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICareTeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class CareTeamEndpoints
     private static async Task<IResult> AssignDepartment(
         AssociationRequest request,
         ICareTeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDepartment(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class CareTeamEndpoints
     private static async Task<IResult> UnassignDepartment(
     AssociationRequest request,
     ICareTeamService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDepartment(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class CareTeamEndpoints
     private static async Task<IResult> AddToClinicians(
         MultipleAssociationRequest request,
         ICareTeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToClinicians(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class CareTeamEndpoints
     private static async Task<IResult> RemoveFromClinicians(
         MultipleAssociationRequest request,
         ICareTeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromClinicians(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPatients(
         MultipleAssociationRequest request,
         ICareTeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPatients(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class CareTeamEndpoints
     private static async Task<IResult> RemoveFromPatients(
         MultipleAssociationRequest request,
         ICareTeamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPatients(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static CareTeam mapRequestToCareTeam( CareTeamRequest request ) {
+    private static CareTeam mapRequestToCareTeam(CareTeamRequest request)
+    {
         var model = new CareTeam
         {
             Id = request.Id,

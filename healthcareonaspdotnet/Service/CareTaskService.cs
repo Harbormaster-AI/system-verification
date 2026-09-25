@@ -6,9 +6,10 @@ using healthcareonaspdotnet.Telemetry;
 
 namespace healthcareonaspdotnet.Service;
 
-public interface ICareTaskService {
+public interface ICareTaskService
+{
 
-    Task Create(CareTask model , CancellationToken cancellationToken);
+    Task Create(CareTask model, CancellationToken cancellationToken);
     Task<bool> Update(CareTask model, CancellationToken cancellationToken);
     Task<CareTask?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CareTask>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class CareTaskService : ICareTaskService
 
     public async Task<bool> Update(CareTask model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class CareTaskService : ICareTaskService
         return true;
     }
 
-    public async Task<bool> AssignCarePlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCarePlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class CareTaskService : ICareTaskService
 
             var child = await _serviceResolver.Get<CarePlanService>().Get(childRequest, cancellationToken);
             parent.CarePlan = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class CareTaskService : ICareTaskService
         return true;
     }
 
-    public async Task<bool> UnassignCarePlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCarePlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class CareTaskService : ICareTaskService
         try
         {
             parent.CarePlan = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class CareTaskService : ICareTaskService
         return true;
     }
 
-    public async Task<bool> AssignAssignedTo(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAssignedTo(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class CareTaskService : ICareTaskService
 
             var child = await _serviceResolver.Get<ClinicianService>().Get(childRequest, cancellationToken);
             parent.AssignedTo = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class CareTaskService : ICareTaskService
         return true;
     }
 
-    public async Task<bool> UnassignAssignedTo(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAssignedTo(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class CareTaskService : ICareTaskService
         try
         {
             parent.AssignedTo = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class CareTaskService : ICareTaskService
         return true;
     }
 
-    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class CareTaskService : ICareTaskService
 
             var child = await _serviceResolver.Get<EncounterService>().Get(childRequest, cancellationToken);
             parent.Encounter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class CareTaskService : ICareTaskService
         return true;
     }
 
-    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEncounter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class CareTaskService : ICareTaskService
         try
         {
             parent.Encounter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
