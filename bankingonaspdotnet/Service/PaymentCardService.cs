@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IPaymentCardService {
+public interface IPaymentCardService
+{
 
-    Task Create(PaymentCard model , CancellationToken cancellationToken);
+    Task Create(PaymentCard model, CancellationToken cancellationToken);
     Task<bool> Update(PaymentCard model, CancellationToken cancellationToken);
     Task<PaymentCard?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<PaymentCard>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class PaymentCardService : IPaymentCardService
 
     public async Task<bool> Update(PaymentCard model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class PaymentCardService : IPaymentCardService
         return true;
     }
 
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,9 +140,9 @@ public class PaymentCardService : IPaymentCardService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(BankService).get( childRequest , cancellationToken );
+            var child = serviceResolver.get(BankService).get(childRequest, cancellationToken);
             parent.Bank = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class PaymentCardService : IPaymentCardService
         return true;
     }
 
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class PaymentCardService : IPaymentCardService
         try
         {
             parent.Bank = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -170,7 +174,8 @@ public class PaymentCardService : IPaymentCardService
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -186,9 +191,9 @@ public class PaymentCardService : IPaymentCardService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(AccountService).get( childRequest , cancellationToken );
+            var child = serviceResolver.get(AccountService).get(childRequest, cancellationToken);
             parent.Account = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -198,7 +203,8 @@ public class PaymentCardService : IPaymentCardService
         return true;
     }
 
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -209,7 +215,7 @@ public class PaymentCardService : IPaymentCardService
         try
         {
             parent.Account = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -219,7 +225,8 @@ public class PaymentCardService : IPaymentCardService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -235,9 +242,9 @@ public class PaymentCardService : IPaymentCardService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(CustomerService).get( childRequest , cancellationToken );
+            var child = serviceResolver.get(CustomerService).get(childRequest, cancellationToken);
             parent.Customer = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -247,7 +254,8 @@ public class PaymentCardService : IPaymentCardService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -258,7 +266,7 @@ public class PaymentCardService : IPaymentCardService
         try
         {
             parent.Customer = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -269,8 +277,10 @@ public class PaymentCardService : IPaymentCardService
     }
 
 
-    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PaymentCard",
                 "AddToTransactions",
@@ -284,8 +294,10 @@ public class PaymentCardService : IPaymentCardService
         return true;
     }
 
-    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PaymentCard",
                 "RemoveFromTransactions",

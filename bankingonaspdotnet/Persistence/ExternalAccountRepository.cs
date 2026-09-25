@@ -48,7 +48,7 @@ public class ExternalAccountRepository : IExternalAccountRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task AddToTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _db.Transactions
             .Where(transaction => request.ChildIds.Contains(transaction.Id))
@@ -58,7 +58,7 @@ public class ExternalAccountRepository : IExternalAccountRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _db.Transactions
             .Where(transaction =>

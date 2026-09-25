@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface ILoanPaymentService {
+public interface ILoanPaymentService
+{
 
-    Task Create(LoanPayment model , CancellationToken cancellationToken);
+    Task Create(LoanPayment model, CancellationToken cancellationToken);
     Task<bool> Update(LoanPayment model, CancellationToken cancellationToken);
     Task<LoanPayment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<LoanPayment>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class LoanPaymentService : ILoanPaymentService
 
     public async Task<bool> Update(LoanPayment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -115,7 +117,8 @@ public class LoanPaymentService : ILoanPaymentService
         return true;
     }
 
-    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -131,9 +134,9 @@ public class LoanPaymentService : ILoanPaymentService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(LoanAccountService).get( childRequest , cancellationToken );
+            var child = serviceResolver.get(LoanAccountService).get(childRequest, cancellationToken);
             parent.LoanAccount = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -143,7 +146,8 @@ public class LoanPaymentService : ILoanPaymentService
         return true;
     }
 
-    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -154,7 +158,7 @@ public class LoanPaymentService : ILoanPaymentService
         try
         {
             parent.LoanAccount = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -164,7 +168,8 @@ public class LoanPaymentService : ILoanPaymentService
         return true;
     }
 
-    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -180,9 +185,9 @@ public class LoanPaymentService : ILoanPaymentService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(TransactionService).get( childRequest , cancellationToken );
+            var child = serviceResolver.get(TransactionService).get(childRequest, cancellationToken);
             parent.Transaction = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -192,7 +197,8 @@ public class LoanPaymentService : ILoanPaymentService
         return true;
     }
 
-    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -203,7 +209,7 @@ public class LoanPaymentService : ILoanPaymentService
         try
         {
             parent.Transaction = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
