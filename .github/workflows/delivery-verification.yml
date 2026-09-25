@@ -334,7 +334,7 @@ jobs:
                              
           echo "Running docker build..."
                     
-          docker build --progress=plain -t "${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}" -f "${DOCKERFILE_PATH}"
+          docker build --progress=plain -t "${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}" -f "${DOCKERFILE_PATH}" .
                     
           if [ $? -eq 0 ]; then
           
