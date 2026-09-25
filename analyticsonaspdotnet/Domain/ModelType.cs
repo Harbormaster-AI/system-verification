@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum ModelType
 {
-    Classification=1,Regression=2,Clustering=3,Forecasting=4,Ranking=5,NLP=6,ComputerVision=7
+    Classification = 1, Regression = 2, Clustering = 3, Forecasting = 4, Ranking = 5, NLP = 6, ComputerVision = 7
 }
 
 /// <summary>

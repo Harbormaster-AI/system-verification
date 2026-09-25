@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IVisualizationService {
+public interface IVisualizationService
+{
 
-    Task Create(Visualization model , CancellationToken cancellationToken);
+    Task Create(Visualization model, CancellationToken cancellationToken);
     Task<bool> Update(Visualization model, CancellationToken cancellationToken);
     Task<Visualization?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Visualization>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class VisualizationService : IVisualizationService
 
     public async Task<bool> Update(Visualization model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class VisualizationService : IVisualizationService
         return true;
     }
 
-    public async Task<bool> AssignDashboard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDashboard(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class VisualizationService : IVisualizationService
 
             var child = await _serviceResolver.Get<DashboardService>().Get(childRequest, cancellationToken);
             parent.Dashboard = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class VisualizationService : IVisualizationService
         return true;
     }
 
-    public async Task<bool> UnassignDashboard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDashboard(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class VisualizationService : IVisualizationService
         try
         {
             parent.Dashboard = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class VisualizationService : IVisualizationService
         return true;
     }
 
-    public async Task<bool> AssignReport(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignReport(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class VisualizationService : IVisualizationService
 
             var child = await _serviceResolver.Get<ReportService>().Get(childRequest, cancellationToken);
             parent.Report = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class VisualizationService : IVisualizationService
         return true;
     }
 
-    public async Task<bool> UnassignReport(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignReport(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class VisualizationService : IVisualizationService
         try
         {
             parent.Report = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -232,8 +238,10 @@ public class VisualizationService : IVisualizationService
     }
 
 
-    public async Task<bool> AddToMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Visualization",
                 "AddToMetrics",
@@ -241,16 +249,18 @@ public class VisualizationService : IVisualizationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Visualization",
                 "RemoveFromMetrics",
@@ -266,8 +276,10 @@ public class VisualizationService : IVisualizationService
         return true;
     }
 
-    public async Task<bool> AddToDimensions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDimensions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Visualization",
                 "AddToDimensions",
@@ -275,16 +287,18 @@ public class VisualizationService : IVisualizationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDimensions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDimensions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Visualization",
                 "RemoveFromDimensions",
@@ -300,8 +314,10 @@ public class VisualizationService : IVisualizationService
         return true;
     }
 
-    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Visualization",
                 "AddToDatasets",
@@ -309,16 +325,18 @@ public class VisualizationService : IVisualizationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Visualization",
                 "RemoveFromDatasets",

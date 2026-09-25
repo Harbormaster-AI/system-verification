@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IRunMetricService {
+public interface IRunMetricService
+{
 
-    Task Create(RunMetric model , CancellationToken cancellationToken);
+    Task Create(RunMetric model, CancellationToken cancellationToken);
     Task<bool> Update(RunMetric model, CancellationToken cancellationToken);
     Task<RunMetric?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RunMetric>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class RunMetricService : IRunMetricService
 
     public async Task<bool> Update(RunMetric model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class RunMetricService : IRunMetricService
         return true;
     }
 
-    public async Task<bool> AssignTrainingRun(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTrainingRun(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class RunMetricService : IRunMetricService
 
             var child = await _serviceResolver.Get<TrainingRunService>().Get(childRequest, cancellationToken);
             parent.TrainingRun = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class RunMetricService : IRunMetricService
         return true;
     }
 
-    public async Task<bool> UnassignTrainingRun(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTrainingRun(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class RunMetricService : IRunMetricService
         try
         {
             parent.TrainingRun = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class RunMetricService : IRunMetricService
         return true;
     }
 
-    public async Task<bool> AssignMetric(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMetric(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class RunMetricService : IRunMetricService
 
             var child = await _serviceResolver.Get<MetricService>().Get(childRequest, cancellationToken);
             parent.Metric = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class RunMetricService : IRunMetricService
         return true;
     }
 
-    public async Task<bool> UnassignMetric(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMetric(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class RunMetricService : IRunMetricService
         try
         {
             parent.Metric = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -226,7 +232,8 @@ public class RunMetricService : IRunMetricService
         return true;
     }
 
-    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -244,7 +251,7 @@ public class RunMetricService : IRunMetricService
 
             var child = await _serviceResolver.Get<DataSetService>().Get(childRequest, cancellationToken);
             parent.Dataset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -256,7 +263,8 @@ public class RunMetricService : IRunMetricService
         return true;
     }
 
-    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -267,7 +275,7 @@ public class RunMetricService : IRunMetricService
         try
         {
             parent.Dataset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum NotebookLanguage
 {
-    Python=1,R=2,SQL=3,Julia=4
+    Python = 1, R = 2, SQL = 3, Julia = 4
 }
 
 /// <summary>

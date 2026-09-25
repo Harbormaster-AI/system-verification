@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum QualityDimension
 {
-    Completeness=1,Accuracy=2,Consistency=3,Timeliness=4,Uniqueness=5,Validity=6
+    Completeness = 1, Accuracy = 2, Consistency = 3, Timeliness = 4, Uniqueness = 5, Validity = 6
 }
 
 /// <summary>

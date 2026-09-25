@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface ISubscriberService {
+public interface ISubscriberService
+{
 
-    Task Create(Subscriber model , CancellationToken cancellationToken);
+    Task Create(Subscriber model, CancellationToken cancellationToken);
     Task<bool> Update(Subscriber model, CancellationToken cancellationToken);
     Task<Subscriber?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Subscriber>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class SubscriberService : ISubscriberService
 
     public async Task<bool> Update(Subscriber model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,8 +120,10 @@ public class SubscriberService : ISubscriberService
     }
 
 
-    public async Task<bool> AddToAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Subscriber",
                 "AddToAlerts",
@@ -127,16 +131,18 @@ public class SubscriberService : ISubscriberService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Subscriber",
                 "RemoveFromAlerts",

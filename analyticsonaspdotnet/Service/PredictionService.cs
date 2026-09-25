@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IPredictionService {
+public interface IPredictionService
+{
 
-    Task Create(Prediction model , CancellationToken cancellationToken);
+    Task Create(Prediction model, CancellationToken cancellationToken);
     Task<bool> Update(Prediction model, CancellationToken cancellationToken);
     Task<Prediction?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Prediction>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class PredictionService : IPredictionService
 
     public async Task<bool> Update(Prediction model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class PredictionService : IPredictionService
         return true;
     }
 
-    public async Task<bool> AssignEndpoint(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEndpoint(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class PredictionService : IPredictionService
 
             var child = await _serviceResolver.Get<InferenceEndpointService>().Get(childRequest, cancellationToken);
             parent.Endpoint = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class PredictionService : IPredictionService
         return true;
     }
 
-    public async Task<bool> UnassignEndpoint(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEndpoint(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class PredictionService : IPredictionService
         try
         {
             parent.Endpoint = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class PredictionService : IPredictionService
         return true;
     }
 
-    public async Task<bool> AssignModelVersion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignModelVersion(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class PredictionService : IPredictionService
 
             var child = await _serviceResolver.Get<ModelVersionService>().Get(childRequest, cancellationToken);
             parent.ModelVersion = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class PredictionService : IPredictionService
         return true;
     }
 
-    public async Task<bool> UnassignModelVersion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignModelVersion(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class PredictionService : IPredictionService
         try
         {
             parent.ModelVersion = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -227,7 +233,8 @@ public class PredictionService : IPredictionService
         return true;
     }
 
-    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -245,7 +252,7 @@ public class PredictionService : IPredictionService
 
             var child = await _serviceResolver.Get<DataSetService>().Get(childRequest, cancellationToken);
             parent.Dataset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -257,7 +264,8 @@ public class PredictionService : IPredictionService
         return true;
     }
 
-    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -268,7 +276,7 @@ public class PredictionService : IPredictionService
         try
         {
             parent.Dataset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

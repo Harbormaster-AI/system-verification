@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface ITimeSeriesService {
+public interface ITimeSeriesService
+{
 
-    Task Create(TimeSeries model , CancellationToken cancellationToken);
+    Task Create(TimeSeries model, CancellationToken cancellationToken);
     Task<bool> Update(TimeSeries model, CancellationToken cancellationToken);
     Task<TimeSeries?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TimeSeries>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class TimeSeriesService : ITimeSeriesService
 
     public async Task<bool> Update(TimeSeries model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,8 +124,10 @@ public class TimeSeriesService : ITimeSeriesService
     }
 
 
-    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TimeSeries",
                 "AddToDatasets",
@@ -131,16 +135,18 @@ public class TimeSeriesService : ITimeSeriesService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TimeSeries",
                 "RemoveFromDatasets",
@@ -156,8 +162,10 @@ public class TimeSeriesService : ITimeSeriesService
         return true;
     }
 
-    public async Task<bool> AddToForecasts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToForecasts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TimeSeries",
                 "AddToForecasts",
@@ -165,16 +173,18 @@ public class TimeSeriesService : ITimeSeriesService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromForecasts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromForecasts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TimeSeries",
                 "RemoveFromForecasts",
@@ -190,8 +200,10 @@ public class TimeSeriesService : ITimeSeriesService
         return true;
     }
 
-    public async Task<bool> AddToAnomalies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAnomalies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TimeSeries",
                 "AddToAnomalies",
@@ -199,16 +211,18 @@ public class TimeSeriesService : ITimeSeriesService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAnomalies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAnomalies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TimeSeries",
                 "RemoveFromAnomalies",

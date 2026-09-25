@@ -31,9 +31,10 @@ public static class RunMetricEndpoints
     private static async Task<IResult> Create(
         RunMetricRequest request,
         IRunMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRunMetric( request );
+        var model = mapRequestToRunMetric(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class RunMetricEndpoints
     private static async Task<IResult> Update(
         RunMetricRequest request,
         IRunMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRunMetric( request );
+        var model = mapRequestToRunMetric(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class RunMetricEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRunMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var runMetric = await service.Get(identifier, cancellationToken);
-        return runMetric is null ? Results.NotFound() : Results.Ok( runMetric );
+        return runMetric is null ? Results.NotFound() : Results.Ok(runMetric);
     }
 
 
     private static async Task<IResult> GetAll(
         IRunMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RunMetricResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RunMetricResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRunMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class RunMetricEndpoints
     private static async Task<IResult> AssignTrainingRun(
         AssociationRequest request,
         IRunMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTrainingRun(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class RunMetricEndpoints
     private static async Task<IResult> UnassignTrainingRun(
     AssociationRequest request,
     IRunMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTrainingRun(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class RunMetricEndpoints
     private static async Task<IResult> AssignMetric(
         AssociationRequest request,
         IRunMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMetric(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class RunMetricEndpoints
     private static async Task<IResult> UnassignMetric(
     AssociationRequest request,
     IRunMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMetric(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class RunMetricEndpoints
     private static async Task<IResult> AssignDataset(
         AssociationRequest request,
         IRunMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDataset(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class RunMetricEndpoints
     private static async Task<IResult> UnassignDataset(
     AssociationRequest request,
     IRunMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDataset(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static RunMetric mapRequestToRunMetric( RunMetricRequest request ) {
+    private static RunMetric mapRequestToRunMetric(RunMetricRequest request)
+    {
         var model = new RunMetric
         {
             Id = request.Id,

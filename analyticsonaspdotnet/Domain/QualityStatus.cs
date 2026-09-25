@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum QualityStatus
 {
-    Passed=1,Failed=2,Warning=3,Skipped=4
+    Passed = 1, Failed = 2, Warning = 3, Skipped = 4
 }
 
 /// <summary>

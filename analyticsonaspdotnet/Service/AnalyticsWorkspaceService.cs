@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IAnalyticsWorkspaceService {
+public interface IAnalyticsWorkspaceService
+{
 
-    Task Create(AnalyticsWorkspace model , CancellationToken cancellationToken);
+    Task Create(AnalyticsWorkspace model, CancellationToken cancellationToken);
     Task<bool> Update(AnalyticsWorkspace model, CancellationToken cancellationToken);
     Task<AnalyticsWorkspace?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AnalyticsWorkspace>> GetAll(CancellationToken cancellationToken);
@@ -79,7 +80,8 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
 
     public async Task<bool> Update(AnalyticsWorkspace model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -137,8 +139,10 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
     }
 
 
-    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "AddToDatasets",
@@ -146,16 +150,18 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "RemoveFromDatasets",
@@ -171,8 +177,10 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         return true;
     }
 
-    public async Task<bool> AddToDataSources(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDataSources(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "AddToDataSources",
@@ -180,16 +188,18 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDataSources(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDataSources(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "RemoveFromDataSources",
@@ -205,8 +215,10 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         return true;
     }
 
-    public async Task<bool> AddToPipelines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPipelines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "AddToPipelines",
@@ -214,16 +226,18 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPipelines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPipelines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "RemoveFromPipelines",
@@ -239,8 +253,10 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         return true;
     }
 
-    public async Task<bool> AddToDashboards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDashboards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "AddToDashboards",
@@ -248,16 +264,18 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDashboards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDashboards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "RemoveFromDashboards",
@@ -273,8 +291,10 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         return true;
     }
 
-    public async Task<bool> AddToReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "AddToReports",
@@ -282,16 +302,18 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "RemoveFromReports",
@@ -307,8 +329,10 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         return true;
     }
 
-    public async Task<bool> AddToNotebooks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToNotebooks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "AddToNotebooks",
@@ -316,16 +340,18 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromNotebooks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromNotebooks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "RemoveFromNotebooks",
@@ -341,8 +367,10 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         return true;
     }
 
-    public async Task<bool> AddToModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "AddToModels",
@@ -350,16 +378,18 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "RemoveFromModels",
@@ -375,8 +405,10 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         return true;
     }
 
-    public async Task<bool> AddToFeatureSets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFeatureSets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "AddToFeatureSets",
@@ -384,16 +416,18 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFeatureSets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFeatureSets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "RemoveFromFeatureSets",
@@ -409,8 +443,10 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         return true;
     }
 
-    public async Task<bool> AddToPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "AddToPolicies",
@@ -418,16 +454,18 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "RemoveFromPolicies",
@@ -443,8 +481,10 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         return true;
     }
 
-    public async Task<bool> AddToLineageNodes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLineageNodes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "AddToLineageNodes",
@@ -452,16 +492,18 @@ public class AnalyticsWorkspaceService : IAnalyticsWorkspaceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLineageNodes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLineageNodes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AnalyticsWorkspace",
                 "RemoveFromLineageNodes",

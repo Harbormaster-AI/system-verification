@@ -20,14 +20,14 @@ public static class NotebookEndpoints
         group.MapPut("/assignWorkspace", AssignWorkspace);
         group.MapPut("/unassignWorkspace", UnassignWorkspace);
 
-    group.MapPut("/addToDatasets", AddToDatasets);
-    group.MapPut("/removeFromDatasets", RemoveFromDatasets);
+        group.MapPut("/addToDatasets", AddToDatasets);
+        group.MapPut("/removeFromDatasets", RemoveFromDatasets);
 
-    group.MapPut("/addToExperiments", AddToExperiments);
-    group.MapPut("/removeFromExperiments", RemoveFromExperiments);
+        group.MapPut("/addToExperiments", AddToExperiments);
+        group.MapPut("/removeFromExperiments", RemoveFromExperiments);
 
-    group.MapPut("/addToQueries", AddToQueries);
-    group.MapPut("/removeFromQueries", RemoveFromQueries);
+        group.MapPut("/addToQueries", AddToQueries);
+        group.MapPut("/removeFromQueries", RemoveFromQueries);
 
 
         return app;
@@ -36,9 +36,10 @@ public static class NotebookEndpoints
     private static async Task<IResult> Create(
         NotebookRequest request,
         INotebookService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToNotebook( request );
+        var model = mapRequestToNotebook(request);
 
         try
         {
@@ -55,9 +56,10 @@ public static class NotebookEndpoints
     private static async Task<IResult> Update(
         NotebookRequest request,
         INotebookService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToNotebook( request );
+        var model = mapRequestToNotebook(request);
 
         try
         {
@@ -74,25 +76,28 @@ public static class NotebookEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         INotebookService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var notebook = await service.Get(identifier, cancellationToken);
-        return notebook is null ? Results.NotFound() : Results.Ok( notebook );
+        return notebook is null ? Results.NotFound() : Results.Ok(notebook);
     }
 
 
     private static async Task<IResult> GetAll(
         INotebookService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( NotebookResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(NotebookResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         INotebookService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -100,7 +105,8 @@ public static class NotebookEndpoints
     private static async Task<IResult> AssignWorkspace(
         AssociationRequest request,
         INotebookService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkspace(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +114,8 @@ public static class NotebookEndpoints
     private static async Task<IResult> UnassignWorkspace(
     AssociationRequest request,
     INotebookService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkspace(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,7 +124,8 @@ public static class NotebookEndpoints
     private static async Task<IResult> AddToDatasets(
         MultipleAssociationRequest request,
         INotebookService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDatasets(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -125,14 +133,16 @@ public static class NotebookEndpoints
     private static async Task<IResult> RemoveFromDatasets(
         MultipleAssociationRequest request,
         INotebookService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDatasets(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToExperiments(
         MultipleAssociationRequest request,
         INotebookService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToExperiments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class NotebookEndpoints
     private static async Task<IResult> RemoveFromExperiments(
         MultipleAssociationRequest request,
         INotebookService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromExperiments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToQueries(
         MultipleAssociationRequest request,
         INotebookService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToQueries(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class NotebookEndpoints
     private static async Task<IResult> RemoveFromQueries(
         MultipleAssociationRequest request,
         INotebookService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromQueries(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Notebook mapRequestToNotebook( NotebookRequest request ) {
+    private static Notebook mapRequestToNotebook(NotebookRequest request)
+    {
         var model = new Notebook
         {
             Id = request.Id,

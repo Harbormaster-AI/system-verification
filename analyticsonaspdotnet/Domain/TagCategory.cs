@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum TagCategory
 {
-    Domain=1,Sensitivity=2,Priority=3,Lifecycle=4
+    Domain = 1, Sensitivity = 2, Priority = 3, Lifecycle = 4
 }
 
 /// <summary>

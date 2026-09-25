@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IModelVersionService {
+public interface IModelVersionService
+{
 
-    Task Create(ModelVersion model , CancellationToken cancellationToken);
+    Task Create(ModelVersion model, CancellationToken cancellationToken);
     Task<bool> Update(ModelVersion model, CancellationToken cancellationToken);
     Task<ModelVersion?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ModelVersion>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class ModelVersionService : IModelVersionService
 
     public async Task<bool> Update(ModelVersion model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -127,7 +129,8 @@ public class ModelVersionService : IModelVersionService
         return true;
     }
 
-    public async Task<bool> AssignModel_(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignModel_(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -145,7 +148,7 @@ public class ModelVersionService : IModelVersionService
 
             var child = await _serviceResolver.Get<Model_Service>().Get(childRequest, cancellationToken);
             parent.Model_ = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -157,7 +160,8 @@ public class ModelVersionService : IModelVersionService
         return true;
     }
 
-    public async Task<bool> UnassignModel_(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignModel_(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -168,7 +172,7 @@ public class ModelVersionService : IModelVersionService
         try
         {
             parent.Model_ = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -180,7 +184,8 @@ public class ModelVersionService : IModelVersionService
         return true;
     }
 
-    public async Task<bool> AssignTrainingRun(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTrainingRun(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -198,7 +203,7 @@ public class ModelVersionService : IModelVersionService
 
             var child = await _serviceResolver.Get<TrainingRunService>().Get(childRequest, cancellationToken);
             parent.TrainingRun = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -210,7 +215,8 @@ public class ModelVersionService : IModelVersionService
         return true;
     }
 
-    public async Task<bool> UnassignTrainingRun(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTrainingRun(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -221,7 +227,7 @@ public class ModelVersionService : IModelVersionService
         try
         {
             parent.TrainingRun = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -234,8 +240,10 @@ public class ModelVersionService : IModelVersionService
     }
 
 
-    public async Task<bool> AddToEvaluationMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEvaluationMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ModelVersion",
                 "AddToEvaluationMetrics",
@@ -243,16 +251,18 @@ public class ModelVersionService : IModelVersionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEvaluationMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEvaluationMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ModelVersion",
                 "RemoveFromEvaluationMetrics",
@@ -268,8 +278,10 @@ public class ModelVersionService : IModelVersionService
         return true;
     }
 
-    public async Task<bool> AddToDeployments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDeployments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ModelVersion",
                 "AddToDeployments",
@@ -277,16 +289,18 @@ public class ModelVersionService : IModelVersionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDeployments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDeployments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ModelVersion",
                 "RemoveFromDeployments",
@@ -302,8 +316,10 @@ public class ModelVersionService : IModelVersionService
         return true;
     }
 
-    public async Task<bool> AddToFeatureSets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFeatureSets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ModelVersion",
                 "AddToFeatureSets",
@@ -311,16 +327,18 @@ public class ModelVersionService : IModelVersionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFeatureSets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFeatureSets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ModelVersion",
                 "RemoveFromFeatureSets",
@@ -336,8 +354,10 @@ public class ModelVersionService : IModelVersionService
         return true;
     }
 
-    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ModelVersion",
                 "AddToDatasets",
@@ -345,16 +365,18 @@ public class ModelVersionService : IModelVersionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ModelVersion",
                 "RemoveFromDatasets",

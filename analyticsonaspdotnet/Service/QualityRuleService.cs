@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IQualityRuleService {
+public interface IQualityRuleService
+{
 
-    Task Create(QualityRule model , CancellationToken cancellationToken);
+    Task Create(QualityRule model, CancellationToken cancellationToken);
     Task<bool> Update(QualityRule model, CancellationToken cancellationToken);
     Task<QualityRule?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<QualityRule>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class QualityRuleService : IQualityRuleService
 
     public async Task<bool> Update(QualityRule model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class QualityRuleService : IQualityRuleService
         return true;
     }
 
-    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class QualityRuleService : IQualityRuleService
 
             var child = await _serviceResolver.Get<DataSetService>().Get(childRequest, cancellationToken);
             parent.Dataset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class QualityRuleService : IQualityRuleService
         return true;
     }
 
-    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class QualityRuleService : IQualityRuleService
         try
         {
             parent.Dataset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class QualityRuleService : IQualityRuleService
     }
 
 
-    public async Task<bool> AddToChecks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToChecks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "QualityRule",
                 "AddToChecks",
@@ -184,16 +190,18 @@ public class QualityRuleService : IQualityRuleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromChecks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromChecks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "QualityRule",
                 "RemoveFromChecks",

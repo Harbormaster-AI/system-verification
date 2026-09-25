@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IEvaluationMetricService {
+public interface IEvaluationMetricService
+{
 
-    Task Create(EvaluationMetric model , CancellationToken cancellationToken);
+    Task Create(EvaluationMetric model, CancellationToken cancellationToken);
     Task<bool> Update(EvaluationMetric model, CancellationToken cancellationToken);
     Task<EvaluationMetric?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<EvaluationMetric>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class EvaluationMetricService : IEvaluationMetricService
 
     public async Task<bool> Update(EvaluationMetric model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class EvaluationMetricService : IEvaluationMetricService
         return true;
     }
 
-    public async Task<bool> AssignModelVersion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignModelVersion(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class EvaluationMetricService : IEvaluationMetricService
 
             var child = await _serviceResolver.Get<ModelVersionService>().Get(childRequest, cancellationToken);
             parent.ModelVersion = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class EvaluationMetricService : IEvaluationMetricService
         return true;
     }
 
-    public async Task<bool> UnassignModelVersion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignModelVersion(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class EvaluationMetricService : IEvaluationMetricService
         try
         {
             parent.ModelVersion = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class EvaluationMetricService : IEvaluationMetricService
         return true;
     }
 
-    public async Task<bool> AssignMetric(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMetric(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class EvaluationMetricService : IEvaluationMetricService
 
             var child = await _serviceResolver.Get<MetricService>().Get(childRequest, cancellationToken);
             parent.Metric = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class EvaluationMetricService : IEvaluationMetricService
         return true;
     }
 
-    public async Task<bool> UnassignMetric(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMetric(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class EvaluationMetricService : IEvaluationMetricService
         try
         {
             parent.Metric = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -226,7 +232,8 @@ public class EvaluationMetricService : IEvaluationMetricService
         return true;
     }
 
-    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -244,7 +251,7 @@ public class EvaluationMetricService : IEvaluationMetricService
 
             var child = await _serviceResolver.Get<DataSetService>().Get(childRequest, cancellationToken);
             parent.Dataset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -256,7 +263,8 @@ public class EvaluationMetricService : IEvaluationMetricService
         return true;
     }
 
-    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -267,7 +275,7 @@ public class EvaluationMetricService : IEvaluationMetricService
         try
         {
             parent.Dataset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

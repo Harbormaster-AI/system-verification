@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum NotificationChannel
 {
-    Email=1,SMS=2,Webhook=3,Chat=4
+    Email = 1, SMS = 2, Webhook = 3, Chat = 4
 }
 
 /// <summary>

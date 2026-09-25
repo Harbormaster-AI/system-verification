@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IQualityCheckService {
+public interface IQualityCheckService
+{
 
-    Task Create(QualityCheck model , CancellationToken cancellationToken);
+    Task Create(QualityCheck model, CancellationToken cancellationToken);
     Task<bool> Update(QualityCheck model, CancellationToken cancellationToken);
     Task<QualityCheck?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<QualityCheck>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class QualityCheckService : IQualityCheckService
 
     public async Task<bool> Update(QualityCheck model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class QualityCheckService : IQualityCheckService
         return true;
     }
 
-    public async Task<bool> AssignRule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRule(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class QualityCheckService : IQualityCheckService
 
             var child = await _serviceResolver.Get<QualityRuleService>().Get(childRequest, cancellationToken);
             parent.Rule = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class QualityCheckService : IQualityCheckService
         return true;
     }
 
-    public async Task<bool> UnassignRule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRule(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class QualityCheckService : IQualityCheckService
         try
         {
             parent.Rule = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class QualityCheckService : IQualityCheckService
         return true;
     }
 
-    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class QualityCheckService : IQualityCheckService
 
             var child = await _serviceResolver.Get<DataSetService>().Get(childRequest, cancellationToken);
             parent.Dataset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class QualityCheckService : IQualityCheckService
         return true;
     }
 
-    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class QualityCheckService : IQualityCheckService
         try
         {
             parent.Dataset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

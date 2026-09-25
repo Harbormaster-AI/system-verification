@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IFeatureService {
+public interface IFeatureService
+{
 
-    Task Create(Feature model , CancellationToken cancellationToken);
+    Task Create(Feature model, CancellationToken cancellationToken);
     Task<bool> Update(Feature model, CancellationToken cancellationToken);
     Task<Feature?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Feature>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class FeatureService : IFeatureService
 
     public async Task<bool> Update(Feature model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class FeatureService : IFeatureService
         return true;
     }
 
-    public async Task<bool> AssignFeatureSet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFeatureSet(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class FeatureService : IFeatureService
 
             var child = await _serviceResolver.Get<FeatureSetService>().Get(childRequest, cancellationToken);
             parent.FeatureSet = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class FeatureService : IFeatureService
         return true;
     }
 
-    public async Task<bool> UnassignFeatureSet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFeatureSet(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class FeatureService : IFeatureService
         try
         {
             parent.FeatureSet = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,8 +181,10 @@ public class FeatureService : IFeatureService
     }
 
 
-    public async Task<bool> AddToSourceDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSourceDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Feature",
                 "AddToSourceDatasets",
@@ -186,16 +192,18 @@ public class FeatureService : IFeatureService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSourceDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSourceDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Feature",
                 "RemoveFromSourceDatasets",
@@ -211,8 +219,10 @@ public class FeatureService : IFeatureService
         return true;
     }
 
-    public async Task<bool> AddToModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Feature",
                 "AddToModels",
@@ -220,16 +230,18 @@ public class FeatureService : IFeatureService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Feature",
                 "RemoveFromModels",
@@ -245,8 +257,10 @@ public class FeatureService : IFeatureService
         return true;
     }
 
-    public async Task<bool> AddToTrainingRuns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTrainingRuns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Feature",
                 "AddToTrainingRuns",
@@ -254,16 +268,18 @@ public class FeatureService : IFeatureService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTrainingRuns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTrainingRuns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Feature",
                 "RemoveFromTrainingRuns",

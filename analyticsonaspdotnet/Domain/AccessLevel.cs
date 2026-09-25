@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum AccessLevel
 {
-    View=1,Query=2,Modify=3,Admin=4
+    View = 1, Query = 2, Modify = 3, Admin = 4
 }
 
 /// <summary>

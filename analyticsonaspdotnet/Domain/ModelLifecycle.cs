@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum ModelLifecycle
 {
-    Draft=1,Staging=2,Production=3,Archived=4
+    Draft = 1, Staging = 2, Production = 3, Archived = 4
 }
 
 /// <summary>

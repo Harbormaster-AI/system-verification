@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum FraudDetectionType
 {
-    RuleBased=1,SupervisedML=2,UnsupervisedML=3,Hybrid=4
+    RuleBased = 1, SupervisedML = 2, UnsupervisedML = 3, Hybrid = 4
 }
 
 /// <summary>

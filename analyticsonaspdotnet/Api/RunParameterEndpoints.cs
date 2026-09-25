@@ -27,9 +27,10 @@ public static class RunParameterEndpoints
     private static async Task<IResult> Create(
         RunParameterRequest request,
         IRunParameterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRunParameter( request );
+        var model = mapRequestToRunParameter(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class RunParameterEndpoints
     private static async Task<IResult> Update(
         RunParameterRequest request,
         IRunParameterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRunParameter( request );
+        var model = mapRequestToRunParameter(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class RunParameterEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRunParameterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var runParameter = await service.Get(identifier, cancellationToken);
-        return runParameter is null ? Results.NotFound() : Results.Ok( runParameter );
+        return runParameter is null ? Results.NotFound() : Results.Ok(runParameter);
     }
 
 
     private static async Task<IResult> GetAll(
         IRunParameterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RunParameterResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RunParameterResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRunParameterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class RunParameterEndpoints
     private static async Task<IResult> AssignTrainingRun(
         AssociationRequest request,
         IRunParameterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTrainingRun(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class RunParameterEndpoints
     private static async Task<IResult> UnassignTrainingRun(
     AssociationRequest request,
     IRunParameterService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTrainingRun(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static RunParameter mapRequestToRunParameter( RunParameterRequest request ) {
+    private static RunParameter mapRequestToRunParameter(RunParameterRequest request)
+    {
         var model = new RunParameter
         {
             Id = request.Id,

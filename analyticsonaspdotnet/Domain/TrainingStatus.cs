@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum TrainingStatus
 {
-    Queued=1,Running=2,Completed=3,Failed=4
+    Queued = 1, Running = 2, Completed = 3, Failed = 4
 }
 
 /// <summary>

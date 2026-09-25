@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IDimensionService {
+public interface IDimensionService
+{
 
-    Task Create(Dimension model , CancellationToken cancellationToken);
+    Task Create(Dimension model, CancellationToken cancellationToken);
     Task<bool> Update(Dimension model, CancellationToken cancellationToken);
     Task<Dimension?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Dimension>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class DimensionService : IDimensionService
 
     public async Task<bool> Update(Dimension model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class DimensionService : IDimensionService
         return true;
     }
 
-    public async Task<bool> AssignSemanticModel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSemanticModel(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class DimensionService : IDimensionService
 
             var child = await _serviceResolver.Get<SemanticModelService>().Get(childRequest, cancellationToken);
             parent.SemanticModel = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class DimensionService : IDimensionService
         return true;
     }
 
-    public async Task<bool> UnassignSemanticModel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSemanticModel(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class DimensionService : IDimensionService
         try
         {
             parent.SemanticModel = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class DimensionService : IDimensionService
     }
 
 
-    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Dimension",
                 "AddToDatasets",
@@ -184,16 +190,18 @@ public class DimensionService : IDimensionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Dimension",
                 "RemoveFromDatasets",
@@ -209,8 +217,10 @@ public class DimensionService : IDimensionService
         return true;
     }
 
-    public async Task<bool> AddToGlossaryTerms(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToGlossaryTerms(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Dimension",
                 "AddToGlossaryTerms",
@@ -218,16 +228,18 @@ public class DimensionService : IDimensionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromGlossaryTerms(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromGlossaryTerms(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Dimension",
                 "RemoveFromGlossaryTerms",

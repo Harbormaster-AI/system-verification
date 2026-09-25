@@ -29,9 +29,10 @@ public static class QualityCheckEndpoints
     private static async Task<IResult> Create(
         QualityCheckRequest request,
         IQualityCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToQualityCheck( request );
+        var model = mapRequestToQualityCheck(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class QualityCheckEndpoints
     private static async Task<IResult> Update(
         QualityCheckRequest request,
         IQualityCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToQualityCheck( request );
+        var model = mapRequestToQualityCheck(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class QualityCheckEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IQualityCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var qualityCheck = await service.Get(identifier, cancellationToken);
-        return qualityCheck is null ? Results.NotFound() : Results.Ok( qualityCheck );
+        return qualityCheck is null ? Results.NotFound() : Results.Ok(qualityCheck);
     }
 
 
     private static async Task<IResult> GetAll(
         IQualityCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( QualityCheckResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(QualityCheckResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IQualityCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class QualityCheckEndpoints
     private static async Task<IResult> AssignRule(
         AssociationRequest request,
         IQualityCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRule(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class QualityCheckEndpoints
     private static async Task<IResult> UnassignRule(
     AssociationRequest request,
     IQualityCheckService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRule(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class QualityCheckEndpoints
     private static async Task<IResult> AssignDataset(
         AssociationRequest request,
         IQualityCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDataset(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class QualityCheckEndpoints
     private static async Task<IResult> UnassignDataset(
     AssociationRequest request,
     IQualityCheckService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDataset(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static QualityCheck mapRequestToQualityCheck( QualityCheckRequest request ) {
+    private static QualityCheck mapRequestToQualityCheck(QualityCheckRequest request)
+    {
         var model = new QualityCheck
         {
             Id = request.Id,

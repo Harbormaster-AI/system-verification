@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IAnomalyService {
+public interface IAnomalyService
+{
 
-    Task Create(Anomaly model , CancellationToken cancellationToken);
+    Task Create(Anomaly model, CancellationToken cancellationToken);
     Task<bool> Update(Anomaly model, CancellationToken cancellationToken);
     Task<Anomaly?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Anomaly>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class AnomalyService : IAnomalyService
 
     public async Task<bool> Update(Anomaly model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class AnomalyService : IAnomalyService
         return true;
     }
 
-    public async Task<bool> AssignTimeSeries(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTimeSeries(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class AnomalyService : IAnomalyService
 
             var child = await _serviceResolver.Get<TimeSeriesService>().Get(childRequest, cancellationToken);
             parent.TimeSeries = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class AnomalyService : IAnomalyService
         return true;
     }
 
-    public async Task<bool> UnassignTimeSeries(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTimeSeries(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class AnomalyService : IAnomalyService
         try
         {
             parent.TimeSeries = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class AnomalyService : IAnomalyService
         return true;
     }
 
-    public async Task<bool> AssignAlert(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAlert(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class AnomalyService : IAnomalyService
 
             var child = await _serviceResolver.Get<AlertService>().Get(childRequest, cancellationToken);
             parent.Alert = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class AnomalyService : IAnomalyService
         return true;
     }
 
-    public async Task<bool> UnassignAlert(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAlert(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class AnomalyService : IAnomalyService
         try
         {
             parent.Alert = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class AnomalyService : IAnomalyService
         return true;
     }
 
-    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class AnomalyService : IAnomalyService
 
             var child = await _serviceResolver.Get<DataSetService>().Get(childRequest, cancellationToken);
             parent.Dataset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class AnomalyService : IAnomalyService
         return true;
     }
 
-    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class AnomalyService : IAnomalyService
         try
         {
             parent.Dataset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -22,8 +22,8 @@ public static class InferenceEndpointEndpoints
         group.MapPut("/assignWorkspace", AssignWorkspace);
         group.MapPut("/unassignWorkspace", UnassignWorkspace);
 
-    group.MapPut("/addToPredictions", AddToPredictions);
-    group.MapPut("/removeFromPredictions", RemoveFromPredictions);
+        group.MapPut("/addToPredictions", AddToPredictions);
+        group.MapPut("/removeFromPredictions", RemoveFromPredictions);
 
 
         return app;
@@ -32,9 +32,10 @@ public static class InferenceEndpointEndpoints
     private static async Task<IResult> Create(
         InferenceEndpointRequest request,
         IInferenceEndpointService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInferenceEndpoint( request );
+        var model = mapRequestToInferenceEndpoint(request);
 
         try
         {
@@ -51,9 +52,10 @@ public static class InferenceEndpointEndpoints
     private static async Task<IResult> Update(
         InferenceEndpointRequest request,
         IInferenceEndpointService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInferenceEndpoint( request );
+        var model = mapRequestToInferenceEndpoint(request);
 
         try
         {
@@ -70,25 +72,28 @@ public static class InferenceEndpointEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInferenceEndpointService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var inferenceEndpoint = await service.Get(identifier, cancellationToken);
-        return inferenceEndpoint is null ? Results.NotFound() : Results.Ok( inferenceEndpoint );
+        return inferenceEndpoint is null ? Results.NotFound() : Results.Ok(inferenceEndpoint);
     }
 
 
     private static async Task<IResult> GetAll(
         IInferenceEndpointService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InferenceEndpointResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InferenceEndpointResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInferenceEndpointService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class InferenceEndpointEndpoints
     private static async Task<IResult> AssignModelVersion(
         AssociationRequest request,
         IInferenceEndpointService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignModelVersion(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +110,8 @@ public static class InferenceEndpointEndpoints
     private static async Task<IResult> UnassignModelVersion(
     AssociationRequest request,
     IInferenceEndpointService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignModelVersion(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +119,8 @@ public static class InferenceEndpointEndpoints
     private static async Task<IResult> AssignWorkspace(
         AssociationRequest request,
         IInferenceEndpointService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkspace(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +128,8 @@ public static class InferenceEndpointEndpoints
     private static async Task<IResult> UnassignWorkspace(
     AssociationRequest request,
     IInferenceEndpointService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkspace(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class InferenceEndpointEndpoints
     private static async Task<IResult> AddToPredictions(
         MultipleAssociationRequest request,
         IInferenceEndpointService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPredictions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class InferenceEndpointEndpoints
     private static async Task<IResult> RemoveFromPredictions(
         MultipleAssociationRequest request,
         IInferenceEndpointService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPredictions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static InferenceEndpoint mapRequestToInferenceEndpoint( InferenceEndpointRequest request ) {
+    private static InferenceEndpoint mapRequestToInferenceEndpoint(InferenceEndpointRequest request)
+    {
         var model = new InferenceEndpoint
         {
             Id = request.Id,

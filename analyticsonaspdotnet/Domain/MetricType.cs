@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum MetricType
 {
-    Ratio=1,Rate=2,Count=3,Percentage=4,Index=5,Score=6
+    Ratio = 1, Rate = 2, Count = 3, Percentage = 4, Index = 5, Score = 6
 }
 
 /// <summary>

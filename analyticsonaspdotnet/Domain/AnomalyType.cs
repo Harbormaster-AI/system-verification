@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum AnomalyType
 {
-    Spike=1,Drop=2,Drift=3,Seasonal=4,LevelShift=5
+    Spike = 1, Drop = 2, Drift = 3, Seasonal = 4, LevelShift = 5
 }
 
 /// <summary>

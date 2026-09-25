@@ -11,7 +11,7 @@ public interface ISubscriberRepository
     Task UpdateAsync(Subscriber subscriber, CancellationToken cancellationToken);
     Task DeleteAsync(Subscriber subscriber, CancellationToken cancellationToken);
 
-    Task AddToAlertsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAlertsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAlertsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAlertsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

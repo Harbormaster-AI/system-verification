@@ -11,17 +11,17 @@ public interface IDashboardRepository
     Task UpdateAsync(Dashboard dashboard, CancellationToken cancellationToken);
     Task DeleteAsync(Dashboard dashboard, CancellationToken cancellationToken);
 
-    Task AddToVisualizationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromVisualizationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToReportsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromReportsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToDatasetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDatasetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToAlertsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAlertsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToQueriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromQueriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTagsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTagsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToVisualizationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromVisualizationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToReportsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromReportsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDatasetsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDatasetsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAlertsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAlertsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToQueriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromQueriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTagsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTagsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

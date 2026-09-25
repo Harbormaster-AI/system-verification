@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum ExperimentStatus
 {
-    Planned=1,Running=2,Completed=3,Failed=4,Stopped=5
+    Planned = 1, Running = 2, Completed = 3, Failed = 4, Stopped = 5
 }
 
 /// <summary>

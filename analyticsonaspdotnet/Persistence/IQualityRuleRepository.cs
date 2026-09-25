@@ -11,7 +11,7 @@ public interface IQualityRuleRepository
     Task UpdateAsync(QualityRule qualityRule, CancellationToken cancellationToken);
     Task DeleteAsync(QualityRule qualityRule, CancellationToken cancellationToken);
 
-    Task AddToChecksAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromChecksAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToChecksAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromChecksAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

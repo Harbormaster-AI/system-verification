@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IRecommendationScenarioService {
+public interface IRecommendationScenarioService
+{
 
-    Task Create(RecommendationScenario model , CancellationToken cancellationToken);
+    Task Create(RecommendationScenario model, CancellationToken cancellationToken);
     Task<bool> Update(RecommendationScenario model, CancellationToken cancellationToken);
     Task<RecommendationScenario?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RecommendationScenario>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class RecommendationScenarioService : IRecommendationScenarioService
 
     public async Task<bool> Update(RecommendationScenario model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,8 +126,10 @@ public class RecommendationScenarioService : IRecommendationScenarioService
     }
 
 
-    public async Task<bool> AddToModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecommendationScenario",
                 "AddToModels",
@@ -133,16 +137,18 @@ public class RecommendationScenarioService : IRecommendationScenarioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecommendationScenario",
                 "RemoveFromModels",
@@ -158,8 +164,10 @@ public class RecommendationScenarioService : IRecommendationScenarioService
         return true;
     }
 
-    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecommendationScenario",
                 "AddToDatasets",
@@ -167,16 +175,18 @@ public class RecommendationScenarioService : IRecommendationScenarioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecommendationScenario",
                 "RemoveFromDatasets",
@@ -192,8 +202,10 @@ public class RecommendationScenarioService : IRecommendationScenarioService
         return true;
     }
 
-    public async Task<bool> AddToExperiments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToExperiments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecommendationScenario",
                 "AddToExperiments",
@@ -201,16 +213,18 @@ public class RecommendationScenarioService : IRecommendationScenarioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromExperiments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromExperiments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecommendationScenario",
                 "RemoveFromExperiments",
@@ -226,8 +240,10 @@ public class RecommendationScenarioService : IRecommendationScenarioService
         return true;
     }
 
-    public async Task<bool> AddToAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecommendationScenario",
                 "AddToAlerts",
@@ -235,16 +251,18 @@ public class RecommendationScenarioService : IRecommendationScenarioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RecommendationScenario",
                 "RemoveFromAlerts",

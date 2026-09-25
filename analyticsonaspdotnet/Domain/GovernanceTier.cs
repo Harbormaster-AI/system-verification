@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum GovernanceTier
 {
-    Open=1,Internal=2,Restricted=3,Confidential=4
+    Open = 1, Internal = 2, Restricted = 3, Confidential = 4
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum RecommendationType
 {
-    Personalized=1,Trending=2,SimilarItems=3,FrequentlyBoughtTogether=4,ContentBased=5
+    Personalized = 1, Trending = 2, SimilarItems = 3, FrequentlyBoughtTogether = 4, ContentBased = 5
 }
 
 /// <summary>
