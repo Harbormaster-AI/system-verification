@@ -36,7 +36,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum DisputeStatus
 {
-    Open=1,UnderReview=2,Resolved=3,Rejected=4,Withdrawn=5
+    Open = 1, UnderReview = 2, Resolved = 3, Rejected = 4, Withdrawn = 5
 }
 
 /// <summary>

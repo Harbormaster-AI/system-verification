@@ -36,7 +36,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum InstallmentStatus
 {
-    Due=1,Paid=2,Overdue=3,Deferred=4
+    Due = 1, Paid = 2, Overdue = 3, Deferred = 4
 }
 
 /// <summary>
