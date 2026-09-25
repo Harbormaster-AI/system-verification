@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface ICustomerService {
+public interface ICustomerService
+{
 
-    Task Create(Customer model , CancellationToken cancellationToken);
+    Task Create(Customer model, CancellationToken cancellationToken);
     Task<bool> Update(Customer model, CancellationToken cancellationToken);
     Task<Customer?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Customer>> GetAll(CancellationToken cancellationToken);
@@ -76,7 +77,8 @@ public class CustomerService : ICustomerService
 
     public async Task<bool> Update(Customer model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -136,7 +138,8 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -152,9 +155,9 @@ public class CustomerService : ICustomerService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(BankService).get( childRequest , cancellationToken );
+            var child = serviceResolver.get(BankService).get(childRequest, cancellationToken);
             parent.Bank = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -164,7 +167,8 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -175,7 +179,7 @@ public class CustomerService : ICustomerService
         try
         {
             parent.Bank = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -186,8 +190,10 @@ public class CustomerService : ICustomerService
     }
 
 
-    public async Task<bool> AddToAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToAccounts",
@@ -201,8 +207,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> RemoveFromAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromAccounts",
@@ -216,8 +224,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToLoanAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLoanAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToLoanAccounts",
@@ -231,8 +241,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> RemoveFromLoanAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLoanAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromLoanAccounts",
@@ -246,8 +258,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToPaymentCards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPaymentCards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToPaymentCards",
@@ -261,8 +275,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> RemoveFromPaymentCards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPaymentCards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromPaymentCards",
@@ -276,8 +292,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToExternalAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToExternalAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToExternalAccounts",
@@ -291,8 +309,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> RemoveFromExternalAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromExternalAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromExternalAccounts",
@@ -306,8 +326,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToFundsTransfers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFundsTransfers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToFundsTransfers",
@@ -321,8 +343,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> RemoveFromFundsTransfers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFundsTransfers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromFundsTransfers",
@@ -336,8 +360,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToDisputes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDisputes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToDisputes",
@@ -351,8 +377,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> RemoveFromDisputes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDisputes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromDisputes",
@@ -366,8 +394,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToKycProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToKycProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToKycProfiles",
@@ -381,8 +411,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> RemoveFromKycProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromKycProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromKycProfiles",
@@ -396,8 +428,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToConsents",
@@ -411,8 +445,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromConsents",

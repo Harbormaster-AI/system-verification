@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IRiskAssessmentService {
+public interface IRiskAssessmentService
+{
 
-    Task Create(RiskAssessment model , CancellationToken cancellationToken);
+    Task Create(RiskAssessment model, CancellationToken cancellationToken);
     Task<bool> Update(RiskAssessment model, CancellationToken cancellationToken);
     Task<RiskAssessment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RiskAssessment>> GetAll(CancellationToken cancellationToken);
@@ -60,7 +61,8 @@ public class RiskAssessmentService : IRiskAssessmentService
 
     public async Task<bool> Update(RiskAssessment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -112,7 +114,8 @@ public class RiskAssessmentService : IRiskAssessmentService
         return true;
     }
 
-    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -128,9 +131,9 @@ public class RiskAssessmentService : IRiskAssessmentService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(KycProfileService).get( childRequest , cancellationToken );
+            var child = serviceResolver.get(KycProfileService).get(childRequest, cancellationToken);
             parent.KycProfile = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -140,7 +143,8 @@ public class RiskAssessmentService : IRiskAssessmentService
         return true;
     }
 
-    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -151,7 +155,7 @@ public class RiskAssessmentService : IRiskAssessmentService
         try
         {
             parent.KycProfile = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {

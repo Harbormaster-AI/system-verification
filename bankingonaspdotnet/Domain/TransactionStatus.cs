@@ -36,7 +36,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum TransactionStatus
 {
-    Pending=1,Posted=2,Reversed=3,Failed=4,Cancelled=5
+    Pending = 1, Posted = 2, Reversed = 3, Failed = 4, Cancelled = 5
 }
 
 /// <summary>
