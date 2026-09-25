@@ -10,7 +10,7 @@ public interface IConsentRepository
     Task UpdateAsync(Consent consent, CancellationToken cancellationToken);
     Task DeleteAsync(Consent consent, CancellationToken cancellationToken);
 
-    Task AddToAuthorizedAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAuthorizedAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAuthorizedAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAuthorizedAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

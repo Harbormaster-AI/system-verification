@@ -10,11 +10,11 @@ public interface IBankingProductRepository
     Task UpdateAsync(BankingProduct bankingProduct, CancellationToken cancellationToken);
     Task DeleteAsync(BankingProduct bankingProduct, CancellationToken cancellationToken);
 
-    Task AddToAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToLoanAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLoanAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToPaymentCardsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPaymentCardsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLoanAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLoanAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPaymentCardsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPaymentCardsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }
