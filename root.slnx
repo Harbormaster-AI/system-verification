@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="inventoryonaspdotnet/inventoryonaspdotnet.Api.csproj" />
+  <Project Path="inventoryonaspdotnet/Tests/inventoryonaspdotnet.Tests.csproj" />
+</Solution>

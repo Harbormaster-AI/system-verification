@@ -1,0 +1,5 @@
+@inventoryonaspdotnet.Api_HostAddress = http://localhost:5076
+
+GET {{inventoryonaspdotnet.Api_HostAddress}}/
+Accept: application/json
+
