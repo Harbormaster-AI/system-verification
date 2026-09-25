@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum JobLevel
 {
-    Entry=1,Intermediate=2,Senior=3,Lead=4,Manager=5,Director=6,Executive=7
+    Entry = 1, Intermediate = 2, Senior = 3, Lead = 4, Manager = 5, Director = 6, Executive = 7
 }
 
 /// <summary>

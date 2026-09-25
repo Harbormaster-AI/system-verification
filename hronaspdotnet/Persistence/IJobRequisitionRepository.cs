@@ -11,11 +11,11 @@ public interface IJobRequisitionRepository
     Task UpdateAsync(JobRequisition jobRequisition, CancellationToken cancellationToken);
     Task DeleteAsync(JobRequisition jobRequisition, CancellationToken cancellationToken);
 
-    Task AddToCandidatesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCandidatesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToInterviewsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInterviewsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToOffersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromOffersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCandidatesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCandidatesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInterviewsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInterviewsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToOffersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromOffersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

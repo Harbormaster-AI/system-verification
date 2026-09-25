@@ -11,9 +11,9 @@ public interface ITimesheetRepository
     Task UpdateAsync(Timesheet timesheet, CancellationToken cancellationToken);
     Task DeleteAsync(Timesheet timesheet, CancellationToken cancellationToken);
 
-    Task AddToTimeEntriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTimeEntriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToApprovalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromApprovalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTimeEntriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTimeEntriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToApprovalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromApprovalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

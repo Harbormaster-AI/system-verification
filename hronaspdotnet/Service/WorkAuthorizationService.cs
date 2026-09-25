@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IWorkAuthorizationService {
+public interface IWorkAuthorizationService
+{
 
-    Task Create(WorkAuthorization model , CancellationToken cancellationToken);
+    Task Create(WorkAuthorization model, CancellationToken cancellationToken);
     Task<bool> Update(WorkAuthorization model, CancellationToken cancellationToken);
     Task<WorkAuthorization?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<WorkAuthorization>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class WorkAuthorizationService : IWorkAuthorizationService
 
     public async Task<bool> Update(WorkAuthorization model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class WorkAuthorizationService : IWorkAuthorizationService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class WorkAuthorizationService : IWorkAuthorizationService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class WorkAuthorizationService : IWorkAuthorizationService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class WorkAuthorizationService : IWorkAuthorizationService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class WorkAuthorizationService : IWorkAuthorizationService
     }
 
 
-    public async Task<bool> AddToDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "WorkAuthorization",
                 "AddToDocuments",
@@ -182,16 +188,18 @@ public class WorkAuthorizationService : IWorkAuthorizationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "WorkAuthorization",
                 "RemoveFromDocuments",

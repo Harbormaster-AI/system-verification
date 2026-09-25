@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum PayrollStatus
 {
-    Scheduled=1,InProgress=2,Completed=3,Reversed=4
+    Scheduled = 1, InProgress = 2, Completed = 3, Reversed = 4
 }
 
 /// <summary>

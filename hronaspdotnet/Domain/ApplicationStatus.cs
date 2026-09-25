@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum ApplicationStatus
 {
-    New=1,Screening=2,Interview=3,Offer=4,Hired=5,Rejected=6,Withdrawn=7
+    New = 1, Screening = 2, Interview = 3, Offer = 4, Hired = 5, Rejected = 6, Withdrawn = 7
 }
 
 /// <summary>

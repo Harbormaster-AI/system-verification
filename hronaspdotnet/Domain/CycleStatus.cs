@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum CycleStatus
 {
-    Planned=1,Open=2,Closed=3
+    Planned = 1, Open = 2, Closed = 3
 }
 
 /// <summary>

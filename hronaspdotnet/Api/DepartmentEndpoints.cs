@@ -24,11 +24,11 @@ public static class DepartmentEndpoints
         group.MapPut("/assignCostCenter", AssignCostCenter);
         group.MapPut("/unassignCostCenter", UnassignCostCenter);
 
-    group.MapPut("/addToPositions", AddToPositions);
-    group.MapPut("/removeFromPositions", RemoveFromPositions);
+        group.MapPut("/addToPositions", AddToPositions);
+        group.MapPut("/removeFromPositions", RemoveFromPositions);
 
-    group.MapPut("/addToEmployees", AddToEmployees);
-    group.MapPut("/removeFromEmployees", RemoveFromEmployees);
+        group.MapPut("/addToEmployees", AddToEmployees);
+        group.MapPut("/removeFromEmployees", RemoveFromEmployees);
 
 
         return app;
@@ -37,9 +37,10 @@ public static class DepartmentEndpoints
     private static async Task<IResult> Create(
         DepartmentRequest request,
         IDepartmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDepartment( request );
+        var model = mapRequestToDepartment(request);
 
         try
         {
@@ -56,9 +57,10 @@ public static class DepartmentEndpoints
     private static async Task<IResult> Update(
         DepartmentRequest request,
         IDepartmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDepartment( request );
+        var model = mapRequestToDepartment(request);
 
         try
         {
@@ -75,25 +77,28 @@ public static class DepartmentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDepartmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var department = await service.Get(identifier, cancellationToken);
-        return department is null ? Results.NotFound() : Results.Ok( department );
+        return department is null ? Results.NotFound() : Results.Ok(department);
     }
 
 
     private static async Task<IResult> GetAll(
         IDepartmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DepartmentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DepartmentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDepartmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +106,8 @@ public static class DepartmentEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IDepartmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +115,8 @@ public static class DepartmentEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IDepartmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,7 +124,8 @@ public static class DepartmentEndpoints
     private static async Task<IResult> AssignManager(
         AssociationRequest request,
         IDepartmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignManager(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -125,7 +133,8 @@ public static class DepartmentEndpoints
     private static async Task<IResult> UnassignManager(
     AssociationRequest request,
     IDepartmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignManager(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -133,7 +142,8 @@ public static class DepartmentEndpoints
     private static async Task<IResult> AssignCostCenter(
         AssociationRequest request,
         IDepartmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCostCenter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -141,7 +151,8 @@ public static class DepartmentEndpoints
     private static async Task<IResult> UnassignCostCenter(
     AssociationRequest request,
     IDepartmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCostCenter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -150,7 +161,8 @@ public static class DepartmentEndpoints
     private static async Task<IResult> AddToPositions(
         MultipleAssociationRequest request,
         IDepartmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPositions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -158,14 +170,16 @@ public static class DepartmentEndpoints
     private static async Task<IResult> RemoveFromPositions(
         MultipleAssociationRequest request,
         IDepartmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPositions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToEmployees(
         MultipleAssociationRequest request,
         IDepartmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToEmployees(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -173,11 +187,13 @@ public static class DepartmentEndpoints
     private static async Task<IResult> RemoveFromEmployees(
         MultipleAssociationRequest request,
         IDepartmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromEmployees(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Department mapRequestToDepartment( DepartmentRequest request ) {
+    private static Department mapRequestToDepartment(DepartmentRequest request)
+    {
         var model = new Department
         {
             Id = request.Id,

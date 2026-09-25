@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum AssignmentType
 {
-    Primary=1,Secondary=2,Temporary=3
+    Primary = 1, Secondary = 2, Temporary = 3
 }
 
 /// <summary>

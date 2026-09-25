@@ -11,7 +11,7 @@ public interface IPolicyRepository
     Task UpdateAsync(Policy policy, CancellationToken cancellationToken);
     Task DeleteAsync(Policy policy, CancellationToken cancellationToken);
 
-    Task AddToAcknowledgementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAcknowledgementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAcknowledgementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAcknowledgementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

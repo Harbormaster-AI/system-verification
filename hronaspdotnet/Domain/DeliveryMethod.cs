@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum DeliveryMethod
 {
-    Classroom=1,Virtual=2,SelfPaced=3,Blended=4
+    Classroom = 1, Virtual = 2, SelfPaced = 3, Blended = 4
 }
 
 /// <summary>

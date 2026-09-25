@@ -11,11 +11,11 @@ public interface IWorkScheduleRepository
     Task UpdateAsync(WorkSchedule workSchedule, CancellationToken cancellationToken);
     Task DeleteAsync(WorkSchedule workSchedule, CancellationToken cancellationToken);
 
-    Task AddToContractsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromContractsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToShiftsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromShiftsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToExceptionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromExceptionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToContractsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromContractsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToShiftsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromShiftsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToExceptionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromExceptionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

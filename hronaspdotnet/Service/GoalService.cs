@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IGoalService {
+public interface IGoalService
+{
 
-    Task Create(Goal model , CancellationToken cancellationToken);
+    Task Create(Goal model, CancellationToken cancellationToken);
     Task<bool> Update(Goal model, CancellationToken cancellationToken);
     Task<Goal?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Goal>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class GoalService : IGoalService
 
     public async Task<bool> Update(Goal model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class GoalService : IGoalService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class GoalService : IGoalService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class GoalService : IGoalService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class GoalService : IGoalService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class GoalService : IGoalService
         return true;
     }
 
-    public async Task<bool> AssignCycle(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCycle(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class GoalService : IGoalService
 
             var child = await _serviceResolver.Get<PerformanceCycleService>().Get(childRequest, cancellationToken);
             parent.Cycle = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class GoalService : IGoalService
         return true;
     }
 
-    public async Task<bool> UnassignCycle(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCycle(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class GoalService : IGoalService
         try
         {
             parent.Cycle = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,7 +237,8 @@ public class GoalService : IGoalService
         return true;
     }
 
-    public async Task<bool> AssignParentGoal(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignParentGoal(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -249,7 +256,7 @@ public class GoalService : IGoalService
 
             var child = await _serviceResolver.Get<GoalService>().Get(childRequest, cancellationToken);
             parent.ParentGoal = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -261,7 +268,8 @@ public class GoalService : IGoalService
         return true;
     }
 
-    public async Task<bool> UnassignParentGoal(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignParentGoal(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -272,7 +280,7 @@ public class GoalService : IGoalService
         try
         {
             parent.ParentGoal = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -285,8 +293,10 @@ public class GoalService : IGoalService
     }
 
 
-    public async Task<bool> AddToChildGoals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToChildGoals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Goal",
                 "AddToChildGoals",
@@ -294,16 +304,18 @@ public class GoalService : IGoalService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromChildGoals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromChildGoals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Goal",
                 "RemoveFromChildGoals",

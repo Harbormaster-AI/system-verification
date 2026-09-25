@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum ApprovalStatus
 {
-    Pending=1,Approved=2,Rejected=3,Cancelled=4
+    Pending = 1, Approved = 2, Rejected = 3, Cancelled = 4
 }
 
 /// <summary>

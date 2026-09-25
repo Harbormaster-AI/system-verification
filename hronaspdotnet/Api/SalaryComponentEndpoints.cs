@@ -27,9 +27,10 @@ public static class SalaryComponentEndpoints
     private static async Task<IResult> Create(
         SalaryComponentRequest request,
         ISalaryComponentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSalaryComponent( request );
+        var model = mapRequestToSalaryComponent(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class SalaryComponentEndpoints
     private static async Task<IResult> Update(
         SalaryComponentRequest request,
         ISalaryComponentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSalaryComponent( request );
+        var model = mapRequestToSalaryComponent(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class SalaryComponentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISalaryComponentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var salaryComponent = await service.Get(identifier, cancellationToken);
-        return salaryComponent is null ? Results.NotFound() : Results.Ok( salaryComponent );
+        return salaryComponent is null ? Results.NotFound() : Results.Ok(salaryComponent);
     }
 
 
     private static async Task<IResult> GetAll(
         ISalaryComponentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SalaryComponentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SalaryComponentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISalaryComponentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class SalaryComponentEndpoints
     private static async Task<IResult> AssignCompensationPackage(
         AssociationRequest request,
         ISalaryComponentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCompensationPackage(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class SalaryComponentEndpoints
     private static async Task<IResult> UnassignCompensationPackage(
     AssociationRequest request,
     ISalaryComponentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCompensationPackage(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static SalaryComponent mapRequestToSalaryComponent( SalaryComponentRequest request ) {
+    private static SalaryComponent mapRequestToSalaryComponent(SalaryComponentRequest request)
+    {
         var model = new SalaryComponent
         {
             Id = request.Id,

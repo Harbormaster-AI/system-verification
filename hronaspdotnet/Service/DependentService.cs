@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IDependentService {
+public interface IDependentService
+{
 
-    Task Create(Dependent model , CancellationToken cancellationToken);
+    Task Create(Dependent model, CancellationToken cancellationToken);
     Task<bool> Update(Dependent model, CancellationToken cancellationToken);
     Task<Dependent?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Dependent>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class DependentService : IDependentService
 
     public async Task<bool> Update(Dependent model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class DependentService : IDependentService
         return true;
     }
 
-    public async Task<bool> AssignBenefitEnrollment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBenefitEnrollment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class DependentService : IDependentService
 
             var child = await _serviceResolver.Get<BenefitEnrollmentService>().Get(childRequest, cancellationToken);
             parent.BenefitEnrollment = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class DependentService : IDependentService
         return true;
     }
 
-    public async Task<bool> UnassignBenefitEnrollment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBenefitEnrollment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class DependentService : IDependentService
         try
         {
             parent.BenefitEnrollment = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class DependentService : IDependentService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class DependentService : IDependentService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class DependentService : IDependentService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class DependentService : IDependentService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

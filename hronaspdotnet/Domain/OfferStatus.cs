@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum OfferStatus
 {
-    Draft=1,Sent=2,Accepted=3,Declined=4,Withdrawn=5,Expired=6
+    Draft = 1, Sent = 2, Accepted = 3, Declined = 4, Withdrawn = 5, Expired = 6
 }
 
 /// <summary>

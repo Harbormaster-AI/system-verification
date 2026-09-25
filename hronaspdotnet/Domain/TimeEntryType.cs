@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum TimeEntryType
 {
-    Regular=1,Overtime=2,Sick=3,Vacation=4,Unpaid=5
+    Regular = 1, Overtime = 2, Sick = 3, Vacation = 4, Unpaid = 5
 }
 
 /// <summary>

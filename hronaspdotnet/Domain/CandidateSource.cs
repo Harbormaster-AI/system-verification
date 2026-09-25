@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum CandidateSource
 {
-    Referral=1,Agency=2,JobBoard=3,CareerSite=4,Campus=5,Social=6,Internal=7
+    Referral = 1, Agency = 2, JobBoard = 3, CareerSite = 4, Campus = 5, Social = 6, Internal = 7
 }
 
 /// <summary>

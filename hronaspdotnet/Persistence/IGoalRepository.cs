@@ -11,7 +11,7 @@ public interface IGoalRepository
     Task UpdateAsync(Goal goal, CancellationToken cancellationToken);
     Task DeleteAsync(Goal goal, CancellationToken cancellationToken);
 
-    Task AddToChildGoalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromChildGoalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToChildGoalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromChildGoalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum PayFrequency
 {
-    Weekly=1,Biweekly=2,Semimonthly=3,Monthly=4,Quarterly=5
+    Weekly = 1, Biweekly = 2, Semimonthly = 3, Monthly = 4, Quarterly = 5
 }
 
 /// <summary>

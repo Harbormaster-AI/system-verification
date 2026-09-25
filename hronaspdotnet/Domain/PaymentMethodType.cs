@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum PaymentMethodType
 {
-    DirectDeposit=1,Check=2,Cash=3,InternationalTransfer=4
+    DirectDeposit = 1, Check = 2, Cash = 3, InternationalTransfer = 4
 }
 
 /// <summary>

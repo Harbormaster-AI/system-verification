@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IJobProfileService {
+public interface IJobProfileService
+{
 
-    Task Create(JobProfile model , CancellationToken cancellationToken);
+    Task Create(JobProfile model, CancellationToken cancellationToken);
     Task<bool> Update(JobProfile model, CancellationToken cancellationToken);
     Task<JobProfile?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<JobProfile>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class JobProfileService : IJobProfileService
 
     public async Task<bool> Update(JobProfile model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class JobProfileService : IJobProfileService
         return true;
     }
 
-    public async Task<bool> AssignJobFamily(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignJobFamily(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class JobProfileService : IJobProfileService
 
             var child = await _serviceResolver.Get<JobFamilyService>().Get(childRequest, cancellationToken);
             parent.JobFamily = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class JobProfileService : IJobProfileService
         return true;
     }
 
-    public async Task<bool> UnassignJobFamily(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignJobFamily(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class JobProfileService : IJobProfileService
         try
         {
             parent.JobFamily = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,8 +182,10 @@ public class JobProfileService : IJobProfileService
     }
 
 
-    public async Task<bool> AddToCompetencies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCompetencies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "JobProfile",
                 "AddToCompetencies",
@@ -187,16 +193,18 @@ public class JobProfileService : IJobProfileService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCompetencies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCompetencies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "JobProfile",
                 "RemoveFromCompetencies",
@@ -212,8 +220,10 @@ public class JobProfileService : IJobProfileService
         return true;
     }
 
-    public async Task<bool> AddToTrainingRecommendations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTrainingRecommendations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "JobProfile",
                 "AddToTrainingRecommendations",
@@ -221,16 +231,18 @@ public class JobProfileService : IJobProfileService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTrainingRecommendations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTrainingRecommendations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "JobProfile",
                 "RemoveFromTrainingRecommendations",
@@ -246,8 +258,10 @@ public class JobProfileService : IJobProfileService
         return true;
     }
 
-    public async Task<bool> AddToPositions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPositions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "JobProfile",
                 "AddToPositions",
@@ -255,16 +269,18 @@ public class JobProfileService : IJobProfileService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPositions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPositions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "JobProfile",
                 "RemoveFromPositions",

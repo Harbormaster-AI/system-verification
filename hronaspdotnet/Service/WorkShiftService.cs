@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IWorkShiftService {
+public interface IWorkShiftService
+{
 
-    Task Create(WorkShift model , CancellationToken cancellationToken);
+    Task Create(WorkShift model, CancellationToken cancellationToken);
     Task<bool> Update(WorkShift model, CancellationToken cancellationToken);
     Task<WorkShift?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<WorkShift>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class WorkShiftService : IWorkShiftService
 
     public async Task<bool> Update(WorkShift model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class WorkShiftService : IWorkShiftService
         return true;
     }
 
-    public async Task<bool> AssignWorkSchedule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkSchedule(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class WorkShiftService : IWorkShiftService
 
             var child = await _serviceResolver.Get<WorkScheduleService>().Get(childRequest, cancellationToken);
             parent.WorkSchedule = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class WorkShiftService : IWorkShiftService
         return true;
     }
 
-    public async Task<bool> UnassignWorkSchedule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkSchedule(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class WorkShiftService : IWorkShiftService
         try
         {
             parent.WorkSchedule = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

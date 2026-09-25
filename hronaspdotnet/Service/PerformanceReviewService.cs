@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IPerformanceReviewService {
+public interface IPerformanceReviewService
+{
 
-    Task Create(PerformanceReview model , CancellationToken cancellationToken);
+    Task Create(PerformanceReview model, CancellationToken cancellationToken);
     Task<bool> Update(PerformanceReview model, CancellationToken cancellationToken);
     Task<PerformanceReview?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<PerformanceReview>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class PerformanceReviewService : IPerformanceReviewService
 
     public async Task<bool> Update(PerformanceReview model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -127,7 +129,8 @@ public class PerformanceReviewService : IPerformanceReviewService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -145,7 +148,7 @@ public class PerformanceReviewService : IPerformanceReviewService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -157,7 +160,8 @@ public class PerformanceReviewService : IPerformanceReviewService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -168,7 +172,7 @@ public class PerformanceReviewService : IPerformanceReviewService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -180,7 +184,8 @@ public class PerformanceReviewService : IPerformanceReviewService
         return true;
     }
 
-    public async Task<bool> AssignReviewer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignReviewer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -198,7 +203,7 @@ public class PerformanceReviewService : IPerformanceReviewService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Reviewer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -210,7 +215,8 @@ public class PerformanceReviewService : IPerformanceReviewService
         return true;
     }
 
-    public async Task<bool> UnassignReviewer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignReviewer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -221,7 +227,7 @@ public class PerformanceReviewService : IPerformanceReviewService
         try
         {
             parent.Reviewer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -233,7 +239,8 @@ public class PerformanceReviewService : IPerformanceReviewService
         return true;
     }
 
-    public async Task<bool> AssignCycle(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCycle(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -251,7 +258,7 @@ public class PerformanceReviewService : IPerformanceReviewService
 
             var child = await _serviceResolver.Get<PerformanceCycleService>().Get(childRequest, cancellationToken);
             parent.Cycle = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -263,7 +270,8 @@ public class PerformanceReviewService : IPerformanceReviewService
         return true;
     }
 
-    public async Task<bool> UnassignCycle(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCycle(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -274,7 +282,7 @@ public class PerformanceReviewService : IPerformanceReviewService
         try
         {
             parent.Cycle = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -287,8 +295,10 @@ public class PerformanceReviewService : IPerformanceReviewService
     }
 
 
-    public async Task<bool> AddToCompetencyRatings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCompetencyRatings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PerformanceReview",
                 "AddToCompetencyRatings",
@@ -296,16 +306,18 @@ public class PerformanceReviewService : IPerformanceReviewService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCompetencyRatings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCompetencyRatings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PerformanceReview",
                 "RemoveFromCompetencyRatings",
@@ -321,8 +333,10 @@ public class PerformanceReviewService : IPerformanceReviewService
         return true;
     }
 
-    public async Task<bool> AddToGoals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToGoals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PerformanceReview",
                 "AddToGoals",
@@ -330,16 +344,18 @@ public class PerformanceReviewService : IPerformanceReviewService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromGoals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromGoals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PerformanceReview",
                 "RemoveFromGoals",

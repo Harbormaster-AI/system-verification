@@ -20,14 +20,14 @@ public static class JobProfileEndpoints
         group.MapPut("/assignJobFamily", AssignJobFamily);
         group.MapPut("/unassignJobFamily", UnassignJobFamily);
 
-    group.MapPut("/addToCompetencies", AddToCompetencies);
-    group.MapPut("/removeFromCompetencies", RemoveFromCompetencies);
+        group.MapPut("/addToCompetencies", AddToCompetencies);
+        group.MapPut("/removeFromCompetencies", RemoveFromCompetencies);
 
-    group.MapPut("/addToTrainingRecommendations", AddToTrainingRecommendations);
-    group.MapPut("/removeFromTrainingRecommendations", RemoveFromTrainingRecommendations);
+        group.MapPut("/addToTrainingRecommendations", AddToTrainingRecommendations);
+        group.MapPut("/removeFromTrainingRecommendations", RemoveFromTrainingRecommendations);
 
-    group.MapPut("/addToPositions", AddToPositions);
-    group.MapPut("/removeFromPositions", RemoveFromPositions);
+        group.MapPut("/addToPositions", AddToPositions);
+        group.MapPut("/removeFromPositions", RemoveFromPositions);
 
 
         return app;
@@ -36,9 +36,10 @@ public static class JobProfileEndpoints
     private static async Task<IResult> Create(
         JobProfileRequest request,
         IJobProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToJobProfile( request );
+        var model = mapRequestToJobProfile(request);
 
         try
         {
@@ -55,9 +56,10 @@ public static class JobProfileEndpoints
     private static async Task<IResult> Update(
         JobProfileRequest request,
         IJobProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToJobProfile( request );
+        var model = mapRequestToJobProfile(request);
 
         try
         {
@@ -74,25 +76,28 @@ public static class JobProfileEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IJobProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var jobProfile = await service.Get(identifier, cancellationToken);
-        return jobProfile is null ? Results.NotFound() : Results.Ok( jobProfile );
+        return jobProfile is null ? Results.NotFound() : Results.Ok(jobProfile);
     }
 
 
     private static async Task<IResult> GetAll(
         IJobProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( JobProfileResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(JobProfileResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IJobProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -100,7 +105,8 @@ public static class JobProfileEndpoints
     private static async Task<IResult> AssignJobFamily(
         AssociationRequest request,
         IJobProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignJobFamily(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +114,8 @@ public static class JobProfileEndpoints
     private static async Task<IResult> UnassignJobFamily(
     AssociationRequest request,
     IJobProfileService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignJobFamily(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,7 +124,8 @@ public static class JobProfileEndpoints
     private static async Task<IResult> AddToCompetencies(
         MultipleAssociationRequest request,
         IJobProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCompetencies(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -125,14 +133,16 @@ public static class JobProfileEndpoints
     private static async Task<IResult> RemoveFromCompetencies(
         MultipleAssociationRequest request,
         IJobProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCompetencies(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToTrainingRecommendations(
         MultipleAssociationRequest request,
         IJobProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTrainingRecommendations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class JobProfileEndpoints
     private static async Task<IResult> RemoveFromTrainingRecommendations(
         MultipleAssociationRequest request,
         IJobProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTrainingRecommendations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPositions(
         MultipleAssociationRequest request,
         IJobProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPositions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class JobProfileEndpoints
     private static async Task<IResult> RemoveFromPositions(
         MultipleAssociationRequest request,
         IJobProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPositions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static JobProfile mapRequestToJobProfile( JobProfileRequest request ) {
+    private static JobProfile mapRequestToJobProfile(JobProfileRequest request)
+    {
         var model = new JobProfile
         {
             Id = request.Id,

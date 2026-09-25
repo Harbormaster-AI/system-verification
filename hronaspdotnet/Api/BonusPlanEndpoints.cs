@@ -18,8 +18,8 @@ public static class BonusPlanEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToCompensationPackages", AddToCompensationPackages);
-    group.MapPut("/removeFromCompensationPackages", RemoveFromCompensationPackages);
+        group.MapPut("/addToCompensationPackages", AddToCompensationPackages);
+        group.MapPut("/removeFromCompensationPackages", RemoveFromCompensationPackages);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class BonusPlanEndpoints
     private static async Task<IResult> Create(
         BonusPlanRequest request,
         IBonusPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBonusPlan( request );
+        var model = mapRequestToBonusPlan(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class BonusPlanEndpoints
     private static async Task<IResult> Update(
         BonusPlanRequest request,
         IBonusPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBonusPlan( request );
+        var model = mapRequestToBonusPlan(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class BonusPlanEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IBonusPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var bonusPlan = await service.Get(identifier, cancellationToken);
-        return bonusPlan is null ? Results.NotFound() : Results.Ok( bonusPlan );
+        return bonusPlan is null ? Results.NotFound() : Results.Ok(bonusPlan);
     }
 
 
     private static async Task<IResult> GetAll(
         IBonusPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( BonusPlanResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(BonusPlanResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IBonusPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class BonusPlanEndpoints
     private static async Task<IResult> AddToCompensationPackages(
         MultipleAssociationRequest request,
         IBonusPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCompensationPackages(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class BonusPlanEndpoints
     private static async Task<IResult> RemoveFromCompensationPackages(
         MultipleAssociationRequest request,
         IBonusPlanService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCompensationPackages(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static BonusPlan mapRequestToBonusPlan( BonusPlanRequest request ) {
+    private static BonusPlan mapRequestToBonusPlan(BonusPlanRequest request)
+    {
         var model = new BonusPlan
         {
             Id = request.Id,

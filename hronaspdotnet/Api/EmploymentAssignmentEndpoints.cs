@@ -31,9 +31,10 @@ public static class EmploymentAssignmentEndpoints
     private static async Task<IResult> Create(
         EmploymentAssignmentRequest request,
         IEmploymentAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEmploymentAssignment( request );
+        var model = mapRequestToEmploymentAssignment(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class EmploymentAssignmentEndpoints
     private static async Task<IResult> Update(
         EmploymentAssignmentRequest request,
         IEmploymentAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEmploymentAssignment( request );
+        var model = mapRequestToEmploymentAssignment(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class EmploymentAssignmentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IEmploymentAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var employmentAssignment = await service.Get(identifier, cancellationToken);
-        return employmentAssignment is null ? Results.NotFound() : Results.Ok( employmentAssignment );
+        return employmentAssignment is null ? Results.NotFound() : Results.Ok(employmentAssignment);
     }
 
 
     private static async Task<IResult> GetAll(
         IEmploymentAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( EmploymentAssignmentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(EmploymentAssignmentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IEmploymentAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class EmploymentAssignmentEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         IEmploymentAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class EmploymentAssignmentEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     IEmploymentAssignmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class EmploymentAssignmentEndpoints
     private static async Task<IResult> AssignPosition(
         AssociationRequest request,
         IEmploymentAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPosition(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class EmploymentAssignmentEndpoints
     private static async Task<IResult> UnassignPosition(
     AssociationRequest request,
     IEmploymentAssignmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPosition(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class EmploymentAssignmentEndpoints
     private static async Task<IResult> AssignSupervisor(
         AssociationRequest request,
         IEmploymentAssignmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSupervisor(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class EmploymentAssignmentEndpoints
     private static async Task<IResult> UnassignSupervisor(
     AssociationRequest request,
     IEmploymentAssignmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSupervisor(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static EmploymentAssignment mapRequestToEmploymentAssignment( EmploymentAssignmentRequest request ) {
+    private static EmploymentAssignment mapRequestToEmploymentAssignment(EmploymentAssignmentRequest request)
+    {
         var model = new EmploymentAssignment
         {
             Id = request.Id,

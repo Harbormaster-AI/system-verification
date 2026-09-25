@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IPaymentMethodService {
+public interface IPaymentMethodService
+{
 
-    Task Create(PaymentMethod model , CancellationToken cancellationToken);
+    Task Create(PaymentMethod model, CancellationToken cancellationToken);
     Task<bool> Update(PaymentMethod model, CancellationToken cancellationToken);
     Task<PaymentMethod?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<PaymentMethod>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class PaymentMethodService : IPaymentMethodService
 
     public async Task<bool> Update(PaymentMethod model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class PaymentMethodService : IPaymentMethodService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class PaymentMethodService : IPaymentMethodService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class PaymentMethodService : IPaymentMethodService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class PaymentMethodService : IPaymentMethodService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -171,7 +175,8 @@ public class PaymentMethodService : IPaymentMethodService
         return true;
     }
 
-    public async Task<bool> AssignBankAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBankAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -189,7 +194,7 @@ public class PaymentMethodService : IPaymentMethodService
 
             var child = await _serviceResolver.Get<BankAccountService>().Get(childRequest, cancellationToken);
             parent.BankAccount = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -201,7 +206,8 @@ public class PaymentMethodService : IPaymentMethodService
         return true;
     }
 
-    public async Task<bool> UnassignBankAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBankAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -212,7 +218,7 @@ public class PaymentMethodService : IPaymentMethodService
         try
         {
             parent.BankAccount = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

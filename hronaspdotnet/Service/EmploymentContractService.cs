@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IEmploymentContractService {
+public interface IEmploymentContractService
+{
 
-    Task Create(EmploymentContract model , CancellationToken cancellationToken);
+    Task Create(EmploymentContract model, CancellationToken cancellationToken);
     Task<bool> Update(EmploymentContract model, CancellationToken cancellationToken);
     Task<EmploymentContract?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<EmploymentContract>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class EmploymentContractService : IEmploymentContractService
 
     public async Task<bool> Update(EmploymentContract model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -129,7 +131,8 @@ public class EmploymentContractService : IEmploymentContractService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -147,7 +150,7 @@ public class EmploymentContractService : IEmploymentContractService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -159,7 +162,8 @@ public class EmploymentContractService : IEmploymentContractService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -170,7 +174,7 @@ public class EmploymentContractService : IEmploymentContractService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -182,7 +186,8 @@ public class EmploymentContractService : IEmploymentContractService
         return true;
     }
 
-    public async Task<bool> AssignCompensationPackage(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCompensationPackage(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -200,7 +205,7 @@ public class EmploymentContractService : IEmploymentContractService
 
             var child = await _serviceResolver.Get<CompensationPackageService>().Get(childRequest, cancellationToken);
             parent.CompensationPackage = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -212,7 +217,8 @@ public class EmploymentContractService : IEmploymentContractService
         return true;
     }
 
-    public async Task<bool> UnassignCompensationPackage(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCompensationPackage(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -223,7 +229,7 @@ public class EmploymentContractService : IEmploymentContractService
         try
         {
             parent.CompensationPackage = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -235,7 +241,8 @@ public class EmploymentContractService : IEmploymentContractService
         return true;
     }
 
-    public async Task<bool> AssignWorkSchedule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkSchedule(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -253,7 +260,7 @@ public class EmploymentContractService : IEmploymentContractService
 
             var child = await _serviceResolver.Get<WorkScheduleService>().Get(childRequest, cancellationToken);
             parent.WorkSchedule = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -265,7 +272,8 @@ public class EmploymentContractService : IEmploymentContractService
         return true;
     }
 
-    public async Task<bool> UnassignWorkSchedule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkSchedule(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -276,7 +284,7 @@ public class EmploymentContractService : IEmploymentContractService
         try
         {
             parent.WorkSchedule = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -288,7 +296,8 @@ public class EmploymentContractService : IEmploymentContractService
         return true;
     }
 
-    public async Task<bool> AssignLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -306,7 +315,7 @@ public class EmploymentContractService : IEmploymentContractService
 
             var child = await _serviceResolver.Get<LocationService>().Get(childRequest, cancellationToken);
             parent.Location = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -318,7 +327,8 @@ public class EmploymentContractService : IEmploymentContractService
         return true;
     }
 
-    public async Task<bool> UnassignLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -329,7 +339,7 @@ public class EmploymentContractService : IEmploymentContractService
         try
         {
             parent.Location = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -341,7 +351,8 @@ public class EmploymentContractService : IEmploymentContractService
         return true;
     }
 
-    public async Task<bool> AssignPayrollCalendar(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPayrollCalendar(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -359,7 +370,7 @@ public class EmploymentContractService : IEmploymentContractService
 
             var child = await _serviceResolver.Get<PayrollCalendarService>().Get(childRequest, cancellationToken);
             parent.PayrollCalendar = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -371,7 +382,8 @@ public class EmploymentContractService : IEmploymentContractService
         return true;
     }
 
-    public async Task<bool> UnassignPayrollCalendar(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPayrollCalendar(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -382,7 +394,7 @@ public class EmploymentContractService : IEmploymentContractService
         try
         {
             parent.PayrollCalendar = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

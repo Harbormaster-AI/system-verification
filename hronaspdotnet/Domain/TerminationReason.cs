@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum TerminationReason
 {
-    Voluntary=1,Involuntary=2,Retirement=3,Redundancy=4,EndOfContract=5
+    Voluntary = 1, Involuntary = 2, Retirement = 3, Redundancy = 4, EndOfContract = 5
 }
 
 /// <summary>

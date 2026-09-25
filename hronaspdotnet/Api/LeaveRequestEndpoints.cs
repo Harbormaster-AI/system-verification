@@ -22,8 +22,8 @@ public static class LeaveRequestEndpoints
         group.MapPut("/assignLeavePolicy", AssignLeavePolicy);
         group.MapPut("/unassignLeavePolicy", UnassignLeavePolicy);
 
-    group.MapPut("/addToApprovals", AddToApprovals);
-    group.MapPut("/removeFromApprovals", RemoveFromApprovals);
+        group.MapPut("/addToApprovals", AddToApprovals);
+        group.MapPut("/removeFromApprovals", RemoveFromApprovals);
 
 
         return app;
@@ -32,9 +32,10 @@ public static class LeaveRequestEndpoints
     private static async Task<IResult> Create(
         LeaveRequestRequest request,
         ILeaveRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLeaveRequest( request );
+        var model = mapRequestToLeaveRequest(request);
 
         try
         {
@@ -51,9 +52,10 @@ public static class LeaveRequestEndpoints
     private static async Task<IResult> Update(
         LeaveRequestRequest request,
         ILeaveRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLeaveRequest( request );
+        var model = mapRequestToLeaveRequest(request);
 
         try
         {
@@ -70,25 +72,28 @@ public static class LeaveRequestEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ILeaveRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var leaveRequest = await service.Get(identifier, cancellationToken);
-        return leaveRequest is null ? Results.NotFound() : Results.Ok( leaveRequest );
+        return leaveRequest is null ? Results.NotFound() : Results.Ok(leaveRequest);
     }
 
 
     private static async Task<IResult> GetAll(
         ILeaveRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( LeaveRequestResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(LeaveRequestResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ILeaveRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class LeaveRequestEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         ILeaveRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +110,8 @@ public static class LeaveRequestEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     ILeaveRequestService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +119,8 @@ public static class LeaveRequestEndpoints
     private static async Task<IResult> AssignLeavePolicy(
         AssociationRequest request,
         ILeaveRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLeavePolicy(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +128,8 @@ public static class LeaveRequestEndpoints
     private static async Task<IResult> UnassignLeavePolicy(
     AssociationRequest request,
     ILeaveRequestService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLeavePolicy(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class LeaveRequestEndpoints
     private static async Task<IResult> AddToApprovals(
         MultipleAssociationRequest request,
         ILeaveRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToApprovals(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class LeaveRequestEndpoints
     private static async Task<IResult> RemoveFromApprovals(
         MultipleAssociationRequest request,
         ILeaveRequestService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromApprovals(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static LeaveRequest mapRequestToLeaveRequest( LeaveRequestRequest request ) {
+    private static LeaveRequest mapRequestToLeaveRequest(LeaveRequestRequest request)
+    {
         var model = new LeaveRequest
         {
             Id = request.Id,

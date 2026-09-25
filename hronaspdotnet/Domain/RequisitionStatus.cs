@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum RequisitionStatus
 {
-    Draft=1,Open=2,OnHold=3,Closed=4,Cancelled=5
+    Draft = 1, Open = 2, OnHold = 3, Closed = 4, Cancelled = 5
 }
 
 /// <summary>

@@ -27,9 +27,10 @@ public static class WorkShiftEndpoints
     private static async Task<IResult> Create(
         WorkShiftRequest request,
         IWorkShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWorkShift( request );
+        var model = mapRequestToWorkShift(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class WorkShiftEndpoints
     private static async Task<IResult> Update(
         WorkShiftRequest request,
         IWorkShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWorkShift( request );
+        var model = mapRequestToWorkShift(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class WorkShiftEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IWorkShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var workShift = await service.Get(identifier, cancellationToken);
-        return workShift is null ? Results.NotFound() : Results.Ok( workShift );
+        return workShift is null ? Results.NotFound() : Results.Ok(workShift);
     }
 
 
     private static async Task<IResult> GetAll(
         IWorkShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( WorkShiftResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(WorkShiftResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IWorkShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class WorkShiftEndpoints
     private static async Task<IResult> AssignWorkSchedule(
         AssociationRequest request,
         IWorkShiftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkSchedule(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class WorkShiftEndpoints
     private static async Task<IResult> UnassignWorkSchedule(
     AssociationRequest request,
     IWorkShiftService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkSchedule(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static WorkShift mapRequestToWorkShift( WorkShiftRequest request ) {
+    private static WorkShift mapRequestToWorkShift(WorkShiftRequest request)
+    {
         var model = new WorkShift
         {
             Id = request.Id,

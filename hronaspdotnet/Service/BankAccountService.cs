@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IBankAccountService {
+public interface IBankAccountService
+{
 
-    Task Create(BankAccount model , CancellationToken cancellationToken);
+    Task Create(BankAccount model, CancellationToken cancellationToken);
     Task<bool> Update(BankAccount model, CancellationToken cancellationToken);
     Task<BankAccount?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BankAccount>> GetAll(CancellationToken cancellationToken);
@@ -59,7 +60,8 @@ public class BankAccountService : IBankAccountService
 
     public async Task<bool> Update(BankAccount model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {

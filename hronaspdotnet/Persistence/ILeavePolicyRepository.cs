@@ -11,7 +11,7 @@ public interface ILeavePolicyRepository
     Task UpdateAsync(LeavePolicy leavePolicy, CancellationToken cancellationToken);
     Task DeleteAsync(LeavePolicy leavePolicy, CancellationToken cancellationToken);
 
-    Task AddToLeaveRequestsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLeaveRequestsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLeaveRequestsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLeaveRequestsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

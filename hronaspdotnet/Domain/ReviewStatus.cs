@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum ReviewStatus
 {
-    NotStarted=1,InProgress=2,Finalized=3,Acknowledged=4
+    NotStarted = 1, InProgress = 2, Finalized = 3, Acknowledged = 4
 }
 
 /// <summary>

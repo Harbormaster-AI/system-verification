@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IBonusPlanService {
+public interface IBonusPlanService
+{
 
-    Task Create(BonusPlan model , CancellationToken cancellationToken);
+    Task Create(BonusPlan model, CancellationToken cancellationToken);
     Task<bool> Update(BonusPlan model, CancellationToken cancellationToken);
     Task<BonusPlan?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BonusPlan>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class BonusPlanService : IBonusPlanService
 
     public async Task<bool> Update(BonusPlan model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,8 +119,10 @@ public class BonusPlanService : IBonusPlanService
     }
 
 
-    public async Task<bool> AddToCompensationPackages(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCompensationPackages(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BonusPlan",
                 "AddToCompensationPackages",
@@ -126,16 +130,18 @@ public class BonusPlanService : IBonusPlanService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCompensationPackages(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCompensationPackages(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BonusPlan",
                 "RemoveFromCompensationPackages",

@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum InterviewStage
 {
-    PhoneScreen=1,Technical=2,Onsite=3,Panel=4,HR=5,Executive=6
+    PhoneScreen = 1, Technical = 2, Onsite = 3, Panel = 4, HR = 5, Executive = 6
 }
 
 /// <summary>

@@ -31,9 +31,10 @@ public static class TrainingEnrollmentEndpoints
     private static async Task<IResult> Create(
         TrainingEnrollmentRequest request,
         ITrainingEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTrainingEnrollment( request );
+        var model = mapRequestToTrainingEnrollment(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class TrainingEnrollmentEndpoints
     private static async Task<IResult> Update(
         TrainingEnrollmentRequest request,
         ITrainingEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTrainingEnrollment( request );
+        var model = mapRequestToTrainingEnrollment(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class TrainingEnrollmentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITrainingEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var trainingEnrollment = await service.Get(identifier, cancellationToken);
-        return trainingEnrollment is null ? Results.NotFound() : Results.Ok( trainingEnrollment );
+        return trainingEnrollment is null ? Results.NotFound() : Results.Ok(trainingEnrollment);
     }
 
 
     private static async Task<IResult> GetAll(
         ITrainingEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TrainingEnrollmentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TrainingEnrollmentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITrainingEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class TrainingEnrollmentEndpoints
     private static async Task<IResult> AssignCourse(
         AssociationRequest request,
         ITrainingEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCourse(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class TrainingEnrollmentEndpoints
     private static async Task<IResult> UnassignCourse(
     AssociationRequest request,
     ITrainingEnrollmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCourse(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class TrainingEnrollmentEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         ITrainingEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class TrainingEnrollmentEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     ITrainingEnrollmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class TrainingEnrollmentEndpoints
     private static async Task<IResult> AssignInstructor(
         AssociationRequest request,
         ITrainingEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInstructor(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class TrainingEnrollmentEndpoints
     private static async Task<IResult> UnassignInstructor(
     AssociationRequest request,
     ITrainingEnrollmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInstructor(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static TrainingEnrollment mapRequestToTrainingEnrollment( TrainingEnrollmentRequest request ) {
+    private static TrainingEnrollment mapRequestToTrainingEnrollment(TrainingEnrollmentRequest request)
+    {
         var model = new TrainingEnrollment
         {
             Id = request.Id,

@@ -29,9 +29,10 @@ public static class CertificationEndpoints
     private static async Task<IResult> Create(
         CertificationRequest request,
         ICertificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCertification( request );
+        var model = mapRequestToCertification(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class CertificationEndpoints
     private static async Task<IResult> Update(
         CertificationRequest request,
         ICertificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCertification( request );
+        var model = mapRequestToCertification(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class CertificationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICertificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var certification = await service.Get(identifier, cancellationToken);
-        return certification is null ? Results.NotFound() : Results.Ok( certification );
+        return certification is null ? Results.NotFound() : Results.Ok(certification);
     }
 
 
     private static async Task<IResult> GetAll(
         ICertificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CertificationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CertificationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICertificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class CertificationEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         ICertificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class CertificationEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     ICertificationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class CertificationEndpoints
     private static async Task<IResult> AssignCourse(
         AssociationRequest request,
         ICertificationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCourse(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class CertificationEndpoints
     private static async Task<IResult> UnassignCourse(
     AssociationRequest request,
     ICertificationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCourse(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Certification mapRequestToCertification( CertificationRequest request ) {
+    private static Certification mapRequestToCertification(CertificationRequest request)
+    {
         var model = new Certification
         {
             Id = request.Id,

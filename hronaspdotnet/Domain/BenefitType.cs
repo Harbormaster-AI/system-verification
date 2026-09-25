@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum BenefitType
 {
-    Medical=1,Dental=2,Vision=3,LifeInsurance=4,Disability=5,Retirement=6,Wellness=7
+    Medical = 1, Dental = 2, Vision = 3, LifeInsurance = 4, Disability = 5, Retirement = 6, Wellness = 7
 }
 
 /// <summary>

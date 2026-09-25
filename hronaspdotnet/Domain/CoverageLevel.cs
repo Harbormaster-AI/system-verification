@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum CoverageLevel
 {
-    EmployeeOnly=1,EmployeeSpouse=2,EmployeeChildren=3,Family=4
+    EmployeeOnly = 1, EmployeeSpouse = 2, EmployeeChildren = 3, Family = 4
 }
 
 /// <summary>

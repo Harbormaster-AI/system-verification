@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum PositionStatus
 {
-    Open=1,Filled=2,Frozen=3,Closed=4
+    Open = 1, Filled = 2, Frozen = 3, Closed = 4
 }
 
 /// <summary>

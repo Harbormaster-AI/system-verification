@@ -20,11 +20,11 @@ public static class PayrollCalendarEndpoints
         group.MapPut("/assignOrganization", AssignOrganization);
         group.MapPut("/unassignOrganization", UnassignOrganization);
 
-    group.MapPut("/addToPayrollRuns", AddToPayrollRuns);
-    group.MapPut("/removeFromPayrollRuns", RemoveFromPayrollRuns);
+        group.MapPut("/addToPayrollRuns", AddToPayrollRuns);
+        group.MapPut("/removeFromPayrollRuns", RemoveFromPayrollRuns);
 
-    group.MapPut("/addToEmployees", AddToEmployees);
-    group.MapPut("/removeFromEmployees", RemoveFromEmployees);
+        group.MapPut("/addToEmployees", AddToEmployees);
+        group.MapPut("/removeFromEmployees", RemoveFromEmployees);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class PayrollCalendarEndpoints
     private static async Task<IResult> Create(
         PayrollCalendarRequest request,
         IPayrollCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPayrollCalendar( request );
+        var model = mapRequestToPayrollCalendar(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class PayrollCalendarEndpoints
     private static async Task<IResult> Update(
         PayrollCalendarRequest request,
         IPayrollCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPayrollCalendar( request );
+        var model = mapRequestToPayrollCalendar(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class PayrollCalendarEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPayrollCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var payrollCalendar = await service.Get(identifier, cancellationToken);
-        return payrollCalendar is null ? Results.NotFound() : Results.Ok( payrollCalendar );
+        return payrollCalendar is null ? Results.NotFound() : Results.Ok(payrollCalendar);
     }
 
 
     private static async Task<IResult> GetAll(
         IPayrollCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PayrollCalendarResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PayrollCalendarResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPayrollCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class PayrollCalendarEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IPayrollCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class PayrollCalendarEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IPayrollCalendarService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class PayrollCalendarEndpoints
     private static async Task<IResult> AddToPayrollRuns(
         MultipleAssociationRequest request,
         IPayrollCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPayrollRuns(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class PayrollCalendarEndpoints
     private static async Task<IResult> RemoveFromPayrollRuns(
         MultipleAssociationRequest request,
         IPayrollCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPayrollRuns(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToEmployees(
         MultipleAssociationRequest request,
         IPayrollCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToEmployees(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class PayrollCalendarEndpoints
     private static async Task<IResult> RemoveFromEmployees(
         MultipleAssociationRequest request,
         IPayrollCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromEmployees(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static PayrollCalendar mapRequestToPayrollCalendar( PayrollCalendarRequest request ) {
+    private static PayrollCalendar mapRequestToPayrollCalendar(PayrollCalendarRequest request)
+    {
         var model = new PayrollCalendar
         {
             Id = request.Id,

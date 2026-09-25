@@ -31,9 +31,10 @@ public static class BackgroundCheckEndpoints
     private static async Task<IResult> Create(
         BackgroundCheckRequest request,
         IBackgroundCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBackgroundCheck( request );
+        var model = mapRequestToBackgroundCheck(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class BackgroundCheckEndpoints
     private static async Task<IResult> Update(
         BackgroundCheckRequest request,
         IBackgroundCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBackgroundCheck( request );
+        var model = mapRequestToBackgroundCheck(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class BackgroundCheckEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IBackgroundCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var backgroundCheck = await service.Get(identifier, cancellationToken);
-        return backgroundCheck is null ? Results.NotFound() : Results.Ok( backgroundCheck );
+        return backgroundCheck is null ? Results.NotFound() : Results.Ok(backgroundCheck);
     }
 
 
     private static async Task<IResult> GetAll(
         IBackgroundCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( BackgroundCheckResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(BackgroundCheckResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IBackgroundCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class BackgroundCheckEndpoints
     private static async Task<IResult> AssignCandidate(
         AssociationRequest request,
         IBackgroundCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCandidate(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class BackgroundCheckEndpoints
     private static async Task<IResult> UnassignCandidate(
     AssociationRequest request,
     IBackgroundCheckService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCandidate(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class BackgroundCheckEndpoints
     private static async Task<IResult> AssignRequisition(
         AssociationRequest request,
         IBackgroundCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRequisition(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class BackgroundCheckEndpoints
     private static async Task<IResult> UnassignRequisition(
     AssociationRequest request,
     IBackgroundCheckService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRequisition(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class BackgroundCheckEndpoints
     private static async Task<IResult> AssignReport(
         AssociationRequest request,
         IBackgroundCheckService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignReport(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class BackgroundCheckEndpoints
     private static async Task<IResult> UnassignReport(
     AssociationRequest request,
     IBackgroundCheckService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignReport(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static BackgroundCheck mapRequestToBackgroundCheck( BackgroundCheckRequest request ) {
+    private static BackgroundCheck mapRequestToBackgroundCheck(BackgroundCheckRequest request)
+    {
         var model = new BackgroundCheck
         {
             Id = request.Id,

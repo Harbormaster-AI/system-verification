@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum EmploymentType
 {
-    FullTime=1,PartTime=2,Temporary=3,Intern=4,Contractor=5,Seasonal=6
+    FullTime = 1, PartTime = 2, Temporary = 3, Intern = 4, Contractor = 5, Seasonal = 6
 }
 
 /// <summary>

@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface ITrainingCourseService {
+public interface ITrainingCourseService
+{
 
-    Task Create(TrainingCourse model , CancellationToken cancellationToken);
+    Task Create(TrainingCourse model, CancellationToken cancellationToken);
     Task<bool> Update(TrainingCourse model, CancellationToken cancellationToken);
     Task<TrainingCourse?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TrainingCourse>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class TrainingCourseService : ITrainingCourseService
 
     public async Task<bool> Update(TrainingCourse model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,8 +125,10 @@ public class TrainingCourseService : ITrainingCourseService
     }
 
 
-    public async Task<bool> AddToPrerequisites(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPrerequisites(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingCourse",
                 "AddToPrerequisites",
@@ -132,16 +136,18 @@ public class TrainingCourseService : ITrainingCourseService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPrerequisites(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPrerequisites(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingCourse",
                 "RemoveFromPrerequisites",
@@ -157,8 +163,10 @@ public class TrainingCourseService : ITrainingCourseService
         return true;
     }
 
-    public async Task<bool> AddToEnrollments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEnrollments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingCourse",
                 "AddToEnrollments",
@@ -166,16 +174,18 @@ public class TrainingCourseService : ITrainingCourseService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEnrollments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEnrollments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingCourse",
                 "RemoveFromEnrollments",
@@ -191,8 +201,10 @@ public class TrainingCourseService : ITrainingCourseService
         return true;
     }
 
-    public async Task<bool> AddToJobProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToJobProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingCourse",
                 "AddToJobProfiles",
@@ -200,16 +212,18 @@ public class TrainingCourseService : ITrainingCourseService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromJobProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromJobProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingCourse",
                 "RemoveFromJobProfiles",

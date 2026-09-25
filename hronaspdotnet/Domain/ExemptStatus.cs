@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum ExemptStatus
 {
-    Exempt=1,NonExempt=2
+    Exempt = 1, NonExempt = 2
 }
 
 /// <summary>

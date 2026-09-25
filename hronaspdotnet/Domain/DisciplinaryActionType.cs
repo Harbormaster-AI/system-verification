@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum DisciplinaryActionType
 {
-    VerbalWarning=1,WrittenWarning=2,Suspension=3,Termination=4
+    VerbalWarning = 1, WrittenWarning = 2, Suspension = 3, Termination = 4
 }
 
 /// <summary>

@@ -29,9 +29,10 @@ public static class DependentEndpoints
     private static async Task<IResult> Create(
         DependentRequest request,
         IDependentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDependent( request );
+        var model = mapRequestToDependent(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class DependentEndpoints
     private static async Task<IResult> Update(
         DependentRequest request,
         IDependentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDependent( request );
+        var model = mapRequestToDependent(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class DependentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDependentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var dependent = await service.Get(identifier, cancellationToken);
-        return dependent is null ? Results.NotFound() : Results.Ok( dependent );
+        return dependent is null ? Results.NotFound() : Results.Ok(dependent);
     }
 
 
     private static async Task<IResult> GetAll(
         IDependentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DependentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DependentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDependentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class DependentEndpoints
     private static async Task<IResult> AssignBenefitEnrollment(
         AssociationRequest request,
         IDependentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBenefitEnrollment(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class DependentEndpoints
     private static async Task<IResult> UnassignBenefitEnrollment(
     AssociationRequest request,
     IDependentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBenefitEnrollment(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class DependentEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         IDependentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class DependentEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     IDependentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Dependent mapRequestToDependent( DependentRequest request ) {
+    private static Dependent mapRequestToDependent(DependentRequest request)
+    {
         var model = new Dependent
         {
             Id = request.Id,

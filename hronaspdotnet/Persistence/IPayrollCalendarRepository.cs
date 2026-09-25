@@ -11,9 +11,9 @@ public interface IPayrollCalendarRepository
     Task UpdateAsync(PayrollCalendar payrollCalendar, CancellationToken cancellationToken);
     Task DeleteAsync(PayrollCalendar payrollCalendar, CancellationToken cancellationToken);
 
-    Task AddToPayrollRunsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPayrollRunsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToEmployeesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromEmployeesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPayrollRunsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPayrollRunsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToEmployeesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromEmployeesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

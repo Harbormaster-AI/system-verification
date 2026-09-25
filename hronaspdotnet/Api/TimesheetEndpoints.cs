@@ -20,11 +20,11 @@ public static class TimesheetEndpoints
         group.MapPut("/assignEmployee", AssignEmployee);
         group.MapPut("/unassignEmployee", UnassignEmployee);
 
-    group.MapPut("/addToTimeEntries", AddToTimeEntries);
-    group.MapPut("/removeFromTimeEntries", RemoveFromTimeEntries);
+        group.MapPut("/addToTimeEntries", AddToTimeEntries);
+        group.MapPut("/removeFromTimeEntries", RemoveFromTimeEntries);
 
-    group.MapPut("/addToApprovals", AddToApprovals);
-    group.MapPut("/removeFromApprovals", RemoveFromApprovals);
+        group.MapPut("/addToApprovals", AddToApprovals);
+        group.MapPut("/removeFromApprovals", RemoveFromApprovals);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class TimesheetEndpoints
     private static async Task<IResult> Create(
         TimesheetRequest request,
         ITimesheetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTimesheet( request );
+        var model = mapRequestToTimesheet(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class TimesheetEndpoints
     private static async Task<IResult> Update(
         TimesheetRequest request,
         ITimesheetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTimesheet( request );
+        var model = mapRequestToTimesheet(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class TimesheetEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITimesheetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var timesheet = await service.Get(identifier, cancellationToken);
-        return timesheet is null ? Results.NotFound() : Results.Ok( timesheet );
+        return timesheet is null ? Results.NotFound() : Results.Ok(timesheet);
     }
 
 
     private static async Task<IResult> GetAll(
         ITimesheetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TimesheetResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TimesheetResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITimesheetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class TimesheetEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         ITimesheetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class TimesheetEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     ITimesheetService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class TimesheetEndpoints
     private static async Task<IResult> AddToTimeEntries(
         MultipleAssociationRequest request,
         ITimesheetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTimeEntries(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class TimesheetEndpoints
     private static async Task<IResult> RemoveFromTimeEntries(
         MultipleAssociationRequest request,
         ITimesheetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTimeEntries(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToApprovals(
         MultipleAssociationRequest request,
         ITimesheetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToApprovals(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class TimesheetEndpoints
     private static async Task<IResult> RemoveFromApprovals(
         MultipleAssociationRequest request,
         ITimesheetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromApprovals(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Timesheet mapRequestToTimesheet( TimesheetRequest request ) {
+    private static Timesheet mapRequestToTimesheet(TimesheetRequest request)
+    {
         var model = new Timesheet
         {
             Id = request.Id,

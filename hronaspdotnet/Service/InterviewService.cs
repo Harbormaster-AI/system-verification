@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IInterviewService {
+public interface IInterviewService
+{
 
-    Task Create(Interview model , CancellationToken cancellationToken);
+    Task Create(Interview model, CancellationToken cancellationToken);
     Task<bool> Update(Interview model, CancellationToken cancellationToken);
     Task<Interview?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Interview>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class InterviewService : IInterviewService
 
     public async Task<bool> Update(Interview model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class InterviewService : IInterviewService
         return true;
     }
 
-    public async Task<bool> AssignRequisition(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRequisition(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class InterviewService : IInterviewService
 
             var child = await _serviceResolver.Get<JobRequisitionService>().Get(childRequest, cancellationToken);
             parent.Requisition = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class InterviewService : IInterviewService
         return true;
     }
 
-    public async Task<bool> UnassignRequisition(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRequisition(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class InterviewService : IInterviewService
         try
         {
             parent.Requisition = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class InterviewService : IInterviewService
         return true;
     }
 
-    public async Task<bool> AssignCandidate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCandidate(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class InterviewService : IInterviewService
 
             var child = await _serviceResolver.Get<CandidateService>().Get(childRequest, cancellationToken);
             parent.Candidate = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class InterviewService : IInterviewService
         return true;
     }
 
-    public async Task<bool> UnassignCandidate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCandidate(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class InterviewService : IInterviewService
         try
         {
             parent.Candidate = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,8 +235,10 @@ public class InterviewService : IInterviewService
     }
 
 
-    public async Task<bool> AddToInterviewers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInterviewers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Interview",
                 "AddToInterviewers",
@@ -238,16 +246,18 @@ public class InterviewService : IInterviewService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInterviewers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInterviewers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Interview",
                 "RemoveFromInterviewers",

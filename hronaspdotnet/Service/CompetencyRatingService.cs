@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface ICompetencyRatingService {
+public interface ICompetencyRatingService
+{
 
-    Task Create(CompetencyRating model , CancellationToken cancellationToken);
+    Task Create(CompetencyRating model, CancellationToken cancellationToken);
     Task<bool> Update(CompetencyRating model, CancellationToken cancellationToken);
     Task<CompetencyRating?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CompetencyRating>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class CompetencyRatingService : ICompetencyRatingService
 
     public async Task<bool> Update(CompetencyRating model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class CompetencyRatingService : ICompetencyRatingService
         return true;
     }
 
-    public async Task<bool> AssignReview(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignReview(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class CompetencyRatingService : ICompetencyRatingService
 
             var child = await _serviceResolver.Get<PerformanceReviewService>().Get(childRequest, cancellationToken);
             parent.Review = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class CompetencyRatingService : ICompetencyRatingService
         return true;
     }
 
-    public async Task<bool> UnassignReview(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignReview(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class CompetencyRatingService : ICompetencyRatingService
         try
         {
             parent.Review = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -171,7 +175,8 @@ public class CompetencyRatingService : ICompetencyRatingService
         return true;
     }
 
-    public async Task<bool> AssignCompetency(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCompetency(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -189,7 +194,7 @@ public class CompetencyRatingService : ICompetencyRatingService
 
             var child = await _serviceResolver.Get<CompetencyService>().Get(childRequest, cancellationToken);
             parent.Competency = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -201,7 +206,8 @@ public class CompetencyRatingService : ICompetencyRatingService
         return true;
     }
 
-    public async Task<bool> UnassignCompetency(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCompetency(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -212,7 +218,7 @@ public class CompetencyRatingService : ICompetencyRatingService
         try
         {
             parent.Competency = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

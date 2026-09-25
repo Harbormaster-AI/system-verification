@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IEquityGrantService {
+public interface IEquityGrantService
+{
 
-    Task Create(EquityGrant model , CancellationToken cancellationToken);
+    Task Create(EquityGrant model, CancellationToken cancellationToken);
     Task<bool> Update(EquityGrant model, CancellationToken cancellationToken);
     Task<EquityGrant?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<EquityGrant>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class EquityGrantService : IEquityGrantService
 
     public async Task<bool> Update(EquityGrant model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class EquityGrantService : IEquityGrantService
         return true;
     }
 
-    public async Task<bool> AssignCompensationPackage(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCompensationPackage(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class EquityGrantService : IEquityGrantService
 
             var child = await _serviceResolver.Get<CompensationPackageService>().Get(childRequest, cancellationToken);
             parent.CompensationPackage = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class EquityGrantService : IEquityGrantService
         return true;
     }
 
-    public async Task<bool> UnassignCompensationPackage(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCompensationPackage(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class EquityGrantService : IEquityGrantService
         try
         {
             parent.CompensationPackage = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

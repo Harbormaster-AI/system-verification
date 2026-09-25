@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum GoalStatus
 {
-    NotStarted=1,InProgress=2,Completed=3,Deferred=4,Cancelled=5
+    NotStarted = 1, InProgress = 2, Completed = 3, Deferred = 4, Cancelled = 5
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum PayrollItemType
 {
-    Earning=1,Deduction=2,Tax=3,Benefit=4
+    Earning = 1, Deduction = 2, Tax = 3, Benefit = 4
 }
 
 /// <summary>

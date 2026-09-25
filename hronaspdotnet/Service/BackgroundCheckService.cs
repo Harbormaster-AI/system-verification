@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IBackgroundCheckService {
+public interface IBackgroundCheckService
+{
 
-    Task Create(BackgroundCheck model , CancellationToken cancellationToken);
+    Task Create(BackgroundCheck model, CancellationToken cancellationToken);
     Task<bool> Update(BackgroundCheck model, CancellationToken cancellationToken);
     Task<BackgroundCheck?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BackgroundCheck>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class BackgroundCheckService : IBackgroundCheckService
 
     public async Task<bool> Update(BackgroundCheck model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class BackgroundCheckService : IBackgroundCheckService
         return true;
     }
 
-    public async Task<bool> AssignCandidate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCandidate(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class BackgroundCheckService : IBackgroundCheckService
 
             var child = await _serviceResolver.Get<CandidateService>().Get(childRequest, cancellationToken);
             parent.Candidate = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class BackgroundCheckService : IBackgroundCheckService
         return true;
     }
 
-    public async Task<bool> UnassignCandidate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCandidate(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class BackgroundCheckService : IBackgroundCheckService
         try
         {
             parent.Candidate = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class BackgroundCheckService : IBackgroundCheckService
         return true;
     }
 
-    public async Task<bool> AssignRequisition(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRequisition(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class BackgroundCheckService : IBackgroundCheckService
 
             var child = await _serviceResolver.Get<JobRequisitionService>().Get(childRequest, cancellationToken);
             parent.Requisition = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class BackgroundCheckService : IBackgroundCheckService
         return true;
     }
 
-    public async Task<bool> UnassignRequisition(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRequisition(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class BackgroundCheckService : IBackgroundCheckService
         try
         {
             parent.Requisition = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class BackgroundCheckService : IBackgroundCheckService
         return true;
     }
 
-    public async Task<bool> AssignReport(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignReport(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class BackgroundCheckService : IBackgroundCheckService
 
             var child = await _serviceResolver.Get<DocumentService>().Get(childRequest, cancellationToken);
             parent.Report = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class BackgroundCheckService : IBackgroundCheckService
         return true;
     }
 
-    public async Task<bool> UnassignReport(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignReport(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class BackgroundCheckService : IBackgroundCheckService
         try
         {
             parent.Report = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -33,9 +33,10 @@ public static class OfferEndpoints
     private static async Task<IResult> Create(
         OfferRequest request,
         IOfferService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOffer( request );
+        var model = mapRequestToOffer(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class OfferEndpoints
     private static async Task<IResult> Update(
         OfferRequest request,
         IOfferService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOffer( request );
+        var model = mapRequestToOffer(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class OfferEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IOfferService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var offer = await service.Get(identifier, cancellationToken);
-        return offer is null ? Results.NotFound() : Results.Ok( offer );
+        return offer is null ? Results.NotFound() : Results.Ok(offer);
     }
 
 
     private static async Task<IResult> GetAll(
         IOfferService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( OfferResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(OfferResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IOfferService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class OfferEndpoints
     private static async Task<IResult> AssignRequisition(
         AssociationRequest request,
         IOfferService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRequisition(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class OfferEndpoints
     private static async Task<IResult> UnassignRequisition(
     AssociationRequest request,
     IOfferService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRequisition(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class OfferEndpoints
     private static async Task<IResult> AssignCandidate(
         AssociationRequest request,
         IOfferService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCandidate(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class OfferEndpoints
     private static async Task<IResult> UnassignCandidate(
     AssociationRequest request,
     IOfferService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCandidate(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class OfferEndpoints
     private static async Task<IResult> AssignApprovedBy(
         AssociationRequest request,
         IOfferService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignApprovedBy(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class OfferEndpoints
     private static async Task<IResult> UnassignApprovedBy(
     AssociationRequest request,
     IOfferService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignApprovedBy(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class OfferEndpoints
     private static async Task<IResult> AssignContract(
         AssociationRequest request,
         IOfferService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignContract(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class OfferEndpoints
     private static async Task<IResult> UnassignContract(
     AssociationRequest request,
     IOfferService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignContract(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Offer mapRequestToOffer( OfferRequest request ) {
+    private static Offer mapRequestToOffer(OfferRequest request)
+    {
         var model = new Offer
         {
             Id = request.Id,

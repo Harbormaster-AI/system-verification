@@ -29,9 +29,10 @@ public static class TerminationEndpoints
     private static async Task<IResult> Create(
         TerminationRequest request,
         ITerminationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTermination( request );
+        var model = mapRequestToTermination(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class TerminationEndpoints
     private static async Task<IResult> Update(
         TerminationRequest request,
         ITerminationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTermination( request );
+        var model = mapRequestToTermination(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class TerminationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITerminationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var termination = await service.Get(identifier, cancellationToken);
-        return termination is null ? Results.NotFound() : Results.Ok( termination );
+        return termination is null ? Results.NotFound() : Results.Ok(termination);
     }
 
 
     private static async Task<IResult> GetAll(
         ITerminationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TerminationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TerminationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITerminationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class TerminationEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         ITerminationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class TerminationEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     ITerminationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class TerminationEndpoints
     private static async Task<IResult> AssignAssignment(
         AssociationRequest request,
         ITerminationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAssignment(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class TerminationEndpoints
     private static async Task<IResult> UnassignAssignment(
     AssociationRequest request,
     ITerminationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAssignment(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Termination mapRequestToTermination( TerminationRequest request ) {
+    private static Termination mapRequestToTermination(TerminationRequest request)
+    {
         var model = new Termination
         {
             Id = request.Id,

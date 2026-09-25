@@ -18,23 +18,23 @@ public static class OrganizationEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToDepartments", AddToDepartments);
-    group.MapPut("/removeFromDepartments", RemoveFromDepartments);
+        group.MapPut("/addToDepartments", AddToDepartments);
+        group.MapPut("/removeFromDepartments", RemoveFromDepartments);
 
-    group.MapPut("/addToLocations", AddToLocations);
-    group.MapPut("/removeFromLocations", RemoveFromLocations);
+        group.MapPut("/addToLocations", AddToLocations);
+        group.MapPut("/removeFromLocations", RemoveFromLocations);
 
-    group.MapPut("/addToJobFamilies", AddToJobFamilies);
-    group.MapPut("/removeFromJobFamilies", RemoveFromJobFamilies);
+        group.MapPut("/addToJobFamilies", AddToJobFamilies);
+        group.MapPut("/removeFromJobFamilies", RemoveFromJobFamilies);
 
-    group.MapPut("/addToBenefitPlans", AddToBenefitPlans);
-    group.MapPut("/removeFromBenefitPlans", RemoveFromBenefitPlans);
+        group.MapPut("/addToBenefitPlans", AddToBenefitPlans);
+        group.MapPut("/removeFromBenefitPlans", RemoveFromBenefitPlans);
 
-    group.MapPut("/addToCostCenters", AddToCostCenters);
-    group.MapPut("/removeFromCostCenters", RemoveFromCostCenters);
+        group.MapPut("/addToCostCenters", AddToCostCenters);
+        group.MapPut("/removeFromCostCenters", RemoveFromCostCenters);
 
-    group.MapPut("/addToPayrollCalendars", AddToPayrollCalendars);
-    group.MapPut("/removeFromPayrollCalendars", RemoveFromPayrollCalendars);
+        group.MapPut("/addToPayrollCalendars", AddToPayrollCalendars);
+        group.MapPut("/removeFromPayrollCalendars", RemoveFromPayrollCalendars);
 
 
         return app;
@@ -43,9 +43,10 @@ public static class OrganizationEndpoints
     private static async Task<IResult> Create(
         OrganizationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOrganization( request );
+        var model = mapRequestToOrganization(request);
 
         try
         {
@@ -62,9 +63,10 @@ public static class OrganizationEndpoints
     private static async Task<IResult> Update(
         OrganizationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOrganization( request );
+        var model = mapRequestToOrganization(request);
 
         try
         {
@@ -81,25 +83,28 @@ public static class OrganizationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var organization = await service.Get(identifier, cancellationToken);
-        return organization is null ? Results.NotFound() : Results.Ok( organization );
+        return organization is null ? Results.NotFound() : Results.Ok(organization);
     }
 
 
     private static async Task<IResult> GetAll(
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( OrganizationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(OrganizationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +113,8 @@ public static class OrganizationEndpoints
     private static async Task<IResult> AddToDepartments(
         MultipleAssociationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDepartments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -116,14 +122,16 @@ public static class OrganizationEndpoints
     private static async Task<IResult> RemoveFromDepartments(
         MultipleAssociationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDepartments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToLocations(
         MultipleAssociationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLocations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -131,14 +139,16 @@ public static class OrganizationEndpoints
     private static async Task<IResult> RemoveFromLocations(
         MultipleAssociationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLocations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToJobFamilies(
         MultipleAssociationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToJobFamilies(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -146,14 +156,16 @@ public static class OrganizationEndpoints
     private static async Task<IResult> RemoveFromJobFamilies(
         MultipleAssociationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromJobFamilies(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToBenefitPlans(
         MultipleAssociationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToBenefitPlans(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -161,14 +173,16 @@ public static class OrganizationEndpoints
     private static async Task<IResult> RemoveFromBenefitPlans(
         MultipleAssociationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromBenefitPlans(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCostCenters(
         MultipleAssociationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCostCenters(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -176,14 +190,16 @@ public static class OrganizationEndpoints
     private static async Task<IResult> RemoveFromCostCenters(
         MultipleAssociationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCostCenters(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPayrollCalendars(
         MultipleAssociationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPayrollCalendars(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -191,11 +207,13 @@ public static class OrganizationEndpoints
     private static async Task<IResult> RemoveFromPayrollCalendars(
         MultipleAssociationRequest request,
         IOrganizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPayrollCalendars(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Organization mapRequestToOrganization( OrganizationRequest request ) {
+    private static Organization mapRequestToOrganization(OrganizationRequest request)
+    {
         var model = new Organization
         {
             Id = request.Id,

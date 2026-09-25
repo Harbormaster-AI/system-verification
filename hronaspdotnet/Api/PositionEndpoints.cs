@@ -28,11 +28,11 @@ public static class PositionEndpoints
         group.MapPut("/assignManagerPosition", AssignManagerPosition);
         group.MapPut("/unassignManagerPosition", UnassignManagerPosition);
 
-    group.MapPut("/addToDirectReports", AddToDirectReports);
-    group.MapPut("/removeFromDirectReports", RemoveFromDirectReports);
+        group.MapPut("/addToDirectReports", AddToDirectReports);
+        group.MapPut("/removeFromDirectReports", RemoveFromDirectReports);
 
-    group.MapPut("/addToAssignments", AddToAssignments);
-    group.MapPut("/removeFromAssignments", RemoveFromAssignments);
+        group.MapPut("/addToAssignments", AddToAssignments);
+        group.MapPut("/removeFromAssignments", RemoveFromAssignments);
 
 
         return app;
@@ -41,9 +41,10 @@ public static class PositionEndpoints
     private static async Task<IResult> Create(
         PositionRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPosition( request );
+        var model = mapRequestToPosition(request);
 
         try
         {
@@ -60,9 +61,10 @@ public static class PositionEndpoints
     private static async Task<IResult> Update(
         PositionRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPosition( request );
+        var model = mapRequestToPosition(request);
 
         try
         {
@@ -79,25 +81,28 @@ public static class PositionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var position = await service.Get(identifier, cancellationToken);
-        return position is null ? Results.NotFound() : Results.Ok( position );
+        return position is null ? Results.NotFound() : Results.Ok(position);
     }
 
 
     private static async Task<IResult> GetAll(
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PositionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PositionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +110,8 @@ public static class PositionEndpoints
     private static async Task<IResult> AssignDepartment(
         AssociationRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDepartment(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +119,8 @@ public static class PositionEndpoints
     private static async Task<IResult> UnassignDepartment(
     AssociationRequest request,
     IPositionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDepartment(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +128,8 @@ public static class PositionEndpoints
     private static async Task<IResult> AssignJobProfile(
         AssociationRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignJobProfile(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +137,8 @@ public static class PositionEndpoints
     private static async Task<IResult> UnassignJobProfile(
     AssociationRequest request,
     IPositionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignJobProfile(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +146,8 @@ public static class PositionEndpoints
     private static async Task<IResult> AssignCostCenter(
         AssociationRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCostCenter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +155,8 @@ public static class PositionEndpoints
     private static async Task<IResult> UnassignCostCenter(
     AssociationRequest request,
     IPositionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCostCenter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,7 +164,8 @@ public static class PositionEndpoints
     private static async Task<IResult> AssignLocation(
         AssociationRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLocation(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -161,7 +173,8 @@ public static class PositionEndpoints
     private static async Task<IResult> UnassignLocation(
     AssociationRequest request,
     IPositionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLocation(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -169,7 +182,8 @@ public static class PositionEndpoints
     private static async Task<IResult> AssignManagerPosition(
         AssociationRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignManagerPosition(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -177,7 +191,8 @@ public static class PositionEndpoints
     private static async Task<IResult> UnassignManagerPosition(
     AssociationRequest request,
     IPositionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignManagerPosition(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -186,7 +201,8 @@ public static class PositionEndpoints
     private static async Task<IResult> AddToDirectReports(
         MultipleAssociationRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDirectReports(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -194,14 +210,16 @@ public static class PositionEndpoints
     private static async Task<IResult> RemoveFromDirectReports(
         MultipleAssociationRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDirectReports(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToAssignments(
         MultipleAssociationRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAssignments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -209,11 +227,13 @@ public static class PositionEndpoints
     private static async Task<IResult> RemoveFromAssignments(
         MultipleAssociationRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAssignments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Position mapRequestToPosition( PositionRequest request ) {
+    private static Position mapRequestToPosition(PositionRequest request)
+    {
         var model = new Position
         {
             Id = request.Id,

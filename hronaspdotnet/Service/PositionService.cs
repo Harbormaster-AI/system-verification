@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IPositionService {
+public interface IPositionService
+{
 
-    Task Create(Position model , CancellationToken cancellationToken);
+    Task Create(Position model, CancellationToken cancellationToken);
     Task<bool> Update(Position model, CancellationToken cancellationToken);
     Task<Position?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Position>> GetAll(CancellationToken cancellationToken);
@@ -73,7 +74,8 @@ public class PositionService : IPositionService
 
     public async Task<bool> Update(Position model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -130,7 +132,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> AssignDepartment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDepartment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -148,7 +151,7 @@ public class PositionService : IPositionService
 
             var child = await _serviceResolver.Get<DepartmentService>().Get(childRequest, cancellationToken);
             parent.Department = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -160,7 +163,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> UnassignDepartment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDepartment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -171,7 +175,7 @@ public class PositionService : IPositionService
         try
         {
             parent.Department = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -183,7 +187,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> AssignJobProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignJobProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -201,7 +206,7 @@ public class PositionService : IPositionService
 
             var child = await _serviceResolver.Get<JobProfileService>().Get(childRequest, cancellationToken);
             parent.JobProfile = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -213,7 +218,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> UnassignJobProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignJobProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -224,7 +230,7 @@ public class PositionService : IPositionService
         try
         {
             parent.JobProfile = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -236,7 +242,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> AssignCostCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCostCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -254,7 +261,7 @@ public class PositionService : IPositionService
 
             var child = await _serviceResolver.Get<CostCenterService>().Get(childRequest, cancellationToken);
             parent.CostCenter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -266,7 +273,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> UnassignCostCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCostCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -277,7 +285,7 @@ public class PositionService : IPositionService
         try
         {
             parent.CostCenter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -289,7 +297,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> AssignLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -307,7 +316,7 @@ public class PositionService : IPositionService
 
             var child = await _serviceResolver.Get<LocationService>().Get(childRequest, cancellationToken);
             parent.Location = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -319,7 +328,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> UnassignLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -330,7 +340,7 @@ public class PositionService : IPositionService
         try
         {
             parent.Location = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -342,7 +352,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> AssignManagerPosition(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignManagerPosition(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -360,7 +371,7 @@ public class PositionService : IPositionService
 
             var child = await _serviceResolver.Get<PositionService>().Get(childRequest, cancellationToken);
             parent.ManagerPosition = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -372,7 +383,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> UnassignManagerPosition(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignManagerPosition(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -383,7 +395,7 @@ public class PositionService : IPositionService
         try
         {
             parent.ManagerPosition = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -396,8 +408,10 @@ public class PositionService : IPositionService
     }
 
 
-    public async Task<bool> AddToDirectReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDirectReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Position",
                 "AddToDirectReports",
@@ -405,16 +419,18 @@ public class PositionService : IPositionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDirectReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDirectReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Position",
                 "RemoveFromDirectReports",
@@ -430,8 +446,10 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> AddToAssignments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAssignments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Position",
                 "AddToAssignments",
@@ -439,16 +457,18 @@ public class PositionService : IPositionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAssignments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAssignments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Position",
                 "RemoveFromAssignments",

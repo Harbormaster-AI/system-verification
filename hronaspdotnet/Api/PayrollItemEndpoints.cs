@@ -29,9 +29,10 @@ public static class PayrollItemEndpoints
     private static async Task<IResult> Create(
         PayrollItemRequest request,
         IPayrollItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPayrollItem( request );
+        var model = mapRequestToPayrollItem(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class PayrollItemEndpoints
     private static async Task<IResult> Update(
         PayrollItemRequest request,
         IPayrollItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPayrollItem( request );
+        var model = mapRequestToPayrollItem(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class PayrollItemEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPayrollItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var payrollItem = await service.Get(identifier, cancellationToken);
-        return payrollItem is null ? Results.NotFound() : Results.Ok( payrollItem );
+        return payrollItem is null ? Results.NotFound() : Results.Ok(payrollItem);
     }
 
 
     private static async Task<IResult> GetAll(
         IPayrollItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PayrollItemResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PayrollItemResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPayrollItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class PayrollItemEndpoints
     private static async Task<IResult> AssignPayrollRun(
         AssociationRequest request,
         IPayrollItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPayrollRun(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class PayrollItemEndpoints
     private static async Task<IResult> UnassignPayrollRun(
     AssociationRequest request,
     IPayrollItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPayrollRun(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class PayrollItemEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         IPayrollItemService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class PayrollItemEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     IPayrollItemService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static PayrollItem mapRequestToPayrollItem( PayrollItemRequest request ) {
+    private static PayrollItem mapRequestToPayrollItem(PayrollItemRequest request)
+    {
         var model = new PayrollItem
         {
             Id = request.Id,

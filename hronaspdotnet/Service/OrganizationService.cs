@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IOrganizationService {
+public interface IOrganizationService
+{
 
-    Task Create(Organization model , CancellationToken cancellationToken);
+    Task Create(Organization model, CancellationToken cancellationToken);
     Task<bool> Update(Organization model, CancellationToken cancellationToken);
     Task<Organization?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Organization>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class OrganizationService : IOrganizationService
 
     public async Task<bool> Update(Organization model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -129,8 +131,10 @@ public class OrganizationService : IOrganizationService
     }
 
 
-    public async Task<bool> AddToDepartments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDepartments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Organization",
                 "AddToDepartments",
@@ -138,16 +142,18 @@ public class OrganizationService : IOrganizationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDepartments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDepartments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Organization",
                 "RemoveFromDepartments",
@@ -163,8 +169,10 @@ public class OrganizationService : IOrganizationService
         return true;
     }
 
-    public async Task<bool> AddToLocations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLocations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Organization",
                 "AddToLocations",
@@ -172,16 +180,18 @@ public class OrganizationService : IOrganizationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLocations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLocations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Organization",
                 "RemoveFromLocations",
@@ -197,8 +207,10 @@ public class OrganizationService : IOrganizationService
         return true;
     }
 
-    public async Task<bool> AddToJobFamilies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToJobFamilies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Organization",
                 "AddToJobFamilies",
@@ -206,16 +218,18 @@ public class OrganizationService : IOrganizationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromJobFamilies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromJobFamilies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Organization",
                 "RemoveFromJobFamilies",
@@ -231,8 +245,10 @@ public class OrganizationService : IOrganizationService
         return true;
     }
 
-    public async Task<bool> AddToBenefitPlans(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToBenefitPlans(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Organization",
                 "AddToBenefitPlans",
@@ -240,16 +256,18 @@ public class OrganizationService : IOrganizationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromBenefitPlans(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromBenefitPlans(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Organization",
                 "RemoveFromBenefitPlans",
@@ -265,8 +283,10 @@ public class OrganizationService : IOrganizationService
         return true;
     }
 
-    public async Task<bool> AddToCostCenters(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCostCenters(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Organization",
                 "AddToCostCenters",
@@ -274,16 +294,18 @@ public class OrganizationService : IOrganizationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCostCenters(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCostCenters(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Organization",
                 "RemoveFromCostCenters",
@@ -299,8 +321,10 @@ public class OrganizationService : IOrganizationService
         return true;
     }
 
-    public async Task<bool> AddToPayrollCalendars(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPayrollCalendars(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Organization",
                 "AddToPayrollCalendars",
@@ -308,16 +332,18 @@ public class OrganizationService : IOrganizationService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPayrollCalendars(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPayrollCalendars(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Organization",
                 "RemoveFromPayrollCalendars",

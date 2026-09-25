@@ -29,9 +29,10 @@ public static class ScheduleExceptionEndpoints
     private static async Task<IResult> Create(
         ScheduleExceptionRequest request,
         IScheduleExceptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToScheduleException( request );
+        var model = mapRequestToScheduleException(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class ScheduleExceptionEndpoints
     private static async Task<IResult> Update(
         ScheduleExceptionRequest request,
         IScheduleExceptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToScheduleException( request );
+        var model = mapRequestToScheduleException(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class ScheduleExceptionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IScheduleExceptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var scheduleException = await service.Get(identifier, cancellationToken);
-        return scheduleException is null ? Results.NotFound() : Results.Ok( scheduleException );
+        return scheduleException is null ? Results.NotFound() : Results.Ok(scheduleException);
     }
 
 
     private static async Task<IResult> GetAll(
         IScheduleExceptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ScheduleExceptionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ScheduleExceptionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IScheduleExceptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class ScheduleExceptionEndpoints
     private static async Task<IResult> AssignWorkSchedule(
         AssociationRequest request,
         IScheduleExceptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkSchedule(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class ScheduleExceptionEndpoints
     private static async Task<IResult> UnassignWorkSchedule(
     AssociationRequest request,
     IScheduleExceptionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkSchedule(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class ScheduleExceptionEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         IScheduleExceptionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class ScheduleExceptionEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     IScheduleExceptionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ScheduleException mapRequestToScheduleException( ScheduleExceptionRequest request ) {
+    private static ScheduleException mapRequestToScheduleException(ScheduleExceptionRequest request)
+    {
         var model = new ScheduleException
         {
             Id = request.Id,

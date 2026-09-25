@@ -11,9 +11,9 @@ public interface ICompetencyRepository
     Task UpdateAsync(Competency competency, CancellationToken cancellationToken);
     Task DeleteAsync(Competency competency, CancellationToken cancellationToken);
 
-    Task AddToJobProfilesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromJobProfilesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCompetencyRatingsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCompetencyRatingsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToJobProfilesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromJobProfilesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCompetencyRatingsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCompetencyRatingsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

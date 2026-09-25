@@ -29,9 +29,10 @@ public static class PolicyAcknowledgementEndpoints
     private static async Task<IResult> Create(
         PolicyAcknowledgementRequest request,
         IPolicyAcknowledgementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPolicyAcknowledgement( request );
+        var model = mapRequestToPolicyAcknowledgement(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class PolicyAcknowledgementEndpoints
     private static async Task<IResult> Update(
         PolicyAcknowledgementRequest request,
         IPolicyAcknowledgementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPolicyAcknowledgement( request );
+        var model = mapRequestToPolicyAcknowledgement(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class PolicyAcknowledgementEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPolicyAcknowledgementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var policyAcknowledgement = await service.Get(identifier, cancellationToken);
-        return policyAcknowledgement is null ? Results.NotFound() : Results.Ok( policyAcknowledgement );
+        return policyAcknowledgement is null ? Results.NotFound() : Results.Ok(policyAcknowledgement);
     }
 
 
     private static async Task<IResult> GetAll(
         IPolicyAcknowledgementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PolicyAcknowledgementResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PolicyAcknowledgementResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPolicyAcknowledgementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class PolicyAcknowledgementEndpoints
     private static async Task<IResult> AssignPolicy(
         AssociationRequest request,
         IPolicyAcknowledgementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPolicy(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class PolicyAcknowledgementEndpoints
     private static async Task<IResult> UnassignPolicy(
     AssociationRequest request,
     IPolicyAcknowledgementService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPolicy(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class PolicyAcknowledgementEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         IPolicyAcknowledgementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class PolicyAcknowledgementEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     IPolicyAcknowledgementService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static PolicyAcknowledgement mapRequestToPolicyAcknowledgement( PolicyAcknowledgementRequest request ) {
+    private static PolicyAcknowledgement mapRequestToPolicyAcknowledgement(PolicyAcknowledgementRequest request)
+    {
         var model = new PolicyAcknowledgement
         {
             Id = request.Id,

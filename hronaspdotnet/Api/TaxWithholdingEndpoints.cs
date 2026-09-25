@@ -27,9 +27,10 @@ public static class TaxWithholdingEndpoints
     private static async Task<IResult> Create(
         TaxWithholdingRequest request,
         ITaxWithholdingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTaxWithholding( request );
+        var model = mapRequestToTaxWithholding(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class TaxWithholdingEndpoints
     private static async Task<IResult> Update(
         TaxWithholdingRequest request,
         ITaxWithholdingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTaxWithholding( request );
+        var model = mapRequestToTaxWithholding(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class TaxWithholdingEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITaxWithholdingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var taxWithholding = await service.Get(identifier, cancellationToken);
-        return taxWithholding is null ? Results.NotFound() : Results.Ok( taxWithholding );
+        return taxWithholding is null ? Results.NotFound() : Results.Ok(taxWithholding);
     }
 
 
     private static async Task<IResult> GetAll(
         ITaxWithholdingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TaxWithholdingResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TaxWithholdingResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITaxWithholdingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class TaxWithholdingEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         ITaxWithholdingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class TaxWithholdingEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     ITaxWithholdingService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static TaxWithholding mapRequestToTaxWithholding( TaxWithholdingRequest request ) {
+    private static TaxWithholding mapRequestToTaxWithholding(TaxWithholdingRequest request)
+    {
         var model = new TaxWithholding
         {
             Id = request.Id,

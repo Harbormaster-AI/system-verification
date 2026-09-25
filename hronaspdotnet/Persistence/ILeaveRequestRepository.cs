@@ -11,7 +11,7 @@ public interface ILeaveRequestRepository
     Task UpdateAsync(LeaveRequest leaveRequest, CancellationToken cancellationToken);
     Task DeleteAsync(LeaveRequest leaveRequest, CancellationToken cancellationToken);
 
-    Task AddToApprovalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromApprovalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToApprovalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromApprovalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IWorkScheduleService {
+public interface IWorkScheduleService
+{
 
-    Task Create(WorkSchedule model , CancellationToken cancellationToken);
+    Task Create(WorkSchedule model, CancellationToken cancellationToken);
     Task<bool> Update(WorkSchedule model, CancellationToken cancellationToken);
     Task<WorkSchedule?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<WorkSchedule>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class WorkScheduleService : IWorkScheduleService
 
     public async Task<bool> Update(WorkSchedule model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,8 +124,10 @@ public class WorkScheduleService : IWorkScheduleService
     }
 
 
-    public async Task<bool> AddToContracts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToContracts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "WorkSchedule",
                 "AddToContracts",
@@ -131,16 +135,18 @@ public class WorkScheduleService : IWorkScheduleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromContracts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromContracts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "WorkSchedule",
                 "RemoveFromContracts",
@@ -156,8 +162,10 @@ public class WorkScheduleService : IWorkScheduleService
         return true;
     }
 
-    public async Task<bool> AddToShifts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToShifts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "WorkSchedule",
                 "AddToShifts",
@@ -165,16 +173,18 @@ public class WorkScheduleService : IWorkScheduleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromShifts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromShifts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "WorkSchedule",
                 "RemoveFromShifts",
@@ -190,8 +200,10 @@ public class WorkScheduleService : IWorkScheduleService
         return true;
     }
 
-    public async Task<bool> AddToExceptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToExceptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "WorkSchedule",
                 "AddToExceptions",
@@ -199,16 +211,18 @@ public class WorkScheduleService : IWorkScheduleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromExceptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromExceptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "WorkSchedule",
                 "RemoveFromExceptions",

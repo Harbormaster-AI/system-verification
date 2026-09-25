@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum InterviewResult
 {
-    Pending=1,Proceed=2,Reject=3,OfferRecommended=4
+    Pending = 1, Proceed = 2, Reject = 3, OfferRecommended = 4
 }
 
 /// <summary>

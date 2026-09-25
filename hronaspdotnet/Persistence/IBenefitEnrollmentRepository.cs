@@ -11,7 +11,7 @@ public interface IBenefitEnrollmentRepository
     Task UpdateAsync(BenefitEnrollment benefitEnrollment, CancellationToken cancellationToken);
     Task DeleteAsync(BenefitEnrollment benefitEnrollment, CancellationToken cancellationToken);
 
-    Task AddToDependentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDependentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDependentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDependentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

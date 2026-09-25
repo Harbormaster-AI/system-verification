@@ -31,9 +31,10 @@ public static class TimeEntryEndpoints
     private static async Task<IResult> Create(
         TimeEntryRequest request,
         ITimeEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTimeEntry( request );
+        var model = mapRequestToTimeEntry(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class TimeEntryEndpoints
     private static async Task<IResult> Update(
         TimeEntryRequest request,
         ITimeEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTimeEntry( request );
+        var model = mapRequestToTimeEntry(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class TimeEntryEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITimeEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var timeEntry = await service.Get(identifier, cancellationToken);
-        return timeEntry is null ? Results.NotFound() : Results.Ok( timeEntry );
+        return timeEntry is null ? Results.NotFound() : Results.Ok(timeEntry);
     }
 
 
     private static async Task<IResult> GetAll(
         ITimeEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TimeEntryResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TimeEntryResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITimeEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class TimeEntryEndpoints
     private static async Task<IResult> AssignTimesheet(
         AssociationRequest request,
         ITimeEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTimesheet(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class TimeEntryEndpoints
     private static async Task<IResult> UnassignTimesheet(
     AssociationRequest request,
     ITimeEntryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTimesheet(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class TimeEntryEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         ITimeEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class TimeEntryEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     ITimeEntryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class TimeEntryEndpoints
     private static async Task<IResult> AssignCostCenter(
         AssociationRequest request,
         ITimeEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCostCenter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class TimeEntryEndpoints
     private static async Task<IResult> UnassignCostCenter(
     AssociationRequest request,
     ITimeEntryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCostCenter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static TimeEntry mapRequestToTimeEntry( TimeEntryRequest request ) {
+    private static TimeEntry mapRequestToTimeEntry(TimeEntryRequest request)
+    {
         var model = new TimeEntry
         {
             Id = request.Id,

@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum DocumentType
 {
-    Resume=1,CoverLetter=2,ID=3,Certification=4,Contract=5,Policy=6,Other=7
+    Resume = 1, CoverLetter = 2, ID = 3, Certification = 4, Contract = 5, Policy = 6, Other = 7
 }
 
 /// <summary>

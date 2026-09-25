@@ -18,14 +18,14 @@ public static class TrainingCourseEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToPrerequisites", AddToPrerequisites);
-    group.MapPut("/removeFromPrerequisites", RemoveFromPrerequisites);
+        group.MapPut("/addToPrerequisites", AddToPrerequisites);
+        group.MapPut("/removeFromPrerequisites", RemoveFromPrerequisites);
 
-    group.MapPut("/addToEnrollments", AddToEnrollments);
-    group.MapPut("/removeFromEnrollments", RemoveFromEnrollments);
+        group.MapPut("/addToEnrollments", AddToEnrollments);
+        group.MapPut("/removeFromEnrollments", RemoveFromEnrollments);
 
-    group.MapPut("/addToJobProfiles", AddToJobProfiles);
-    group.MapPut("/removeFromJobProfiles", RemoveFromJobProfiles);
+        group.MapPut("/addToJobProfiles", AddToJobProfiles);
+        group.MapPut("/removeFromJobProfiles", RemoveFromJobProfiles);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class TrainingCourseEndpoints
     private static async Task<IResult> Create(
         TrainingCourseRequest request,
         ITrainingCourseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTrainingCourse( request );
+        var model = mapRequestToTrainingCourse(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class TrainingCourseEndpoints
     private static async Task<IResult> Update(
         TrainingCourseRequest request,
         ITrainingCourseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTrainingCourse( request );
+        var model = mapRequestToTrainingCourse(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class TrainingCourseEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITrainingCourseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var trainingCourse = await service.Get(identifier, cancellationToken);
-        return trainingCourse is null ? Results.NotFound() : Results.Ok( trainingCourse );
+        return trainingCourse is null ? Results.NotFound() : Results.Ok(trainingCourse);
     }
 
 
     private static async Task<IResult> GetAll(
         ITrainingCourseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TrainingCourseResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TrainingCourseResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITrainingCourseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class TrainingCourseEndpoints
     private static async Task<IResult> AddToPrerequisites(
         MultipleAssociationRequest request,
         ITrainingCourseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPrerequisites(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -107,14 +113,16 @@ public static class TrainingCourseEndpoints
     private static async Task<IResult> RemoveFromPrerequisites(
         MultipleAssociationRequest request,
         ITrainingCourseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPrerequisites(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToEnrollments(
         MultipleAssociationRequest request,
         ITrainingCourseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToEnrollments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class TrainingCourseEndpoints
     private static async Task<IResult> RemoveFromEnrollments(
         MultipleAssociationRequest request,
         ITrainingCourseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromEnrollments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToJobProfiles(
         MultipleAssociationRequest request,
         ITrainingCourseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToJobProfiles(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class TrainingCourseEndpoints
     private static async Task<IResult> RemoveFromJobProfiles(
         MultipleAssociationRequest request,
         ITrainingCourseService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromJobProfiles(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static TrainingCourse mapRequestToTrainingCourse( TrainingCourseRequest request ) {
+    private static TrainingCourse mapRequestToTrainingCourse(TrainingCourseRequest request)
+    {
         var model = new TrainingCourse
         {
             Id = request.Id,

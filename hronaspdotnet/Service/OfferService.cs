@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IOfferService {
+public interface IOfferService
+{
 
-    Task Create(Offer model , CancellationToken cancellationToken);
+    Task Create(Offer model, CancellationToken cancellationToken);
     Task<bool> Update(Offer model, CancellationToken cancellationToken);
     Task<Offer?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Offer>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class OfferService : IOfferService
 
     public async Task<bool> Update(Offer model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class OfferService : IOfferService
         return true;
     }
 
-    public async Task<bool> AssignRequisition(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRequisition(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class OfferService : IOfferService
 
             var child = await _serviceResolver.Get<JobRequisitionService>().Get(childRequest, cancellationToken);
             parent.Requisition = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class OfferService : IOfferService
         return true;
     }
 
-    public async Task<bool> UnassignRequisition(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRequisition(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class OfferService : IOfferService
         try
         {
             parent.Requisition = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class OfferService : IOfferService
         return true;
     }
 
-    public async Task<bool> AssignCandidate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCandidate(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class OfferService : IOfferService
 
             var child = await _serviceResolver.Get<CandidateService>().Get(childRequest, cancellationToken);
             parent.Candidate = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class OfferService : IOfferService
         return true;
     }
 
-    public async Task<bool> UnassignCandidate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCandidate(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class OfferService : IOfferService
         try
         {
             parent.Candidate = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,7 +237,8 @@ public class OfferService : IOfferService
         return true;
     }
 
-    public async Task<bool> AssignApprovedBy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignApprovedBy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -249,7 +256,7 @@ public class OfferService : IOfferService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.ApprovedBy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -261,7 +268,8 @@ public class OfferService : IOfferService
         return true;
     }
 
-    public async Task<bool> UnassignApprovedBy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignApprovedBy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -272,7 +280,7 @@ public class OfferService : IOfferService
         try
         {
             parent.ApprovedBy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,7 +292,8 @@ public class OfferService : IOfferService
         return true;
     }
 
-    public async Task<bool> AssignContract(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignContract(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -302,7 +311,7 @@ public class OfferService : IOfferService
 
             var child = await _serviceResolver.Get<EmploymentContractService>().Get(childRequest, cancellationToken);
             parent.Contract = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -314,7 +323,8 @@ public class OfferService : IOfferService
         return true;
     }
 
-    public async Task<bool> UnassignContract(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignContract(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -325,7 +335,7 @@ public class OfferService : IOfferService
         try
         {
             parent.Contract = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IDocumentService {
+public interface IDocumentService
+{
 
-    Task Create(Document model , CancellationToken cancellationToken);
+    Task Create(Document model, CancellationToken cancellationToken);
     Task<bool> Update(Document model, CancellationToken cancellationToken);
     Task<Document?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Document>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class DocumentService : IDocumentService
 
     public async Task<bool> Update(Document model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class DocumentService : IDocumentService
         return true;
     }
 
-    public async Task<bool> AssignCandidate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCandidate(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class DocumentService : IDocumentService
 
             var child = await _serviceResolver.Get<CandidateService>().Get(childRequest, cancellationToken);
             parent.Candidate = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class DocumentService : IDocumentService
         return true;
     }
 
-    public async Task<bool> UnassignCandidate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCandidate(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class DocumentService : IDocumentService
         try
         {
             parent.Candidate = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class DocumentService : IDocumentService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class DocumentService : IDocumentService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class DocumentService : IDocumentService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class DocumentService : IDocumentService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

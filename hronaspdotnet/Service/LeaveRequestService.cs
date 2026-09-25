@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface ILeaveRequestService {
+public interface ILeaveRequestService
+{
 
-    Task Create(LeaveRequest model , CancellationToken cancellationToken);
+    Task Create(LeaveRequest model, CancellationToken cancellationToken);
     Task<bool> Update(LeaveRequest model, CancellationToken cancellationToken);
     Task<LeaveRequest?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<LeaveRequest>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class LeaveRequestService : ILeaveRequestService
 
     public async Task<bool> Update(LeaveRequest model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class LeaveRequestService : ILeaveRequestService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class LeaveRequestService : ILeaveRequestService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class LeaveRequestService : ILeaveRequestService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class LeaveRequestService : ILeaveRequestService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class LeaveRequestService : ILeaveRequestService
         return true;
     }
 
-    public async Task<bool> AssignLeavePolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLeavePolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class LeaveRequestService : ILeaveRequestService
 
             var child = await _serviceResolver.Get<LeavePolicyService>().Get(childRequest, cancellationToken);
             parent.LeavePolicy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class LeaveRequestService : ILeaveRequestService
         return true;
     }
 
-    public async Task<bool> UnassignLeavePolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLeavePolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class LeaveRequestService : ILeaveRequestService
         try
         {
             parent.LeavePolicy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,8 +237,10 @@ public class LeaveRequestService : ILeaveRequestService
     }
 
 
-    public async Task<bool> AddToApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LeaveRequest",
                 "AddToApprovals",
@@ -240,16 +248,18 @@ public class LeaveRequestService : ILeaveRequestService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LeaveRequest",
                 "RemoveFromApprovals",

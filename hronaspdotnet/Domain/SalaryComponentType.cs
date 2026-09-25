@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum SalaryComponentType
 {
-    BaseSalary=1,Allowance=2,OvertimeRate=3,Commission=4,ShiftDifferential=5
+    BaseSalary = 1, Allowance = 2, OvertimeRate = 3, Commission = 4, ShiftDifferential = 5
 }
 
 /// <summary>

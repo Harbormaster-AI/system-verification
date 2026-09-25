@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface ITerminationService {
+public interface ITerminationService
+{
 
-    Task Create(Termination model , CancellationToken cancellationToken);
+    Task Create(Termination model, CancellationToken cancellationToken);
     Task<bool> Update(Termination model, CancellationToken cancellationToken);
     Task<Termination?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Termination>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class TerminationService : ITerminationService
 
     public async Task<bool> Update(Termination model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class TerminationService : ITerminationService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class TerminationService : ITerminationService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class TerminationService : ITerminationService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class TerminationService : ITerminationService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class TerminationService : ITerminationService
         return true;
     }
 
-    public async Task<bool> AssignAssignment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAssignment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class TerminationService : ITerminationService
 
             var child = await _serviceResolver.Get<EmploymentAssignmentService>().Get(childRequest, cancellationToken);
             parent.Assignment = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class TerminationService : ITerminationService
         return true;
     }
 
-    public async Task<bool> UnassignAssignment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAssignment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class TerminationService : ITerminationService
         try
         {
             parent.Assignment = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

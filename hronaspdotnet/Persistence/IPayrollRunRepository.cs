@@ -11,7 +11,7 @@ public interface IPayrollRunRepository
     Task UpdateAsync(PayrollRun payrollRun, CancellationToken cancellationToken);
     Task DeleteAsync(PayrollRun payrollRun, CancellationToken cancellationToken);
 
-    Task AddToPayrollItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPayrollItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPayrollItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPayrollItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -11,7 +11,7 @@ public interface IInterviewRepository
     Task UpdateAsync(Interview interview, CancellationToken cancellationToken);
     Task DeleteAsync(Interview interview, CancellationToken cancellationToken);
 
-    Task AddToInterviewersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInterviewersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInterviewersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInterviewersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

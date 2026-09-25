@@ -11,7 +11,7 @@ public interface IWorkAuthorizationRepository
     Task UpdateAsync(WorkAuthorization workAuthorization, CancellationToken cancellationToken);
     Task DeleteAsync(WorkAuthorization workAuthorization, CancellationToken cancellationToken);
 
-    Task AddToDocumentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDocumentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDocumentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDocumentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -27,9 +27,10 @@ public static class EquityGrantEndpoints
     private static async Task<IResult> Create(
         EquityGrantRequest request,
         IEquityGrantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEquityGrant( request );
+        var model = mapRequestToEquityGrant(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class EquityGrantEndpoints
     private static async Task<IResult> Update(
         EquityGrantRequest request,
         IEquityGrantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEquityGrant( request );
+        var model = mapRequestToEquityGrant(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class EquityGrantEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IEquityGrantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var equityGrant = await service.Get(identifier, cancellationToken);
-        return equityGrant is null ? Results.NotFound() : Results.Ok( equityGrant );
+        return equityGrant is null ? Results.NotFound() : Results.Ok(equityGrant);
     }
 
 
     private static async Task<IResult> GetAll(
         IEquityGrantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( EquityGrantResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(EquityGrantResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IEquityGrantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class EquityGrantEndpoints
     private static async Task<IResult> AssignCompensationPackage(
         AssociationRequest request,
         IEquityGrantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCompensationPackage(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class EquityGrantEndpoints
     private static async Task<IResult> UnassignCompensationPackage(
     AssociationRequest request,
     IEquityGrantService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCompensationPackage(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static EquityGrant mapRequestToEquityGrant( EquityGrantRequest request ) {
+    private static EquityGrant mapRequestToEquityGrant(EquityGrantRequest request)
+    {
         var model = new EquityGrant
         {
             Id = request.Id,

@@ -20,8 +20,8 @@ public static class PolicyEndpoints
         group.MapPut("/assignOrganization", AssignOrganization);
         group.MapPut("/unassignOrganization", UnassignOrganization);
 
-    group.MapPut("/addToAcknowledgements", AddToAcknowledgements);
-    group.MapPut("/removeFromAcknowledgements", RemoveFromAcknowledgements);
+        group.MapPut("/addToAcknowledgements", AddToAcknowledgements);
+        group.MapPut("/removeFromAcknowledgements", RemoveFromAcknowledgements);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class PolicyEndpoints
     private static async Task<IResult> Create(
         PolicyRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPolicy( request );
+        var model = mapRequestToPolicy(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class PolicyEndpoints
     private static async Task<IResult> Update(
         PolicyRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPolicy( request );
+        var model = mapRequestToPolicy(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class PolicyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var policy = await service.Get(identifier, cancellationToken);
-        return policy is null ? Results.NotFound() : Results.Ok( policy );
+        return policy is null ? Results.NotFound() : Results.Ok(policy);
     }
 
 
     private static async Task<IResult> GetAll(
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PolicyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PolicyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class PolicyEndpoints
     private static async Task<IResult> AssignOrganization(
         AssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrganization(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class PolicyEndpoints
     private static async Task<IResult> UnassignOrganization(
     AssociationRequest request,
     IPolicyService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrganization(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class PolicyEndpoints
     private static async Task<IResult> AddToAcknowledgements(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAcknowledgements(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class PolicyEndpoints
     private static async Task<IResult> RemoveFromAcknowledgements(
         MultipleAssociationRequest request,
         IPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAcknowledgements(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Policy mapRequestToPolicy( PolicyRequest request ) {
+    private static Policy mapRequestToPolicy(PolicyRequest request)
+    {
         var model = new Policy
         {
             Id = request.Id,

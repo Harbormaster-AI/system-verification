@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum ScheduleType
 {
-    Fixed=1,Flexible=2,Rotating=3
+    Fixed = 1, Flexible = 2, Rotating = 3
 }
 
 /// <summary>

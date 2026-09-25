@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface ICompensationPackageService {
+public interface ICompensationPackageService
+{
 
-    Task Create(CompensationPackage model , CancellationToken cancellationToken);
+    Task Create(CompensationPackage model, CancellationToken cancellationToken);
     Task<bool> Update(CompensationPackage model, CancellationToken cancellationToken);
     Task<CompensationPackage?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CompensationPackage>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class CompensationPackageService : ICompensationPackageService
 
     public async Task<bool> Update(CompensationPackage model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class CompensationPackageService : ICompensationPackageService
         return true;
     }
 
-    public async Task<bool> AssignContract(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignContract(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class CompensationPackageService : ICompensationPackageService
 
             var child = await _serviceResolver.Get<EmploymentContractService>().Get(childRequest, cancellationToken);
             parent.Contract = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class CompensationPackageService : ICompensationPackageService
         return true;
     }
 
-    public async Task<bool> UnassignContract(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignContract(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class CompensationPackageService : ICompensationPackageService
         try
         {
             parent.Contract = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,8 +181,10 @@ public class CompensationPackageService : ICompensationPackageService
     }
 
 
-    public async Task<bool> AddToSalaryComponents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSalaryComponents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CompensationPackage",
                 "AddToSalaryComponents",
@@ -186,16 +192,18 @@ public class CompensationPackageService : ICompensationPackageService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSalaryComponents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSalaryComponents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CompensationPackage",
                 "RemoveFromSalaryComponents",
@@ -211,8 +219,10 @@ public class CompensationPackageService : ICompensationPackageService
         return true;
     }
 
-    public async Task<bool> AddToBonusPlans(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToBonusPlans(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CompensationPackage",
                 "AddToBonusPlans",
@@ -220,16 +230,18 @@ public class CompensationPackageService : ICompensationPackageService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromBonusPlans(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromBonusPlans(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CompensationPackage",
                 "RemoveFromBonusPlans",
@@ -245,8 +257,10 @@ public class CompensationPackageService : ICompensationPackageService
         return true;
     }
 
-    public async Task<bool> AddToEquityGrants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEquityGrants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CompensationPackage",
                 "AddToEquityGrants",
@@ -254,16 +268,18 @@ public class CompensationPackageService : ICompensationPackageService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEquityGrants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEquityGrants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CompensationPackage",
                 "RemoveFromEquityGrants",

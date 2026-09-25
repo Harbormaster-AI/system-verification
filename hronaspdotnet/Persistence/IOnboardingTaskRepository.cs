@@ -11,7 +11,7 @@ public interface IOnboardingTaskRepository
     Task UpdateAsync(OnboardingTask onboardingTask, CancellationToken cancellationToken);
     Task DeleteAsync(OnboardingTask onboardingTask, CancellationToken cancellationToken);
 
-    Task AddToDependenciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDependenciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDependenciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDependenciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -25,9 +25,10 @@ public static class BankAccountEndpoints
     private static async Task<IResult> Create(
         BankAccountRequest request,
         IBankAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBankAccount( request );
+        var model = mapRequestToBankAccount(request);
 
         try
         {
@@ -44,9 +45,10 @@ public static class BankAccountEndpoints
     private static async Task<IResult> Update(
         BankAccountRequest request,
         IBankAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBankAccount( request );
+        var model = mapRequestToBankAccount(request);
 
         try
         {
@@ -63,31 +65,35 @@ public static class BankAccountEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IBankAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var bankAccount = await service.Get(identifier, cancellationToken);
-        return bankAccount is null ? Results.NotFound() : Results.Ok( bankAccount );
+        return bankAccount is null ? Results.NotFound() : Results.Ok(bankAccount);
     }
 
 
     private static async Task<IResult> GetAll(
         IBankAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( BankAccountResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(BankAccountResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IBankAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static BankAccount mapRequestToBankAccount( BankAccountRequest request ) {
+    private static BankAccount mapRequestToBankAccount(BankAccountRequest request)
+    {
         var model = new BankAccount
         {
             Id = request.Id,

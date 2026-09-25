@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IOnboardingTaskService {
+public interface IOnboardingTaskService
+{
 
-    Task Create(OnboardingTask model , CancellationToken cancellationToken);
+    Task Create(OnboardingTask model, CancellationToken cancellationToken);
     Task<bool> Update(OnboardingTask model, CancellationToken cancellationToken);
     Task<OnboardingTask?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<OnboardingTask>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class OnboardingTaskService : IOnboardingTaskService
 
     public async Task<bool> Update(OnboardingTask model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class OnboardingTaskService : IOnboardingTaskService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class OnboardingTaskService : IOnboardingTaskService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class OnboardingTaskService : IOnboardingTaskService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class OnboardingTaskService : IOnboardingTaskService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class OnboardingTaskService : IOnboardingTaskService
         return true;
     }
 
-    public async Task<bool> AssignAssignedTo(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAssignedTo(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class OnboardingTaskService : IOnboardingTaskService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.AssignedTo = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class OnboardingTaskService : IOnboardingTaskService
         return true;
     }
 
-    public async Task<bool> UnassignAssignedTo(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAssignedTo(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class OnboardingTaskService : IOnboardingTaskService
         try
         {
             parent.AssignedTo = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,7 +236,8 @@ public class OnboardingTaskService : IOnboardingTaskService
         return true;
     }
 
-    public async Task<bool> AssignRelatedOffer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRelatedOffer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -248,7 +255,7 @@ public class OnboardingTaskService : IOnboardingTaskService
 
             var child = await _serviceResolver.Get<OfferService>().Get(childRequest, cancellationToken);
             parent.RelatedOffer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -260,7 +267,8 @@ public class OnboardingTaskService : IOnboardingTaskService
         return true;
     }
 
-    public async Task<bool> UnassignRelatedOffer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRelatedOffer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -271,7 +279,7 @@ public class OnboardingTaskService : IOnboardingTaskService
         try
         {
             parent.RelatedOffer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,8 +292,10 @@ public class OnboardingTaskService : IOnboardingTaskService
     }
 
 
-    public async Task<bool> AddToDependencies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDependencies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "OnboardingTask",
                 "AddToDependencies",
@@ -293,16 +303,18 @@ public class OnboardingTaskService : IOnboardingTaskService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDependencies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDependencies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "OnboardingTask",
                 "RemoveFromDependencies",

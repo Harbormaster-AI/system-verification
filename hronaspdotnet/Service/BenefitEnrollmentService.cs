@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IBenefitEnrollmentService {
+public interface IBenefitEnrollmentService
+{
 
-    Task Create(BenefitEnrollment model , CancellationToken cancellationToken);
+    Task Create(BenefitEnrollment model, CancellationToken cancellationToken);
     Task<bool> Update(BenefitEnrollment model, CancellationToken cancellationToken);
     Task<BenefitEnrollment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BenefitEnrollment>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class BenefitEnrollmentService : IBenefitEnrollmentService
 
     public async Task<bool> Update(BenefitEnrollment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class BenefitEnrollmentService : IBenefitEnrollmentService
         return true;
     }
 
-    public async Task<bool> AssignBenefitPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBenefitPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class BenefitEnrollmentService : IBenefitEnrollmentService
 
             var child = await _serviceResolver.Get<BenefitPlanService>().Get(childRequest, cancellationToken);
             parent.BenefitPlan = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class BenefitEnrollmentService : IBenefitEnrollmentService
         return true;
     }
 
-    public async Task<bool> UnassignBenefitPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBenefitPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class BenefitEnrollmentService : IBenefitEnrollmentService
         try
         {
             parent.BenefitPlan = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,7 +180,8 @@ public class BenefitEnrollmentService : IBenefitEnrollmentService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -194,7 +199,7 @@ public class BenefitEnrollmentService : IBenefitEnrollmentService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -206,7 +211,8 @@ public class BenefitEnrollmentService : IBenefitEnrollmentService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -217,7 +223,7 @@ public class BenefitEnrollmentService : IBenefitEnrollmentService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,8 +236,10 @@ public class BenefitEnrollmentService : IBenefitEnrollmentService
     }
 
 
-    public async Task<bool> AddToDependents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDependents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BenefitEnrollment",
                 "AddToDependents",
@@ -239,16 +247,18 @@ public class BenefitEnrollmentService : IBenefitEnrollmentService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDependents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDependents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BenefitEnrollment",
                 "RemoveFromDependents",

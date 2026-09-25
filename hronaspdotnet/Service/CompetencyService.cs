@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface ICompetencyService {
+public interface ICompetencyService
+{
 
-    Task Create(Competency model , CancellationToken cancellationToken);
+    Task Create(Competency model, CancellationToken cancellationToken);
     Task<bool> Update(Competency model, CancellationToken cancellationToken);
     Task<Competency?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Competency>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class CompetencyService : ICompetencyService
 
     public async Task<bool> Update(Competency model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,8 +121,10 @@ public class CompetencyService : ICompetencyService
     }
 
 
-    public async Task<bool> AddToJobProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToJobProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Competency",
                 "AddToJobProfiles",
@@ -128,16 +132,18 @@ public class CompetencyService : ICompetencyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromJobProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromJobProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Competency",
                 "RemoveFromJobProfiles",
@@ -153,8 +159,10 @@ public class CompetencyService : ICompetencyService
         return true;
     }
 
-    public async Task<bool> AddToCompetencyRatings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCompetencyRatings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Competency",
                 "AddToCompetencyRatings",
@@ -162,16 +170,18 @@ public class CompetencyService : ICompetencyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCompetencyRatings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCompetencyRatings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Competency",
                 "RemoveFromCompetencyRatings",

@@ -22,8 +22,8 @@ public static class JobApplicationEndpoints
         group.MapPut("/assignRequisition", AssignRequisition);
         group.MapPut("/unassignRequisition", UnassignRequisition);
 
-    group.MapPut("/addToScreenings", AddToScreenings);
-    group.MapPut("/removeFromScreenings", RemoveFromScreenings);
+        group.MapPut("/addToScreenings", AddToScreenings);
+        group.MapPut("/removeFromScreenings", RemoveFromScreenings);
 
 
         return app;
@@ -32,9 +32,10 @@ public static class JobApplicationEndpoints
     private static async Task<IResult> Create(
         JobApplicationRequest request,
         IJobApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToJobApplication( request );
+        var model = mapRequestToJobApplication(request);
 
         try
         {
@@ -51,9 +52,10 @@ public static class JobApplicationEndpoints
     private static async Task<IResult> Update(
         JobApplicationRequest request,
         IJobApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToJobApplication( request );
+        var model = mapRequestToJobApplication(request);
 
         try
         {
@@ -70,25 +72,28 @@ public static class JobApplicationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IJobApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var jobApplication = await service.Get(identifier, cancellationToken);
-        return jobApplication is null ? Results.NotFound() : Results.Ok( jobApplication );
+        return jobApplication is null ? Results.NotFound() : Results.Ok(jobApplication);
     }
 
 
     private static async Task<IResult> GetAll(
         IJobApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( JobApplicationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(JobApplicationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IJobApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class JobApplicationEndpoints
     private static async Task<IResult> AssignCandidate(
         AssociationRequest request,
         IJobApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCandidate(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +110,8 @@ public static class JobApplicationEndpoints
     private static async Task<IResult> UnassignCandidate(
     AssociationRequest request,
     IJobApplicationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCandidate(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +119,8 @@ public static class JobApplicationEndpoints
     private static async Task<IResult> AssignRequisition(
         AssociationRequest request,
         IJobApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRequisition(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +128,8 @@ public static class JobApplicationEndpoints
     private static async Task<IResult> UnassignRequisition(
     AssociationRequest request,
     IJobApplicationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRequisition(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class JobApplicationEndpoints
     private static async Task<IResult> AddToScreenings(
         MultipleAssociationRequest request,
         IJobApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToScreenings(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class JobApplicationEndpoints
     private static async Task<IResult> RemoveFromScreenings(
         MultipleAssociationRequest request,
         IJobApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromScreenings(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static JobApplication mapRequestToJobApplication( JobApplicationRequest request ) {
+    private static JobApplication mapRequestToJobApplication(JobApplicationRequest request)
+    {
         var model = new JobApplication
         {
             Id = request.Id,

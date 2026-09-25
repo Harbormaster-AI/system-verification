@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum BenefitEnrollmentStatus
 {
-    Pending=1,Active=2,Waived=3,Cancelled=4,Terminated=5
+    Pending = 1, Active = 2, Waived = 3, Cancelled = 4, Terminated = 5
 }
 
 /// <summary>

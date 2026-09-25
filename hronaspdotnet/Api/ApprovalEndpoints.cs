@@ -31,9 +31,10 @@ public static class ApprovalEndpoints
     private static async Task<IResult> Create(
         ApprovalRequest request,
         IApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToApproval( request );
+        var model = mapRequestToApproval(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class ApprovalEndpoints
     private static async Task<IResult> Update(
         ApprovalRequest request,
         IApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToApproval( request );
+        var model = mapRequestToApproval(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class ApprovalEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var approval = await service.Get(identifier, cancellationToken);
-        return approval is null ? Results.NotFound() : Results.Ok( approval );
+        return approval is null ? Results.NotFound() : Results.Ok(approval);
     }
 
 
     private static async Task<IResult> GetAll(
         IApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ApprovalResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ApprovalResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class ApprovalEndpoints
     private static async Task<IResult> AssignApprover(
         AssociationRequest request,
         IApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignApprover(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class ApprovalEndpoints
     private static async Task<IResult> UnassignApprover(
     AssociationRequest request,
     IApprovalService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignApprover(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ApprovalEndpoints
     private static async Task<IResult> AssignTimesheet(
         AssociationRequest request,
         IApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTimesheet(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class ApprovalEndpoints
     private static async Task<IResult> UnassignTimesheet(
     AssociationRequest request,
     IApprovalService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTimesheet(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class ApprovalEndpoints
     private static async Task<IResult> AssignLeaveRequest(
         AssociationRequest request,
         IApprovalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLeaveRequest(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class ApprovalEndpoints
     private static async Task<IResult> UnassignLeaveRequest(
     AssociationRequest request,
     IApprovalService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLeaveRequest(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Approval mapRequestToApproval( ApprovalRequest request ) {
+    private static Approval mapRequestToApproval(ApprovalRequest request)
+    {
         var model = new Approval
         {
             Id = request.Id,

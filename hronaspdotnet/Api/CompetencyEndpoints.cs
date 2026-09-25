@@ -18,11 +18,11 @@ public static class CompetencyEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToJobProfiles", AddToJobProfiles);
-    group.MapPut("/removeFromJobProfiles", RemoveFromJobProfiles);
+        group.MapPut("/addToJobProfiles", AddToJobProfiles);
+        group.MapPut("/removeFromJobProfiles", RemoveFromJobProfiles);
 
-    group.MapPut("/addToCompetencyRatings", AddToCompetencyRatings);
-    group.MapPut("/removeFromCompetencyRatings", RemoveFromCompetencyRatings);
+        group.MapPut("/addToCompetencyRatings", AddToCompetencyRatings);
+        group.MapPut("/removeFromCompetencyRatings", RemoveFromCompetencyRatings);
 
 
         return app;
@@ -31,9 +31,10 @@ public static class CompetencyEndpoints
     private static async Task<IResult> Create(
         CompetencyRequest request,
         ICompetencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCompetency( request );
+        var model = mapRequestToCompetency(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class CompetencyEndpoints
     private static async Task<IResult> Update(
         CompetencyRequest request,
         ICompetencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCompetency( request );
+        var model = mapRequestToCompetency(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class CompetencyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICompetencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var competency = await service.Get(identifier, cancellationToken);
-        return competency is null ? Results.NotFound() : Results.Ok( competency );
+        return competency is null ? Results.NotFound() : Results.Ok(competency);
     }
 
 
     private static async Task<IResult> GetAll(
         ICompetencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CompetencyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CompetencyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICompetencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class CompetencyEndpoints
     private static async Task<IResult> AddToJobProfiles(
         MultipleAssociationRequest request,
         ICompetencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToJobProfiles(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -104,14 +110,16 @@ public static class CompetencyEndpoints
     private static async Task<IResult> RemoveFromJobProfiles(
         MultipleAssociationRequest request,
         ICompetencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromJobProfiles(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCompetencyRatings(
         MultipleAssociationRequest request,
         ICompetencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCompetencyRatings(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class CompetencyEndpoints
     private static async Task<IResult> RemoveFromCompetencyRatings(
         MultipleAssociationRequest request,
         ICompetencyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCompetencyRatings(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Competency mapRequestToCompetency( CompetencyRequest request ) {
+    private static Competency mapRequestToCompetency(CompetencyRequest request)
+    {
         var model = new Competency
         {
             Id = request.Id,

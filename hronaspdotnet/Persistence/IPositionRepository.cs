@@ -11,9 +11,9 @@ public interface IPositionRepository
     Task UpdateAsync(Position position, CancellationToken cancellationToken);
     Task DeleteAsync(Position position, CancellationToken cancellationToken);
 
-    Task AddToDirectReportsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDirectReportsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToAssignmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAssignmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDirectReportsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDirectReportsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAssignmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAssignmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

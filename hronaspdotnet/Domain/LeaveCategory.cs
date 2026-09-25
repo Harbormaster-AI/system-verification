@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum LeaveCategory
 {
-    Vacation=1,Sick=2,Parental=3,Bereavement=4,Unpaid=5,JuryDuty=6
+    Vacation = 1, Sick = 2, Parental = 3, Bereavement = 4, Unpaid = 5, JuryDuty = 6
 }
 
 /// <summary>

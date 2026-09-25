@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IApprovalService {
+public interface IApprovalService
+{
 
-    Task Create(Approval model , CancellationToken cancellationToken);
+    Task Create(Approval model, CancellationToken cancellationToken);
     Task<bool> Update(Approval model, CancellationToken cancellationToken);
     Task<Approval?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Approval>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ApprovalService : IApprovalService
 
     public async Task<bool> Update(Approval model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class ApprovalService : IApprovalService
         return true;
     }
 
-    public async Task<bool> AssignApprover(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignApprover(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class ApprovalService : IApprovalService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Approver = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class ApprovalService : IApprovalService
         return true;
     }
 
-    public async Task<bool> UnassignApprover(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignApprover(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class ApprovalService : IApprovalService
         try
         {
             parent.Approver = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class ApprovalService : IApprovalService
         return true;
     }
 
-    public async Task<bool> AssignTimesheet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTimesheet(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class ApprovalService : IApprovalService
 
             var child = await _serviceResolver.Get<TimesheetService>().Get(childRequest, cancellationToken);
             parent.Timesheet = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class ApprovalService : IApprovalService
         return true;
     }
 
-    public async Task<bool> UnassignTimesheet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTimesheet(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class ApprovalService : IApprovalService
         try
         {
             parent.Timesheet = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -227,7 +233,8 @@ public class ApprovalService : IApprovalService
         return true;
     }
 
-    public async Task<bool> AssignLeaveRequest(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLeaveRequest(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -245,7 +252,7 @@ public class ApprovalService : IApprovalService
 
             var child = await _serviceResolver.Get<LeaveRequestService>().Get(childRequest, cancellationToken);
             parent.LeaveRequest = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -257,7 +264,8 @@ public class ApprovalService : IApprovalService
         return true;
     }
 
-    public async Task<bool> UnassignLeaveRequest(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLeaveRequest(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -268,7 +276,7 @@ public class ApprovalService : IApprovalService
         try
         {
             parent.LeaveRequest = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

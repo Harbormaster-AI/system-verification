@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum BackgroundCheckStatus
 {
-    Ordered=1,InProgress=2,Clear=3,Adverse=4,Cancelled=5
+    Ordered = 1, InProgress = 2, Clear = 3, Adverse = 4, Cancelled = 5
 }
 
 /// <summary>

@@ -11,9 +11,9 @@ public interface IPerformanceCycleRepository
     Task UpdateAsync(PerformanceCycle performanceCycle, CancellationToken cancellationToken);
     Task DeleteAsync(PerformanceCycle performanceCycle, CancellationToken cancellationToken);
 
-    Task AddToReviewsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromReviewsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToGoalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromGoalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToReviewsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromReviewsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToGoalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromGoalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface ITrainingEnrollmentService {
+public interface ITrainingEnrollmentService
+{
 
-    Task Create(TrainingEnrollment model , CancellationToken cancellationToken);
+    Task Create(TrainingEnrollment model, CancellationToken cancellationToken);
     Task<bool> Update(TrainingEnrollment model, CancellationToken cancellationToken);
     Task<TrainingEnrollment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TrainingEnrollment>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
 
     public async Task<bool> Update(TrainingEnrollment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
         return true;
     }
 
-    public async Task<bool> AssignCourse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCourse(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
 
             var child = await _serviceResolver.Get<TrainingCourseService>().Get(childRequest, cancellationToken);
             parent.Course = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
         return true;
     }
 
-    public async Task<bool> UnassignCourse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCourse(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
         try
         {
             parent.Course = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
         return true;
     }
 
-    public async Task<bool> AssignInstructor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInstructor(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Instructor = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
         return true;
     }
 
-    public async Task<bool> UnassignInstructor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInstructor(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class TrainingEnrollmentService : ITrainingEnrollmentService
         try
         {
             parent.Instructor = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

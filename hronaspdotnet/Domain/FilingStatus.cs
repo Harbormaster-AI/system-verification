@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum FilingStatus
 {
-    Single=1,MarriedFilingJointly=2,MarriedFilingSeparately=3,HeadOfHousehold=4,QualifyingWidowEr=5
+    Single = 1, MarriedFilingJointly = 2, MarriedFilingSeparately = 3, HeadOfHousehold = 4, QualifyingWidowEr = 5
 }
 
 /// <summary>

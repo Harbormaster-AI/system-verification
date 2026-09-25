@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IPayrollRunService {
+public interface IPayrollRunService
+{
 
-    Task Create(PayrollRun model , CancellationToken cancellationToken);
+    Task Create(PayrollRun model, CancellationToken cancellationToken);
     Task<bool> Update(PayrollRun model, CancellationToken cancellationToken);
     Task<PayrollRun?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<PayrollRun>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class PayrollRunService : IPayrollRunService
 
     public async Task<bool> Update(PayrollRun model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class PayrollRunService : IPayrollRunService
         return true;
     }
 
-    public async Task<bool> AssignPayrollCalendar(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPayrollCalendar(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class PayrollRunService : IPayrollRunService
 
             var child = await _serviceResolver.Get<PayrollCalendarService>().Get(childRequest, cancellationToken);
             parent.PayrollCalendar = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class PayrollRunService : IPayrollRunService
         return true;
     }
 
-    public async Task<bool> UnassignPayrollCalendar(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPayrollCalendar(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class PayrollRunService : IPayrollRunService
         try
         {
             parent.PayrollCalendar = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class PayrollRunService : IPayrollRunService
     }
 
 
-    public async Task<bool> AddToPayrollItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPayrollItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PayrollRun",
                 "AddToPayrollItems",
@@ -184,16 +190,18 @@ public class PayrollRunService : IPayrollRunService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPayrollItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPayrollItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PayrollRun",
                 "RemoveFromPayrollItems",

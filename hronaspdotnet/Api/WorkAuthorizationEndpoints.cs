@@ -20,8 +20,8 @@ public static class WorkAuthorizationEndpoints
         group.MapPut("/assignEmployee", AssignEmployee);
         group.MapPut("/unassignEmployee", UnassignEmployee);
 
-    group.MapPut("/addToDocuments", AddToDocuments);
-    group.MapPut("/removeFromDocuments", RemoveFromDocuments);
+        group.MapPut("/addToDocuments", AddToDocuments);
+        group.MapPut("/removeFromDocuments", RemoveFromDocuments);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class WorkAuthorizationEndpoints
     private static async Task<IResult> Create(
         WorkAuthorizationRequest request,
         IWorkAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWorkAuthorization( request );
+        var model = mapRequestToWorkAuthorization(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class WorkAuthorizationEndpoints
     private static async Task<IResult> Update(
         WorkAuthorizationRequest request,
         IWorkAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWorkAuthorization( request );
+        var model = mapRequestToWorkAuthorization(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class WorkAuthorizationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IWorkAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var workAuthorization = await service.Get(identifier, cancellationToken);
-        return workAuthorization is null ? Results.NotFound() : Results.Ok( workAuthorization );
+        return workAuthorization is null ? Results.NotFound() : Results.Ok(workAuthorization);
     }
 
 
     private static async Task<IResult> GetAll(
         IWorkAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( WorkAuthorizationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(WorkAuthorizationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IWorkAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class WorkAuthorizationEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         IWorkAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class WorkAuthorizationEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     IWorkAuthorizationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class WorkAuthorizationEndpoints
     private static async Task<IResult> AddToDocuments(
         MultipleAssociationRequest request,
         IWorkAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDocuments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class WorkAuthorizationEndpoints
     private static async Task<IResult> RemoveFromDocuments(
         MultipleAssociationRequest request,
         IWorkAuthorizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDocuments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static WorkAuthorization mapRequestToWorkAuthorization( WorkAuthorizationRequest request ) {
+    private static WorkAuthorization mapRequestToWorkAuthorization(WorkAuthorizationRequest request)
+    {
         var model = new WorkAuthorization
         {
             Id = request.Id,

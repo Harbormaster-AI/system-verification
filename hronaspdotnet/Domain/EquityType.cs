@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum EquityType
 {
-    RSU=1,StockOption=2,ESPP=3
+    RSU = 1, StockOption = 2, ESPP = 3
 }
 
 /// <summary>

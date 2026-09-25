@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IJobRequisitionService {
+public interface IJobRequisitionService
+{
 
-    Task Create(JobRequisition model , CancellationToken cancellationToken);
+    Task Create(JobRequisition model, CancellationToken cancellationToken);
     Task<bool> Update(JobRequisition model, CancellationToken cancellationToken);
     Task<JobRequisition?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<JobRequisition>> GetAll(CancellationToken cancellationToken);
@@ -73,7 +74,8 @@ public class JobRequisitionService : IJobRequisitionService
 
     public async Task<bool> Update(JobRequisition model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -132,7 +134,8 @@ public class JobRequisitionService : IJobRequisitionService
         return true;
     }
 
-    public async Task<bool> AssignDepartment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDepartment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -150,7 +153,7 @@ public class JobRequisitionService : IJobRequisitionService
 
             var child = await _serviceResolver.Get<DepartmentService>().Get(childRequest, cancellationToken);
             parent.Department = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -162,7 +165,8 @@ public class JobRequisitionService : IJobRequisitionService
         return true;
     }
 
-    public async Task<bool> UnassignDepartment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDepartment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -173,7 +177,7 @@ public class JobRequisitionService : IJobRequisitionService
         try
         {
             parent.Department = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -185,7 +189,8 @@ public class JobRequisitionService : IJobRequisitionService
         return true;
     }
 
-    public async Task<bool> AssignHiringManager(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignHiringManager(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -203,7 +208,7 @@ public class JobRequisitionService : IJobRequisitionService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.HiringManager = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -215,7 +220,8 @@ public class JobRequisitionService : IJobRequisitionService
         return true;
     }
 
-    public async Task<bool> UnassignHiringManager(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignHiringManager(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -226,7 +232,7 @@ public class JobRequisitionService : IJobRequisitionService
         try
         {
             parent.HiringManager = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -238,7 +244,8 @@ public class JobRequisitionService : IJobRequisitionService
         return true;
     }
 
-    public async Task<bool> AssignRecruiter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRecruiter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -256,7 +263,7 @@ public class JobRequisitionService : IJobRequisitionService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Recruiter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -268,7 +275,8 @@ public class JobRequisitionService : IJobRequisitionService
         return true;
     }
 
-    public async Task<bool> UnassignRecruiter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRecruiter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -279,7 +287,7 @@ public class JobRequisitionService : IJobRequisitionService
         try
         {
             parent.Recruiter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -291,7 +299,8 @@ public class JobRequisitionService : IJobRequisitionService
         return true;
     }
 
-    public async Task<bool> AssignJobProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignJobProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -309,7 +318,7 @@ public class JobRequisitionService : IJobRequisitionService
 
             var child = await _serviceResolver.Get<JobProfileService>().Get(childRequest, cancellationToken);
             parent.JobProfile = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -321,7 +330,8 @@ public class JobRequisitionService : IJobRequisitionService
         return true;
     }
 
-    public async Task<bool> UnassignJobProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignJobProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -332,7 +342,7 @@ public class JobRequisitionService : IJobRequisitionService
         try
         {
             parent.JobProfile = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -345,8 +355,10 @@ public class JobRequisitionService : IJobRequisitionService
     }
 
 
-    public async Task<bool> AddToCandidates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCandidates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "JobRequisition",
                 "AddToCandidates",
@@ -354,16 +366,18 @@ public class JobRequisitionService : IJobRequisitionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCandidates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCandidates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "JobRequisition",
                 "RemoveFromCandidates",
@@ -379,8 +393,10 @@ public class JobRequisitionService : IJobRequisitionService
         return true;
     }
 
-    public async Task<bool> AddToInterviews(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInterviews(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "JobRequisition",
                 "AddToInterviews",
@@ -388,16 +404,18 @@ public class JobRequisitionService : IJobRequisitionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInterviews(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInterviews(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "JobRequisition",
                 "RemoveFromInterviews",
@@ -413,8 +431,10 @@ public class JobRequisitionService : IJobRequisitionService
         return true;
     }
 
-    public async Task<bool> AddToOffers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOffers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "JobRequisition",
                 "AddToOffers",
@@ -422,16 +442,18 @@ public class JobRequisitionService : IJobRequisitionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOffers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOffers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "JobRequisition",
                 "RemoveFromOffers",

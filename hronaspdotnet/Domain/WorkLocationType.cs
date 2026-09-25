@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum WorkLocationType
 {
-    Onsite=1,Hybrid=2,Remote=3
+    Onsite = 1, Hybrid = 2, Remote = 3
 }
 
 /// <summary>

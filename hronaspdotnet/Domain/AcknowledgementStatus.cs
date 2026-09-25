@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum AcknowledgementStatus
 {
-    Pending=1,Acknowledged=2,Declined=3
+    Pending = 1, Acknowledged = 2, Declined = 3
 }
 
 /// <summary>

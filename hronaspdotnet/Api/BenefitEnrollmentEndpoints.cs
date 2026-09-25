@@ -22,8 +22,8 @@ public static class BenefitEnrollmentEndpoints
         group.MapPut("/assignEmployee", AssignEmployee);
         group.MapPut("/unassignEmployee", UnassignEmployee);
 
-    group.MapPut("/addToDependents", AddToDependents);
-    group.MapPut("/removeFromDependents", RemoveFromDependents);
+        group.MapPut("/addToDependents", AddToDependents);
+        group.MapPut("/removeFromDependents", RemoveFromDependents);
 
 
         return app;
@@ -32,9 +32,10 @@ public static class BenefitEnrollmentEndpoints
     private static async Task<IResult> Create(
         BenefitEnrollmentRequest request,
         IBenefitEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBenefitEnrollment( request );
+        var model = mapRequestToBenefitEnrollment(request);
 
         try
         {
@@ -51,9 +52,10 @@ public static class BenefitEnrollmentEndpoints
     private static async Task<IResult> Update(
         BenefitEnrollmentRequest request,
         IBenefitEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBenefitEnrollment( request );
+        var model = mapRequestToBenefitEnrollment(request);
 
         try
         {
@@ -70,25 +72,28 @@ public static class BenefitEnrollmentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IBenefitEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var benefitEnrollment = await service.Get(identifier, cancellationToken);
-        return benefitEnrollment is null ? Results.NotFound() : Results.Ok( benefitEnrollment );
+        return benefitEnrollment is null ? Results.NotFound() : Results.Ok(benefitEnrollment);
     }
 
 
     private static async Task<IResult> GetAll(
         IBenefitEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( BenefitEnrollmentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(BenefitEnrollmentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IBenefitEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class BenefitEnrollmentEndpoints
     private static async Task<IResult> AssignBenefitPlan(
         AssociationRequest request,
         IBenefitEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBenefitPlan(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +110,8 @@ public static class BenefitEnrollmentEndpoints
     private static async Task<IResult> UnassignBenefitPlan(
     AssociationRequest request,
     IBenefitEnrollmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBenefitPlan(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +119,8 @@ public static class BenefitEnrollmentEndpoints
     private static async Task<IResult> AssignEmployee(
         AssociationRequest request,
         IBenefitEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEmployee(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +128,8 @@ public static class BenefitEnrollmentEndpoints
     private static async Task<IResult> UnassignEmployee(
     AssociationRequest request,
     IBenefitEnrollmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEmployee(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class BenefitEnrollmentEndpoints
     private static async Task<IResult> AddToDependents(
         MultipleAssociationRequest request,
         IBenefitEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDependents(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class BenefitEnrollmentEndpoints
     private static async Task<IResult> RemoveFromDependents(
         MultipleAssociationRequest request,
         IBenefitEnrollmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDependents(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static BenefitEnrollment mapRequestToBenefitEnrollment( BenefitEnrollmentRequest request ) {
+    private static BenefitEnrollment mapRequestToBenefitEnrollment(BenefitEnrollmentRequest request)
+    {
         var model = new BenefitEnrollment
         {
             Id = request.Id,

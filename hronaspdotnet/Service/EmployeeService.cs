@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IEmployeeService {
+public interface IEmployeeService
+{
 
-    Task Create(Employee model , CancellationToken cancellationToken);
+    Task Create(Employee model, CancellationToken cancellationToken);
     Task<bool> Update(Employee model, CancellationToken cancellationToken);
     Task<Employee?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Employee>> GetAll(CancellationToken cancellationToken);
@@ -85,7 +86,8 @@ public class EmployeeService : IEmployeeService
 
     public async Task<bool> Update(Employee model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -145,7 +147,8 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> AssignManager(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignManager(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -163,7 +166,7 @@ public class EmployeeService : IEmployeeService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Manager = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +178,8 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> UnassignManager(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignManager(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -186,7 +190,7 @@ public class EmployeeService : IEmployeeService
         try
         {
             parent.Manager = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -198,7 +202,8 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> AssignDepartment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDepartment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -216,7 +221,7 @@ public class EmployeeService : IEmployeeService
 
             var child = await _serviceResolver.Get<DepartmentService>().Get(childRequest, cancellationToken);
             parent.Department = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +233,8 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> UnassignDepartment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDepartment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -239,7 +245,7 @@ public class EmployeeService : IEmployeeService
         try
         {
             parent.Department = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -251,7 +257,8 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> AssignPrimaryLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPrimaryLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -269,7 +276,7 @@ public class EmployeeService : IEmployeeService
 
             var child = await _serviceResolver.Get<LocationService>().Get(childRequest, cancellationToken);
             parent.PrimaryLocation = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -281,7 +288,8 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> UnassignPrimaryLocation(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPrimaryLocation(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -292,7 +300,7 @@ public class EmployeeService : IEmployeeService
         try
         {
             parent.PrimaryLocation = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -304,7 +312,8 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> AssignCostCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCostCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -322,7 +331,7 @@ public class EmployeeService : IEmployeeService
 
             var child = await _serviceResolver.Get<CostCenterService>().Get(childRequest, cancellationToken);
             parent.CostCenter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -334,7 +343,8 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> UnassignCostCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCostCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -345,7 +355,7 @@ public class EmployeeService : IEmployeeService
         try
         {
             parent.CostCenter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -358,8 +368,10 @@ public class EmployeeService : IEmployeeService
     }
 
 
-    public async Task<bool> AddToDirectReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDirectReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "AddToDirectReports",
@@ -367,16 +379,18 @@ public class EmployeeService : IEmployeeService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDirectReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDirectReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "RemoveFromDirectReports",
@@ -392,8 +406,10 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> AddToEmploymentAssignments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEmploymentAssignments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "AddToEmploymentAssignments",
@@ -401,16 +417,18 @@ public class EmployeeService : IEmployeeService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEmploymentAssignments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEmploymentAssignments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "RemoveFromEmploymentAssignments",
@@ -426,8 +444,10 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> AddToContracts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToContracts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "AddToContracts",
@@ -435,16 +455,18 @@ public class EmployeeService : IEmployeeService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromContracts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromContracts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "RemoveFromContracts",
@@ -460,8 +482,10 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> AddToBenefitEnrollments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToBenefitEnrollments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "AddToBenefitEnrollments",
@@ -469,16 +493,18 @@ public class EmployeeService : IEmployeeService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromBenefitEnrollments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromBenefitEnrollments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "RemoveFromBenefitEnrollments",
@@ -494,8 +520,10 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> AddToTimesheets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTimesheets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "AddToTimesheets",
@@ -503,16 +531,18 @@ public class EmployeeService : IEmployeeService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTimesheets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTimesheets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "RemoveFromTimesheets",
@@ -528,8 +558,10 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> AddToLeaveRequests(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLeaveRequests(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "AddToLeaveRequests",
@@ -537,16 +569,18 @@ public class EmployeeService : IEmployeeService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLeaveRequests(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLeaveRequests(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "RemoveFromLeaveRequests",
@@ -562,8 +596,10 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> AddToPerformanceReviews(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPerformanceReviews(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "AddToPerformanceReviews",
@@ -571,16 +607,18 @@ public class EmployeeService : IEmployeeService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPerformanceReviews(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPerformanceReviews(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "RemoveFromPerformanceReviews",
@@ -596,8 +634,10 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> AddToTrainingEnrollments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTrainingEnrollments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "AddToTrainingEnrollments",
@@ -605,16 +645,18 @@ public class EmployeeService : IEmployeeService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTrainingEnrollments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTrainingEnrollments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "RemoveFromTrainingEnrollments",
@@ -630,8 +672,10 @@ public class EmployeeService : IEmployeeService
         return true;
     }
 
-    public async Task<bool> AddToWorkAuthorizations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToWorkAuthorizations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "AddToWorkAuthorizations",
@@ -639,16 +683,18 @@ public class EmployeeService : IEmployeeService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromWorkAuthorizations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromWorkAuthorizations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Employee",
                 "RemoveFromWorkAuthorizations",

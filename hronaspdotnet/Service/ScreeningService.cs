@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface IScreeningService {
+public interface IScreeningService
+{
 
-    Task Create(Screening model , CancellationToken cancellationToken);
+    Task Create(Screening model, CancellationToken cancellationToken);
     Task<bool> Update(Screening model, CancellationToken cancellationToken);
     Task<Screening?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Screening>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class ScreeningService : IScreeningService
 
     public async Task<bool> Update(Screening model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class ScreeningService : IScreeningService
         return true;
     }
 
-    public async Task<bool> AssignApplication(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignApplication(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class ScreeningService : IScreeningService
 
             var child = await _serviceResolver.Get<JobApplicationService>().Get(childRequest, cancellationToken);
             parent.Application = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class ScreeningService : IScreeningService
         return true;
     }
 
-    public async Task<bool> UnassignApplication(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignApplication(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class ScreeningService : IScreeningService
         try
         {
             parent.Application = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

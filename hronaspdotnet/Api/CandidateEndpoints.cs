@@ -18,17 +18,17 @@ public static class CandidateEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToApplications", AddToApplications);
-    group.MapPut("/removeFromApplications", RemoveFromApplications);
+        group.MapPut("/addToApplications", AddToApplications);
+        group.MapPut("/removeFromApplications", RemoveFromApplications);
 
-    group.MapPut("/addToInterviews", AddToInterviews);
-    group.MapPut("/removeFromInterviews", RemoveFromInterviews);
+        group.MapPut("/addToInterviews", AddToInterviews);
+        group.MapPut("/removeFromInterviews", RemoveFromInterviews);
 
-    group.MapPut("/addToOffers", AddToOffers);
-    group.MapPut("/removeFromOffers", RemoveFromOffers);
+        group.MapPut("/addToOffers", AddToOffers);
+        group.MapPut("/removeFromOffers", RemoveFromOffers);
 
-    group.MapPut("/addToDocuments", AddToDocuments);
-    group.MapPut("/removeFromDocuments", RemoveFromDocuments);
+        group.MapPut("/addToDocuments", AddToDocuments);
+        group.MapPut("/removeFromDocuments", RemoveFromDocuments);
 
 
         return app;
@@ -37,9 +37,10 @@ public static class CandidateEndpoints
     private static async Task<IResult> Create(
         CandidateRequest request,
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCandidate( request );
+        var model = mapRequestToCandidate(request);
 
         try
         {
@@ -56,9 +57,10 @@ public static class CandidateEndpoints
     private static async Task<IResult> Update(
         CandidateRequest request,
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCandidate( request );
+        var model = mapRequestToCandidate(request);
 
         try
         {
@@ -75,25 +77,28 @@ public static class CandidateEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var candidate = await service.Get(identifier, cancellationToken);
-        return candidate is null ? Results.NotFound() : Results.Ok( candidate );
+        return candidate is null ? Results.NotFound() : Results.Ok(candidate);
     }
 
 
     private static async Task<IResult> GetAll(
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CandidateResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CandidateResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +107,8 @@ public static class CandidateEndpoints
     private static async Task<IResult> AddToApplications(
         MultipleAssociationRequest request,
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToApplications(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -110,14 +116,16 @@ public static class CandidateEndpoints
     private static async Task<IResult> RemoveFromApplications(
         MultipleAssociationRequest request,
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromApplications(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToInterviews(
         MultipleAssociationRequest request,
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInterviews(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -125,14 +133,16 @@ public static class CandidateEndpoints
     private static async Task<IResult> RemoveFromInterviews(
         MultipleAssociationRequest request,
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInterviews(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOffers(
         MultipleAssociationRequest request,
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOffers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class CandidateEndpoints
     private static async Task<IResult> RemoveFromOffers(
         MultipleAssociationRequest request,
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOffers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToDocuments(
         MultipleAssociationRequest request,
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDocuments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class CandidateEndpoints
     private static async Task<IResult> RemoveFromDocuments(
         MultipleAssociationRequest request,
         ICandidateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDocuments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Candidate mapRequestToCandidate( CandidateRequest request ) {
+    private static Candidate mapRequestToCandidate(CandidateRequest request)
+    {
         var model = new Candidate
         {
             Id = request.Id,

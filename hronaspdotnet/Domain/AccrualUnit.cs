@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum AccrualUnit
 {
-    Hours=1,Days=2
+    Hours = 1, Days = 2
 }
 
 /// <summary>

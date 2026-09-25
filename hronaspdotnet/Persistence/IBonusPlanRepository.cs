@@ -11,7 +11,7 @@ public interface IBonusPlanRepository
     Task UpdateAsync(BonusPlan bonusPlan, CancellationToken cancellationToken);
     Task DeleteAsync(BonusPlan bonusPlan, CancellationToken cancellationToken);
 
-    Task AddToCompensationPackagesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCompensationPackagesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCompensationPackagesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCompensationPackagesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

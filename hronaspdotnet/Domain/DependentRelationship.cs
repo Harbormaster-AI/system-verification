@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum DependentRelationship
 {
-    Spouse=1,DomesticPartner=2,Child=3,Other=4
+    Spouse = 1, DomesticPartner = 2, Child = 3, Other = 4
 }
 
 /// <summary>

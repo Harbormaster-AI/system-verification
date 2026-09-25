@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum TerminationType
 {
-    Resignation=1,Dismissal=2,Layoff=3,Retirement=4,EndOfAssignment=5
+    Resignation = 1, Dismissal = 2, Layoff = 3, Retirement = 4, EndOfAssignment = 5
 }
 
 /// <summary>

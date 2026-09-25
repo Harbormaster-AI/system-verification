@@ -36,7 +36,7 @@ namespace hronaspdotnet.Domain;
 
 public enum WorkAuthorizationStatus
 {
-    NotRequired=1,Pending=2,Authorized=3,Expired=4
+    NotRequired = 1, Pending = 2, Authorized = 3, Expired = 4
 }
 
 /// <summary>

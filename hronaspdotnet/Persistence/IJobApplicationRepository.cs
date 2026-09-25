@@ -11,7 +11,7 @@ public interface IJobApplicationRepository
     Task UpdateAsync(JobApplication jobApplication, CancellationToken cancellationToken);
     Task DeleteAsync(JobApplication jobApplication, CancellationToken cancellationToken);
 
-    Task AddToScreeningsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromScreeningsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToScreeningsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromScreeningsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

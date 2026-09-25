@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface ICertificationService {
+public interface ICertificationService
+{
 
-    Task Create(Certification model , CancellationToken cancellationToken);
+    Task Create(Certification model, CancellationToken cancellationToken);
     Task<bool> Update(Certification model, CancellationToken cancellationToken);
     Task<Certification?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Certification>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class CertificationService : ICertificationService
 
     public async Task<bool> Update(Certification model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class CertificationService : ICertificationService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class CertificationService : ICertificationService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class CertificationService : ICertificationService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class CertificationService : ICertificationService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class CertificationService : ICertificationService
         return true;
     }
 
-    public async Task<bool> AssignCourse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCourse(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class CertificationService : ICertificationService
 
             var child = await _serviceResolver.Get<TrainingCourseService>().Get(childRequest, cancellationToken);
             parent.Course = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class CertificationService : ICertificationService
         return true;
     }
 
-    public async Task<bool> UnassignCourse(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCourse(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class CertificationService : ICertificationService
         try
         {
             parent.Course = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

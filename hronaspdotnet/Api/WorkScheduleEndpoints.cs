@@ -18,14 +18,14 @@ public static class WorkScheduleEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToContracts", AddToContracts);
-    group.MapPut("/removeFromContracts", RemoveFromContracts);
+        group.MapPut("/addToContracts", AddToContracts);
+        group.MapPut("/removeFromContracts", RemoveFromContracts);
 
-    group.MapPut("/addToShifts", AddToShifts);
-    group.MapPut("/removeFromShifts", RemoveFromShifts);
+        group.MapPut("/addToShifts", AddToShifts);
+        group.MapPut("/removeFromShifts", RemoveFromShifts);
 
-    group.MapPut("/addToExceptions", AddToExceptions);
-    group.MapPut("/removeFromExceptions", RemoveFromExceptions);
+        group.MapPut("/addToExceptions", AddToExceptions);
+        group.MapPut("/removeFromExceptions", RemoveFromExceptions);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class WorkScheduleEndpoints
     private static async Task<IResult> Create(
         WorkScheduleRequest request,
         IWorkScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWorkSchedule( request );
+        var model = mapRequestToWorkSchedule(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class WorkScheduleEndpoints
     private static async Task<IResult> Update(
         WorkScheduleRequest request,
         IWorkScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWorkSchedule( request );
+        var model = mapRequestToWorkSchedule(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class WorkScheduleEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IWorkScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var workSchedule = await service.Get(identifier, cancellationToken);
-        return workSchedule is null ? Results.NotFound() : Results.Ok( workSchedule );
+        return workSchedule is null ? Results.NotFound() : Results.Ok(workSchedule);
     }
 
 
     private static async Task<IResult> GetAll(
         IWorkScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( WorkScheduleResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(WorkScheduleResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IWorkScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class WorkScheduleEndpoints
     private static async Task<IResult> AddToContracts(
         MultipleAssociationRequest request,
         IWorkScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToContracts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -107,14 +113,16 @@ public static class WorkScheduleEndpoints
     private static async Task<IResult> RemoveFromContracts(
         MultipleAssociationRequest request,
         IWorkScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromContracts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToShifts(
         MultipleAssociationRequest request,
         IWorkScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToShifts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class WorkScheduleEndpoints
     private static async Task<IResult> RemoveFromShifts(
         MultipleAssociationRequest request,
         IWorkScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromShifts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToExceptions(
         MultipleAssociationRequest request,
         IWorkScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToExceptions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class WorkScheduleEndpoints
     private static async Task<IResult> RemoveFromExceptions(
         MultipleAssociationRequest request,
         IWorkScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromExceptions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static WorkSchedule mapRequestToWorkSchedule( WorkScheduleRequest request ) {
+    private static WorkSchedule mapRequestToWorkSchedule(WorkScheduleRequest request)
+    {
         var model = new WorkSchedule
         {
             Id = request.Id,

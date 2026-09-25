@@ -20,8 +20,8 @@ public static class PayrollRunEndpoints
         group.MapPut("/assignPayrollCalendar", AssignPayrollCalendar);
         group.MapPut("/unassignPayrollCalendar", UnassignPayrollCalendar);
 
-    group.MapPut("/addToPayrollItems", AddToPayrollItems);
-    group.MapPut("/removeFromPayrollItems", RemoveFromPayrollItems);
+        group.MapPut("/addToPayrollItems", AddToPayrollItems);
+        group.MapPut("/removeFromPayrollItems", RemoveFromPayrollItems);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class PayrollRunEndpoints
     private static async Task<IResult> Create(
         PayrollRunRequest request,
         IPayrollRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPayrollRun( request );
+        var model = mapRequestToPayrollRun(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class PayrollRunEndpoints
     private static async Task<IResult> Update(
         PayrollRunRequest request,
         IPayrollRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPayrollRun( request );
+        var model = mapRequestToPayrollRun(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class PayrollRunEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPayrollRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var payrollRun = await service.Get(identifier, cancellationToken);
-        return payrollRun is null ? Results.NotFound() : Results.Ok( payrollRun );
+        return payrollRun is null ? Results.NotFound() : Results.Ok(payrollRun);
     }
 
 
     private static async Task<IResult> GetAll(
         IPayrollRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PayrollRunResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PayrollRunResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPayrollRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class PayrollRunEndpoints
     private static async Task<IResult> AssignPayrollCalendar(
         AssociationRequest request,
         IPayrollRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPayrollCalendar(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class PayrollRunEndpoints
     private static async Task<IResult> UnassignPayrollCalendar(
     AssociationRequest request,
     IPayrollRunService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPayrollCalendar(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class PayrollRunEndpoints
     private static async Task<IResult> AddToPayrollItems(
         MultipleAssociationRequest request,
         IPayrollRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPayrollItems(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class PayrollRunEndpoints
     private static async Task<IResult> RemoveFromPayrollItems(
         MultipleAssociationRequest request,
         IPayrollRunService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPayrollItems(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static PayrollRun mapRequestToPayrollRun( PayrollRunRequest request ) {
+    private static PayrollRun mapRequestToPayrollRun(PayrollRunRequest request)
+    {
         var model = new PayrollRun
         {
             Id = request.Id,

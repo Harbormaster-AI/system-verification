@@ -6,9 +6,10 @@ using hronaspdotnet.Telemetry;
 
 namespace hronaspdotnet.Service;
 
-public interface ITimeEntryService {
+public interface ITimeEntryService
+{
 
-    Task Create(TimeEntry model , CancellationToken cancellationToken);
+    Task Create(TimeEntry model, CancellationToken cancellationToken);
     Task<bool> Update(TimeEntry model, CancellationToken cancellationToken);
     Task<TimeEntry?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TimeEntry>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class TimeEntryService : ITimeEntryService
 
     public async Task<bool> Update(TimeEntry model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class TimeEntryService : ITimeEntryService
         return true;
     }
 
-    public async Task<bool> AssignTimesheet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTimesheet(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class TimeEntryService : ITimeEntryService
 
             var child = await _serviceResolver.Get<TimesheetService>().Get(childRequest, cancellationToken);
             parent.Timesheet = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class TimeEntryService : ITimeEntryService
         return true;
     }
 
-    public async Task<bool> UnassignTimesheet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTimesheet(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class TimeEntryService : ITimeEntryService
         try
         {
             parent.Timesheet = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class TimeEntryService : ITimeEntryService
         return true;
     }
 
-    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class TimeEntryService : ITimeEntryService
 
             var child = await _serviceResolver.Get<EmployeeService>().Get(childRequest, cancellationToken);
             parent.Employee = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class TimeEntryService : ITimeEntryService
         return true;
     }
 
-    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignEmployee(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class TimeEntryService : ITimeEntryService
         try
         {
             parent.Employee = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -227,7 +233,8 @@ public class TimeEntryService : ITimeEntryService
         return true;
     }
 
-    public async Task<bool> AssignCostCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCostCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -245,7 +252,7 @@ public class TimeEntryService : ITimeEntryService
 
             var child = await _serviceResolver.Get<CostCenterService>().Get(childRequest, cancellationToken);
             parent.CostCenter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -257,7 +264,8 @@ public class TimeEntryService : ITimeEntryService
         return true;
     }
 
-    public async Task<bool> UnassignCostCenter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCostCenter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -268,7 +276,7 @@ public class TimeEntryService : ITimeEntryService
         try
         {
             parent.CostCenter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
