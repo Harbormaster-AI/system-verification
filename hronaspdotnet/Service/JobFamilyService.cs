@@ -1,0 +1,211 @@
+
+using hronaspdotnet.Domain;
+using hronaspdotnet.Persistence;
+using hronaspdotnet.Contracts;
+using hronaspdotnet.Telemetry;
+
+namespace hronaspdotnet.Service;
+
+public interface IJobFamilyService {
+
+    Task Create(JobFamily model , CancellationToken cancellationToken);
+    Task<bool> Update(JobFamily model, CancellationToken cancellationToken);
+    Task<JobFamily?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
+    Task<IReadOnlyList<JobFamily>> GetAll(CancellationToken cancellationToken);
+    Task<bool> Delete(IdentifierRequest identifier, CancellationToken cancellationToken);
+    // ------------------------------
+    // Single Associations
+    // -------------------------------
+    Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken);
+
+    Task<bool> AddToJobProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> RemoveFromJobProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken);
+
+}
+
+public class JobFamilyService : IJobFamilyService
+{
+    private readonly ApplicationTelemetry _telemetry;
+    private readonly IJobFamilyRepository _repository;
+    private readonly ILogger<JobFamilyService> _logger;
+    private readonly IServiceResolver _serviceResolver;
+
+
+    public JobFamilyService(
+        ApplicationTelemetry telemetry,
+        IJobFamilyRepository repository,
+        ILogger<JobFamilyService> logger,
+        IServiceResolver serviceResolver)
+    {
+        _telemetry = telemetry;
+        _repository = repository;
+        _logger = logger;
+        _serviceResolver = serviceResolver;
+    }
+
+    public async Task Create(JobFamily model, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _telemetry.Execute(
+                "JobFamily",
+                "CreateJobFamily",
+                () => _repository.AddAsync(model, cancellationToken));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+        }
+    }
+
+    public async Task<bool> Update(JobFamily model, CancellationToken cancellationToken)
+    {
+        try {
+            var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
+            if (existing is null)
+            {
+                return false;
+            }
+            existing.Name = model.Name;
+            existing.Description = model.Description;
+
+            await _telemetry.Execute(
+                "JobFamily",
+                "UpdateJobFamily",
+                () => _repository.UpdateAsync(existing, cancellationToken));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+    public Task<JobFamily?> Get(IdentifierRequest identifier, CancellationToken cancellationToken)
+    => _repository.GetByIdAsync(identifier.Id, cancellationToken);
+
+    public Task<IReadOnlyList<JobFamily>> GetAll(CancellationToken cancellationToken)
+    => _repository.GetAllAsync(cancellationToken);
+
+    public async Task<bool> Delete(IdentifierRequest identifier, CancellationToken cancellationToken)
+    {
+        var existing = await _repository.GetByIdAsync(identifier.Id, cancellationToken);
+        if (existing is null)
+        {
+            return false;
+        }
+
+        try
+        {
+            await _telemetry.Execute(
+                "JobFamily",
+                "UpdateJobFamily",
+                () => _repository.DeleteAsync(existing, cancellationToken));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+    public async Task<bool> AssignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+
+        var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
+        if (parent is null)
+        {
+            _logger.LogError("No JobFamily found using Id {ParentId}", request.ParentId);
+            return false;
+        }
+
+        try
+        {
+            var childRequest = new IdentifierRequest
+            {
+                Id = request.ChildId,
+            };
+
+            var child = await _serviceResolver.Get<OrganizationService>().Get(childRequest, cancellationToken);
+            parent.Organization = child;
+            await Update( parent, cancellationToken );
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+    public async Task<bool> UnassignOrganization(AssociationRequest request, CancellationToken cancellationToken) {
+        var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
+        if (parent is null)
+        {
+            _logger.LogError("No JobFamily found using Id {ParentId}", request.ParentId);
+            return false;
+        }
+
+        try
+        {
+            parent.Organization = null;
+            await Update( parent, cancellationToken );
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+
+    public async Task<bool> AddToJobProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+        try {
+            await _telemetry.Execute(
+                "JobFamily",
+                "AddToJobProfiles",
+                () => _repository.AddToJobProfilesAsync(request, cancellationToken));
+        }
+        catch (Exception ex)
+        {
+           _logger.LogError(
+                   ex,
+                   "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+    public async Task<bool> RemoveFromJobProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+        try {
+            await _telemetry.Execute(
+                "JobFamily",
+                "RemoveFromJobProfiles",
+                () => _repository.RemoveFromJobProfilesAsync(request, cancellationToken));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+
+
+}
