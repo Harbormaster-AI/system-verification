@@ -48,7 +48,7 @@ public class ThirdPartyProviderRepository : IThirdPartyProviderRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task AddToConsentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToConsentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Consents
             .Where(consent => request.ChildIds.Contains(consent.Id))
@@ -58,7 +58,7 @@ public class ThirdPartyProviderRepository : IThirdPartyProviderRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromConsentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromConsentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Consents
             .Where(consent =>

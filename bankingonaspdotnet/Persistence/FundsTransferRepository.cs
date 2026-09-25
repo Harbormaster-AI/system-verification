@@ -54,7 +54,7 @@ public class FundsTransferRepository : IFundsTransferRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task AddToTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Transactions
             .Where(transaction => request.ChildIds.Contains(transaction.Id))
@@ -64,7 +64,7 @@ public class FundsTransferRepository : IFundsTransferRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Transactions
             .Where(transaction =>

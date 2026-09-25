@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IKycProfileService {
+public interface IKycProfileService
+{
 
-    Task Create(KycProfile model , CancellationToken cancellationToken);
+    Task Create(KycProfile model, CancellationToken cancellationToken);
     Task<bool> Update(KycProfile model, CancellationToken cancellationToken);
     Task<KycProfile?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<KycProfile>> GetAll(CancellationToken cancellationToken);
@@ -66,7 +67,8 @@ public class KycProfileService : IKycProfileService
 
     public async Task<bool> Update(KycProfile model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class KycProfileService : IKycProfileService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -134,9 +137,9 @@ public class KycProfileService : IKycProfileService
                 Id = request.ChildId,
             };
 
-            var child = serviceResolver.get(CustomerService).get( childRequest , cancellationToken );
+            var child = serviceResolver.get(CustomerService).get(childRequest, cancellationToken);
             parent.Customer = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -146,7 +149,8 @@ public class KycProfileService : IKycProfileService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -157,7 +161,7 @@ public class KycProfileService : IKycProfileService
         try
         {
             parent.Customer = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -168,8 +172,10 @@ public class KycProfileService : IKycProfileService
     }
 
 
-    public async Task<bool> AddToIdentityDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToIdentityDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "KycProfile",
                 "AddToIdentityDocuments",
@@ -183,8 +189,10 @@ public class KycProfileService : IKycProfileService
         return true;
     }
 
-    public async Task<bool> RemoveFromIdentityDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromIdentityDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "KycProfile",
                 "RemoveFromIdentityDocuments",
@@ -198,8 +206,10 @@ public class KycProfileService : IKycProfileService
         return true;
     }
 
-    public async Task<bool> AddToRiskAssessments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRiskAssessments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "KycProfile",
                 "AddToRiskAssessments",
@@ -213,8 +223,10 @@ public class KycProfileService : IKycProfileService
         return true;
     }
 
-    public async Task<bool> RemoveFromRiskAssessments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRiskAssessments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "KycProfile",
                 "RemoveFromRiskAssessments",
@@ -228,8 +240,10 @@ public class KycProfileService : IKycProfileService
         return true;
     }
 
-    public async Task<bool> AddToScreenings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToScreenings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "KycProfile",
                 "AddToScreenings",
@@ -243,8 +257,10 @@ public class KycProfileService : IKycProfileService
         return true;
     }
 
-    public async Task<bool> RemoveFromScreenings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromScreenings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "KycProfile",
                 "RemoveFromScreenings",
