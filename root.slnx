@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="crmonaspdotnet/crmonaspdotnet.Api.csproj" />
+  <Project Path="crmonaspdotnet/Tests/crmonaspdotnet.Tests.csproj" />
+</Solution>

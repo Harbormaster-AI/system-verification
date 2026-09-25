@@ -1,0 +1,5 @@
+@crmonaspdotnet.Api_HostAddress = http://localhost:5076
+
+GET {{crmonaspdotnet.Api_HostAddress}}/
+Accept: application/json
+
