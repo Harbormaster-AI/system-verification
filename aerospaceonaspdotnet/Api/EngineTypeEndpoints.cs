@@ -20,8 +20,8 @@ public static class EngineTypeEndpoints
         group.MapPut("/assignSupplier", AssignSupplier);
         group.MapPut("/unassignSupplier", UnassignSupplier);
 
-    group.MapPut("/addToCompatibleModels", AddToCompatibleModels);
-    group.MapPut("/removeFromCompatibleModels", RemoveFromCompatibleModels);
+        group.MapPut("/addToCompatibleModels", AddToCompatibleModels);
+        group.MapPut("/removeFromCompatibleModels", RemoveFromCompatibleModels);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class EngineTypeEndpoints
     private static async Task<IResult> Create(
         EngineTypeRequest request,
         IEngineTypeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEngineType( request );
+        var model = mapRequestToEngineType(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class EngineTypeEndpoints
     private static async Task<IResult> Update(
         EngineTypeRequest request,
         IEngineTypeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEngineType( request );
+        var model = mapRequestToEngineType(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class EngineTypeEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IEngineTypeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var engineType = await service.Get(identifier, cancellationToken);
-        return engineType is null ? Results.NotFound() : Results.Ok( engineType );
+        return engineType is null ? Results.NotFound() : Results.Ok(engineType);
     }
 
 
     private static async Task<IResult> GetAll(
         IEngineTypeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( EngineTypeResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(EngineTypeResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IEngineTypeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class EngineTypeEndpoints
     private static async Task<IResult> AssignSupplier(
         AssociationRequest request,
         IEngineTypeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSupplier(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class EngineTypeEndpoints
     private static async Task<IResult> UnassignSupplier(
     AssociationRequest request,
     IEngineTypeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSupplier(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class EngineTypeEndpoints
     private static async Task<IResult> AddToCompatibleModels(
         MultipleAssociationRequest request,
         IEngineTypeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCompatibleModels(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class EngineTypeEndpoints
     private static async Task<IResult> RemoveFromCompatibleModels(
         MultipleAssociationRequest request,
         IEngineTypeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCompatibleModels(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static EngineType mapRequestToEngineType( EngineTypeRequest request ) {
+    private static EngineType mapRequestToEngineType(EngineTypeRequest request)
+    {
         var model = new EngineType
         {
             Id = request.Id,

@@ -27,9 +27,10 @@ public static class Component_Endpoints
     private static async Task<IResult> Create(
         Component_Request request,
         IComponent_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToComponent_( request );
+        var model = mapRequestToComponent_(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class Component_Endpoints
     private static async Task<IResult> Update(
         Component_Request request,
         IComponent_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToComponent_( request );
+        var model = mapRequestToComponent_(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class Component_Endpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IComponent_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var component_ = await service.Get(identifier, cancellationToken);
-        return component_ is null ? Results.NotFound() : Results.Ok( component_ );
+        return component_ is null ? Results.NotFound() : Results.Ok(component_);
     }
 
 
     private static async Task<IResult> GetAll(
         IComponent_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( Component_Response.FromModel ) );
-        }
+        return Results.Ok(all.Select(Component_Response.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IComponent_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class Component_Endpoints
     private static async Task<IResult> AssignSupplier(
         AssociationRequest request,
         IComponent_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSupplier(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class Component_Endpoints
     private static async Task<IResult> UnassignSupplier(
     AssociationRequest request,
     IComponent_Service service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSupplier(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Component_ mapRequestToComponent_( Component_Request request ) {
+    private static Component_ mapRequestToComponent_(Component_Request request)
+    {
         var model = new Component_
         {
             Id = request.Id,

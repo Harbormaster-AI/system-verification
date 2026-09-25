@@ -18,11 +18,11 @@ public static class ServiceBulletinEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToWorkOrders", AddToWorkOrders);
-    group.MapPut("/removeFromWorkOrders", RemoveFromWorkOrders);
+        group.MapPut("/addToWorkOrders", AddToWorkOrders);
+        group.MapPut("/removeFromWorkOrders", RemoveFromWorkOrders);
 
-    group.MapPut("/addToVariants", AddToVariants);
-    group.MapPut("/removeFromVariants", RemoveFromVariants);
+        group.MapPut("/addToVariants", AddToVariants);
+        group.MapPut("/removeFromVariants", RemoveFromVariants);
 
 
         return app;
@@ -31,9 +31,10 @@ public static class ServiceBulletinEndpoints
     private static async Task<IResult> Create(
         ServiceBulletinRequest request,
         IServiceBulletinService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToServiceBulletin( request );
+        var model = mapRequestToServiceBulletin(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class ServiceBulletinEndpoints
     private static async Task<IResult> Update(
         ServiceBulletinRequest request,
         IServiceBulletinService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToServiceBulletin( request );
+        var model = mapRequestToServiceBulletin(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class ServiceBulletinEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IServiceBulletinService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var serviceBulletin = await service.Get(identifier, cancellationToken);
-        return serviceBulletin is null ? Results.NotFound() : Results.Ok( serviceBulletin );
+        return serviceBulletin is null ? Results.NotFound() : Results.Ok(serviceBulletin);
     }
 
 
     private static async Task<IResult> GetAll(
         IServiceBulletinService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ServiceBulletinResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ServiceBulletinResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IServiceBulletinService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class ServiceBulletinEndpoints
     private static async Task<IResult> AddToWorkOrders(
         MultipleAssociationRequest request,
         IServiceBulletinService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToWorkOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -104,14 +110,16 @@ public static class ServiceBulletinEndpoints
     private static async Task<IResult> RemoveFromWorkOrders(
         MultipleAssociationRequest request,
         IServiceBulletinService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromWorkOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToVariants(
         MultipleAssociationRequest request,
         IServiceBulletinService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToVariants(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class ServiceBulletinEndpoints
     private static async Task<IResult> RemoveFromVariants(
         MultipleAssociationRequest request,
         IServiceBulletinService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromVariants(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static ServiceBulletin mapRequestToServiceBulletin( ServiceBulletinRequest request ) {
+    private static ServiceBulletin mapRequestToServiceBulletin(ServiceBulletinRequest request)
+    {
         var model = new ServiceBulletin
         {
             Id = request.Id,

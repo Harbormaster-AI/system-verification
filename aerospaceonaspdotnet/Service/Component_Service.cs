@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IComponent_Service {
+public interface IComponent_Service
+{
 
-    Task Create(Component_ model , CancellationToken cancellationToken);
+    Task Create(Component_ model, CancellationToken cancellationToken);
     Task<bool> Update(Component_ model, CancellationToken cancellationToken);
     Task<Component_?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Component_>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class Component_Service : IComponent_Service
 
     public async Task<bool> Update(Component_ model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class Component_Service : IComponent_Service
         return true;
     }
 
-    public async Task<bool> AssignSupplier(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSupplier(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class Component_Service : IComponent_Service
 
             var child = await _serviceResolver.Get<SupplierService>().Get(childRequest, cancellationToken);
             parent.Supplier = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class Component_Service : IComponent_Service
         return true;
     }
 
-    public async Task<bool> UnassignSupplier(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSupplier(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class Component_Service : IComponent_Service
         try
         {
             parent.Supplier = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

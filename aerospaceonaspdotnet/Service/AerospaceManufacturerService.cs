@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IAerospaceManufacturerService {
+public interface IAerospaceManufacturerService
+{
 
-    Task Create(AerospaceManufacturer model , CancellationToken cancellationToken);
+    Task Create(AerospaceManufacturer model, CancellationToken cancellationToken);
     Task<bool> Update(AerospaceManufacturer model, CancellationToken cancellationToken);
     Task<AerospaceManufacturer?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AerospaceManufacturer>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class AerospaceManufacturerService : IAerospaceManufacturerService
 
     public async Task<bool> Update(AerospaceManufacturer model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,8 +127,10 @@ public class AerospaceManufacturerService : IAerospaceManufacturerService
     }
 
 
-    public async Task<bool> AddToPrograms(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPrograms(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AerospaceManufacturer",
                 "AddToPrograms",
@@ -134,16 +138,18 @@ public class AerospaceManufacturerService : IAerospaceManufacturerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPrograms(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPrograms(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AerospaceManufacturer",
                 "RemoveFromPrograms",
@@ -159,8 +165,10 @@ public class AerospaceManufacturerService : IAerospaceManufacturerService
         return true;
     }
 
-    public async Task<bool> AddToPlants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPlants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AerospaceManufacturer",
                 "AddToPlants",
@@ -168,16 +176,18 @@ public class AerospaceManufacturerService : IAerospaceManufacturerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPlants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPlants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AerospaceManufacturer",
                 "RemoveFromPlants",
@@ -193,8 +203,10 @@ public class AerospaceManufacturerService : IAerospaceManufacturerService
         return true;
     }
 
-    public async Task<bool> AddToSuppliers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSuppliers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AerospaceManufacturer",
                 "AddToSuppliers",
@@ -202,16 +214,18 @@ public class AerospaceManufacturerService : IAerospaceManufacturerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSuppliers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSuppliers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AerospaceManufacturer",
                 "RemoveFromSuppliers",
@@ -227,8 +241,10 @@ public class AerospaceManufacturerService : IAerospaceManufacturerService
         return true;
     }
 
-    public async Task<bool> AddToProductionCertificates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToProductionCertificates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AerospaceManufacturer",
                 "AddToProductionCertificates",
@@ -236,16 +252,18 @@ public class AerospaceManufacturerService : IAerospaceManufacturerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromProductionCertificates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromProductionCertificates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AerospaceManufacturer",
                 "RemoveFromProductionCertificates",

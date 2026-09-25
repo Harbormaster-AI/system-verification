@@ -11,9 +11,9 @@ public interface IAircraftPackageRepository
     Task UpdateAsync(AircraftPackage aircraftPackage, CancellationToken cancellationToken);
     Task DeleteAsync(AircraftPackage aircraftPackage, CancellationToken cancellationToken);
 
-    Task AddToOptionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromOptionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToVariantsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromVariantsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToOptionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromOptionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToVariantsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromVariantsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum ProgramStatus
 {
-    Concept=1,Development=2,Certification=3,Production=4,InService=5,Sunset=6
+    Concept = 1, Development = 2, Certification = 3, Production = 4, InService = 5, Sunset = 6
 }
 
 /// <summary>

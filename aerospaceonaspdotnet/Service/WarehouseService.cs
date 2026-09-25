@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IWarehouseService {
+public interface IWarehouseService
+{
 
-    Task Create(Warehouse model , CancellationToken cancellationToken);
+    Task Create(Warehouse model, CancellationToken cancellationToken);
     Task<bool> Update(Warehouse model, CancellationToken cancellationToken);
     Task<Warehouse?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Warehouse>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class WarehouseService : IWarehouseService
 
     public async Task<bool> Update(Warehouse model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,8 +118,10 @@ public class WarehouseService : IWarehouseService
     }
 
 
-    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "AddToInventoryItems",
@@ -125,16 +129,18 @@ public class WarehouseService : IWarehouseService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInventoryItems(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Warehouse",
                 "RemoveFromInventoryItems",

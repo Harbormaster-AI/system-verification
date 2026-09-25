@@ -28,14 +28,14 @@ public static class AircraftVariantEndpoints
         group.MapPut("/assignLandingGear", AssignLandingGear);
         group.MapPut("/unassignLandingGear", UnassignLandingGear);
 
-    group.MapPut("/addToCabinLayouts", AddToCabinLayouts);
-    group.MapPut("/removeFromCabinLayouts", RemoveFromCabinLayouts);
+        group.MapPut("/addToCabinLayouts", AddToCabinLayouts);
+        group.MapPut("/removeFromCabinLayouts", RemoveFromCabinLayouts);
 
-    group.MapPut("/addToOptions", AddToOptions);
-    group.MapPut("/removeFromOptions", RemoveFromOptions);
+        group.MapPut("/addToOptions", AddToOptions);
+        group.MapPut("/removeFromOptions", RemoveFromOptions);
 
-    group.MapPut("/addToPackages", AddToPackages);
-    group.MapPut("/removeFromPackages", RemoveFromPackages);
+        group.MapPut("/addToPackages", AddToPackages);
+        group.MapPut("/removeFromPackages", RemoveFromPackages);
 
 
         return app;
@@ -44,9 +44,10 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> Create(
         AircraftVariantRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAircraftVariant( request );
+        var model = mapRequestToAircraftVariant(request);
 
         try
         {
@@ -63,9 +64,10 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> Update(
         AircraftVariantRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAircraftVariant( request );
+        var model = mapRequestToAircraftVariant(request);
 
         try
         {
@@ -82,25 +84,28 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var aircraftVariant = await service.Get(identifier, cancellationToken);
-        return aircraftVariant is null ? Results.NotFound() : Results.Ok( aircraftVariant );
+        return aircraftVariant is null ? Results.NotFound() : Results.Ok(aircraftVariant);
     }
 
 
     private static async Task<IResult> GetAll(
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AircraftVariantResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AircraftVariantResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +113,8 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> AssignModel_(
         AssociationRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignModel_(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -116,7 +122,8 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> UnassignModel_(
     AssociationRequest request,
     IAircraftVariantService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignModel_(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -124,7 +131,8 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> AssignEngineType(
         AssociationRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEngineType(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +140,8 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> UnassignEngineType(
     AssociationRequest request,
     IAircraftVariantService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEngineType(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -140,7 +149,8 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> AssignAvionicsSuite(
         AssociationRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAvionicsSuite(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -148,7 +158,8 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> UnassignAvionicsSuite(
     AssociationRequest request,
     IAircraftVariantService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAvionicsSuite(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -156,7 +167,8 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> AssignApu(
         AssociationRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignApu(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -164,7 +176,8 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> UnassignApu(
     AssociationRequest request,
     IAircraftVariantService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignApu(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -172,7 +185,8 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> AssignLandingGear(
         AssociationRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLandingGear(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -180,7 +194,8 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> UnassignLandingGear(
     AssociationRequest request,
     IAircraftVariantService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLandingGear(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -189,7 +204,8 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> AddToCabinLayouts(
         MultipleAssociationRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCabinLayouts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -197,14 +213,16 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> RemoveFromCabinLayouts(
         MultipleAssociationRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCabinLayouts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOptions(
         MultipleAssociationRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOptions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -212,14 +230,16 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> RemoveFromOptions(
         MultipleAssociationRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOptions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPackages(
         MultipleAssociationRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPackages(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -227,11 +247,13 @@ public static class AircraftVariantEndpoints
     private static async Task<IResult> RemoveFromPackages(
         MultipleAssociationRequest request,
         IAircraftVariantService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPackages(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static AircraftVariant mapRequestToAircraftVariant( AircraftVariantRequest request ) {
+    private static AircraftVariant mapRequestToAircraftVariant(AircraftVariantRequest request)
+    {
         var model = new AircraftVariant
         {
             Id = request.Id,

@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface ICabinLayoutService {
+public interface ICabinLayoutService
+{
 
-    Task Create(CabinLayout model , CancellationToken cancellationToken);
+    Task Create(CabinLayout model, CancellationToken cancellationToken);
     Task<bool> Update(CabinLayout model, CancellationToken cancellationToken);
     Task<CabinLayout?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CabinLayout>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class CabinLayoutService : ICabinLayoutService
 
     public async Task<bool> Update(CabinLayout model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class CabinLayoutService : ICabinLayoutService
         return true;
     }
 
-    public async Task<bool> AssignVariant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignVariant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class CabinLayoutService : ICabinLayoutService
 
             var child = await _serviceResolver.Get<AircraftVariantService>().Get(childRequest, cancellationToken);
             parent.Variant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class CabinLayoutService : ICabinLayoutService
         return true;
     }
 
-    public async Task<bool> UnassignVariant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignVariant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class CabinLayoutService : ICabinLayoutService
         try
         {
             parent.Variant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class CabinLayoutService : ICabinLayoutService
     }
 
 
-    public async Task<bool> AddToAircraft(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAircraft(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CabinLayout",
                 "AddToAircraft",
@@ -184,16 +190,18 @@ public class CabinLayoutService : ICabinLayoutService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAircraft(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAircraft(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CabinLayout",
                 "RemoveFromAircraft",
@@ -209,8 +217,10 @@ public class CabinLayoutService : ICabinLayoutService
         return true;
     }
 
-    public async Task<bool> AddToOptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CabinLayout",
                 "AddToOptions",
@@ -218,16 +228,18 @@ public class CabinLayoutService : ICabinLayoutService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CabinLayout",
                 "RemoveFromOptions",

@@ -27,9 +27,10 @@ public static class PurchaseAgreementEndpoints
     private static async Task<IResult> Create(
         PurchaseAgreementRequest request,
         IPurchaseAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPurchaseAgreement( request );
+        var model = mapRequestToPurchaseAgreement(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class PurchaseAgreementEndpoints
     private static async Task<IResult> Update(
         PurchaseAgreementRequest request,
         IPurchaseAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPurchaseAgreement( request );
+        var model = mapRequestToPurchaseAgreement(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class PurchaseAgreementEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPurchaseAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var purchaseAgreement = await service.Get(identifier, cancellationToken);
-        return purchaseAgreement is null ? Results.NotFound() : Results.Ok( purchaseAgreement );
+        return purchaseAgreement is null ? Results.NotFound() : Results.Ok(purchaseAgreement);
     }
 
 
     private static async Task<IResult> GetAll(
         IPurchaseAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PurchaseAgreementResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PurchaseAgreementResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPurchaseAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class PurchaseAgreementEndpoints
     private static async Task<IResult> AssignAircraftOrder(
         AssociationRequest request,
         IPurchaseAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAircraftOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class PurchaseAgreementEndpoints
     private static async Task<IResult> UnassignAircraftOrder(
     AssociationRequest request,
     IPurchaseAgreementService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAircraftOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static PurchaseAgreement mapRequestToPurchaseAgreement( PurchaseAgreementRequest request ) {
+    private static PurchaseAgreement mapRequestToPurchaseAgreement(PurchaseAgreementRequest request)
+    {
         var model = new PurchaseAgreement
         {
             Id = request.Id,

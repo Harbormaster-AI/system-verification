@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface ISalesCampaignService {
+public interface ISalesCampaignService
+{
 
-    Task Create(SalesCampaign model , CancellationToken cancellationToken);
+    Task Create(SalesCampaign model, CancellationToken cancellationToken);
     Task<bool> Update(SalesCampaign model, CancellationToken cancellationToken);
     Task<SalesCampaign?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SalesCampaign>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class SalesCampaignService : ISalesCampaignService
 
     public async Task<bool> Update(SalesCampaign model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class SalesCampaignService : ISalesCampaignService
         return true;
     }
 
-    public async Task<bool> AssignRegion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRegion(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class SalesCampaignService : ISalesCampaignService
 
             var child = await _serviceResolver.Get<SalesRegionService>().Get(childRequest, cancellationToken);
             parent.Region = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class SalesCampaignService : ISalesCampaignService
         return true;
     }
 
-    public async Task<bool> UnassignRegion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRegion(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class SalesCampaignService : ISalesCampaignService
         try
         {
             parent.Region = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class SalesCampaignService : ISalesCampaignService
         return true;
     }
 
-    public async Task<bool> AssignOperator_(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOperator_(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class SalesCampaignService : ISalesCampaignService
 
             var child = await _serviceResolver.Get<Operator_Service>().Get(childRequest, cancellationToken);
             parent.Operator_ = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class SalesCampaignService : ISalesCampaignService
         return true;
     }
 
-    public async Task<bool> UnassignOperator_(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOperator_(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class SalesCampaignService : ISalesCampaignService
         try
         {
             parent.Operator_ = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -227,8 +233,10 @@ public class SalesCampaignService : ISalesCampaignService
     }
 
 
-    public async Task<bool> AddToQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SalesCampaign",
                 "AddToQuotes",
@@ -236,16 +244,18 @@ public class SalesCampaignService : ISalesCampaignService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SalesCampaign",
                 "RemoveFromQuotes",

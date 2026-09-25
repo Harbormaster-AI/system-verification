@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum ComponentCategory
 {
-    Structure=1,System=2,Avionics=3,Interior=4,LandingGear=5,Powerplant=6,Consumable=7
+    Structure = 1, System = 2, Avionics = 3, Interior = 4, LandingGear = 5, Powerplant = 6, Consumable = 7
 }
 
 /// <summary>

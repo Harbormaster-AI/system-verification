@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IAirworthinessDirectiveService {
+public interface IAirworthinessDirectiveService
+{
 
-    Task Create(AirworthinessDirective model , CancellationToken cancellationToken);
+    Task Create(AirworthinessDirective model, CancellationToken cancellationToken);
     Task<bool> Update(AirworthinessDirective model, CancellationToken cancellationToken);
     Task<AirworthinessDirective?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AirworthinessDirective>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class AirworthinessDirectiveService : IAirworthinessDirectiveService
 
     public async Task<bool> Update(AirworthinessDirective model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,8 +119,10 @@ public class AirworthinessDirectiveService : IAirworthinessDirectiveService
     }
 
 
-    public async Task<bool> AddToWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AirworthinessDirective",
                 "AddToWorkOrders",
@@ -126,16 +130,18 @@ public class AirworthinessDirectiveService : IAirworthinessDirectiveService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AirworthinessDirective",
                 "RemoveFromWorkOrders",

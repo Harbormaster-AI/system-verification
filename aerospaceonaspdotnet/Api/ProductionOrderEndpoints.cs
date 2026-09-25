@@ -31,9 +31,10 @@ public static class ProductionOrderEndpoints
     private static async Task<IResult> Create(
         ProductionOrderRequest request,
         IProductionOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProductionOrder( request );
+        var model = mapRequestToProductionOrder(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class ProductionOrderEndpoints
     private static async Task<IResult> Update(
         ProductionOrderRequest request,
         IProductionOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProductionOrder( request );
+        var model = mapRequestToProductionOrder(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class ProductionOrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IProductionOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var productionOrder = await service.Get(identifier, cancellationToken);
-        return productionOrder is null ? Results.NotFound() : Results.Ok( productionOrder );
+        return productionOrder is null ? Results.NotFound() : Results.Ok(productionOrder);
     }
 
 
     private static async Task<IResult> GetAll(
         IProductionOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ProductionOrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ProductionOrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IProductionOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class ProductionOrderEndpoints
     private static async Task<IResult> AssignVariant(
         AssociationRequest request,
         IProductionOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignVariant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class ProductionOrderEndpoints
     private static async Task<IResult> UnassignVariant(
     AssociationRequest request,
     IProductionOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignVariant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ProductionOrderEndpoints
     private static async Task<IResult> AssignPlant(
         AssociationRequest request,
         IProductionOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPlant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class ProductionOrderEndpoints
     private static async Task<IResult> UnassignPlant(
     AssociationRequest request,
     IProductionOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPlant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class ProductionOrderEndpoints
     private static async Task<IResult> AssignAircraftOrder(
         AssociationRequest request,
         IProductionOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAircraftOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class ProductionOrderEndpoints
     private static async Task<IResult> UnassignAircraftOrder(
     AssociationRequest request,
     IProductionOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAircraftOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ProductionOrder mapRequestToProductionOrder( ProductionOrderRequest request ) {
+    private static ProductionOrder mapRequestToProductionOrder(ProductionOrderRequest request)
+    {
         var model = new ProductionOrder
         {
             Id = request.Id,

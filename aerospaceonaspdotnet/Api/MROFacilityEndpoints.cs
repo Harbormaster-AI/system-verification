@@ -18,11 +18,11 @@ public static class MROFacilityEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToAppointments", AddToAppointments);
-    group.MapPut("/removeFromAppointments", RemoveFromAppointments);
+        group.MapPut("/addToAppointments", AddToAppointments);
+        group.MapPut("/removeFromAppointments", RemoveFromAppointments);
 
-    group.MapPut("/addToWorkOrders", AddToWorkOrders);
-    group.MapPut("/removeFromWorkOrders", RemoveFromWorkOrders);
+        group.MapPut("/addToWorkOrders", AddToWorkOrders);
+        group.MapPut("/removeFromWorkOrders", RemoveFromWorkOrders);
 
 
         return app;
@@ -31,9 +31,10 @@ public static class MROFacilityEndpoints
     private static async Task<IResult> Create(
         MROFacilityRequest request,
         IMROFacilityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMROFacility( request );
+        var model = mapRequestToMROFacility(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class MROFacilityEndpoints
     private static async Task<IResult> Update(
         MROFacilityRequest request,
         IMROFacilityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMROFacility( request );
+        var model = mapRequestToMROFacility(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class MROFacilityEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMROFacilityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var mROFacility = await service.Get(identifier, cancellationToken);
-        return mROFacility is null ? Results.NotFound() : Results.Ok( mROFacility );
+        return mROFacility is null ? Results.NotFound() : Results.Ok(mROFacility);
     }
 
 
     private static async Task<IResult> GetAll(
         IMROFacilityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MROFacilityResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MROFacilityResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMROFacilityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class MROFacilityEndpoints
     private static async Task<IResult> AddToAppointments(
         MultipleAssociationRequest request,
         IMROFacilityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAppointments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -104,14 +110,16 @@ public static class MROFacilityEndpoints
     private static async Task<IResult> RemoveFromAppointments(
         MultipleAssociationRequest request,
         IMROFacilityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAppointments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToWorkOrders(
         MultipleAssociationRequest request,
         IMROFacilityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToWorkOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class MROFacilityEndpoints
     private static async Task<IResult> RemoveFromWorkOrders(
         MultipleAssociationRequest request,
         IMROFacilityService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromWorkOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static MROFacility mapRequestToMROFacility( MROFacilityRequest request ) {
+    private static MROFacility mapRequestToMROFacility(MROFacilityRequest request)
+    {
         var model = new MROFacility
         {
             Id = request.Id,

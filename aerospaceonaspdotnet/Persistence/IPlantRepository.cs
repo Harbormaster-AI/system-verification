@@ -11,9 +11,9 @@ public interface IPlantRepository
     Task UpdateAsync(Plant plant, CancellationToken cancellationToken);
     Task DeleteAsync(Plant plant, CancellationToken cancellationToken);
 
-    Task AddToProductionLinesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromProductionLinesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToWarehousesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromWarehousesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToProductionLinesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromProductionLinesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToWarehousesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromWarehousesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

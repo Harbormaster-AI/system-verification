@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IPurchaseAgreementService {
+public interface IPurchaseAgreementService
+{
 
-    Task Create(PurchaseAgreement model , CancellationToken cancellationToken);
+    Task Create(PurchaseAgreement model, CancellationToken cancellationToken);
     Task<bool> Update(PurchaseAgreement model, CancellationToken cancellationToken);
     Task<PurchaseAgreement?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<PurchaseAgreement>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class PurchaseAgreementService : IPurchaseAgreementService
 
     public async Task<bool> Update(PurchaseAgreement model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,7 +118,8 @@ public class PurchaseAgreementService : IPurchaseAgreementService
         return true;
     }
 
-    public async Task<bool> AssignAircraftOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAircraftOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -134,7 +137,7 @@ public class PurchaseAgreementService : IPurchaseAgreementService
 
             var child = await _serviceResolver.Get<AircraftOrderService>().Get(childRequest, cancellationToken);
             parent.AircraftOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -146,7 +149,8 @@ public class PurchaseAgreementService : IPurchaseAgreementService
         return true;
     }
 
-    public async Task<bool> UnassignAircraftOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAircraftOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -157,7 +161,7 @@ public class PurchaseAgreementService : IPurchaseAgreementService
         try
         {
             parent.AircraftOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

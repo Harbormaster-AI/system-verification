@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IProductionCertificateService {
+public interface IProductionCertificateService
+{
 
-    Task Create(ProductionCertificate model , CancellationToken cancellationToken);
+    Task Create(ProductionCertificate model, CancellationToken cancellationToken);
     Task<bool> Update(ProductionCertificate model, CancellationToken cancellationToken);
     Task<ProductionCertificate?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ProductionCertificate>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class ProductionCertificateService : IProductionCertificateService
 
     public async Task<bool> Update(ProductionCertificate model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,7 +118,8 @@ public class ProductionCertificateService : IProductionCertificateService
         return true;
     }
 
-    public async Task<bool> AssignManufacturer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignManufacturer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -134,7 +137,7 @@ public class ProductionCertificateService : IProductionCertificateService
 
             var child = await _serviceResolver.Get<AerospaceManufacturerService>().Get(childRequest, cancellationToken);
             parent.Manufacturer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -146,7 +149,8 @@ public class ProductionCertificateService : IProductionCertificateService
         return true;
     }
 
-    public async Task<bool> UnassignManufacturer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignManufacturer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -157,7 +161,7 @@ public class ProductionCertificateService : IProductionCertificateService
         try
         {
             parent.Manufacturer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

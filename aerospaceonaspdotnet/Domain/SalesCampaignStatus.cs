@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum SalesCampaignStatus
 {
-    Prospecting=1,Proposal=2,Negotiation=3,Won=4,Lost=5
+    Prospecting = 1, Proposal = 2, Negotiation = 3, Won = 4, Lost = 5
 }
 
 /// <summary>

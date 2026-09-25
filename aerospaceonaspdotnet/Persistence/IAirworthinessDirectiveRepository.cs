@@ -11,7 +11,7 @@ public interface IAirworthinessDirectiveRepository
     Task UpdateAsync(AirworthinessDirective airworthinessDirective, CancellationToken cancellationToken);
     Task DeleteAsync(AirworthinessDirective airworthinessDirective, CancellationToken cancellationToken);
 
-    Task AddToWorkOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromWorkOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToWorkOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromWorkOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IRegistrationService {
+public interface IRegistrationService
+{
 
-    Task Create(Registration model , CancellationToken cancellationToken);
+    Task Create(Registration model, CancellationToken cancellationToken);
     Task<bool> Update(Registration model, CancellationToken cancellationToken);
     Task<Registration?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Registration>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class RegistrationService : IRegistrationService
 
     public async Task<bool> Update(Registration model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,7 +118,8 @@ public class RegistrationService : IRegistrationService
         return true;
     }
 
-    public async Task<bool> AssignAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -134,7 +137,7 @@ public class RegistrationService : IRegistrationService
 
             var child = await _serviceResolver.Get<AircraftService>().Get(childRequest, cancellationToken);
             parent.Aircraft = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -146,7 +149,8 @@ public class RegistrationService : IRegistrationService
         return true;
     }
 
-    public async Task<bool> UnassignAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -157,7 +161,7 @@ public class RegistrationService : IRegistrationService
         try
         {
             parent.Aircraft = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

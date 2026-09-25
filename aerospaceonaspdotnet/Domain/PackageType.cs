@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum PackageType
 {
-    PerformancePack=1,CabinPack=2,ConnectivityPack=3,CompliancePack=4
+    PerformancePack = 1, CabinPack = 2, ConnectivityPack = 3, CompliancePack = 4
 }
 
 /// <summary>

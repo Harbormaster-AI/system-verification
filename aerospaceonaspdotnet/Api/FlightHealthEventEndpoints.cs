@@ -27,9 +27,10 @@ public static class FlightHealthEventEndpoints
     private static async Task<IResult> Create(
         FlightHealthEventRequest request,
         IFlightHealthEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFlightHealthEvent( request );
+        var model = mapRequestToFlightHealthEvent(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class FlightHealthEventEndpoints
     private static async Task<IResult> Update(
         FlightHealthEventRequest request,
         IFlightHealthEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFlightHealthEvent( request );
+        var model = mapRequestToFlightHealthEvent(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class FlightHealthEventEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IFlightHealthEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var flightHealthEvent = await service.Get(identifier, cancellationToken);
-        return flightHealthEvent is null ? Results.NotFound() : Results.Ok( flightHealthEvent );
+        return flightHealthEvent is null ? Results.NotFound() : Results.Ok(flightHealthEvent);
     }
 
 
     private static async Task<IResult> GetAll(
         IFlightHealthEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( FlightHealthEventResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(FlightHealthEventResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IFlightHealthEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class FlightHealthEventEndpoints
     private static async Task<IResult> AssignConnectedAircraft(
         AssociationRequest request,
         IFlightHealthEventService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignConnectedAircraft(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class FlightHealthEventEndpoints
     private static async Task<IResult> UnassignConnectedAircraft(
     AssociationRequest request,
     IFlightHealthEventService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignConnectedAircraft(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static FlightHealthEvent mapRequestToFlightHealthEvent( FlightHealthEventRequest request ) {
+    private static FlightHealthEvent mapRequestToFlightHealthEvent(FlightHealthEventRequest request)
+    {
         var model = new FlightHealthEvent
         {
             Id = request.Id,

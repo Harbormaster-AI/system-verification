@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IAvionicsSuiteService {
+public interface IAvionicsSuiteService
+{
 
-    Task Create(AvionicsSuite model , CancellationToken cancellationToken);
+    Task Create(AvionicsSuite model, CancellationToken cancellationToken);
     Task<bool> Update(AvionicsSuite model, CancellationToken cancellationToken);
     Task<AvionicsSuite?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AvionicsSuite>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class AvionicsSuiteService : IAvionicsSuiteService
 
     public async Task<bool> Update(AvionicsSuite model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class AvionicsSuiteService : IAvionicsSuiteService
         return true;
     }
 
-    public async Task<bool> AssignSupplier(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSupplier(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class AvionicsSuiteService : IAvionicsSuiteService
 
             var child = await _serviceResolver.Get<SupplierService>().Get(childRequest, cancellationToken);
             parent.Supplier = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class AvionicsSuiteService : IAvionicsSuiteService
         return true;
     }
 
-    public async Task<bool> UnassignSupplier(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSupplier(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class AvionicsSuiteService : IAvionicsSuiteService
         try
         {
             parent.Supplier = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,8 +178,10 @@ public class AvionicsSuiteService : IAvionicsSuiteService
     }
 
 
-    public async Task<bool> AddToVariants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToVariants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AvionicsSuite",
                 "AddToVariants",
@@ -183,16 +189,18 @@ public class AvionicsSuiteService : IAvionicsSuiteService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromVariants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromVariants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AvionicsSuite",
                 "RemoveFromVariants",
@@ -208,8 +216,10 @@ public class AvionicsSuiteService : IAvionicsSuiteService
         return true;
     }
 
-    public async Task<bool> AddToSoftwareLoads(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSoftwareLoads(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AvionicsSuite",
                 "AddToSoftwareLoads",
@@ -217,16 +227,18 @@ public class AvionicsSuiteService : IAvionicsSuiteService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSoftwareLoads(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSoftwareLoads(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AvionicsSuite",
                 "RemoveFromSoftwareLoads",

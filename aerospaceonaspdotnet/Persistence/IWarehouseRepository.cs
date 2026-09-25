@@ -11,7 +11,7 @@ public interface IWarehouseRepository
     Task UpdateAsync(Warehouse warehouse, CancellationToken cancellationToken);
     Task DeleteAsync(Warehouse warehouse, CancellationToken cancellationToken);
 
-    Task AddToInventoryItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInventoryItemsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInventoryItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInventoryItemsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

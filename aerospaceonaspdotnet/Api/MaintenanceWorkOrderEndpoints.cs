@@ -31,9 +31,10 @@ public static class MaintenanceWorkOrderEndpoints
     private static async Task<IResult> Create(
         MaintenanceWorkOrderRequest request,
         IMaintenanceWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMaintenanceWorkOrder( request );
+        var model = mapRequestToMaintenanceWorkOrder(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class MaintenanceWorkOrderEndpoints
     private static async Task<IResult> Update(
         MaintenanceWorkOrderRequest request,
         IMaintenanceWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMaintenanceWorkOrder( request );
+        var model = mapRequestToMaintenanceWorkOrder(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class MaintenanceWorkOrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMaintenanceWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var maintenanceWorkOrder = await service.Get(identifier, cancellationToken);
-        return maintenanceWorkOrder is null ? Results.NotFound() : Results.Ok( maintenanceWorkOrder );
+        return maintenanceWorkOrder is null ? Results.NotFound() : Results.Ok(maintenanceWorkOrder);
     }
 
 
     private static async Task<IResult> GetAll(
         IMaintenanceWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MaintenanceWorkOrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MaintenanceWorkOrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMaintenanceWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class MaintenanceWorkOrderEndpoints
     private static async Task<IResult> AssignAircraft(
         AssociationRequest request,
         IMaintenanceWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAircraft(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class MaintenanceWorkOrderEndpoints
     private static async Task<IResult> UnassignAircraft(
     AssociationRequest request,
     IMaintenanceWorkOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAircraft(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class MaintenanceWorkOrderEndpoints
     private static async Task<IResult> AssignAirworthinessDirective(
         AssociationRequest request,
         IMaintenanceWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAirworthinessDirective(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class MaintenanceWorkOrderEndpoints
     private static async Task<IResult> UnassignAirworthinessDirective(
     AssociationRequest request,
     IMaintenanceWorkOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAirworthinessDirective(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class MaintenanceWorkOrderEndpoints
     private static async Task<IResult> AssignServiceBulletin(
         AssociationRequest request,
         IMaintenanceWorkOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignServiceBulletin(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class MaintenanceWorkOrderEndpoints
     private static async Task<IResult> UnassignServiceBulletin(
     AssociationRequest request,
     IMaintenanceWorkOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignServiceBulletin(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static MaintenanceWorkOrder mapRequestToMaintenanceWorkOrder( MaintenanceWorkOrderRequest request ) {
+    private static MaintenanceWorkOrder mapRequestToMaintenanceWorkOrder(MaintenanceWorkOrderRequest request)
+    {
         var model = new MaintenanceWorkOrder
         {
             Id = request.Id,

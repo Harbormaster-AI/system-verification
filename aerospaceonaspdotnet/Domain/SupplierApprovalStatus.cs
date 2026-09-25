@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum SupplierApprovalStatus
 {
-    Applied=1,Approved=2,OnHold=3,Suspended=4
+    Applied = 1, Approved = 2, OnHold = 3, Suspended = 4
 }
 
 /// <summary>

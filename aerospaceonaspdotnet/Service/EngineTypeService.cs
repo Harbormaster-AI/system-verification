@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IEngineTypeService {
+public interface IEngineTypeService
+{
 
-    Task Create(EngineType model , CancellationToken cancellationToken);
+    Task Create(EngineType model, CancellationToken cancellationToken);
     Task<bool> Update(EngineType model, CancellationToken cancellationToken);
     Task<EngineType?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<EngineType>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class EngineTypeService : IEngineTypeService
 
     public async Task<bool> Update(EngineType model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class EngineTypeService : IEngineTypeService
         return true;
     }
 
-    public async Task<bool> AssignSupplier(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSupplier(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class EngineTypeService : IEngineTypeService
 
             var child = await _serviceResolver.Get<SupplierService>().Get(childRequest, cancellationToken);
             parent.Supplier = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class EngineTypeService : IEngineTypeService
         return true;
     }
 
-    public async Task<bool> UnassignSupplier(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSupplier(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class EngineTypeService : IEngineTypeService
         try
         {
             parent.Supplier = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class EngineTypeService : IEngineTypeService
     }
 
 
-    public async Task<bool> AddToCompatibleModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCompatibleModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "EngineType",
                 "AddToCompatibleModels",
@@ -182,16 +188,18 @@ public class EngineTypeService : IEngineTypeService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCompatibleModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCompatibleModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "EngineType",
                 "RemoveFromCompatibleModels",

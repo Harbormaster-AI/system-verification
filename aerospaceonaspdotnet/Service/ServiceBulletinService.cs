@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IServiceBulletinService {
+public interface IServiceBulletinService
+{
 
-    Task Create(ServiceBulletin model , CancellationToken cancellationToken);
+    Task Create(ServiceBulletin model, CancellationToken cancellationToken);
     Task<bool> Update(ServiceBulletin model, CancellationToken cancellationToken);
     Task<ServiceBulletin?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ServiceBulletin>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ServiceBulletinService : IServiceBulletinService
 
     public async Task<bool> Update(ServiceBulletin model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,8 +121,10 @@ public class ServiceBulletinService : IServiceBulletinService
     }
 
 
-    public async Task<bool> AddToWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ServiceBulletin",
                 "AddToWorkOrders",
@@ -128,16 +132,18 @@ public class ServiceBulletinService : IServiceBulletinService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ServiceBulletin",
                 "RemoveFromWorkOrders",
@@ -153,8 +159,10 @@ public class ServiceBulletinService : IServiceBulletinService
         return true;
     }
 
-    public async Task<bool> AddToVariants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToVariants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ServiceBulletin",
                 "AddToVariants",
@@ -162,16 +170,18 @@ public class ServiceBulletinService : IServiceBulletinService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromVariants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromVariants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ServiceBulletin",
                 "RemoveFromVariants",

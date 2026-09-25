@@ -11,7 +11,7 @@ public interface IEngineTypeRepository
     Task UpdateAsync(EngineType engineType, CancellationToken cancellationToken);
     Task DeleteAsync(EngineType engineType, CancellationToken cancellationToken);
 
-    Task AddToCompatibleModelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCompatibleModelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCompatibleModelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCompatibleModelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

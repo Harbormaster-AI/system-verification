@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum EventSeverity
 {
-    Info=1,Warning=2,Critical=3
+    Info = 1, Warning = 2, Critical = 3
 }
 
 /// <summary>

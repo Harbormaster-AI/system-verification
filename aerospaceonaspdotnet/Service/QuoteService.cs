@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IQuoteService {
+public interface IQuoteService
+{
 
-    Task Create(Quote model , CancellationToken cancellationToken);
+    Task Create(Quote model, CancellationToken cancellationToken);
     Task<bool> Update(Quote model, CancellationToken cancellationToken);
     Task<Quote?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Quote>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class QuoteService : IQuoteService
 
     public async Task<bool> Update(Quote model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,7 +118,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> AssignAircraftOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAircraftOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -134,7 +137,7 @@ public class QuoteService : IQuoteService
 
             var child = await _serviceResolver.Get<AircraftOrderService>().Get(childRequest, cancellationToken);
             parent.AircraftOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -146,7 +149,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> UnassignAircraftOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAircraftOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -157,7 +161,7 @@ public class QuoteService : IQuoteService
         try
         {
             parent.AircraftOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

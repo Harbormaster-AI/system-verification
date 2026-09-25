@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum OptionCategory
 {
-    Cabin=1,Connectivity=2,Safety=3,Performance=4,Paint=5,FlightDeck=6
+    Cabin = 1, Connectivity = 2, Safety = 3, Performance = 4, Paint = 5, FlightDeck = 6
 }
 
 /// <summary>

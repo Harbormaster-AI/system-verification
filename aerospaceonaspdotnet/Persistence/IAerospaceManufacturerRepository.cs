@@ -11,13 +11,13 @@ public interface IAerospaceManufacturerRepository
     Task UpdateAsync(AerospaceManufacturer aerospaceManufacturer, CancellationToken cancellationToken);
     Task DeleteAsync(AerospaceManufacturer aerospaceManufacturer, CancellationToken cancellationToken);
 
-    Task AddToProgramsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromProgramsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToPlantsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPlantsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToSuppliersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSuppliersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToProductionCertificatesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromProductionCertificatesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToProgramsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromProgramsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPlantsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPlantsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSuppliersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSuppliersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToProductionCertificatesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromProductionCertificatesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

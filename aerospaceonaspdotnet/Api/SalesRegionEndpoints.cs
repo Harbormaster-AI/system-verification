@@ -18,11 +18,11 @@ public static class SalesRegionEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToOperators", AddToOperators);
-    group.MapPut("/removeFromOperators", RemoveFromOperators);
+        group.MapPut("/addToOperators", AddToOperators);
+        group.MapPut("/removeFromOperators", RemoveFromOperators);
 
-    group.MapPut("/addToSalesCampaigns", AddToSalesCampaigns);
-    group.MapPut("/removeFromSalesCampaigns", RemoveFromSalesCampaigns);
+        group.MapPut("/addToSalesCampaigns", AddToSalesCampaigns);
+        group.MapPut("/removeFromSalesCampaigns", RemoveFromSalesCampaigns);
 
 
         return app;
@@ -31,9 +31,10 @@ public static class SalesRegionEndpoints
     private static async Task<IResult> Create(
         SalesRegionRequest request,
         ISalesRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSalesRegion( request );
+        var model = mapRequestToSalesRegion(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class SalesRegionEndpoints
     private static async Task<IResult> Update(
         SalesRegionRequest request,
         ISalesRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSalesRegion( request );
+        var model = mapRequestToSalesRegion(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class SalesRegionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISalesRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var salesRegion = await service.Get(identifier, cancellationToken);
-        return salesRegion is null ? Results.NotFound() : Results.Ok( salesRegion );
+        return salesRegion is null ? Results.NotFound() : Results.Ok(salesRegion);
     }
 
 
     private static async Task<IResult> GetAll(
         ISalesRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SalesRegionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SalesRegionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISalesRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class SalesRegionEndpoints
     private static async Task<IResult> AddToOperators(
         MultipleAssociationRequest request,
         ISalesRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOperators(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -104,14 +110,16 @@ public static class SalesRegionEndpoints
     private static async Task<IResult> RemoveFromOperators(
         MultipleAssociationRequest request,
         ISalesRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOperators(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSalesCampaigns(
         MultipleAssociationRequest request,
         ISalesRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSalesCampaigns(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class SalesRegionEndpoints
     private static async Task<IResult> RemoveFromSalesCampaigns(
         MultipleAssociationRequest request,
         ISalesRegionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSalesCampaigns(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static SalesRegion mapRequestToSalesRegion( SalesRegionRequest request ) {
+    private static SalesRegion mapRequestToSalesRegion(SalesRegionRequest request)
+    {
         var model = new SalesRegion
         {
             Id = request.Id,

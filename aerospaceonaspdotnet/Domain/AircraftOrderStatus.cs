@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum AircraftOrderStatus
 {
-    Draft=1,Committed=2,InProduction=3,Delivered=4,Cancelled=5
+    Draft = 1, Committed = 2, InProduction = 3, Delivered = 4, Cancelled = 5
 }
 
 /// <summary>

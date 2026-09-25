@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum ConnectivityStatus
 {
-    Offline=1,Online=2,Degraded=3
+    Offline = 1, Online = 2, Degraded = 3
 }
 
 /// <summary>

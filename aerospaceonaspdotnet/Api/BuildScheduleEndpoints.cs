@@ -18,8 +18,8 @@ public static class BuildScheduleEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToProductionOrders", AddToProductionOrders);
-    group.MapPut("/removeFromProductionOrders", RemoveFromProductionOrders);
+        group.MapPut("/addToProductionOrders", AddToProductionOrders);
+        group.MapPut("/removeFromProductionOrders", RemoveFromProductionOrders);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class BuildScheduleEndpoints
     private static async Task<IResult> Create(
         BuildScheduleRequest request,
         IBuildScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBuildSchedule( request );
+        var model = mapRequestToBuildSchedule(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class BuildScheduleEndpoints
     private static async Task<IResult> Update(
         BuildScheduleRequest request,
         IBuildScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBuildSchedule( request );
+        var model = mapRequestToBuildSchedule(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class BuildScheduleEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IBuildScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var buildSchedule = await service.Get(identifier, cancellationToken);
-        return buildSchedule is null ? Results.NotFound() : Results.Ok( buildSchedule );
+        return buildSchedule is null ? Results.NotFound() : Results.Ok(buildSchedule);
     }
 
 
     private static async Task<IResult> GetAll(
         IBuildScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( BuildScheduleResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(BuildScheduleResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IBuildScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class BuildScheduleEndpoints
     private static async Task<IResult> AddToProductionOrders(
         MultipleAssociationRequest request,
         IBuildScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToProductionOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class BuildScheduleEndpoints
     private static async Task<IResult> RemoveFromProductionOrders(
         MultipleAssociationRequest request,
         IBuildScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromProductionOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static BuildSchedule mapRequestToBuildSchedule( BuildScheduleRequest request ) {
+    private static BuildSchedule mapRequestToBuildSchedule(BuildScheduleRequest request)
+    {
         var model = new BuildSchedule
         {
             Id = request.Id,

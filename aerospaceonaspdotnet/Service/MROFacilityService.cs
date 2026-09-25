@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IMROFacilityService {
+public interface IMROFacilityService
+{
 
-    Task Create(MROFacility model , CancellationToken cancellationToken);
+    Task Create(MROFacility model, CancellationToken cancellationToken);
     Task<bool> Update(MROFacility model, CancellationToken cancellationToken);
     Task<MROFacility?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<MROFacility>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class MROFacilityService : IMROFacilityService
 
     public async Task<bool> Update(MROFacility model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,8 +122,10 @@ public class MROFacilityService : IMROFacilityService
     }
 
 
-    public async Task<bool> AddToAppointments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAppointments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MROFacility",
                 "AddToAppointments",
@@ -129,16 +133,18 @@ public class MROFacilityService : IMROFacilityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAppointments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAppointments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MROFacility",
                 "RemoveFromAppointments",
@@ -154,8 +160,10 @@ public class MROFacilityService : IMROFacilityService
         return true;
     }
 
-    public async Task<bool> AddToWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MROFacility",
                 "AddToWorkOrders",
@@ -163,16 +171,18 @@ public class MROFacilityService : IMROFacilityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromWorkOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MROFacility",
                 "RemoveFromWorkOrders",

@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum ProductionLineType
 {
-    FinalAssembly=1,SubAssembly=2,Integration=3,TestAndDelivery=4
+    FinalAssembly = 1, SubAssembly = 2, Integration = 3, TestAndDelivery = 4
 }
 
 /// <summary>

@@ -11,7 +11,7 @@ public interface IBuildScheduleRepository
     Task UpdateAsync(BuildSchedule buildSchedule, CancellationToken cancellationToken);
     Task DeleteAsync(BuildSchedule buildSchedule, CancellationToken cancellationToken);
 
-    Task AddToProductionOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromProductionOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToProductionOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromProductionOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

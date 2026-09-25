@@ -20,8 +20,8 @@ public static class LandingGearEndpoints
         group.MapPut("/assignSupplier", AssignSupplier);
         group.MapPut("/unassignSupplier", UnassignSupplier);
 
-    group.MapPut("/addToVariants", AddToVariants);
-    group.MapPut("/removeFromVariants", RemoveFromVariants);
+        group.MapPut("/addToVariants", AddToVariants);
+        group.MapPut("/removeFromVariants", RemoveFromVariants);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class LandingGearEndpoints
     private static async Task<IResult> Create(
         LandingGearRequest request,
         ILandingGearService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLandingGear( request );
+        var model = mapRequestToLandingGear(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class LandingGearEndpoints
     private static async Task<IResult> Update(
         LandingGearRequest request,
         ILandingGearService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLandingGear( request );
+        var model = mapRequestToLandingGear(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class LandingGearEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ILandingGearService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var landingGear = await service.Get(identifier, cancellationToken);
-        return landingGear is null ? Results.NotFound() : Results.Ok( landingGear );
+        return landingGear is null ? Results.NotFound() : Results.Ok(landingGear);
     }
 
 
     private static async Task<IResult> GetAll(
         ILandingGearService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( LandingGearResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(LandingGearResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ILandingGearService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class LandingGearEndpoints
     private static async Task<IResult> AssignSupplier(
         AssociationRequest request,
         ILandingGearService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSupplier(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class LandingGearEndpoints
     private static async Task<IResult> UnassignSupplier(
     AssociationRequest request,
     ILandingGearService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSupplier(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class LandingGearEndpoints
     private static async Task<IResult> AddToVariants(
         MultipleAssociationRequest request,
         ILandingGearService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToVariants(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class LandingGearEndpoints
     private static async Task<IResult> RemoveFromVariants(
         MultipleAssociationRequest request,
         ILandingGearService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromVariants(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static LandingGear mapRequestToLandingGear( LandingGearRequest request ) {
+    private static LandingGear mapRequestToLandingGear(LandingGearRequest request)
+    {
         var model = new LandingGear
         {
             Id = request.Id,

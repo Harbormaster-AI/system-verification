@@ -11,7 +11,7 @@ public interface IAircraftFamilyRepository
     Task UpdateAsync(AircraftFamily aircraftFamily, CancellationToken cancellationToken);
     Task DeleteAsync(AircraftFamily aircraftFamily, CancellationToken cancellationToken);
 
-    Task AddToAircraftModelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAircraftModelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAircraftModelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAircraftModelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

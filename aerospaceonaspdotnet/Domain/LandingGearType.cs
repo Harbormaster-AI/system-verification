@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum LandingGearType
 {
-    Tricycle=1,Tandem=2,Taildragger=3,Skid=4,Floats=5,Retractable=6
+    Tricycle = 1, Tandem = 2, Taildragger = 3, Skid = 4, Floats = 5, Retractable = 6
 }
 
 /// <summary>

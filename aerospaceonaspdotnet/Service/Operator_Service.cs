@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IOperator_Service {
+public interface IOperator_Service
+{
 
-    Task Create(Operator_ model , CancellationToken cancellationToken);
+    Task Create(Operator_ model, CancellationToken cancellationToken);
     Task<bool> Update(Operator_ model, CancellationToken cancellationToken);
     Task<Operator_?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Operator_>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class Operator_Service : IOperator_Service
 
     public async Task<bool> Update(Operator_ model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class Operator_Service : IOperator_Service
         return true;
     }
 
-    public async Task<bool> AssignSalesRegion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSalesRegion(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class Operator_Service : IOperator_Service
 
             var child = await _serviceResolver.Get<SalesRegionService>().Get(childRequest, cancellationToken);
             parent.SalesRegion = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class Operator_Service : IOperator_Service
         return true;
     }
 
-    public async Task<bool> UnassignSalesRegion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSalesRegion(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class Operator_Service : IOperator_Service
         try
         {
             parent.SalesRegion = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class Operator_Service : IOperator_Service
     }
 
 
-    public async Task<bool> AddToAircraftOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAircraftOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Operator_",
                 "AddToAircraftOrders",
@@ -184,16 +190,18 @@ public class Operator_Service : IOperator_Service
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAircraftOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAircraftOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Operator_",
                 "RemoveFromAircraftOrders",
@@ -209,8 +217,10 @@ public class Operator_Service : IOperator_Service
         return true;
     }
 
-    public async Task<bool> AddToOperatedAircraft(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOperatedAircraft(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Operator_",
                 "AddToOperatedAircraft",
@@ -218,16 +228,18 @@ public class Operator_Service : IOperator_Service
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOperatedAircraft(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOperatedAircraft(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Operator_",
                 "RemoveFromOperatedAircraft",

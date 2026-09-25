@@ -11,9 +11,9 @@ public interface IConnectedAircraftRepository
     Task UpdateAsync(ConnectedAircraft connectedAircraft, CancellationToken cancellationToken);
     Task DeleteAsync(ConnectedAircraft connectedAircraft, CancellationToken cancellationToken);
 
-    Task AddToFlightHealthEventsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromFlightHealthEventsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToSoftwareLoadsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSoftwareLoadsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToFlightHealthEventsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromFlightHealthEventsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSoftwareLoadsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSoftwareLoadsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

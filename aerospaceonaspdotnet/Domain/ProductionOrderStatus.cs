@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum ProductionOrderStatus
 {
-    Planned=1,Released=2,InAssembly=3,FlightTest=4,Completed=5
+    Planned = 1, Released = 2, InAssembly = 3, FlightTest = 4, Completed = 5
 }
 
 /// <summary>

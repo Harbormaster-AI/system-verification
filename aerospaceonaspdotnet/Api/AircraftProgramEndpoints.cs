@@ -22,11 +22,11 @@ public static class AircraftProgramEndpoints
         group.MapPut("/assignTypeCertificate", AssignTypeCertificate);
         group.MapPut("/unassignTypeCertificate", UnassignTypeCertificate);
 
-    group.MapPut("/addToAircraftFamilies", AddToAircraftFamilies);
-    group.MapPut("/removeFromAircraftFamilies", RemoveFromAircraftFamilies);
+        group.MapPut("/addToAircraftFamilies", AddToAircraftFamilies);
+        group.MapPut("/removeFromAircraftFamilies", RemoveFromAircraftFamilies);
 
-    group.MapPut("/addToKeySuppliers", AddToKeySuppliers);
-    group.MapPut("/removeFromKeySuppliers", RemoveFromKeySuppliers);
+        group.MapPut("/addToKeySuppliers", AddToKeySuppliers);
+        group.MapPut("/removeFromKeySuppliers", RemoveFromKeySuppliers);
 
 
         return app;
@@ -35,9 +35,10 @@ public static class AircraftProgramEndpoints
     private static async Task<IResult> Create(
         AircraftProgramRequest request,
         IAircraftProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAircraftProgram( request );
+        var model = mapRequestToAircraftProgram(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class AircraftProgramEndpoints
     private static async Task<IResult> Update(
         AircraftProgramRequest request,
         IAircraftProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAircraftProgram( request );
+        var model = mapRequestToAircraftProgram(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class AircraftProgramEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAircraftProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var aircraftProgram = await service.Get(identifier, cancellationToken);
-        return aircraftProgram is null ? Results.NotFound() : Results.Ok( aircraftProgram );
+        return aircraftProgram is null ? Results.NotFound() : Results.Ok(aircraftProgram);
     }
 
 
     private static async Task<IResult> GetAll(
         IAircraftProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AircraftProgramResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AircraftProgramResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAircraftProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class AircraftProgramEndpoints
     private static async Task<IResult> AssignManufacturer(
         AssociationRequest request,
         IAircraftProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignManufacturer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class AircraftProgramEndpoints
     private static async Task<IResult> UnassignManufacturer(
     AssociationRequest request,
     IAircraftProgramService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignManufacturer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -115,7 +122,8 @@ public static class AircraftProgramEndpoints
     private static async Task<IResult> AssignTypeCertificate(
         AssociationRequest request,
         IAircraftProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTypeCertificate(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +131,8 @@ public static class AircraftProgramEndpoints
     private static async Task<IResult> UnassignTypeCertificate(
     AssociationRequest request,
     IAircraftProgramService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTypeCertificate(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +141,8 @@ public static class AircraftProgramEndpoints
     private static async Task<IResult> AddToAircraftFamilies(
         MultipleAssociationRequest request,
         IAircraftProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAircraftFamilies(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class AircraftProgramEndpoints
     private static async Task<IResult> RemoveFromAircraftFamilies(
         MultipleAssociationRequest request,
         IAircraftProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAircraftFamilies(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToKeySuppliers(
         MultipleAssociationRequest request,
         IAircraftProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToKeySuppliers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class AircraftProgramEndpoints
     private static async Task<IResult> RemoveFromKeySuppliers(
         MultipleAssociationRequest request,
         IAircraftProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromKeySuppliers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static AircraftProgram mapRequestToAircraftProgram( AircraftProgramRequest request ) {
+    private static AircraftProgram mapRequestToAircraftProgram(AircraftProgramRequest request)
+    {
         var model = new AircraftProgram
         {
             Id = request.Id,

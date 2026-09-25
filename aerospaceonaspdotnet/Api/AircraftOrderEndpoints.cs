@@ -33,9 +33,10 @@ public static class AircraftOrderEndpoints
     private static async Task<IResult> Create(
         AircraftOrderRequest request,
         IAircraftOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAircraftOrder( request );
+        var model = mapRequestToAircraftOrder(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class AircraftOrderEndpoints
     private static async Task<IResult> Update(
         AircraftOrderRequest request,
         IAircraftOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAircraftOrder( request );
+        var model = mapRequestToAircraftOrder(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class AircraftOrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAircraftOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var aircraftOrder = await service.Get(identifier, cancellationToken);
-        return aircraftOrder is null ? Results.NotFound() : Results.Ok( aircraftOrder );
+        return aircraftOrder is null ? Results.NotFound() : Results.Ok(aircraftOrder);
     }
 
 
     private static async Task<IResult> GetAll(
         IAircraftOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AircraftOrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AircraftOrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAircraftOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class AircraftOrderEndpoints
     private static async Task<IResult> AssignOperator_(
         AssociationRequest request,
         IAircraftOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOperator_(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class AircraftOrderEndpoints
     private static async Task<IResult> UnassignOperator_(
     AssociationRequest request,
     IAircraftOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOperator_(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class AircraftOrderEndpoints
     private static async Task<IResult> AssignVariant(
         AssociationRequest request,
         IAircraftOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignVariant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class AircraftOrderEndpoints
     private static async Task<IResult> UnassignVariant(
     AssociationRequest request,
     IAircraftOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignVariant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class AircraftOrderEndpoints
     private static async Task<IResult> AssignQuote(
         AssociationRequest request,
         IAircraftOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignQuote(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class AircraftOrderEndpoints
     private static async Task<IResult> UnassignQuote(
     AssociationRequest request,
     IAircraftOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignQuote(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class AircraftOrderEndpoints
     private static async Task<IResult> AssignPurchaseAgreement(
         AssociationRequest request,
         IAircraftOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPurchaseAgreement(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class AircraftOrderEndpoints
     private static async Task<IResult> UnassignPurchaseAgreement(
     AssociationRequest request,
     IAircraftOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPurchaseAgreement(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static AircraftOrder mapRequestToAircraftOrder( AircraftOrderRequest request ) {
+    private static AircraftOrder mapRequestToAircraftOrder(AircraftOrderRequest request)
+    {
         var model = new AircraftOrder
         {
             Id = request.Id,

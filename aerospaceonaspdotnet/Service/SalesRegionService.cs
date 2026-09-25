@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface ISalesRegionService {
+public interface ISalesRegionService
+{
 
-    Task Create(SalesRegion model , CancellationToken cancellationToken);
+    Task Create(SalesRegion model, CancellationToken cancellationToken);
     Task<bool> Update(SalesRegion model, CancellationToken cancellationToken);
     Task<SalesRegion?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SalesRegion>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class SalesRegionService : ISalesRegionService
 
     public async Task<bool> Update(SalesRegion model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,8 +121,10 @@ public class SalesRegionService : ISalesRegionService
     }
 
 
-    public async Task<bool> AddToOperators(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOperators(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SalesRegion",
                 "AddToOperators",
@@ -128,16 +132,18 @@ public class SalesRegionService : ISalesRegionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOperators(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOperators(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SalesRegion",
                 "RemoveFromOperators",
@@ -153,8 +159,10 @@ public class SalesRegionService : ISalesRegionService
         return true;
     }
 
-    public async Task<bool> AddToSalesCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSalesCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SalesRegion",
                 "AddToSalesCampaigns",
@@ -162,16 +170,18 @@ public class SalesRegionService : ISalesRegionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSalesCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSalesCampaigns(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SalesRegion",
                 "RemoveFromSalesCampaigns",

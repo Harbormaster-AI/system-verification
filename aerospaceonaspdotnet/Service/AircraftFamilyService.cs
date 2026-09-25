@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IAircraftFamilyService {
+public interface IAircraftFamilyService
+{
 
-    Task Create(AircraftFamily model , CancellationToken cancellationToken);
+    Task Create(AircraftFamily model, CancellationToken cancellationToken);
     Task<bool> Update(AircraftFamily model, CancellationToken cancellationToken);
     Task<AircraftFamily?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AircraftFamily>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class AircraftFamilyService : IAircraftFamilyService
 
     public async Task<bool> Update(AircraftFamily model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class AircraftFamilyService : IAircraftFamilyService
         return true;
     }
 
-    public async Task<bool> AssignProgram(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProgram(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class AircraftFamilyService : IAircraftFamilyService
 
             var child = await _serviceResolver.Get<AircraftProgramService>().Get(childRequest, cancellationToken);
             parent.Program = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class AircraftFamilyService : IAircraftFamilyService
         return true;
     }
 
-    public async Task<bool> UnassignProgram(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProgram(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class AircraftFamilyService : IAircraftFamilyService
         try
         {
             parent.Program = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,8 +176,10 @@ public class AircraftFamilyService : IAircraftFamilyService
     }
 
 
-    public async Task<bool> AddToAircraftModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAircraftModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AircraftFamily",
                 "AddToAircraftModels",
@@ -181,16 +187,18 @@ public class AircraftFamilyService : IAircraftFamilyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAircraftModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAircraftModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AircraftFamily",
                 "RemoveFromAircraftModels",

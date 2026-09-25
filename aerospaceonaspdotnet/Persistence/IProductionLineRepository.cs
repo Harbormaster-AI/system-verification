@@ -11,7 +11,7 @@ public interface IProductionLineRepository
     Task UpdateAsync(ProductionLine productionLine, CancellationToken cancellationToken);
     Task DeleteAsync(ProductionLine productionLine, CancellationToken cancellationToken);
 
-    Task AddToWorkCentersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromWorkCentersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToWorkCentersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromWorkCentersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

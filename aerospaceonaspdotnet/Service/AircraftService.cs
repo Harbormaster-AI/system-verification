@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IAircraftService {
+public interface IAircraftService
+{
 
-    Task Create(Aircraft model , CancellationToken cancellationToken);
+    Task Create(Aircraft model, CancellationToken cancellationToken);
     Task<bool> Update(Aircraft model, CancellationToken cancellationToken);
     Task<Aircraft?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Aircraft>> GetAll(CancellationToken cancellationToken);
@@ -73,7 +74,8 @@ public class AircraftService : IAircraftService
 
     public async Task<bool> Update(Aircraft model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -128,7 +130,8 @@ public class AircraftService : IAircraftService
         return true;
     }
 
-    public async Task<bool> AssignVariant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignVariant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -146,7 +149,7 @@ public class AircraftService : IAircraftService
 
             var child = await _serviceResolver.Get<AircraftVariantService>().Get(childRequest, cancellationToken);
             parent.Variant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -158,7 +161,8 @@ public class AircraftService : IAircraftService
         return true;
     }
 
-    public async Task<bool> UnassignVariant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignVariant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -169,7 +173,7 @@ public class AircraftService : IAircraftService
         try
         {
             parent.Variant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -181,7 +185,8 @@ public class AircraftService : IAircraftService
         return true;
     }
 
-    public async Task<bool> AssignOperator_(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOperator_(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -199,7 +204,7 @@ public class AircraftService : IAircraftService
 
             var child = await _serviceResolver.Get<Operator_Service>().Get(childRequest, cancellationToken);
             parent.Operator_ = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -211,7 +216,8 @@ public class AircraftService : IAircraftService
         return true;
     }
 
-    public async Task<bool> UnassignOperator_(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOperator_(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -222,7 +228,7 @@ public class AircraftService : IAircraftService
         try
         {
             parent.Operator_ = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -234,7 +240,8 @@ public class AircraftService : IAircraftService
         return true;
     }
 
-    public async Task<bool> AssignRegistration(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRegistration(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -252,7 +259,7 @@ public class AircraftService : IAircraftService
 
             var child = await _serviceResolver.Get<RegistrationService>().Get(childRequest, cancellationToken);
             parent.Registration = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -264,7 +271,8 @@ public class AircraftService : IAircraftService
         return true;
     }
 
-    public async Task<bool> UnassignRegistration(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRegistration(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -275,7 +283,7 @@ public class AircraftService : IAircraftService
         try
         {
             parent.Registration = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -287,7 +295,8 @@ public class AircraftService : IAircraftService
         return true;
     }
 
-    public async Task<bool> AssignWarranty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWarranty(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -305,7 +314,7 @@ public class AircraftService : IAircraftService
 
             var child = await _serviceResolver.Get<WarrantyService>().Get(childRequest, cancellationToken);
             parent.Warranty = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -317,7 +326,8 @@ public class AircraftService : IAircraftService
         return true;
     }
 
-    public async Task<bool> UnassignWarranty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWarranty(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -328,7 +338,7 @@ public class AircraftService : IAircraftService
         try
         {
             parent.Warranty = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -340,7 +350,8 @@ public class AircraftService : IAircraftService
         return true;
     }
 
-    public async Task<bool> AssignConnectedAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignConnectedAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -358,7 +369,7 @@ public class AircraftService : IAircraftService
 
             var child = await _serviceResolver.Get<ConnectedAircraftService>().Get(childRequest, cancellationToken);
             parent.ConnectedAircraft = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -370,7 +381,8 @@ public class AircraftService : IAircraftService
         return true;
     }
 
-    public async Task<bool> UnassignConnectedAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignConnectedAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -381,7 +393,7 @@ public class AircraftService : IAircraftService
         try
         {
             parent.ConnectedAircraft = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -393,7 +405,8 @@ public class AircraftService : IAircraftService
         return true;
     }
 
-    public async Task<bool> AssignCabinLayout(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCabinLayout(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -411,7 +424,7 @@ public class AircraftService : IAircraftService
 
             var child = await _serviceResolver.Get<CabinLayoutService>().Get(childRequest, cancellationToken);
             parent.CabinLayout = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -423,7 +436,8 @@ public class AircraftService : IAircraftService
         return true;
     }
 
-    public async Task<bool> UnassignCabinLayout(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCabinLayout(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -434,7 +448,7 @@ public class AircraftService : IAircraftService
         try
         {
             parent.CabinLayout = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -447,8 +461,10 @@ public class AircraftService : IAircraftService
     }
 
 
-    public async Task<bool> AddToMaintenanceRecords(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToMaintenanceRecords(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Aircraft",
                 "AddToMaintenanceRecords",
@@ -456,16 +472,18 @@ public class AircraftService : IAircraftService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromMaintenanceRecords(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromMaintenanceRecords(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Aircraft",
                 "RemoveFromMaintenanceRecords",

@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IAircraftPackageService {
+public interface IAircraftPackageService
+{
 
-    Task Create(AircraftPackage model , CancellationToken cancellationToken);
+    Task Create(AircraftPackage model, CancellationToken cancellationToken);
     Task<bool> Update(AircraftPackage model, CancellationToken cancellationToken);
     Task<AircraftPackage?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AircraftPackage>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class AircraftPackageService : IAircraftPackageService
 
     public async Task<bool> Update(AircraftPackage model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,8 +121,10 @@ public class AircraftPackageService : IAircraftPackageService
     }
 
 
-    public async Task<bool> AddToOptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AircraftPackage",
                 "AddToOptions",
@@ -128,16 +132,18 @@ public class AircraftPackageService : IAircraftPackageService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOptions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOptions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AircraftPackage",
                 "RemoveFromOptions",
@@ -153,8 +159,10 @@ public class AircraftPackageService : IAircraftPackageService
         return true;
     }
 
-    public async Task<bool> AddToVariants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToVariants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AircraftPackage",
                 "AddToVariants",
@@ -162,16 +170,18 @@ public class AircraftPackageService : IAircraftPackageService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromVariants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromVariants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AircraftPackage",
                 "RemoveFromVariants",

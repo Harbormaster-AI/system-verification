@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IConnectedAircraftService {
+public interface IConnectedAircraftService
+{
 
-    Task Create(ConnectedAircraft model , CancellationToken cancellationToken);
+    Task Create(ConnectedAircraft model, CancellationToken cancellationToken);
     Task<bool> Update(ConnectedAircraft model, CancellationToken cancellationToken);
     Task<ConnectedAircraft?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ConnectedAircraft>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ConnectedAircraftService : IConnectedAircraftService
 
     public async Task<bool> Update(ConnectedAircraft model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class ConnectedAircraftService : IConnectedAircraftService
         return true;
     }
 
-    public async Task<bool> AssignAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class ConnectedAircraftService : IConnectedAircraftService
 
             var child = await _serviceResolver.Get<AircraftService>().Get(childRequest, cancellationToken);
             parent.Aircraft = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class ConnectedAircraftService : IConnectedAircraftService
         return true;
     }
 
-    public async Task<bool> UnassignAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class ConnectedAircraftService : IConnectedAircraftService
         try
         {
             parent.Aircraft = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,8 +178,10 @@ public class ConnectedAircraftService : IConnectedAircraftService
     }
 
 
-    public async Task<bool> AddToFlightHealthEvents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFlightHealthEvents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ConnectedAircraft",
                 "AddToFlightHealthEvents",
@@ -183,16 +189,18 @@ public class ConnectedAircraftService : IConnectedAircraftService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFlightHealthEvents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFlightHealthEvents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ConnectedAircraft",
                 "RemoveFromFlightHealthEvents",
@@ -208,8 +216,10 @@ public class ConnectedAircraftService : IConnectedAircraftService
         return true;
     }
 
-    public async Task<bool> AddToSoftwareLoads(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSoftwareLoads(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ConnectedAircraft",
                 "AddToSoftwareLoads",
@@ -217,16 +227,18 @@ public class ConnectedAircraftService : IConnectedAircraftService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSoftwareLoads(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSoftwareLoads(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ConnectedAircraft",
                 "RemoveFromSoftwareLoads",

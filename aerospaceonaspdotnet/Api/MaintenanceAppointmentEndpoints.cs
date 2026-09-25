@@ -31,9 +31,10 @@ public static class MaintenanceAppointmentEndpoints
     private static async Task<IResult> Create(
         MaintenanceAppointmentRequest request,
         IMaintenanceAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMaintenanceAppointment( request );
+        var model = mapRequestToMaintenanceAppointment(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class MaintenanceAppointmentEndpoints
     private static async Task<IResult> Update(
         MaintenanceAppointmentRequest request,
         IMaintenanceAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMaintenanceAppointment( request );
+        var model = mapRequestToMaintenanceAppointment(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class MaintenanceAppointmentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMaintenanceAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var maintenanceAppointment = await service.Get(identifier, cancellationToken);
-        return maintenanceAppointment is null ? Results.NotFound() : Results.Ok( maintenanceAppointment );
+        return maintenanceAppointment is null ? Results.NotFound() : Results.Ok(maintenanceAppointment);
     }
 
 
     private static async Task<IResult> GetAll(
         IMaintenanceAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MaintenanceAppointmentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MaintenanceAppointmentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMaintenanceAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class MaintenanceAppointmentEndpoints
     private static async Task<IResult> AssignAircraft(
         AssociationRequest request,
         IMaintenanceAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAircraft(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class MaintenanceAppointmentEndpoints
     private static async Task<IResult> UnassignAircraft(
     AssociationRequest request,
     IMaintenanceAppointmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAircraft(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class MaintenanceAppointmentEndpoints
     private static async Task<IResult> AssignMroFacility(
         AssociationRequest request,
         IMaintenanceAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMroFacility(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class MaintenanceAppointmentEndpoints
     private static async Task<IResult> UnassignMroFacility(
     AssociationRequest request,
     IMaintenanceAppointmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMroFacility(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class MaintenanceAppointmentEndpoints
     private static async Task<IResult> AssignWorkOrder(
         AssociationRequest request,
         IMaintenanceAppointmentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class MaintenanceAppointmentEndpoints
     private static async Task<IResult> UnassignWorkOrder(
     AssociationRequest request,
     IMaintenanceAppointmentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static MaintenanceAppointment mapRequestToMaintenanceAppointment( MaintenanceAppointmentRequest request ) {
+    private static MaintenanceAppointment mapRequestToMaintenanceAppointment(MaintenanceAppointmentRequest request)
+    {
         var model = new MaintenanceAppointment
         {
             Id = request.Id,

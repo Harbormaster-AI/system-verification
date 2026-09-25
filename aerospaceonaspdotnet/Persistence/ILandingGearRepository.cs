@@ -11,7 +11,7 @@ public interface ILandingGearRepository
     Task UpdateAsync(LandingGear landingGear, CancellationToken cancellationToken);
     Task DeleteAsync(LandingGear landingGear, CancellationToken cancellationToken);
 
-    Task AddToVariantsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromVariantsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToVariantsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromVariantsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

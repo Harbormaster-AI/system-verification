@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IAircraftModelService {
+public interface IAircraftModelService
+{
 
-    Task Create(AircraftModel model , CancellationToken cancellationToken);
+    Task Create(AircraftModel model, CancellationToken cancellationToken);
     Task<bool> Update(AircraftModel model, CancellationToken cancellationToken);
     Task<AircraftModel?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AircraftModel>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class AircraftModelService : IAircraftModelService
 
     public async Task<bool> Update(AircraftModel model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class AircraftModelService : IAircraftModelService
         return true;
     }
 
-    public async Task<bool> AssignFamily(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFamily(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class AircraftModelService : IAircraftModelService
 
             var child = await _serviceResolver.Get<AircraftFamilyService>().Get(childRequest, cancellationToken);
             parent.Family = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class AircraftModelService : IAircraftModelService
         return true;
     }
 
-    public async Task<bool> UnassignFamily(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFamily(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class AircraftModelService : IAircraftModelService
         try
         {
             parent.Family = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class AircraftModelService : IAircraftModelService
     }
 
 
-    public async Task<bool> AddToVariants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToVariants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AircraftModel",
                 "AddToVariants",
@@ -184,16 +190,18 @@ public class AircraftModelService : IAircraftModelService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromVariants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromVariants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AircraftModel",
                 "RemoveFromVariants",
@@ -209,8 +217,10 @@ public class AircraftModelService : IAircraftModelService
         return true;
     }
 
-    public async Task<bool> AddToEngineTypes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEngineTypes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AircraftModel",
                 "AddToEngineTypes",
@@ -218,16 +228,18 @@ public class AircraftModelService : IAircraftModelService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEngineTypes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEngineTypes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AircraftModel",
                 "RemoveFromEngineTypes",

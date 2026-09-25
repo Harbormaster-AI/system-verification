@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum ServiceBulletinCategory
 {
-    Recommended=1,Optional=2,Alert=3,Mandatory=4
+    Recommended = 1, Optional = 2, Alert = 3, Mandatory = 4
 }
 
 /// <summary>

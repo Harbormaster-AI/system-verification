@@ -27,9 +27,10 @@ public static class ProductionCertificateEndpoints
     private static async Task<IResult> Create(
         ProductionCertificateRequest request,
         IProductionCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProductionCertificate( request );
+        var model = mapRequestToProductionCertificate(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class ProductionCertificateEndpoints
     private static async Task<IResult> Update(
         ProductionCertificateRequest request,
         IProductionCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProductionCertificate( request );
+        var model = mapRequestToProductionCertificate(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class ProductionCertificateEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IProductionCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var productionCertificate = await service.Get(identifier, cancellationToken);
-        return productionCertificate is null ? Results.NotFound() : Results.Ok( productionCertificate );
+        return productionCertificate is null ? Results.NotFound() : Results.Ok(productionCertificate);
     }
 
 
     private static async Task<IResult> GetAll(
         IProductionCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ProductionCertificateResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ProductionCertificateResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IProductionCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class ProductionCertificateEndpoints
     private static async Task<IResult> AssignManufacturer(
         AssociationRequest request,
         IProductionCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignManufacturer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class ProductionCertificateEndpoints
     private static async Task<IResult> UnassignManufacturer(
     AssociationRequest request,
     IProductionCertificateService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignManufacturer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ProductionCertificate mapRequestToProductionCertificate( ProductionCertificateRequest request ) {
+    private static ProductionCertificate mapRequestToProductionCertificate(ProductionCertificateRequest request)
+    {
         var model = new ProductionCertificate
         {
             Id = request.Id,

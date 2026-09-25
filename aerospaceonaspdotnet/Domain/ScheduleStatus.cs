@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum ScheduleStatus
 {
-    Draft=1,Published=2,Revised=3,Closed=4
+    Draft = 1, Published = 2, Revised = 3, Closed = 4
 }
 
 /// <summary>

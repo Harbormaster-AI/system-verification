@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum SoftwareLoadType
 {
-    FlightDeckSoftware=1,MaintenanceTools=2,CabinIFE=3,ConnectivityModem=4
+    FlightDeckSoftware = 1, MaintenanceTools = 2, CabinIFE = 3, ConnectivityModem = 4
 }
 
 /// <summary>

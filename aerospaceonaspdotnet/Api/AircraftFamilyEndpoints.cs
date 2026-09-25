@@ -20,8 +20,8 @@ public static class AircraftFamilyEndpoints
         group.MapPut("/assignProgram", AssignProgram);
         group.MapPut("/unassignProgram", UnassignProgram);
 
-    group.MapPut("/addToAircraftModels", AddToAircraftModels);
-    group.MapPut("/removeFromAircraftModels", RemoveFromAircraftModels);
+        group.MapPut("/addToAircraftModels", AddToAircraftModels);
+        group.MapPut("/removeFromAircraftModels", RemoveFromAircraftModels);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class AircraftFamilyEndpoints
     private static async Task<IResult> Create(
         AircraftFamilyRequest request,
         IAircraftFamilyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAircraftFamily( request );
+        var model = mapRequestToAircraftFamily(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class AircraftFamilyEndpoints
     private static async Task<IResult> Update(
         AircraftFamilyRequest request,
         IAircraftFamilyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAircraftFamily( request );
+        var model = mapRequestToAircraftFamily(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class AircraftFamilyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAircraftFamilyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var aircraftFamily = await service.Get(identifier, cancellationToken);
-        return aircraftFamily is null ? Results.NotFound() : Results.Ok( aircraftFamily );
+        return aircraftFamily is null ? Results.NotFound() : Results.Ok(aircraftFamily);
     }
 
 
     private static async Task<IResult> GetAll(
         IAircraftFamilyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AircraftFamilyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AircraftFamilyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAircraftFamilyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class AircraftFamilyEndpoints
     private static async Task<IResult> AssignProgram(
         AssociationRequest request,
         IAircraftFamilyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProgram(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class AircraftFamilyEndpoints
     private static async Task<IResult> UnassignProgram(
     AssociationRequest request,
     IAircraftFamilyService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProgram(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class AircraftFamilyEndpoints
     private static async Task<IResult> AddToAircraftModels(
         MultipleAssociationRequest request,
         IAircraftFamilyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAircraftModels(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class AircraftFamilyEndpoints
     private static async Task<IResult> RemoveFromAircraftModels(
         MultipleAssociationRequest request,
         IAircraftFamilyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAircraftModels(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static AircraftFamily mapRequestToAircraftFamily( AircraftFamilyRequest request ) {
+    private static AircraftFamily mapRequestToAircraftFamily(AircraftFamilyRequest request)
+    {
         var model = new AircraftFamily
         {
             Id = request.Id,

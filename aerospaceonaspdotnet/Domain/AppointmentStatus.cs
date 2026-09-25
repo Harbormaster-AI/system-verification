@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum AppointmentStatus
 {
-    Scheduled=1,InProgress=2,Completed=3,Cancelled=4,Deferred=5
+    Scheduled = 1, InProgress = 2, Completed = 3, Cancelled = 4, Deferred = 5
 }
 
 /// <summary>

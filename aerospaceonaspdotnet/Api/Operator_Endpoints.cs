@@ -20,11 +20,11 @@ public static class Operator_Endpoints
         group.MapPut("/assignSalesRegion", AssignSalesRegion);
         group.MapPut("/unassignSalesRegion", UnassignSalesRegion);
 
-    group.MapPut("/addToAircraftOrders", AddToAircraftOrders);
-    group.MapPut("/removeFromAircraftOrders", RemoveFromAircraftOrders);
+        group.MapPut("/addToAircraftOrders", AddToAircraftOrders);
+        group.MapPut("/removeFromAircraftOrders", RemoveFromAircraftOrders);
 
-    group.MapPut("/addToOperatedAircraft", AddToOperatedAircraft);
-    group.MapPut("/removeFromOperatedAircraft", RemoveFromOperatedAircraft);
+        group.MapPut("/addToOperatedAircraft", AddToOperatedAircraft);
+        group.MapPut("/removeFromOperatedAircraft", RemoveFromOperatedAircraft);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class Operator_Endpoints
     private static async Task<IResult> Create(
         Operator_Request request,
         IOperator_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOperator_( request );
+        var model = mapRequestToOperator_(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class Operator_Endpoints
     private static async Task<IResult> Update(
         Operator_Request request,
         IOperator_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToOperator_( request );
+        var model = mapRequestToOperator_(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class Operator_Endpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IOperator_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var operator_ = await service.Get(identifier, cancellationToken);
-        return operator_ is null ? Results.NotFound() : Results.Ok( operator_ );
+        return operator_ is null ? Results.NotFound() : Results.Ok(operator_);
     }
 
 
     private static async Task<IResult> GetAll(
         IOperator_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( Operator_Response.FromModel ) );
-        }
+        return Results.Ok(all.Select(Operator_Response.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IOperator_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class Operator_Endpoints
     private static async Task<IResult> AssignSalesRegion(
         AssociationRequest request,
         IOperator_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSalesRegion(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class Operator_Endpoints
     private static async Task<IResult> UnassignSalesRegion(
     AssociationRequest request,
     IOperator_Service service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSalesRegion(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class Operator_Endpoints
     private static async Task<IResult> AddToAircraftOrders(
         MultipleAssociationRequest request,
         IOperator_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAircraftOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class Operator_Endpoints
     private static async Task<IResult> RemoveFromAircraftOrders(
         MultipleAssociationRequest request,
         IOperator_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAircraftOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOperatedAircraft(
         MultipleAssociationRequest request,
         IOperator_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOperatedAircraft(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class Operator_Endpoints
     private static async Task<IResult> RemoveFromOperatedAircraft(
         MultipleAssociationRequest request,
         IOperator_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOperatedAircraft(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Operator_ mapRequestToOperator_( Operator_Request request ) {
+    private static Operator_ mapRequestToOperator_(Operator_Request request)
+    {
         var model = new Operator_
         {
             Id = request.Id,

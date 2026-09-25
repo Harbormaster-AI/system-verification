@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IMaintenanceAppointmentService {
+public interface IMaintenanceAppointmentService
+{
 
-    Task Create(MaintenanceAppointment model , CancellationToken cancellationToken);
+    Task Create(MaintenanceAppointment model, CancellationToken cancellationToken);
     Task<bool> Update(MaintenanceAppointment model, CancellationToken cancellationToken);
     Task<MaintenanceAppointment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<MaintenanceAppointment>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
 
     public async Task<bool> Update(MaintenanceAppointment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
         return true;
     }
 
-    public async Task<bool> AssignAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
 
             var child = await _serviceResolver.Get<AircraftService>().Get(childRequest, cancellationToken);
             parent.Aircraft = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
         return true;
     }
 
-    public async Task<bool> UnassignAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
         try
         {
             parent.Aircraft = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
         return true;
     }
 
-    public async Task<bool> AssignMroFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMroFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
 
             var child = await _serviceResolver.Get<MROFacilityService>().Get(childRequest, cancellationToken);
             parent.MroFacility = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
         return true;
     }
 
-    public async Task<bool> UnassignMroFacility(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMroFacility(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
         try
         {
             parent.MroFacility = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -226,7 +232,8 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
         return true;
     }
 
-    public async Task<bool> AssignWorkOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -244,7 +251,7 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
 
             var child = await _serviceResolver.Get<MaintenanceWorkOrderService>().Get(childRequest, cancellationToken);
             parent.WorkOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -256,7 +263,8 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
         return true;
     }
 
-    public async Task<bool> UnassignWorkOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -267,7 +275,7 @@ public class MaintenanceAppointmentService : IMaintenanceAppointmentService
         try
         {
             parent.WorkOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum WorkOrderStatus
 {
-    Open=1,InProgress=2,AwaitingParts=3,Closed=4,Deferred=5
+    Open = 1, InProgress = 2, AwaitingParts = 3, Closed = 4, Deferred = 5
 }
 
 /// <summary>

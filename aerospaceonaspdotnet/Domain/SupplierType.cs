@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum SupplierType
 {
-    Airframe=1,Engine=2,Avionics=3,Systems=4,Materials=5,MRO=6,Testing=7
+    Airframe = 1, Engine = 2, Avionics = 3, Systems = 4, Materials = 5, MRO = 6, Testing = 7
 }
 
 /// <summary>

@@ -11,7 +11,7 @@ public interface IAircraftRepository
     Task UpdateAsync(Aircraft aircraft, CancellationToken cancellationToken);
     Task DeleteAsync(Aircraft aircraft, CancellationToken cancellationToken);
 
-    Task AddToMaintenanceRecordsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromMaintenanceRecordsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToMaintenanceRecordsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromMaintenanceRecordsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

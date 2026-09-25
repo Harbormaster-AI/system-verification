@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface ILandingGearService {
+public interface ILandingGearService
+{
 
-    Task Create(LandingGear model , CancellationToken cancellationToken);
+    Task Create(LandingGear model, CancellationToken cancellationToken);
     Task<bool> Update(LandingGear model, CancellationToken cancellationToken);
     Task<LandingGear?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<LandingGear>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class LandingGearService : ILandingGearService
 
     public async Task<bool> Update(LandingGear model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class LandingGearService : ILandingGearService
         return true;
     }
 
-    public async Task<bool> AssignSupplier(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSupplier(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class LandingGearService : ILandingGearService
 
             var child = await _serviceResolver.Get<SupplierService>().Get(childRequest, cancellationToken);
             parent.Supplier = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class LandingGearService : ILandingGearService
         return true;
     }
 
-    public async Task<bool> UnassignSupplier(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSupplier(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class LandingGearService : ILandingGearService
         try
         {
             parent.Supplier = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,8 +176,10 @@ public class LandingGearService : ILandingGearService
     }
 
 
-    public async Task<bool> AddToVariants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToVariants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LandingGear",
                 "AddToVariants",
@@ -181,16 +187,18 @@ public class LandingGearService : ILandingGearService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromVariants(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromVariants(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LandingGear",
                 "RemoveFromVariants",

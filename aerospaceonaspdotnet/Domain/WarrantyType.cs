@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum WarrantyType
 {
-    Basic=1,Powerplant=2,Avionics=3,Corrosion=4
+    Basic = 1, Powerplant = 2, Avionics = 3, Corrosion = 4
 }
 
 /// <summary>

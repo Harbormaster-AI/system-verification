@@ -27,9 +27,10 @@ public static class TypeCertificateEndpoints
     private static async Task<IResult> Create(
         TypeCertificateRequest request,
         ITypeCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTypeCertificate( request );
+        var model = mapRequestToTypeCertificate(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class TypeCertificateEndpoints
     private static async Task<IResult> Update(
         TypeCertificateRequest request,
         ITypeCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTypeCertificate( request );
+        var model = mapRequestToTypeCertificate(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class TypeCertificateEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITypeCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var typeCertificate = await service.Get(identifier, cancellationToken);
-        return typeCertificate is null ? Results.NotFound() : Results.Ok( typeCertificate );
+        return typeCertificate is null ? Results.NotFound() : Results.Ok(typeCertificate);
     }
 
 
     private static async Task<IResult> GetAll(
         ITypeCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TypeCertificateResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TypeCertificateResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITypeCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class TypeCertificateEndpoints
     private static async Task<IResult> AssignProgram(
         AssociationRequest request,
         ITypeCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProgram(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class TypeCertificateEndpoints
     private static async Task<IResult> UnassignProgram(
     AssociationRequest request,
     ITypeCertificateService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProgram(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static TypeCertificate mapRequestToTypeCertificate( TypeCertificateRequest request ) {
+    private static TypeCertificate mapRequestToTypeCertificate(TypeCertificateRequest request)
+    {
         var model = new TypeCertificate
         {
             Id = request.Id,

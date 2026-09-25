@@ -20,11 +20,11 @@ public static class ConnectedAircraftEndpoints
         group.MapPut("/assignAircraft", AssignAircraft);
         group.MapPut("/unassignAircraft", UnassignAircraft);
 
-    group.MapPut("/addToFlightHealthEvents", AddToFlightHealthEvents);
-    group.MapPut("/removeFromFlightHealthEvents", RemoveFromFlightHealthEvents);
+        group.MapPut("/addToFlightHealthEvents", AddToFlightHealthEvents);
+        group.MapPut("/removeFromFlightHealthEvents", RemoveFromFlightHealthEvents);
 
-    group.MapPut("/addToSoftwareLoads", AddToSoftwareLoads);
-    group.MapPut("/removeFromSoftwareLoads", RemoveFromSoftwareLoads);
+        group.MapPut("/addToSoftwareLoads", AddToSoftwareLoads);
+        group.MapPut("/removeFromSoftwareLoads", RemoveFromSoftwareLoads);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class ConnectedAircraftEndpoints
     private static async Task<IResult> Create(
         ConnectedAircraftRequest request,
         IConnectedAircraftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToConnectedAircraft( request );
+        var model = mapRequestToConnectedAircraft(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class ConnectedAircraftEndpoints
     private static async Task<IResult> Update(
         ConnectedAircraftRequest request,
         IConnectedAircraftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToConnectedAircraft( request );
+        var model = mapRequestToConnectedAircraft(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class ConnectedAircraftEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IConnectedAircraftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var connectedAircraft = await service.Get(identifier, cancellationToken);
-        return connectedAircraft is null ? Results.NotFound() : Results.Ok( connectedAircraft );
+        return connectedAircraft is null ? Results.NotFound() : Results.Ok(connectedAircraft);
     }
 
 
     private static async Task<IResult> GetAll(
         IConnectedAircraftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ConnectedAircraftResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ConnectedAircraftResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IConnectedAircraftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class ConnectedAircraftEndpoints
     private static async Task<IResult> AssignAircraft(
         AssociationRequest request,
         IConnectedAircraftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAircraft(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class ConnectedAircraftEndpoints
     private static async Task<IResult> UnassignAircraft(
     AssociationRequest request,
     IConnectedAircraftService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAircraft(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class ConnectedAircraftEndpoints
     private static async Task<IResult> AddToFlightHealthEvents(
         MultipleAssociationRequest request,
         IConnectedAircraftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToFlightHealthEvents(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class ConnectedAircraftEndpoints
     private static async Task<IResult> RemoveFromFlightHealthEvents(
         MultipleAssociationRequest request,
         IConnectedAircraftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromFlightHealthEvents(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSoftwareLoads(
         MultipleAssociationRequest request,
         IConnectedAircraftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSoftwareLoads(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class ConnectedAircraftEndpoints
     private static async Task<IResult> RemoveFromSoftwareLoads(
         MultipleAssociationRequest request,
         IConnectedAircraftService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSoftwareLoads(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static ConnectedAircraft mapRequestToConnectedAircraft( ConnectedAircraftRequest request ) {
+    private static ConnectedAircraft mapRequestToConnectedAircraft(ConnectedAircraftRequest request)
+    {
         var model = new ConnectedAircraft
         {
             Id = request.Id,

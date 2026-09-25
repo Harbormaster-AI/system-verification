@@ -11,7 +11,7 @@ public interface ISalesCampaignRepository
     Task UpdateAsync(SalesCampaign salesCampaign, CancellationToken cancellationToken);
     Task DeleteAsync(SalesCampaign salesCampaign, CancellationToken cancellationToken);
 
-    Task AddToQuotesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromQuotesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToQuotesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromQuotesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

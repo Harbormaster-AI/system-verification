@@ -29,9 +29,10 @@ public static class SoftwareLoadEndpoints
     private static async Task<IResult> Create(
         SoftwareLoadRequest request,
         ISoftwareLoadService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSoftwareLoad( request );
+        var model = mapRequestToSoftwareLoad(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class SoftwareLoadEndpoints
     private static async Task<IResult> Update(
         SoftwareLoadRequest request,
         ISoftwareLoadService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSoftwareLoad( request );
+        var model = mapRequestToSoftwareLoad(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class SoftwareLoadEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISoftwareLoadService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var softwareLoad = await service.Get(identifier, cancellationToken);
-        return softwareLoad is null ? Results.NotFound() : Results.Ok( softwareLoad );
+        return softwareLoad is null ? Results.NotFound() : Results.Ok(softwareLoad);
     }
 
 
     private static async Task<IResult> GetAll(
         ISoftwareLoadService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SoftwareLoadResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SoftwareLoadResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISoftwareLoadService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class SoftwareLoadEndpoints
     private static async Task<IResult> AssignConnectedAircraft(
         AssociationRequest request,
         ISoftwareLoadService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignConnectedAircraft(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class SoftwareLoadEndpoints
     private static async Task<IResult> UnassignConnectedAircraft(
     AssociationRequest request,
     ISoftwareLoadService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignConnectedAircraft(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class SoftwareLoadEndpoints
     private static async Task<IResult> AssignAvionicsSuite(
         AssociationRequest request,
         ISoftwareLoadService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAvionicsSuite(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class SoftwareLoadEndpoints
     private static async Task<IResult> UnassignAvionicsSuite(
     AssociationRequest request,
     ISoftwareLoadService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAvionicsSuite(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static SoftwareLoad mapRequestToSoftwareLoad( SoftwareLoadRequest request ) {
+    private static SoftwareLoad mapRequestToSoftwareLoad(SoftwareLoadRequest request)
+    {
         var model = new SoftwareLoad
         {
             Id = request.Id,

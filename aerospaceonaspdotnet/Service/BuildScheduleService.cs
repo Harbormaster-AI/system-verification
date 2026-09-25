@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IBuildScheduleService {
+public interface IBuildScheduleService
+{
 
-    Task Create(BuildSchedule model , CancellationToken cancellationToken);
+    Task Create(BuildSchedule model, CancellationToken cancellationToken);
     Task<bool> Update(BuildSchedule model, CancellationToken cancellationToken);
     Task<BuildSchedule?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BuildSchedule>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class BuildScheduleService : IBuildScheduleService
 
     public async Task<bool> Update(BuildSchedule model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,8 +119,10 @@ public class BuildScheduleService : IBuildScheduleService
     }
 
 
-    public async Task<bool> AddToProductionOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToProductionOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BuildSchedule",
                 "AddToProductionOrders",
@@ -126,16 +130,18 @@ public class BuildScheduleService : IBuildScheduleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromProductionOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromProductionOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BuildSchedule",
                 "RemoveFromProductionOrders",

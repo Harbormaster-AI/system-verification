@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IFlightHealthEventService {
+public interface IFlightHealthEventService
+{
 
-    Task Create(FlightHealthEvent model , CancellationToken cancellationToken);
+    Task Create(FlightHealthEvent model, CancellationToken cancellationToken);
     Task<bool> Update(FlightHealthEvent model, CancellationToken cancellationToken);
     Task<FlightHealthEvent?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FlightHealthEvent>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class FlightHealthEventService : IFlightHealthEventService
 
     public async Task<bool> Update(FlightHealthEvent model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,7 +118,8 @@ public class FlightHealthEventService : IFlightHealthEventService
         return true;
     }
 
-    public async Task<bool> AssignConnectedAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignConnectedAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -134,7 +137,7 @@ public class FlightHealthEventService : IFlightHealthEventService
 
             var child = await _serviceResolver.Get<ConnectedAircraftService>().Get(childRequest, cancellationToken);
             parent.ConnectedAircraft = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -146,7 +149,8 @@ public class FlightHealthEventService : IFlightHealthEventService
         return true;
     }
 
-    public async Task<bool> UnassignConnectedAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignConnectedAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -157,7 +161,7 @@ public class FlightHealthEventService : IFlightHealthEventService
         try
         {
             parent.ConnectedAircraft = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

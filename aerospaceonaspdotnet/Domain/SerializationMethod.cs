@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum SerializationMethod
 {
-    Serialized=1,LotTracked=2,None=3
+    Serialized = 1, LotTracked = 2, None = 3
 }
 
 /// <summary>

@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface ITypeCertificateService {
+public interface ITypeCertificateService
+{
 
-    Task Create(TypeCertificate model , CancellationToken cancellationToken);
+    Task Create(TypeCertificate model, CancellationToken cancellationToken);
     Task<bool> Update(TypeCertificate model, CancellationToken cancellationToken);
     Task<TypeCertificate?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TypeCertificate>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class TypeCertificateService : ITypeCertificateService
 
     public async Task<bool> Update(TypeCertificate model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,7 +118,8 @@ public class TypeCertificateService : ITypeCertificateService
         return true;
     }
 
-    public async Task<bool> AssignProgram(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProgram(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -134,7 +137,7 @@ public class TypeCertificateService : ITypeCertificateService
 
             var child = await _serviceResolver.Get<AircraftProgramService>().Get(childRequest, cancellationToken);
             parent.Program = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -146,7 +149,8 @@ public class TypeCertificateService : ITypeCertificateService
         return true;
     }
 
-    public async Task<bool> UnassignProgram(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProgram(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -157,7 +161,7 @@ public class TypeCertificateService : ITypeCertificateService
         try
         {
             parent.Program = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

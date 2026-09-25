@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IProductionOrderService {
+public interface IProductionOrderService
+{
 
-    Task Create(ProductionOrder model , CancellationToken cancellationToken);
+    Task Create(ProductionOrder model, CancellationToken cancellationToken);
     Task<bool> Update(ProductionOrder model, CancellationToken cancellationToken);
     Task<ProductionOrder?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ProductionOrder>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ProductionOrderService : IProductionOrderService
 
     public async Task<bool> Update(ProductionOrder model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class ProductionOrderService : IProductionOrderService
         return true;
     }
 
-    public async Task<bool> AssignVariant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignVariant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class ProductionOrderService : IProductionOrderService
 
             var child = await _serviceResolver.Get<AircraftVariantService>().Get(childRequest, cancellationToken);
             parent.Variant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class ProductionOrderService : IProductionOrderService
         return true;
     }
 
-    public async Task<bool> UnassignVariant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignVariant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class ProductionOrderService : IProductionOrderService
         try
         {
             parent.Variant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class ProductionOrderService : IProductionOrderService
         return true;
     }
 
-    public async Task<bool> AssignPlant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPlant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class ProductionOrderService : IProductionOrderService
 
             var child = await _serviceResolver.Get<PlantService>().Get(childRequest, cancellationToken);
             parent.Plant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class ProductionOrderService : IProductionOrderService
         return true;
     }
 
-    public async Task<bool> UnassignPlant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPlant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class ProductionOrderService : IProductionOrderService
         try
         {
             parent.Plant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -226,7 +232,8 @@ public class ProductionOrderService : IProductionOrderService
         return true;
     }
 
-    public async Task<bool> AssignAircraftOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAircraftOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -244,7 +251,7 @@ public class ProductionOrderService : IProductionOrderService
 
             var child = await _serviceResolver.Get<AircraftOrderService>().Get(childRequest, cancellationToken);
             parent.AircraftOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -256,7 +263,8 @@ public class ProductionOrderService : IProductionOrderService
         return true;
     }
 
-    public async Task<bool> UnassignAircraftOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAircraftOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -267,7 +275,7 @@ public class ProductionOrderService : IProductionOrderService
         try
         {
             parent.AircraftOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

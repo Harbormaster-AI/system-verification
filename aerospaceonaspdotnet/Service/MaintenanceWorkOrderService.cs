@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface IMaintenanceWorkOrderService {
+public interface IMaintenanceWorkOrderService
+{
 
-    Task Create(MaintenanceWorkOrder model , CancellationToken cancellationToken);
+    Task Create(MaintenanceWorkOrder model, CancellationToken cancellationToken);
     Task<bool> Update(MaintenanceWorkOrder model, CancellationToken cancellationToken);
     Task<MaintenanceWorkOrder?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<MaintenanceWorkOrder>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
 
     public async Task<bool> Update(MaintenanceWorkOrder model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
         return true;
     }
 
-    public async Task<bool> AssignAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
 
             var child = await _serviceResolver.Get<AircraftService>().Get(childRequest, cancellationToken);
             parent.Aircraft = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
         return true;
     }
 
-    public async Task<bool> UnassignAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
         try
         {
             parent.Aircraft = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
         return true;
     }
 
-    public async Task<bool> AssignAirworthinessDirective(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAirworthinessDirective(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
 
             var child = await _serviceResolver.Get<AirworthinessDirectiveService>().Get(childRequest, cancellationToken);
             parent.AirworthinessDirective = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
         return true;
     }
 
-    public async Task<bool> UnassignAirworthinessDirective(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAirworthinessDirective(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
         try
         {
             parent.AirworthinessDirective = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -226,7 +232,8 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
         return true;
     }
 
-    public async Task<bool> AssignServiceBulletin(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignServiceBulletin(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -244,7 +251,7 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
 
             var child = await _serviceResolver.Get<ServiceBulletinService>().Get(childRequest, cancellationToken);
             parent.ServiceBulletin = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -256,7 +263,8 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
         return true;
     }
 
-    public async Task<bool> UnassignServiceBulletin(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignServiceBulletin(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -267,7 +275,7 @@ public class MaintenanceWorkOrderService : IMaintenanceWorkOrderService
         try
         {
             parent.ServiceBulletin = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

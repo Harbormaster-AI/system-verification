@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum OperatorType
 {
-    Airline=1,Cargo=2,Government=3,Private=4,Lessor=5
+    Airline = 1, Cargo = 2, Government = 3, Private = 4, Lessor = 5
 }
 
 /// <summary>

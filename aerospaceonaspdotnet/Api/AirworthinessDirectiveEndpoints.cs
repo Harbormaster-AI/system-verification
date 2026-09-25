@@ -18,8 +18,8 @@ public static class AirworthinessDirectiveEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToWorkOrders", AddToWorkOrders);
-    group.MapPut("/removeFromWorkOrders", RemoveFromWorkOrders);
+        group.MapPut("/addToWorkOrders", AddToWorkOrders);
+        group.MapPut("/removeFromWorkOrders", RemoveFromWorkOrders);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class AirworthinessDirectiveEndpoints
     private static async Task<IResult> Create(
         AirworthinessDirectiveRequest request,
         IAirworthinessDirectiveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAirworthinessDirective( request );
+        var model = mapRequestToAirworthinessDirective(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class AirworthinessDirectiveEndpoints
     private static async Task<IResult> Update(
         AirworthinessDirectiveRequest request,
         IAirworthinessDirectiveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAirworthinessDirective( request );
+        var model = mapRequestToAirworthinessDirective(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class AirworthinessDirectiveEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAirworthinessDirectiveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var airworthinessDirective = await service.Get(identifier, cancellationToken);
-        return airworthinessDirective is null ? Results.NotFound() : Results.Ok( airworthinessDirective );
+        return airworthinessDirective is null ? Results.NotFound() : Results.Ok(airworthinessDirective);
     }
 
 
     private static async Task<IResult> GetAll(
         IAirworthinessDirectiveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AirworthinessDirectiveResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AirworthinessDirectiveResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAirworthinessDirectiveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class AirworthinessDirectiveEndpoints
     private static async Task<IResult> AddToWorkOrders(
         MultipleAssociationRequest request,
         IAirworthinessDirectiveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToWorkOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class AirworthinessDirectiveEndpoints
     private static async Task<IResult> RemoveFromWorkOrders(
         MultipleAssociationRequest request,
         IAirworthinessDirectiveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromWorkOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static AirworthinessDirective mapRequestToAirworthinessDirective( AirworthinessDirectiveRequest request ) {
+    private static AirworthinessDirective mapRequestToAirworthinessDirective(AirworthinessDirectiveRequest request)
+    {
         var model = new AirworthinessDirective
         {
             Id = request.Id,

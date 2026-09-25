@@ -6,9 +6,10 @@ using aerospaceonaspdotnet.Telemetry;
 
 namespace aerospaceonaspdotnet.Service;
 
-public interface ISoftwareLoadService {
+public interface ISoftwareLoadService
+{
 
-    Task Create(SoftwareLoad model , CancellationToken cancellationToken);
+    Task Create(SoftwareLoad model, CancellationToken cancellationToken);
     Task<bool> Update(SoftwareLoad model, CancellationToken cancellationToken);
     Task<SoftwareLoad?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SoftwareLoad>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class SoftwareLoadService : ISoftwareLoadService
 
     public async Task<bool> Update(SoftwareLoad model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class SoftwareLoadService : ISoftwareLoadService
         return true;
     }
 
-    public async Task<bool> AssignConnectedAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignConnectedAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class SoftwareLoadService : ISoftwareLoadService
 
             var child = await _serviceResolver.Get<ConnectedAircraftService>().Get(childRequest, cancellationToken);
             parent.ConnectedAircraft = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class SoftwareLoadService : ISoftwareLoadService
         return true;
     }
 
-    public async Task<bool> UnassignConnectedAircraft(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignConnectedAircraft(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class SoftwareLoadService : ISoftwareLoadService
         try
         {
             parent.ConnectedAircraft = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -171,7 +175,8 @@ public class SoftwareLoadService : ISoftwareLoadService
         return true;
     }
 
-    public async Task<bool> AssignAvionicsSuite(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAvionicsSuite(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -189,7 +194,7 @@ public class SoftwareLoadService : ISoftwareLoadService
 
             var child = await _serviceResolver.Get<AvionicsSuiteService>().Get(childRequest, cancellationToken);
             parent.AvionicsSuite = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -201,7 +206,8 @@ public class SoftwareLoadService : ISoftwareLoadService
         return true;
     }
 
-    public async Task<bool> UnassignAvionicsSuite(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAvionicsSuite(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -212,7 +218,7 @@ public class SoftwareLoadService : ISoftwareLoadService
         try
         {
             parent.AvionicsSuite = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

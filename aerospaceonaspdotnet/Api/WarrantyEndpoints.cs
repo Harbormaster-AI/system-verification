@@ -27,9 +27,10 @@ public static class WarrantyEndpoints
     private static async Task<IResult> Create(
         WarrantyRequest request,
         IWarrantyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWarranty( request );
+        var model = mapRequestToWarranty(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class WarrantyEndpoints
     private static async Task<IResult> Update(
         WarrantyRequest request,
         IWarrantyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWarranty( request );
+        var model = mapRequestToWarranty(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class WarrantyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IWarrantyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var warranty = await service.Get(identifier, cancellationToken);
-        return warranty is null ? Results.NotFound() : Results.Ok( warranty );
+        return warranty is null ? Results.NotFound() : Results.Ok(warranty);
     }
 
 
     private static async Task<IResult> GetAll(
         IWarrantyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( WarrantyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(WarrantyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IWarrantyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class WarrantyEndpoints
     private static async Task<IResult> AssignAircraft(
         AssociationRequest request,
         IWarrantyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAircraft(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class WarrantyEndpoints
     private static async Task<IResult> UnassignAircraft(
     AssociationRequest request,
     IWarrantyService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAircraft(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Warranty mapRequestToWarranty( WarrantyRequest request ) {
+    private static Warranty mapRequestToWarranty(WarrantyRequest request)
+    {
         var model = new Warranty
         {
             Id = request.Id,

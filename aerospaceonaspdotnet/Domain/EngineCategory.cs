@@ -36,7 +36,7 @@ namespace aerospaceonaspdotnet.Domain;
 
 public enum EngineCategory
 {
-    Turbofan=1,Turboprop=2,Turbojet=3,Piston=4,Electric=5,Rocket=6
+    Turbofan = 1, Turboprop = 2, Turbojet = 3, Piston = 4, Electric = 5, Rocket = 6
 }
 
 /// <summary>

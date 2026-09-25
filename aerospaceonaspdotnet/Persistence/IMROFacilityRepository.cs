@@ -11,9 +11,9 @@ public interface IMROFacilityRepository
     Task UpdateAsync(MROFacility mROFacility, CancellationToken cancellationToken);
     Task DeleteAsync(MROFacility mROFacility, CancellationToken cancellationToken);
 
-    Task AddToAppointmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAppointmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToWorkOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromWorkOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAppointmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAppointmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToWorkOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromWorkOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

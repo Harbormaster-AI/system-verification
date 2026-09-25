@@ -22,8 +22,8 @@ public static class SalesCampaignEndpoints
         group.MapPut("/assignOperator_", AssignOperator_);
         group.MapPut("/unassignOperator_", UnassignOperator_);
 
-    group.MapPut("/addToQuotes", AddToQuotes);
-    group.MapPut("/removeFromQuotes", RemoveFromQuotes);
+        group.MapPut("/addToQuotes", AddToQuotes);
+        group.MapPut("/removeFromQuotes", RemoveFromQuotes);
 
 
         return app;
@@ -32,9 +32,10 @@ public static class SalesCampaignEndpoints
     private static async Task<IResult> Create(
         SalesCampaignRequest request,
         ISalesCampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSalesCampaign( request );
+        var model = mapRequestToSalesCampaign(request);
 
         try
         {
@@ -51,9 +52,10 @@ public static class SalesCampaignEndpoints
     private static async Task<IResult> Update(
         SalesCampaignRequest request,
         ISalesCampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSalesCampaign( request );
+        var model = mapRequestToSalesCampaign(request);
 
         try
         {
@@ -70,25 +72,28 @@ public static class SalesCampaignEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISalesCampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var salesCampaign = await service.Get(identifier, cancellationToken);
-        return salesCampaign is null ? Results.NotFound() : Results.Ok( salesCampaign );
+        return salesCampaign is null ? Results.NotFound() : Results.Ok(salesCampaign);
     }
 
 
     private static async Task<IResult> GetAll(
         ISalesCampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SalesCampaignResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SalesCampaignResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISalesCampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class SalesCampaignEndpoints
     private static async Task<IResult> AssignRegion(
         AssociationRequest request,
         ISalesCampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRegion(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +110,8 @@ public static class SalesCampaignEndpoints
     private static async Task<IResult> UnassignRegion(
     AssociationRequest request,
     ISalesCampaignService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRegion(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +119,8 @@ public static class SalesCampaignEndpoints
     private static async Task<IResult> AssignOperator_(
         AssociationRequest request,
         ISalesCampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOperator_(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +128,8 @@ public static class SalesCampaignEndpoints
     private static async Task<IResult> UnassignOperator_(
     AssociationRequest request,
     ISalesCampaignService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOperator_(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class SalesCampaignEndpoints
     private static async Task<IResult> AddToQuotes(
         MultipleAssociationRequest request,
         ISalesCampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToQuotes(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class SalesCampaignEndpoints
     private static async Task<IResult> RemoveFromQuotes(
         MultipleAssociationRequest request,
         ISalesCampaignService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromQuotes(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static SalesCampaign mapRequestToSalesCampaign( SalesCampaignRequest request ) {
+    private static SalesCampaign mapRequestToSalesCampaign(SalesCampaignRequest request)
+    {
         var model = new SalesCampaign
         {
             Id = request.Id,
