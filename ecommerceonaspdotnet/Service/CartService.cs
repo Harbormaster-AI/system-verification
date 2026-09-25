@@ -1,0 +1,306 @@
+
+using ecommerceonaspdotnet.Domain;
+using ecommerceonaspdotnet.Persistence;
+using ecommerceonaspdotnet.Contracts;
+using ecommerceonaspdotnet.Telemetry;
+
+namespace ecommerceonaspdotnet.Service;
+
+public interface ICartService {
+
+    Task Create(Cart model , CancellationToken cancellationToken);
+    Task<bool> Update(Cart model, CancellationToken cancellationToken);
+    Task<Cart?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
+    Task<IReadOnlyList<Cart>> GetAll(CancellationToken cancellationToken);
+    Task<bool> Delete(IdentifierRequest identifier, CancellationToken cancellationToken);
+    // ------------------------------
+    // Single Associations
+    // -------------------------------
+    Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> AssignChannel(AssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> UnassignChannel(AssociationRequest request, CancellationToken cancellationToken);
+
+    Task<bool> AddToItems(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> RemoveFromItems(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> AddToAppliedPromotions(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task<bool> RemoveFromAppliedPromotions(MultipleAssociationRequest request, CancellationToken cancellationToken);
+
+}
+
+public class CartService : ICartService
+{
+    private readonly ApplicationTelemetry _telemetry;
+    private readonly ICartRepository _repository;
+    private readonly ILogger<CartService> _logger;
+    private readonly IServiceResolver _serviceResolver;
+
+
+    public CartService(
+        ApplicationTelemetry telemetry,
+        ICartRepository repository,
+        ILogger<CartService> logger,
+        IServiceResolver serviceResolver)
+    {
+        _telemetry = telemetry;
+        _repository = repository;
+        _logger = logger;
+        _serviceResolver = serviceResolver;
+    }
+
+    public async Task Create(Cart model, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _telemetry.Execute(
+                "Cart",
+                "CreateCart",
+                () => _repository.AddAsync(model, cancellationToken));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+        }
+    }
+
+    public async Task<bool> Update(Cart model, CancellationToken cancellationToken)
+    {
+        try {
+            var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
+            if (existing is null)
+            {
+                return false;
+            }
+            existing.CartNumber = model.CartNumber;
+            existing.CreatedAt = model.CreatedAt;
+            existing.Currency = model.Currency;
+            existing.ShippingAddress = model.ShippingAddress;
+            existing.BillingAddress = model.BillingAddress;
+            existing.Status = model.Status;
+
+            await _telemetry.Execute(
+                "Cart",
+                "UpdateCart",
+                () => _repository.UpdateAsync(existing, cancellationToken));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+    public Task<Cart?> Get(IdentifierRequest identifier, CancellationToken cancellationToken)
+    => _repository.GetByIdAsync(identifier.Id, cancellationToken);
+
+    public Task<IReadOnlyList<Cart>> GetAll(CancellationToken cancellationToken)
+    => _repository.GetAllAsync(cancellationToken);
+
+    public async Task<bool> Delete(IdentifierRequest identifier, CancellationToken cancellationToken)
+    {
+        var existing = await _repository.GetByIdAsync(identifier.Id, cancellationToken);
+        if (existing is null)
+        {
+            return false;
+        }
+
+        try
+        {
+            await _telemetry.Execute(
+                "Cart",
+                "UpdateCart",
+                () => _repository.DeleteAsync(existing, cancellationToken));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+
+        var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
+        if (parent is null)
+        {
+            _logger.LogError("No Cart found using Id {ParentId}", request.ParentId);
+            return false;
+        }
+
+        try
+        {
+            var childRequest = new IdentifierRequest
+            {
+                Id = request.ChildId,
+            };
+
+            var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
+            parent.Customer = child;
+            await Update( parent, cancellationToken );
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+        var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
+        if (parent is null)
+        {
+            _logger.LogError("No Cart found using Id {ParentId}", request.ParentId);
+            return false;
+        }
+
+        try
+        {
+            parent.Customer = null;
+            await Update( parent, cancellationToken );
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+    public async Task<bool> AssignChannel(AssociationRequest request, CancellationToken cancellationToken) {
+
+        var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
+        if (parent is null)
+        {
+            _logger.LogError("No Cart found using Id {ParentId}", request.ParentId);
+            return false;
+        }
+
+        try
+        {
+            var childRequest = new IdentifierRequest
+            {
+                Id = request.ChildId,
+            };
+
+            var child = await _serviceResolver.Get<ChannelService>().Get(childRequest, cancellationToken);
+            parent.Channel = child;
+            await Update( parent, cancellationToken );
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+    public async Task<bool> UnassignChannel(AssociationRequest request, CancellationToken cancellationToken) {
+        var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
+        if (parent is null)
+        {
+            _logger.LogError("No Cart found using Id {ParentId}", request.ParentId);
+            return false;
+        }
+
+        try
+        {
+            parent.Channel = null;
+            await Update( parent, cancellationToken );
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+
+    public async Task<bool> AddToItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+        try {
+            await _telemetry.Execute(
+                "Cart",
+                "AddToItems",
+                () => _repository.AddToItemsAsync(request, cancellationToken));
+        }
+        catch (Exception ex)
+        {
+           _logger.LogError(
+                   ex,
+                   "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+    public async Task<bool> RemoveFromItems(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+        try {
+            await _telemetry.Execute(
+                "Cart",
+                "RemoveFromItems",
+                () => _repository.RemoveFromItemsAsync(request, cancellationToken));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+    public async Task<bool> AddToAppliedPromotions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+        try {
+            await _telemetry.Execute(
+                "Cart",
+                "AddToAppliedPromotions",
+                () => _repository.AddToAppliedPromotionsAsync(request, cancellationToken));
+        }
+        catch (Exception ex)
+        {
+           _logger.LogError(
+                   ex,
+                   "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+    public async Task<bool> RemoveFromAppliedPromotions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+        try {
+            await _telemetry.Execute(
+                "Cart",
+                "RemoveFromAppliedPromotions",
+                () => _repository.RemoveFromAppliedPromotionsAsync(request, cancellationToken));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
+            return false;
+        }
+        return true;
+    }
+
+
+
+}
