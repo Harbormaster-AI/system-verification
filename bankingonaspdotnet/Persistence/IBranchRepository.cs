@@ -10,11 +10,11 @@ public interface IBranchRepository
     Task UpdateAsync(Branch branch, CancellationToken cancellationToken);
     Task DeleteAsync(Branch branch, CancellationToken cancellationToken);
 
-    Task AddToAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToLoanAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLoanAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToAtmsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAtmsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLoanAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLoanAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAtmsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAtmsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

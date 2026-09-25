@@ -10,7 +10,7 @@ public interface IThirdPartyProviderRepository
     Task UpdateAsync(ThirdPartyProvider thirdPartyProvider, CancellationToken cancellationToken);
     Task DeleteAsync(ThirdPartyProvider thirdPartyProvider, CancellationToken cancellationToken);
 
-    Task AddToConsentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromConsentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToConsentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromConsentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }
