@@ -11,13 +11,13 @@ public interface IRecommendationScenarioRepository
     Task UpdateAsync(RecommendationScenario recommendationScenario, CancellationToken cancellationToken);
     Task DeleteAsync(RecommendationScenario recommendationScenario, CancellationToken cancellationToken);
 
-    Task AddToModelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromModelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToDatasetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDatasetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToExperimentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromExperimentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToAlertsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAlertsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToModelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromModelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDatasetsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDatasetsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToExperimentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromExperimentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAlertsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAlertsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

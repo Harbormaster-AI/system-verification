@@ -31,9 +31,10 @@ public static class FraudSignalEndpoints
     private static async Task<IResult> Create(
         FraudSignalRequest request,
         IFraudSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFraudSignal( request );
+        var model = mapRequestToFraudSignal(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class FraudSignalEndpoints
     private static async Task<IResult> Update(
         FraudSignalRequest request,
         IFraudSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFraudSignal( request );
+        var model = mapRequestToFraudSignal(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class FraudSignalEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IFraudSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var fraudSignal = await service.Get(identifier, cancellationToken);
-        return fraudSignal is null ? Results.NotFound() : Results.Ok( fraudSignal );
+        return fraudSignal is null ? Results.NotFound() : Results.Ok(fraudSignal);
     }
 
 
     private static async Task<IResult> GetAll(
         IFraudSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( FraudSignalResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(FraudSignalResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IFraudSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class FraudSignalEndpoints
     private static async Task<IResult> AssignScenario(
         AssociationRequest request,
         IFraudSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignScenario(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class FraudSignalEndpoints
     private static async Task<IResult> UnassignScenario(
     AssociationRequest request,
     IFraudSignalService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignScenario(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class FraudSignalEndpoints
     private static async Task<IResult> AssignDataset(
         AssociationRequest request,
         IFraudSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDataset(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class FraudSignalEndpoints
     private static async Task<IResult> UnassignDataset(
     AssociationRequest request,
     IFraudSignalService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDataset(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class FraudSignalEndpoints
     private static async Task<IResult> AssignModelVersion(
         AssociationRequest request,
         IFraudSignalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignModelVersion(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class FraudSignalEndpoints
     private static async Task<IResult> UnassignModelVersion(
     AssociationRequest request,
     IFraudSignalService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignModelVersion(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static FraudSignal mapRequestToFraudSignal( FraudSignalRequest request ) {
+    private static FraudSignal mapRequestToFraudSignal(FraudSignalRequest request)
+    {
         var model = new FraudSignal
         {
             Id = request.Id,

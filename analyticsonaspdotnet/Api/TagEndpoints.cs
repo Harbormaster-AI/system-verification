@@ -18,26 +18,26 @@ public static class TagEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToDatasets", AddToDatasets);
-    group.MapPut("/removeFromDatasets", RemoveFromDatasets);
+        group.MapPut("/addToDatasets", AddToDatasets);
+        group.MapPut("/removeFromDatasets", RemoveFromDatasets);
 
-    group.MapPut("/addToModels", AddToModels);
-    group.MapPut("/removeFromModels", RemoveFromModels);
+        group.MapPut("/addToModels", AddToModels);
+        group.MapPut("/removeFromModels", RemoveFromModels);
 
-    group.MapPut("/addToModelVersions", AddToModelVersions);
-    group.MapPut("/removeFromModelVersions", RemoveFromModelVersions);
+        group.MapPut("/addToModelVersions", AddToModelVersions);
+        group.MapPut("/removeFromModelVersions", RemoveFromModelVersions);
 
-    group.MapPut("/addToDashboards", AddToDashboards);
-    group.MapPut("/removeFromDashboards", RemoveFromDashboards);
+        group.MapPut("/addToDashboards", AddToDashboards);
+        group.MapPut("/removeFromDashboards", RemoveFromDashboards);
 
-    group.MapPut("/addToReports", AddToReports);
-    group.MapPut("/removeFromReports", RemoveFromReports);
+        group.MapPut("/addToReports", AddToReports);
+        group.MapPut("/removeFromReports", RemoveFromReports);
 
-    group.MapPut("/addToFeatureSets", AddToFeatureSets);
-    group.MapPut("/removeFromFeatureSets", RemoveFromFeatureSets);
+        group.MapPut("/addToFeatureSets", AddToFeatureSets);
+        group.MapPut("/removeFromFeatureSets", RemoveFromFeatureSets);
 
-    group.MapPut("/addToMetrics", AddToMetrics);
-    group.MapPut("/removeFromMetrics", RemoveFromMetrics);
+        group.MapPut("/addToMetrics", AddToMetrics);
+        group.MapPut("/removeFromMetrics", RemoveFromMetrics);
 
 
         return app;
@@ -46,9 +46,10 @@ public static class TagEndpoints
     private static async Task<IResult> Create(
         TagRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTag( request );
+        var model = mapRequestToTag(request);
 
         try
         {
@@ -65,9 +66,10 @@ public static class TagEndpoints
     private static async Task<IResult> Update(
         TagRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTag( request );
+        var model = mapRequestToTag(request);
 
         try
         {
@@ -84,25 +86,28 @@ public static class TagEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var tag = await service.Get(identifier, cancellationToken);
-        return tag is null ? Results.NotFound() : Results.Ok( tag );
+        return tag is null ? Results.NotFound() : Results.Ok(tag);
     }
 
 
     private static async Task<IResult> GetAll(
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TagResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TagResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +116,8 @@ public static class TagEndpoints
     private static async Task<IResult> AddToDatasets(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDatasets(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,14 +125,16 @@ public static class TagEndpoints
     private static async Task<IResult> RemoveFromDatasets(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDatasets(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToModels(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToModels(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -134,14 +142,16 @@ public static class TagEndpoints
     private static async Task<IResult> RemoveFromModels(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromModels(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToModelVersions(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToModelVersions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -149,14 +159,16 @@ public static class TagEndpoints
     private static async Task<IResult> RemoveFromModelVersions(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromModelVersions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToDashboards(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDashboards(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -164,14 +176,16 @@ public static class TagEndpoints
     private static async Task<IResult> RemoveFromDashboards(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDashboards(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToReports(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToReports(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -179,14 +193,16 @@ public static class TagEndpoints
     private static async Task<IResult> RemoveFromReports(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromReports(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToFeatureSets(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToFeatureSets(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -194,14 +210,16 @@ public static class TagEndpoints
     private static async Task<IResult> RemoveFromFeatureSets(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromFeatureSets(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToMetrics(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToMetrics(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -209,11 +227,13 @@ public static class TagEndpoints
     private static async Task<IResult> RemoveFromMetrics(
         MultipleAssociationRequest request,
         ITagService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromMetrics(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Tag mapRequestToTag( TagRequest request ) {
+    private static Tag mapRequestToTag(TagRequest request)
+    {
         var model = new Tag
         {
             Id = request.Id,

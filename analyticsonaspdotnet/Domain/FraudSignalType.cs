@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum FraudSignalType
 {
-    Velocity=1,GeolocationMismatch=2,AmountOutlier=3,DeviceFingerprint=4,BehavioralChange=5
+    Velocity = 1, GeolocationMismatch = 2, AmountOutlier = 3, DeviceFingerprint = 4, BehavioralChange = 5
 }
 
 /// <summary>

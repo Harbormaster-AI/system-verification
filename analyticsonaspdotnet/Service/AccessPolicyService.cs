@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IAccessPolicyService {
+public interface IAccessPolicyService
+{
 
-    Task Create(AccessPolicy model , CancellationToken cancellationToken);
+    Task Create(AccessPolicy model, CancellationToken cancellationToken);
     Task<bool> Update(AccessPolicy model, CancellationToken cancellationToken);
     Task<AccessPolicy?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AccessPolicy>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class AccessPolicyService : IAccessPolicyService
 
     public async Task<bool> Update(AccessPolicy model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -128,7 +130,8 @@ public class AccessPolicyService : IAccessPolicyService
         return true;
     }
 
-    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -146,7 +149,7 @@ public class AccessPolicyService : IAccessPolicyService
 
             var child = await _serviceResolver.Get<AnalyticsWorkspaceService>().Get(childRequest, cancellationToken);
             parent.Workspace = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -158,7 +161,8 @@ public class AccessPolicyService : IAccessPolicyService
         return true;
     }
 
-    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -169,7 +173,7 @@ public class AccessPolicyService : IAccessPolicyService
         try
         {
             parent.Workspace = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -182,8 +186,10 @@ public class AccessPolicyService : IAccessPolicyService
     }
 
 
-    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AccessPolicy",
                 "AddToDatasets",
@@ -191,16 +197,18 @@ public class AccessPolicyService : IAccessPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AccessPolicy",
                 "RemoveFromDatasets",
@@ -216,8 +224,10 @@ public class AccessPolicyService : IAccessPolicyService
         return true;
     }
 
-    public async Task<bool> AddToDashboards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDashboards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AccessPolicy",
                 "AddToDashboards",
@@ -225,16 +235,18 @@ public class AccessPolicyService : IAccessPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDashboards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDashboards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AccessPolicy",
                 "RemoveFromDashboards",
@@ -250,8 +262,10 @@ public class AccessPolicyService : IAccessPolicyService
         return true;
     }
 
-    public async Task<bool> AddToReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AccessPolicy",
                 "AddToReports",
@@ -259,16 +273,18 @@ public class AccessPolicyService : IAccessPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AccessPolicy",
                 "RemoveFromReports",
@@ -284,8 +300,10 @@ public class AccessPolicyService : IAccessPolicyService
         return true;
     }
 
-    public async Task<bool> AddToModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AccessPolicy",
                 "AddToModels",
@@ -293,16 +311,18 @@ public class AccessPolicyService : IAccessPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AccessPolicy",
                 "RemoveFromModels",
@@ -318,8 +338,10 @@ public class AccessPolicyService : IAccessPolicyService
         return true;
     }
 
-    public async Task<bool> AddToFeatureSets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFeatureSets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AccessPolicy",
                 "AddToFeatureSets",
@@ -327,16 +349,18 @@ public class AccessPolicyService : IAccessPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFeatureSets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFeatureSets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "AccessPolicy",
                 "RemoveFromFeatureSets",

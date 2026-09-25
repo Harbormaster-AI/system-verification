@@ -22,14 +22,14 @@ public static class DataPipelineEndpoints
         group.MapPut("/assignLineageNode", AssignLineageNode);
         group.MapPut("/unassignLineageNode", UnassignLineageNode);
 
-    group.MapPut("/addToTasks", AddToTasks);
-    group.MapPut("/removeFromTasks", RemoveFromTasks);
+        group.MapPut("/addToTasks", AddToTasks);
+        group.MapPut("/removeFromTasks", RemoveFromTasks);
 
-    group.MapPut("/addToSources", AddToSources);
-    group.MapPut("/removeFromSources", RemoveFromSources);
+        group.MapPut("/addToSources", AddToSources);
+        group.MapPut("/removeFromSources", RemoveFromSources);
 
-    group.MapPut("/addToOutputs", AddToOutputs);
-    group.MapPut("/removeFromOutputs", RemoveFromOutputs);
+        group.MapPut("/addToOutputs", AddToOutputs);
+        group.MapPut("/removeFromOutputs", RemoveFromOutputs);
 
 
         return app;
@@ -38,9 +38,10 @@ public static class DataPipelineEndpoints
     private static async Task<IResult> Create(
         DataPipelineRequest request,
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDataPipeline( request );
+        var model = mapRequestToDataPipeline(request);
 
         try
         {
@@ -57,9 +58,10 @@ public static class DataPipelineEndpoints
     private static async Task<IResult> Update(
         DataPipelineRequest request,
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDataPipeline( request );
+        var model = mapRequestToDataPipeline(request);
 
         try
         {
@@ -76,25 +78,28 @@ public static class DataPipelineEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var dataPipeline = await service.Get(identifier, cancellationToken);
-        return dataPipeline is null ? Results.NotFound() : Results.Ok( dataPipeline );
+        return dataPipeline is null ? Results.NotFound() : Results.Ok(dataPipeline);
     }
 
 
     private static async Task<IResult> GetAll(
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DataPipelineResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DataPipelineResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +107,8 @@ public static class DataPipelineEndpoints
     private static async Task<IResult> AssignWorkspace(
         AssociationRequest request,
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkspace(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -110,7 +116,8 @@ public static class DataPipelineEndpoints
     private static async Task<IResult> UnassignWorkspace(
     AssociationRequest request,
     IDataPipelineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkspace(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -118,7 +125,8 @@ public static class DataPipelineEndpoints
     private static async Task<IResult> AssignLineageNode(
         AssociationRequest request,
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLineageNode(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -126,7 +134,8 @@ public static class DataPipelineEndpoints
     private static async Task<IResult> UnassignLineageNode(
     AssociationRequest request,
     IDataPipelineService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLineageNode(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,7 +144,8 @@ public static class DataPipelineEndpoints
     private static async Task<IResult> AddToTasks(
         MultipleAssociationRequest request,
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTasks(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -143,14 +153,16 @@ public static class DataPipelineEndpoints
     private static async Task<IResult> RemoveFromTasks(
         MultipleAssociationRequest request,
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTasks(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSources(
         MultipleAssociationRequest request,
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSources(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -158,14 +170,16 @@ public static class DataPipelineEndpoints
     private static async Task<IResult> RemoveFromSources(
         MultipleAssociationRequest request,
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSources(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOutputs(
         MultipleAssociationRequest request,
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOutputs(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -173,11 +187,13 @@ public static class DataPipelineEndpoints
     private static async Task<IResult> RemoveFromOutputs(
         MultipleAssociationRequest request,
         IDataPipelineService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOutputs(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static DataPipeline mapRequestToDataPipeline( DataPipelineRequest request ) {
+    private static DataPipeline mapRequestToDataPipeline(DataPipelineRequest request)
+    {
         var model = new DataPipeline
         {
             Id = request.Id,

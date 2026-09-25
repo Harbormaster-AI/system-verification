@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum AggregationType
 {
-    Sum=1,Average=2,Min=3,Max=4,Median=5,Count=6,DistinctCount=7
+    Sum = 1, Average = 2, Min = 3, Max = 4, Median = 5, Count = 6, DistinctCount = 7
 }
 
 /// <summary>

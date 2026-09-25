@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IRunParameterService {
+public interface IRunParameterService
+{
 
-    Task Create(RunParameter model , CancellationToken cancellationToken);
+    Task Create(RunParameter model, CancellationToken cancellationToken);
     Task<bool> Update(RunParameter model, CancellationToken cancellationToken);
     Task<RunParameter?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RunParameter>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class RunParameterService : IRunParameterService
 
     public async Task<bool> Update(RunParameter model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,7 +118,8 @@ public class RunParameterService : IRunParameterService
         return true;
     }
 
-    public async Task<bool> AssignTrainingRun(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTrainingRun(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -134,7 +137,7 @@ public class RunParameterService : IRunParameterService
 
             var child = await _serviceResolver.Get<TrainingRunService>().Get(childRequest, cancellationToken);
             parent.TrainingRun = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -146,7 +149,8 @@ public class RunParameterService : IRunParameterService
         return true;
     }
 
-    public async Task<bool> UnassignTrainingRun(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTrainingRun(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -157,7 +161,7 @@ public class RunParameterService : IRunParameterService
         try
         {
             parent.TrainingRun = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

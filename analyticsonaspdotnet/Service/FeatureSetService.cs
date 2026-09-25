@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IFeatureSetService {
+public interface IFeatureSetService
+{
 
-    Task Create(FeatureSet model , CancellationToken cancellationToken);
+    Task Create(FeatureSet model, CancellationToken cancellationToken);
     Task<bool> Update(FeatureSet model, CancellationToken cancellationToken);
     Task<FeatureSet?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FeatureSet>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class FeatureSetService : IFeatureSetService
 
     public async Task<bool> Update(FeatureSet model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -127,7 +129,8 @@ public class FeatureSetService : IFeatureSetService
         return true;
     }
 
-    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -145,7 +148,7 @@ public class FeatureSetService : IFeatureSetService
 
             var child = await _serviceResolver.Get<AnalyticsWorkspaceService>().Get(childRequest, cancellationToken);
             parent.Workspace = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -157,7 +160,8 @@ public class FeatureSetService : IFeatureSetService
         return true;
     }
 
-    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -168,7 +172,7 @@ public class FeatureSetService : IFeatureSetService
         try
         {
             parent.Workspace = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -181,8 +185,10 @@ public class FeatureSetService : IFeatureSetService
     }
 
 
-    public async Task<bool> AddToFeatures(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFeatures(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FeatureSet",
                 "AddToFeatures",
@@ -190,16 +196,18 @@ public class FeatureSetService : IFeatureSetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFeatures(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFeatures(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FeatureSet",
                 "RemoveFromFeatures",
@@ -215,8 +223,10 @@ public class FeatureSetService : IFeatureSetService
         return true;
     }
 
-    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FeatureSet",
                 "AddToDatasets",
@@ -224,16 +234,18 @@ public class FeatureSetService : IFeatureSetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FeatureSet",
                 "RemoveFromDatasets",
@@ -249,8 +261,10 @@ public class FeatureSetService : IFeatureSetService
         return true;
     }
 
-    public async Task<bool> AddToModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FeatureSet",
                 "AddToModels",
@@ -258,16 +272,18 @@ public class FeatureSetService : IFeatureSetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FeatureSet",
                 "RemoveFromModels",
@@ -283,8 +299,10 @@ public class FeatureSetService : IFeatureSetService
         return true;
     }
 
-    public async Task<bool> AddToModelVersions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToModelVersions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FeatureSet",
                 "AddToModelVersions",
@@ -292,16 +310,18 @@ public class FeatureSetService : IFeatureSetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromModelVersions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromModelVersions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FeatureSet",
                 "RemoveFromModelVersions",
@@ -317,8 +337,10 @@ public class FeatureSetService : IFeatureSetService
         return true;
     }
 
-    public async Task<bool> AddToTags(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTags(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FeatureSet",
                 "AddToTags",
@@ -326,16 +348,18 @@ public class FeatureSetService : IFeatureSetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTags(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTags(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FeatureSet",
                 "RemoveFromTags",

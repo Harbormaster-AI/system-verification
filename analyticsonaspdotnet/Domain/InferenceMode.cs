@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum InferenceMode
 {
-    Batch=1,RealTime=2
+    Batch = 1, RealTime = 2
 }
 
 /// <summary>

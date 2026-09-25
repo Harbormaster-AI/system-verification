@@ -20,11 +20,11 @@ public static class DataTaskEndpoints
         group.MapPut("/assignPipeline", AssignPipeline);
         group.MapPut("/unassignPipeline", UnassignPipeline);
 
-    group.MapPut("/addToInputDatasets", AddToInputDatasets);
-    group.MapPut("/removeFromInputDatasets", RemoveFromInputDatasets);
+        group.MapPut("/addToInputDatasets", AddToInputDatasets);
+        group.MapPut("/removeFromInputDatasets", RemoveFromInputDatasets);
 
-    group.MapPut("/addToOutputDatasets", AddToOutputDatasets);
-    group.MapPut("/removeFromOutputDatasets", RemoveFromOutputDatasets);
+        group.MapPut("/addToOutputDatasets", AddToOutputDatasets);
+        group.MapPut("/removeFromOutputDatasets", RemoveFromOutputDatasets);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class DataTaskEndpoints
     private static async Task<IResult> Create(
         DataTaskRequest request,
         IDataTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDataTask( request );
+        var model = mapRequestToDataTask(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class DataTaskEndpoints
     private static async Task<IResult> Update(
         DataTaskRequest request,
         IDataTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDataTask( request );
+        var model = mapRequestToDataTask(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class DataTaskEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDataTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var dataTask = await service.Get(identifier, cancellationToken);
-        return dataTask is null ? Results.NotFound() : Results.Ok( dataTask );
+        return dataTask is null ? Results.NotFound() : Results.Ok(dataTask);
     }
 
 
     private static async Task<IResult> GetAll(
         IDataTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DataTaskResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DataTaskResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDataTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class DataTaskEndpoints
     private static async Task<IResult> AssignPipeline(
         AssociationRequest request,
         IDataTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPipeline(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class DataTaskEndpoints
     private static async Task<IResult> UnassignPipeline(
     AssociationRequest request,
     IDataTaskService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPipeline(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class DataTaskEndpoints
     private static async Task<IResult> AddToInputDatasets(
         MultipleAssociationRequest request,
         IDataTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInputDatasets(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class DataTaskEndpoints
     private static async Task<IResult> RemoveFromInputDatasets(
         MultipleAssociationRequest request,
         IDataTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInputDatasets(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOutputDatasets(
         MultipleAssociationRequest request,
         IDataTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOutputDatasets(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class DataTaskEndpoints
     private static async Task<IResult> RemoveFromOutputDatasets(
         MultipleAssociationRequest request,
         IDataTaskService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOutputDatasets(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static DataTask mapRequestToDataTask( DataTaskRequest request ) {
+    private static DataTask mapRequestToDataTask(DataTaskRequest request)
+    {
         var model = new DataTask
         {
             Id = request.Id,

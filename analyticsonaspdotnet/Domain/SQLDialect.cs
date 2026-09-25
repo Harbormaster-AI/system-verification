@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum SQLDialect
 {
-    ANSI=1,Postgres=2,MySQL=3,SQLServer=4,Oracle=5,SparkSQL=6,BigQuery=7
+    ANSI = 1, Postgres = 2, MySQL = 3, SQLServer = 4, Oracle = 5, SparkSQL = 6, BigQuery = 7
 }
 
 /// <summary>

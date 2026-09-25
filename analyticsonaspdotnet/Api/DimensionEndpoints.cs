@@ -20,11 +20,11 @@ public static class DimensionEndpoints
         group.MapPut("/assignSemanticModel", AssignSemanticModel);
         group.MapPut("/unassignSemanticModel", UnassignSemanticModel);
 
-    group.MapPut("/addToDatasets", AddToDatasets);
-    group.MapPut("/removeFromDatasets", RemoveFromDatasets);
+        group.MapPut("/addToDatasets", AddToDatasets);
+        group.MapPut("/removeFromDatasets", RemoveFromDatasets);
 
-    group.MapPut("/addToGlossaryTerms", AddToGlossaryTerms);
-    group.MapPut("/removeFromGlossaryTerms", RemoveFromGlossaryTerms);
+        group.MapPut("/addToGlossaryTerms", AddToGlossaryTerms);
+        group.MapPut("/removeFromGlossaryTerms", RemoveFromGlossaryTerms);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class DimensionEndpoints
     private static async Task<IResult> Create(
         DimensionRequest request,
         IDimensionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDimension( request );
+        var model = mapRequestToDimension(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class DimensionEndpoints
     private static async Task<IResult> Update(
         DimensionRequest request,
         IDimensionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDimension( request );
+        var model = mapRequestToDimension(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class DimensionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDimensionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var dimension = await service.Get(identifier, cancellationToken);
-        return dimension is null ? Results.NotFound() : Results.Ok( dimension );
+        return dimension is null ? Results.NotFound() : Results.Ok(dimension);
     }
 
 
     private static async Task<IResult> GetAll(
         IDimensionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DimensionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DimensionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDimensionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class DimensionEndpoints
     private static async Task<IResult> AssignSemanticModel(
         AssociationRequest request,
         IDimensionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSemanticModel(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class DimensionEndpoints
     private static async Task<IResult> UnassignSemanticModel(
     AssociationRequest request,
     IDimensionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSemanticModel(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class DimensionEndpoints
     private static async Task<IResult> AddToDatasets(
         MultipleAssociationRequest request,
         IDimensionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDatasets(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class DimensionEndpoints
     private static async Task<IResult> RemoveFromDatasets(
         MultipleAssociationRequest request,
         IDimensionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDatasets(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToGlossaryTerms(
         MultipleAssociationRequest request,
         IDimensionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToGlossaryTerms(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class DimensionEndpoints
     private static async Task<IResult> RemoveFromGlossaryTerms(
         MultipleAssociationRequest request,
         IDimensionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromGlossaryTerms(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Dimension mapRequestToDimension( DimensionRequest request ) {
+    private static Dimension mapRequestToDimension(DimensionRequest request)
+    {
         var model = new Dimension
         {
             Id = request.Id,

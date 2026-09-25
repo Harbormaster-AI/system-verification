@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IAlertService {
+public interface IAlertService
+{
 
-    Task Create(Alert model , CancellationToken cancellationToken);
+    Task Create(Alert model, CancellationToken cancellationToken);
     Task<bool> Update(Alert model, CancellationToken cancellationToken);
     Task<Alert?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Alert>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class AlertService : IAlertService
 
     public async Task<bool> Update(Alert model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -128,7 +130,8 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> AssignMetric(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMetric(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -146,7 +149,7 @@ public class AlertService : IAlertService
 
             var child = await _serviceResolver.Get<MetricService>().Get(childRequest, cancellationToken);
             parent.Metric = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -158,7 +161,8 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> UnassignMetric(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMetric(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -169,7 +173,7 @@ public class AlertService : IAlertService
         try
         {
             parent.Metric = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -181,7 +185,8 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> AssignDashboard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDashboard(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -199,7 +204,7 @@ public class AlertService : IAlertService
 
             var child = await _serviceResolver.Get<DashboardService>().Get(childRequest, cancellationToken);
             parent.Dashboard = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -211,7 +216,8 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> UnassignDashboard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDashboard(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -222,7 +228,7 @@ public class AlertService : IAlertService
         try
         {
             parent.Dashboard = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -234,7 +240,8 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -252,7 +259,7 @@ public class AlertService : IAlertService
 
             var child = await _serviceResolver.Get<DataSetService>().Get(childRequest, cancellationToken);
             parent.Dataset = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -264,7 +271,8 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDataset(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -275,7 +283,7 @@ public class AlertService : IAlertService
         try
         {
             parent.Dataset = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -287,7 +295,8 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> AssignRule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRule(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -305,7 +314,7 @@ public class AlertService : IAlertService
 
             var child = await _serviceResolver.Get<QualityRuleService>().Get(childRequest, cancellationToken);
             parent.Rule = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -317,7 +326,8 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> UnassignRule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRule(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -328,7 +338,7 @@ public class AlertService : IAlertService
         try
         {
             parent.Rule = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -341,8 +351,10 @@ public class AlertService : IAlertService
     }
 
 
-    public async Task<bool> AddToAnomalies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAnomalies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Alert",
                 "AddToAnomalies",
@@ -350,16 +362,18 @@ public class AlertService : IAlertService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAnomalies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAnomalies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Alert",
                 "RemoveFromAnomalies",
@@ -375,8 +389,10 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> AddToSubscribers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSubscribers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Alert",
                 "AddToSubscribers",
@@ -384,16 +400,18 @@ public class AlertService : IAlertService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSubscribers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSubscribers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Alert",
                 "RemoveFromSubscribers",

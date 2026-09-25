@@ -11,9 +11,9 @@ public interface IMeasureRepository
     Task UpdateAsync(Measure measure, CancellationToken cancellationToken);
     Task DeleteAsync(Measure measure, CancellationToken cancellationToken);
 
-    Task AddToDatasetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDatasetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToGlossaryTermsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromGlossaryTermsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDatasetsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDatasetsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToGlossaryTermsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromGlossaryTermsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

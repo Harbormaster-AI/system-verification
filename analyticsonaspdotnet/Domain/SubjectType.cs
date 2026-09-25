@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum SubjectType
 {
-    User=1,Group=2,Service=3
+    User = 1, Group = 2, Service = 3
 }
 
 /// <summary>

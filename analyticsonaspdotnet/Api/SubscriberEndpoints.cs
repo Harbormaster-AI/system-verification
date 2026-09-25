@@ -18,8 +18,8 @@ public static class SubscriberEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToAlerts", AddToAlerts);
-    group.MapPut("/removeFromAlerts", RemoveFromAlerts);
+        group.MapPut("/addToAlerts", AddToAlerts);
+        group.MapPut("/removeFromAlerts", RemoveFromAlerts);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class SubscriberEndpoints
     private static async Task<IResult> Create(
         SubscriberRequest request,
         ISubscriberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSubscriber( request );
+        var model = mapRequestToSubscriber(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class SubscriberEndpoints
     private static async Task<IResult> Update(
         SubscriberRequest request,
         ISubscriberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSubscriber( request );
+        var model = mapRequestToSubscriber(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class SubscriberEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISubscriberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var subscriber = await service.Get(identifier, cancellationToken);
-        return subscriber is null ? Results.NotFound() : Results.Ok( subscriber );
+        return subscriber is null ? Results.NotFound() : Results.Ok(subscriber);
     }
 
 
     private static async Task<IResult> GetAll(
         ISubscriberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SubscriberResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SubscriberResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISubscriberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class SubscriberEndpoints
     private static async Task<IResult> AddToAlerts(
         MultipleAssociationRequest request,
         ISubscriberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAlerts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class SubscriberEndpoints
     private static async Task<IResult> RemoveFromAlerts(
         MultipleAssociationRequest request,
         ISubscriberService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAlerts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Subscriber mapRequestToSubscriber( SubscriberRequest request ) {
+    private static Subscriber mapRequestToSubscriber(SubscriberRequest request)
+    {
         var model = new Subscriber
         {
             Id = request.Id,

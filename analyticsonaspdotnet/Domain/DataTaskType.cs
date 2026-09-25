@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum DataTaskType
 {
-    Extract=1,Transform=2,Load=3,Validate=4,Enrich=5
+    Extract = 1, Transform = 2, Load = 3, Validate = 4, Enrich = 5
 }
 
 /// <summary>

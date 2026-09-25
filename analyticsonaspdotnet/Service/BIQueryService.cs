@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IBIQueryService {
+public interface IBIQueryService
+{
 
-    Task Create(BIQuery model , CancellationToken cancellationToken);
+    Task Create(BIQuery model, CancellationToken cancellationToken);
     Task<bool> Update(BIQuery model, CancellationToken cancellationToken);
     Task<BIQuery?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BIQuery>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class BIQueryService : IBIQueryService
 
     public async Task<bool> Update(BIQuery model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class BIQueryService : IBIQueryService
         return true;
     }
 
-    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class BIQueryService : IBIQueryService
 
             var child = await _serviceResolver.Get<AnalyticsWorkspaceService>().Get(childRequest, cancellationToken);
             parent.Workspace = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class BIQueryService : IBIQueryService
         return true;
     }
 
-    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class BIQueryService : IBIQueryService
         try
         {
             parent.Workspace = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,8 +183,10 @@ public class BIQueryService : IBIQueryService
     }
 
 
-    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BIQuery",
                 "AddToDatasets",
@@ -188,16 +194,18 @@ public class BIQueryService : IBIQueryService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BIQuery",
                 "RemoveFromDatasets",
@@ -213,8 +221,10 @@ public class BIQueryService : IBIQueryService
         return true;
     }
 
-    public async Task<bool> AddToReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BIQuery",
                 "AddToReports",
@@ -222,16 +232,18 @@ public class BIQueryService : IBIQueryService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BIQuery",
                 "RemoveFromReports",
@@ -247,8 +259,10 @@ public class BIQueryService : IBIQueryService
         return true;
     }
 
-    public async Task<bool> AddToDashboards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDashboards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BIQuery",
                 "AddToDashboards",
@@ -256,16 +270,18 @@ public class BIQueryService : IBIQueryService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDashboards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDashboards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BIQuery",
                 "RemoveFromDashboards",
@@ -281,8 +297,10 @@ public class BIQueryService : IBIQueryService
         return true;
     }
 
-    public async Task<bool> AddToNotebooks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToNotebooks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BIQuery",
                 "AddToNotebooks",
@@ -290,16 +308,18 @@ public class BIQueryService : IBIQueryService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromNotebooks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromNotebooks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BIQuery",
                 "RemoveFromNotebooks",

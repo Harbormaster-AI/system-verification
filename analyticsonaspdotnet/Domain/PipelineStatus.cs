@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum PipelineStatus
 {
-    Draft=1,Active=2,Paused=3,Failed=4,Succeeded=5
+    Draft = 1, Active = 2, Paused = 3, Failed = 4, Succeeded = 5
 }
 
 /// <summary>

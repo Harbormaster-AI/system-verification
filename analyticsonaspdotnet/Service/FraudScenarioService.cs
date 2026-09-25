@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IFraudScenarioService {
+public interface IFraudScenarioService
+{
 
-    Task Create(FraudScenario model , CancellationToken cancellationToken);
+    Task Create(FraudScenario model, CancellationToken cancellationToken);
     Task<bool> Update(FraudScenario model, CancellationToken cancellationToken);
     Task<FraudScenario?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FraudScenario>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class FraudScenarioService : IFraudScenarioService
 
     public async Task<bool> Update(FraudScenario model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,8 +126,10 @@ public class FraudScenarioService : IFraudScenarioService
     }
 
 
-    public async Task<bool> AddToModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FraudScenario",
                 "AddToModels",
@@ -133,16 +137,18 @@ public class FraudScenarioService : IFraudScenarioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FraudScenario",
                 "RemoveFromModels",
@@ -158,8 +164,10 @@ public class FraudScenarioService : IFraudScenarioService
         return true;
     }
 
-    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FraudScenario",
                 "AddToDatasets",
@@ -167,16 +175,18 @@ public class FraudScenarioService : IFraudScenarioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FraudScenario",
                 "RemoveFromDatasets",
@@ -192,8 +202,10 @@ public class FraudScenarioService : IFraudScenarioService
         return true;
     }
 
-    public async Task<bool> AddToAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FraudScenario",
                 "AddToAlerts",
@@ -201,16 +213,18 @@ public class FraudScenarioService : IFraudScenarioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FraudScenario",
                 "RemoveFromAlerts",
@@ -226,8 +240,10 @@ public class FraudScenarioService : IFraudScenarioService
         return true;
     }
 
-    public async Task<bool> AddToSignals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSignals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FraudScenario",
                 "AddToSignals",
@@ -235,16 +251,18 @@ public class FraudScenarioService : IFraudScenarioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSignals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSignals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FraudScenario",
                 "RemoveFromSignals",

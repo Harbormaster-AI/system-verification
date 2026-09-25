@@ -20,26 +20,26 @@ public static class LineageNodeEndpoints
         group.MapPut("/assignWorkspace", AssignWorkspace);
         group.MapPut("/unassignWorkspace", UnassignWorkspace);
 
-    group.MapPut("/addToInputs", AddToInputs);
-    group.MapPut("/removeFromInputs", RemoveFromInputs);
+        group.MapPut("/addToInputs", AddToInputs);
+        group.MapPut("/removeFromInputs", RemoveFromInputs);
 
-    group.MapPut("/addToOutputs", AddToOutputs);
-    group.MapPut("/removeFromOutputs", RemoveFromOutputs);
+        group.MapPut("/addToOutputs", AddToOutputs);
+        group.MapPut("/removeFromOutputs", RemoveFromOutputs);
 
-    group.MapPut("/addToDatasets", AddToDatasets);
-    group.MapPut("/removeFromDatasets", RemoveFromDatasets);
+        group.MapPut("/addToDatasets", AddToDatasets);
+        group.MapPut("/removeFromDatasets", RemoveFromDatasets);
 
-    group.MapPut("/addToModels", AddToModels);
-    group.MapPut("/removeFromModels", RemoveFromModels);
+        group.MapPut("/addToModels", AddToModels);
+        group.MapPut("/removeFromModels", RemoveFromModels);
 
-    group.MapPut("/addToPipelines", AddToPipelines);
-    group.MapPut("/removeFromPipelines", RemoveFromPipelines);
+        group.MapPut("/addToPipelines", AddToPipelines);
+        group.MapPut("/removeFromPipelines", RemoveFromPipelines);
 
-    group.MapPut("/addToDashboards", AddToDashboards);
-    group.MapPut("/removeFromDashboards", RemoveFromDashboards);
+        group.MapPut("/addToDashboards", AddToDashboards);
+        group.MapPut("/removeFromDashboards", RemoveFromDashboards);
 
-    group.MapPut("/addToReports", AddToReports);
-    group.MapPut("/removeFromReports", RemoveFromReports);
+        group.MapPut("/addToReports", AddToReports);
+        group.MapPut("/removeFromReports", RemoveFromReports);
 
 
         return app;
@@ -48,9 +48,10 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> Create(
         LineageNodeRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLineageNode( request );
+        var model = mapRequestToLineageNode(request);
 
         try
         {
@@ -67,9 +68,10 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> Update(
         LineageNodeRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLineageNode( request );
+        var model = mapRequestToLineageNode(request);
 
         try
         {
@@ -86,25 +88,28 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var lineageNode = await service.Get(identifier, cancellationToken);
-        return lineageNode is null ? Results.NotFound() : Results.Ok( lineageNode );
+        return lineageNode is null ? Results.NotFound() : Results.Ok(lineageNode);
     }
 
 
     private static async Task<IResult> GetAll(
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( LineageNodeResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(LineageNodeResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +117,8 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> AssignWorkspace(
         AssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkspace(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +126,8 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> UnassignWorkspace(
     AssociationRequest request,
     ILineageNodeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkspace(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +136,8 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> AddToInputs(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInputs(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,14 +145,16 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> RemoveFromInputs(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInputs(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOutputs(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOutputs(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -152,14 +162,16 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> RemoveFromOutputs(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOutputs(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToDatasets(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDatasets(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -167,14 +179,16 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> RemoveFromDatasets(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDatasets(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToModels(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToModels(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -182,14 +196,16 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> RemoveFromModels(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromModels(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPipelines(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPipelines(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -197,14 +213,16 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> RemoveFromPipelines(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPipelines(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToDashboards(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDashboards(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -212,14 +230,16 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> RemoveFromDashboards(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDashboards(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToReports(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToReports(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -227,11 +247,13 @@ public static class LineageNodeEndpoints
     private static async Task<IResult> RemoveFromReports(
         MultipleAssociationRequest request,
         ILineageNodeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromReports(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static LineageNode mapRequestToLineageNode( LineageNodeRequest request ) {
+    private static LineageNode mapRequestToLineageNode(LineageNodeRequest request)
+    {
         var model = new LineageNode
         {
             Id = request.Id,

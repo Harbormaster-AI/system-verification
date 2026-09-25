@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface ITrainingRunService {
+public interface ITrainingRunService
+{
 
-    Task Create(TrainingRun model , CancellationToken cancellationToken);
+    Task Create(TrainingRun model, CancellationToken cancellationToken);
     Task<bool> Update(TrainingRun model, CancellationToken cancellationToken);
     Task<TrainingRun?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TrainingRun>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class TrainingRunService : ITrainingRunService
 
     public async Task<bool> Update(TrainingRun model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -128,7 +130,8 @@ public class TrainingRunService : ITrainingRunService
         return true;
     }
 
-    public async Task<bool> AssignExperiment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignExperiment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -146,7 +149,7 @@ public class TrainingRunService : ITrainingRunService
 
             var child = await _serviceResolver.Get<ExperimentService>().Get(childRequest, cancellationToken);
             parent.Experiment = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -158,7 +161,8 @@ public class TrainingRunService : ITrainingRunService
         return true;
     }
 
-    public async Task<bool> UnassignExperiment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignExperiment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -169,7 +173,7 @@ public class TrainingRunService : ITrainingRunService
         try
         {
             parent.Experiment = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -181,7 +185,8 @@ public class TrainingRunService : ITrainingRunService
         return true;
     }
 
-    public async Task<bool> AssignModelVersion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignModelVersion(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -199,7 +204,7 @@ public class TrainingRunService : ITrainingRunService
 
             var child = await _serviceResolver.Get<ModelVersionService>().Get(childRequest, cancellationToken);
             parent.ModelVersion = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -211,7 +216,8 @@ public class TrainingRunService : ITrainingRunService
         return true;
     }
 
-    public async Task<bool> UnassignModelVersion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignModelVersion(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -222,7 +228,7 @@ public class TrainingRunService : ITrainingRunService
         try
         {
             parent.ModelVersion = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -235,8 +241,10 @@ public class TrainingRunService : ITrainingRunService
     }
 
 
-    public async Task<bool> AddToInputDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInputDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingRun",
                 "AddToInputDatasets",
@@ -244,16 +252,18 @@ public class TrainingRunService : ITrainingRunService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInputDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInputDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingRun",
                 "RemoveFromInputDatasets",
@@ -269,8 +279,10 @@ public class TrainingRunService : ITrainingRunService
         return true;
     }
 
-    public async Task<bool> AddToFeatures(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFeatures(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingRun",
                 "AddToFeatures",
@@ -278,16 +290,18 @@ public class TrainingRunService : ITrainingRunService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFeatures(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFeatures(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingRun",
                 "RemoveFromFeatures",
@@ -303,8 +317,10 @@ public class TrainingRunService : ITrainingRunService
         return true;
     }
 
-    public async Task<bool> AddToRunMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRunMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingRun",
                 "AddToRunMetrics",
@@ -312,16 +328,18 @@ public class TrainingRunService : ITrainingRunService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRunMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRunMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingRun",
                 "RemoveFromRunMetrics",
@@ -337,8 +355,10 @@ public class TrainingRunService : ITrainingRunService
         return true;
     }
 
-    public async Task<bool> AddToRunParameters(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRunParameters(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingRun",
                 "AddToRunParameters",
@@ -346,16 +366,18 @@ public class TrainingRunService : ITrainingRunService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRunParameters(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRunParameters(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TrainingRun",
                 "RemoveFromRunParameters",

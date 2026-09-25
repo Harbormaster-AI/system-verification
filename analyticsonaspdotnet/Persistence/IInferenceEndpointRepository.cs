@@ -11,7 +11,7 @@ public interface IInferenceEndpointRepository
     Task UpdateAsync(InferenceEndpoint inferenceEndpoint, CancellationToken cancellationToken);
     Task DeleteAsync(InferenceEndpoint inferenceEndpoint, CancellationToken cancellationToken);
 
-    Task AddToPredictionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPredictionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPredictionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPredictionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

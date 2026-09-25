@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum DataFormat
 {
-    CSV=1,JSON=2,Parquet=3,Avro=4,ORC=5,XML=6
+    CSV = 1, JSON = 2, Parquet = 3, Avro = 4, ORC = 5, XML = 6
 }
 
 /// <summary>

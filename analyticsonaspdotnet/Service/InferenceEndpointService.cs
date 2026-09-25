@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IInferenceEndpointService {
+public interface IInferenceEndpointService
+{
 
-    Task Create(InferenceEndpoint model , CancellationToken cancellationToken);
+    Task Create(InferenceEndpoint model, CancellationToken cancellationToken);
     Task<bool> Update(InferenceEndpoint model, CancellationToken cancellationToken);
     Task<InferenceEndpoint?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InferenceEndpoint>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class InferenceEndpointService : IInferenceEndpointService
 
     public async Task<bool> Update(InferenceEndpoint model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class InferenceEndpointService : IInferenceEndpointService
         return true;
     }
 
-    public async Task<bool> AssignModelVersion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignModelVersion(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class InferenceEndpointService : IInferenceEndpointService
 
             var child = await _serviceResolver.Get<ModelVersionService>().Get(childRequest, cancellationToken);
             parent.ModelVersion = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class InferenceEndpointService : IInferenceEndpointService
         return true;
     }
 
-    public async Task<bool> UnassignModelVersion(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignModelVersion(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class InferenceEndpointService : IInferenceEndpointService
         try
         {
             parent.ModelVersion = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class InferenceEndpointService : IInferenceEndpointService
         return true;
     }
 
-    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class InferenceEndpointService : IInferenceEndpointService
 
             var child = await _serviceResolver.Get<AnalyticsWorkspaceService>().Get(childRequest, cancellationToken);
             parent.Workspace = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class InferenceEndpointService : IInferenceEndpointService
         return true;
     }
 
-    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class InferenceEndpointService : IInferenceEndpointService
         try
         {
             parent.Workspace = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,8 +235,10 @@ public class InferenceEndpointService : IInferenceEndpointService
     }
 
 
-    public async Task<bool> AddToPredictions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPredictions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InferenceEndpoint",
                 "AddToPredictions",
@@ -238,16 +246,18 @@ public class InferenceEndpointService : IInferenceEndpointService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPredictions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPredictions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InferenceEndpoint",
                 "RemoveFromPredictions",

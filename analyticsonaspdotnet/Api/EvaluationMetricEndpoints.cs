@@ -31,9 +31,10 @@ public static class EvaluationMetricEndpoints
     private static async Task<IResult> Create(
         EvaluationMetricRequest request,
         IEvaluationMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEvaluationMetric( request );
+        var model = mapRequestToEvaluationMetric(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class EvaluationMetricEndpoints
     private static async Task<IResult> Update(
         EvaluationMetricRequest request,
         IEvaluationMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEvaluationMetric( request );
+        var model = mapRequestToEvaluationMetric(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class EvaluationMetricEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IEvaluationMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var evaluationMetric = await service.Get(identifier, cancellationToken);
-        return evaluationMetric is null ? Results.NotFound() : Results.Ok( evaluationMetric );
+        return evaluationMetric is null ? Results.NotFound() : Results.Ok(evaluationMetric);
     }
 
 
     private static async Task<IResult> GetAll(
         IEvaluationMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( EvaluationMetricResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(EvaluationMetricResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IEvaluationMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class EvaluationMetricEndpoints
     private static async Task<IResult> AssignModelVersion(
         AssociationRequest request,
         IEvaluationMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignModelVersion(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class EvaluationMetricEndpoints
     private static async Task<IResult> UnassignModelVersion(
     AssociationRequest request,
     IEvaluationMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignModelVersion(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class EvaluationMetricEndpoints
     private static async Task<IResult> AssignMetric(
         AssociationRequest request,
         IEvaluationMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMetric(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class EvaluationMetricEndpoints
     private static async Task<IResult> UnassignMetric(
     AssociationRequest request,
     IEvaluationMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMetric(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class EvaluationMetricEndpoints
     private static async Task<IResult> AssignDataset(
         AssociationRequest request,
         IEvaluationMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDataset(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class EvaluationMetricEndpoints
     private static async Task<IResult> UnassignDataset(
     AssociationRequest request,
     IEvaluationMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDataset(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static EvaluationMetric mapRequestToEvaluationMetric( EvaluationMetricRequest request ) {
+    private static EvaluationMetric mapRequestToEvaluationMetric(EvaluationMetricRequest request)
+    {
         var model = new EvaluationMetric
         {
             Id = request.Id,

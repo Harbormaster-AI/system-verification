@@ -11,11 +11,11 @@ public interface IFeatureRepository
     Task UpdateAsync(Feature feature, CancellationToken cancellationToken);
     Task DeleteAsync(Feature feature, CancellationToken cancellationToken);
 
-    Task AddToSourceDatasetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSourceDatasetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToModelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromModelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTrainingRunsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTrainingRunsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSourceDatasetsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSourceDatasetsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToModelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromModelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTrainingRunsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTrainingRunsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

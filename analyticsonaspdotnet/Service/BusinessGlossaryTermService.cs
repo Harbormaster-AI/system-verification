@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IBusinessGlossaryTermService {
+public interface IBusinessGlossaryTermService
+{
 
-    Task Create(BusinessGlossaryTerm model , CancellationToken cancellationToken);
+    Task Create(BusinessGlossaryTerm model, CancellationToken cancellationToken);
     Task<bool> Update(BusinessGlossaryTerm model, CancellationToken cancellationToken);
     Task<BusinessGlossaryTerm?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BusinessGlossaryTerm>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class BusinessGlossaryTermService : IBusinessGlossaryTermService
 
     public async Task<bool> Update(BusinessGlossaryTerm model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,8 +128,10 @@ public class BusinessGlossaryTermService : IBusinessGlossaryTermService
     }
 
 
-    public async Task<bool> AddToRelatedTerms(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRelatedTerms(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessGlossaryTerm",
                 "AddToRelatedTerms",
@@ -135,16 +139,18 @@ public class BusinessGlossaryTermService : IBusinessGlossaryTermService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRelatedTerms(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRelatedTerms(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessGlossaryTerm",
                 "RemoveFromRelatedTerms",
@@ -160,8 +166,10 @@ public class BusinessGlossaryTermService : IBusinessGlossaryTermService
         return true;
     }
 
-    public async Task<bool> AddToMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessGlossaryTerm",
                 "AddToMetrics",
@@ -169,16 +177,18 @@ public class BusinessGlossaryTermService : IBusinessGlossaryTermService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessGlossaryTerm",
                 "RemoveFromMetrics",
@@ -194,8 +204,10 @@ public class BusinessGlossaryTermService : IBusinessGlossaryTermService
         return true;
     }
 
-    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessGlossaryTerm",
                 "AddToDatasets",
@@ -203,16 +215,18 @@ public class BusinessGlossaryTermService : IBusinessGlossaryTermService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessGlossaryTerm",
                 "RemoveFromDatasets",
@@ -228,8 +242,10 @@ public class BusinessGlossaryTermService : IBusinessGlossaryTermService
         return true;
     }
 
-    public async Task<bool> AddToDimensions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDimensions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessGlossaryTerm",
                 "AddToDimensions",
@@ -237,16 +253,18 @@ public class BusinessGlossaryTermService : IBusinessGlossaryTermService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDimensions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDimensions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessGlossaryTerm",
                 "RemoveFromDimensions",
@@ -262,8 +280,10 @@ public class BusinessGlossaryTermService : IBusinessGlossaryTermService
         return true;
     }
 
-    public async Task<bool> AddToMeasures(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToMeasures(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessGlossaryTerm",
                 "AddToMeasures",
@@ -271,16 +291,18 @@ public class BusinessGlossaryTermService : IBusinessGlossaryTermService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromMeasures(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromMeasures(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessGlossaryTerm",
                 "RemoveFromMeasures",

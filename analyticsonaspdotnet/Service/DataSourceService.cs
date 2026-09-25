@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IDataSourceService {
+public interface IDataSourceService
+{
 
-    Task Create(DataSource model , CancellationToken cancellationToken);
+    Task Create(DataSource model, CancellationToken cancellationToken);
     Task<bool> Update(DataSource model, CancellationToken cancellationToken);
     Task<DataSource?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DataSource>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class DataSourceService : IDataSourceService
 
     public async Task<bool> Update(DataSource model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class DataSourceService : IDataSourceService
         return true;
     }
 
-    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class DataSourceService : IDataSourceService
 
             var child = await _serviceResolver.Get<AnalyticsWorkspaceService>().Get(childRequest, cancellationToken);
             parent.Workspace = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class DataSourceService : IDataSourceService
         return true;
     }
 
-    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class DataSourceService : IDataSourceService
         try
         {
             parent.Workspace = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,8 +181,10 @@ public class DataSourceService : IDataSourceService
     }
 
 
-    public async Task<bool> AddToProducedDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToProducedDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataSource",
                 "AddToProducedDatasets",
@@ -186,16 +192,18 @@ public class DataSourceService : IDataSourceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromProducedDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromProducedDatasets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataSource",
                 "RemoveFromProducedDatasets",
@@ -211,8 +219,10 @@ public class DataSourceService : IDataSourceService
         return true;
     }
 
-    public async Task<bool> AddToPipelines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPipelines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataSource",
                 "AddToPipelines",
@@ -220,16 +230,18 @@ public class DataSourceService : IDataSourceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPipelines(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPipelines(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataSource",
                 "RemoveFromPipelines",

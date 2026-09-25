@@ -26,11 +26,11 @@ public static class AlertEndpoints
         group.MapPut("/assignRule", AssignRule);
         group.MapPut("/unassignRule", UnassignRule);
 
-    group.MapPut("/addToAnomalies", AddToAnomalies);
-    group.MapPut("/removeFromAnomalies", RemoveFromAnomalies);
+        group.MapPut("/addToAnomalies", AddToAnomalies);
+        group.MapPut("/removeFromAnomalies", RemoveFromAnomalies);
 
-    group.MapPut("/addToSubscribers", AddToSubscribers);
-    group.MapPut("/removeFromSubscribers", RemoveFromSubscribers);
+        group.MapPut("/addToSubscribers", AddToSubscribers);
+        group.MapPut("/removeFromSubscribers", RemoveFromSubscribers);
 
 
         return app;
@@ -39,9 +39,10 @@ public static class AlertEndpoints
     private static async Task<IResult> Create(
         AlertRequest request,
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAlert( request );
+        var model = mapRequestToAlert(request);
 
         try
         {
@@ -58,9 +59,10 @@ public static class AlertEndpoints
     private static async Task<IResult> Update(
         AlertRequest request,
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAlert( request );
+        var model = mapRequestToAlert(request);
 
         try
         {
@@ -77,25 +79,28 @@ public static class AlertEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var alert = await service.Get(identifier, cancellationToken);
-        return alert is null ? Results.NotFound() : Results.Ok( alert );
+        return alert is null ? Results.NotFound() : Results.Ok(alert);
     }
 
 
     private static async Task<IResult> GetAll(
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AlertResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AlertResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +108,8 @@ public static class AlertEndpoints
     private static async Task<IResult> AssignMetric(
         AssociationRequest request,
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMetric(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +117,8 @@ public static class AlertEndpoints
     private static async Task<IResult> UnassignMetric(
     AssociationRequest request,
     IAlertService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMetric(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +126,8 @@ public static class AlertEndpoints
     private static async Task<IResult> AssignDashboard(
         AssociationRequest request,
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDashboard(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +135,8 @@ public static class AlertEndpoints
     private static async Task<IResult> UnassignDashboard(
     AssociationRequest request,
     IAlertService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDashboard(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,7 +144,8 @@ public static class AlertEndpoints
     private static async Task<IResult> AssignDataset(
         AssociationRequest request,
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDataset(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -143,7 +153,8 @@ public static class AlertEndpoints
     private static async Task<IResult> UnassignDataset(
     AssociationRequest request,
     IAlertService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDataset(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -151,7 +162,8 @@ public static class AlertEndpoints
     private static async Task<IResult> AssignRule(
         AssociationRequest request,
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRule(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -159,7 +171,8 @@ public static class AlertEndpoints
     private static async Task<IResult> UnassignRule(
     AssociationRequest request,
     IAlertService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRule(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -168,7 +181,8 @@ public static class AlertEndpoints
     private static async Task<IResult> AddToAnomalies(
         MultipleAssociationRequest request,
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAnomalies(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -176,14 +190,16 @@ public static class AlertEndpoints
     private static async Task<IResult> RemoveFromAnomalies(
         MultipleAssociationRequest request,
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAnomalies(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSubscribers(
         MultipleAssociationRequest request,
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSubscribers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -191,11 +207,13 @@ public static class AlertEndpoints
     private static async Task<IResult> RemoveFromSubscribers(
         MultipleAssociationRequest request,
         IAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSubscribers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Alert mapRequestToAlert( AlertRequest request ) {
+    private static Alert mapRequestToAlert(AlertRequest request)
+    {
         var model = new Alert
         {
             Id = request.Id,

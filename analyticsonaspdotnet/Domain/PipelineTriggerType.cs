@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum PipelineTriggerType
 {
-    Manual=1,Schedule=2,Event=3
+    Manual = 1, Schedule = 2, Event = 3
 }
 
 /// <summary>

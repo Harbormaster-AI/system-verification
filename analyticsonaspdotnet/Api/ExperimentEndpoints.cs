@@ -20,14 +20,14 @@ public static class ExperimentEndpoints
         group.MapPut("/assignWorkspace", AssignWorkspace);
         group.MapPut("/unassignWorkspace", UnassignWorkspace);
 
-    group.MapPut("/addToTrainingRuns", AddToTrainingRuns);
-    group.MapPut("/removeFromTrainingRuns", RemoveFromTrainingRuns);
+        group.MapPut("/addToTrainingRuns", AddToTrainingRuns);
+        group.MapPut("/removeFromTrainingRuns", RemoveFromTrainingRuns);
 
-    group.MapPut("/addToModels", AddToModels);
-    group.MapPut("/removeFromModels", RemoveFromModels);
+        group.MapPut("/addToModels", AddToModels);
+        group.MapPut("/removeFromModels", RemoveFromModels);
 
-    group.MapPut("/addToNotebooks", AddToNotebooks);
-    group.MapPut("/removeFromNotebooks", RemoveFromNotebooks);
+        group.MapPut("/addToNotebooks", AddToNotebooks);
+        group.MapPut("/removeFromNotebooks", RemoveFromNotebooks);
 
 
         return app;
@@ -36,9 +36,10 @@ public static class ExperimentEndpoints
     private static async Task<IResult> Create(
         ExperimentRequest request,
         IExperimentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToExperiment( request );
+        var model = mapRequestToExperiment(request);
 
         try
         {
@@ -55,9 +56,10 @@ public static class ExperimentEndpoints
     private static async Task<IResult> Update(
         ExperimentRequest request,
         IExperimentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToExperiment( request );
+        var model = mapRequestToExperiment(request);
 
         try
         {
@@ -74,25 +76,28 @@ public static class ExperimentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IExperimentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var experiment = await service.Get(identifier, cancellationToken);
-        return experiment is null ? Results.NotFound() : Results.Ok( experiment );
+        return experiment is null ? Results.NotFound() : Results.Ok(experiment);
     }
 
 
     private static async Task<IResult> GetAll(
         IExperimentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ExperimentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ExperimentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IExperimentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -100,7 +105,8 @@ public static class ExperimentEndpoints
     private static async Task<IResult> AssignWorkspace(
         AssociationRequest request,
         IExperimentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkspace(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +114,8 @@ public static class ExperimentEndpoints
     private static async Task<IResult> UnassignWorkspace(
     AssociationRequest request,
     IExperimentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkspace(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,7 +124,8 @@ public static class ExperimentEndpoints
     private static async Task<IResult> AddToTrainingRuns(
         MultipleAssociationRequest request,
         IExperimentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTrainingRuns(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -125,14 +133,16 @@ public static class ExperimentEndpoints
     private static async Task<IResult> RemoveFromTrainingRuns(
         MultipleAssociationRequest request,
         IExperimentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTrainingRuns(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToModels(
         MultipleAssociationRequest request,
         IExperimentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToModels(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class ExperimentEndpoints
     private static async Task<IResult> RemoveFromModels(
         MultipleAssociationRequest request,
         IExperimentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromModels(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToNotebooks(
         MultipleAssociationRequest request,
         IExperimentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToNotebooks(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class ExperimentEndpoints
     private static async Task<IResult> RemoveFromNotebooks(
         MultipleAssociationRequest request,
         IExperimentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromNotebooks(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Experiment mapRequestToExperiment( ExperimentRequest request ) {
+    private static Experiment mapRequestToExperiment(ExperimentRequest request)
+    {
         var model = new Experiment
         {
             Id = request.Id,

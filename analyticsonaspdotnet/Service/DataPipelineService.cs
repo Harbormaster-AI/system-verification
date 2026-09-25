@@ -6,9 +6,10 @@ using analyticsonaspdotnet.Telemetry;
 
 namespace analyticsonaspdotnet.Service;
 
-public interface IDataPipelineService {
+public interface IDataPipelineService
+{
 
-    Task Create(DataPipeline model , CancellationToken cancellationToken);
+    Task Create(DataPipeline model, CancellationToken cancellationToken);
     Task<bool> Update(DataPipeline model, CancellationToken cancellationToken);
     Task<DataPipeline?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DataPipeline>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class DataPipelineService : IDataPipelineService
 
     public async Task<bool> Update(DataPipeline model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class DataPipelineService : IDataPipelineService
         return true;
     }
 
-    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignWorkspace(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class DataPipelineService : IDataPipelineService
 
             var child = await _serviceResolver.Get<AnalyticsWorkspaceService>().Get(childRequest, cancellationToken);
             parent.Workspace = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class DataPipelineService : IDataPipelineService
         return true;
     }
 
-    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignWorkspace(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class DataPipelineService : IDataPipelineService
         try
         {
             parent.Workspace = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,7 +183,8 @@ public class DataPipelineService : IDataPipelineService
         return true;
     }
 
-    public async Task<bool> AssignLineageNode(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLineageNode(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,7 +202,7 @@ public class DataPipelineService : IDataPipelineService
 
             var child = await _serviceResolver.Get<LineageNodeService>().Get(childRequest, cancellationToken);
             parent.LineageNode = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class DataPipelineService : IDataPipelineService
         return true;
     }
 
-    public async Task<bool> UnassignLineageNode(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLineageNode(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class DataPipelineService : IDataPipelineService
         try
         {
             parent.LineageNode = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -233,8 +239,10 @@ public class DataPipelineService : IDataPipelineService
     }
 
 
-    public async Task<bool> AddToTasks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTasks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataPipeline",
                 "AddToTasks",
@@ -242,16 +250,18 @@ public class DataPipelineService : IDataPipelineService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTasks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTasks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataPipeline",
                 "RemoveFromTasks",
@@ -267,8 +277,10 @@ public class DataPipelineService : IDataPipelineService
         return true;
     }
 
-    public async Task<bool> AddToSources(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSources(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataPipeline",
                 "AddToSources",
@@ -276,16 +288,18 @@ public class DataPipelineService : IDataPipelineService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSources(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSources(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataPipeline",
                 "RemoveFromSources",
@@ -301,8 +315,10 @@ public class DataPipelineService : IDataPipelineService
         return true;
     }
 
-    public async Task<bool> AddToOutputs(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOutputs(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataPipeline",
                 "AddToOutputs",
@@ -310,16 +326,18 @@ public class DataPipelineService : IDataPipelineService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOutputs(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOutputs(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DataPipeline",
                 "RemoveFromOutputs",

@@ -20,11 +20,11 @@ public static class MeasureEndpoints
         group.MapPut("/assignSemanticModel", AssignSemanticModel);
         group.MapPut("/unassignSemanticModel", UnassignSemanticModel);
 
-    group.MapPut("/addToDatasets", AddToDatasets);
-    group.MapPut("/removeFromDatasets", RemoveFromDatasets);
+        group.MapPut("/addToDatasets", AddToDatasets);
+        group.MapPut("/removeFromDatasets", RemoveFromDatasets);
 
-    group.MapPut("/addToGlossaryTerms", AddToGlossaryTerms);
-    group.MapPut("/removeFromGlossaryTerms", RemoveFromGlossaryTerms);
+        group.MapPut("/addToGlossaryTerms", AddToGlossaryTerms);
+        group.MapPut("/removeFromGlossaryTerms", RemoveFromGlossaryTerms);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class MeasureEndpoints
     private static async Task<IResult> Create(
         MeasureRequest request,
         IMeasureService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMeasure( request );
+        var model = mapRequestToMeasure(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class MeasureEndpoints
     private static async Task<IResult> Update(
         MeasureRequest request,
         IMeasureService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMeasure( request );
+        var model = mapRequestToMeasure(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class MeasureEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMeasureService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var measure = await service.Get(identifier, cancellationToken);
-        return measure is null ? Results.NotFound() : Results.Ok( measure );
+        return measure is null ? Results.NotFound() : Results.Ok(measure);
     }
 
 
     private static async Task<IResult> GetAll(
         IMeasureService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MeasureResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MeasureResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMeasureService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class MeasureEndpoints
     private static async Task<IResult> AssignSemanticModel(
         AssociationRequest request,
         IMeasureService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSemanticModel(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class MeasureEndpoints
     private static async Task<IResult> UnassignSemanticModel(
     AssociationRequest request,
     IMeasureService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSemanticModel(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class MeasureEndpoints
     private static async Task<IResult> AddToDatasets(
         MultipleAssociationRequest request,
         IMeasureService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDatasets(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class MeasureEndpoints
     private static async Task<IResult> RemoveFromDatasets(
         MultipleAssociationRequest request,
         IMeasureService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDatasets(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToGlossaryTerms(
         MultipleAssociationRequest request,
         IMeasureService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToGlossaryTerms(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class MeasureEndpoints
     private static async Task<IResult> RemoveFromGlossaryTerms(
         MultipleAssociationRequest request,
         IMeasureService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromGlossaryTerms(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Measure mapRequestToMeasure( MeasureRequest request ) {
+    private static Measure mapRequestToMeasure(MeasureRequest request)
+    {
         var model = new Measure
         {
             Id = request.Id,

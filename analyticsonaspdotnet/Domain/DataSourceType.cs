@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum DataSourceType
 {
-    Database=1,File=2,Stream=3,API=4,DataWarehouse=5,DataLake=6
+    Database = 1, File = 2, Stream = 3, API = 4, DataWarehouse = 5, DataLake = 6
 }
 
 /// <summary>

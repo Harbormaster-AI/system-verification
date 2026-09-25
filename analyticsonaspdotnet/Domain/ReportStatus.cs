@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum ReportStatus
 {
-    Draft=1,Published=2,Archived=3
+    Draft = 1, Published = 2, Archived = 3
 }
 
 /// <summary>

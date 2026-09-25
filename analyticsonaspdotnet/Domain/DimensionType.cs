@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum DimensionType
 {
-    Categorical=1,Temporal=2,Geospatial=3,Hierarchical=4
+    Categorical = 1, Temporal = 2, Geospatial = 3, Hierarchical = 4
 }
 
 /// <summary>

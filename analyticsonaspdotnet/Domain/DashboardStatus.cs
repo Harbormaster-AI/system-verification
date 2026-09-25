@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum DashboardStatus
 {
-    Draft=1,Live=2,Archived=3
+    Draft = 1, Live = 2, Archived = 3
 }
 
 /// <summary>

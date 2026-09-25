@@ -18,14 +18,14 @@ public static class TimeSeriesEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToDatasets", AddToDatasets);
-    group.MapPut("/removeFromDatasets", RemoveFromDatasets);
+        group.MapPut("/addToDatasets", AddToDatasets);
+        group.MapPut("/removeFromDatasets", RemoveFromDatasets);
 
-    group.MapPut("/addToForecasts", AddToForecasts);
-    group.MapPut("/removeFromForecasts", RemoveFromForecasts);
+        group.MapPut("/addToForecasts", AddToForecasts);
+        group.MapPut("/removeFromForecasts", RemoveFromForecasts);
 
-    group.MapPut("/addToAnomalies", AddToAnomalies);
-    group.MapPut("/removeFromAnomalies", RemoveFromAnomalies);
+        group.MapPut("/addToAnomalies", AddToAnomalies);
+        group.MapPut("/removeFromAnomalies", RemoveFromAnomalies);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class TimeSeriesEndpoints
     private static async Task<IResult> Create(
         TimeSeriesRequest request,
         ITimeSeriesService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTimeSeries( request );
+        var model = mapRequestToTimeSeries(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class TimeSeriesEndpoints
     private static async Task<IResult> Update(
         TimeSeriesRequest request,
         ITimeSeriesService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTimeSeries( request );
+        var model = mapRequestToTimeSeries(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class TimeSeriesEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITimeSeriesService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var timeSeries = await service.Get(identifier, cancellationToken);
-        return timeSeries is null ? Results.NotFound() : Results.Ok( timeSeries );
+        return timeSeries is null ? Results.NotFound() : Results.Ok(timeSeries);
     }
 
 
     private static async Task<IResult> GetAll(
         ITimeSeriesService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TimeSeriesResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TimeSeriesResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITimeSeriesService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class TimeSeriesEndpoints
     private static async Task<IResult> AddToDatasets(
         MultipleAssociationRequest request,
         ITimeSeriesService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDatasets(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -107,14 +113,16 @@ public static class TimeSeriesEndpoints
     private static async Task<IResult> RemoveFromDatasets(
         MultipleAssociationRequest request,
         ITimeSeriesService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDatasets(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToForecasts(
         MultipleAssociationRequest request,
         ITimeSeriesService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToForecasts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class TimeSeriesEndpoints
     private static async Task<IResult> RemoveFromForecasts(
         MultipleAssociationRequest request,
         ITimeSeriesService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromForecasts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToAnomalies(
         MultipleAssociationRequest request,
         ITimeSeriesService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAnomalies(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class TimeSeriesEndpoints
     private static async Task<IResult> RemoveFromAnomalies(
         MultipleAssociationRequest request,
         ITimeSeriesService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAnomalies(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static TimeSeries mapRequestToTimeSeries( TimeSeriesRequest request ) {
+    private static TimeSeries mapRequestToTimeSeries(TimeSeriesRequest request)
+    {
         var model = new TimeSeries
         {
             Id = request.Id,

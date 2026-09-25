@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum FeatureStoreType
 {
-    Online=1,Offline=2,Hybrid=3
+    Online = 1, Offline = 2, Hybrid = 3
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum AlertSeverity
 {
-    Info=1,Warning=2,Critical=3
+    Info = 1, Warning = 2, Critical = 3
 }
 
 /// <summary>

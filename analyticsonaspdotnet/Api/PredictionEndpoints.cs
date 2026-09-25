@@ -31,9 +31,10 @@ public static class PredictionEndpoints
     private static async Task<IResult> Create(
         PredictionRequest request,
         IPredictionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPrediction( request );
+        var model = mapRequestToPrediction(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class PredictionEndpoints
     private static async Task<IResult> Update(
         PredictionRequest request,
         IPredictionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPrediction( request );
+        var model = mapRequestToPrediction(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class PredictionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPredictionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var prediction = await service.Get(identifier, cancellationToken);
-        return prediction is null ? Results.NotFound() : Results.Ok( prediction );
+        return prediction is null ? Results.NotFound() : Results.Ok(prediction);
     }
 
 
     private static async Task<IResult> GetAll(
         IPredictionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PredictionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PredictionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPredictionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class PredictionEndpoints
     private static async Task<IResult> AssignEndpoint(
         AssociationRequest request,
         IPredictionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignEndpoint(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class PredictionEndpoints
     private static async Task<IResult> UnassignEndpoint(
     AssociationRequest request,
     IPredictionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignEndpoint(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class PredictionEndpoints
     private static async Task<IResult> AssignModelVersion(
         AssociationRequest request,
         IPredictionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignModelVersion(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class PredictionEndpoints
     private static async Task<IResult> UnassignModelVersion(
     AssociationRequest request,
     IPredictionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignModelVersion(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class PredictionEndpoints
     private static async Task<IResult> AssignDataset(
         AssociationRequest request,
         IPredictionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDataset(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class PredictionEndpoints
     private static async Task<IResult> UnassignDataset(
     AssociationRequest request,
     IPredictionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDataset(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Prediction mapRequestToPrediction( PredictionRequest request ) {
+    private static Prediction mapRequestToPrediction(PredictionRequest request)
+    {
         var model = new Prediction
         {
             Id = request.Id,

@@ -36,7 +36,7 @@ namespace analyticsonaspdotnet.Domain;
 
 public enum ChartType
 {
-    Table=1,Bar=2,Line=3,Area=4,Pie=5,Scatter=6,Heatmap=7,KPI=8
+    Table = 1, Bar = 2, Line = 3, Area = 4, Pie = 5, Scatter = 6, Heatmap = 7, KPI = 8
 }
 
 /// <summary>

@@ -20,11 +20,11 @@ public static class DataSourceEndpoints
         group.MapPut("/assignWorkspace", AssignWorkspace);
         group.MapPut("/unassignWorkspace", UnassignWorkspace);
 
-    group.MapPut("/addToProducedDatasets", AddToProducedDatasets);
-    group.MapPut("/removeFromProducedDatasets", RemoveFromProducedDatasets);
+        group.MapPut("/addToProducedDatasets", AddToProducedDatasets);
+        group.MapPut("/removeFromProducedDatasets", RemoveFromProducedDatasets);
 
-    group.MapPut("/addToPipelines", AddToPipelines);
-    group.MapPut("/removeFromPipelines", RemoveFromPipelines);
+        group.MapPut("/addToPipelines", AddToPipelines);
+        group.MapPut("/removeFromPipelines", RemoveFromPipelines);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class DataSourceEndpoints
     private static async Task<IResult> Create(
         DataSourceRequest request,
         IDataSourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDataSource( request );
+        var model = mapRequestToDataSource(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class DataSourceEndpoints
     private static async Task<IResult> Update(
         DataSourceRequest request,
         IDataSourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDataSource( request );
+        var model = mapRequestToDataSource(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class DataSourceEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDataSourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var dataSource = await service.Get(identifier, cancellationToken);
-        return dataSource is null ? Results.NotFound() : Results.Ok( dataSource );
+        return dataSource is null ? Results.NotFound() : Results.Ok(dataSource);
     }
 
 
     private static async Task<IResult> GetAll(
         IDataSourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DataSourceResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DataSourceResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDataSourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class DataSourceEndpoints
     private static async Task<IResult> AssignWorkspace(
         AssociationRequest request,
         IDataSourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignWorkspace(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class DataSourceEndpoints
     private static async Task<IResult> UnassignWorkspace(
     AssociationRequest request,
     IDataSourceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignWorkspace(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class DataSourceEndpoints
     private static async Task<IResult> AddToProducedDatasets(
         MultipleAssociationRequest request,
         IDataSourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToProducedDatasets(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class DataSourceEndpoints
     private static async Task<IResult> RemoveFromProducedDatasets(
         MultipleAssociationRequest request,
         IDataSourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromProducedDatasets(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPipelines(
         MultipleAssociationRequest request,
         IDataSourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPipelines(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class DataSourceEndpoints
     private static async Task<IResult> RemoveFromPipelines(
         MultipleAssociationRequest request,
         IDataSourceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPipelines(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static DataSource mapRequestToDataSource( DataSourceRequest request ) {
+    private static DataSource mapRequestToDataSource(DataSourceRequest request)
+    {
         var model = new DataSource
         {
             Id = request.Id,
