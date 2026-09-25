@@ -50,7 +50,7 @@ public class ConsentRepository : IConsentRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task AddToAuthorizedAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToAuthorizedAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.AuthorizedAccounts
             .Where(account => request.ChildIds.Contains(account.Id))
@@ -60,7 +60,7 @@ public class ConsentRepository : IConsentRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromAuthorizedAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromAuthorizedAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.AuthorizedAccounts
             .Where(account =>

@@ -46,7 +46,7 @@ public class KycProfileRepository : IKycProfileRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task AddToIdentityDocumentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToIdentityDocumentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.IdentityDocuments
             .Where(identityDocument => request.ChildIds.Contains(identityDocument.Id))
@@ -56,7 +56,7 @@ public class KycProfileRepository : IKycProfileRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromIdentityDocumentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromIdentityDocumentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.IdentityDocuments
             .Where(identityDocument =>
@@ -68,7 +68,7 @@ public class KycProfileRepository : IKycProfileRepository
                     (Guid?)null));
     }
 
-    public async Task AddToRiskAssessmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToRiskAssessmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.RiskAssessments
             .Where(riskAssessment => request.ChildIds.Contains(riskAssessment.Id))
@@ -78,7 +78,7 @@ public class KycProfileRepository : IKycProfileRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromRiskAssessmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromRiskAssessmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.RiskAssessments
             .Where(riskAssessment =>
@@ -90,7 +90,7 @@ public class KycProfileRepository : IKycProfileRepository
                     (Guid?)null));
     }
 
-    public async Task AddToScreeningsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToScreeningsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Screenings
             .Where(screeningResult => request.ChildIds.Contains(screeningResult.Id))
@@ -100,7 +100,7 @@ public class KycProfileRepository : IKycProfileRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromScreeningsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromScreeningsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Screenings
             .Where(screeningResult =>

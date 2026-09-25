@@ -46,7 +46,7 @@ public class CustomerRepository : ICustomerRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task AddToAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Accounts
             .Where(account => request.ChildIds.Contains(account.Id))
@@ -56,7 +56,7 @@ public class CustomerRepository : ICustomerRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Accounts
             .Where(account =>
@@ -68,7 +68,7 @@ public class CustomerRepository : ICustomerRepository
                     (Guid?)null));
     }
 
-    public async Task AddToLoanAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToLoanAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.LoanAccounts
             .Where(loanAccount => request.ChildIds.Contains(loanAccount.Id))
@@ -78,7 +78,7 @@ public class CustomerRepository : ICustomerRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromLoanAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromLoanAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.LoanAccounts
             .Where(loanAccount =>
@@ -90,7 +90,7 @@ public class CustomerRepository : ICustomerRepository
                     (Guid?)null));
     }
 
-    public async Task AddToPaymentCardsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToPaymentCardsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.PaymentCards
             .Where(paymentCard => request.ChildIds.Contains(paymentCard.Id))
@@ -100,7 +100,7 @@ public class CustomerRepository : ICustomerRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromPaymentCardsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromPaymentCardsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.PaymentCards
             .Where(paymentCard =>
@@ -112,7 +112,7 @@ public class CustomerRepository : ICustomerRepository
                     (Guid?)null));
     }
 
-    public async Task AddToExternalAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToExternalAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.ExternalAccounts
             .Where(externalAccount => request.ChildIds.Contains(externalAccount.Id))
@@ -122,7 +122,7 @@ public class CustomerRepository : ICustomerRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromExternalAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromExternalAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.ExternalAccounts
             .Where(externalAccount =>
@@ -134,7 +134,7 @@ public class CustomerRepository : ICustomerRepository
                     (Guid?)null));
     }
 
-    public async Task AddToFundsTransfersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToFundsTransfersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.FundsTransfers
             .Where(fundsTransfer => request.ChildIds.Contains(fundsTransfer.Id))
@@ -144,7 +144,7 @@ public class CustomerRepository : ICustomerRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromFundsTransfersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromFundsTransfersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.FundsTransfers
             .Where(fundsTransfer =>
@@ -156,7 +156,7 @@ public class CustomerRepository : ICustomerRepository
                     (Guid?)null));
     }
 
-    public async Task AddToDisputesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToDisputesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Disputes
             .Where(dispute => request.ChildIds.Contains(dispute.Id))
@@ -166,7 +166,7 @@ public class CustomerRepository : ICustomerRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromDisputesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromDisputesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Disputes
             .Where(dispute =>
@@ -178,7 +178,7 @@ public class CustomerRepository : ICustomerRepository
                     (Guid?)null));
     }
 
-    public async Task AddToKycProfilesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToKycProfilesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.KycProfiles
             .Where(kycProfile => request.ChildIds.Contains(kycProfile.Id))
@@ -188,7 +188,7 @@ public class CustomerRepository : ICustomerRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromKycProfilesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromKycProfilesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.KycProfiles
             .Where(kycProfile =>
@@ -200,7 +200,7 @@ public class CustomerRepository : ICustomerRepository
                     (Guid?)null));
     }
 
-    public async Task AddToConsentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToConsentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Consents
             .Where(consent => request.ChildIds.Contains(consent.Id))
@@ -210,7 +210,7 @@ public class CustomerRepository : ICustomerRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromConsentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromConsentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Consents
             .Where(consent =>
