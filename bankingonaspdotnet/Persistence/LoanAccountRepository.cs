@@ -50,7 +50,7 @@ public class LoanAccountRepository : ILoanAccountRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task AddToBorrowersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToBorrowersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Borrowers
             .Where(customer => request.ChildIds.Contains(customer.Id))
@@ -60,7 +60,7 @@ public class LoanAccountRepository : ILoanAccountRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromBorrowersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromBorrowersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Borrowers
             .Where(customer =>
@@ -72,7 +72,7 @@ public class LoanAccountRepository : ILoanAccountRepository
                     (Guid?)null));
     }
 
-    public async Task AddToRepaymentScheduleAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToRepaymentScheduleAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.RepaymentSchedule
             .Where(repaymentSchedule => request.ChildIds.Contains(repaymentSchedule.Id))
@@ -82,7 +82,7 @@ public class LoanAccountRepository : ILoanAccountRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromRepaymentScheduleAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromRepaymentScheduleAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.RepaymentSchedule
             .Where(repaymentSchedule =>
@@ -94,7 +94,7 @@ public class LoanAccountRepository : ILoanAccountRepository
                     (Guid?)null));
     }
 
-    public async Task AddToPaymentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToPaymentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Payments
             .Where(loanPayment => request.ChildIds.Contains(loanPayment.Id))
@@ -104,7 +104,7 @@ public class LoanAccountRepository : ILoanAccountRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromPaymentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromPaymentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Payments
             .Where(loanPayment =>
@@ -116,7 +116,7 @@ public class LoanAccountRepository : ILoanAccountRepository
                     (Guid?)null));
     }
 
-    public async Task AddToCollateralAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToCollateralAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Collateral
             .Where(collateral => request.ChildIds.Contains(collateral.Id))
@@ -126,7 +126,7 @@ public class LoanAccountRepository : ILoanAccountRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromCollateralAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromCollateralAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.Collateral
             .Where(collateral =>
@@ -138,7 +138,7 @@ public class LoanAccountRepository : ILoanAccountRepository
                     (Guid?)null));
     }
 
-    public async Task AddToFeeChargesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task AddToFeeChargesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.FeeCharges
             .Where(feeCharge => request.ChildIds.Contains(feeCharge.Id))
@@ -148,7 +148,7 @@ public class LoanAccountRepository : ILoanAccountRepository
                     request.ParentId));
     }
 
-    public async Task RemoveFromFeeChargesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken)
+    public async Task RemoveFromFeeChargesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken)
     {
         await _context.FeeCharges
             .Where(feeCharge =>
