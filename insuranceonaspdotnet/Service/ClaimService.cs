@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IClaimService {
+public interface IClaimService
+{
 
-    Task Create(Claim model , CancellationToken cancellationToken);
+    Task Create(Claim model, CancellationToken cancellationToken);
     Task<bool> Update(Claim model, CancellationToken cancellationToken);
     Task<Claim?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Claim>> GetAll(CancellationToken cancellationToken);
@@ -77,7 +78,8 @@ public class ClaimService : IClaimService
 
     public async Task<bool> Update(Claim model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -136,7 +138,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -154,7 +157,7 @@ public class ClaimService : IClaimService
 
             var child = await _serviceResolver.Get<PolicyService>().Get(childRequest, cancellationToken);
             parent.Policy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -166,7 +169,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -177,7 +181,7 @@ public class ClaimService : IClaimService
         try
         {
             parent.Policy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -189,7 +193,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -207,7 +212,7 @@ public class ClaimService : IClaimService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.Customer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -219,7 +224,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -230,7 +236,7 @@ public class ClaimService : IClaimService
         try
         {
             parent.Customer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -242,7 +248,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> AssignAdjuster(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAdjuster(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -260,7 +267,7 @@ public class ClaimService : IClaimService
 
             var child = await _serviceResolver.Get<AdjusterService>().Get(childRequest, cancellationToken);
             parent.Adjuster = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -272,7 +279,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> UnassignAdjuster(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAdjuster(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -283,7 +291,7 @@ public class ClaimService : IClaimService
         try
         {
             parent.Adjuster = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -295,7 +303,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> AssignIncident(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignIncident(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -313,7 +322,7 @@ public class ClaimService : IClaimService
 
             var child = await _serviceResolver.Get<IncidentService>().Get(childRequest, cancellationToken);
             parent.Incident = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -325,7 +334,8 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> UnassignIncident(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignIncident(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -336,7 +346,7 @@ public class ClaimService : IClaimService
         try
         {
             parent.Incident = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -349,8 +359,10 @@ public class ClaimService : IClaimService
     }
 
 
-    public async Task<bool> AddToExposures(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToExposures(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Claim",
                 "AddToExposures",
@@ -358,16 +370,18 @@ public class ClaimService : IClaimService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromExposures(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromExposures(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Claim",
                 "RemoveFromExposures",
@@ -383,8 +397,10 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> AddToReserves(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToReserves(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Claim",
                 "AddToReserves",
@@ -392,16 +408,18 @@ public class ClaimService : IClaimService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromReserves(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromReserves(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Claim",
                 "RemoveFromReserves",
@@ -417,8 +435,10 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> AddToClaimPayments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToClaimPayments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Claim",
                 "AddToClaimPayments",
@@ -426,16 +446,18 @@ public class ClaimService : IClaimService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromClaimPayments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromClaimPayments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Claim",
                 "RemoveFromClaimPayments",
@@ -451,8 +473,10 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> AddToServiceProviders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToServiceProviders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Claim",
                 "AddToServiceProviders",
@@ -460,16 +484,18 @@ public class ClaimService : IClaimService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromServiceProviders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromServiceProviders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Claim",
                 "RemoveFromServiceProviders",
@@ -485,8 +511,10 @@ public class ClaimService : IClaimService
         return true;
     }
 
-    public async Task<bool> AddToSubrogations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSubrogations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Claim",
                 "AddToSubrogations",
@@ -494,16 +522,18 @@ public class ClaimService : IClaimService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSubrogations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSubrogations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Claim",
                 "RemoveFromSubrogations",

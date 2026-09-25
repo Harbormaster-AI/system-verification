@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum ApplicationStatus
 {
-    Draft=1,Submitted=2,UnderReview=3,Quoted=4,Declined=5,Withdrawn=6,Bound=7
+    Draft = 1, Submitted = 2, UnderReview = 3, Quoted = 4, Declined = 5, Withdrawn = 6, Bound = 7
 }
 
 /// <summary>

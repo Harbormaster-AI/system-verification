@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IEndorsementService {
+public interface IEndorsementService
+{
 
-    Task Create(Endorsement model , CancellationToken cancellationToken);
+    Task Create(Endorsement model, CancellationToken cancellationToken);
     Task<bool> Update(Endorsement model, CancellationToken cancellationToken);
     Task<Endorsement?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Endorsement>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class EndorsementService : IEndorsementService
 
     public async Task<bool> Update(Endorsement model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class EndorsementService : IEndorsementService
         return true;
     }
 
-    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class EndorsementService : IEndorsementService
 
             var child = await _serviceResolver.Get<PolicyService>().Get(childRequest, cancellationToken);
             parent.Policy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class EndorsementService : IEndorsementService
         return true;
     }
 
-    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class EndorsementService : IEndorsementService
         try
         {
             parent.Policy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

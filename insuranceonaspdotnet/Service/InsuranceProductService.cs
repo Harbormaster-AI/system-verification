@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IInsuranceProductService {
+public interface IInsuranceProductService
+{
 
-    Task Create(InsuranceProduct model , CancellationToken cancellationToken);
+    Task Create(InsuranceProduct model, CancellationToken cancellationToken);
     Task<bool> Update(InsuranceProduct model, CancellationToken cancellationToken);
     Task<InsuranceProduct?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InsuranceProduct>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class InsuranceProductService : IInsuranceProductService
 
     public async Task<bool> Update(InsuranceProduct model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class InsuranceProductService : IInsuranceProductService
         return true;
     }
 
-    public async Task<bool> AssignInsurer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInsurer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class InsuranceProductService : IInsuranceProductService
 
             var child = await _serviceResolver.Get<InsurerService>().Get(childRequest, cancellationToken);
             parent.Insurer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class InsuranceProductService : IInsuranceProductService
         return true;
     }
 
-    public async Task<bool> UnassignInsurer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInsurer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class InsuranceProductService : IInsuranceProductService
         try
         {
             parent.Insurer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class InsuranceProductService : IInsuranceProductService
     }
 
 
-    public async Task<bool> AddToCoverageDefinitions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCoverageDefinitions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InsuranceProduct",
                 "AddToCoverageDefinitions",
@@ -182,16 +188,18 @@ public class InsuranceProductService : IInsuranceProductService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCoverageDefinitions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCoverageDefinitions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InsuranceProduct",
                 "RemoveFromCoverageDefinitions",

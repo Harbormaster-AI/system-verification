@@ -11,7 +11,7 @@ public interface IIncidentRepository
     Task UpdateAsync(Incident incident, CancellationToken cancellationToken);
     Task DeleteAsync(Incident incident, CancellationToken cancellationToken);
 
-    Task AddToInsuredObjectsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInsuredObjectsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInsuredObjectsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInsuredObjectsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

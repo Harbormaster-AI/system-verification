@@ -20,8 +20,8 @@ public static class IncidentEndpoints
         group.MapPut("/assignClaim", AssignClaim);
         group.MapPut("/unassignClaim", UnassignClaim);
 
-    group.MapPut("/addToInsuredObjects", AddToInsuredObjects);
-    group.MapPut("/removeFromInsuredObjects", RemoveFromInsuredObjects);
+        group.MapPut("/addToInsuredObjects", AddToInsuredObjects);
+        group.MapPut("/removeFromInsuredObjects", RemoveFromInsuredObjects);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class IncidentEndpoints
     private static async Task<IResult> Create(
         IncidentRequest request,
         IIncidentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToIncident( request );
+        var model = mapRequestToIncident(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class IncidentEndpoints
     private static async Task<IResult> Update(
         IncidentRequest request,
         IIncidentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToIncident( request );
+        var model = mapRequestToIncident(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class IncidentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IIncidentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var incident = await service.Get(identifier, cancellationToken);
-        return incident is null ? Results.NotFound() : Results.Ok( incident );
+        return incident is null ? Results.NotFound() : Results.Ok(incident);
     }
 
 
     private static async Task<IResult> GetAll(
         IIncidentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( IncidentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(IncidentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IIncidentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class IncidentEndpoints
     private static async Task<IResult> AssignClaim(
         AssociationRequest request,
         IIncidentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignClaim(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class IncidentEndpoints
     private static async Task<IResult> UnassignClaim(
     AssociationRequest request,
     IIncidentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignClaim(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class IncidentEndpoints
     private static async Task<IResult> AddToInsuredObjects(
         MultipleAssociationRequest request,
         IIncidentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInsuredObjects(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class IncidentEndpoints
     private static async Task<IResult> RemoveFromInsuredObjects(
         MultipleAssociationRequest request,
         IIncidentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInsuredObjects(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Incident mapRequestToIncident( IncidentRequest request ) {
+    private static Incident mapRequestToIncident(IncidentRequest request)
+    {
         var model = new Incident
         {
             Id = request.Id,

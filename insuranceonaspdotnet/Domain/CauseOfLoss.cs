@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum CauseOfLoss
 {
-    Collision=1,Weather=2,MechanicalFailure=3,HumanError=4,NaturalDisaster=5,Theft=6,Vandalism=7,LiabilityClaim=8,Illness=9
+    Collision = 1, Weather = 2, MechanicalFailure = 3, HumanError = 4, NaturalDisaster = 5, Theft = 6, Vandalism = 7, LiabilityClaim = 8, Illness = 9
 }
 
 /// <summary>

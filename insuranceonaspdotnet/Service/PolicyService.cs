@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IPolicyService {
+public interface IPolicyService
+{
 
-    Task Create(Policy model , CancellationToken cancellationToken);
+    Task Create(Policy model, CancellationToken cancellationToken);
     Task<bool> Update(Policy model, CancellationToken cancellationToken);
     Task<Policy?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Policy>> GetAll(CancellationToken cancellationToken);
@@ -81,7 +82,8 @@ public class PolicyService : IPolicyService
 
     public async Task<bool> Update(Policy model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -139,7 +141,8 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> AssignInsurer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInsurer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -157,7 +160,7 @@ public class PolicyService : IPolicyService
 
             var child = await _serviceResolver.Get<InsurerService>().Get(childRequest, cancellationToken);
             parent.Insurer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -169,7 +172,8 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> UnassignInsurer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInsurer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -180,7 +184,7 @@ public class PolicyService : IPolicyService
         try
         {
             parent.Insurer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -192,7 +196,8 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -210,7 +215,7 @@ public class PolicyService : IPolicyService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.Customer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -222,7 +227,8 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -233,7 +239,7 @@ public class PolicyService : IPolicyService
         try
         {
             parent.Customer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -245,7 +251,8 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -263,7 +270,7 @@ public class PolicyService : IPolicyService
 
             var child = await _serviceResolver.Get<InsuranceProductService>().Get(childRequest, cancellationToken);
             parent.Product = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -275,7 +282,8 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -286,7 +294,7 @@ public class PolicyService : IPolicyService
         try
         {
             parent.Product = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -298,7 +306,8 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> AssignAgent(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAgent(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -316,7 +325,7 @@ public class PolicyService : IPolicyService
 
             var child = await _serviceResolver.Get<AgentService>().Get(childRequest, cancellationToken);
             parent.Agent = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -328,7 +337,8 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> UnassignAgent(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAgent(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -339,7 +349,7 @@ public class PolicyService : IPolicyService
         try
         {
             parent.Agent = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -351,7 +361,8 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> AssignBillingAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBillingAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -369,7 +380,7 @@ public class PolicyService : IPolicyService
 
             var child = await _serviceResolver.Get<BillingAccountService>().Get(childRequest, cancellationToken);
             parent.BillingAccount = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -381,7 +392,8 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> UnassignBillingAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBillingAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -392,7 +404,7 @@ public class PolicyService : IPolicyService
         try
         {
             parent.BillingAccount = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -405,8 +417,10 @@ public class PolicyService : IPolicyService
     }
 
 
-    public async Task<bool> AddToCoverages(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCoverages(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Policy",
                 "AddToCoverages",
@@ -414,16 +428,18 @@ public class PolicyService : IPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCoverages(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCoverages(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Policy",
                 "RemoveFromCoverages",
@@ -439,8 +455,10 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> AddToInsuredObjects(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInsuredObjects(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Policy",
                 "AddToInsuredObjects",
@@ -448,16 +466,18 @@ public class PolicyService : IPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInsuredObjects(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInsuredObjects(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Policy",
                 "RemoveFromInsuredObjects",
@@ -473,8 +493,10 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> AddToEndorsements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEndorsements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Policy",
                 "AddToEndorsements",
@@ -482,16 +504,18 @@ public class PolicyService : IPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEndorsements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEndorsements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Policy",
                 "RemoveFromEndorsements",
@@ -507,8 +531,10 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> AddToBeneficiaries(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToBeneficiaries(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Policy",
                 "AddToBeneficiaries",
@@ -516,16 +542,18 @@ public class PolicyService : IPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromBeneficiaries(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromBeneficiaries(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Policy",
                 "RemoveFromBeneficiaries",
@@ -541,8 +569,10 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> AddToClaims(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToClaims(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Policy",
                 "AddToClaims",
@@ -550,16 +580,18 @@ public class PolicyService : IPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromClaims(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromClaims(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Policy",
                 "RemoveFromClaims",
@@ -575,8 +607,10 @@ public class PolicyService : IPolicyService
         return true;
     }
 
-    public async Task<bool> AddToReinsuranceAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToReinsuranceAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Policy",
                 "AddToReinsuranceAgreements",
@@ -584,16 +618,18 @@ public class PolicyService : IPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromReinsuranceAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromReinsuranceAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Policy",
                 "RemoveFromReinsuranceAgreements",

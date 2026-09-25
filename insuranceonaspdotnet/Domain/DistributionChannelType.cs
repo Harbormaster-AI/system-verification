@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum DistributionChannelType
 {
-    Agency=1,Broker=2,Direct=3,Bancassurance=4,AffinityPartner=5,OnlineAggregator=6
+    Agency = 1, Broker = 2, Direct = 3, Bancassurance = 4, AffinityPartner = 5, OnlineAggregator = 6
 }
 
 /// <summary>

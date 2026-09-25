@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IServiceProvider_Service {
+public interface IServiceProvider_Service
+{
 
-    Task Create(ServiceProvider_ model , CancellationToken cancellationToken);
+    Task Create(ServiceProvider_ model, CancellationToken cancellationToken);
     Task<bool> Update(ServiceProvider_ model, CancellationToken cancellationToken);
     Task<ServiceProvider_?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ServiceProvider_>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class ServiceProvider_Service : IServiceProvider_Service
 
     public async Task<bool> Update(ServiceProvider_ model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,8 +121,10 @@ public class ServiceProvider_Service : IServiceProvider_Service
     }
 
 
-    public async Task<bool> AddToClaims(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToClaims(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ServiceProvider_",
                 "AddToClaims",
@@ -128,16 +132,18 @@ public class ServiceProvider_Service : IServiceProvider_Service
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromClaims(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromClaims(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ServiceProvider_",
                 "RemoveFromClaims",

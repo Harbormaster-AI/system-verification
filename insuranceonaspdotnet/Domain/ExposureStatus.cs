@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum ExposureStatus
 {
-    Open=1,Closed=2,Pending=3,Reserved=4
+    Open = 1, Closed = 2, Pending = 3, Reserved = 4
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum ExposureType
 {
-    BodilyInjury=1,PropertyDamage=2,Medical=3,UninsuredMotorist=4,PersonalInjuryProtection=5,DwellingDamage=6,ContentsDamage=7,BusinessIncome=8
+    BodilyInjury = 1, PropertyDamage = 2, Medical = 3, UninsuredMotorist = 4, PersonalInjuryProtection = 5, DwellingDamage = 6, ContentsDamage = 7, BusinessIncome = 8
 }
 
 /// <summary>

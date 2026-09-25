@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum RelationshipType
 {
-    Spouse=1,Child=2,Parent=3,Sibling=4,BusinessPartner=5,Estate=6,Trust=7,Other=8
+    Spouse = 1, Child = 2, Parent = 3, Sibling = 4, BusinessPartner = 5, Estate = 6, Trust = 7, Other = 8
 }
 
 /// <summary>

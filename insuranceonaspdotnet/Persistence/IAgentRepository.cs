@@ -11,9 +11,9 @@ public interface IAgentRepository
     Task UpdateAsync(Agent agent, CancellationToken cancellationToken);
     Task DeleteAsync(Agent agent, CancellationToken cancellationToken);
 
-    Task AddToPoliciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPoliciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCustomersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCustomersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPoliciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPoliciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCustomersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCustomersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

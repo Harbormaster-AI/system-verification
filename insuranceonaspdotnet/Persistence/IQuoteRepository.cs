@@ -11,7 +11,7 @@ public interface IQuoteRepository
     Task UpdateAsync(Quote quote, CancellationToken cancellationToken);
     Task DeleteAsync(Quote quote, CancellationToken cancellationToken);
 
-    Task AddToUnderwritingDecisionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromUnderwritingDecisionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToUnderwritingDecisionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromUnderwritingDecisionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

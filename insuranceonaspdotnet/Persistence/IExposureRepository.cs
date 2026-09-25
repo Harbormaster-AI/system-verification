@@ -11,9 +11,9 @@ public interface IExposureRepository
     Task UpdateAsync(Exposure exposure, CancellationToken cancellationToken);
     Task DeleteAsync(Exposure exposure, CancellationToken cancellationToken);
 
-    Task AddToReservesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromReservesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToPaymentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPaymentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToReservesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromReservesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPaymentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPaymentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

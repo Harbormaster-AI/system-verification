@@ -18,11 +18,11 @@ public static class AdjusterEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToClaims", AddToClaims);
-    group.MapPut("/removeFromClaims", RemoveFromClaims);
+        group.MapPut("/addToClaims", AddToClaims);
+        group.MapPut("/removeFromClaims", RemoveFromClaims);
 
-    group.MapPut("/addToServiceProviders", AddToServiceProviders);
-    group.MapPut("/removeFromServiceProviders", RemoveFromServiceProviders);
+        group.MapPut("/addToServiceProviders", AddToServiceProviders);
+        group.MapPut("/removeFromServiceProviders", RemoveFromServiceProviders);
 
 
         return app;
@@ -31,9 +31,10 @@ public static class AdjusterEndpoints
     private static async Task<IResult> Create(
         AdjusterRequest request,
         IAdjusterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAdjuster( request );
+        var model = mapRequestToAdjuster(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class AdjusterEndpoints
     private static async Task<IResult> Update(
         AdjusterRequest request,
         IAdjusterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAdjuster( request );
+        var model = mapRequestToAdjuster(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class AdjusterEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAdjusterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var adjuster = await service.Get(identifier, cancellationToken);
-        return adjuster is null ? Results.NotFound() : Results.Ok( adjuster );
+        return adjuster is null ? Results.NotFound() : Results.Ok(adjuster);
     }
 
 
     private static async Task<IResult> GetAll(
         IAdjusterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AdjusterResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AdjusterResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAdjusterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class AdjusterEndpoints
     private static async Task<IResult> AddToClaims(
         MultipleAssociationRequest request,
         IAdjusterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToClaims(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -104,14 +110,16 @@ public static class AdjusterEndpoints
     private static async Task<IResult> RemoveFromClaims(
         MultipleAssociationRequest request,
         IAdjusterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromClaims(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToServiceProviders(
         MultipleAssociationRequest request,
         IAdjusterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToServiceProviders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class AdjusterEndpoints
     private static async Task<IResult> RemoveFromServiceProviders(
         MultipleAssociationRequest request,
         IAdjusterService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromServiceProviders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Adjuster mapRequestToAdjuster( AdjusterRequest request ) {
+    private static Adjuster mapRequestToAdjuster(AdjusterRequest request)
+    {
         var model = new Adjuster
         {
             Id = request.Id,

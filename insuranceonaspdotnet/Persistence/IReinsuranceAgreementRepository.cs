@@ -11,7 +11,7 @@ public interface IReinsuranceAgreementRepository
     Task UpdateAsync(ReinsuranceAgreement reinsuranceAgreement, CancellationToken cancellationToken);
     Task DeleteAsync(ReinsuranceAgreement reinsuranceAgreement, CancellationToken cancellationToken);
 
-    Task AddToPoliciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPoliciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPoliciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPoliciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

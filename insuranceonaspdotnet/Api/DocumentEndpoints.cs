@@ -33,9 +33,10 @@ public static class DocumentEndpoints
     private static async Task<IResult> Create(
         DocumentRequest request,
         IDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDocument( request );
+        var model = mapRequestToDocument(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class DocumentEndpoints
     private static async Task<IResult> Update(
         DocumentRequest request,
         IDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDocument( request );
+        var model = mapRequestToDocument(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class DocumentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var document = await service.Get(identifier, cancellationToken);
-        return document is null ? Results.NotFound() : Results.Ok( document );
+        return document is null ? Results.NotFound() : Results.Ok(document);
     }
 
 
     private static async Task<IResult> GetAll(
         IDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DocumentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DocumentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class DocumentEndpoints
     private static async Task<IResult> AssignPolicy(
         AssociationRequest request,
         IDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPolicy(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class DocumentEndpoints
     private static async Task<IResult> UnassignPolicy(
     AssociationRequest request,
     IDocumentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPolicy(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class DocumentEndpoints
     private static async Task<IResult> AssignClaim(
         AssociationRequest request,
         IDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignClaim(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class DocumentEndpoints
     private static async Task<IResult> UnassignClaim(
     AssociationRequest request,
     IDocumentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignClaim(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class DocumentEndpoints
     private static async Task<IResult> AssignApplication(
         AssociationRequest request,
         IDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignApplication(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class DocumentEndpoints
     private static async Task<IResult> UnassignApplication(
     AssociationRequest request,
     IDocumentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignApplication(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class DocumentEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         IDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class DocumentEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     IDocumentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Document mapRequestToDocument( DocumentRequest request ) {
+    private static Document mapRequestToDocument(DocumentRequest request)
+    {
         var model = new Document
         {
             Id = request.Id,

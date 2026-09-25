@@ -11,11 +11,11 @@ public interface IBillingAccountRepository
     Task UpdateAsync(BillingAccount billingAccount, CancellationToken cancellationToken);
     Task DeleteAsync(BillingAccount billingAccount, CancellationToken cancellationToken);
 
-    Task AddToPoliciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPoliciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToInvoicesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInvoicesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToPaymentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPaymentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPoliciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPoliciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInvoicesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInvoicesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPaymentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPaymentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

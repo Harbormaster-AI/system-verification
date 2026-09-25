@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum PolicyStatus
 {
-    Quoted=1,Active=2,Lapsed=3,Cancelled=4,Expired=5,PendingCancel=6,PendingReinstatement=7
+    Quoted = 1, Active = 2, Lapsed = 3, Cancelled = 4, Expired = 5, PendingCancel = 6, PendingReinstatement = 7
 }
 
 /// <summary>

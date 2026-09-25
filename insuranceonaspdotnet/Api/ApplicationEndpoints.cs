@@ -26,8 +26,8 @@ public static class ApplicationEndpoints
         group.MapPut("/assignSelectedQuote", AssignSelectedQuote);
         group.MapPut("/unassignSelectedQuote", UnassignSelectedQuote);
 
-    group.MapPut("/addToQuotes", AddToQuotes);
-    group.MapPut("/removeFromQuotes", RemoveFromQuotes);
+        group.MapPut("/addToQuotes", AddToQuotes);
+        group.MapPut("/removeFromQuotes", RemoveFromQuotes);
 
 
         return app;
@@ -36,9 +36,10 @@ public static class ApplicationEndpoints
     private static async Task<IResult> Create(
         ApplicationRequest request,
         IApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToApplication( request );
+        var model = mapRequestToApplication(request);
 
         try
         {
@@ -55,9 +56,10 @@ public static class ApplicationEndpoints
     private static async Task<IResult> Update(
         ApplicationRequest request,
         IApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToApplication( request );
+        var model = mapRequestToApplication(request);
 
         try
         {
@@ -74,25 +76,28 @@ public static class ApplicationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var application = await service.Get(identifier, cancellationToken);
-        return application is null ? Results.NotFound() : Results.Ok( application );
+        return application is null ? Results.NotFound() : Results.Ok(application);
     }
 
 
     private static async Task<IResult> GetAll(
         IApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ApplicationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ApplicationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -100,7 +105,8 @@ public static class ApplicationEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         IApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +114,8 @@ public static class ApplicationEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     IApplicationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -116,7 +123,8 @@ public static class ApplicationEndpoints
     private static async Task<IResult> AssignProduct(
         AssociationRequest request,
         IApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProduct(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -124,7 +132,8 @@ public static class ApplicationEndpoints
     private static async Task<IResult> UnassignProduct(
     AssociationRequest request,
     IApplicationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProduct(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +141,8 @@ public static class ApplicationEndpoints
     private static async Task<IResult> AssignDistributor(
         AssociationRequest request,
         IApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDistributor(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -140,7 +150,8 @@ public static class ApplicationEndpoints
     private static async Task<IResult> UnassignDistributor(
     AssociationRequest request,
     IApplicationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDistributor(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -148,7 +159,8 @@ public static class ApplicationEndpoints
     private static async Task<IResult> AssignSelectedQuote(
         AssociationRequest request,
         IApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSelectedQuote(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -156,7 +168,8 @@ public static class ApplicationEndpoints
     private static async Task<IResult> UnassignSelectedQuote(
     AssociationRequest request,
     IApplicationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSelectedQuote(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -165,7 +178,8 @@ public static class ApplicationEndpoints
     private static async Task<IResult> AddToQuotes(
         MultipleAssociationRequest request,
         IApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToQuotes(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -173,11 +187,13 @@ public static class ApplicationEndpoints
     private static async Task<IResult> RemoveFromQuotes(
         MultipleAssociationRequest request,
         IApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromQuotes(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Application mapRequestToApplication( ApplicationRequest request ) {
+    private static Application mapRequestToApplication(ApplicationRequest request)
+    {
         var model = new Application
         {
             Id = request.Id,

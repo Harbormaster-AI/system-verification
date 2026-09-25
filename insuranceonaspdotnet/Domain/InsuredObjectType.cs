@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum InsuredObjectType
 {
-    Vehicle=1,Property=2,Person=3,Equipment=4,LiabilityExposure=5
+    Vehicle = 1, Property = 2, Person = 3, Equipment = 4, LiabilityExposure = 5
 }
 
 /// <summary>

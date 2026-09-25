@@ -29,9 +29,10 @@ public static class ClaimReserveEndpoints
     private static async Task<IResult> Create(
         ClaimReserveRequest request,
         IClaimReserveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToClaimReserve( request );
+        var model = mapRequestToClaimReserve(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class ClaimReserveEndpoints
     private static async Task<IResult> Update(
         ClaimReserveRequest request,
         IClaimReserveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToClaimReserve( request );
+        var model = mapRequestToClaimReserve(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class ClaimReserveEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IClaimReserveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var claimReserve = await service.Get(identifier, cancellationToken);
-        return claimReserve is null ? Results.NotFound() : Results.Ok( claimReserve );
+        return claimReserve is null ? Results.NotFound() : Results.Ok(claimReserve);
     }
 
 
     private static async Task<IResult> GetAll(
         IClaimReserveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ClaimReserveResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ClaimReserveResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IClaimReserveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class ClaimReserveEndpoints
     private static async Task<IResult> AssignClaim(
         AssociationRequest request,
         IClaimReserveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignClaim(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class ClaimReserveEndpoints
     private static async Task<IResult> UnassignClaim(
     AssociationRequest request,
     IClaimReserveService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignClaim(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class ClaimReserveEndpoints
     private static async Task<IResult> AssignExposure(
         AssociationRequest request,
         IClaimReserveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignExposure(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class ClaimReserveEndpoints
     private static async Task<IResult> UnassignExposure(
     AssociationRequest request,
     IClaimReserveService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignExposure(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ClaimReserve mapRequestToClaimReserve( ClaimReserveRequest request ) {
+    private static ClaimReserve mapRequestToClaimReserve(ClaimReserveRequest request)
+    {
         var model = new ClaimReserve
         {
             Id = request.Id,

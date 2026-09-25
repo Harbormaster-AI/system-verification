@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IUnderwritingDecisionService {
+public interface IUnderwritingDecisionService
+{
 
-    Task Create(UnderwritingDecision model , CancellationToken cancellationToken);
+    Task Create(UnderwritingDecision model, CancellationToken cancellationToken);
     Task<bool> Update(UnderwritingDecision model, CancellationToken cancellationToken);
     Task<UnderwritingDecision?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<UnderwritingDecision>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class UnderwritingDecisionService : IUnderwritingDecisionService
 
     public async Task<bool> Update(UnderwritingDecision model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class UnderwritingDecisionService : IUnderwritingDecisionService
         return true;
     }
 
-    public async Task<bool> AssignQuote(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignQuote(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class UnderwritingDecisionService : IUnderwritingDecisionService
 
             var child = await _serviceResolver.Get<QuoteService>().Get(childRequest, cancellationToken);
             parent.Quote = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class UnderwritingDecisionService : IUnderwritingDecisionService
         return true;
     }
 
-    public async Task<bool> UnassignQuote(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignQuote(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class UnderwritingDecisionService : IUnderwritingDecisionService
         try
         {
             parent.Quote = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class UnderwritingDecisionService : IUnderwritingDecisionService
         return true;
     }
 
-    public async Task<bool> AssignUnderwriter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignUnderwriter(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class UnderwritingDecisionService : IUnderwritingDecisionService
 
             var child = await _serviceResolver.Get<UnderwriterService>().Get(childRequest, cancellationToken);
             parent.Underwriter = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class UnderwritingDecisionService : IUnderwritingDecisionService
         return true;
     }
 
-    public async Task<bool> UnassignUnderwriter(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignUnderwriter(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class UnderwritingDecisionService : IUnderwritingDecisionService
         try
         {
             parent.Underwriter = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

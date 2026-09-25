@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum NetworkStatus
 {
-    InNetwork=1,OutOfNetwork=2
+    InNetwork = 1, OutOfNetwork = 2
 }
 
 /// <summary>

@@ -11,11 +11,11 @@ public interface IDistributorRepository
     Task UpdateAsync(Distributor distributor, CancellationToken cancellationToken);
     Task DeleteAsync(Distributor distributor, CancellationToken cancellationToken);
 
-    Task AddToInsurersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInsurersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToAgentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAgentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToPoliciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPoliciesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInsurersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInsurersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAgentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAgentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPoliciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPoliciesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -11,9 +11,9 @@ public interface IAdjusterRepository
     Task UpdateAsync(Adjuster adjuster, CancellationToken cancellationToken);
     Task DeleteAsync(Adjuster adjuster, CancellationToken cancellationToken);
 
-    Task AddToClaimsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromClaimsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToServiceProvidersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromServiceProvidersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToClaimsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromClaimsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToServiceProvidersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromServiceProvidersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -18,8 +18,8 @@ public static class ThirdPartyEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToSubrogations", AddToSubrogations);
-    group.MapPut("/removeFromSubrogations", RemoveFromSubrogations);
+        group.MapPut("/addToSubrogations", AddToSubrogations);
+        group.MapPut("/removeFromSubrogations", RemoveFromSubrogations);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class ThirdPartyEndpoints
     private static async Task<IResult> Create(
         ThirdPartyRequest request,
         IThirdPartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToThirdParty( request );
+        var model = mapRequestToThirdParty(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class ThirdPartyEndpoints
     private static async Task<IResult> Update(
         ThirdPartyRequest request,
         IThirdPartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToThirdParty( request );
+        var model = mapRequestToThirdParty(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class ThirdPartyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IThirdPartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var thirdParty = await service.Get(identifier, cancellationToken);
-        return thirdParty is null ? Results.NotFound() : Results.Ok( thirdParty );
+        return thirdParty is null ? Results.NotFound() : Results.Ok(thirdParty);
     }
 
 
     private static async Task<IResult> GetAll(
         IThirdPartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ThirdPartyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ThirdPartyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IThirdPartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class ThirdPartyEndpoints
     private static async Task<IResult> AddToSubrogations(
         MultipleAssociationRequest request,
         IThirdPartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSubrogations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class ThirdPartyEndpoints
     private static async Task<IResult> RemoveFromSubrogations(
         MultipleAssociationRequest request,
         IThirdPartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSubrogations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static ThirdParty mapRequestToThirdParty( ThirdPartyRequest request ) {
+    private static ThirdParty mapRequestToThirdParty(ThirdPartyRequest request)
+    {
         var model = new ThirdParty
         {
             Id = request.Id,

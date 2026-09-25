@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum LineOfBusiness
 {
-    PersonalAuto=1,Homeowners=2,Renters=3,TermLife=4,WholeLife=5,CommercialProperty=6,GeneralLiability=7,WorkersCompensation=8
+    PersonalAuto = 1, Homeowners = 2, Renters = 3, TermLife = 4, WholeLife = 5, CommercialProperty = 6, GeneralLiability = 7, WorkersCompensation = 8
 }
 
 /// <summary>

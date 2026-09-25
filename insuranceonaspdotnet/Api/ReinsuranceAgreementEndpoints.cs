@@ -20,8 +20,8 @@ public static class ReinsuranceAgreementEndpoints
         group.MapPut("/assignInsurer", AssignInsurer);
         group.MapPut("/unassignInsurer", UnassignInsurer);
 
-    group.MapPut("/addToPolicies", AddToPolicies);
-    group.MapPut("/removeFromPolicies", RemoveFromPolicies);
+        group.MapPut("/addToPolicies", AddToPolicies);
+        group.MapPut("/removeFromPolicies", RemoveFromPolicies);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class ReinsuranceAgreementEndpoints
     private static async Task<IResult> Create(
         ReinsuranceAgreementRequest request,
         IReinsuranceAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToReinsuranceAgreement( request );
+        var model = mapRequestToReinsuranceAgreement(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class ReinsuranceAgreementEndpoints
     private static async Task<IResult> Update(
         ReinsuranceAgreementRequest request,
         IReinsuranceAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToReinsuranceAgreement( request );
+        var model = mapRequestToReinsuranceAgreement(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class ReinsuranceAgreementEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IReinsuranceAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var reinsuranceAgreement = await service.Get(identifier, cancellationToken);
-        return reinsuranceAgreement is null ? Results.NotFound() : Results.Ok( reinsuranceAgreement );
+        return reinsuranceAgreement is null ? Results.NotFound() : Results.Ok(reinsuranceAgreement);
     }
 
 
     private static async Task<IResult> GetAll(
         IReinsuranceAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ReinsuranceAgreementResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ReinsuranceAgreementResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IReinsuranceAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class ReinsuranceAgreementEndpoints
     private static async Task<IResult> AssignInsurer(
         AssociationRequest request,
         IReinsuranceAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInsurer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class ReinsuranceAgreementEndpoints
     private static async Task<IResult> UnassignInsurer(
     AssociationRequest request,
     IReinsuranceAgreementService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInsurer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ReinsuranceAgreementEndpoints
     private static async Task<IResult> AddToPolicies(
         MultipleAssociationRequest request,
         IReinsuranceAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPolicies(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class ReinsuranceAgreementEndpoints
     private static async Task<IResult> RemoveFromPolicies(
         MultipleAssociationRequest request,
         IReinsuranceAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPolicies(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static ReinsuranceAgreement mapRequestToReinsuranceAgreement( ReinsuranceAgreementRequest request ) {
+    private static ReinsuranceAgreement mapRequestToReinsuranceAgreement(ReinsuranceAgreementRequest request)
+    {
         var model = new ReinsuranceAgreement
         {
             Id = request.Id,

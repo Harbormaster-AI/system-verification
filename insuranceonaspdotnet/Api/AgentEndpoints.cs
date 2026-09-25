@@ -20,11 +20,11 @@ public static class AgentEndpoints
         group.MapPut("/assignDistributor", AssignDistributor);
         group.MapPut("/unassignDistributor", UnassignDistributor);
 
-    group.MapPut("/addToPolicies", AddToPolicies);
-    group.MapPut("/removeFromPolicies", RemoveFromPolicies);
+        group.MapPut("/addToPolicies", AddToPolicies);
+        group.MapPut("/removeFromPolicies", RemoveFromPolicies);
 
-    group.MapPut("/addToCustomers", AddToCustomers);
-    group.MapPut("/removeFromCustomers", RemoveFromCustomers);
+        group.MapPut("/addToCustomers", AddToCustomers);
+        group.MapPut("/removeFromCustomers", RemoveFromCustomers);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class AgentEndpoints
     private static async Task<IResult> Create(
         AgentRequest request,
         IAgentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAgent( request );
+        var model = mapRequestToAgent(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class AgentEndpoints
     private static async Task<IResult> Update(
         AgentRequest request,
         IAgentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAgent( request );
+        var model = mapRequestToAgent(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class AgentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAgentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var agent = await service.Get(identifier, cancellationToken);
-        return agent is null ? Results.NotFound() : Results.Ok( agent );
+        return agent is null ? Results.NotFound() : Results.Ok(agent);
     }
 
 
     private static async Task<IResult> GetAll(
         IAgentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AgentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AgentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAgentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class AgentEndpoints
     private static async Task<IResult> AssignDistributor(
         AssociationRequest request,
         IAgentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDistributor(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class AgentEndpoints
     private static async Task<IResult> UnassignDistributor(
     AssociationRequest request,
     IAgentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDistributor(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class AgentEndpoints
     private static async Task<IResult> AddToPolicies(
         MultipleAssociationRequest request,
         IAgentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPolicies(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class AgentEndpoints
     private static async Task<IResult> RemoveFromPolicies(
         MultipleAssociationRequest request,
         IAgentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPolicies(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCustomers(
         MultipleAssociationRequest request,
         IAgentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCustomers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class AgentEndpoints
     private static async Task<IResult> RemoveFromCustomers(
         MultipleAssociationRequest request,
         IAgentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCustomers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Agent mapRequestToAgent( AgentRequest request ) {
+    private static Agent mapRequestToAgent(AgentRequest request)
+    {
         var model = new Agent
         {
             Id = request.Id,

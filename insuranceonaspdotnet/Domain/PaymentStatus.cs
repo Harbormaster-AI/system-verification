@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum PaymentStatus
 {
-    Pending=1,Settled=2,Failed=3,Refunded=4,Reversed=5
+    Pending = 1, Settled = 2, Failed = 3, Refunded = 4, Reversed = 5
 }
 
 /// <summary>

@@ -29,9 +29,10 @@ public static class UnderwritingDecisionEndpoints
     private static async Task<IResult> Create(
         UnderwritingDecisionRequest request,
         IUnderwritingDecisionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToUnderwritingDecision( request );
+        var model = mapRequestToUnderwritingDecision(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class UnderwritingDecisionEndpoints
     private static async Task<IResult> Update(
         UnderwritingDecisionRequest request,
         IUnderwritingDecisionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToUnderwritingDecision( request );
+        var model = mapRequestToUnderwritingDecision(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class UnderwritingDecisionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IUnderwritingDecisionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var underwritingDecision = await service.Get(identifier, cancellationToken);
-        return underwritingDecision is null ? Results.NotFound() : Results.Ok( underwritingDecision );
+        return underwritingDecision is null ? Results.NotFound() : Results.Ok(underwritingDecision);
     }
 
 
     private static async Task<IResult> GetAll(
         IUnderwritingDecisionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( UnderwritingDecisionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(UnderwritingDecisionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IUnderwritingDecisionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class UnderwritingDecisionEndpoints
     private static async Task<IResult> AssignQuote(
         AssociationRequest request,
         IUnderwritingDecisionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignQuote(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class UnderwritingDecisionEndpoints
     private static async Task<IResult> UnassignQuote(
     AssociationRequest request,
     IUnderwritingDecisionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignQuote(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class UnderwritingDecisionEndpoints
     private static async Task<IResult> AssignUnderwriter(
         AssociationRequest request,
         IUnderwritingDecisionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignUnderwriter(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class UnderwritingDecisionEndpoints
     private static async Task<IResult> UnassignUnderwriter(
     AssociationRequest request,
     IUnderwritingDecisionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignUnderwriter(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static UnderwritingDecision mapRequestToUnderwritingDecision( UnderwritingDecisionRequest request ) {
+    private static UnderwritingDecision mapRequestToUnderwritingDecision(UnderwritingDecisionRequest request)
+    {
         var model = new UnderwritingDecision
         {
             Id = request.Id,

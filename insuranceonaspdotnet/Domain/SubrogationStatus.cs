@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum SubrogationStatus
 {
-    Open=1,Negotiating=2,Settled=3,Uncollectible=4,Closed=5
+    Open = 1, Negotiating = 2, Settled = 3, Uncollectible = 4, Closed = 5
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum AdjusterType
 {
-    Staff=1,Independent=2,Public=3
+    Staff = 1, Independent = 2, Public = 3
 }
 
 /// <summary>

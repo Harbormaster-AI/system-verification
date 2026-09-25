@@ -11,7 +11,7 @@ public interface IPolicyCoverageRepository
     Task UpdateAsync(PolicyCoverage policyCoverage, CancellationToken cancellationToken);
     Task DeleteAsync(PolicyCoverage policyCoverage, CancellationToken cancellationToken);
 
-    Task AddToInsuredObjectsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInsuredObjectsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInsuredObjectsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInsuredObjectsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

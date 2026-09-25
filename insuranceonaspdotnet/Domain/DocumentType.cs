@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum DocumentType
 {
-    ApplicationForm=1,PolicyDocument=2,Endorsement=3,Invoice=4,ClaimForm=5,PoliceReport=6,Estimate=7,Photo=8,MedicalRecord=9,Correspondence=10
+    ApplicationForm = 1, PolicyDocument = 2, Endorsement = 3, Invoice = 4, ClaimForm = 5, PoliceReport = 6, Estimate = 7, Photo = 8, MedicalRecord = 9, Correspondence = 10
 }
 
 /// <summary>

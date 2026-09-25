@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum PaymentPlanType
 {
-    Annual=1,SemiAnnual=2,Quarterly=3,Monthly=4,PayInFull=5
+    Annual = 1, SemiAnnual = 2, Quarterly = 3, Monthly = 4, PayInFull = 5
 }
 
 /// <summary>

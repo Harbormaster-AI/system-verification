@@ -18,8 +18,8 @@ public static class ServiceProvider_Endpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToClaims", AddToClaims);
-    group.MapPut("/removeFromClaims", RemoveFromClaims);
+        group.MapPut("/addToClaims", AddToClaims);
+        group.MapPut("/removeFromClaims", RemoveFromClaims);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class ServiceProvider_Endpoints
     private static async Task<IResult> Create(
         ServiceProvider_Request request,
         IServiceProvider_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToServiceProvider_( request );
+        var model = mapRequestToServiceProvider_(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class ServiceProvider_Endpoints
     private static async Task<IResult> Update(
         ServiceProvider_Request request,
         IServiceProvider_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToServiceProvider_( request );
+        var model = mapRequestToServiceProvider_(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class ServiceProvider_Endpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IServiceProvider_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var serviceProvider_ = await service.Get(identifier, cancellationToken);
-        return serviceProvider_ is null ? Results.NotFound() : Results.Ok( serviceProvider_ );
+        return serviceProvider_ is null ? Results.NotFound() : Results.Ok(serviceProvider_);
     }
 
 
     private static async Task<IResult> GetAll(
         IServiceProvider_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ServiceProvider_Response.FromModel ) );
-        }
+        return Results.Ok(all.Select(ServiceProvider_Response.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IServiceProvider_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class ServiceProvider_Endpoints
     private static async Task<IResult> AddToClaims(
         MultipleAssociationRequest request,
         IServiceProvider_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToClaims(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class ServiceProvider_Endpoints
     private static async Task<IResult> RemoveFromClaims(
         MultipleAssociationRequest request,
         IServiceProvider_Service service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromClaims(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static ServiceProvider_ mapRequestToServiceProvider_( ServiceProvider_Request request ) {
+    private static ServiceProvider_ mapRequestToServiceProvider_(ServiceProvider_Request request)
+    {
         var model = new ServiceProvider_
         {
             Id = request.Id,

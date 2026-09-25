@@ -27,9 +27,10 @@ public static class EndorsementEndpoints
     private static async Task<IResult> Create(
         EndorsementRequest request,
         IEndorsementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEndorsement( request );
+        var model = mapRequestToEndorsement(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class EndorsementEndpoints
     private static async Task<IResult> Update(
         EndorsementRequest request,
         IEndorsementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEndorsement( request );
+        var model = mapRequestToEndorsement(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class EndorsementEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IEndorsementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var endorsement = await service.Get(identifier, cancellationToken);
-        return endorsement is null ? Results.NotFound() : Results.Ok( endorsement );
+        return endorsement is null ? Results.NotFound() : Results.Ok(endorsement);
     }
 
 
     private static async Task<IResult> GetAll(
         IEndorsementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( EndorsementResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(EndorsementResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IEndorsementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class EndorsementEndpoints
     private static async Task<IResult> AssignPolicy(
         AssociationRequest request,
         IEndorsementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPolicy(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class EndorsementEndpoints
     private static async Task<IResult> UnassignPolicy(
     AssociationRequest request,
     IEndorsementService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPolicy(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Endorsement mapRequestToEndorsement( EndorsementRequest request ) {
+    private static Endorsement mapRequestToEndorsement(EndorsementRequest request)
+    {
         var model = new Endorsement
         {
             Id = request.Id,

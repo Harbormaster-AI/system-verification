@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IThirdPartyService {
+public interface IThirdPartyService
+{
 
-    Task Create(ThirdParty model , CancellationToken cancellationToken);
+    Task Create(ThirdParty model, CancellationToken cancellationToken);
     Task<bool> Update(ThirdParty model, CancellationToken cancellationToken);
     Task<ThirdParty?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ThirdParty>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class ThirdPartyService : IThirdPartyService
 
     public async Task<bool> Update(ThirdParty model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,8 +121,10 @@ public class ThirdPartyService : IThirdPartyService
     }
 
 
-    public async Task<bool> AddToSubrogations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSubrogations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ThirdParty",
                 "AddToSubrogations",
@@ -128,16 +132,18 @@ public class ThirdPartyService : IThirdPartyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSubrogations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSubrogations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ThirdParty",
                 "RemoveFromSubrogations",

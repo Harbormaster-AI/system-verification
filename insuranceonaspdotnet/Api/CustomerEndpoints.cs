@@ -18,20 +18,20 @@ public static class CustomerEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToApplications", AddToApplications);
-    group.MapPut("/removeFromApplications", RemoveFromApplications);
+        group.MapPut("/addToApplications", AddToApplications);
+        group.MapPut("/removeFromApplications", RemoveFromApplications);
 
-    group.MapPut("/addToPolicies", AddToPolicies);
-    group.MapPut("/removeFromPolicies", RemoveFromPolicies);
+        group.MapPut("/addToPolicies", AddToPolicies);
+        group.MapPut("/removeFromPolicies", RemoveFromPolicies);
 
-    group.MapPut("/addToClaims", AddToClaims);
-    group.MapPut("/removeFromClaims", RemoveFromClaims);
+        group.MapPut("/addToClaims", AddToClaims);
+        group.MapPut("/removeFromClaims", RemoveFromClaims);
 
-    group.MapPut("/addToAgents", AddToAgents);
-    group.MapPut("/removeFromAgents", RemoveFromAgents);
+        group.MapPut("/addToAgents", AddToAgents);
+        group.MapPut("/removeFromAgents", RemoveFromAgents);
 
-    group.MapPut("/addToBeneficiaries", AddToBeneficiaries);
-    group.MapPut("/removeFromBeneficiaries", RemoveFromBeneficiaries);
+        group.MapPut("/addToBeneficiaries", AddToBeneficiaries);
+        group.MapPut("/removeFromBeneficiaries", RemoveFromBeneficiaries);
 
 
         return app;
@@ -40,9 +40,10 @@ public static class CustomerEndpoints
     private static async Task<IResult> Create(
         CustomerRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCustomer( request );
+        var model = mapRequestToCustomer(request);
 
         try
         {
@@ -59,9 +60,10 @@ public static class CustomerEndpoints
     private static async Task<IResult> Update(
         CustomerRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCustomer( request );
+        var model = mapRequestToCustomer(request);
 
         try
         {
@@ -78,25 +80,28 @@ public static class CustomerEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var customer = await service.Get(identifier, cancellationToken);
-        return customer is null ? Results.NotFound() : Results.Ok( customer );
+        return customer is null ? Results.NotFound() : Results.Ok(customer);
     }
 
 
     private static async Task<IResult> GetAll(
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CustomerResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CustomerResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +110,8 @@ public static class CustomerEndpoints
     private static async Task<IResult> AddToApplications(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToApplications(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -113,14 +119,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromApplications(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromApplications(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPolicies(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPolicies(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -128,14 +136,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromPolicies(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPolicies(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToClaims(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToClaims(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -143,14 +153,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromClaims(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromClaims(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToAgents(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAgents(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -158,14 +170,16 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromAgents(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAgents(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToBeneficiaries(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToBeneficiaries(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -173,11 +187,13 @@ public static class CustomerEndpoints
     private static async Task<IResult> RemoveFromBeneficiaries(
         MultipleAssociationRequest request,
         ICustomerService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromBeneficiaries(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Customer mapRequestToCustomer( CustomerRequest request ) {
+    private static Customer mapRequestToCustomer(CustomerRequest request)
+    {
         var model = new Customer
         {
             Id = request.Id,

@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum ClaimStatus
 {
-    Open=1,Closed=2,Reopened=3,Denied=4,PendingInvestigation=5,Litigation=6
+    Open = 1, Closed = 2, Reopened = 3, Denied = 4, PendingInvestigation = 5, Litigation = 6
 }
 
 /// <summary>

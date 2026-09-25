@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum ReserveType
 {
-    Indemnity=1,Expense=2,Legal=3,Medical=4
+    Indemnity = 1, Expense = 2, Legal = 3, Medical = 4
 }
 
 /// <summary>

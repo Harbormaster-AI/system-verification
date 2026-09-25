@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum CoverageType
 {
-    Liability=1,Collision=2,Comprehensive=3,PropertyDamage=4,BodilyInjury=5,UninsuredMotorist=6,MedicalPayments=7,Dwelling=8,Contents=9,PersonalLiability=10,BusinessInterruption=11,ProfessionalLiability=12
+    Liability = 1, Collision = 2, Comprehensive = 3, PropertyDamage = 4, BodilyInjury = 5, UninsuredMotorist = 6, MedicalPayments = 7, Dwelling = 8, Contents = 9, PersonalLiability = 10, BusinessInterruption = 11, ProfessionalLiability = 12
 }
 
 /// <summary>

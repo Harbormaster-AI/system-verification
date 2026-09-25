@@ -18,14 +18,14 @@ public static class DistributorEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToInsurers", AddToInsurers);
-    group.MapPut("/removeFromInsurers", RemoveFromInsurers);
+        group.MapPut("/addToInsurers", AddToInsurers);
+        group.MapPut("/removeFromInsurers", RemoveFromInsurers);
 
-    group.MapPut("/addToAgents", AddToAgents);
-    group.MapPut("/removeFromAgents", RemoveFromAgents);
+        group.MapPut("/addToAgents", AddToAgents);
+        group.MapPut("/removeFromAgents", RemoveFromAgents);
 
-    group.MapPut("/addToPolicies", AddToPolicies);
-    group.MapPut("/removeFromPolicies", RemoveFromPolicies);
+        group.MapPut("/addToPolicies", AddToPolicies);
+        group.MapPut("/removeFromPolicies", RemoveFromPolicies);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class DistributorEndpoints
     private static async Task<IResult> Create(
         DistributorRequest request,
         IDistributorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDistributor( request );
+        var model = mapRequestToDistributor(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class DistributorEndpoints
     private static async Task<IResult> Update(
         DistributorRequest request,
         IDistributorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDistributor( request );
+        var model = mapRequestToDistributor(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class DistributorEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDistributorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var distributor = await service.Get(identifier, cancellationToken);
-        return distributor is null ? Results.NotFound() : Results.Ok( distributor );
+        return distributor is null ? Results.NotFound() : Results.Ok(distributor);
     }
 
 
     private static async Task<IResult> GetAll(
         IDistributorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DistributorResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DistributorResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDistributorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class DistributorEndpoints
     private static async Task<IResult> AddToInsurers(
         MultipleAssociationRequest request,
         IDistributorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInsurers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -107,14 +113,16 @@ public static class DistributorEndpoints
     private static async Task<IResult> RemoveFromInsurers(
         MultipleAssociationRequest request,
         IDistributorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInsurers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToAgents(
         MultipleAssociationRequest request,
         IDistributorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAgents(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class DistributorEndpoints
     private static async Task<IResult> RemoveFromAgents(
         MultipleAssociationRequest request,
         IDistributorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAgents(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPolicies(
         MultipleAssociationRequest request,
         IDistributorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPolicies(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class DistributorEndpoints
     private static async Task<IResult> RemoveFromPolicies(
         MultipleAssociationRequest request,
         IDistributorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPolicies(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Distributor mapRequestToDistributor( DistributorRequest request ) {
+    private static Distributor mapRequestToDistributor(DistributorRequest request)
+    {
         var model = new Distributor
         {
             Id = request.Id,

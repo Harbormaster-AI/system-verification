@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum UnderwritingDecisionType
 {
-    Approve=1,ConditionalApprove=2,Refer=3,Decline=4
+    Approve = 1, ConditionalApprove = 2, Refer = 3, Decline = 4
 }
 
 /// <summary>

@@ -11,7 +11,7 @@ public interface IThirdPartyRepository
     Task UpdateAsync(ThirdParty thirdParty, CancellationToken cancellationToken);
     Task DeleteAsync(ThirdParty thirdParty, CancellationToken cancellationToken);
 
-    Task AddToSubrogationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSubrogationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSubrogationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSubrogationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

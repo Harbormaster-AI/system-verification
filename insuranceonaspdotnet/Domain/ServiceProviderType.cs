@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum ServiceProviderType
 {
-    RepairShop=1,Towing=2,MedicalProvider=3,Attorney=4,ForensicEngineer=5,RentalCar=6
+    RepairShop = 1, Towing = 2, MedicalProvider = 3, Attorney = 4, ForensicEngineer = 5, RentalCar = 6
 }
 
 /// <summary>

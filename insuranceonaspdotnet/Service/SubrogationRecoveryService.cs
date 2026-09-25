@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface ISubrogationRecoveryService {
+public interface ISubrogationRecoveryService
+{
 
-    Task Create(SubrogationRecovery model , CancellationToken cancellationToken);
+    Task Create(SubrogationRecovery model, CancellationToken cancellationToken);
     Task<bool> Update(SubrogationRecovery model, CancellationToken cancellationToken);
     Task<SubrogationRecovery?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SubrogationRecovery>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
 
     public async Task<bool> Update(SubrogationRecovery model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
         return true;
     }
 
-    public async Task<bool> AssignClaim(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignClaim(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
 
             var child = await _serviceResolver.Get<ClaimService>().Get(childRequest, cancellationToken);
             parent.Claim = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
         return true;
     }
 
-    public async Task<bool> UnassignClaim(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignClaim(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
         try
         {
             parent.Claim = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
         return true;
     }
 
-    public async Task<bool> AssignExposure(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignExposure(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
 
             var child = await _serviceResolver.Get<ExposureService>().Get(childRequest, cancellationToken);
             parent.Exposure = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
         return true;
     }
 
-    public async Task<bool> UnassignExposure(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignExposure(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
         try
         {
             parent.Exposure = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
         return true;
     }
 
-    public async Task<bool> AssignCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
 
             var child = await _serviceResolver.Get<ThirdPartyService>().Get(childRequest, cancellationToken);
             parent.Counterparty = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
         return true;
     }
 
-    public async Task<bool> UnassignCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class SubrogationRecoveryService : ISubrogationRecoveryService
         try
         {
             parent.Counterparty = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum PerilType
 {
-    AutoAccident=1,Fire=2,Theft=3,Windstorm=4,Flood=5,Hail=6,Earthquake=7,Vandalism=8,Injury=9,Death=10
+    AutoAccident = 1, Fire = 2, Theft = 3, Windstorm = 4, Flood = 5, Hail = 6, Earthquake = 7, Vandalism = 8, Injury = 9, Death = 10
 }
 
 /// <summary>

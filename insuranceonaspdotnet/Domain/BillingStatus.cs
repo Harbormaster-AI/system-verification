@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum BillingStatus
 {
-    Current=1,Delinquent=2,Collections=3,Closed=4
+    Current = 1, Delinquent = 2, Collections = 3, Closed = 4
 }
 
 /// <summary>

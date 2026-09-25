@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum TreatyType
 {
-    QuotaShare=1,Surplus=2,ExcessOfLoss=3,StopLoss=4
+    QuotaShare = 1, Surplus = 2, ExcessOfLoss = 3, StopLoss = 4
 }
 
 /// <summary>

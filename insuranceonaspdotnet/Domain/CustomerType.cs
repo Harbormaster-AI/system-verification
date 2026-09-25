@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum CustomerType
 {
-    Individual=1,Organization=2
+    Individual = 1, Organization = 2
 }
 
 /// <summary>

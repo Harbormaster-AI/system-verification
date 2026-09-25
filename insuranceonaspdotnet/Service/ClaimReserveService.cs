@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IClaimReserveService {
+public interface IClaimReserveService
+{
 
-    Task Create(ClaimReserve model , CancellationToken cancellationToken);
+    Task Create(ClaimReserve model, CancellationToken cancellationToken);
     Task<bool> Update(ClaimReserve model, CancellationToken cancellationToken);
     Task<ClaimReserve?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ClaimReserve>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ClaimReserveService : IClaimReserveService
 
     public async Task<bool> Update(ClaimReserve model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class ClaimReserveService : IClaimReserveService
         return true;
     }
 
-    public async Task<bool> AssignClaim(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignClaim(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class ClaimReserveService : IClaimReserveService
 
             var child = await _serviceResolver.Get<ClaimService>().Get(childRequest, cancellationToken);
             parent.Claim = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class ClaimReserveService : IClaimReserveService
         return true;
     }
 
-    public async Task<bool> UnassignClaim(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignClaim(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class ClaimReserveService : IClaimReserveService
         try
         {
             parent.Claim = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class ClaimReserveService : IClaimReserveService
         return true;
     }
 
-    public async Task<bool> AssignExposure(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignExposure(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class ClaimReserveService : IClaimReserveService
 
             var child = await _serviceResolver.Get<ExposureService>().Get(childRequest, cancellationToken);
             parent.Exposure = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class ClaimReserveService : IClaimReserveService
         return true;
     }
 
-    public async Task<bool> UnassignExposure(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignExposure(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class ClaimReserveService : IClaimReserveService
         try
         {
             parent.Exposure = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

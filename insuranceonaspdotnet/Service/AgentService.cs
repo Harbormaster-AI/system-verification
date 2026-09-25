@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IAgentService {
+public interface IAgentService
+{
 
-    Task Create(Agent model , CancellationToken cancellationToken);
+    Task Create(Agent model, CancellationToken cancellationToken);
     Task<bool> Update(Agent model, CancellationToken cancellationToken);
     Task<Agent?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Agent>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class AgentService : IAgentService
 
     public async Task<bool> Update(Agent model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class AgentService : IAgentService
         return true;
     }
 
-    public async Task<bool> AssignDistributor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDistributor(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class AgentService : IAgentService
 
             var child = await _serviceResolver.Get<DistributorService>().Get(childRequest, cancellationToken);
             parent.Distributor = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class AgentService : IAgentService
         return true;
     }
 
-    public async Task<bool> UnassignDistributor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDistributor(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class AgentService : IAgentService
         try
         {
             parent.Distributor = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,8 +180,10 @@ public class AgentService : IAgentService
     }
 
 
-    public async Task<bool> AddToPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Agent",
                 "AddToPolicies",
@@ -185,16 +191,18 @@ public class AgentService : IAgentService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Agent",
                 "RemoveFromPolicies",
@@ -210,8 +218,10 @@ public class AgentService : IAgentService
         return true;
     }
 
-    public async Task<bool> AddToCustomers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCustomers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Agent",
                 "AddToCustomers",
@@ -219,16 +229,18 @@ public class AgentService : IAgentService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCustomers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCustomers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Agent",
                 "RemoveFromCustomers",

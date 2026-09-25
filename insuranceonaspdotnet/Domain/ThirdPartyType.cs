@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum ThirdPartyType
 {
-    Individual=1,Company=2,GovernmentAgency=3
+    Individual = 1, Company = 2, GovernmentAgency = 3
 }
 
 /// <summary>

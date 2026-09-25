@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum InvoiceStatus
 {
-    Open=1,Paid=2,PartiallyPaid=3,Void=4
+    Open = 1, Paid = 2, PartiallyPaid = 3, Void = 4
 }
 
 /// <summary>

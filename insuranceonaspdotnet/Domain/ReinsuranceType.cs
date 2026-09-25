@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum ReinsuranceType
 {
-    Treaty=1,Facultative=2
+    Treaty = 1, Facultative = 2
 }
 
 /// <summary>

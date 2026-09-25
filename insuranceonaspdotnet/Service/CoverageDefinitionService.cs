@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface ICoverageDefinitionService {
+public interface ICoverageDefinitionService
+{
 
-    Task Create(CoverageDefinition model , CancellationToken cancellationToken);
+    Task Create(CoverageDefinition model, CancellationToken cancellationToken);
     Task<bool> Update(CoverageDefinition model, CancellationToken cancellationToken);
     Task<CoverageDefinition?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CoverageDefinition>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class CoverageDefinitionService : ICoverageDefinitionService
 
     public async Task<bool> Update(CoverageDefinition model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class CoverageDefinitionService : ICoverageDefinitionService
         return true;
     }
 
-    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class CoverageDefinitionService : ICoverageDefinitionService
 
             var child = await _serviceResolver.Get<InsuranceProductService>().Get(childRequest, cancellationToken);
             parent.Product = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class CoverageDefinitionService : ICoverageDefinitionService
         return true;
     }
 
-    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class CoverageDefinitionService : ICoverageDefinitionService
         try
         {
             parent.Product = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

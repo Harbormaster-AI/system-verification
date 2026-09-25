@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum PaymentMethod
 {
-    ACH=1,CreditCard=2,DebitCard=3,Check=4,Cash=5,Wire=6
+    ACH = 1, CreditCard = 2, DebitCard = 3, Check = 4, Cash = 5, Wire = 6
 }
 
 /// <summary>

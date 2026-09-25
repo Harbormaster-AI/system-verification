@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IAdjusterService {
+public interface IAdjusterService
+{
 
-    Task Create(Adjuster model , CancellationToken cancellationToken);
+    Task Create(Adjuster model, CancellationToken cancellationToken);
     Task<bool> Update(Adjuster model, CancellationToken cancellationToken);
     Task<Adjuster?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Adjuster>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class AdjusterService : IAdjusterService
 
     public async Task<bool> Update(Adjuster model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,8 +123,10 @@ public class AdjusterService : IAdjusterService
     }
 
 
-    public async Task<bool> AddToClaims(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToClaims(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Adjuster",
                 "AddToClaims",
@@ -130,16 +134,18 @@ public class AdjusterService : IAdjusterService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromClaims(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromClaims(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Adjuster",
                 "RemoveFromClaims",
@@ -155,8 +161,10 @@ public class AdjusterService : IAdjusterService
         return true;
     }
 
-    public async Task<bool> AddToServiceProviders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToServiceProviders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Adjuster",
                 "AddToServiceProviders",
@@ -164,16 +172,18 @@ public class AdjusterService : IAdjusterService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromServiceProviders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromServiceProviders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Adjuster",
                 "RemoveFromServiceProviders",

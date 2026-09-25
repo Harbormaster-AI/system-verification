@@ -27,9 +27,10 @@ public static class CoverageDefinitionEndpoints
     private static async Task<IResult> Create(
         CoverageDefinitionRequest request,
         ICoverageDefinitionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCoverageDefinition( request );
+        var model = mapRequestToCoverageDefinition(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class CoverageDefinitionEndpoints
     private static async Task<IResult> Update(
         CoverageDefinitionRequest request,
         ICoverageDefinitionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCoverageDefinition( request );
+        var model = mapRequestToCoverageDefinition(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class CoverageDefinitionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICoverageDefinitionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var coverageDefinition = await service.Get(identifier, cancellationToken);
-        return coverageDefinition is null ? Results.NotFound() : Results.Ok( coverageDefinition );
+        return coverageDefinition is null ? Results.NotFound() : Results.Ok(coverageDefinition);
     }
 
 
     private static async Task<IResult> GetAll(
         ICoverageDefinitionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CoverageDefinitionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CoverageDefinitionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICoverageDefinitionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class CoverageDefinitionEndpoints
     private static async Task<IResult> AssignProduct(
         AssociationRequest request,
         ICoverageDefinitionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProduct(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class CoverageDefinitionEndpoints
     private static async Task<IResult> UnassignProduct(
     AssociationRequest request,
     ICoverageDefinitionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProduct(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static CoverageDefinition mapRequestToCoverageDefinition( CoverageDefinitionRequest request ) {
+    private static CoverageDefinition mapRequestToCoverageDefinition(CoverageDefinitionRequest request)
+    {
         var model = new CoverageDefinition
         {
             Id = request.Id,

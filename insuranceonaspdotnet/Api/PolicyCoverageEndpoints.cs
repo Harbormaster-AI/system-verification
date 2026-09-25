@@ -20,8 +20,8 @@ public static class PolicyCoverageEndpoints
         group.MapPut("/assignPolicy", AssignPolicy);
         group.MapPut("/unassignPolicy", UnassignPolicy);
 
-    group.MapPut("/addToInsuredObjects", AddToInsuredObjects);
-    group.MapPut("/removeFromInsuredObjects", RemoveFromInsuredObjects);
+        group.MapPut("/addToInsuredObjects", AddToInsuredObjects);
+        group.MapPut("/removeFromInsuredObjects", RemoveFromInsuredObjects);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class PolicyCoverageEndpoints
     private static async Task<IResult> Create(
         PolicyCoverageRequest request,
         IPolicyCoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPolicyCoverage( request );
+        var model = mapRequestToPolicyCoverage(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class PolicyCoverageEndpoints
     private static async Task<IResult> Update(
         PolicyCoverageRequest request,
         IPolicyCoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPolicyCoverage( request );
+        var model = mapRequestToPolicyCoverage(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class PolicyCoverageEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPolicyCoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var policyCoverage = await service.Get(identifier, cancellationToken);
-        return policyCoverage is null ? Results.NotFound() : Results.Ok( policyCoverage );
+        return policyCoverage is null ? Results.NotFound() : Results.Ok(policyCoverage);
     }
 
 
     private static async Task<IResult> GetAll(
         IPolicyCoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PolicyCoverageResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PolicyCoverageResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPolicyCoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class PolicyCoverageEndpoints
     private static async Task<IResult> AssignPolicy(
         AssociationRequest request,
         IPolicyCoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPolicy(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class PolicyCoverageEndpoints
     private static async Task<IResult> UnassignPolicy(
     AssociationRequest request,
     IPolicyCoverageService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPolicy(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class PolicyCoverageEndpoints
     private static async Task<IResult> AddToInsuredObjects(
         MultipleAssociationRequest request,
         IPolicyCoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInsuredObjects(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class PolicyCoverageEndpoints
     private static async Task<IResult> RemoveFromInsuredObjects(
         MultipleAssociationRequest request,
         IPolicyCoverageService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInsuredObjects(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static PolicyCoverage mapRequestToPolicyCoverage( PolicyCoverageRequest request ) {
+    private static PolicyCoverage mapRequestToPolicyCoverage(PolicyCoverageRequest request)
+    {
         var model = new PolicyCoverage
         {
             Id = request.Id,

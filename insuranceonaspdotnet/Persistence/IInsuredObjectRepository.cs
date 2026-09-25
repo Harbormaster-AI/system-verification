@@ -11,7 +11,7 @@ public interface IInsuredObjectRepository
     Task UpdateAsync(InsuredObject insuredObject, CancellationToken cancellationToken);
     Task DeleteAsync(InsuredObject insuredObject, CancellationToken cancellationToken);
 
-    Task AddToCoveragesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCoveragesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCoveragesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCoveragesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

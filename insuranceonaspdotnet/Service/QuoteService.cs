@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IQuoteService {
+public interface IQuoteService
+{
 
-    Task Create(Quote model , CancellationToken cancellationToken);
+    Task Create(Quote model, CancellationToken cancellationToken);
     Task<bool> Update(Quote model, CancellationToken cancellationToken);
     Task<Quote?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Quote>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class QuoteService : IQuoteService
 
     public async Task<bool> Update(Quote model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> AssignApplication(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignApplication(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class QuoteService : IQuoteService
 
             var child = await _serviceResolver.Get<ApplicationService>().Get(childRequest, cancellationToken);
             parent.Application = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> UnassignApplication(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignApplication(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class QuoteService : IQuoteService
         try
         {
             parent.Application = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class QuoteService : IQuoteService
 
             var child = await _serviceResolver.Get<PolicyService>().Get(childRequest, cancellationToken);
             parent.Policy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class QuoteService : IQuoteService
         return true;
     }
 
-    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class QuoteService : IQuoteService
         try
         {
             parent.Policy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,8 +235,10 @@ public class QuoteService : IQuoteService
     }
 
 
-    public async Task<bool> AddToUnderwritingDecisions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToUnderwritingDecisions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Quote",
                 "AddToUnderwritingDecisions",
@@ -238,16 +246,18 @@ public class QuoteService : IQuoteService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromUnderwritingDecisions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromUnderwritingDecisions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Quote",
                 "RemoveFromUnderwritingDecisions",

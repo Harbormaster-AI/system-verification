@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IUnderwriterService {
+public interface IUnderwriterService
+{
 
-    Task Create(Underwriter model , CancellationToken cancellationToken);
+    Task Create(Underwriter model, CancellationToken cancellationToken);
     Task<bool> Update(Underwriter model, CancellationToken cancellationToken);
     Task<Underwriter?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Underwriter>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class UnderwriterService : IUnderwriterService
 
     public async Task<bool> Update(Underwriter model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class UnderwriterService : IUnderwriterService
         return true;
     }
 
-    public async Task<bool> AssignInsurer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInsurer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class UnderwriterService : IUnderwriterService
 
             var child = await _serviceResolver.Get<InsurerService>().Get(childRequest, cancellationToken);
             parent.Insurer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class UnderwriterService : IUnderwriterService
         return true;
     }
 
-    public async Task<bool> UnassignInsurer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInsurer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class UnderwriterService : IUnderwriterService
         try
         {
             parent.Insurer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,8 +178,10 @@ public class UnderwriterService : IUnderwriterService
     }
 
 
-    public async Task<bool> AddToDecisions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDecisions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Underwriter",
                 "AddToDecisions",
@@ -183,16 +189,18 @@ public class UnderwriterService : IUnderwriterService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDecisions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDecisions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Underwriter",
                 "RemoveFromDecisions",

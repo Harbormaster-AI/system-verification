@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IIncidentService {
+public interface IIncidentService
+{
 
-    Task Create(Incident model , CancellationToken cancellationToken);
+    Task Create(Incident model, CancellationToken cancellationToken);
     Task<bool> Update(Incident model, CancellationToken cancellationToken);
     Task<Incident?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Incident>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class IncidentService : IIncidentService
 
     public async Task<bool> Update(Incident model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class IncidentService : IIncidentService
         return true;
     }
 
-    public async Task<bool> AssignClaim(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignClaim(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class IncidentService : IIncidentService
 
             var child = await _serviceResolver.Get<ClaimService>().Get(childRequest, cancellationToken);
             parent.Claim = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class IncidentService : IIncidentService
         return true;
     }
 
-    public async Task<bool> UnassignClaim(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignClaim(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class IncidentService : IIncidentService
         try
         {
             parent.Claim = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class IncidentService : IIncidentService
     }
 
 
-    public async Task<bool> AddToInsuredObjects(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInsuredObjects(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Incident",
                 "AddToInsuredObjects",
@@ -182,16 +188,18 @@ public class IncidentService : IIncidentService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInsuredObjects(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInsuredObjects(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Incident",
                 "RemoveFromInsuredObjects",

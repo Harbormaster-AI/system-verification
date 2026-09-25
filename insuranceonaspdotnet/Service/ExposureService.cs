@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IExposureService {
+public interface IExposureService
+{
 
-    Task Create(Exposure model , CancellationToken cancellationToken);
+    Task Create(Exposure model, CancellationToken cancellationToken);
     Task<bool> Update(Exposure model, CancellationToken cancellationToken);
     Task<Exposure?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Exposure>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class ExposureService : IExposureService
 
     public async Task<bool> Update(Exposure model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class ExposureService : IExposureService
         return true;
     }
 
-    public async Task<bool> AssignClaim(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignClaim(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class ExposureService : IExposureService
 
             var child = await _serviceResolver.Get<ClaimService>().Get(childRequest, cancellationToken);
             parent.Claim = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class ExposureService : IExposureService
         return true;
     }
 
-    public async Task<bool> UnassignClaim(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignClaim(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class ExposureService : IExposureService
         try
         {
             parent.Claim = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class ExposureService : IExposureService
         return true;
     }
 
-    public async Task<bool> AssignPolicyCoverage(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPolicyCoverage(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class ExposureService : IExposureService
 
             var child = await _serviceResolver.Get<PolicyCoverageService>().Get(childRequest, cancellationToken);
             parent.PolicyCoverage = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class ExposureService : IExposureService
         return true;
     }
 
-    public async Task<bool> UnassignPolicyCoverage(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPolicyCoverage(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class ExposureService : IExposureService
         try
         {
             parent.PolicyCoverage = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,7 +236,8 @@ public class ExposureService : IExposureService
         return true;
     }
 
-    public async Task<bool> AssignInsuredObject(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInsuredObject(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -248,7 +255,7 @@ public class ExposureService : IExposureService
 
             var child = await _serviceResolver.Get<InsuredObjectService>().Get(childRequest, cancellationToken);
             parent.InsuredObject = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -260,7 +267,8 @@ public class ExposureService : IExposureService
         return true;
     }
 
-    public async Task<bool> UnassignInsuredObject(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInsuredObject(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -271,7 +279,7 @@ public class ExposureService : IExposureService
         try
         {
             parent.InsuredObject = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,8 +292,10 @@ public class ExposureService : IExposureService
     }
 
 
-    public async Task<bool> AddToReserves(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToReserves(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Exposure",
                 "AddToReserves",
@@ -293,16 +303,18 @@ public class ExposureService : IExposureService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromReserves(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromReserves(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Exposure",
                 "RemoveFromReserves",
@@ -318,8 +330,10 @@ public class ExposureService : IExposureService
         return true;
     }
 
-    public async Task<bool> AddToPayments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPayments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Exposure",
                 "AddToPayments",
@@ -327,16 +341,18 @@ public class ExposureService : IExposureService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPayments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPayments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Exposure",
                 "RemoveFromPayments",

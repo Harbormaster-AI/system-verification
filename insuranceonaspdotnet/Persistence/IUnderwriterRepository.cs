@@ -11,7 +11,7 @@ public interface IUnderwriterRepository
     Task UpdateAsync(Underwriter underwriter, CancellationToken cancellationToken);
     Task DeleteAsync(Underwriter underwriter, CancellationToken cancellationToken);
 
-    Task AddToDecisionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDecisionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDecisionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDecisionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

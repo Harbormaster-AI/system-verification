@@ -36,7 +36,7 @@ namespace insuranceonaspdotnet.Domain;
 
 public enum ReserveStatus
 {
-    Open=1,Released=2,Increased=3,Decreased=4,Closed=5
+    Open = 1, Released = 2, Increased = 3, Decreased = 4, Closed = 5
 }
 
 /// <summary>

@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IPaymentService {
+public interface IPaymentService
+{
 
-    Task Create(Payment model , CancellationToken cancellationToken);
+    Task Create(Payment model, CancellationToken cancellationToken);
     Task<bool> Update(Payment model, CancellationToken cancellationToken);
     Task<Payment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Payment>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class PaymentService : IPaymentService
 
     public async Task<bool> Update(Payment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class PaymentService : IPaymentService
         return true;
     }
 
-    public async Task<bool> AssignInvoice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInvoice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class PaymentService : IPaymentService
 
             var child = await _serviceResolver.Get<InvoiceService>().Get(childRequest, cancellationToken);
             parent.Invoice = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class PaymentService : IPaymentService
         return true;
     }
 
-    public async Task<bool> UnassignInvoice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInvoice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class PaymentService : IPaymentService
         try
         {
             parent.Invoice = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,7 +180,8 @@ public class PaymentService : IPaymentService
         return true;
     }
 
-    public async Task<bool> AssignBillingAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBillingAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -194,7 +199,7 @@ public class PaymentService : IPaymentService
 
             var child = await _serviceResolver.Get<BillingAccountService>().Get(childRequest, cancellationToken);
             parent.BillingAccount = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -206,7 +211,8 @@ public class PaymentService : IPaymentService
         return true;
     }
 
-    public async Task<bool> UnassignBillingAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBillingAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -217,7 +223,7 @@ public class PaymentService : IPaymentService
         try
         {
             parent.BillingAccount = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,7 +235,8 @@ public class PaymentService : IPaymentService
         return true;
     }
 
-    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -247,7 +254,7 @@ public class PaymentService : IPaymentService
 
             var child = await _serviceResolver.Get<PolicyService>().Get(childRequest, cancellationToken);
             parent.Policy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -259,7 +266,8 @@ public class PaymentService : IPaymentService
         return true;
     }
 
-    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -270,7 +278,7 @@ public class PaymentService : IPaymentService
         try
         {
             parent.Policy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -6,9 +6,10 @@ using insuranceonaspdotnet.Telemetry;
 
 namespace insuranceonaspdotnet.Service;
 
-public interface IClaimPaymentService {
+public interface IClaimPaymentService
+{
 
-    Task Create(ClaimPayment model , CancellationToken cancellationToken);
+    Task Create(ClaimPayment model, CancellationToken cancellationToken);
     Task<bool> Update(ClaimPayment model, CancellationToken cancellationToken);
     Task<ClaimPayment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ClaimPayment>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class ClaimPaymentService : IClaimPaymentService
 
     public async Task<bool> Update(ClaimPayment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -128,7 +130,8 @@ public class ClaimPaymentService : IClaimPaymentService
         return true;
     }
 
-    public async Task<bool> AssignClaim(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignClaim(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -146,7 +149,7 @@ public class ClaimPaymentService : IClaimPaymentService
 
             var child = await _serviceResolver.Get<ClaimService>().Get(childRequest, cancellationToken);
             parent.Claim = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -158,7 +161,8 @@ public class ClaimPaymentService : IClaimPaymentService
         return true;
     }
 
-    public async Task<bool> UnassignClaim(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignClaim(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -169,7 +173,7 @@ public class ClaimPaymentService : IClaimPaymentService
         try
         {
             parent.Claim = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -181,7 +185,8 @@ public class ClaimPaymentService : IClaimPaymentService
         return true;
     }
 
-    public async Task<bool> AssignExposure(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignExposure(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -199,7 +204,7 @@ public class ClaimPaymentService : IClaimPaymentService
 
             var child = await _serviceResolver.Get<ExposureService>().Get(childRequest, cancellationToken);
             parent.Exposure = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -211,7 +216,8 @@ public class ClaimPaymentService : IClaimPaymentService
         return true;
     }
 
-    public async Task<bool> UnassignExposure(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignExposure(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -222,7 +228,7 @@ public class ClaimPaymentService : IClaimPaymentService
         try
         {
             parent.Exposure = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -234,7 +240,8 @@ public class ClaimPaymentService : IClaimPaymentService
         return true;
     }
 
-    public async Task<bool> AssignBeneficiary(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBeneficiary(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -252,7 +259,7 @@ public class ClaimPaymentService : IClaimPaymentService
 
             var child = await _serviceResolver.Get<BeneficiaryService>().Get(childRequest, cancellationToken);
             parent.Beneficiary = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -264,7 +271,8 @@ public class ClaimPaymentService : IClaimPaymentService
         return true;
     }
 
-    public async Task<bool> UnassignBeneficiary(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBeneficiary(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -275,7 +283,7 @@ public class ClaimPaymentService : IClaimPaymentService
         try
         {
             parent.Beneficiary = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -287,7 +295,8 @@ public class ClaimPaymentService : IClaimPaymentService
         return true;
     }
 
-    public async Task<bool> AssignServiceProvider_(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignServiceProvider_(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -305,7 +314,7 @@ public class ClaimPaymentService : IClaimPaymentService
 
             var child = await _serviceResolver.Get<ServiceProvider_Service>().Get(childRequest, cancellationToken);
             parent.ServiceProvider_ = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -317,7 +326,8 @@ public class ClaimPaymentService : IClaimPaymentService
         return true;
     }
 
-    public async Task<bool> UnassignServiceProvider_(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignServiceProvider_(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -328,7 +338,7 @@ public class ClaimPaymentService : IClaimPaymentService
         try
         {
             parent.ServiceProvider_ = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -340,7 +350,8 @@ public class ClaimPaymentService : IClaimPaymentService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -358,7 +369,7 @@ public class ClaimPaymentService : IClaimPaymentService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.Customer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -370,7 +381,8 @@ public class ClaimPaymentService : IClaimPaymentService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -381,7 +393,7 @@ public class ClaimPaymentService : IClaimPaymentService
         try
         {
             parent.Customer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
