@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface ILoanAccountService {
+public interface ILoanAccountService
+{
 
-    Task Create(LoanAccount model , CancellationToken cancellationToken);
+    Task Create(LoanAccount model, CancellationToken cancellationToken);
     Task<bool> Update(LoanAccount model, CancellationToken cancellationToken);
     Task<LoanAccount?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<LoanAccount>> GetAll(CancellationToken cancellationToken);
@@ -75,7 +76,8 @@ public class LoanAccountService : ILoanAccountService
 
     public async Task<bool> Update(LoanAccount model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -140,7 +142,8 @@ public class LoanAccountService : ILoanAccountService
         return true;
     }
 
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -158,7 +161,7 @@ public class LoanAccountService : ILoanAccountService
 
             var child = await _serviceResolver.Get<BankService>().Get(childRequest, cancellationToken);
             parent.Bank = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -170,7 +173,8 @@ public class LoanAccountService : ILoanAccountService
         return true;
     }
 
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -181,7 +185,7 @@ public class LoanAccountService : ILoanAccountService
         try
         {
             parent.Bank = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -193,7 +197,8 @@ public class LoanAccountService : ILoanAccountService
         return true;
     }
 
-    public async Task<bool> AssignBranch(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBranch(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -211,7 +216,7 @@ public class LoanAccountService : ILoanAccountService
 
             var child = await _serviceResolver.Get<BranchService>().Get(childRequest, cancellationToken);
             parent.Branch = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -223,7 +228,8 @@ public class LoanAccountService : ILoanAccountService
         return true;
     }
 
-    public async Task<bool> UnassignBranch(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBranch(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -234,7 +240,7 @@ public class LoanAccountService : ILoanAccountService
         try
         {
             parent.Branch = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -246,7 +252,8 @@ public class LoanAccountService : ILoanAccountService
         return true;
     }
 
-    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -264,7 +271,7 @@ public class LoanAccountService : ILoanAccountService
 
             var child = await _serviceResolver.Get<BankingProductService>().Get(childRequest, cancellationToken);
             parent.Product = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -276,7 +283,8 @@ public class LoanAccountService : ILoanAccountService
         return true;
     }
 
-    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProduct(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -287,7 +295,7 @@ public class LoanAccountService : ILoanAccountService
         try
         {
             parent.Product = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -300,8 +308,10 @@ public class LoanAccountService : ILoanAccountService
     }
 
 
-    public async Task<bool> AddToBorrowers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToBorrowers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LoanAccount",
                 "AddToBorrowers",
@@ -309,16 +319,18 @@ public class LoanAccountService : ILoanAccountService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromBorrowers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromBorrowers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LoanAccount",
                 "RemoveFromBorrowers",
@@ -334,8 +346,10 @@ public class LoanAccountService : ILoanAccountService
         return true;
     }
 
-    public async Task<bool> AddToRepaymentSchedule(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRepaymentSchedule(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LoanAccount",
                 "AddToRepaymentSchedule",
@@ -343,16 +357,18 @@ public class LoanAccountService : ILoanAccountService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRepaymentSchedule(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRepaymentSchedule(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LoanAccount",
                 "RemoveFromRepaymentSchedule",
@@ -368,8 +384,10 @@ public class LoanAccountService : ILoanAccountService
         return true;
     }
 
-    public async Task<bool> AddToPayments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPayments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LoanAccount",
                 "AddToPayments",
@@ -377,16 +395,18 @@ public class LoanAccountService : ILoanAccountService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPayments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPayments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LoanAccount",
                 "RemoveFromPayments",
@@ -402,8 +422,10 @@ public class LoanAccountService : ILoanAccountService
         return true;
     }
 
-    public async Task<bool> AddToCollateral(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCollateral(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LoanAccount",
                 "AddToCollateral",
@@ -411,16 +433,18 @@ public class LoanAccountService : ILoanAccountService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCollateral(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCollateral(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LoanAccount",
                 "RemoveFromCollateral",
@@ -436,8 +460,10 @@ public class LoanAccountService : ILoanAccountService
         return true;
     }
 
-    public async Task<bool> AddToFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LoanAccount",
                 "AddToFeeCharges",
@@ -445,16 +471,18 @@ public class LoanAccountService : ILoanAccountService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFeeCharges(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LoanAccount",
                 "RemoveFromFeeCharges",

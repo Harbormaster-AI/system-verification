@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IExchangeRateService {
+public interface IExchangeRateService
+{
 
-    Task Create(ExchangeRate model , CancellationToken cancellationToken);
+    Task Create(ExchangeRate model, CancellationToken cancellationToken);
     Task<bool> Update(ExchangeRate model, CancellationToken cancellationToken);
     Task<ExchangeRate?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ExchangeRate>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ExchangeRateService : IExchangeRateService
 
     public async Task<bool> Update(ExchangeRate model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class ExchangeRateService : IExchangeRateService
         return true;
     }
 
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class ExchangeRateService : IExchangeRateService
 
             var child = await _serviceResolver.Get<BankService>().Get(childRequest, cancellationToken);
             parent.Bank = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class ExchangeRateService : IExchangeRateService
         return true;
     }
 
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class ExchangeRateService : IExchangeRateService
         try
         {
             parent.Bank = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class ExchangeRateService : IExchangeRateService
     }
 
 
-    public async Task<bool> AddToFxTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFxTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ExchangeRate",
                 "AddToFxTrades",
@@ -184,16 +190,18 @@ public class ExchangeRateService : IExchangeRateService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFxTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFxTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ExchangeRate",
                 "RemoveFromFxTrades",

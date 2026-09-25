@@ -36,7 +36,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum TransactionType
 {
-    Deposit=1,Withdrawal=2,Transfer=3,Payment=4,Fee=5,Interest=6,Adjustment=7,Chargeback=8,Refund=9,FXConversion=10
+    Deposit = 1, Withdrawal = 2, Transfer = 3, Payment = 4, Fee = 5, Interest = 6, Adjustment = 7, Chargeback = 8, Refund = 9, FXConversion = 10
 }
 
 /// <summary>
