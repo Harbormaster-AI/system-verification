@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface ITerminalService {
+public interface ITerminalService
+{
 
-    Task Create(Terminal model , CancellationToken cancellationToken);
+    Task Create(Terminal model, CancellationToken cancellationToken);
     Task<bool> Update(Terminal model, CancellationToken cancellationToken);
     Task<Terminal?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Terminal>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class TerminalService : ITerminalService
 
     public async Task<bool> Update(Terminal model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class TerminalService : ITerminalService
         return true;
     }
 
-    public async Task<bool> AssignMerchant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMerchant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class TerminalService : ITerminalService
 
             var child = await _serviceResolver.Get<MerchantService>().Get(childRequest, cancellationToken);
             parent.Merchant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class TerminalService : ITerminalService
         return true;
     }
 
-    public async Task<bool> UnassignMerchant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMerchant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class TerminalService : ITerminalService
         try
         {
             parent.Merchant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

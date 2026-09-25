@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum SecurityType
 {
-    Equity=1,Bond=2,ETF=3,MutualFund=4,Derivative=5,Crypto=6
+    Equity = 1, Bond = 2, ETF = 3, MutualFund = 4, Derivative = 5, Crypto = 6
 }
 
 /// <summary>

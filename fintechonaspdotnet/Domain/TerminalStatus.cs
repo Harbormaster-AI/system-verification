@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum TerminalStatus
 {
-    Active=1,Inactive=2,Decommissioned=3
+    Active = 1, Inactive = 2, Decommissioned = 3
 }
 
 /// <summary>

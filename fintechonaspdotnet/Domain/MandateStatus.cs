@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum MandateStatus
 {
-    Active=1,Suspended=2,Cancelled=3,Expired=4
+    Active = 1, Suspended = 2, Cancelled = 3, Expired = 4
 }
 
 /// <summary>

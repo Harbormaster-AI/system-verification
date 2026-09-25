@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IRepaymentScheduleService {
+public interface IRepaymentScheduleService
+{
 
-    Task Create(RepaymentSchedule model , CancellationToken cancellationToken);
+    Task Create(RepaymentSchedule model, CancellationToken cancellationToken);
     Task<bool> Update(RepaymentSchedule model, CancellationToken cancellationToken);
     Task<RepaymentSchedule?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RepaymentSchedule>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class RepaymentScheduleService : IRepaymentScheduleService
 
     public async Task<bool> Update(RepaymentSchedule model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class RepaymentScheduleService : IRepaymentScheduleService
         return true;
     }
 
-    public async Task<bool> AssignLoan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLoan(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class RepaymentScheduleService : IRepaymentScheduleService
 
             var child = await _serviceResolver.Get<LoanService>().Get(childRequest, cancellationToken);
             parent.Loan = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class RepaymentScheduleService : IRepaymentScheduleService
         return true;
     }
 
-    public async Task<bool> UnassignLoan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLoan(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class RepaymentScheduleService : IRepaymentScheduleService
         try
         {
             parent.Loan = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,8 +180,10 @@ public class RepaymentScheduleService : IRepaymentScheduleService
     }
 
 
-    public async Task<bool> AddToPayments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPayments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RepaymentSchedule",
                 "AddToPayments",
@@ -185,16 +191,18 @@ public class RepaymentScheduleService : IRepaymentScheduleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPayments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPayments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RepaymentSchedule",
                 "RemoveFromPayments",

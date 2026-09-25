@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum PortfolioStatus
 {
-    Active=1,Closed=2,Suspended=3
+    Active = 1, Closed = 2, Suspended = 3
 }
 
 /// <summary>

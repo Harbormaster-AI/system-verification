@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum TerminalType
 {
-    POS=1,mPOS=2,ECommerce=3
+    POS = 1, mPOS = 2, ECommerce = 3
 }
 
 /// <summary>

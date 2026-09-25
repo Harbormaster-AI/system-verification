@@ -29,9 +29,10 @@ public static class AppliedFeeEndpoints
     private static async Task<IResult> Create(
         AppliedFeeRequest request,
         IAppliedFeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAppliedFee( request );
+        var model = mapRequestToAppliedFee(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class AppliedFeeEndpoints
     private static async Task<IResult> Update(
         AppliedFeeRequest request,
         IAppliedFeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAppliedFee( request );
+        var model = mapRequestToAppliedFee(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class AppliedFeeEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAppliedFeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var appliedFee = await service.Get(identifier, cancellationToken);
-        return appliedFee is null ? Results.NotFound() : Results.Ok( appliedFee );
+        return appliedFee is null ? Results.NotFound() : Results.Ok(appliedFee);
     }
 
 
     private static async Task<IResult> GetAll(
         IAppliedFeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AppliedFeeResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AppliedFeeResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAppliedFeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class AppliedFeeEndpoints
     private static async Task<IResult> AssignPaymentOrder(
         AssociationRequest request,
         IAppliedFeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPaymentOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class AppliedFeeEndpoints
     private static async Task<IResult> UnassignPaymentOrder(
     AssociationRequest request,
     IAppliedFeeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPaymentOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class AppliedFeeEndpoints
     private static async Task<IResult> AssignTransaction(
         AssociationRequest request,
         IAppliedFeeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTransaction(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class AppliedFeeEndpoints
     private static async Task<IResult> UnassignTransaction(
     AssociationRequest request,
     IAppliedFeeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTransaction(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static AppliedFee mapRequestToAppliedFee( AppliedFeeRequest request ) {
+    private static AppliedFee mapRequestToAppliedFee(AppliedFeeRequest request)
+    {
         var model = new AppliedFee
         {
             Id = request.Id,

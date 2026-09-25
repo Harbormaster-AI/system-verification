@@ -24,8 +24,8 @@ public static class DisputeEndpoints
         group.MapPut("/assignMerchant", AssignMerchant);
         group.MapPut("/unassignMerchant", UnassignMerchant);
 
-    group.MapPut("/addToChargebacks", AddToChargebacks);
-    group.MapPut("/removeFromChargebacks", RemoveFromChargebacks);
+        group.MapPut("/addToChargebacks", AddToChargebacks);
+        group.MapPut("/removeFromChargebacks", RemoveFromChargebacks);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class DisputeEndpoints
     private static async Task<IResult> Create(
         DisputeRequest request,
         IDisputeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDispute( request );
+        var model = mapRequestToDispute(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class DisputeEndpoints
     private static async Task<IResult> Update(
         DisputeRequest request,
         IDisputeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDispute( request );
+        var model = mapRequestToDispute(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class DisputeEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDisputeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var dispute = await service.Get(identifier, cancellationToken);
-        return dispute is null ? Results.NotFound() : Results.Ok( dispute );
+        return dispute is null ? Results.NotFound() : Results.Ok(dispute);
     }
 
 
     private static async Task<IResult> GetAll(
         IDisputeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DisputeResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DisputeResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDisputeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -98,7 +103,8 @@ public static class DisputeEndpoints
     private static async Task<IResult> AssignTransaction(
         AssociationRequest request,
         IDisputeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTransaction(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -106,7 +112,8 @@ public static class DisputeEndpoints
     private static async Task<IResult> UnassignTransaction(
     AssociationRequest request,
     IDisputeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTransaction(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class DisputeEndpoints
     private static async Task<IResult> AssignCard(
         AssociationRequest request,
         IDisputeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCard(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -122,7 +130,8 @@ public static class DisputeEndpoints
     private static async Task<IResult> UnassignCard(
     AssociationRequest request,
     IDisputeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCard(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -130,7 +139,8 @@ public static class DisputeEndpoints
     private static async Task<IResult> AssignMerchant(
         AssociationRequest request,
         IDisputeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMerchant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -138,7 +148,8 @@ public static class DisputeEndpoints
     private static async Task<IResult> UnassignMerchant(
     AssociationRequest request,
     IDisputeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMerchant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -147,7 +158,8 @@ public static class DisputeEndpoints
     private static async Task<IResult> AddToChargebacks(
         MultipleAssociationRequest request,
         IDisputeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToChargebacks(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class DisputeEndpoints
     private static async Task<IResult> RemoveFromChargebacks(
         MultipleAssociationRequest request,
         IDisputeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromChargebacks(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Dispute mapRequestToDispute( DisputeRequest request ) {
+    private static Dispute mapRequestToDispute(DisputeRequest request)
+    {
         var model = new Dispute
         {
             Id = request.Id,

@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IDisputeService {
+public interface IDisputeService
+{
 
-    Task Create(Dispute model , CancellationToken cancellationToken);
+    Task Create(Dispute model, CancellationToken cancellationToken);
     Task<bool> Update(Dispute model, CancellationToken cancellationToken);
     Task<Dispute?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Dispute>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class DisputeService : IDisputeService
 
     public async Task<bool> Update(Dispute model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class DisputeService : IDisputeService
         return true;
     }
 
-    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class DisputeService : IDisputeService
 
             var child = await _serviceResolver.Get<TransactionService>().Get(childRequest, cancellationToken);
             parent.Transaction = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class DisputeService : IDisputeService
         return true;
     }
 
-    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class DisputeService : IDisputeService
         try
         {
             parent.Transaction = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class DisputeService : IDisputeService
         return true;
     }
 
-    public async Task<bool> AssignCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class DisputeService : IDisputeService
 
             var child = await _serviceResolver.Get<PaymentCardService>().Get(childRequest, cancellationToken);
             parent.Card = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class DisputeService : IDisputeService
         return true;
     }
 
-    public async Task<bool> UnassignCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class DisputeService : IDisputeService
         try
         {
             parent.Card = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,7 +237,8 @@ public class DisputeService : IDisputeService
         return true;
     }
 
-    public async Task<bool> AssignMerchant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMerchant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -249,7 +256,7 @@ public class DisputeService : IDisputeService
 
             var child = await _serviceResolver.Get<MerchantService>().Get(childRequest, cancellationToken);
             parent.Merchant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -261,7 +268,8 @@ public class DisputeService : IDisputeService
         return true;
     }
 
-    public async Task<bool> UnassignMerchant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMerchant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -272,7 +280,7 @@ public class DisputeService : IDisputeService
         try
         {
             parent.Merchant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -285,8 +293,10 @@ public class DisputeService : IDisputeService
     }
 
 
-    public async Task<bool> AddToChargebacks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToChargebacks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Dispute",
                 "AddToChargebacks",
@@ -294,16 +304,18 @@ public class DisputeService : IDisputeService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromChargebacks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromChargebacks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Dispute",
                 "RemoveFromChargebacks",

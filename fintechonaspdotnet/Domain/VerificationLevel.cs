@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum VerificationLevel
 {
-    Basic=1,Standard=2,Enhanced=3
+    Basic = 1, Standard = 2, Enhanced = 3
 }
 
 /// <summary>

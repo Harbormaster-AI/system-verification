@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum InterestRateType
 {
-    Fixed=1,Variable=2
+    Fixed = 1, Variable = 2
 }
 
 /// <summary>

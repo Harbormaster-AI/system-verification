@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IKYCDocumentService {
+public interface IKYCDocumentService
+{
 
-    Task Create(KYCDocument model , CancellationToken cancellationToken);
+    Task Create(KYCDocument model, CancellationToken cancellationToken);
     Task<bool> Update(KYCDocument model, CancellationToken cancellationToken);
     Task<KYCDocument?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<KYCDocument>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class KYCDocumentService : IKYCDocumentService
 
     public async Task<bool> Update(KYCDocument model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class KYCDocumentService : IKYCDocumentService
         return true;
     }
 
-    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class KYCDocumentService : IKYCDocumentService
 
             var child = await _serviceResolver.Get<KYCProfileService>().Get(childRequest, cancellationToken);
             parent.KycProfile = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class KYCDocumentService : IKYCDocumentService
         return true;
     }
 
-    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class KYCDocumentService : IKYCDocumentService
         try
         {
             parent.KycProfile = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

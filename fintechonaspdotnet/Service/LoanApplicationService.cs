@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface ILoanApplicationService {
+public interface ILoanApplicationService
+{
 
-    Task Create(LoanApplication model , CancellationToken cancellationToken);
+    Task Create(LoanApplication model, CancellationToken cancellationToken);
     Task<bool> Update(LoanApplication model, CancellationToken cancellationToken);
     Task<LoanApplication?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<LoanApplication>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class LoanApplicationService : ILoanApplicationService
 
     public async Task<bool> Update(LoanApplication model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class LoanApplicationService : ILoanApplicationService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class LoanApplicationService : ILoanApplicationService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.Customer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class LoanApplicationService : ILoanApplicationService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class LoanApplicationService : ILoanApplicationService
         try
         {
             parent.Customer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class LoanApplicationService : ILoanApplicationService
         return true;
     }
 
-    public async Task<bool> AssignRiskAssessment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRiskAssessment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class LoanApplicationService : ILoanApplicationService
 
             var child = await _serviceResolver.Get<RiskAssessmentService>().Get(childRequest, cancellationToken);
             parent.RiskAssessment = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class LoanApplicationService : ILoanApplicationService
         return true;
     }
 
-    public async Task<bool> UnassignRiskAssessment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRiskAssessment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class LoanApplicationService : ILoanApplicationService
         try
         {
             parent.RiskAssessment = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,7 +237,8 @@ public class LoanApplicationService : ILoanApplicationService
         return true;
     }
 
-    public async Task<bool> AssignLoan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLoan(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -249,7 +256,7 @@ public class LoanApplicationService : ILoanApplicationService
 
             var child = await _serviceResolver.Get<LoanService>().Get(childRequest, cancellationToken);
             parent.Loan = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -261,7 +268,8 @@ public class LoanApplicationService : ILoanApplicationService
         return true;
     }
 
-    public async Task<bool> UnassignLoan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLoan(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -272,7 +280,7 @@ public class LoanApplicationService : ILoanApplicationService
         try
         {
             parent.Loan = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

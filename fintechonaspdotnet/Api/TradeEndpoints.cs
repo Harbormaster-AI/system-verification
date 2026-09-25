@@ -31,9 +31,10 @@ public static class TradeEndpoints
     private static async Task<IResult> Create(
         TradeRequest request,
         ITradeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTrade( request );
+        var model = mapRequestToTrade(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class TradeEndpoints
     private static async Task<IResult> Update(
         TradeRequest request,
         ITradeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTrade( request );
+        var model = mapRequestToTrade(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class TradeEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITradeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var trade = await service.Get(identifier, cancellationToken);
-        return trade is null ? Results.NotFound() : Results.Ok( trade );
+        return trade is null ? Results.NotFound() : Results.Ok(trade);
     }
 
 
     private static async Task<IResult> GetAll(
         ITradeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TradeResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TradeResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITradeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class TradeEndpoints
     private static async Task<IResult> AssignOrder(
         AssociationRequest request,
         ITradeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignOrder(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class TradeEndpoints
     private static async Task<IResult> UnassignOrder(
     AssociationRequest request,
     ITradeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignOrder(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class TradeEndpoints
     private static async Task<IResult> AssignSecurity(
         AssociationRequest request,
         ITradeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSecurity(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class TradeEndpoints
     private static async Task<IResult> UnassignSecurity(
     AssociationRequest request,
     ITradeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSecurity(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class TradeEndpoints
     private static async Task<IResult> AssignInvestmentAccount(
         AssociationRequest request,
         ITradeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInvestmentAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class TradeEndpoints
     private static async Task<IResult> UnassignInvestmentAccount(
     AssociationRequest request,
     ITradeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInvestmentAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Trade mapRequestToTrade( TradeRequest request ) {
+    private static Trade mapRequestToTrade(TradeRequest request)
+    {
         var model = new Trade
         {
             Id = request.Id,

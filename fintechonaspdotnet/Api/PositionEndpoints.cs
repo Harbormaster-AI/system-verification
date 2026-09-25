@@ -29,9 +29,10 @@ public static class PositionEndpoints
     private static async Task<IResult> Create(
         PositionRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPosition( request );
+        var model = mapRequestToPosition(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class PositionEndpoints
     private static async Task<IResult> Update(
         PositionRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPosition( request );
+        var model = mapRequestToPosition(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class PositionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var position = await service.Get(identifier, cancellationToken);
-        return position is null ? Results.NotFound() : Results.Ok( position );
+        return position is null ? Results.NotFound() : Results.Ok(position);
     }
 
 
     private static async Task<IResult> GetAll(
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PositionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PositionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class PositionEndpoints
     private static async Task<IResult> AssignPortfolio(
         AssociationRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPortfolio(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class PositionEndpoints
     private static async Task<IResult> UnassignPortfolio(
     AssociationRequest request,
     IPositionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPortfolio(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class PositionEndpoints
     private static async Task<IResult> AssignSecurity(
         AssociationRequest request,
         IPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSecurity(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class PositionEndpoints
     private static async Task<IResult> UnassignSecurity(
     AssociationRequest request,
     IPositionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSecurity(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Position mapRequestToPosition( PositionRequest request ) {
+    private static Position mapRequestToPosition(PositionRequest request)
+    {
         var model = new Position
         {
             Id = request.Id,

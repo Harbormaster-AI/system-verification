@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum PolicyStatus
 {
-    Draft=1,Active=2,Retired=3
+    Draft = 1, Active = 2, Retired = 3
 }
 
 /// <summary>

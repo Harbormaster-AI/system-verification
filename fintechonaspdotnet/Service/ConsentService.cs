@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IConsentService {
+public interface IConsentService
+{
 
-    Task Create(Consent model , CancellationToken cancellationToken);
+    Task Create(Consent model, CancellationToken cancellationToken);
     Task<bool> Update(Consent model, CancellationToken cancellationToken);
     Task<Consent?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Consent>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ConsentService : IConsentService
 
     public async Task<bool> Update(Consent model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class ConsentService : IConsentService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class ConsentService : IConsentService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.Customer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class ConsentService : IConsentService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class ConsentService : IConsentService
         try
         {
             parent.Customer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class ConsentService : IConsentService
         return true;
     }
 
-    public async Task<bool> AssignApiClient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignApiClient(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class ConsentService : IConsentService
 
             var child = await _serviceResolver.Get<APIClientService>().Get(childRequest, cancellationToken);
             parent.ApiClient = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class ConsentService : IConsentService
         return true;
     }
 
-    public async Task<bool> UnassignApiClient(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignApiClient(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class ConsentService : IConsentService
         try
         {
             parent.ApiClient = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

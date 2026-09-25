@@ -20,8 +20,8 @@ public static class ProductOfferingEndpoints
         group.MapPut("/assignInstitution", AssignInstitution);
         group.MapPut("/unassignInstitution", UnassignInstitution);
 
-    group.MapPut("/addToPricingPlans", AddToPricingPlans);
-    group.MapPut("/removeFromPricingPlans", RemoveFromPricingPlans);
+        group.MapPut("/addToPricingPlans", AddToPricingPlans);
+        group.MapPut("/removeFromPricingPlans", RemoveFromPricingPlans);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class ProductOfferingEndpoints
     private static async Task<IResult> Create(
         ProductOfferingRequest request,
         IProductOfferingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProductOffering( request );
+        var model = mapRequestToProductOffering(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class ProductOfferingEndpoints
     private static async Task<IResult> Update(
         ProductOfferingRequest request,
         IProductOfferingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProductOffering( request );
+        var model = mapRequestToProductOffering(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class ProductOfferingEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IProductOfferingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var productOffering = await service.Get(identifier, cancellationToken);
-        return productOffering is null ? Results.NotFound() : Results.Ok( productOffering );
+        return productOffering is null ? Results.NotFound() : Results.Ok(productOffering);
     }
 
 
     private static async Task<IResult> GetAll(
         IProductOfferingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ProductOfferingResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ProductOfferingResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IProductOfferingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class ProductOfferingEndpoints
     private static async Task<IResult> AssignInstitution(
         AssociationRequest request,
         IProductOfferingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInstitution(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class ProductOfferingEndpoints
     private static async Task<IResult> UnassignInstitution(
     AssociationRequest request,
     IProductOfferingService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInstitution(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ProductOfferingEndpoints
     private static async Task<IResult> AddToPricingPlans(
         MultipleAssociationRequest request,
         IProductOfferingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPricingPlans(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class ProductOfferingEndpoints
     private static async Task<IResult> RemoveFromPricingPlans(
         MultipleAssociationRequest request,
         IProductOfferingService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPricingPlans(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static ProductOffering mapRequestToProductOffering( ProductOfferingRequest request ) {
+    private static ProductOffering mapRequestToProductOffering(ProductOfferingRequest request)
+    {
         var model = new ProductOffering
         {
             Id = request.Id,

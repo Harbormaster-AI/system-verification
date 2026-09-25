@@ -20,8 +20,8 @@ public static class FXDealEndpoints
         group.MapPut("/assignQuote", AssignQuote);
         group.MapPut("/unassignQuote", UnassignQuote);
 
-    group.MapPut("/addToPaymentOrders", AddToPaymentOrders);
-    group.MapPut("/removeFromPaymentOrders", RemoveFromPaymentOrders);
+        group.MapPut("/addToPaymentOrders", AddToPaymentOrders);
+        group.MapPut("/removeFromPaymentOrders", RemoveFromPaymentOrders);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class FXDealEndpoints
     private static async Task<IResult> Create(
         FXDealRequest request,
         IFXDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFXDeal( request );
+        var model = mapRequestToFXDeal(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class FXDealEndpoints
     private static async Task<IResult> Update(
         FXDealRequest request,
         IFXDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFXDeal( request );
+        var model = mapRequestToFXDeal(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class FXDealEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IFXDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var fXDeal = await service.Get(identifier, cancellationToken);
-        return fXDeal is null ? Results.NotFound() : Results.Ok( fXDeal );
+        return fXDeal is null ? Results.NotFound() : Results.Ok(fXDeal);
     }
 
 
     private static async Task<IResult> GetAll(
         IFXDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( FXDealResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(FXDealResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IFXDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class FXDealEndpoints
     private static async Task<IResult> AssignQuote(
         AssociationRequest request,
         IFXDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignQuote(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class FXDealEndpoints
     private static async Task<IResult> UnassignQuote(
     AssociationRequest request,
     IFXDealService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignQuote(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class FXDealEndpoints
     private static async Task<IResult> AddToPaymentOrders(
         MultipleAssociationRequest request,
         IFXDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPaymentOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class FXDealEndpoints
     private static async Task<IResult> RemoveFromPaymentOrders(
         MultipleAssociationRequest request,
         IFXDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPaymentOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static FXDeal mapRequestToFXDeal( FXDealRequest request ) {
+    private static FXDeal mapRequestToFXDeal(FXDealRequest request)
+    {
         var model = new FXDeal
         {
             Id = request.Id,

@@ -11,9 +11,9 @@ public interface ITransactionRepository
     Task UpdateAsync(Transaction transaction, CancellationToken cancellationToken);
     Task DeleteAsync(Transaction transaction, CancellationToken cancellationToken);
 
-    Task AddToRelatedTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRelatedTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToAlertsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAlertsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRelatedTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRelatedTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAlertsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAlertsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

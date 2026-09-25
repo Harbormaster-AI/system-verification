@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum KYCDocumentType
 {
-    Passport=1,NationalID=2,DriverLicense=3,BusinessRegistration=4,ProofOfAddress=5
+    Passport = 1, NationalID = 2, DriverLicense = 3, BusinessRegistration = 4, ProofOfAddress = 5
 }
 
 /// <summary>

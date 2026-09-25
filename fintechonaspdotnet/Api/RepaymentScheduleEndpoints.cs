@@ -20,8 +20,8 @@ public static class RepaymentScheduleEndpoints
         group.MapPut("/assignLoan", AssignLoan);
         group.MapPut("/unassignLoan", UnassignLoan);
 
-    group.MapPut("/addToPayments", AddToPayments);
-    group.MapPut("/removeFromPayments", RemoveFromPayments);
+        group.MapPut("/addToPayments", AddToPayments);
+        group.MapPut("/removeFromPayments", RemoveFromPayments);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> Create(
         RepaymentScheduleRequest request,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRepaymentSchedule( request );
+        var model = mapRequestToRepaymentSchedule(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> Update(
         RepaymentScheduleRequest request,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRepaymentSchedule( request );
+        var model = mapRequestToRepaymentSchedule(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var repaymentSchedule = await service.Get(identifier, cancellationToken);
-        return repaymentSchedule is null ? Results.NotFound() : Results.Ok( repaymentSchedule );
+        return repaymentSchedule is null ? Results.NotFound() : Results.Ok(repaymentSchedule);
     }
 
 
     private static async Task<IResult> GetAll(
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RepaymentScheduleResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RepaymentScheduleResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> AssignLoan(
         AssociationRequest request,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLoan(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> UnassignLoan(
     AssociationRequest request,
     IRepaymentScheduleService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLoan(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> AddToPayments(
         MultipleAssociationRequest request,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPayments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> RemoveFromPayments(
         MultipleAssociationRequest request,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPayments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static RepaymentSchedule mapRequestToRepaymentSchedule( RepaymentScheduleRequest request ) {
+    private static RepaymentSchedule mapRequestToRepaymentSchedule(RepaymentScheduleRequest request)
+    {
         var model = new RepaymentSchedule
         {
             Id = request.Id,

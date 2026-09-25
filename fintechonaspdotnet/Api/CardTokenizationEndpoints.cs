@@ -27,9 +27,10 @@ public static class CardTokenizationEndpoints
     private static async Task<IResult> Create(
         CardTokenizationRequest request,
         ICardTokenizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCardTokenization( request );
+        var model = mapRequestToCardTokenization(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class CardTokenizationEndpoints
     private static async Task<IResult> Update(
         CardTokenizationRequest request,
         ICardTokenizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCardTokenization( request );
+        var model = mapRequestToCardTokenization(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class CardTokenizationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICardTokenizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var cardTokenization = await service.Get(identifier, cancellationToken);
-        return cardTokenization is null ? Results.NotFound() : Results.Ok( cardTokenization );
+        return cardTokenization is null ? Results.NotFound() : Results.Ok(cardTokenization);
     }
 
 
     private static async Task<IResult> GetAll(
         ICardTokenizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CardTokenizationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CardTokenizationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICardTokenizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class CardTokenizationEndpoints
     private static async Task<IResult> AssignCard(
         AssociationRequest request,
         ICardTokenizationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCard(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class CardTokenizationEndpoints
     private static async Task<IResult> UnassignCard(
     AssociationRequest request,
     ICardTokenizationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCard(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static CardTokenization mapRequestToCardTokenization( CardTokenizationRequest request ) {
+    private static CardTokenization mapRequestToCardTokenization(CardTokenizationRequest request)
+    {
         var model = new CardTokenization
         {
             Id = request.Id,

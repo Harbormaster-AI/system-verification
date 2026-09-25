@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum VerificationStatus
 {
-    Unverified=1,Verified=2,Failed=3
+    Unverified = 1, Verified = 2, Failed = 3
 }
 
 /// <summary>

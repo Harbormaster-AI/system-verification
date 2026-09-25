@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum TransactionStatus
 {
-    Pending=1,Authorized=2,Posted=3,Settled=4,Reversed=5,Failed=6
+    Pending = 1, Authorized = 2, Posted = 3, Settled = 4, Reversed = 5, Failed = 6
 }
 
 /// <summary>

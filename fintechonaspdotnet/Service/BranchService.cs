@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IBranchService {
+public interface IBranchService
+{
 
-    Task Create(Branch model , CancellationToken cancellationToken);
+    Task Create(Branch model, CancellationToken cancellationToken);
     Task<bool> Update(Branch model, CancellationToken cancellationToken);
     Task<Branch?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Branch>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class BranchService : IBranchService
 
     public async Task<bool> Update(Branch model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class BranchService : IBranchService
         return true;
     }
 
-    public async Task<bool> AssignInstitution(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInstitution(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class BranchService : IBranchService
 
             var child = await _serviceResolver.Get<FinancialInstitutionService>().Get(childRequest, cancellationToken);
             parent.Institution = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class BranchService : IBranchService
         return true;
     }
 
-    public async Task<bool> UnassignInstitution(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInstitution(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class BranchService : IBranchService
         try
         {
             parent.Institution = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

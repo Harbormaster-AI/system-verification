@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface ICardTokenizationService {
+public interface ICardTokenizationService
+{
 
-    Task Create(CardTokenization model , CancellationToken cancellationToken);
+    Task Create(CardTokenization model, CancellationToken cancellationToken);
     Task<bool> Update(CardTokenization model, CancellationToken cancellationToken);
     Task<CardTokenization?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CardTokenization>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class CardTokenizationService : ICardTokenizationService
 
     public async Task<bool> Update(CardTokenization model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class CardTokenizationService : ICardTokenizationService
         return true;
     }
 
-    public async Task<bool> AssignCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class CardTokenizationService : ICardTokenizationService
 
             var child = await _serviceResolver.Get<PaymentCardService>().Get(childRequest, cancellationToken);
             parent.Card = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class CardTokenizationService : ICardTokenizationService
         return true;
     }
 
-    public async Task<bool> UnassignCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class CardTokenizationService : ICardTokenizationService
         try
         {
             parent.Card = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

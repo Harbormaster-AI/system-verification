@@ -27,9 +27,10 @@ public static class VerifiedAddressEndpoints
     private static async Task<IResult> Create(
         VerifiedAddressRequest request,
         IVerifiedAddressService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToVerifiedAddress( request );
+        var model = mapRequestToVerifiedAddress(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class VerifiedAddressEndpoints
     private static async Task<IResult> Update(
         VerifiedAddressRequest request,
         IVerifiedAddressService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToVerifiedAddress( request );
+        var model = mapRequestToVerifiedAddress(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class VerifiedAddressEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IVerifiedAddressService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var verifiedAddress = await service.Get(identifier, cancellationToken);
-        return verifiedAddress is null ? Results.NotFound() : Results.Ok( verifiedAddress );
+        return verifiedAddress is null ? Results.NotFound() : Results.Ok(verifiedAddress);
     }
 
 
     private static async Task<IResult> GetAll(
         IVerifiedAddressService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( VerifiedAddressResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(VerifiedAddressResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IVerifiedAddressService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class VerifiedAddressEndpoints
     private static async Task<IResult> AssignKycProfile(
         AssociationRequest request,
         IVerifiedAddressService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignKycProfile(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class VerifiedAddressEndpoints
     private static async Task<IResult> UnassignKycProfile(
     AssociationRequest request,
     IVerifiedAddressService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignKycProfile(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static VerifiedAddress mapRequestToVerifiedAddress( VerifiedAddressRequest request ) {
+    private static VerifiedAddress mapRequestToVerifiedAddress(VerifiedAddressRequest request)
+    {
         var model = new VerifiedAddress
         {
             Id = request.Id,

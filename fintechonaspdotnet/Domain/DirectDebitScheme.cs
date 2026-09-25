@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum DirectDebitScheme
 {
-    SEPA=1,ACH=2,BACS=3,BECS=4
+    SEPA = 1, ACH = 2, BACS = 3, BECS = 4
 }
 
 /// <summary>

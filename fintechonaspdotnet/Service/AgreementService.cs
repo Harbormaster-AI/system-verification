@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IAgreementService {
+public interface IAgreementService
+{
 
-    Task Create(Agreement model , CancellationToken cancellationToken);
+    Task Create(Agreement model, CancellationToken cancellationToken);
     Task<bool> Update(Agreement model, CancellationToken cancellationToken);
     Task<Agreement?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Agreement>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class AgreementService : IAgreementService
 
     public async Task<bool> Update(Agreement model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class AgreementService : IAgreementService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class AgreementService : IAgreementService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.Customer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class AgreementService : IAgreementService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class AgreementService : IAgreementService
         try
         {
             parent.Customer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class AgreementService : IAgreementService
         return true;
     }
 
-    public async Task<bool> AssignProductOffering(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProductOffering(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class AgreementService : IAgreementService
 
             var child = await _serviceResolver.Get<ProductOfferingService>().Get(childRequest, cancellationToken);
             parent.ProductOffering = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class AgreementService : IAgreementService
         return true;
     }
 
-    public async Task<bool> UnassignProductOffering(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProductOffering(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class AgreementService : IAgreementService
         try
         {
             parent.ProductOffering = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

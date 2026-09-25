@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum ConsentStatus
 {
-    Active=1,Revoked=2,Expired=3
+    Active = 1, Revoked = 2, Expired = 3
 }
 
 /// <summary>

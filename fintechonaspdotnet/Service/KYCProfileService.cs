@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IKYCProfileService {
+public interface IKYCProfileService
+{
 
-    Task Create(KYCProfile model , CancellationToken cancellationToken);
+    Task Create(KYCProfile model, CancellationToken cancellationToken);
     Task<bool> Update(KYCProfile model, CancellationToken cancellationToken);
     Task<KYCProfile?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<KYCProfile>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class KYCProfileService : IKYCProfileService
 
     public async Task<bool> Update(KYCProfile model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class KYCProfileService : IKYCProfileService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class KYCProfileService : IKYCProfileService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.Customer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class KYCProfileService : IKYCProfileService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class KYCProfileService : IKYCProfileService
         try
         {
             parent.Customer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,8 +182,10 @@ public class KYCProfileService : IKYCProfileService
     }
 
 
-    public async Task<bool> AddToDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "KYCProfile",
                 "AddToDocuments",
@@ -187,16 +193,18 @@ public class KYCProfileService : IKYCProfileService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDocuments(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "KYCProfile",
                 "RemoveFromDocuments",
@@ -212,8 +220,10 @@ public class KYCProfileService : IKYCProfileService
         return true;
     }
 
-    public async Task<bool> AddToScreenings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToScreenings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "KYCProfile",
                 "AddToScreenings",
@@ -221,16 +231,18 @@ public class KYCProfileService : IKYCProfileService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromScreenings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromScreenings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "KYCProfile",
                 "RemoveFromScreenings",
@@ -246,8 +258,10 @@ public class KYCProfileService : IKYCProfileService
         return true;
     }
 
-    public async Task<bool> AddToAddresses(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAddresses(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "KYCProfile",
                 "AddToAddresses",
@@ -255,16 +269,18 @@ public class KYCProfileService : IKYCProfileService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAddresses(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAddresses(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "KYCProfile",
                 "RemoveFromAddresses",

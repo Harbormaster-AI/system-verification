@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface ITradeOrderService {
+public interface ITradeOrderService
+{
 
-    Task Create(TradeOrder model , CancellationToken cancellationToken);
+    Task Create(TradeOrder model, CancellationToken cancellationToken);
     Task<bool> Update(TradeOrder model, CancellationToken cancellationToken);
     Task<TradeOrder?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TradeOrder>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class TradeOrderService : ITradeOrderService
 
     public async Task<bool> Update(TradeOrder model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class TradeOrderService : ITradeOrderService
         return true;
     }
 
-    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class TradeOrderService : ITradeOrderService
 
             var child = await _serviceResolver.Get<InvestmentPortfolioService>().Get(childRequest, cancellationToken);
             parent.Portfolio = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class TradeOrderService : ITradeOrderService
         return true;
     }
 
-    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class TradeOrderService : ITradeOrderService
         try
         {
             parent.Portfolio = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,7 +183,8 @@ public class TradeOrderService : ITradeOrderService
         return true;
     }
 
-    public async Task<bool> AssignSecurity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSecurity(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,7 +202,7 @@ public class TradeOrderService : ITradeOrderService
 
             var child = await _serviceResolver.Get<SecurityService>().Get(childRequest, cancellationToken);
             parent.Security = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class TradeOrderService : ITradeOrderService
         return true;
     }
 
-    public async Task<bool> UnassignSecurity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSecurity(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class TradeOrderService : ITradeOrderService
         try
         {
             parent.Security = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -233,8 +239,10 @@ public class TradeOrderService : ITradeOrderService
     }
 
 
-    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TradeOrder",
                 "AddToTrades",
@@ -242,16 +250,18 @@ public class TradeOrderService : ITradeOrderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TradeOrder",
                 "RemoveFromTrades",

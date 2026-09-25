@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum PaymentOrderStatus
 {
-    Draft=1,Submitted=2,Processing=3,Completed=4,Cancelled=5,Failed=6
+    Draft = 1, Submitted = 2, Processing = 3, Completed = 4, Cancelled = 5, Failed = 6
 }
 
 /// <summary>

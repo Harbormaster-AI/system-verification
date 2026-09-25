@@ -7,19 +7,21 @@ public class Payout
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- public virtual long? PayoutId { get; set; } 
- public virtual string? PayoutReference { get; set; } 
- public virtual Money? Amount { get; set; } 
- public virtual string? Currency { get; set; } 
- public virtual DateOnly? ScheduledDate { get; set; } 
- public virtual DateOnly? PaidDate { get; set; } 
-public virtual Merchant? Merchant { get; set; } 
-public virtual SettlementBatch? SettlementBatch { get; set; } 
-public virtual Account? DestinationAccount { get; set; } 
- public virtual PayoutStatus? Status { get; set; } 
+    public virtual long? PayoutId { get; set; }
+    public virtual string? PayoutReference { get; set; }
+    public virtual Money? Amount { get; set; }
+    public virtual string? Currency { get; set; }
+    public virtual DateOnly? ScheduledDate { get; set; }
+    public virtual DateOnly? PaidDate { get; set; }
+    public virtual Merchant? Merchant { get; set; }
+    public virtual SettlementBatch? SettlementBatch { get; set; }
+    public virtual Account? DestinationAccount { get; set; }
+    public virtual PayoutStatus? Status { get; set; }
 
-    public static Payout FromRequest(PayoutRequest request) {
-        return new Payout {
+    public static Payout FromRequest(PayoutRequest request)
+    {
+        return new Payout
+        {
             Id = request.Id,
             PayoutReference = request.PayoutReference,
             Amount = request.Amount,

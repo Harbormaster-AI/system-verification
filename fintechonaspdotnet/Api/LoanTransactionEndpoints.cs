@@ -27,9 +27,10 @@ public static class LoanTransactionEndpoints
     private static async Task<IResult> Create(
         LoanTransactionRequest request,
         ILoanTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLoanTransaction( request );
+        var model = mapRequestToLoanTransaction(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class LoanTransactionEndpoints
     private static async Task<IResult> Update(
         LoanTransactionRequest request,
         ILoanTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLoanTransaction( request );
+        var model = mapRequestToLoanTransaction(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class LoanTransactionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ILoanTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var loanTransaction = await service.Get(identifier, cancellationToken);
-        return loanTransaction is null ? Results.NotFound() : Results.Ok( loanTransaction );
+        return loanTransaction is null ? Results.NotFound() : Results.Ok(loanTransaction);
     }
 
 
     private static async Task<IResult> GetAll(
         ILoanTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( LoanTransactionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(LoanTransactionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ILoanTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class LoanTransactionEndpoints
     private static async Task<IResult> AssignLoan(
         AssociationRequest request,
         ILoanTransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLoan(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class LoanTransactionEndpoints
     private static async Task<IResult> UnassignLoan(
     AssociationRequest request,
     ILoanTransactionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLoan(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static LoanTransaction mapRequestToLoanTransaction( LoanTransactionRequest request ) {
+    private static LoanTransaction mapRequestToLoanTransaction(LoanTransactionRequest request)
+    {
         var model = new LoanTransaction
         {
             Id = request.Id,

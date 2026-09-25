@@ -11,7 +11,7 @@ public interface IExchangeRateRepository
     Task UpdateAsync(ExchangeRate exchangeRate, CancellationToken cancellationToken);
     Task DeleteAsync(ExchangeRate exchangeRate, CancellationToken cancellationToken);
 
-    Task AddToUsedByQuotesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromUsedByQuotesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToUsedByQuotesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromUsedByQuotesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

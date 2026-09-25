@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IMerchantService {
+public interface IMerchantService
+{
 
-    Task Create(Merchant model , CancellationToken cancellationToken);
+    Task Create(Merchant model, CancellationToken cancellationToken);
     Task<bool> Update(Merchant model, CancellationToken cancellationToken);
     Task<Merchant?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Merchant>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class MerchantService : IMerchantService
 
     public async Task<bool> Update(Merchant model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -130,8 +132,10 @@ public class MerchantService : IMerchantService
     }
 
 
-    public async Task<bool> AddToTerminals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTerminals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Merchant",
                 "AddToTerminals",
@@ -139,16 +143,18 @@ public class MerchantService : IMerchantService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTerminals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTerminals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Merchant",
                 "RemoveFromTerminals",
@@ -164,8 +170,10 @@ public class MerchantService : IMerchantService
         return true;
     }
 
-    public async Task<bool> AddToPaymentContracts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPaymentContracts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Merchant",
                 "AddToPaymentContracts",
@@ -173,16 +181,18 @@ public class MerchantService : IMerchantService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPaymentContracts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPaymentContracts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Merchant",
                 "RemoveFromPaymentContracts",
@@ -198,8 +208,10 @@ public class MerchantService : IMerchantService
         return true;
     }
 
-    public async Task<bool> AddToPayouts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPayouts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Merchant",
                 "AddToPayouts",
@@ -207,16 +219,18 @@ public class MerchantService : IMerchantService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPayouts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPayouts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Merchant",
                 "RemoveFromPayouts",
@@ -232,8 +246,10 @@ public class MerchantService : IMerchantService
         return true;
     }
 
-    public async Task<bool> AddToSettlements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSettlements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Merchant",
                 "AddToSettlements",
@@ -241,16 +257,18 @@ public class MerchantService : IMerchantService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSettlements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSettlements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Merchant",
                 "RemoveFromSettlements",
@@ -266,8 +284,10 @@ public class MerchantService : IMerchantService
         return true;
     }
 
-    public async Task<bool> AddToDisputes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDisputes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Merchant",
                 "AddToDisputes",
@@ -275,16 +295,18 @@ public class MerchantService : IMerchantService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDisputes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDisputes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Merchant",
                 "RemoveFromDisputes",
@@ -300,8 +322,10 @@ public class MerchantService : IMerchantService
         return true;
     }
 
-    public async Task<bool> AddToInvoices(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInvoices(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Merchant",
                 "AddToInvoices",
@@ -309,16 +333,18 @@ public class MerchantService : IMerchantService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInvoices(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInvoices(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Merchant",
                 "RemoveFromInvoices",

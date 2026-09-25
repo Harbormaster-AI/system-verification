@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IComplianceAlertService {
+public interface IComplianceAlertService
+{
 
-    Task Create(ComplianceAlert model , CancellationToken cancellationToken);
+    Task Create(ComplianceAlert model, CancellationToken cancellationToken);
     Task<bool> Update(ComplianceAlert model, CancellationToken cancellationToken);
     Task<ComplianceAlert?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ComplianceAlert>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ComplianceAlertService : IComplianceAlertService
 
     public async Task<bool> Update(ComplianceAlert model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class ComplianceAlertService : IComplianceAlertService
         return true;
     }
 
-    public async Task<bool> AssignScreening(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignScreening(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class ComplianceAlertService : IComplianceAlertService
 
             var child = await _serviceResolver.Get<ScreeningService>().Get(childRequest, cancellationToken);
             parent.Screening = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class ComplianceAlertService : IComplianceAlertService
         return true;
     }
 
-    public async Task<bool> UnassignScreening(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignScreening(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class ComplianceAlertService : IComplianceAlertService
         try
         {
             parent.Screening = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class ComplianceAlertService : IComplianceAlertService
         return true;
     }
 
-    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class ComplianceAlertService : IComplianceAlertService
 
             var child = await _serviceResolver.Get<TransactionService>().Get(childRequest, cancellationToken);
             parent.Transaction = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class ComplianceAlertService : IComplianceAlertService
         return true;
     }
 
-    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class ComplianceAlertService : IComplianceAlertService
         try
         {
             parent.Transaction = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

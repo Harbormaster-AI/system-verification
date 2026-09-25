@@ -27,9 +27,10 @@ public static class BeneficiaryEndpoints
     private static async Task<IResult> Create(
         BeneficiaryRequest request,
         IBeneficiaryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBeneficiary( request );
+        var model = mapRequestToBeneficiary(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class BeneficiaryEndpoints
     private static async Task<IResult> Update(
         BeneficiaryRequest request,
         IBeneficiaryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBeneficiary( request );
+        var model = mapRequestToBeneficiary(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class BeneficiaryEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IBeneficiaryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var beneficiary = await service.Get(identifier, cancellationToken);
-        return beneficiary is null ? Results.NotFound() : Results.Ok( beneficiary );
+        return beneficiary is null ? Results.NotFound() : Results.Ok(beneficiary);
     }
 
 
     private static async Task<IResult> GetAll(
         IBeneficiaryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( BeneficiaryResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(BeneficiaryResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IBeneficiaryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class BeneficiaryEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         IBeneficiaryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class BeneficiaryEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     IBeneficiaryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Beneficiary mapRequestToBeneficiary( BeneficiaryRequest request ) {
+    private static Beneficiary mapRequestToBeneficiary(BeneficiaryRequest request)
+    {
         var model = new Beneficiary
         {
             Id = request.Id,

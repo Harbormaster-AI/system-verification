@@ -22,8 +22,8 @@ public static class TradeOrderEndpoints
         group.MapPut("/assignSecurity", AssignSecurity);
         group.MapPut("/unassignSecurity", UnassignSecurity);
 
-    group.MapPut("/addToTrades", AddToTrades);
-    group.MapPut("/removeFromTrades", RemoveFromTrades);
+        group.MapPut("/addToTrades", AddToTrades);
+        group.MapPut("/removeFromTrades", RemoveFromTrades);
 
 
         return app;
@@ -32,9 +32,10 @@ public static class TradeOrderEndpoints
     private static async Task<IResult> Create(
         TradeOrderRequest request,
         ITradeOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTradeOrder( request );
+        var model = mapRequestToTradeOrder(request);
 
         try
         {
@@ -51,9 +52,10 @@ public static class TradeOrderEndpoints
     private static async Task<IResult> Update(
         TradeOrderRequest request,
         ITradeOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTradeOrder( request );
+        var model = mapRequestToTradeOrder(request);
 
         try
         {
@@ -70,25 +72,28 @@ public static class TradeOrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITradeOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var tradeOrder = await service.Get(identifier, cancellationToken);
-        return tradeOrder is null ? Results.NotFound() : Results.Ok( tradeOrder );
+        return tradeOrder is null ? Results.NotFound() : Results.Ok(tradeOrder);
     }
 
 
     private static async Task<IResult> GetAll(
         ITradeOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TradeOrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TradeOrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITradeOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class TradeOrderEndpoints
     private static async Task<IResult> AssignPortfolio(
         AssociationRequest request,
         ITradeOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPortfolio(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +110,8 @@ public static class TradeOrderEndpoints
     private static async Task<IResult> UnassignPortfolio(
     AssociationRequest request,
     ITradeOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPortfolio(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +119,8 @@ public static class TradeOrderEndpoints
     private static async Task<IResult> AssignSecurity(
         AssociationRequest request,
         ITradeOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSecurity(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +128,8 @@ public static class TradeOrderEndpoints
     private static async Task<IResult> UnassignSecurity(
     AssociationRequest request,
     ITradeOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSecurity(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class TradeOrderEndpoints
     private static async Task<IResult> AddToTrades(
         MultipleAssociationRequest request,
         ITradeOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTrades(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class TradeOrderEndpoints
     private static async Task<IResult> RemoveFromTrades(
         MultipleAssociationRequest request,
         ITradeOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTrades(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static TradeOrder mapRequestToTradeOrder( TradeOrderRequest request ) {
+    private static TradeOrder mapRequestToTradeOrder(TradeOrderRequest request)
+    {
         var model = new TradeOrder
         {
             Id = request.Id,

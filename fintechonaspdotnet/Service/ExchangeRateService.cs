@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IExchangeRateService {
+public interface IExchangeRateService
+{
 
-    Task Create(ExchangeRate model , CancellationToken cancellationToken);
+    Task Create(ExchangeRate model, CancellationToken cancellationToken);
     Task<bool> Update(ExchangeRate model, CancellationToken cancellationToken);
     Task<ExchangeRate?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ExchangeRate>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class ExchangeRateService : IExchangeRateService
 
     public async Task<bool> Update(ExchangeRate model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,8 +122,10 @@ public class ExchangeRateService : IExchangeRateService
     }
 
 
-    public async Task<bool> AddToUsedByQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToUsedByQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ExchangeRate",
                 "AddToUsedByQuotes",
@@ -129,16 +133,18 @@ public class ExchangeRateService : IExchangeRateService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromUsedByQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromUsedByQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ExchangeRate",
                 "RemoveFromUsedByQuotes",

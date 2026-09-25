@@ -29,9 +29,10 @@ public static class AgreementEndpoints
     private static async Task<IResult> Create(
         AgreementRequest request,
         IAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAgreement( request );
+        var model = mapRequestToAgreement(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class AgreementEndpoints
     private static async Task<IResult> Update(
         AgreementRequest request,
         IAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAgreement( request );
+        var model = mapRequestToAgreement(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class AgreementEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var agreement = await service.Get(identifier, cancellationToken);
-        return agreement is null ? Results.NotFound() : Results.Ok( agreement );
+        return agreement is null ? Results.NotFound() : Results.Ok(agreement);
     }
 
 
     private static async Task<IResult> GetAll(
         IAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AgreementResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AgreementResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class AgreementEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         IAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class AgreementEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     IAgreementService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class AgreementEndpoints
     private static async Task<IResult> AssignProductOffering(
         AssociationRequest request,
         IAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProductOffering(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class AgreementEndpoints
     private static async Task<IResult> UnassignProductOffering(
     AssociationRequest request,
     IAgreementService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProductOffering(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Agreement mapRequestToAgreement( AgreementRequest request ) {
+    private static Agreement mapRequestToAgreement(AgreementRequest request)
+    {
         var model = new Agreement
         {
             Id = request.Id,

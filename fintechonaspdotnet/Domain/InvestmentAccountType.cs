@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum InvestmentAccountType
 {
-    Brokerage=1,Retirement=2,Custody=3,Margin=4
+    Brokerage = 1, Retirement = 2, Custody = 3, Margin = 4
 }
 
 /// <summary>

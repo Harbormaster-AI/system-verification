@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum AgreementStatus
 {
-    Active=1,Suspended=2,Terminated=3
+    Active = 1, Suspended = 2, Terminated = 3
 }
 
 /// <summary>

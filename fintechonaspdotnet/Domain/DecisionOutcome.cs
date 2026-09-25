@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum DecisionOutcome
 {
-    Approve=1,Decline=2,Refer=3
+    Approve = 1, Decline = 2, Refer = 3
 }
 
 /// <summary>

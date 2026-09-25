@@ -11,7 +11,7 @@ public interface IInvoiceRepository
     Task UpdateAsync(Invoice invoice, CancellationToken cancellationToken);
     Task DeleteAsync(Invoice invoice, CancellationToken cancellationToken);
 
-    Task AddToPaymentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPaymentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPaymentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPaymentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

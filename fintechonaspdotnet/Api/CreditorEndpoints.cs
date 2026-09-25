@@ -18,8 +18,8 @@ public static class CreditorEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToMandates", AddToMandates);
-    group.MapPut("/removeFromMandates", RemoveFromMandates);
+        group.MapPut("/addToMandates", AddToMandates);
+        group.MapPut("/removeFromMandates", RemoveFromMandates);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class CreditorEndpoints
     private static async Task<IResult> Create(
         CreditorRequest request,
         ICreditorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCreditor( request );
+        var model = mapRequestToCreditor(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class CreditorEndpoints
     private static async Task<IResult> Update(
         CreditorRequest request,
         ICreditorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCreditor( request );
+        var model = mapRequestToCreditor(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class CreditorEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICreditorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var creditor = await service.Get(identifier, cancellationToken);
-        return creditor is null ? Results.NotFound() : Results.Ok( creditor );
+        return creditor is null ? Results.NotFound() : Results.Ok(creditor);
     }
 
 
     private static async Task<IResult> GetAll(
         ICreditorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CreditorResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CreditorResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICreditorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class CreditorEndpoints
     private static async Task<IResult> AddToMandates(
         MultipleAssociationRequest request,
         ICreditorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToMandates(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class CreditorEndpoints
     private static async Task<IResult> RemoveFromMandates(
         MultipleAssociationRequest request,
         ICreditorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromMandates(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Creditor mapRequestToCreditor( CreditorRequest request ) {
+    private static Creditor mapRequestToCreditor(CreditorRequest request)
+    {
         var model = new Creditor
         {
             Id = request.Id,

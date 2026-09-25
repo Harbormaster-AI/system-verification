@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum DisputeReason
 {
-    Fraud=1,Duplicate=2,NotAsDescribed=3,NotReceived=4,ProcessingError=5
+    Fraud = 1, Duplicate = 2, NotAsDescribed = 3, NotReceived = 4, ProcessingError = 5
 }
 
 /// <summary>

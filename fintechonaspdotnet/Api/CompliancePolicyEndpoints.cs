@@ -27,9 +27,10 @@ public static class CompliancePolicyEndpoints
     private static async Task<IResult> Create(
         CompliancePolicyRequest request,
         ICompliancePolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCompliancePolicy( request );
+        var model = mapRequestToCompliancePolicy(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class CompliancePolicyEndpoints
     private static async Task<IResult> Update(
         CompliancePolicyRequest request,
         ICompliancePolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCompliancePolicy( request );
+        var model = mapRequestToCompliancePolicy(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class CompliancePolicyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICompliancePolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var compliancePolicy = await service.Get(identifier, cancellationToken);
-        return compliancePolicy is null ? Results.NotFound() : Results.Ok( compliancePolicy );
+        return compliancePolicy is null ? Results.NotFound() : Results.Ok(compliancePolicy);
     }
 
 
     private static async Task<IResult> GetAll(
         ICompliancePolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CompliancePolicyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CompliancePolicyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICompliancePolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class CompliancePolicyEndpoints
     private static async Task<IResult> AssignInstitution(
         AssociationRequest request,
         ICompliancePolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInstitution(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class CompliancePolicyEndpoints
     private static async Task<IResult> UnassignInstitution(
     AssociationRequest request,
     ICompliancePolicyService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInstitution(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static CompliancePolicy mapRequestToCompliancePolicy( CompliancePolicyRequest request ) {
+    private static CompliancePolicy mapRequestToCompliancePolicy(CompliancePolicyRequest request)
+    {
         var model = new CompliancePolicy
         {
             Id = request.Id,

@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum CardStatus
 {
-    Active=1,Blocked=2,Closed=3,Expired=4
+    Active = 1, Blocked = 2, Closed = 3, Expired = 4
 }
 
 /// <summary>

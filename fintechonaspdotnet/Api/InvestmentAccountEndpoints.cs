@@ -20,11 +20,11 @@ public static class InvestmentAccountEndpoints
         group.MapPut("/assignPortfolio", AssignPortfolio);
         group.MapPut("/unassignPortfolio", UnassignPortfolio);
 
-    group.MapPut("/addToTrades", AddToTrades);
-    group.MapPut("/removeFromTrades", RemoveFromTrades);
+        group.MapPut("/addToTrades", AddToTrades);
+        group.MapPut("/removeFromTrades", RemoveFromTrades);
 
-    group.MapPut("/addToOrders", AddToOrders);
-    group.MapPut("/removeFromOrders", RemoveFromOrders);
+        group.MapPut("/addToOrders", AddToOrders);
+        group.MapPut("/removeFromOrders", RemoveFromOrders);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class InvestmentAccountEndpoints
     private static async Task<IResult> Create(
         InvestmentAccountRequest request,
         IInvestmentAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInvestmentAccount( request );
+        var model = mapRequestToInvestmentAccount(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class InvestmentAccountEndpoints
     private static async Task<IResult> Update(
         InvestmentAccountRequest request,
         IInvestmentAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInvestmentAccount( request );
+        var model = mapRequestToInvestmentAccount(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class InvestmentAccountEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInvestmentAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var investmentAccount = await service.Get(identifier, cancellationToken);
-        return investmentAccount is null ? Results.NotFound() : Results.Ok( investmentAccount );
+        return investmentAccount is null ? Results.NotFound() : Results.Ok(investmentAccount);
     }
 
 
     private static async Task<IResult> GetAll(
         IInvestmentAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InvestmentAccountResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InvestmentAccountResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInvestmentAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class InvestmentAccountEndpoints
     private static async Task<IResult> AssignPortfolio(
         AssociationRequest request,
         IInvestmentAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPortfolio(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class InvestmentAccountEndpoints
     private static async Task<IResult> UnassignPortfolio(
     AssociationRequest request,
     IInvestmentAccountService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPortfolio(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class InvestmentAccountEndpoints
     private static async Task<IResult> AddToTrades(
         MultipleAssociationRequest request,
         IInvestmentAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTrades(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class InvestmentAccountEndpoints
     private static async Task<IResult> RemoveFromTrades(
         MultipleAssociationRequest request,
         IInvestmentAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTrades(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToOrders(
         MultipleAssociationRequest request,
         IInvestmentAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToOrders(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class InvestmentAccountEndpoints
     private static async Task<IResult> RemoveFromOrders(
         MultipleAssociationRequest request,
         IInvestmentAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromOrders(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static InvestmentAccount mapRequestToInvestmentAccount( InvestmentAccountRequest request ) {
+    private static InvestmentAccount mapRequestToInvestmentAccount(InvestmentAccountRequest request)
+    {
         var model = new InvestmentAccount
         {
             Id = request.Id,

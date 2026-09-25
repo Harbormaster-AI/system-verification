@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum LoanPurpose
 {
-    HomeImprovement=1,Education=2,DebtConsolidation=3,Business=4,Other=5
+    HomeImprovement = 1, Education = 2, DebtConsolidation = 3, Business = 4, Other = 5
 }
 
 /// <summary>

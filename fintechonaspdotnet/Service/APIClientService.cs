@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IAPIClientService {
+public interface IAPIClientService
+{
 
-    Task Create(APIClient model , CancellationToken cancellationToken);
+    Task Create(APIClient model, CancellationToken cancellationToken);
     Task<bool> Update(APIClient model, CancellationToken cancellationToken);
     Task<APIClient?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<APIClient>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class APIClientService : IAPIClientService
 
     public async Task<bool> Update(APIClient model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,8 +121,10 @@ public class APIClientService : IAPIClientService
     }
 
 
-    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "APIClient",
                 "AddToConsents",
@@ -128,16 +132,18 @@ public class APIClientService : IAPIClientService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "APIClient",
                 "RemoveFromConsents",

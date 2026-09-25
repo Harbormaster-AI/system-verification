@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IChargebackService {
+public interface IChargebackService
+{
 
-    Task Create(Chargeback model , CancellationToken cancellationToken);
+    Task Create(Chargeback model, CancellationToken cancellationToken);
     Task<bool> Update(Chargeback model, CancellationToken cancellationToken);
     Task<Chargeback?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Chargeback>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ChargebackService : IChargebackService
 
     public async Task<bool> Update(Chargeback model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class ChargebackService : IChargebackService
         return true;
     }
 
-    public async Task<bool> AssignDispute(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDispute(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class ChargebackService : IChargebackService
 
             var child = await _serviceResolver.Get<DisputeService>().Get(childRequest, cancellationToken);
             parent.Dispute = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class ChargebackService : IChargebackService
         return true;
     }
 
-    public async Task<bool> UnassignDispute(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDispute(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class ChargebackService : IChargebackService
         try
         {
             parent.Dispute = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class ChargebackService : IChargebackService
         return true;
     }
 
-    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class ChargebackService : IChargebackService
 
             var child = await _serviceResolver.Get<TransactionService>().Get(childRequest, cancellationToken);
             parent.Transaction = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class ChargebackService : IChargebackService
         return true;
     }
 
-    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class ChargebackService : IChargebackService
         try
         {
             parent.Transaction = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

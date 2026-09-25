@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IVerifiedAddressService {
+public interface IVerifiedAddressService
+{
 
-    Task Create(VerifiedAddress model , CancellationToken cancellationToken);
+    Task Create(VerifiedAddress model, CancellationToken cancellationToken);
     Task<bool> Update(VerifiedAddress model, CancellationToken cancellationToken);
     Task<VerifiedAddress?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<VerifiedAddress>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class VerifiedAddressService : IVerifiedAddressService
 
     public async Task<bool> Update(VerifiedAddress model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class VerifiedAddressService : IVerifiedAddressService
         return true;
     }
 
-    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class VerifiedAddressService : IVerifiedAddressService
 
             var child = await _serviceResolver.Get<KYCProfileService>().Get(childRequest, cancellationToken);
             parent.KycProfile = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class VerifiedAddressService : IVerifiedAddressService
         return true;
     }
 
-    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class VerifiedAddressService : IVerifiedAddressService
         try
         {
             parent.KycProfile = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

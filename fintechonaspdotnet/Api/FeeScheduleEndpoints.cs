@@ -27,9 +27,10 @@ public static class FeeScheduleEndpoints
     private static async Task<IResult> Create(
         FeeScheduleRequest request,
         IFeeScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFeeSchedule( request );
+        var model = mapRequestToFeeSchedule(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class FeeScheduleEndpoints
     private static async Task<IResult> Update(
         FeeScheduleRequest request,
         IFeeScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFeeSchedule( request );
+        var model = mapRequestToFeeSchedule(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class FeeScheduleEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IFeeScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var feeSchedule = await service.Get(identifier, cancellationToken);
-        return feeSchedule is null ? Results.NotFound() : Results.Ok( feeSchedule );
+        return feeSchedule is null ? Results.NotFound() : Results.Ok(feeSchedule);
     }
 
 
     private static async Task<IResult> GetAll(
         IFeeScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( FeeScheduleResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(FeeScheduleResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IFeeScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class FeeScheduleEndpoints
     private static async Task<IResult> AssignPricingPlan(
         AssociationRequest request,
         IFeeScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPricingPlan(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class FeeScheduleEndpoints
     private static async Task<IResult> UnassignPricingPlan(
     AssociationRequest request,
     IFeeScheduleService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPricingPlan(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static FeeSchedule mapRequestToFeeSchedule( FeeScheduleRequest request ) {
+    private static FeeSchedule mapRequestToFeeSchedule(FeeScheduleRequest request)
+    {
         var model = new FeeSchedule
         {
             Id = request.Id,

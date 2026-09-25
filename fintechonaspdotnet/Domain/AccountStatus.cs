@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum AccountStatus
 {
-    Pending=1,Active=2,Frozen=3,Closed=4
+    Pending = 1, Active = 2, Frozen = 3, Closed = 4
 }
 
 /// <summary>

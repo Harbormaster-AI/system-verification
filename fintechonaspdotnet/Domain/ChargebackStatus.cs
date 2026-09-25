@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum ChargebackStatus
 {
-    Pending=1,Accepted=2,Reversed=3,Lost=4
+    Pending = 1, Accepted = 2, Reversed = 3, Lost = 4
 }
 
 /// <summary>

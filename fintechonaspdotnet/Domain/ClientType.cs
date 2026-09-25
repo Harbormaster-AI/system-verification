@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum ClientType
 {
-    Confidential=1,Public=2
+    Confidential = 1, Public = 2
 }
 
 /// <summary>

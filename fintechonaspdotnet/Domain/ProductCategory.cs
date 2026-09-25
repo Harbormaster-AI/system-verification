@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum ProductCategory
 {
-    Checking=1,Savings=2,CreditCard=3,Loan=4,Investment=5,Insurance=6,Payments=7,FX=8,Wallet=9
+    Checking = 1, Savings = 2, CreditCard = 3, Loan = 4, Investment = 5, Insurance = 6, Payments = 7, FX = 8, Wallet = 9
 }
 
 /// <summary>

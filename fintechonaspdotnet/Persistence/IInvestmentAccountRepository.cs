@@ -11,9 +11,9 @@ public interface IInvestmentAccountRepository
     Task UpdateAsync(InvestmentAccount investmentAccount, CancellationToken cancellationToken);
     Task DeleteAsync(InvestmentAccount investmentAccount, CancellationToken cancellationToken);
 
-    Task AddToTradesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTradesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTradesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTradesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

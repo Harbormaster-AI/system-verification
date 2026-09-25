@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IFeeScheduleService {
+public interface IFeeScheduleService
+{
 
-    Task Create(FeeSchedule model , CancellationToken cancellationToken);
+    Task Create(FeeSchedule model, CancellationToken cancellationToken);
     Task<bool> Update(FeeSchedule model, CancellationToken cancellationToken);
     Task<FeeSchedule?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FeeSchedule>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class FeeScheduleService : IFeeScheduleService
 
     public async Task<bool> Update(FeeSchedule model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class FeeScheduleService : IFeeScheduleService
         return true;
     }
 
-    public async Task<bool> AssignPricingPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPricingPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class FeeScheduleService : IFeeScheduleService
 
             var child = await _serviceResolver.Get<PricingPlanService>().Get(childRequest, cancellationToken);
             parent.PricingPlan = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class FeeScheduleService : IFeeScheduleService
         return true;
     }
 
-    public async Task<bool> UnassignPricingPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPricingPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class FeeScheduleService : IFeeScheduleService
         try
         {
             parent.PricingPlan = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

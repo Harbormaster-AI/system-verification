@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum AgreementType
 {
-    TermsOfService=1,PrivacyPolicy=2,LoanAgreement=3,AccountAgreement=4
+    TermsOfService = 1, PrivacyPolicy = 2, LoanAgreement = 3, AccountAgreement = 4
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum WalletProvider
 {
-    ApplePay=1,GooglePay=2,SamsungPay=3,Other=4
+    ApplePay = 1, GooglePay = 2, SamsungPay = 3, Other = 4
 }
 
 /// <summary>

@@ -27,9 +27,10 @@ public static class FXQuoteEndpoints
     private static async Task<IResult> Create(
         FXQuoteRequest request,
         IFXQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFXQuote( request );
+        var model = mapRequestToFXQuote(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class FXQuoteEndpoints
     private static async Task<IResult> Update(
         FXQuoteRequest request,
         IFXQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFXQuote( request );
+        var model = mapRequestToFXQuote(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class FXQuoteEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IFXQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var fXQuote = await service.Get(identifier, cancellationToken);
-        return fXQuote is null ? Results.NotFound() : Results.Ok( fXQuote );
+        return fXQuote is null ? Results.NotFound() : Results.Ok(fXQuote);
     }
 
 
     private static async Task<IResult> GetAll(
         IFXQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( FXQuoteResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(FXQuoteResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IFXQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class FXQuoteEndpoints
     private static async Task<IResult> AssignRequestedBy(
         AssociationRequest request,
         IFXQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRequestedBy(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class FXQuoteEndpoints
     private static async Task<IResult> UnassignRequestedBy(
     AssociationRequest request,
     IFXQuoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRequestedBy(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static FXQuote mapRequestToFXQuote( FXQuoteRequest request ) {
+    private static FXQuote mapRequestToFXQuote(FXQuoteRequest request)
+    {
         var model = new FXQuote
         {
             Id = request.Id,

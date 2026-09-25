@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum PaymentMethod
 {
-    Card=1,BankTransfer=2,DirectDebit=3,Wallet=4,Cash=5
+    Card = 1, BankTransfer = 2, DirectDebit = 3, Wallet = 4, Cash = 5
 }
 
 /// <summary>

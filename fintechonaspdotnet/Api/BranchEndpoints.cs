@@ -27,9 +27,10 @@ public static class BranchEndpoints
     private static async Task<IResult> Create(
         BranchRequest request,
         IBranchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBranch( request );
+        var model = mapRequestToBranch(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class BranchEndpoints
     private static async Task<IResult> Update(
         BranchRequest request,
         IBranchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBranch( request );
+        var model = mapRequestToBranch(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class BranchEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IBranchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var branch = await service.Get(identifier, cancellationToken);
-        return branch is null ? Results.NotFound() : Results.Ok( branch );
+        return branch is null ? Results.NotFound() : Results.Ok(branch);
     }
 
 
     private static async Task<IResult> GetAll(
         IBranchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( BranchResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(BranchResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IBranchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class BranchEndpoints
     private static async Task<IResult> AssignInstitution(
         AssociationRequest request,
         IBranchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInstitution(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class BranchEndpoints
     private static async Task<IResult> UnassignInstitution(
     AssociationRequest request,
     IBranchService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInstitution(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Branch mapRequestToBranch( BranchRequest request ) {
+    private static Branch mapRequestToBranch(BranchRequest request)
+    {
         var model = new Branch
         {
             Id = request.Id,

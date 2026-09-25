@@ -11,7 +11,7 @@ public interface IScreeningRepository
     Task UpdateAsync(Screening screening, CancellationToken cancellationToken);
     Task DeleteAsync(Screening screening, CancellationToken cancellationToken);
 
-    Task AddToAlertsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAlertsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAlertsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAlertsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

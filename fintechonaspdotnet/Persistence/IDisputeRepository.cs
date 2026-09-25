@@ -11,7 +11,7 @@ public interface IDisputeRepository
     Task UpdateAsync(Dispute dispute, CancellationToken cancellationToken);
     Task DeleteAsync(Dispute dispute, CancellationToken cancellationToken);
 
-    Task AddToChargebacksAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromChargebacksAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToChargebacksAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromChargebacksAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

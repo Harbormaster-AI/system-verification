@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IProductOfferingService {
+public interface IProductOfferingService
+{
 
-    Task Create(ProductOffering model , CancellationToken cancellationToken);
+    Task Create(ProductOffering model, CancellationToken cancellationToken);
     Task<bool> Update(ProductOffering model, CancellationToken cancellationToken);
     Task<ProductOffering?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ProductOffering>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ProductOfferingService : IProductOfferingService
 
     public async Task<bool> Update(ProductOffering model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class ProductOfferingService : IProductOfferingService
         return true;
     }
 
-    public async Task<bool> AssignInstitution(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInstitution(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class ProductOfferingService : IProductOfferingService
 
             var child = await _serviceResolver.Get<FinancialInstitutionService>().Get(childRequest, cancellationToken);
             parent.Institution = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class ProductOfferingService : IProductOfferingService
         return true;
     }
 
-    public async Task<bool> UnassignInstitution(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInstitution(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class ProductOfferingService : IProductOfferingService
         try
         {
             parent.Institution = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class ProductOfferingService : IProductOfferingService
     }
 
 
-    public async Task<bool> AddToPricingPlans(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPricingPlans(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ProductOffering",
                 "AddToPricingPlans",
@@ -182,16 +188,18 @@ public class ProductOfferingService : IProductOfferingService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPricingPlans(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPricingPlans(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ProductOffering",
                 "RemoveFromPricingPlans",

@@ -11,11 +11,11 @@ public interface IInvestmentPortfolioRepository
     Task UpdateAsync(InvestmentPortfolio investmentPortfolio, CancellationToken cancellationToken);
     Task DeleteAsync(InvestmentPortfolio investmentPortfolio, CancellationToken cancellationToken);
 
-    Task AddToAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToHoldingsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromHoldingsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToHoldingsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromHoldingsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum ConsentType
 {
-    DataAccess=1,PaymentInitiation=2
+    DataAccess = 1, PaymentInitiation = 2
 }
 
 /// <summary>

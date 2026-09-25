@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IPaymentProcessorService {
+public interface IPaymentProcessorService
+{
 
-    Task Create(PaymentProcessor model , CancellationToken cancellationToken);
+    Task Create(PaymentProcessor model, CancellationToken cancellationToken);
     Task<bool> Update(PaymentProcessor model, CancellationToken cancellationToken);
     Task<PaymentProcessor?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<PaymentProcessor>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class PaymentProcessorService : IPaymentProcessorService
 
     public async Task<bool> Update(PaymentProcessor model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,8 +124,10 @@ public class PaymentProcessorService : IPaymentProcessorService
     }
 
 
-    public async Task<bool> AddToInstitutions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInstitutions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PaymentProcessor",
                 "AddToInstitutions",
@@ -131,16 +135,18 @@ public class PaymentProcessorService : IPaymentProcessorService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInstitutions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInstitutions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PaymentProcessor",
                 "RemoveFromInstitutions",
@@ -156,8 +162,10 @@ public class PaymentProcessorService : IPaymentProcessorService
         return true;
     }
 
-    public async Task<bool> AddToContracts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToContracts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PaymentProcessor",
                 "AddToContracts",
@@ -165,16 +173,18 @@ public class PaymentProcessorService : IPaymentProcessorService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromContracts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromContracts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PaymentProcessor",
                 "RemoveFromContracts",
@@ -190,8 +200,10 @@ public class PaymentProcessorService : IPaymentProcessorService
         return true;
     }
 
-    public async Task<bool> AddToSettlements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSettlements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PaymentProcessor",
                 "AddToSettlements",
@@ -199,16 +211,18 @@ public class PaymentProcessorService : IPaymentProcessorService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSettlements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSettlements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PaymentProcessor",
                 "RemoveFromSettlements",

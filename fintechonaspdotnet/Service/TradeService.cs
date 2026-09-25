@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface ITradeService {
+public interface ITradeService
+{
 
-    Task Create(Trade model , CancellationToken cancellationToken);
+    Task Create(Trade model, CancellationToken cancellationToken);
     Task<bool> Update(Trade model, CancellationToken cancellationToken);
     Task<Trade?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Trade>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class TradeService : ITradeService
 
     public async Task<bool> Update(Trade model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class TradeService : ITradeService
 
             var child = await _serviceResolver.Get<TradeOrderService>().Get(childRequest, cancellationToken);
             parent.Order = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class TradeService : ITradeService
         try
         {
             parent.Order = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,7 +180,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> AssignSecurity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSecurity(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -194,7 +199,7 @@ public class TradeService : ITradeService
 
             var child = await _serviceResolver.Get<SecurityService>().Get(childRequest, cancellationToken);
             parent.Security = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -206,7 +211,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> UnassignSecurity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSecurity(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -217,7 +223,7 @@ public class TradeService : ITradeService
         try
         {
             parent.Security = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,7 +235,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> AssignInvestmentAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInvestmentAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -247,7 +254,7 @@ public class TradeService : ITradeService
 
             var child = await _serviceResolver.Get<InvestmentAccountService>().Get(childRequest, cancellationToken);
             parent.InvestmentAccount = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -259,7 +266,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> UnassignInvestmentAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInvestmentAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -270,7 +278,7 @@ public class TradeService : ITradeService
         try
         {
             parent.InvestmentAccount = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

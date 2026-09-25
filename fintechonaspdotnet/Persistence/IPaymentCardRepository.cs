@@ -11,9 +11,9 @@ public interface IPaymentCardRepository
     Task UpdateAsync(PaymentCard paymentCard, CancellationToken cancellationToken);
     Task DeleteAsync(PaymentCard paymentCard, CancellationToken cancellationToken);
 
-    Task AddToTokenizationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTokenizationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToDisputesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDisputesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTokenizationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTokenizationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDisputesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDisputesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -11,7 +11,7 @@ public interface IProductOfferingRepository
     Task UpdateAsync(ProductOffering productOffering, CancellationToken cancellationToken);
     Task DeleteAsync(ProductOffering productOffering, CancellationToken cancellationToken);
 
-    Task AddToPricingPlansAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPricingPlansAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPricingPlansAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPricingPlansAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

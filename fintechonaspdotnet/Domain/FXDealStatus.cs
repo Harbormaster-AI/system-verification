@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum FXDealStatus
 {
-    Booked=1,Cancelled=2,Settled=3
+    Booked = 1, Cancelled = 2, Settled = 3
 }
 
 /// <summary>

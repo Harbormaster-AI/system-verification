@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum FeeType
 {
-    Fixed=1,Percentage=2,Tiered=3,Interchange=4,Network=5,Chargeback=6,ATM=7,FX=8
+    Fixed = 1, Percentage = 2, Tiered = 3, Interchange = 4, Network = 5, Chargeback = 6, ATM = 7, FX = 8
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum PayoutStatus
 {
-    Scheduled=1,Processing=2,Paid=3,Failed=4
+    Scheduled = 1, Processing = 2, Paid = 3, Failed = 4
 }
 
 /// <summary>

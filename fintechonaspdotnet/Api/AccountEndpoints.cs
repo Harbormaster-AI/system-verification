@@ -22,17 +22,17 @@ public static class AccountEndpoints
         group.MapPut("/assignInstitution", AssignInstitution);
         group.MapPut("/unassignInstitution", UnassignInstitution);
 
-    group.MapPut("/addToTransactions", AddToTransactions);
-    group.MapPut("/removeFromTransactions", RemoveFromTransactions);
+        group.MapPut("/addToTransactions", AddToTransactions);
+        group.MapPut("/removeFromTransactions", RemoveFromTransactions);
 
-    group.MapPut("/addToCards", AddToCards);
-    group.MapPut("/removeFromCards", RemoveFromCards);
+        group.MapPut("/addToCards", AddToCards);
+        group.MapPut("/removeFromCards", RemoveFromCards);
 
-    group.MapPut("/addToStatements", AddToStatements);
-    group.MapPut("/removeFromStatements", RemoveFromStatements);
+        group.MapPut("/addToStatements", AddToStatements);
+        group.MapPut("/removeFromStatements", RemoveFromStatements);
 
-    group.MapPut("/addToMandates", AddToMandates);
-    group.MapPut("/removeFromMandates", RemoveFromMandates);
+        group.MapPut("/addToMandates", AddToMandates);
+        group.MapPut("/removeFromMandates", RemoveFromMandates);
 
 
         return app;
@@ -41,9 +41,10 @@ public static class AccountEndpoints
     private static async Task<IResult> Create(
         AccountRequest request,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAccount( request );
+        var model = mapRequestToAccount(request);
 
         try
         {
@@ -60,9 +61,10 @@ public static class AccountEndpoints
     private static async Task<IResult> Update(
         AccountRequest request,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAccount( request );
+        var model = mapRequestToAccount(request);
 
         try
         {
@@ -79,25 +81,28 @@ public static class AccountEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var account = await service.Get(identifier, cancellationToken);
-        return account is null ? Results.NotFound() : Results.Ok( account );
+        return account is null ? Results.NotFound() : Results.Ok(account);
     }
 
 
     private static async Task<IResult> GetAll(
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AccountResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AccountResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +110,8 @@ public static class AccountEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +119,8 @@ public static class AccountEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     IAccountService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +128,8 @@ public static class AccountEndpoints
     private static async Task<IResult> AssignInstitution(
         AssociationRequest request,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignInstitution(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +137,8 @@ public static class AccountEndpoints
     private static async Task<IResult> UnassignInstitution(
     AssociationRequest request,
     IAccountService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignInstitution(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -138,7 +147,8 @@ public static class AccountEndpoints
     private static async Task<IResult> AddToTransactions(
         MultipleAssociationRequest request,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTransactions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -146,14 +156,16 @@ public static class AccountEndpoints
     private static async Task<IResult> RemoveFromTransactions(
         MultipleAssociationRequest request,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTransactions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCards(
         MultipleAssociationRequest request,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCards(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -161,14 +173,16 @@ public static class AccountEndpoints
     private static async Task<IResult> RemoveFromCards(
         MultipleAssociationRequest request,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCards(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToStatements(
         MultipleAssociationRequest request,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToStatements(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -176,14 +190,16 @@ public static class AccountEndpoints
     private static async Task<IResult> RemoveFromStatements(
         MultipleAssociationRequest request,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromStatements(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToMandates(
         MultipleAssociationRequest request,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToMandates(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -191,11 +207,13 @@ public static class AccountEndpoints
     private static async Task<IResult> RemoveFromMandates(
         MultipleAssociationRequest request,
         IAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromMandates(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Account mapRequestToAccount( AccountRequest request ) {
+    private static Account mapRequestToAccount(AccountRequest request)
+    {
         var model = new Account
         {
             Id = request.Id,

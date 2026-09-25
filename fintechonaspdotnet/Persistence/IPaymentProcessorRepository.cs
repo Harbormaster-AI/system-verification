@@ -11,11 +11,11 @@ public interface IPaymentProcessorRepository
     Task UpdateAsync(PaymentProcessor paymentProcessor, CancellationToken cancellationToken);
     Task DeleteAsync(PaymentProcessor paymentProcessor, CancellationToken cancellationToken);
 
-    Task AddToInstitutionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromInstitutionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToContractsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromContractsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToSettlementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSettlementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToInstitutionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromInstitutionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToContractsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromContractsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSettlementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSettlementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

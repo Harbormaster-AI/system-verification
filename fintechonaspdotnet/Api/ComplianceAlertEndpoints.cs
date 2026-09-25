@@ -29,9 +29,10 @@ public static class ComplianceAlertEndpoints
     private static async Task<IResult> Create(
         ComplianceAlertRequest request,
         IComplianceAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToComplianceAlert( request );
+        var model = mapRequestToComplianceAlert(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class ComplianceAlertEndpoints
     private static async Task<IResult> Update(
         ComplianceAlertRequest request,
         IComplianceAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToComplianceAlert( request );
+        var model = mapRequestToComplianceAlert(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class ComplianceAlertEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IComplianceAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var complianceAlert = await service.Get(identifier, cancellationToken);
-        return complianceAlert is null ? Results.NotFound() : Results.Ok( complianceAlert );
+        return complianceAlert is null ? Results.NotFound() : Results.Ok(complianceAlert);
     }
 
 
     private static async Task<IResult> GetAll(
         IComplianceAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ComplianceAlertResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ComplianceAlertResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IComplianceAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class ComplianceAlertEndpoints
     private static async Task<IResult> AssignScreening(
         AssociationRequest request,
         IComplianceAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignScreening(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class ComplianceAlertEndpoints
     private static async Task<IResult> UnassignScreening(
     AssociationRequest request,
     IComplianceAlertService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignScreening(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class ComplianceAlertEndpoints
     private static async Task<IResult> AssignTransaction(
         AssociationRequest request,
         IComplianceAlertService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTransaction(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class ComplianceAlertEndpoints
     private static async Task<IResult> UnassignTransaction(
     AssociationRequest request,
     IComplianceAlertService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTransaction(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ComplianceAlert mapRequestToComplianceAlert( ComplianceAlertRequest request ) {
+    private static ComplianceAlert mapRequestToComplianceAlert(ComplianceAlertRequest request)
+    {
         var model = new ComplianceAlert
         {
             Id = request.Id,

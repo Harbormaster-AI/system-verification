@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IPositionService {
+public interface IPositionService
+{
 
-    Task Create(Position model , CancellationToken cancellationToken);
+    Task Create(Position model, CancellationToken cancellationToken);
     Task<bool> Update(Position model, CancellationToken cancellationToken);
     Task<Position?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Position>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class PositionService : IPositionService
 
     public async Task<bool> Update(Position model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class PositionService : IPositionService
 
             var child = await _serviceResolver.Get<InvestmentPortfolioService>().Get(childRequest, cancellationToken);
             parent.Portfolio = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class PositionService : IPositionService
         try
         {
             parent.Portfolio = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> AssignSecurity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSecurity(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class PositionService : IPositionService
 
             var child = await _serviceResolver.Get<SecurityService>().Get(childRequest, cancellationToken);
             parent.Security = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class PositionService : IPositionService
         return true;
     }
 
-    public async Task<bool> UnassignSecurity(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSecurity(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class PositionService : IPositionService
         try
         {
             parent.Security = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

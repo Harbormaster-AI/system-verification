@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum TokenizationStatus
 {
-    Active=1,Suspended=2,Deactivated=3
+    Active = 1, Suspended = 2, Deactivated = 3
 }
 
 /// <summary>

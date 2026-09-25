@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum AccountType
 {
-    Checking=1,Savings=2,Current=3,Brokerage=4,Settlement=5,Escrow=6
+    Checking = 1, Savings = 2, Current = 3, Brokerage = 4, Settlement = 5, Escrow = 6
 }
 
 /// <summary>

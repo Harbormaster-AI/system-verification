@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface ISecurityService {
+public interface ISecurityService
+{
 
-    Task Create(Security model , CancellationToken cancellationToken);
+    Task Create(Security model, CancellationToken cancellationToken);
     Task<bool> Update(Security model, CancellationToken cancellationToken);
     Task<Security?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Security>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class SecurityService : ISecurityService
 
     public async Task<bool> Update(Security model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,8 +126,10 @@ public class SecurityService : ISecurityService
     }
 
 
-    public async Task<bool> AddToPositions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPositions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Security",
                 "AddToPositions",
@@ -133,16 +137,18 @@ public class SecurityService : ISecurityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPositions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPositions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Security",
                 "RemoveFromPositions",
@@ -158,8 +164,10 @@ public class SecurityService : ISecurityService
         return true;
     }
 
-    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Security",
                 "AddToTrades",
@@ -167,16 +175,18 @@ public class SecurityService : ISecurityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Security",
                 "RemoveFromTrades",
@@ -192,8 +202,10 @@ public class SecurityService : ISecurityService
         return true;
     }
 
-    public async Task<bool> AddToOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Security",
                 "AddToOrders",
@@ -201,16 +213,18 @@ public class SecurityService : ISecurityService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Security",
                 "RemoveFromOrders",

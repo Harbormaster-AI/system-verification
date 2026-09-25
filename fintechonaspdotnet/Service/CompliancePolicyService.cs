@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface ICompliancePolicyService {
+public interface ICompliancePolicyService
+{
 
-    Task Create(CompliancePolicy model , CancellationToken cancellationToken);
+    Task Create(CompliancePolicy model, CancellationToken cancellationToken);
     Task<bool> Update(CompliancePolicy model, CancellationToken cancellationToken);
     Task<CompliancePolicy?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CompliancePolicy>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class CompliancePolicyService : ICompliancePolicyService
 
     public async Task<bool> Update(CompliancePolicy model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class CompliancePolicyService : ICompliancePolicyService
         return true;
     }
 
-    public async Task<bool> AssignInstitution(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInstitution(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class CompliancePolicyService : ICompliancePolicyService
 
             var child = await _serviceResolver.Get<FinancialInstitutionService>().Get(childRequest, cancellationToken);
             parent.Institution = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class CompliancePolicyService : ICompliancePolicyService
         return true;
     }
 
-    public async Task<bool> UnassignInstitution(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInstitution(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class CompliancePolicyService : ICompliancePolicyService
         try
         {
             parent.Institution = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum DocumentStatus
 {
-    Submitted=1,Approved=2,Rejected=3,Expired=4
+    Submitted = 1, Approved = 2, Rejected = 3, Expired = 4
 }
 
 /// <summary>

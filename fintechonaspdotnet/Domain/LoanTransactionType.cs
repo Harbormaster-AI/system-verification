@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum LoanTransactionType
 {
-    Disbursement=1,Repayment=2,Interest=3,Fee=4,Reversal=5
+    Disbursement = 1, Repayment = 2, Interest = 3, Fee = 4, Reversal = 5
 }
 
 /// <summary>

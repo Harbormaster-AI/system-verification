@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface ICustomerService {
+public interface ICustomerService
+{
 
-    Task Create(Customer model , CancellationToken cancellationToken);
+    Task Create(Customer model, CancellationToken cancellationToken);
     Task<bool> Update(Customer model, CancellationToken cancellationToken);
     Task<Customer?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Customer>> GetAll(CancellationToken cancellationToken);
@@ -81,7 +82,8 @@ public class CustomerService : ICustomerService
 
     public async Task<bool> Update(Customer model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -143,7 +145,8 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AssignInstitution(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignInstitution(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -161,7 +164,7 @@ public class CustomerService : ICustomerService
 
             var child = await _serviceResolver.Get<FinancialInstitutionService>().Get(childRequest, cancellationToken);
             parent.Institution = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +176,8 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> UnassignInstitution(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignInstitution(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -184,7 +188,7 @@ public class CustomerService : ICustomerService
         try
         {
             parent.Institution = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -197,8 +201,10 @@ public class CustomerService : ICustomerService
     }
 
 
-    public async Task<bool> AddToAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToAccounts",
@@ -206,16 +212,18 @@ public class CustomerService : ICustomerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromAccounts",
@@ -231,8 +239,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToWallets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToWallets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToWallets",
@@ -240,16 +250,18 @@ public class CustomerService : ICustomerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromWallets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromWallets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromWallets",
@@ -265,8 +277,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToCards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToCards",
@@ -274,16 +288,18 @@ public class CustomerService : ICustomerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromCards",
@@ -299,8 +315,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToKycProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToKycProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToKycProfiles",
@@ -308,16 +326,18 @@ public class CustomerService : ICustomerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromKycProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromKycProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromKycProfiles",
@@ -333,8 +353,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToConsents",
@@ -342,16 +364,18 @@ public class CustomerService : ICustomerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromConsents",
@@ -367,8 +391,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToAgreements",
@@ -376,16 +402,18 @@ public class CustomerService : ICustomerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromAgreements",
@@ -401,8 +429,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToLoanApplications(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLoanApplications(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToLoanApplications",
@@ -410,16 +440,18 @@ public class CustomerService : ICustomerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLoanApplications(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLoanApplications(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromLoanApplications",
@@ -435,8 +467,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToLoans(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLoans(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToLoans",
@@ -444,16 +478,18 @@ public class CustomerService : ICustomerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLoans(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLoans(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromLoans",
@@ -469,8 +505,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToPortfolios(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPortfolios(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToPortfolios",
@@ -478,16 +516,18 @@ public class CustomerService : ICustomerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPortfolios(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPortfolios(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromPortfolios",
@@ -503,8 +543,10 @@ public class CustomerService : ICustomerService
         return true;
     }
 
-    public async Task<bool> AddToDisputes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDisputes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "AddToDisputes",
@@ -512,16 +554,18 @@ public class CustomerService : ICustomerService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDisputes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDisputes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Customer",
                 "RemoveFromDisputes",

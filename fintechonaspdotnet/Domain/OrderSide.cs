@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum OrderSide
 {
-    Buy=1,Sell=2
+    Buy = 1, Sell = 2
 }
 
 /// <summary>

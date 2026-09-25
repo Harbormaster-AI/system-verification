@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface ISettlementBatchService {
+public interface ISettlementBatchService
+{
 
-    Task Create(SettlementBatch model , CancellationToken cancellationToken);
+    Task Create(SettlementBatch model, CancellationToken cancellationToken);
     Task<bool> Update(SettlementBatch model, CancellationToken cancellationToken);
     Task<SettlementBatch?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SettlementBatch>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class SettlementBatchService : ISettlementBatchService
 
     public async Task<bool> Update(SettlementBatch model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class SettlementBatchService : ISettlementBatchService
         return true;
     }
 
-    public async Task<bool> AssignProcessor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProcessor(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class SettlementBatchService : ISettlementBatchService
 
             var child = await _serviceResolver.Get<PaymentProcessorService>().Get(childRequest, cancellationToken);
             parent.Processor = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class SettlementBatchService : ISettlementBatchService
         return true;
     }
 
-    public async Task<bool> UnassignProcessor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProcessor(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class SettlementBatchService : ISettlementBatchService
         try
         {
             parent.Processor = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,7 +183,8 @@ public class SettlementBatchService : ISettlementBatchService
         return true;
     }
 
-    public async Task<bool> AssignMerchant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMerchant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,7 +202,7 @@ public class SettlementBatchService : ISettlementBatchService
 
             var child = await _serviceResolver.Get<MerchantService>().Get(childRequest, cancellationToken);
             parent.Merchant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class SettlementBatchService : ISettlementBatchService
         return true;
     }
 
-    public async Task<bool> UnassignMerchant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMerchant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class SettlementBatchService : ISettlementBatchService
         try
         {
             parent.Merchant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -233,8 +239,10 @@ public class SettlementBatchService : ISettlementBatchService
     }
 
 
-    public async Task<bool> AddToPayouts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPayouts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SettlementBatch",
                 "AddToPayouts",
@@ -242,16 +250,18 @@ public class SettlementBatchService : ISettlementBatchService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPayouts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPayouts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SettlementBatch",
                 "RemoveFromPayouts",
@@ -267,8 +277,10 @@ public class SettlementBatchService : ISettlementBatchService
         return true;
     }
 
-    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SettlementBatch",
                 "AddToTransactions",
@@ -276,16 +288,18 @@ public class SettlementBatchService : ISettlementBatchService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SettlementBatch",
                 "RemoveFromTransactions",

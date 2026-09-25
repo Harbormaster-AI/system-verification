@@ -22,11 +22,11 @@ public static class SettlementBatchEndpoints
         group.MapPut("/assignMerchant", AssignMerchant);
         group.MapPut("/unassignMerchant", UnassignMerchant);
 
-    group.MapPut("/addToPayouts", AddToPayouts);
-    group.MapPut("/removeFromPayouts", RemoveFromPayouts);
+        group.MapPut("/addToPayouts", AddToPayouts);
+        group.MapPut("/removeFromPayouts", RemoveFromPayouts);
 
-    group.MapPut("/addToTransactions", AddToTransactions);
-    group.MapPut("/removeFromTransactions", RemoveFromTransactions);
+        group.MapPut("/addToTransactions", AddToTransactions);
+        group.MapPut("/removeFromTransactions", RemoveFromTransactions);
 
 
         return app;
@@ -35,9 +35,10 @@ public static class SettlementBatchEndpoints
     private static async Task<IResult> Create(
         SettlementBatchRequest request,
         ISettlementBatchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSettlementBatch( request );
+        var model = mapRequestToSettlementBatch(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class SettlementBatchEndpoints
     private static async Task<IResult> Update(
         SettlementBatchRequest request,
         ISettlementBatchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSettlementBatch( request );
+        var model = mapRequestToSettlementBatch(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class SettlementBatchEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISettlementBatchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var settlementBatch = await service.Get(identifier, cancellationToken);
-        return settlementBatch is null ? Results.NotFound() : Results.Ok( settlementBatch );
+        return settlementBatch is null ? Results.NotFound() : Results.Ok(settlementBatch);
     }
 
 
     private static async Task<IResult> GetAll(
         ISettlementBatchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SettlementBatchResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SettlementBatchResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISettlementBatchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class SettlementBatchEndpoints
     private static async Task<IResult> AssignProcessor(
         AssociationRequest request,
         ISettlementBatchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProcessor(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class SettlementBatchEndpoints
     private static async Task<IResult> UnassignProcessor(
     AssociationRequest request,
     ISettlementBatchService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProcessor(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -115,7 +122,8 @@ public static class SettlementBatchEndpoints
     private static async Task<IResult> AssignMerchant(
         AssociationRequest request,
         ISettlementBatchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMerchant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +131,8 @@ public static class SettlementBatchEndpoints
     private static async Task<IResult> UnassignMerchant(
     AssociationRequest request,
     ISettlementBatchService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMerchant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +141,8 @@ public static class SettlementBatchEndpoints
     private static async Task<IResult> AddToPayouts(
         MultipleAssociationRequest request,
         ISettlementBatchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPayouts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class SettlementBatchEndpoints
     private static async Task<IResult> RemoveFromPayouts(
         MultipleAssociationRequest request,
         ISettlementBatchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPayouts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToTransactions(
         MultipleAssociationRequest request,
         ISettlementBatchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTransactions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class SettlementBatchEndpoints
     private static async Task<IResult> RemoveFromTransactions(
         MultipleAssociationRequest request,
         ISettlementBatchService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTransactions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static SettlementBatch mapRequestToSettlementBatch( SettlementBatchRequest request ) {
+    private static SettlementBatch mapRequestToSettlementBatch(SettlementBatchRequest request)
+    {
         var model = new SettlementBatch
         {
             Id = request.Id,

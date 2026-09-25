@@ -18,8 +18,8 @@ public static class ExchangeRateEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToUsedByQuotes", AddToUsedByQuotes);
-    group.MapPut("/removeFromUsedByQuotes", RemoveFromUsedByQuotes);
+        group.MapPut("/addToUsedByQuotes", AddToUsedByQuotes);
+        group.MapPut("/removeFromUsedByQuotes", RemoveFromUsedByQuotes);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class ExchangeRateEndpoints
     private static async Task<IResult> Create(
         ExchangeRateRequest request,
         IExchangeRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToExchangeRate( request );
+        var model = mapRequestToExchangeRate(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class ExchangeRateEndpoints
     private static async Task<IResult> Update(
         ExchangeRateRequest request,
         IExchangeRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToExchangeRate( request );
+        var model = mapRequestToExchangeRate(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class ExchangeRateEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IExchangeRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var exchangeRate = await service.Get(identifier, cancellationToken);
-        return exchangeRate is null ? Results.NotFound() : Results.Ok( exchangeRate );
+        return exchangeRate is null ? Results.NotFound() : Results.Ok(exchangeRate);
     }
 
 
     private static async Task<IResult> GetAll(
         IExchangeRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ExchangeRateResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ExchangeRateResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IExchangeRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class ExchangeRateEndpoints
     private static async Task<IResult> AddToUsedByQuotes(
         MultipleAssociationRequest request,
         IExchangeRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToUsedByQuotes(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class ExchangeRateEndpoints
     private static async Task<IResult> RemoveFromUsedByQuotes(
         MultipleAssociationRequest request,
         IExchangeRateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromUsedByQuotes(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static ExchangeRate mapRequestToExchangeRate( ExchangeRateRequest request ) {
+    private static ExchangeRate mapRequestToExchangeRate(ExchangeRateRequest request)
+    {
         var model = new ExchangeRate
         {
             Id = request.Id,

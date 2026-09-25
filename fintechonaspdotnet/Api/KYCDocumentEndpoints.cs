@@ -27,9 +27,10 @@ public static class KYCDocumentEndpoints
     private static async Task<IResult> Create(
         KYCDocumentRequest request,
         IKYCDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToKYCDocument( request );
+        var model = mapRequestToKYCDocument(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class KYCDocumentEndpoints
     private static async Task<IResult> Update(
         KYCDocumentRequest request,
         IKYCDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToKYCDocument( request );
+        var model = mapRequestToKYCDocument(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class KYCDocumentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IKYCDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var kYCDocument = await service.Get(identifier, cancellationToken);
-        return kYCDocument is null ? Results.NotFound() : Results.Ok( kYCDocument );
+        return kYCDocument is null ? Results.NotFound() : Results.Ok(kYCDocument);
     }
 
 
     private static async Task<IResult> GetAll(
         IKYCDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( KYCDocumentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(KYCDocumentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IKYCDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class KYCDocumentEndpoints
     private static async Task<IResult> AssignKycProfile(
         AssociationRequest request,
         IKYCDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignKycProfile(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class KYCDocumentEndpoints
     private static async Task<IResult> UnassignKycProfile(
     AssociationRequest request,
     IKYCDocumentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignKycProfile(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static KYCDocument mapRequestToKYCDocument( KYCDocumentRequest request ) {
+    private static KYCDocument mapRequestToKYCDocument(KYCDocumentRequest request)
+    {
         var model = new KYCDocument
         {
             Id = request.Id,

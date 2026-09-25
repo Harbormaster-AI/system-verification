@@ -18,8 +18,8 @@ public static class APIClientEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToConsents", AddToConsents);
-    group.MapPut("/removeFromConsents", RemoveFromConsents);
+        group.MapPut("/addToConsents", AddToConsents);
+        group.MapPut("/removeFromConsents", RemoveFromConsents);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class APIClientEndpoints
     private static async Task<IResult> Create(
         APIClientRequest request,
         IAPIClientService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAPIClient( request );
+        var model = mapRequestToAPIClient(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class APIClientEndpoints
     private static async Task<IResult> Update(
         APIClientRequest request,
         IAPIClientService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAPIClient( request );
+        var model = mapRequestToAPIClient(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class APIClientEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAPIClientService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var aPIClient = await service.Get(identifier, cancellationToken);
-        return aPIClient is null ? Results.NotFound() : Results.Ok( aPIClient );
+        return aPIClient is null ? Results.NotFound() : Results.Ok(aPIClient);
     }
 
 
     private static async Task<IResult> GetAll(
         IAPIClientService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( APIClientResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(APIClientResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAPIClientService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class APIClientEndpoints
     private static async Task<IResult> AddToConsents(
         MultipleAssociationRequest request,
         IAPIClientService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToConsents(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class APIClientEndpoints
     private static async Task<IResult> RemoveFromConsents(
         MultipleAssociationRequest request,
         IAPIClientService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromConsents(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static APIClient mapRequestToAPIClient( APIClientRequest request ) {
+    private static APIClient mapRequestToAPIClient(APIClientRequest request)
+    {
         var model = new APIClient
         {
             Id = request.Id,

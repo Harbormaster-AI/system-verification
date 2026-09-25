@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum ScreeningType
 {
-    Sanctions=1,PEP=2,AdverseMedia=3
+    Sanctions = 1, PEP = 2, AdverseMedia = 3
 }
 
 /// <summary>

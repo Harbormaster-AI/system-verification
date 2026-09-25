@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum InstallmentStatus
 {
-    Scheduled=1,Paid=2,Overdue=3,Waived=4
+    Scheduled = 1, Paid = 2, Overdue = 3, Waived = 4
 }
 
 /// <summary>

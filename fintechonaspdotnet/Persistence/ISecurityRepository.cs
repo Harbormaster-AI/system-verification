@@ -11,11 +11,11 @@ public interface ISecurityRepository
     Task UpdateAsync(Security security, CancellationToken cancellationToken);
     Task DeleteAsync(Security security, CancellationToken cancellationToken);
 
-    Task AddToPositionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPositionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTradesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTradesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPositionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPositionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTradesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTradesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

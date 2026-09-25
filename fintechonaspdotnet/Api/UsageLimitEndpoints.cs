@@ -27,9 +27,10 @@ public static class UsageLimitEndpoints
     private static async Task<IResult> Create(
         UsageLimitRequest request,
         IUsageLimitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToUsageLimit( request );
+        var model = mapRequestToUsageLimit(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class UsageLimitEndpoints
     private static async Task<IResult> Update(
         UsageLimitRequest request,
         IUsageLimitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToUsageLimit( request );
+        var model = mapRequestToUsageLimit(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class UsageLimitEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IUsageLimitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var usageLimit = await service.Get(identifier, cancellationToken);
-        return usageLimit is null ? Results.NotFound() : Results.Ok( usageLimit );
+        return usageLimit is null ? Results.NotFound() : Results.Ok(usageLimit);
     }
 
 
     private static async Task<IResult> GetAll(
         IUsageLimitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( UsageLimitResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(UsageLimitResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IUsageLimitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class UsageLimitEndpoints
     private static async Task<IResult> AssignPricingPlan(
         AssociationRequest request,
         IUsageLimitService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPricingPlan(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class UsageLimitEndpoints
     private static async Task<IResult> UnassignPricingPlan(
     AssociationRequest request,
     IUsageLimitService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPricingPlan(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static UsageLimit mapRequestToUsageLimit( UsageLimitRequest request ) {
+    private static UsageLimit mapRequestToUsageLimit(UsageLimitRequest request)
+    {
         var model = new UsageLimit
         {
             Id = request.Id,

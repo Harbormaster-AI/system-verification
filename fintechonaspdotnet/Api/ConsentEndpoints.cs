@@ -29,9 +29,10 @@ public static class ConsentEndpoints
     private static async Task<IResult> Create(
         ConsentRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToConsent( request );
+        var model = mapRequestToConsent(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class ConsentEndpoints
     private static async Task<IResult> Update(
         ConsentRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToConsent( request );
+        var model = mapRequestToConsent(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class ConsentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var consent = await service.Get(identifier, cancellationToken);
-        return consent is null ? Results.NotFound() : Results.Ok( consent );
+        return consent is null ? Results.NotFound() : Results.Ok(consent);
     }
 
 
     private static async Task<IResult> GetAll(
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ConsentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ConsentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     IConsentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> AssignApiClient(
         AssociationRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignApiClient(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class ConsentEndpoints
     private static async Task<IResult> UnassignApiClient(
     AssociationRequest request,
     IConsentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignApiClient(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Consent mapRequestToConsent( ConsentRequest request ) {
+    private static Consent mapRequestToConsent(ConsentRequest request)
+    {
         var model = new Consent
         {
             Id = request.Id,

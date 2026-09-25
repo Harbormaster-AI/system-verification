@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IScreeningService {
+public interface IScreeningService
+{
 
-    Task Create(Screening model , CancellationToken cancellationToken);
+    Task Create(Screening model, CancellationToken cancellationToken);
     Task<bool> Update(Screening model, CancellationToken cancellationToken);
     Task<Screening?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Screening>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ScreeningService : IScreeningService
 
     public async Task<bool> Update(Screening model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class ScreeningService : IScreeningService
         return true;
     }
 
-    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class ScreeningService : IScreeningService
 
             var child = await _serviceResolver.Get<KYCProfileService>().Get(childRequest, cancellationToken);
             parent.KycProfile = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class ScreeningService : IScreeningService
         return true;
     }
 
-    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class ScreeningService : IScreeningService
         try
         {
             parent.KycProfile = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,8 +178,10 @@ public class ScreeningService : IScreeningService
     }
 
 
-    public async Task<bool> AddToAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Screening",
                 "AddToAlerts",
@@ -183,16 +189,18 @@ public class ScreeningService : IScreeningService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Screening",
                 "RemoveFromAlerts",

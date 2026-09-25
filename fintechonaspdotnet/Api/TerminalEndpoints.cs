@@ -27,9 +27,10 @@ public static class TerminalEndpoints
     private static async Task<IResult> Create(
         TerminalRequest request,
         ITerminalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTerminal( request );
+        var model = mapRequestToTerminal(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class TerminalEndpoints
     private static async Task<IResult> Update(
         TerminalRequest request,
         ITerminalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTerminal( request );
+        var model = mapRequestToTerminal(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class TerminalEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITerminalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var terminal = await service.Get(identifier, cancellationToken);
-        return terminal is null ? Results.NotFound() : Results.Ok( terminal );
+        return terminal is null ? Results.NotFound() : Results.Ok(terminal);
     }
 
 
     private static async Task<IResult> GetAll(
         ITerminalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TerminalResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TerminalResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITerminalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class TerminalEndpoints
     private static async Task<IResult> AssignMerchant(
         AssociationRequest request,
         ITerminalService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMerchant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class TerminalEndpoints
     private static async Task<IResult> UnassignMerchant(
     AssociationRequest request,
     ITerminalService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMerchant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Terminal mapRequestToTerminal( TerminalRequest request ) {
+    private static Terminal mapRequestToTerminal(TerminalRequest request)
+    {
         var model = new Terminal
         {
             Id = request.Id,

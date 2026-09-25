@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum ChargebackStage
 {
-    FirstChargeback=1,SecondChargeback=2,Arbitration=3
+    FirstChargeback = 1, SecondChargeback = 2, Arbitration = 3
 }
 
 /// <summary>

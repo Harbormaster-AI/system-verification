@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum FeeCalculationMethod
 {
-    PerTransaction=1,PerMonth=2,PerAnnum=3,Slab=4,Tiered=5
+    PerTransaction = 1, PerMonth = 2, PerAnnum = 3, Slab = 4, Tiered = 5
 }
 
 /// <summary>

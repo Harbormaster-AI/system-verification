@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IFinancialInstitutionService {
+public interface IFinancialInstitutionService
+{
 
-    Task Create(FinancialInstitution model , CancellationToken cancellationToken);
+    Task Create(FinancialInstitution model, CancellationToken cancellationToken);
     Task<bool> Update(FinancialInstitution model, CancellationToken cancellationToken);
     Task<FinancialInstitution?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FinancialInstitution>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class FinancialInstitutionService : IFinancialInstitutionService
 
     public async Task<bool> Update(FinancialInstitution model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -128,8 +130,10 @@ public class FinancialInstitutionService : IFinancialInstitutionService
     }
 
 
-    public async Task<bool> AddToBranches(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToBranches(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FinancialInstitution",
                 "AddToBranches",
@@ -137,16 +141,18 @@ public class FinancialInstitutionService : IFinancialInstitutionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromBranches(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromBranches(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FinancialInstitution",
                 "RemoveFromBranches",
@@ -162,8 +168,10 @@ public class FinancialInstitutionService : IFinancialInstitutionService
         return true;
     }
 
-    public async Task<bool> AddToCustomers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCustomers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FinancialInstitution",
                 "AddToCustomers",
@@ -171,16 +179,18 @@ public class FinancialInstitutionService : IFinancialInstitutionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCustomers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCustomers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FinancialInstitution",
                 "RemoveFromCustomers",
@@ -196,8 +206,10 @@ public class FinancialInstitutionService : IFinancialInstitutionService
         return true;
     }
 
-    public async Task<bool> AddToProductOfferings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToProductOfferings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FinancialInstitution",
                 "AddToProductOfferings",
@@ -205,16 +217,18 @@ public class FinancialInstitutionService : IFinancialInstitutionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromProductOfferings(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromProductOfferings(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FinancialInstitution",
                 "RemoveFromProductOfferings",
@@ -230,8 +244,10 @@ public class FinancialInstitutionService : IFinancialInstitutionService
         return true;
     }
 
-    public async Task<bool> AddToPaymentProcessors(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPaymentProcessors(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FinancialInstitution",
                 "AddToPaymentProcessors",
@@ -239,16 +255,18 @@ public class FinancialInstitutionService : IFinancialInstitutionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPaymentProcessors(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPaymentProcessors(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FinancialInstitution",
                 "RemoveFromPaymentProcessors",
@@ -264,8 +282,10 @@ public class FinancialInstitutionService : IFinancialInstitutionService
         return true;
     }
 
-    public async Task<bool> AddToCompliancePolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCompliancePolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FinancialInstitution",
                 "AddToCompliancePolicies",
@@ -273,16 +293,18 @@ public class FinancialInstitutionService : IFinancialInstitutionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCompliancePolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCompliancePolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FinancialInstitution",
                 "RemoveFromCompliancePolicies",

@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IPaymentContractService {
+public interface IPaymentContractService
+{
 
-    Task Create(PaymentContract model , CancellationToken cancellationToken);
+    Task Create(PaymentContract model, CancellationToken cancellationToken);
     Task<bool> Update(PaymentContract model, CancellationToken cancellationToken);
     Task<PaymentContract?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<PaymentContract>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class PaymentContractService : IPaymentContractService
 
     public async Task<bool> Update(PaymentContract model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class PaymentContractService : IPaymentContractService
         return true;
     }
 
-    public async Task<bool> AssignMerchant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMerchant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class PaymentContractService : IPaymentContractService
 
             var child = await _serviceResolver.Get<MerchantService>().Get(childRequest, cancellationToken);
             parent.Merchant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class PaymentContractService : IPaymentContractService
         return true;
     }
 
-    public async Task<bool> UnassignMerchant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMerchant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class PaymentContractService : IPaymentContractService
         try
         {
             parent.Merchant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class PaymentContractService : IPaymentContractService
         return true;
     }
 
-    public async Task<bool> AssignAcquirer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAcquirer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class PaymentContractService : IPaymentContractService
 
             var child = await _serviceResolver.Get<PaymentProcessorService>().Get(childRequest, cancellationToken);
             parent.Acquirer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class PaymentContractService : IPaymentContractService
         return true;
     }
 
-    public async Task<bool> UnassignAcquirer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAcquirer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class PaymentContractService : IPaymentContractService
         try
         {
             parent.Acquirer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

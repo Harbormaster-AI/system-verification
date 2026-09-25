@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum PlanStatus
 {
-    Draft=1,Active=2,Suspended=3,Archived=4
+    Draft = 1, Active = 2, Suspended = 3, Archived = 4
 }
 
 /// <summary>

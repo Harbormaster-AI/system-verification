@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IUsageLimitService {
+public interface IUsageLimitService
+{
 
-    Task Create(UsageLimit model , CancellationToken cancellationToken);
+    Task Create(UsageLimit model, CancellationToken cancellationToken);
     Task<bool> Update(UsageLimit model, CancellationToken cancellationToken);
     Task<UsageLimit?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<UsageLimit>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class UsageLimitService : IUsageLimitService
 
     public async Task<bool> Update(UsageLimit model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class UsageLimitService : IUsageLimitService
         return true;
     }
 
-    public async Task<bool> AssignPricingPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPricingPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class UsageLimitService : IUsageLimitService
 
             var child = await _serviceResolver.Get<PricingPlanService>().Get(childRequest, cancellationToken);
             parent.PricingPlan = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class UsageLimitService : IUsageLimitService
         return true;
     }
 
-    public async Task<bool> UnassignPricingPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPricingPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class UsageLimitService : IUsageLimitService
         try
         {
             parent.PricingPlan = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

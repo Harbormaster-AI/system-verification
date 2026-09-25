@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum LoanProductType
 {
-    PersonalLoan=1,Mortgage=2,InstallmentLoan=3,CreditLine=4,SME=5
+    PersonalLoan = 1, Mortgage = 2, InstallmentLoan = 3, CreditLine = 4, SME = 5
 }
 
 /// <summary>

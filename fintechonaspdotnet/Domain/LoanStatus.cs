@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum LoanStatus
 {
-    Active=1,Delinquent=2,Closed=3,ChargedOff=4
+    Active = 1, Delinquent = 2, Closed = 3, ChargedOff = 4
 }
 
 /// <summary>

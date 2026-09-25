@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum OrderType
 {
-    Market=1,Limit=2,Stop=3,StopLimit=4
+    Market = 1, Limit = 2, Stop = 3, StopLimit = 4
 }
 
 /// <summary>

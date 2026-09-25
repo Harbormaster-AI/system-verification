@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum DisputeStatus
 {
-    Open=1,Represented=2,Won=3,Lost=4,Closed=5
+    Open = 1, Represented = 2, Won = 3, Lost = 4, Closed = 5
 }
 
 /// <summary>

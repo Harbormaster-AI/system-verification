@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IRiskAssessmentService {
+public interface IRiskAssessmentService
+{
 
-    Task Create(RiskAssessment model , CancellationToken cancellationToken);
+    Task Create(RiskAssessment model, CancellationToken cancellationToken);
     Task<bool> Update(RiskAssessment model, CancellationToken cancellationToken);
     Task<RiskAssessment?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RiskAssessment>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class RiskAssessmentService : IRiskAssessmentService
 
     public async Task<bool> Update(RiskAssessment model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class RiskAssessmentService : IRiskAssessmentService
         return true;
     }
 
-    public async Task<bool> AssignApplication(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignApplication(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class RiskAssessmentService : IRiskAssessmentService
 
             var child = await _serviceResolver.Get<LoanApplicationService>().Get(childRequest, cancellationToken);
             parent.Application = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class RiskAssessmentService : IRiskAssessmentService
         return true;
     }
 
-    public async Task<bool> UnassignApplication(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignApplication(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class RiskAssessmentService : IRiskAssessmentService
         try
         {
             parent.Application = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

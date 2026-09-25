@@ -29,9 +29,10 @@ public static class PaymentContractEndpoints
     private static async Task<IResult> Create(
         PaymentContractRequest request,
         IPaymentContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPaymentContract( request );
+        var model = mapRequestToPaymentContract(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class PaymentContractEndpoints
     private static async Task<IResult> Update(
         PaymentContractRequest request,
         IPaymentContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPaymentContract( request );
+        var model = mapRequestToPaymentContract(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class PaymentContractEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPaymentContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var paymentContract = await service.Get(identifier, cancellationToken);
-        return paymentContract is null ? Results.NotFound() : Results.Ok( paymentContract );
+        return paymentContract is null ? Results.NotFound() : Results.Ok(paymentContract);
     }
 
 
     private static async Task<IResult> GetAll(
         IPaymentContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PaymentContractResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PaymentContractResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPaymentContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class PaymentContractEndpoints
     private static async Task<IResult> AssignMerchant(
         AssociationRequest request,
         IPaymentContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMerchant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class PaymentContractEndpoints
     private static async Task<IResult> UnassignMerchant(
     AssociationRequest request,
     IPaymentContractService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMerchant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class PaymentContractEndpoints
     private static async Task<IResult> AssignAcquirer(
         AssociationRequest request,
         IPaymentContractService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAcquirer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class PaymentContractEndpoints
     private static async Task<IResult> UnassignAcquirer(
     AssociationRequest request,
     IPaymentContractService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAcquirer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static PaymentContract mapRequestToPaymentContract( PaymentContractRequest request ) {
+    private static PaymentContract mapRequestToPaymentContract(PaymentContractRequest request)
+    {
         var model = new PaymentContract
         {
             Id = request.Id,

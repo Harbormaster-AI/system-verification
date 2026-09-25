@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum AlertStatus
 {
-    Open=1,Investigating=2,Resolved=3,Dismissed=4
+    Open = 1, Investigating = 2, Resolved = 3, Dismissed = 4
 }
 
 /// <summary>

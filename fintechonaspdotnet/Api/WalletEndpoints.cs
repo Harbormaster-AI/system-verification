@@ -20,8 +20,8 @@ public static class WalletEndpoints
         group.MapPut("/assignCustomer", AssignCustomer);
         group.MapPut("/unassignCustomer", UnassignCustomer);
 
-    group.MapPut("/addToTransactions", AddToTransactions);
-    group.MapPut("/removeFromTransactions", RemoveFromTransactions);
+        group.MapPut("/addToTransactions", AddToTransactions);
+        group.MapPut("/removeFromTransactions", RemoveFromTransactions);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class WalletEndpoints
     private static async Task<IResult> Create(
         WalletRequest request,
         IWalletService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWallet( request );
+        var model = mapRequestToWallet(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class WalletEndpoints
     private static async Task<IResult> Update(
         WalletRequest request,
         IWalletService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToWallet( request );
+        var model = mapRequestToWallet(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class WalletEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IWalletService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var wallet = await service.Get(identifier, cancellationToken);
-        return wallet is null ? Results.NotFound() : Results.Ok( wallet );
+        return wallet is null ? Results.NotFound() : Results.Ok(wallet);
     }
 
 
     private static async Task<IResult> GetAll(
         IWalletService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( WalletResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(WalletResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IWalletService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class WalletEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         IWalletService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class WalletEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     IWalletService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class WalletEndpoints
     private static async Task<IResult> AddToTransactions(
         MultipleAssociationRequest request,
         IWalletService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTransactions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class WalletEndpoints
     private static async Task<IResult> RemoveFromTransactions(
         MultipleAssociationRequest request,
         IWalletService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTransactions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Wallet mapRequestToWallet( WalletRequest request ) {
+    private static Wallet mapRequestToWallet(WalletRequest request)
+    {
         var model = new Wallet
         {
             Id = request.Id,

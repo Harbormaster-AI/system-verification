@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum PaymentPriority
 {
-    Normal=1,Urgent=2
+    Normal = 1, Urgent = 2
 }
 
 /// <summary>

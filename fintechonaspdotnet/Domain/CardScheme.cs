@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum CardScheme
 {
-    Visa=1,Mastercard=2,Amex=3,Discover=4,UnionPay=5
+    Visa = 1, Mastercard = 2, Amex = 3, Discover = 4, UnionPay = 5
 }
 
 /// <summary>

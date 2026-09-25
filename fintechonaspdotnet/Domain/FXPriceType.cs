@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum FXPriceType
 {
-    Indicative=1,Firm=2
+    Indicative = 1, Firm = 2
 }
 
 /// <summary>

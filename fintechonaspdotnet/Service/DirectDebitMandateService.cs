@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IDirectDebitMandateService {
+public interface IDirectDebitMandateService
+{
 
-    Task Create(DirectDebitMandate model , CancellationToken cancellationToken);
+    Task Create(DirectDebitMandate model, CancellationToken cancellationToken);
     Task<bool> Update(DirectDebitMandate model, CancellationToken cancellationToken);
     Task<DirectDebitMandate?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DirectDebitMandate>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class DirectDebitMandateService : IDirectDebitMandateService
 
     public async Task<bool> Update(DirectDebitMandate model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class DirectDebitMandateService : IDirectDebitMandateService
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class DirectDebitMandateService : IDirectDebitMandateService
 
             var child = await _serviceResolver.Get<AccountService>().Get(childRequest, cancellationToken);
             parent.Account = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class DirectDebitMandateService : IDirectDebitMandateService
         return true;
     }
 
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class DirectDebitMandateService : IDirectDebitMandateService
         try
         {
             parent.Account = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class DirectDebitMandateService : IDirectDebitMandateService
         return true;
     }
 
-    public async Task<bool> AssignCreditor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCreditor(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class DirectDebitMandateService : IDirectDebitMandateService
 
             var child = await _serviceResolver.Get<CreditorService>().Get(childRequest, cancellationToken);
             parent.Creditor = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class DirectDebitMandateService : IDirectDebitMandateService
         return true;
     }
 
-    public async Task<bool> UnassignCreditor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCreditor(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class DirectDebitMandateService : IDirectDebitMandateService
         try
         {
             parent.Creditor = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

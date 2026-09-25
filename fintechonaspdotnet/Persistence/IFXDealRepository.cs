@@ -11,7 +11,7 @@ public interface IFXDealRepository
     Task UpdateAsync(FXDeal fXDeal, CancellationToken cancellationToken);
     Task DeleteAsync(FXDeal fXDeal, CancellationToken cancellationToken);
 
-    Task AddToPaymentOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPaymentOrdersAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPaymentOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPaymentOrdersAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

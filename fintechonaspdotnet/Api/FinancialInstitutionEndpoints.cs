@@ -18,20 +18,20 @@ public static class FinancialInstitutionEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToBranches", AddToBranches);
-    group.MapPut("/removeFromBranches", RemoveFromBranches);
+        group.MapPut("/addToBranches", AddToBranches);
+        group.MapPut("/removeFromBranches", RemoveFromBranches);
 
-    group.MapPut("/addToCustomers", AddToCustomers);
-    group.MapPut("/removeFromCustomers", RemoveFromCustomers);
+        group.MapPut("/addToCustomers", AddToCustomers);
+        group.MapPut("/removeFromCustomers", RemoveFromCustomers);
 
-    group.MapPut("/addToProductOfferings", AddToProductOfferings);
-    group.MapPut("/removeFromProductOfferings", RemoveFromProductOfferings);
+        group.MapPut("/addToProductOfferings", AddToProductOfferings);
+        group.MapPut("/removeFromProductOfferings", RemoveFromProductOfferings);
 
-    group.MapPut("/addToPaymentProcessors", AddToPaymentProcessors);
-    group.MapPut("/removeFromPaymentProcessors", RemoveFromPaymentProcessors);
+        group.MapPut("/addToPaymentProcessors", AddToPaymentProcessors);
+        group.MapPut("/removeFromPaymentProcessors", RemoveFromPaymentProcessors);
 
-    group.MapPut("/addToCompliancePolicies", AddToCompliancePolicies);
-    group.MapPut("/removeFromCompliancePolicies", RemoveFromCompliancePolicies);
+        group.MapPut("/addToCompliancePolicies", AddToCompliancePolicies);
+        group.MapPut("/removeFromCompliancePolicies", RemoveFromCompliancePolicies);
 
 
         return app;
@@ -40,9 +40,10 @@ public static class FinancialInstitutionEndpoints
     private static async Task<IResult> Create(
         FinancialInstitutionRequest request,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFinancialInstitution( request );
+        var model = mapRequestToFinancialInstitution(request);
 
         try
         {
@@ -59,9 +60,10 @@ public static class FinancialInstitutionEndpoints
     private static async Task<IResult> Update(
         FinancialInstitutionRequest request,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFinancialInstitution( request );
+        var model = mapRequestToFinancialInstitution(request);
 
         try
         {
@@ -78,25 +80,28 @@ public static class FinancialInstitutionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var financialInstitution = await service.Get(identifier, cancellationToken);
-        return financialInstitution is null ? Results.NotFound() : Results.Ok( financialInstitution );
+        return financialInstitution is null ? Results.NotFound() : Results.Ok(financialInstitution);
     }
 
 
     private static async Task<IResult> GetAll(
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( FinancialInstitutionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(FinancialInstitutionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +110,8 @@ public static class FinancialInstitutionEndpoints
     private static async Task<IResult> AddToBranches(
         MultipleAssociationRequest request,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToBranches(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -113,14 +119,16 @@ public static class FinancialInstitutionEndpoints
     private static async Task<IResult> RemoveFromBranches(
         MultipleAssociationRequest request,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromBranches(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCustomers(
         MultipleAssociationRequest request,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCustomers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -128,14 +136,16 @@ public static class FinancialInstitutionEndpoints
     private static async Task<IResult> RemoveFromCustomers(
         MultipleAssociationRequest request,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCustomers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToProductOfferings(
         MultipleAssociationRequest request,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToProductOfferings(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -143,14 +153,16 @@ public static class FinancialInstitutionEndpoints
     private static async Task<IResult> RemoveFromProductOfferings(
         MultipleAssociationRequest request,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromProductOfferings(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPaymentProcessors(
         MultipleAssociationRequest request,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPaymentProcessors(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -158,14 +170,16 @@ public static class FinancialInstitutionEndpoints
     private static async Task<IResult> RemoveFromPaymentProcessors(
         MultipleAssociationRequest request,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPaymentProcessors(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCompliancePolicies(
         MultipleAssociationRequest request,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCompliancePolicies(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -173,11 +187,13 @@ public static class FinancialInstitutionEndpoints
     private static async Task<IResult> RemoveFromCompliancePolicies(
         MultipleAssociationRequest request,
         IFinancialInstitutionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCompliancePolicies(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static FinancialInstitution mapRequestToFinancialInstitution( FinancialInstitutionRequest request ) {
+    private static FinancialInstitution mapRequestToFinancialInstitution(FinancialInstitutionRequest request)
+    {
         var model = new FinancialInstitution
         {
             Id = request.Id,

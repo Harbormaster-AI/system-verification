@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IFXQuoteService {
+public interface IFXQuoteService
+{
 
-    Task Create(FXQuote model , CancellationToken cancellationToken);
+    Task Create(FXQuote model, CancellationToken cancellationToken);
     Task<bool> Update(FXQuote model, CancellationToken cancellationToken);
     Task<FXQuote?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FXQuote>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class FXQuoteService : IFXQuoteService
 
     public async Task<bool> Update(FXQuote model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class FXQuoteService : IFXQuoteService
         return true;
     }
 
-    public async Task<bool> AssignRequestedBy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRequestedBy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class FXQuoteService : IFXQuoteService
 
             var child = await _serviceResolver.Get<CustomerService>().Get(childRequest, cancellationToken);
             parent.RequestedBy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class FXQuoteService : IFXQuoteService
         return true;
     }
 
-    public async Task<bool> UnassignRequestedBy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRequestedBy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class FXQuoteService : IFXQuoteService
         try
         {
             parent.RequestedBy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

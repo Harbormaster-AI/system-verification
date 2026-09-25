@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum ScreeningStatus
 {
-    Clear=1,Review=2,Match=3
+    Clear = 1, Review = 2, Match = 3
 }
 
 /// <summary>

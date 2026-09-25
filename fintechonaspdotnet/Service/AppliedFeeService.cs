@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IAppliedFeeService {
+public interface IAppliedFeeService
+{
 
-    Task Create(AppliedFee model , CancellationToken cancellationToken);
+    Task Create(AppliedFee model, CancellationToken cancellationToken);
     Task<bool> Update(AppliedFee model, CancellationToken cancellationToken);
     Task<AppliedFee?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AppliedFee>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class AppliedFeeService : IAppliedFeeService
 
     public async Task<bool> Update(AppliedFee model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class AppliedFeeService : IAppliedFeeService
         return true;
     }
 
-    public async Task<bool> AssignPaymentOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPaymentOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class AppliedFeeService : IAppliedFeeService
 
             var child = await _serviceResolver.Get<PaymentOrderService>().Get(childRequest, cancellationToken);
             parent.PaymentOrder = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class AppliedFeeService : IAppliedFeeService
         return true;
     }
 
-    public async Task<bool> UnassignPaymentOrder(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPaymentOrder(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class AppliedFeeService : IAppliedFeeService
         try
         {
             parent.PaymentOrder = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class AppliedFeeService : IAppliedFeeService
         return true;
     }
 
-    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class AppliedFeeService : IAppliedFeeService
 
             var child = await _serviceResolver.Get<TransactionService>().Get(childRequest, cancellationToken);
             parent.Transaction = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class AppliedFeeService : IAppliedFeeService
         return true;
     }
 
-    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class AppliedFeeService : IAppliedFeeService
         try
         {
             parent.Transaction = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

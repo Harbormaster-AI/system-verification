@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum CustomerType
 {
-    Individual=1,Business=2
+    Individual = 1, Business = 2
 }
 
 /// <summary>

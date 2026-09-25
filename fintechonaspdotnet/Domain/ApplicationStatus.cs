@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum ApplicationStatus
 {
-    Draft=1,Submitted=2,Underwriting=3,Approved=4,Declined=5,Withdrawn=6
+    Draft = 1, Submitted = 2, Underwriting = 3, Approved = 4, Declined = 5, Withdrawn = 6
 }
 
 /// <summary>

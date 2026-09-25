@@ -26,11 +26,11 @@ public static class PaymentOrderEndpoints
         group.MapPut("/assignFxDeal", AssignFxDeal);
         group.MapPut("/unassignFxDeal", UnassignFxDeal);
 
-    group.MapPut("/addToTransactions", AddToTransactions);
-    group.MapPut("/removeFromTransactions", RemoveFromTransactions);
+        group.MapPut("/addToTransactions", AddToTransactions);
+        group.MapPut("/removeFromTransactions", RemoveFromTransactions);
 
-    group.MapPut("/addToFees", AddToFees);
-    group.MapPut("/removeFromFees", RemoveFromFees);
+        group.MapPut("/addToFees", AddToFees);
+        group.MapPut("/removeFromFees", RemoveFromFees);
 
 
         return app;
@@ -39,9 +39,10 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> Create(
         PaymentOrderRequest request,
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPaymentOrder( request );
+        var model = mapRequestToPaymentOrder(request);
 
         try
         {
@@ -58,9 +59,10 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> Update(
         PaymentOrderRequest request,
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPaymentOrder( request );
+        var model = mapRequestToPaymentOrder(request);
 
         try
         {
@@ -77,25 +79,28 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var paymentOrder = await service.Get(identifier, cancellationToken);
-        return paymentOrder is null ? Results.NotFound() : Results.Ok( paymentOrder );
+        return paymentOrder is null ? Results.NotFound() : Results.Ok(paymentOrder);
     }
 
 
     private static async Task<IResult> GetAll(
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PaymentOrderResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PaymentOrderResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +108,8 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> AssignSourceAccount(
         AssociationRequest request,
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSourceAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +117,8 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> UnassignSourceAccount(
     AssociationRequest request,
     IPaymentOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSourceAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +126,8 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> AssignDestinationAccount(
         AssociationRequest request,
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDestinationAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +135,8 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> UnassignDestinationAccount(
     AssociationRequest request,
     IPaymentOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDestinationAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,7 +144,8 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> AssignBeneficiary(
         AssociationRequest request,
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBeneficiary(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -143,7 +153,8 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> UnassignBeneficiary(
     AssociationRequest request,
     IPaymentOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBeneficiary(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -151,7 +162,8 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> AssignFxDeal(
         AssociationRequest request,
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignFxDeal(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -159,7 +171,8 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> UnassignFxDeal(
     AssociationRequest request,
     IPaymentOrderService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignFxDeal(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -168,7 +181,8 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> AddToTransactions(
         MultipleAssociationRequest request,
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTransactions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -176,14 +190,16 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> RemoveFromTransactions(
         MultipleAssociationRequest request,
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTransactions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToFees(
         MultipleAssociationRequest request,
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToFees(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -191,11 +207,13 @@ public static class PaymentOrderEndpoints
     private static async Task<IResult> RemoveFromFees(
         MultipleAssociationRequest request,
         IPaymentOrderService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromFees(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static PaymentOrder mapRequestToPaymentOrder( PaymentOrderRequest request ) {
+    private static PaymentOrder mapRequestToPaymentOrder(PaymentOrderRequest request)
+    {
         var model = new PaymentOrder
         {
             Id = request.Id,

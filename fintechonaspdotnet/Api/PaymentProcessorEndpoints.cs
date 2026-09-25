@@ -18,14 +18,14 @@ public static class PaymentProcessorEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToInstitutions", AddToInstitutions);
-    group.MapPut("/removeFromInstitutions", RemoveFromInstitutions);
+        group.MapPut("/addToInstitutions", AddToInstitutions);
+        group.MapPut("/removeFromInstitutions", RemoveFromInstitutions);
 
-    group.MapPut("/addToContracts", AddToContracts);
-    group.MapPut("/removeFromContracts", RemoveFromContracts);
+        group.MapPut("/addToContracts", AddToContracts);
+        group.MapPut("/removeFromContracts", RemoveFromContracts);
 
-    group.MapPut("/addToSettlements", AddToSettlements);
-    group.MapPut("/removeFromSettlements", RemoveFromSettlements);
+        group.MapPut("/addToSettlements", AddToSettlements);
+        group.MapPut("/removeFromSettlements", RemoveFromSettlements);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class PaymentProcessorEndpoints
     private static async Task<IResult> Create(
         PaymentProcessorRequest request,
         IPaymentProcessorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPaymentProcessor( request );
+        var model = mapRequestToPaymentProcessor(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class PaymentProcessorEndpoints
     private static async Task<IResult> Update(
         PaymentProcessorRequest request,
         IPaymentProcessorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPaymentProcessor( request );
+        var model = mapRequestToPaymentProcessor(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class PaymentProcessorEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPaymentProcessorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var paymentProcessor = await service.Get(identifier, cancellationToken);
-        return paymentProcessor is null ? Results.NotFound() : Results.Ok( paymentProcessor );
+        return paymentProcessor is null ? Results.NotFound() : Results.Ok(paymentProcessor);
     }
 
 
     private static async Task<IResult> GetAll(
         IPaymentProcessorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PaymentProcessorResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PaymentProcessorResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPaymentProcessorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class PaymentProcessorEndpoints
     private static async Task<IResult> AddToInstitutions(
         MultipleAssociationRequest request,
         IPaymentProcessorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToInstitutions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -107,14 +113,16 @@ public static class PaymentProcessorEndpoints
     private static async Task<IResult> RemoveFromInstitutions(
         MultipleAssociationRequest request,
         IPaymentProcessorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromInstitutions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToContracts(
         MultipleAssociationRequest request,
         IPaymentProcessorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToContracts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class PaymentProcessorEndpoints
     private static async Task<IResult> RemoveFromContracts(
         MultipleAssociationRequest request,
         IPaymentProcessorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromContracts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSettlements(
         MultipleAssociationRequest request,
         IPaymentProcessorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSettlements(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class PaymentProcessorEndpoints
     private static async Task<IResult> RemoveFromSettlements(
         MultipleAssociationRequest request,
         IPaymentProcessorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSettlements(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static PaymentProcessor mapRequestToPaymentProcessor( PaymentProcessorRequest request ) {
+    private static PaymentProcessor mapRequestToPaymentProcessor(PaymentProcessorRequest request)
+    {
         var model = new PaymentProcessor
         {
             Id = request.Id,

@@ -20,8 +20,8 @@ public static class ScreeningEndpoints
         group.MapPut("/assignKycProfile", AssignKycProfile);
         group.MapPut("/unassignKycProfile", UnassignKycProfile);
 
-    group.MapPut("/addToAlerts", AddToAlerts);
-    group.MapPut("/removeFromAlerts", RemoveFromAlerts);
+        group.MapPut("/addToAlerts", AddToAlerts);
+        group.MapPut("/removeFromAlerts", RemoveFromAlerts);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class ScreeningEndpoints
     private static async Task<IResult> Create(
         ScreeningRequest request,
         IScreeningService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToScreening( request );
+        var model = mapRequestToScreening(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class ScreeningEndpoints
     private static async Task<IResult> Update(
         ScreeningRequest request,
         IScreeningService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToScreening( request );
+        var model = mapRequestToScreening(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class ScreeningEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IScreeningService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var screening = await service.Get(identifier, cancellationToken);
-        return screening is null ? Results.NotFound() : Results.Ok( screening );
+        return screening is null ? Results.NotFound() : Results.Ok(screening);
     }
 
 
     private static async Task<IResult> GetAll(
         IScreeningService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ScreeningResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ScreeningResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IScreeningService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class ScreeningEndpoints
     private static async Task<IResult> AssignKycProfile(
         AssociationRequest request,
         IScreeningService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignKycProfile(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class ScreeningEndpoints
     private static async Task<IResult> UnassignKycProfile(
     AssociationRequest request,
     IScreeningService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignKycProfile(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ScreeningEndpoints
     private static async Task<IResult> AddToAlerts(
         MultipleAssociationRequest request,
         IScreeningService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAlerts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class ScreeningEndpoints
     private static async Task<IResult> RemoveFromAlerts(
         MultipleAssociationRequest request,
         IScreeningService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAlerts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Screening mapRequestToScreening( ScreeningRequest request ) {
+    private static Screening mapRequestToScreening(ScreeningRequest request)
+    {
         var model = new Screening
         {
             Id = request.Id,

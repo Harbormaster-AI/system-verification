@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IInvestmentAccountService {
+public interface IInvestmentAccountService
+{
 
-    Task Create(InvestmentAccount model , CancellationToken cancellationToken);
+    Task Create(InvestmentAccount model, CancellationToken cancellationToken);
     Task<bool> Update(InvestmentAccount model, CancellationToken cancellationToken);
     Task<InvestmentAccount?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InvestmentAccount>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class InvestmentAccountService : IInvestmentAccountService
 
     public async Task<bool> Update(InvestmentAccount model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class InvestmentAccountService : IInvestmentAccountService
         return true;
     }
 
-    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class InvestmentAccountService : IInvestmentAccountService
 
             var child = await _serviceResolver.Get<InvestmentPortfolioService>().Get(childRequest, cancellationToken);
             parent.Portfolio = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class InvestmentAccountService : IInvestmentAccountService
         return true;
     }
 
-    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class InvestmentAccountService : IInvestmentAccountService
         try
         {
             parent.Portfolio = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,8 +181,10 @@ public class InvestmentAccountService : IInvestmentAccountService
     }
 
 
-    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InvestmentAccount",
                 "AddToTrades",
@@ -186,16 +192,18 @@ public class InvestmentAccountService : IInvestmentAccountService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InvestmentAccount",
                 "RemoveFromTrades",
@@ -211,8 +219,10 @@ public class InvestmentAccountService : IInvestmentAccountService
         return true;
     }
 
-    public async Task<bool> AddToOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InvestmentAccount",
                 "AddToOrders",
@@ -220,16 +230,18 @@ public class InvestmentAccountService : IInvestmentAccountService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InvestmentAccount",
                 "RemoveFromOrders",

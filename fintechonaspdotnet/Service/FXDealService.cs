@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IFXDealService {
+public interface IFXDealService
+{
 
-    Task Create(FXDeal model , CancellationToken cancellationToken);
+    Task Create(FXDeal model, CancellationToken cancellationToken);
     Task<bool> Update(FXDeal model, CancellationToken cancellationToken);
     Task<FXDeal?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FXDeal>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class FXDealService : IFXDealService
 
     public async Task<bool> Update(FXDeal model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class FXDealService : IFXDealService
         return true;
     }
 
-    public async Task<bool> AssignQuote(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignQuote(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class FXDealService : IFXDealService
 
             var child = await _serviceResolver.Get<FXQuoteService>().Get(childRequest, cancellationToken);
             parent.Quote = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class FXDealService : IFXDealService
         return true;
     }
 
-    public async Task<bool> UnassignQuote(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignQuote(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class FXDealService : IFXDealService
         try
         {
             parent.Quote = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,8 +181,10 @@ public class FXDealService : IFXDealService
     }
 
 
-    public async Task<bool> AddToPaymentOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPaymentOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FXDeal",
                 "AddToPaymentOrders",
@@ -186,16 +192,18 @@ public class FXDealService : IFXDealService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPaymentOrders(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPaymentOrders(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "FXDeal",
                 "RemoveFromPaymentOrders",

@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum CollateralType
 {
-    RealEstate=1,Deposit=2,PersonalGuarantee=3,Inventory=4,Equipment=5
+    RealEstate = 1, Deposit = 2, PersonalGuarantee = 3, Inventory = 4, Equipment = 5
 }
 
 /// <summary>

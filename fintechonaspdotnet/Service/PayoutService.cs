@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IPayoutService {
+public interface IPayoutService
+{
 
-    Task Create(Payout model , CancellationToken cancellationToken);
+    Task Create(Payout model, CancellationToken cancellationToken);
     Task<bool> Update(Payout model, CancellationToken cancellationToken);
     Task<Payout?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Payout>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class PayoutService : IPayoutService
 
     public async Task<bool> Update(Payout model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class PayoutService : IPayoutService
         return true;
     }
 
-    public async Task<bool> AssignMerchant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMerchant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class PayoutService : IPayoutService
 
             var child = await _serviceResolver.Get<MerchantService>().Get(childRequest, cancellationToken);
             parent.Merchant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class PayoutService : IPayoutService
         return true;
     }
 
-    public async Task<bool> UnassignMerchant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMerchant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class PayoutService : IPayoutService
         try
         {
             parent.Merchant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class PayoutService : IPayoutService
         return true;
     }
 
-    public async Task<bool> AssignSettlementBatch(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSettlementBatch(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class PayoutService : IPayoutService
 
             var child = await _serviceResolver.Get<SettlementBatchService>().Get(childRequest, cancellationToken);
             parent.SettlementBatch = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class PayoutService : IPayoutService
         return true;
     }
 
-    public async Task<bool> UnassignSettlementBatch(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSettlementBatch(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class PayoutService : IPayoutService
         try
         {
             parent.SettlementBatch = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,7 +236,8 @@ public class PayoutService : IPayoutService
         return true;
     }
 
-    public async Task<bool> AssignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -248,7 +255,7 @@ public class PayoutService : IPayoutService
 
             var child = await _serviceResolver.Get<AccountService>().Get(childRequest, cancellationToken);
             parent.DestinationAccount = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -260,7 +267,8 @@ public class PayoutService : IPayoutService
         return true;
     }
 
-    public async Task<bool> UnassignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -271,7 +279,7 @@ public class PayoutService : IPayoutService
         try
         {
             parent.DestinationAccount = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

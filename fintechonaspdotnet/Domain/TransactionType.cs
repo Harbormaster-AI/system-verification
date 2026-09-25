@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum TransactionType
 {
-    Deposit=1,Withdrawal=2,Transfer=3,Payment=4,Refund=5,Fee=6,Interest=7,FXConversion=8
+    Deposit = 1, Withdrawal = 2, Transfer = 3, Payment = 4, Refund = 5, Fee = 6, Interest = 7, FXConversion = 8
 }
 
 /// <summary>

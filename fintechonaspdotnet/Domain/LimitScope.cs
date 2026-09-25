@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum LimitScope
 {
-    PerTransaction=1,Daily=2,Monthly=3,Yearly=4,Rolling24h=5
+    PerTransaction = 1, Daily = 2, Monthly = 3, Yearly = 4, Rolling24h = 5
 }
 
 /// <summary>

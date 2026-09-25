@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum SettlementStatus
 {
-    Open=1,Processing=2,Closed=3,Reconciled=4
+    Open = 1, Processing = 2, Closed = 3, Reconciled = 4
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum TimeInForce
 {
-    Day=1,GTC=2,IOC=3,FOK=4
+    Day = 1, GTC = 2, IOC = 3, FOK = 4
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace fintechonaspdotnet.Domain;
 
 public enum PostingStatus
 {
-    Pending=1,Posted=2,Reversed=3
+    Pending = 1, Posted = 2, Reversed = 3
 }
 
 /// <summary>

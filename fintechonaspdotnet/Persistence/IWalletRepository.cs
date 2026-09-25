@@ -11,7 +11,7 @@ public interface IWalletRepository
     Task UpdateAsync(Wallet wallet, CancellationToken cancellationToken);
     Task DeleteAsync(Wallet wallet, CancellationToken cancellationToken);
 
-    Task AddToTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTransactionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTransactionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

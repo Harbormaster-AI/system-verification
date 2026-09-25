@@ -6,9 +6,10 @@ using fintechonaspdotnet.Telemetry;
 
 namespace fintechonaspdotnet.Service;
 
-public interface IPricingPlanService {
+public interface IPricingPlanService
+{
 
-    Task Create(PricingPlan model , CancellationToken cancellationToken);
+    Task Create(PricingPlan model, CancellationToken cancellationToken);
     Task<bool> Update(PricingPlan model, CancellationToken cancellationToken);
     Task<PricingPlan?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<PricingPlan>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class PricingPlanService : IPricingPlanService
 
     public async Task<bool> Update(PricingPlan model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class PricingPlanService : IPricingPlanService
         return true;
     }
 
-    public async Task<bool> AssignProductOffering(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProductOffering(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class PricingPlanService : IPricingPlanService
 
             var child = await _serviceResolver.Get<ProductOfferingService>().Get(childRequest, cancellationToken);
             parent.ProductOffering = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class PricingPlanService : IPricingPlanService
         return true;
     }
 
-    public async Task<bool> UnassignProductOffering(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProductOffering(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class PricingPlanService : IPricingPlanService
         try
         {
             parent.ProductOffering = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,8 +180,10 @@ public class PricingPlanService : IPricingPlanService
     }
 
 
-    public async Task<bool> AddToFeeSchedules(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFeeSchedules(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PricingPlan",
                 "AddToFeeSchedules",
@@ -185,16 +191,18 @@ public class PricingPlanService : IPricingPlanService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFeeSchedules(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFeeSchedules(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PricingPlan",
                 "RemoveFromFeeSchedules",
@@ -210,8 +218,10 @@ public class PricingPlanService : IPricingPlanService
         return true;
     }
 
-    public async Task<bool> AddToLimits(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLimits(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PricingPlan",
                 "AddToLimits",
@@ -219,16 +229,18 @@ public class PricingPlanService : IPricingPlanService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLimits(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLimits(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "PricingPlan",
                 "RemoveFromLimits",
