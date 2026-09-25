@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IExternalAccountService {
+public interface IExternalAccountService
+{
 
-    Task Create(ExternalAccount model , CancellationToken cancellationToken);
+    Task Create(ExternalAccount model, CancellationToken cancellationToken);
     Task<bool> Update(ExternalAccount model, CancellationToken cancellationToken);
     Task<ExternalAccount?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ExternalAccount>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ExternalAccountService : IExternalAccountService
 
     public async Task<bool> Update(ExternalAccount model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class ExternalAccountService : IExternalAccountService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,9 +141,9 @@ public class ExternalAccountService : IExternalAccountService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.Get(<CustomerService>).Get( childRequest , cancellationToken );
+            var child = _serviceResolver.Get(< CustomerService >).Get(childRequest, cancellationToken);
             parent.Customer = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class ExternalAccountService : IExternalAccountService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class ExternalAccountService : IExternalAccountService
         try
         {
             parent.Customer = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -176,8 +180,10 @@ public class ExternalAccountService : IExternalAccountService
     }
 
 
-    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ExternalAccount",
                 "AddToTransactions",
@@ -185,16 +191,18 @@ public class ExternalAccountService : IExternalAccountService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ExternalAccount",
                 "RemoveFromTransactions",

@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IRepaymentScheduleService {
+public interface IRepaymentScheduleService
+{
 
-    Task Create(RepaymentSchedule model , CancellationToken cancellationToken);
+    Task Create(RepaymentSchedule model, CancellationToken cancellationToken);
     Task<bool> Update(RepaymentSchedule model, CancellationToken cancellationToken);
     Task<RepaymentSchedule?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RepaymentSchedule>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class RepaymentScheduleService : IRepaymentScheduleService
 
     public async Task<bool> Update(RepaymentSchedule model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class RepaymentScheduleService : IRepaymentScheduleService
         return true;
     }
 
-    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,9 +141,9 @@ public class RepaymentScheduleService : IRepaymentScheduleService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.Get(<LoanAccountService>).Get( childRequest , cancellationToken );
+            var child = _serviceResolver.Get(< LoanAccountService >).Get(childRequest, cancellationToken);
             parent.LoanAccount = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class RepaymentScheduleService : IRepaymentScheduleService
         return true;
     }
 
-    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class RepaymentScheduleService : IRepaymentScheduleService
         try
         {
             parent.LoanAccount = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class RepaymentScheduleService : IRepaymentScheduleService
         return true;
     }
 
-    public async Task<bool> AssignPayment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPayment(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,9 +196,9 @@ public class RepaymentScheduleService : IRepaymentScheduleService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.Get(<LoanPaymentService>).Get( childRequest , cancellationToken );
+            var child = _serviceResolver.Get(< LoanPaymentService >).Get(childRequest, cancellationToken);
             parent.Payment = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class RepaymentScheduleService : IRepaymentScheduleService
         return true;
     }
 
-    public async Task<bool> UnassignPayment(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPayment(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class RepaymentScheduleService : IRepaymentScheduleService
         try
         {
             parent.Payment = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
