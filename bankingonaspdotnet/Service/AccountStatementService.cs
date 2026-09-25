@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IAccountStatementService {
+public interface IAccountStatementService
+{
 
-    Task Create(AccountStatement model , CancellationToken cancellationToken);
+    Task Create(AccountStatement model, CancellationToken cancellationToken);
     Task<bool> Update(AccountStatement model, CancellationToken cancellationToken);
     Task<AccountStatement?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AccountStatement>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class AccountStatementService : IAccountStatementService
 
     public async Task<bool> Update(AccountStatement model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class AccountStatementService : IAccountStatementService
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class AccountStatementService : IAccountStatementService
 
             var child = _serviceResolver.Get<AccountService>().Get(childRequest, cancellationToken);
             parent.Account = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class AccountStatementService : IAccountStatementService
         return true;
     }
 
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class AccountStatementService : IAccountStatementService
         try
         {
             parent.Account = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
