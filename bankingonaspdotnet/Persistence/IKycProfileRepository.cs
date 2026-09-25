@@ -11,11 +11,11 @@ public interface IKycProfileRepository
     Task UpdateAsync(KycProfile kycProfile, CancellationToken cancellationToken);
     Task DeleteAsync(KycProfile kycProfile, CancellationToken cancellationToken);
 
-    Task AddToIdentityDocumentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromIdentityDocumentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToRiskAssessmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRiskAssessmentsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToScreeningsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromScreeningsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToIdentityDocumentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromIdentityDocumentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRiskAssessmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRiskAssessmentsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToScreeningsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromScreeningsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

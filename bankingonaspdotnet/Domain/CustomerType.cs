@@ -36,7 +36,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum CustomerType
 {
-    Individual=1,Business=2,NonProfit=3,Government=4
+    Individual = 1, Business = 2, NonProfit = 3, Government = 4
 }
 
 /// <summary>
