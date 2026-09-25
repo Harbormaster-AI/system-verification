@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IThirdPartyProviderService {
+public interface IThirdPartyProviderService
+{
 
-    Task Create(ThirdPartyProvider model , CancellationToken cancellationToken);
+    Task Create(ThirdPartyProvider model, CancellationToken cancellationToken);
     Task<bool> Update(ThirdPartyProvider model, CancellationToken cancellationToken);
     Task<ThirdPartyProvider?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ThirdPartyProvider>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ThirdPartyProviderService : IThirdPartyProviderService
 
     public async Task<bool> Update(ThirdPartyProvider model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class ThirdPartyProviderService : IThirdPartyProviderService
         return true;
     }
 
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class ThirdPartyProviderService : IThirdPartyProviderService
 
             var child = _serviceResolver.Get<BankService>().Get(childRequest, cancellationToken);
             parent.Bank = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class ThirdPartyProviderService : IThirdPartyProviderService
         return true;
     }
 
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class ThirdPartyProviderService : IThirdPartyProviderService
         try
         {
             parent.Bank = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class ThirdPartyProviderService : IThirdPartyProviderService
     }
 
 
-    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ThirdPartyProvider",
                 "AddToConsents",
@@ -182,16 +188,18 @@ public class ThirdPartyProviderService : IThirdPartyProviderService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromConsents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ThirdPartyProvider",
                 "RemoveFromConsents",
