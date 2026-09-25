@@ -1,0 +1,5 @@
+@bankingonaspdotnet.Api_HostAddress = http://localhost:5076
+
+GET {{bankingonaspdotnet.Api_HostAddress}}/
+Accept: application/json
+
