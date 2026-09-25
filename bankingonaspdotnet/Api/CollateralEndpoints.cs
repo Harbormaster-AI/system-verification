@@ -26,9 +26,10 @@ public static class CollateralEndpoints
     private static async Task<IResult> Create(
         CollateralRequest request,
         ICollateralService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCollateral( request );
+        var model = mapRequestToCollateral(request);
 
         try
         {
@@ -45,9 +46,10 @@ public static class CollateralEndpoints
     private static async Task<IResult> Update(
         CollateralRequest request,
         ICollateralService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCollateral( request );
+        var model = mapRequestToCollateral(request);
 
         try
         {
@@ -64,25 +66,28 @@ public static class CollateralEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICollateralService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var collateral = await service.Get(identifier, cancellationToken);
-        return collateral is null ? Results.NotFound() : Results.Ok( collateral );
+        return collateral is null ? Results.NotFound() : Results.Ok(collateral);
     }
 
 
     private static async Task<IResult> GetAll(
         ICollateralService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CollateralResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CollateralResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICollateralService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -90,7 +95,8 @@ public static class CollateralEndpoints
     private static async Task<IResult> AssignLoanAccount(
         AssociationRequest request,
         ICollateralService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLoanAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -98,13 +104,15 @@ public static class CollateralEndpoints
     private static async Task<IResult> UnassignLoanAccount(
     AssociationRequest request,
     ICollateralService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLoanAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Collateral mapRequestToCollateral( CollateralRequest request ) {
+    private static Collateral mapRequestToCollateral(CollateralRequest request)
+    {
         var model = new Collateral
         {
             Id = request.Id,

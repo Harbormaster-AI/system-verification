@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IExternalAccountService {
+public interface IExternalAccountService
+{
 
-    Task Create(ExternalAccount model , CancellationToken cancellationToken);
+    Task Create(ExternalAccount model, CancellationToken cancellationToken);
     Task<bool> Update(ExternalAccount model, CancellationToken cancellationToken);
     Task<ExternalAccount?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ExternalAccount>> GetAll(CancellationToken cancellationToken);
@@ -29,7 +30,7 @@ public class ExternalAccountService : IExternalAccountService
     private readonly ILogger<ExternalAccountService> _logger;
 
     public ExternalAccountService(
-        IExternalAccountRepository repository, ILogger<ExternalAccountService> logger )
+        IExternalAccountRepository repository, ILogger<ExternalAccountService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -39,7 +40,7 @@ public class ExternalAccountService : IExternalAccountService
     public async Task Create(ExternalAccount model, CancellationToken cancellationToken)
     {
 
-         try
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -51,7 +52,8 @@ public class ExternalAccountService : IExternalAccountService
 
     public async Task<bool> Update(ExternalAccount model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -101,18 +103,22 @@ public class ExternalAccountService : IExternalAccountService
 
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
 
-    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AddToTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> RemoveFromTransactions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

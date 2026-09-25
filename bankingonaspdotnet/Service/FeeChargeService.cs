@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IFeeChargeService {
+public interface IFeeChargeService
+{
 
-    Task Create(FeeCharge model , CancellationToken cancellationToken);
+    Task Create(FeeCharge model, CancellationToken cancellationToken);
     Task<bool> Update(FeeCharge model, CancellationToken cancellationToken);
     Task<FeeCharge?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FeeCharge>> GetAll(CancellationToken cancellationToken);
@@ -29,7 +30,7 @@ public class FeeChargeService : IFeeChargeService
     private readonly ILogger<FeeChargeService> _logger;
 
     public FeeChargeService(
-        IFeeChargeRepository repository, ILogger<FeeChargeService> logger )
+        IFeeChargeRepository repository, ILogger<FeeChargeService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -39,8 +40,8 @@ public class FeeChargeService : IFeeChargeService
     public async Task Create(FeeCharge model, CancellationToken cancellationToken)
     {
 
- 
-         try
+
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -52,7 +53,8 @@ public class FeeChargeService : IFeeChargeService
 
     public async Task<bool> Update(FeeCharge model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -100,17 +102,21 @@ public class FeeChargeService : IFeeChargeService
 
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLoanAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

@@ -4,9 +4,10 @@ using bankingonaspdotnet.Contracts;
 
 namespace bankingonaspdotnet.Service;
 
-public interface ITransactionService {
+public interface ITransactionService
+{
 
-    Task Create(Transaction model , CancellationToken cancellationToken);
+    Task Create(Transaction model, CancellationToken cancellationToken);
     Task<bool> Update(Transaction model, CancellationToken cancellationToken);
     Task<Transaction?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Transaction>> GetAll(CancellationToken cancellationToken);
@@ -37,7 +38,7 @@ public class TransactionService : ITransactionService
     private readonly ILogger<TransactionService> _logger;
 
     public TransactionService(
-        ITransactionRepository repository, ILogger<TransactionService> logger )
+        ITransactionRepository repository, ILogger<TransactionService> logger)
     {
         _repository = repository;
         _logger = logger;
@@ -47,12 +48,12 @@ public class TransactionService : ITransactionService
     public async Task Create(Transaction model, CancellationToken cancellationToken)
     {
 
- 
- 
- 
- 
- 
-         try
+
+
+
+
+
+        try
         {
             await _repository.AddAsync(model, cancellationToken);
         }
@@ -64,7 +65,8 @@ public class TransactionService : ITransactionService
 
     public async Task<bool> Update(Transaction model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,45 +118,57 @@ public class TransactionService : ITransactionService
 
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AssignExternalCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> UnassignExternalCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignPaymentCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignExternalCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignPaymentCard(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-
-    public async Task<bool> AssignFundsTransfer(AssociationRequest request, CancellationToken cancellationToken) {
-        return true;
-    }
-    public async Task<bool> UnassignFundsTransfer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignExternalCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignFxTrade(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPaymentCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignFxTrade(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPaymentCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 
-    public async Task<bool> AssignDispute(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFundsTransfer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
-    public async Task<bool> UnassignDispute(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFundsTransfer(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AssignFxTrade(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> UnassignFxTrade(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+
+    public async Task<bool> AssignDispute(AssociationRequest request, CancellationToken cancellationToken)
+    {
+        return true;
+    }
+    public async Task<bool> UnassignDispute(AssociationRequest request, CancellationToken cancellationToken)
+    {
         return true;
     }
 

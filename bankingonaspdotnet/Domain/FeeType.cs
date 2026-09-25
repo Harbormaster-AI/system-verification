@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum FeeType
 {
-    Maintenance=1,Overdraft=2,Wire=3,ATM=4,CardAnnual=5,LatePayment=6,EarlyWithdrawal=7,ReplacementCard=8
+    Maintenance = 1, Overdraft = 2, Wire = 3, ATM = 4, CardAnnual = 5, LatePayment = 6, EarlyWithdrawal = 7, ReplacementCard = 8
 }
 
 /// <summary>

@@ -23,20 +23,20 @@ public static class LoanAccountEndpoints
         group.MapPut("/assignProduct", AssignProduct);
         group.MapPut("/unassignProduct", UnassignProduct);
 
-    group.MapPut("/addToBorrowers", AddToBorrowers);
-    group.MapPut("/removeFromBorrowers", RemoveFromBorrowers);
+        group.MapPut("/addToBorrowers", AddToBorrowers);
+        group.MapPut("/removeFromBorrowers", RemoveFromBorrowers);
 
-    group.MapPut("/addToRepaymentSchedule", AddToRepaymentSchedule);
-    group.MapPut("/removeFromRepaymentSchedule", RemoveFromRepaymentSchedule);
+        group.MapPut("/addToRepaymentSchedule", AddToRepaymentSchedule);
+        group.MapPut("/removeFromRepaymentSchedule", RemoveFromRepaymentSchedule);
 
-    group.MapPut("/addToPayments", AddToPayments);
-    group.MapPut("/removeFromPayments", RemoveFromPayments);
+        group.MapPut("/addToPayments", AddToPayments);
+        group.MapPut("/removeFromPayments", RemoveFromPayments);
 
-    group.MapPut("/addToCollateral", AddToCollateral);
-    group.MapPut("/removeFromCollateral", RemoveFromCollateral);
+        group.MapPut("/addToCollateral", AddToCollateral);
+        group.MapPut("/removeFromCollateral", RemoveFromCollateral);
 
-    group.MapPut("/addToFeeCharges", AddToFeeCharges);
-    group.MapPut("/removeFromFeeCharges", RemoveFromFeeCharges);
+        group.MapPut("/addToFeeCharges", AddToFeeCharges);
+        group.MapPut("/removeFromFeeCharges", RemoveFromFeeCharges);
 
 
         return app;
@@ -45,9 +45,10 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> Create(
         LoanAccountRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLoanAccount( request );
+        var model = mapRequestToLoanAccount(request);
 
         try
         {
@@ -64,9 +65,10 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> Update(
         LoanAccountRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLoanAccount( request );
+        var model = mapRequestToLoanAccount(request);
 
         try
         {
@@ -83,25 +85,28 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var loanAccount = await service.Get(identifier, cancellationToken);
-        return loanAccount is null ? Results.NotFound() : Results.Ok( loanAccount );
+        return loanAccount is null ? Results.NotFound() : Results.Ok(loanAccount);
     }
 
 
     private static async Task<IResult> GetAll(
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( LoanAccountResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(LoanAccountResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +114,8 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> AssignBank(
         AssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBank(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,7 +123,8 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> UnassignBank(
     AssociationRequest request,
     ILoanAccountService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBank(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -125,7 +132,8 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> AssignBranch(
         AssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBranch(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -133,7 +141,8 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> UnassignBranch(
     AssociationRequest request,
     ILoanAccountService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBranch(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -141,7 +150,8 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> AssignProduct(
         AssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProduct(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -149,7 +159,8 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> UnassignProduct(
     AssociationRequest request,
     ILoanAccountService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProduct(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -158,7 +169,8 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> AddToBorrowers(
         MultipleAssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToBorrowers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -166,14 +178,16 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> RemoveFromBorrowers(
         MultipleAssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromBorrowers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRepaymentSchedule(
         MultipleAssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRepaymentSchedule(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -181,14 +195,16 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> RemoveFromRepaymentSchedule(
         MultipleAssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRepaymentSchedule(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToPayments(
         MultipleAssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPayments(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -196,14 +212,16 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> RemoveFromPayments(
         MultipleAssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPayments(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCollateral(
         MultipleAssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCollateral(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -211,14 +229,16 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> RemoveFromCollateral(
         MultipleAssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCollateral(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToFeeCharges(
         MultipleAssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToFeeCharges(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -226,11 +246,13 @@ public static class LoanAccountEndpoints
     private static async Task<IResult> RemoveFromFeeCharges(
         MultipleAssociationRequest request,
         ILoanAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromFeeCharges(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static LoanAccount mapRequestToLoanAccount( LoanAccountRequest request ) {
+    private static LoanAccount mapRequestToLoanAccount(LoanAccountRequest request)
+    {
         var model = new LoanAccount
         {
             Id = request.Id,

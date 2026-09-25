@@ -35,7 +35,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum ATMStatus
 {
-    InService=1,OutOfService=2,Maintenance=3
+    InService = 1, OutOfService = 2, Maintenance = 3
 }
 
 /// <summary>
