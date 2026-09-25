@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IStandingInstructionService {
+public interface IStandingInstructionService
+{
 
-    Task Create(StandingInstruction model , CancellationToken cancellationToken);
+    Task Create(StandingInstruction model, CancellationToken cancellationToken);
     Task<bool> Update(StandingInstruction model, CancellationToken cancellationToken);
     Task<StandingInstruction?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<StandingInstruction>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class StandingInstructionService : IStandingInstructionService
 
     public async Task<bool> Update(StandingInstruction model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class StandingInstructionService : IStandingInstructionService
         return true;
     }
 
-    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class StandingInstructionService : IStandingInstructionService
 
             var child = await _serviceResolver.Get<AccountService>().Get(childRequest, cancellationToken);
             parent.Account = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class StandingInstructionService : IStandingInstructionService
         return true;
     }
 
-    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class StandingInstructionService : IStandingInstructionService
         try
         {
             parent.Account = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class StandingInstructionService : IStandingInstructionService
         return true;
     }
 
-    public async Task<bool> AssignBeneficiary(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBeneficiary(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class StandingInstructionService : IStandingInstructionService
 
             var child = await _serviceResolver.Get<ExternalAccountService>().Get(childRequest, cancellationToken);
             parent.Beneficiary = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class StandingInstructionService : IStandingInstructionService
         return true;
     }
 
-    public async Task<bool> UnassignBeneficiary(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBeneficiary(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class StandingInstructionService : IStandingInstructionService
         try
         {
             parent.Beneficiary = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
