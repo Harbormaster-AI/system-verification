@@ -24,8 +24,8 @@ public static class ConsentEndpoints
         group.MapPut("/assignThirdPartyProvider", AssignThirdPartyProvider);
         group.MapPut("/unassignThirdPartyProvider", UnassignThirdPartyProvider);
 
-    group.MapPut("/addToAuthorizedAccounts", AddToAuthorizedAccounts);
-    group.MapPut("/removeFromAuthorizedAccounts", RemoveFromAuthorizedAccounts);
+        group.MapPut("/addToAuthorizedAccounts", AddToAuthorizedAccounts);
+        group.MapPut("/removeFromAuthorizedAccounts", RemoveFromAuthorizedAccounts);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class ConsentEndpoints
     private static async Task<IResult> Create(
         ConsentRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToConsent( request );
+        var model = mapRequestToConsent(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class ConsentEndpoints
     private static async Task<IResult> Update(
         ConsentRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToConsent( request );
+        var model = mapRequestToConsent(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class ConsentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var consent = await service.Get(identifier, cancellationToken);
-        return consent is null ? Results.NotFound() : Results.Ok( consent );
+        return consent is null ? Results.NotFound() : Results.Ok(consent);
     }
 
 
     private static async Task<IResult> GetAll(
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ConsentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ConsentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -98,7 +103,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> AssignCustomer(
         AssociationRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCustomer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -106,7 +112,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> UnassignCustomer(
     AssociationRequest request,
     IConsentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCustomer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> AssignBank(
         AssociationRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBank(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -122,7 +130,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> UnassignBank(
     AssociationRequest request,
     IConsentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBank(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -130,7 +139,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> AssignThirdPartyProvider(
         AssociationRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignThirdPartyProvider(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -138,7 +148,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> UnassignThirdPartyProvider(
     AssociationRequest request,
     IConsentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignThirdPartyProvider(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -147,7 +158,8 @@ public static class ConsentEndpoints
     private static async Task<IResult> AddToAuthorizedAccounts(
         MultipleAssociationRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAuthorizedAccounts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class ConsentEndpoints
     private static async Task<IResult> RemoveFromAuthorizedAccounts(
         MultipleAssociationRequest request,
         IConsentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAuthorizedAccounts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Consent mapRequestToConsent( ConsentRequest request ) {
+    private static Consent mapRequestToConsent(ConsentRequest request)
+    {
         var model = new Consent
         {
             Id = request.Id,
