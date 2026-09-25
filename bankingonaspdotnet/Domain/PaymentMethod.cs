@@ -36,7 +36,7 @@ namespace bankingonaspdotnet.Domain;
 
 public enum PaymentMethod
 {
-    InternalTransfer=1,ACH=2,Wire=3,SEPA=4,SWIFT=5,Card=6,Cash=7,Check=8,MobileWallet=9
+    InternalTransfer = 1, ACH = 2, Wire = 3, SEPA = 4, SWIFT = 5, Card = 6, Cash = 7, Check = 8, MobileWallet = 9
 }
 
 /// <summary>
