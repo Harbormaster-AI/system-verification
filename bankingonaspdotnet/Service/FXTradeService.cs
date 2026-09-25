@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IFXTradeService {
+public interface IFXTradeService
+{
 
-    Task Create(FXTrade model , CancellationToken cancellationToken);
+    Task Create(FXTrade model, CancellationToken cancellationToken);
     Task<bool> Update(FXTrade model, CancellationToken cancellationToken);
     Task<FXTrade?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FXTrade>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class FXTradeService : IFXTradeService
 
     public async Task<bool> Update(FXTrade model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class FXTradeService : IFXTradeService
         return true;
     }
 
-    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,9 +144,9 @@ public class FXTradeService : IFXTradeService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.get(CustomerService).get( childRequest , cancellationToken );
+            var child = _serviceResolver.get(CustomerService).get(childRequest, cancellationToken);
             parent.Customer = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class FXTradeService : IFXTradeService
         return true;
     }
 
-    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCustomer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class FXTradeService : IFXTradeService
         try
         {
             parent.Customer = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class FXTradeService : IFXTradeService
         return true;
     }
 
-    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,9 +195,9 @@ public class FXTradeService : IFXTradeService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.get(BankService).get( childRequest , cancellationToken );
+            var child = _serviceResolver.get(BankService).get(childRequest, cancellationToken);
             parent.Bank = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class FXTradeService : IFXTradeService
         return true;
     }
 
-    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBank(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class FXTradeService : IFXTradeService
         try
         {
             parent.Bank = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -223,7 +229,8 @@ public class FXTradeService : IFXTradeService
         return true;
     }
 
-    public async Task<bool> AssignExchangeRate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignExchangeRate(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -239,9 +246,9 @@ public class FXTradeService : IFXTradeService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.get(ExchangeRateService).get( childRequest , cancellationToken );
+            var child = _serviceResolver.get(ExchangeRateService).get(childRequest, cancellationToken);
             parent.ExchangeRate = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -251,7 +258,8 @@ public class FXTradeService : IFXTradeService
         return true;
     }
 
-    public async Task<bool> UnassignExchangeRate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignExchangeRate(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -262,7 +270,7 @@ public class FXTradeService : IFXTradeService
         try
         {
             parent.ExchangeRate = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -272,7 +280,8 @@ public class FXTradeService : IFXTradeService
         return true;
     }
 
-    public async Task<bool> AssignSourceAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSourceAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -288,9 +297,9 @@ public class FXTradeService : IFXTradeService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.get(AccountService).get( childRequest , cancellationToken );
+            var child = _serviceResolver.get(AccountService).get(childRequest, cancellationToken);
             parent.SourceAccount = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -300,7 +309,8 @@ public class FXTradeService : IFXTradeService
         return true;
     }
 
-    public async Task<bool> UnassignSourceAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSourceAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -311,7 +321,7 @@ public class FXTradeService : IFXTradeService
         try
         {
             parent.SourceAccount = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -321,7 +331,8 @@ public class FXTradeService : IFXTradeService
         return true;
     }
 
-    public async Task<bool> AssignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -337,9 +348,9 @@ public class FXTradeService : IFXTradeService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.get(AccountService).get( childRequest , cancellationToken );
+            var child = _serviceResolver.get(AccountService).get(childRequest, cancellationToken);
             parent.DestinationAccount = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -349,7 +360,8 @@ public class FXTradeService : IFXTradeService
         return true;
     }
 
-    public async Task<bool> UnassignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDestinationAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -360,7 +372,7 @@ public class FXTradeService : IFXTradeService
         try
         {
             parent.DestinationAccount = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -370,7 +382,8 @@ public class FXTradeService : IFXTradeService
         return true;
     }
 
-    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -386,9 +399,9 @@ public class FXTradeService : IFXTradeService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.get(TransactionService).get( childRequest , cancellationToken );
+            var child = _serviceResolver.get(TransactionService).get(childRequest, cancellationToken);
             parent.Transaction = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -398,7 +411,8 @@ public class FXTradeService : IFXTradeService
         return true;
     }
 
-    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTransaction(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -409,7 +423,7 @@ public class FXTradeService : IFXTradeService
         try
         {
             parent.Transaction = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {

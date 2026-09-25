@@ -6,9 +6,10 @@ using bankingonaspdotnet.Telemetry;
 
 namespace bankingonaspdotnet.Service;
 
-public interface IScreeningResultService {
+public interface IScreeningResultService
+{
 
-    Task Create(ScreeningResult model , CancellationToken cancellationToken);
+    Task Create(ScreeningResult model, CancellationToken cancellationToken);
     Task<bool> Update(ScreeningResult model, CancellationToken cancellationToken);
     Task<ScreeningResult?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ScreeningResult>> GetAll(CancellationToken cancellationToken);
@@ -59,7 +60,8 @@ public class ScreeningResultService : IScreeningResultService
 
     public async Task<bool> Update(ScreeningResult model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -111,7 +113,8 @@ public class ScreeningResultService : IScreeningResultService
         return true;
     }
 
-    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -127,9 +130,9 @@ public class ScreeningResultService : IScreeningResultService
                 Id = request.ChildId,
             };
 
-            var child = _serviceResolver.get(KycProfileService).get( childRequest , cancellationToken );
+            var child = _serviceResolver.get(KycProfileService).get(childRequest, cancellationToken);
             parent.KycProfile = child;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
@@ -139,7 +142,8 @@ public class ScreeningResultService : IScreeningResultService
         return true;
     }
 
-    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignKycProfile(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -150,7 +154,7 @@ public class ScreeningResultService : IScreeningResultService
         try
         {
             parent.KycProfile = null;
-            Update( parent );
+            Update(parent);
         }
         catch (Exception ex)
         {
