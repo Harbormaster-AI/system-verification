@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum MessagingProtocol
 {
-    MQTT=1,AMQP=2,HTTP=3,CoAP=4,WebSocket=5
+    MQTT = 1, AMQP = 2, HTTP = 3, CoAP = 4, WebSocket = 5
 }
 
 /// <summary>

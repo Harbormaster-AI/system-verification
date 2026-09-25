@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface ISimCardService {
+public interface ISimCardService
+{
 
-    Task Create(SimCard model , CancellationToken cancellationToken);
+    Task Create(SimCard model, CancellationToken cancellationToken);
     Task<bool> Update(SimCard model, CancellationToken cancellationToken);
     Task<SimCard?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SimCard>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class SimCardService : ISimCardService
 
     public async Task<bool> Update(SimCard model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class SimCardService : ISimCardService
         return true;
     }
 
-    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class SimCardService : ISimCardService
 
             var child = await _serviceResolver.Get<TenantService>().Get(childRequest, cancellationToken);
             parent.Tenant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class SimCardService : ISimCardService
         return true;
     }
 
-    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class SimCardService : ISimCardService
         try
         {
             parent.Tenant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class SimCardService : ISimCardService
         return true;
     }
 
-    public async Task<bool> AssignConnectivityPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignConnectivityPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class SimCardService : ISimCardService
 
             var child = await _serviceResolver.Get<ConnectivityPlanService>().Get(childRequest, cancellationToken);
             parent.ConnectivityPlan = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class SimCardService : ISimCardService
         return true;
     }
 
-    public async Task<bool> UnassignConnectivityPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignConnectivityPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class SimCardService : ISimCardService
         try
         {
             parent.ConnectivityPlan = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,8 +235,10 @@ public class SimCardService : ISimCardService
     }
 
 
-    public async Task<bool> AddToNetworkProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToNetworkProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SimCard",
                 "AddToNetworkProfiles",
@@ -238,16 +246,18 @@ public class SimCardService : ISimCardService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromNetworkProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromNetworkProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SimCard",
                 "RemoveFromNetworkProfiles",

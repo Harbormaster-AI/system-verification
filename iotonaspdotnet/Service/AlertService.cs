@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IAlertService {
+public interface IAlertService
+{
 
-    Task Create(Alert model , CancellationToken cancellationToken);
+    Task Create(Alert model, CancellationToken cancellationToken);
     Task<bool> Update(Alert model, CancellationToken cancellationToken);
     Task<Alert?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Alert>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class AlertService : IAlertService
 
     public async Task<bool> Update(Alert model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class AlertService : IAlertService
 
             var child = await _serviceResolver.Get<IoTDeviceService>().Get(childRequest, cancellationToken);
             parent.Device = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class AlertService : IAlertService
         try
         {
             parent.Device = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> AssignAlertRule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAlertRule(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class AlertService : IAlertService
 
             var child = await _serviceResolver.Get<AlertRuleService>().Get(childRequest, cancellationToken);
             parent.AlertRule = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class AlertService : IAlertService
         return true;
     }
 
-    public async Task<bool> UnassignAlertRule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAlertRule(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class AlertService : IAlertService
         try
         {
             parent.AlertRule = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

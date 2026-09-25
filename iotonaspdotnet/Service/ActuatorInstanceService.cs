@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IActuatorInstanceService {
+public interface IActuatorInstanceService
+{
 
-    Task Create(ActuatorInstance model , CancellationToken cancellationToken);
+    Task Create(ActuatorInstance model, CancellationToken cancellationToken);
     Task<bool> Update(ActuatorInstance model, CancellationToken cancellationToken);
     Task<ActuatorInstance?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ActuatorInstance>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ActuatorInstanceService : IActuatorInstanceService
 
     public async Task<bool> Update(ActuatorInstance model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class ActuatorInstanceService : IActuatorInstanceService
         return true;
     }
 
-    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class ActuatorInstanceService : IActuatorInstanceService
 
             var child = await _serviceResolver.Get<IoTDeviceService>().Get(childRequest, cancellationToken);
             parent.Device = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class ActuatorInstanceService : IActuatorInstanceService
         return true;
     }
 
-    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class ActuatorInstanceService : IActuatorInstanceService
         try
         {
             parent.Device = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class ActuatorInstanceService : IActuatorInstanceService
     }
 
 
-    public async Task<bool> AddToSupportedCommands(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSupportedCommands(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ActuatorInstance",
                 "AddToSupportedCommands",
@@ -182,16 +188,18 @@ public class ActuatorInstanceService : IActuatorInstanceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSupportedCommands(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSupportedCommands(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ActuatorInstance",
                 "RemoveFromSupportedCommands",

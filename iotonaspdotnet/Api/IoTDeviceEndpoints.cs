@@ -32,29 +32,29 @@ public static class IoTDeviceEndpoints
         group.MapPut("/assignProvisioningRecord", AssignProvisioningRecord);
         group.MapPut("/unassignProvisioningRecord", UnassignProvisioningRecord);
 
-    group.MapPut("/addToSensors", AddToSensors);
-    group.MapPut("/removeFromSensors", RemoveFromSensors);
+        group.MapPut("/addToSensors", AddToSensors);
+        group.MapPut("/removeFromSensors", RemoveFromSensors);
 
-    group.MapPut("/addToActuators", AddToActuators);
-    group.MapPut("/removeFromActuators", RemoveFromActuators);
+        group.MapPut("/addToActuators", AddToActuators);
+        group.MapPut("/removeFromActuators", RemoveFromActuators);
 
-    group.MapPut("/addToCertificates", AddToCertificates);
-    group.MapPut("/removeFromCertificates", RemoveFromCertificates);
+        group.MapPut("/addToCertificates", AddToCertificates);
+        group.MapPut("/removeFromCertificates", RemoveFromCertificates);
 
-    group.MapPut("/addToTelemetryStreams", AddToTelemetryStreams);
-    group.MapPut("/removeFromTelemetryStreams", RemoveFromTelemetryStreams);
+        group.MapPut("/addToTelemetryStreams", AddToTelemetryStreams);
+        group.MapPut("/removeFromTelemetryStreams", RemoveFromTelemetryStreams);
 
-    group.MapPut("/addToCommandInvocations", AddToCommandInvocations);
-    group.MapPut("/removeFromCommandInvocations", RemoveFromCommandInvocations);
+        group.MapPut("/addToCommandInvocations", AddToCommandInvocations);
+        group.MapPut("/removeFromCommandInvocations", RemoveFromCommandInvocations);
 
-    group.MapPut("/addToAlerts", AddToAlerts);
-    group.MapPut("/removeFromAlerts", RemoveFromAlerts);
+        group.MapPut("/addToAlerts", AddToAlerts);
+        group.MapPut("/removeFromAlerts", RemoveFromAlerts);
 
-    group.MapPut("/addToDeviceGroups", AddToDeviceGroups);
-    group.MapPut("/removeFromDeviceGroups", RemoveFromDeviceGroups);
+        group.MapPut("/addToDeviceGroups", AddToDeviceGroups);
+        group.MapPut("/removeFromDeviceGroups", RemoveFromDeviceGroups);
 
-    group.MapPut("/addToNetworkProfiles", AddToNetworkProfiles);
-    group.MapPut("/removeFromNetworkProfiles", RemoveFromNetworkProfiles);
+        group.MapPut("/addToNetworkProfiles", AddToNetworkProfiles);
+        group.MapPut("/removeFromNetworkProfiles", RemoveFromNetworkProfiles);
 
 
         return app;
@@ -63,9 +63,10 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> Create(
         IoTDeviceRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToIoTDevice( request );
+        var model = mapRequestToIoTDevice(request);
 
         try
         {
@@ -82,9 +83,10 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> Update(
         IoTDeviceRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToIoTDevice( request );
+        var model = mapRequestToIoTDevice(request);
 
         try
         {
@@ -101,25 +103,28 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var ioTDevice = await service.Get(identifier, cancellationToken);
-        return ioTDevice is null ? Results.NotFound() : Results.Ok( ioTDevice );
+        return ioTDevice is null ? Results.NotFound() : Results.Ok(ioTDevice);
     }
 
 
     private static async Task<IResult> GetAll(
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( IoTDeviceResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(IoTDeviceResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +132,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> AssignDeviceModel(
         AssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDeviceModel(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,7 +141,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> UnassignDeviceModel(
     AssociationRequest request,
     IIoTDeviceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDeviceModel(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -143,7 +150,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> AssignTenant(
         AssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTenant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -151,7 +159,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> UnassignTenant(
     AssociationRequest request,
     IIoTDeviceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTenant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -159,7 +168,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> AssignSite(
         AssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSite(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -167,7 +177,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> UnassignSite(
     AssociationRequest request,
     IIoTDeviceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSite(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -175,7 +186,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> AssignRoom(
         AssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRoom(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -183,7 +195,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> UnassignRoom(
     AssociationRequest request,
     IIoTDeviceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRoom(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -191,7 +204,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> AssignGateway(
         AssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignGateway(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -199,7 +213,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> UnassignGateway(
     AssociationRequest request,
     IIoTDeviceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignGateway(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -207,7 +222,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> AssignDigitalTwin(
         AssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDigitalTwin(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -215,7 +231,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> UnassignDigitalTwin(
     AssociationRequest request,
     IIoTDeviceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDigitalTwin(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -223,7 +240,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> AssignProvisioningRecord(
         AssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignProvisioningRecord(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -231,7 +249,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> UnassignProvisioningRecord(
     AssociationRequest request,
     IIoTDeviceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignProvisioningRecord(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -240,7 +259,8 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> AddToSensors(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSensors(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -248,14 +268,16 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> RemoveFromSensors(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSensors(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToActuators(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToActuators(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -263,14 +285,16 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> RemoveFromActuators(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromActuators(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCertificates(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCertificates(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -278,14 +302,16 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> RemoveFromCertificates(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCertificates(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToTelemetryStreams(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTelemetryStreams(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -293,14 +319,16 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> RemoveFromTelemetryStreams(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTelemetryStreams(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCommandInvocations(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCommandInvocations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -308,14 +336,16 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> RemoveFromCommandInvocations(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCommandInvocations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToAlerts(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAlerts(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -323,14 +353,16 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> RemoveFromAlerts(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAlerts(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToDeviceGroups(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDeviceGroups(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -338,14 +370,16 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> RemoveFromDeviceGroups(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDeviceGroups(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToNetworkProfiles(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToNetworkProfiles(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -353,11 +387,13 @@ public static class IoTDeviceEndpoints
     private static async Task<IResult> RemoveFromNetworkProfiles(
         MultipleAssociationRequest request,
         IIoTDeviceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromNetworkProfiles(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static IoTDevice mapRequestToIoTDevice( IoTDeviceRequest request ) {
+    private static IoTDevice mapRequestToIoTDevice(IoTDeviceRequest request)
+    {
         var model = new IoTDevice
         {
             Id = request.Id,

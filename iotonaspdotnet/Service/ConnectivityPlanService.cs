@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IConnectivityPlanService {
+public interface IConnectivityPlanService
+{
 
-    Task Create(ConnectivityPlan model , CancellationToken cancellationToken);
+    Task Create(ConnectivityPlan model, CancellationToken cancellationToken);
     Task<bool> Update(ConnectivityPlan model, CancellationToken cancellationToken);
     Task<ConnectivityPlan?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ConnectivityPlan>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class ConnectivityPlanService : IConnectivityPlanService
 
     public async Task<bool> Update(ConnectivityPlan model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class ConnectivityPlanService : IConnectivityPlanService
         return true;
     }
 
-    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class ConnectivityPlanService : IConnectivityPlanService
 
             var child = await _serviceResolver.Get<TenantService>().Get(childRequest, cancellationToken);
             parent.Tenant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class ConnectivityPlanService : IConnectivityPlanService
         return true;
     }
 
-    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class ConnectivityPlanService : IConnectivityPlanService
         try
         {
             parent.Tenant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class ConnectivityPlanService : IConnectivityPlanService
     }
 
 
-    public async Task<bool> AddToSimCards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSimCards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ConnectivityPlan",
                 "AddToSimCards",
@@ -182,16 +188,18 @@ public class ConnectivityPlanService : IConnectivityPlanService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSimCards(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSimCards(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "ConnectivityPlan",
                 "RemoveFromSimCards",

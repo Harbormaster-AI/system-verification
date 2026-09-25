@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface ISoftwareUpdateCampaignService {
+public interface ISoftwareUpdateCampaignService
+{
 
-    Task Create(SoftwareUpdateCampaign model , CancellationToken cancellationToken);
+    Task Create(SoftwareUpdateCampaign model, CancellationToken cancellationToken);
     Task<bool> Update(SoftwareUpdateCampaign model, CancellationToken cancellationToken);
     Task<SoftwareUpdateCampaign?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SoftwareUpdateCampaign>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class SoftwareUpdateCampaignService : ISoftwareUpdateCampaignService
 
     public async Task<bool> Update(SoftwareUpdateCampaign model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class SoftwareUpdateCampaignService : ISoftwareUpdateCampaignService
         return true;
     }
 
-    public async Task<bool> AssignFirmwareRelease(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFirmwareRelease(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class SoftwareUpdateCampaignService : ISoftwareUpdateCampaignService
 
             var child = await _serviceResolver.Get<FirmwareReleaseService>().Get(childRequest, cancellationToken);
             parent.FirmwareRelease = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class SoftwareUpdateCampaignService : ISoftwareUpdateCampaignService
         return true;
     }
 
-    public async Task<bool> UnassignFirmwareRelease(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFirmwareRelease(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class SoftwareUpdateCampaignService : ISoftwareUpdateCampaignService
         try
         {
             parent.FirmwareRelease = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class SoftwareUpdateCampaignService : ISoftwareUpdateCampaignService
         return true;
     }
 
-    public async Task<bool> AssignDeviceGroup(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDeviceGroup(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class SoftwareUpdateCampaignService : ISoftwareUpdateCampaignService
 
             var child = await _serviceResolver.Get<DeviceGroupService>().Get(childRequest, cancellationToken);
             parent.DeviceGroup = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class SoftwareUpdateCampaignService : ISoftwareUpdateCampaignService
         return true;
     }
 
-    public async Task<bool> UnassignDeviceGroup(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDeviceGroup(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class SoftwareUpdateCampaignService : ISoftwareUpdateCampaignService
         try
         {
             parent.DeviceGroup = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,8 +235,10 @@ public class SoftwareUpdateCampaignService : ISoftwareUpdateCampaignService
     }
 
 
-    public async Task<bool> AddToExecutions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToExecutions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SoftwareUpdateCampaign",
                 "AddToExecutions",
@@ -238,16 +246,18 @@ public class SoftwareUpdateCampaignService : ISoftwareUpdateCampaignService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromExecutions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromExecutions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "SoftwareUpdateCampaign",
                 "RemoveFromExecutions",

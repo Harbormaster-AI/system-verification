@@ -29,9 +29,10 @@ public static class DeviceCertificateEndpoints
     private static async Task<IResult> Create(
         DeviceCertificateRequest request,
         IDeviceCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDeviceCertificate( request );
+        var model = mapRequestToDeviceCertificate(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class DeviceCertificateEndpoints
     private static async Task<IResult> Update(
         DeviceCertificateRequest request,
         IDeviceCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDeviceCertificate( request );
+        var model = mapRequestToDeviceCertificate(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class DeviceCertificateEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDeviceCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var deviceCertificate = await service.Get(identifier, cancellationToken);
-        return deviceCertificate is null ? Results.NotFound() : Results.Ok( deviceCertificate );
+        return deviceCertificate is null ? Results.NotFound() : Results.Ok(deviceCertificate);
     }
 
 
     private static async Task<IResult> GetAll(
         IDeviceCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DeviceCertificateResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DeviceCertificateResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDeviceCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class DeviceCertificateEndpoints
     private static async Task<IResult> AssignDevice(
         AssociationRequest request,
         IDeviceCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDevice(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class DeviceCertificateEndpoints
     private static async Task<IResult> UnassignDevice(
     AssociationRequest request,
     IDeviceCertificateService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDevice(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class DeviceCertificateEndpoints
     private static async Task<IResult> AssignGateway(
         AssociationRequest request,
         IDeviceCertificateService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignGateway(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class DeviceCertificateEndpoints
     private static async Task<IResult> UnassignGateway(
     AssociationRequest request,
     IDeviceCertificateService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignGateway(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static DeviceCertificate mapRequestToDeviceCertificate( DeviceCertificateRequest request ) {
+    private static DeviceCertificate mapRequestToDeviceCertificate(DeviceCertificateRequest request)
+    {
         var model = new DeviceCertificate
         {
             Id = request.Id,

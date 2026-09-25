@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IApiKeyService {
+public interface IApiKeyService
+{
 
-    Task Create(ApiKey model , CancellationToken cancellationToken);
+    Task Create(ApiKey model, CancellationToken cancellationToken);
     Task<bool> Update(ApiKey model, CancellationToken cancellationToken);
     Task<ApiKey?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ApiKey>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class ApiKeyService : IApiKeyService
 
     public async Task<bool> Update(ApiKey model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class ApiKeyService : IApiKeyService
         return true;
     }
 
-    public async Task<bool> AssignAccessPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignAccessPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class ApiKeyService : IApiKeyService
 
             var child = await _serviceResolver.Get<AccessPolicyService>().Get(childRequest, cancellationToken);
             parent.AccessPolicy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class ApiKeyService : IApiKeyService
         return true;
     }
 
-    public async Task<bool> UnassignAccessPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignAccessPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class ApiKeyService : IApiKeyService
         try
         {
             parent.AccessPolicy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

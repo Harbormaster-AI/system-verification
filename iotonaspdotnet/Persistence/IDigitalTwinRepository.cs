@@ -11,7 +11,7 @@ public interface IDigitalTwinRepository
     Task UpdateAsync(DigitalTwin digitalTwin, CancellationToken cancellationToken);
     Task DeleteAsync(DigitalTwin digitalTwin, CancellationToken cancellationToken);
 
-    Task AddToChangeEventsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromChangeEventsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToChangeEventsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromChangeEventsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

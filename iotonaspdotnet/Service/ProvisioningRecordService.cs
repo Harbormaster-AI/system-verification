@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IProvisioningRecordService {
+public interface IProvisioningRecordService
+{
 
-    Task Create(ProvisioningRecord model , CancellationToken cancellationToken);
+    Task Create(ProvisioningRecord model, CancellationToken cancellationToken);
     Task<bool> Update(ProvisioningRecord model, CancellationToken cancellationToken);
     Task<ProvisioningRecord?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<ProvisioningRecord>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ProvisioningRecordService : IProvisioningRecordService
 
     public async Task<bool> Update(ProvisioningRecord model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class ProvisioningRecordService : IProvisioningRecordService
         return true;
     }
 
-    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class ProvisioningRecordService : IProvisioningRecordService
 
             var child = await _serviceResolver.Get<IoTDeviceService>().Get(childRequest, cancellationToken);
             parent.Device = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class ProvisioningRecordService : IProvisioningRecordService
         return true;
     }
 
-    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class ProvisioningRecordService : IProvisioningRecordService
         try
         {
             parent.Device = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class ProvisioningRecordService : IProvisioningRecordService
         return true;
     }
 
-    public async Task<bool> AssignCertificate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCertificate(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class ProvisioningRecordService : IProvisioningRecordService
 
             var child = await _serviceResolver.Get<DeviceCertificateService>().Get(childRequest, cancellationToken);
             parent.Certificate = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class ProvisioningRecordService : IProvisioningRecordService
         return true;
     }
 
-    public async Task<bool> UnassignCertificate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCertificate(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class ProvisioningRecordService : IProvisioningRecordService
         try
         {
             parent.Certificate = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class ProvisioningRecordService : IProvisioningRecordService
         return true;
     }
 
-    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class ProvisioningRecordService : IProvisioningRecordService
 
             var child = await _serviceResolver.Get<TenantService>().Get(childRequest, cancellationToken);
             parent.Tenant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class ProvisioningRecordService : IProvisioningRecordService
         return true;
     }
 
-    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class ProvisioningRecordService : IProvisioningRecordService
         try
         {
             parent.Tenant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

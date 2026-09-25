@@ -11,9 +11,9 @@ public interface IRoomRepository
     Task UpdateAsync(Room room, CancellationToken cancellationToken);
     Task DeleteAsync(Room room, CancellationToken cancellationToken);
 
-    Task AddToDevicesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDevicesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToGatewaysAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromGatewaysAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDevicesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDevicesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToGatewaysAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromGatewaysAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

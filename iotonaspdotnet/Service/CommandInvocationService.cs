@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface ICommandInvocationService {
+public interface ICommandInvocationService
+{
 
-    Task Create(CommandInvocation model , CancellationToken cancellationToken);
+    Task Create(CommandInvocation model, CancellationToken cancellationToken);
     Task<bool> Update(CommandInvocation model, CancellationToken cancellationToken);
     Task<CommandInvocation?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CommandInvocation>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class CommandInvocationService : ICommandInvocationService
 
     public async Task<bool> Update(CommandInvocation model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class CommandInvocationService : ICommandInvocationService
         return true;
     }
 
-    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class CommandInvocationService : ICommandInvocationService
 
             var child = await _serviceResolver.Get<IoTDeviceService>().Get(childRequest, cancellationToken);
             parent.Device = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class CommandInvocationService : ICommandInvocationService
         return true;
     }
 
-    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class CommandInvocationService : ICommandInvocationService
         try
         {
             parent.Device = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class CommandInvocationService : ICommandInvocationService
         return true;
     }
 
-    public async Task<bool> AssignCommandDefinition(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCommandDefinition(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class CommandInvocationService : ICommandInvocationService
 
             var child = await _serviceResolver.Get<CommandDefinitionService>().Get(childRequest, cancellationToken);
             parent.CommandDefinition = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class CommandInvocationService : ICommandInvocationService
         return true;
     }
 
-    public async Task<bool> UnassignCommandDefinition(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCommandDefinition(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class CommandInvocationService : ICommandInvocationService
         try
         {
             parent.CommandDefinition = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,7 +236,8 @@ public class CommandInvocationService : ICommandInvocationService
         return true;
     }
 
-    public async Task<bool> AssignActuator(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignActuator(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -248,7 +255,7 @@ public class CommandInvocationService : ICommandInvocationService
 
             var child = await _serviceResolver.Get<ActuatorInstanceService>().Get(childRequest, cancellationToken);
             parent.Actuator = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -260,7 +267,8 @@ public class CommandInvocationService : ICommandInvocationService
         return true;
     }
 
-    public async Task<bool> UnassignActuator(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignActuator(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -271,7 +279,7 @@ public class CommandInvocationService : ICommandInvocationService
         try
         {
             parent.Actuator = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -283,7 +291,8 @@ public class CommandInvocationService : ICommandInvocationService
         return true;
     }
 
-    public async Task<bool> AssignUser(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignUser(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -301,7 +310,7 @@ public class CommandInvocationService : ICommandInvocationService
 
             var child = await _serviceResolver.Get<TenantUserService>().Get(childRequest, cancellationToken);
             parent.User = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -313,7 +322,8 @@ public class CommandInvocationService : ICommandInvocationService
         return true;
     }
 
-    public async Task<bool> UnassignUser(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignUser(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -324,7 +334,7 @@ public class CommandInvocationService : ICommandInvocationService
         try
         {
             parent.User = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

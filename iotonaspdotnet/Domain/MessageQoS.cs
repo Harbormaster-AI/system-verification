@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum MessageQoS
 {
-    AtMostOnce=1,AtLeastOnce=2,ExactlyOnce=3
+    AtMostOnce = 1, AtLeastOnce = 2, ExactlyOnce = 3
 }
 
 /// <summary>

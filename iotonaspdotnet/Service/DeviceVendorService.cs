@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IDeviceVendorService {
+public interface IDeviceVendorService
+{
 
-    Task Create(DeviceVendor model , CancellationToken cancellationToken);
+    Task Create(DeviceVendor model, CancellationToken cancellationToken);
     Task<bool> Update(DeviceVendor model, CancellationToken cancellationToken);
     Task<DeviceVendor?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DeviceVendor>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class DeviceVendorService : IDeviceVendorService
 
     public async Task<bool> Update(DeviceVendor model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,8 +125,10 @@ public class DeviceVendorService : IDeviceVendorService
     }
 
 
-    public async Task<bool> AddToDeviceModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDeviceModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceVendor",
                 "AddToDeviceModels",
@@ -132,16 +136,18 @@ public class DeviceVendorService : IDeviceVendorService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDeviceModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDeviceModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceVendor",
                 "RemoveFromDeviceModels",
@@ -157,8 +163,10 @@ public class DeviceVendorService : IDeviceVendorService
         return true;
     }
 
-    public async Task<bool> AddToFirmwareReleases(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFirmwareReleases(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceVendor",
                 "AddToFirmwareReleases",
@@ -166,16 +174,18 @@ public class DeviceVendorService : IDeviceVendorService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFirmwareReleases(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFirmwareReleases(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceVendor",
                 "RemoveFromFirmwareReleases",
@@ -191,8 +201,10 @@ public class DeviceVendorService : IDeviceVendorService
         return true;
     }
 
-    public async Task<bool> AddToHardwareModules(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToHardwareModules(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceVendor",
                 "AddToHardwareModules",
@@ -200,16 +212,18 @@ public class DeviceVendorService : IDeviceVendorService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromHardwareModules(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromHardwareModules(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceVendor",
                 "RemoveFromHardwareModules",

@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface ITelemetryStreamService {
+public interface ITelemetryStreamService
+{
 
-    Task Create(TelemetryStream model , CancellationToken cancellationToken);
+    Task Create(TelemetryStream model, CancellationToken cancellationToken);
     Task<bool> Update(TelemetryStream model, CancellationToken cancellationToken);
     Task<TelemetryStream?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TelemetryStream>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class TelemetryStreamService : ITelemetryStreamService
 
     public async Task<bool> Update(TelemetryStream model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -125,7 +127,8 @@ public class TelemetryStreamService : ITelemetryStreamService
         return true;
     }
 
-    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -143,7 +146,7 @@ public class TelemetryStreamService : ITelemetryStreamService
 
             var child = await _serviceResolver.Get<IoTDeviceService>().Get(childRequest, cancellationToken);
             parent.Device = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -155,7 +158,8 @@ public class TelemetryStreamService : ITelemetryStreamService
         return true;
     }
 
-    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -166,7 +170,7 @@ public class TelemetryStreamService : ITelemetryStreamService
         try
         {
             parent.Device = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +182,8 @@ public class TelemetryStreamService : ITelemetryStreamService
         return true;
     }
 
-    public async Task<bool> AssignSensor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSensor(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -196,7 +201,7 @@ public class TelemetryStreamService : ITelemetryStreamService
 
             var child = await _serviceResolver.Get<SensorInstanceService>().Get(childRequest, cancellationToken);
             parent.Sensor = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -208,7 +213,8 @@ public class TelemetryStreamService : ITelemetryStreamService
         return true;
     }
 
-    public async Task<bool> UnassignSensor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSensor(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -219,7 +225,7 @@ public class TelemetryStreamService : ITelemetryStreamService
         try
         {
             parent.Sensor = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,7 +237,8 @@ public class TelemetryStreamService : ITelemetryStreamService
         return true;
     }
 
-    public async Task<bool> AssignSchema(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSchema(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -249,7 +256,7 @@ public class TelemetryStreamService : ITelemetryStreamService
 
             var child = await _serviceResolver.Get<TelemetrySchemaService>().Get(childRequest, cancellationToken);
             parent.Schema = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -261,7 +268,8 @@ public class TelemetryStreamService : ITelemetryStreamService
         return true;
     }
 
-    public async Task<bool> UnassignSchema(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSchema(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -272,7 +280,7 @@ public class TelemetryStreamService : ITelemetryStreamService
         try
         {
             parent.Schema = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,7 +292,8 @@ public class TelemetryStreamService : ITelemetryStreamService
         return true;
     }
 
-    public async Task<bool> AssignMessagingEndpoint(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMessagingEndpoint(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -302,7 +311,7 @@ public class TelemetryStreamService : ITelemetryStreamService
 
             var child = await _serviceResolver.Get<MessagingEndpointService>().Get(childRequest, cancellationToken);
             parent.MessagingEndpoint = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -314,7 +323,8 @@ public class TelemetryStreamService : ITelemetryStreamService
         return true;
     }
 
-    public async Task<bool> UnassignMessagingEndpoint(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMessagingEndpoint(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -325,7 +335,7 @@ public class TelemetryStreamService : ITelemetryStreamService
         try
         {
             parent.MessagingEndpoint = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -337,7 +347,8 @@ public class TelemetryStreamService : ITelemetryStreamService
         return true;
     }
 
-    public async Task<bool> AssignRetentionPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRetentionPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -355,7 +366,7 @@ public class TelemetryStreamService : ITelemetryStreamService
 
             var child = await _serviceResolver.Get<DataRetentionPolicyService>().Get(childRequest, cancellationToken);
             parent.RetentionPolicy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -367,7 +378,8 @@ public class TelemetryStreamService : ITelemetryStreamService
         return true;
     }
 
-    public async Task<bool> UnassignRetentionPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRetentionPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -378,7 +390,7 @@ public class TelemetryStreamService : ITelemetryStreamService
         try
         {
             parent.RetentionPolicy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

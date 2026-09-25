@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IMessagingEndpointService {
+public interface IMessagingEndpointService
+{
 
-    Task Create(MessagingEndpoint model , CancellationToken cancellationToken);
+    Task Create(MessagingEndpoint model, CancellationToken cancellationToken);
     Task<bool> Update(MessagingEndpoint model, CancellationToken cancellationToken);
     Task<MessagingEndpoint?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<MessagingEndpoint>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class MessagingEndpointService : IMessagingEndpointService
 
     public async Task<bool> Update(MessagingEndpoint model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class MessagingEndpointService : IMessagingEndpointService
         return true;
     }
 
-    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class MessagingEndpointService : IMessagingEndpointService
 
             var child = await _serviceResolver.Get<TenantService>().Get(childRequest, cancellationToken);
             parent.Tenant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class MessagingEndpointService : IMessagingEndpointService
         return true;
     }
 
-    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class MessagingEndpointService : IMessagingEndpointService
         try
         {
             parent.Tenant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,8 +178,10 @@ public class MessagingEndpointService : IMessagingEndpointService
     }
 
 
-    public async Task<bool> AddToStreams(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToStreams(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MessagingEndpoint",
                 "AddToStreams",
@@ -183,16 +189,18 @@ public class MessagingEndpointService : IMessagingEndpointService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromStreams(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromStreams(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MessagingEndpoint",
                 "RemoveFromStreams",

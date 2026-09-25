@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IEdgeApplicationService {
+public interface IEdgeApplicationService
+{
 
-    Task Create(EdgeApplication model , CancellationToken cancellationToken);
+    Task Create(EdgeApplication model, CancellationToken cancellationToken);
     Task<bool> Update(EdgeApplication model, CancellationToken cancellationToken);
     Task<EdgeApplication?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<EdgeApplication>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class EdgeApplicationService : IEdgeApplicationService
 
     public async Task<bool> Update(EdgeApplication model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class EdgeApplicationService : IEdgeApplicationService
         return true;
     }
 
-    public async Task<bool> AssignGateway(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignGateway(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class EdgeApplicationService : IEdgeApplicationService
 
             var child = await _serviceResolver.Get<GatewayService>().Get(childRequest, cancellationToken);
             parent.Gateway = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class EdgeApplicationService : IEdgeApplicationService
         return true;
     }
 
-    public async Task<bool> UnassignGateway(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignGateway(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class EdgeApplicationService : IEdgeApplicationService
         try
         {
             parent.Gateway = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IGatewayService {
+public interface IGatewayService
+{
 
-    Task Create(Gateway model , CancellationToken cancellationToken);
+    Task Create(Gateway model, CancellationToken cancellationToken);
     Task<bool> Update(Gateway model, CancellationToken cancellationToken);
     Task<Gateway?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Gateway>> GetAll(CancellationToken cancellationToken);
@@ -73,7 +74,8 @@ public class GatewayService : IGatewayService
 
     public async Task<bool> Update(Gateway model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -128,7 +130,8 @@ public class GatewayService : IGatewayService
         return true;
     }
 
-    public async Task<bool> AssignSite(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSite(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -146,7 +149,7 @@ public class GatewayService : IGatewayService
 
             var child = await _serviceResolver.Get<SiteService>().Get(childRequest, cancellationToken);
             parent.Site = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -158,7 +161,8 @@ public class GatewayService : IGatewayService
         return true;
     }
 
-    public async Task<bool> UnassignSite(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSite(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -169,7 +173,7 @@ public class GatewayService : IGatewayService
         try
         {
             parent.Site = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -181,7 +185,8 @@ public class GatewayService : IGatewayService
         return true;
     }
 
-    public async Task<bool> AssignRoom(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRoom(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -199,7 +204,7 @@ public class GatewayService : IGatewayService
 
             var child = await _serviceResolver.Get<RoomService>().Get(childRequest, cancellationToken);
             parent.Room = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -211,7 +216,8 @@ public class GatewayService : IGatewayService
         return true;
     }
 
-    public async Task<bool> UnassignRoom(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRoom(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -222,7 +228,7 @@ public class GatewayService : IGatewayService
         try
         {
             parent.Room = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -234,7 +240,8 @@ public class GatewayService : IGatewayService
         return true;
     }
 
-    public async Task<bool> AssignDigitalTwin(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDigitalTwin(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -252,7 +259,7 @@ public class GatewayService : IGatewayService
 
             var child = await _serviceResolver.Get<DigitalTwinService>().Get(childRequest, cancellationToken);
             parent.DigitalTwin = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -264,7 +271,8 @@ public class GatewayService : IGatewayService
         return true;
     }
 
-    public async Task<bool> UnassignDigitalTwin(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDigitalTwin(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -275,7 +283,7 @@ public class GatewayService : IGatewayService
         try
         {
             parent.DigitalTwin = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -288,8 +296,10 @@ public class GatewayService : IGatewayService
     }
 
 
-    public async Task<bool> AddToDevices(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDevices(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Gateway",
                 "AddToDevices",
@@ -297,16 +307,18 @@ public class GatewayService : IGatewayService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDevices(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDevices(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Gateway",
                 "RemoveFromDevices",
@@ -322,8 +334,10 @@ public class GatewayService : IGatewayService
         return true;
     }
 
-    public async Task<bool> AddToEdgeApplications(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToEdgeApplications(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Gateway",
                 "AddToEdgeApplications",
@@ -331,16 +345,18 @@ public class GatewayService : IGatewayService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromEdgeApplications(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromEdgeApplications(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Gateway",
                 "RemoveFromEdgeApplications",
@@ -356,8 +372,10 @@ public class GatewayService : IGatewayService
         return true;
     }
 
-    public async Task<bool> AddToCertificates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCertificates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Gateway",
                 "AddToCertificates",
@@ -365,16 +383,18 @@ public class GatewayService : IGatewayService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCertificates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCertificates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Gateway",
                 "RemoveFromCertificates",
@@ -390,8 +410,10 @@ public class GatewayService : IGatewayService
         return true;
     }
 
-    public async Task<bool> AddToNetworkProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToNetworkProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Gateway",
                 "AddToNetworkProfiles",
@@ -399,16 +421,18 @@ public class GatewayService : IGatewayService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromNetworkProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromNetworkProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Gateway",
                 "RemoveFromNetworkProfiles",

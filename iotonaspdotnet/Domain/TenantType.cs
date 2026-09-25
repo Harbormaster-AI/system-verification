@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum TenantType
 {
-    Enterprise=1,SMB=2,ISV=3,SystemIntegrator=4,Government=5
+    Enterprise = 1, SMB = 2, ISV = 3, SystemIntegrator = 4, Government = 5
 }
 
 /// <summary>

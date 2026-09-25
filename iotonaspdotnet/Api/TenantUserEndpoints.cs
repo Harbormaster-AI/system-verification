@@ -20,8 +20,8 @@ public static class TenantUserEndpoints
         group.MapPut("/assignTenant", AssignTenant);
         group.MapPut("/unassignTenant", UnassignTenant);
 
-    group.MapPut("/addToCommandInvocations", AddToCommandInvocations);
-    group.MapPut("/removeFromCommandInvocations", RemoveFromCommandInvocations);
+        group.MapPut("/addToCommandInvocations", AddToCommandInvocations);
+        group.MapPut("/removeFromCommandInvocations", RemoveFromCommandInvocations);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class TenantUserEndpoints
     private static async Task<IResult> Create(
         TenantUserRequest request,
         ITenantUserService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTenantUser( request );
+        var model = mapRequestToTenantUser(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class TenantUserEndpoints
     private static async Task<IResult> Update(
         TenantUserRequest request,
         ITenantUserService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTenantUser( request );
+        var model = mapRequestToTenantUser(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class TenantUserEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITenantUserService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var tenantUser = await service.Get(identifier, cancellationToken);
-        return tenantUser is null ? Results.NotFound() : Results.Ok( tenantUser );
+        return tenantUser is null ? Results.NotFound() : Results.Ok(tenantUser);
     }
 
 
     private static async Task<IResult> GetAll(
         ITenantUserService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TenantUserResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TenantUserResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITenantUserService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class TenantUserEndpoints
     private static async Task<IResult> AssignTenant(
         AssociationRequest request,
         ITenantUserService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTenant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class TenantUserEndpoints
     private static async Task<IResult> UnassignTenant(
     AssociationRequest request,
     ITenantUserService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTenant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class TenantUserEndpoints
     private static async Task<IResult> AddToCommandInvocations(
         MultipleAssociationRequest request,
         ITenantUserService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCommandInvocations(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class TenantUserEndpoints
     private static async Task<IResult> RemoveFromCommandInvocations(
         MultipleAssociationRequest request,
         ITenantUserService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCommandInvocations(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static TenantUser mapRequestToTenantUser( TenantUserRequest request ) {
+    private static TenantUser mapRequestToTenantUser(TenantUserRequest request)
+    {
         var model = new TenantUser
         {
             Id = request.Id,

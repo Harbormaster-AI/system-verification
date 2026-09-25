@@ -20,14 +20,14 @@ public static class SiteEndpoints
         group.MapPut("/assignTenant", AssignTenant);
         group.MapPut("/unassignTenant", UnassignTenant);
 
-    group.MapPut("/addToBuildings", AddToBuildings);
-    group.MapPut("/removeFromBuildings", RemoveFromBuildings);
+        group.MapPut("/addToBuildings", AddToBuildings);
+        group.MapPut("/removeFromBuildings", RemoveFromBuildings);
 
-    group.MapPut("/addToDevices", AddToDevices);
-    group.MapPut("/removeFromDevices", RemoveFromDevices);
+        group.MapPut("/addToDevices", AddToDevices);
+        group.MapPut("/removeFromDevices", RemoveFromDevices);
 
-    group.MapPut("/addToGateways", AddToGateways);
-    group.MapPut("/removeFromGateways", RemoveFromGateways);
+        group.MapPut("/addToGateways", AddToGateways);
+        group.MapPut("/removeFromGateways", RemoveFromGateways);
 
 
         return app;
@@ -36,9 +36,10 @@ public static class SiteEndpoints
     private static async Task<IResult> Create(
         SiteRequest request,
         ISiteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSite( request );
+        var model = mapRequestToSite(request);
 
         try
         {
@@ -55,9 +56,10 @@ public static class SiteEndpoints
     private static async Task<IResult> Update(
         SiteRequest request,
         ISiteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSite( request );
+        var model = mapRequestToSite(request);
 
         try
         {
@@ -74,25 +76,28 @@ public static class SiteEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISiteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var site = await service.Get(identifier, cancellationToken);
-        return site is null ? Results.NotFound() : Results.Ok( site );
+        return site is null ? Results.NotFound() : Results.Ok(site);
     }
 
 
     private static async Task<IResult> GetAll(
         ISiteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SiteResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SiteResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISiteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -100,7 +105,8 @@ public static class SiteEndpoints
     private static async Task<IResult> AssignTenant(
         AssociationRequest request,
         ISiteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTenant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +114,8 @@ public static class SiteEndpoints
     private static async Task<IResult> UnassignTenant(
     AssociationRequest request,
     ISiteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTenant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,7 +124,8 @@ public static class SiteEndpoints
     private static async Task<IResult> AddToBuildings(
         MultipleAssociationRequest request,
         ISiteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToBuildings(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -125,14 +133,16 @@ public static class SiteEndpoints
     private static async Task<IResult> RemoveFromBuildings(
         MultipleAssociationRequest request,
         ISiteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromBuildings(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToDevices(
         MultipleAssociationRequest request,
         ISiteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDevices(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class SiteEndpoints
     private static async Task<IResult> RemoveFromDevices(
         MultipleAssociationRequest request,
         ISiteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDevices(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToGateways(
         MultipleAssociationRequest request,
         ISiteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToGateways(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class SiteEndpoints
     private static async Task<IResult> RemoveFromGateways(
         MultipleAssociationRequest request,
         ISiteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromGateways(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Site mapRequestToSite( SiteRequest request ) {
+    private static Site mapRequestToSite(SiteRequest request)
+    {
         var model = new Site
         {
             Id = request.Id,

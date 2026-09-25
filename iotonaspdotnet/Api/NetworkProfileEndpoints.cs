@@ -31,9 +31,10 @@ public static class NetworkProfileEndpoints
     private static async Task<IResult> Create(
         NetworkProfileRequest request,
         INetworkProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToNetworkProfile( request );
+        var model = mapRequestToNetworkProfile(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class NetworkProfileEndpoints
     private static async Task<IResult> Update(
         NetworkProfileRequest request,
         INetworkProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToNetworkProfile( request );
+        var model = mapRequestToNetworkProfile(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class NetworkProfileEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         INetworkProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var networkProfile = await service.Get(identifier, cancellationToken);
-        return networkProfile is null ? Results.NotFound() : Results.Ok( networkProfile );
+        return networkProfile is null ? Results.NotFound() : Results.Ok(networkProfile);
     }
 
 
     private static async Task<IResult> GetAll(
         INetworkProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( NetworkProfileResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(NetworkProfileResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         INetworkProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class NetworkProfileEndpoints
     private static async Task<IResult> AssignDevice(
         AssociationRequest request,
         INetworkProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDevice(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class NetworkProfileEndpoints
     private static async Task<IResult> UnassignDevice(
     AssociationRequest request,
     INetworkProfileService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDevice(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class NetworkProfileEndpoints
     private static async Task<IResult> AssignGateway(
         AssociationRequest request,
         INetworkProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignGateway(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class NetworkProfileEndpoints
     private static async Task<IResult> UnassignGateway(
     AssociationRequest request,
     INetworkProfileService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignGateway(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class NetworkProfileEndpoints
     private static async Task<IResult> AssignSimCard(
         AssociationRequest request,
         INetworkProfileService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSimCard(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class NetworkProfileEndpoints
     private static async Task<IResult> UnassignSimCard(
     AssociationRequest request,
     INetworkProfileService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSimCard(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static NetworkProfile mapRequestToNetworkProfile( NetworkProfileRequest request ) {
+    private static NetworkProfile mapRequestToNetworkProfile(NetworkProfileRequest request)
+    {
         var model = new NetworkProfile
         {
             Id = request.Id,

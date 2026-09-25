@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IIoTDeviceService {
+public interface IIoTDeviceService
+{
 
-    Task Create(IoTDevice model , CancellationToken cancellationToken);
+    Task Create(IoTDevice model, CancellationToken cancellationToken);
     Task<bool> Update(IoTDevice model, CancellationToken cancellationToken);
     Task<IoTDevice?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<IoTDevice>> GetAll(CancellationToken cancellationToken);
@@ -89,7 +90,8 @@ public class IoTDeviceService : IIoTDeviceService
 
     public async Task<bool> Update(IoTDevice model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -148,7 +150,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AssignDeviceModel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDeviceModel(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -166,7 +169,7 @@ public class IoTDeviceService : IIoTDeviceService
 
             var child = await _serviceResolver.Get<DeviceModelService>().Get(childRequest, cancellationToken);
             parent.DeviceModel = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,7 +181,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> UnassignDeviceModel(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDeviceModel(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -189,7 +193,7 @@ public class IoTDeviceService : IIoTDeviceService
         try
         {
             parent.DeviceModel = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -201,7 +205,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -219,7 +224,7 @@ public class IoTDeviceService : IIoTDeviceService
 
             var child = await _serviceResolver.Get<TenantService>().Get(childRequest, cancellationToken);
             parent.Tenant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -231,7 +236,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -242,7 +248,7 @@ public class IoTDeviceService : IIoTDeviceService
         try
         {
             parent.Tenant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -254,7 +260,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AssignSite(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSite(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -272,7 +279,7 @@ public class IoTDeviceService : IIoTDeviceService
 
             var child = await _serviceResolver.Get<SiteService>().Get(childRequest, cancellationToken);
             parent.Site = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,7 +291,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> UnassignSite(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSite(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -295,7 +303,7 @@ public class IoTDeviceService : IIoTDeviceService
         try
         {
             parent.Site = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -307,7 +315,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AssignRoom(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRoom(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -325,7 +334,7 @@ public class IoTDeviceService : IIoTDeviceService
 
             var child = await _serviceResolver.Get<RoomService>().Get(childRequest, cancellationToken);
             parent.Room = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -337,7 +346,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> UnassignRoom(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRoom(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -348,7 +358,7 @@ public class IoTDeviceService : IIoTDeviceService
         try
         {
             parent.Room = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -360,7 +370,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AssignGateway(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignGateway(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -378,7 +389,7 @@ public class IoTDeviceService : IIoTDeviceService
 
             var child = await _serviceResolver.Get<GatewayService>().Get(childRequest, cancellationToken);
             parent.Gateway = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -390,7 +401,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> UnassignGateway(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignGateway(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -401,7 +413,7 @@ public class IoTDeviceService : IIoTDeviceService
         try
         {
             parent.Gateway = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -413,7 +425,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AssignDigitalTwin(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDigitalTwin(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -431,7 +444,7 @@ public class IoTDeviceService : IIoTDeviceService
 
             var child = await _serviceResolver.Get<DigitalTwinService>().Get(childRequest, cancellationToken);
             parent.DigitalTwin = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -443,7 +456,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> UnassignDigitalTwin(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDigitalTwin(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -454,7 +468,7 @@ public class IoTDeviceService : IIoTDeviceService
         try
         {
             parent.DigitalTwin = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -466,7 +480,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AssignProvisioningRecord(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignProvisioningRecord(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -484,7 +499,7 @@ public class IoTDeviceService : IIoTDeviceService
 
             var child = await _serviceResolver.Get<ProvisioningRecordService>().Get(childRequest, cancellationToken);
             parent.ProvisioningRecord = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -496,7 +511,8 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> UnassignProvisioningRecord(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignProvisioningRecord(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -507,7 +523,7 @@ public class IoTDeviceService : IIoTDeviceService
         try
         {
             parent.ProvisioningRecord = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -520,8 +536,10 @@ public class IoTDeviceService : IIoTDeviceService
     }
 
 
-    public async Task<bool> AddToSensors(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSensors(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "AddToSensors",
@@ -529,16 +547,18 @@ public class IoTDeviceService : IIoTDeviceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSensors(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSensors(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "RemoveFromSensors",
@@ -554,8 +574,10 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AddToActuators(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToActuators(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "AddToActuators",
@@ -563,16 +585,18 @@ public class IoTDeviceService : IIoTDeviceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromActuators(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromActuators(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "RemoveFromActuators",
@@ -588,8 +612,10 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AddToCertificates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCertificates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "AddToCertificates",
@@ -597,16 +623,18 @@ public class IoTDeviceService : IIoTDeviceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCertificates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCertificates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "RemoveFromCertificates",
@@ -622,8 +650,10 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AddToTelemetryStreams(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTelemetryStreams(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "AddToTelemetryStreams",
@@ -631,16 +661,18 @@ public class IoTDeviceService : IIoTDeviceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTelemetryStreams(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTelemetryStreams(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "RemoveFromTelemetryStreams",
@@ -656,8 +688,10 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AddToCommandInvocations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCommandInvocations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "AddToCommandInvocations",
@@ -665,16 +699,18 @@ public class IoTDeviceService : IIoTDeviceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCommandInvocations(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCommandInvocations(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "RemoveFromCommandInvocations",
@@ -690,8 +726,10 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AddToAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "AddToAlerts",
@@ -699,16 +737,18 @@ public class IoTDeviceService : IIoTDeviceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAlerts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "RemoveFromAlerts",
@@ -724,8 +764,10 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AddToDeviceGroups(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDeviceGroups(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "AddToDeviceGroups",
@@ -733,16 +775,18 @@ public class IoTDeviceService : IIoTDeviceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDeviceGroups(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDeviceGroups(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "RemoveFromDeviceGroups",
@@ -758,8 +802,10 @@ public class IoTDeviceService : IIoTDeviceService
         return true;
     }
 
-    public async Task<bool> AddToNetworkProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToNetworkProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "AddToNetworkProfiles",
@@ -767,16 +813,18 @@ public class IoTDeviceService : IIoTDeviceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromNetworkProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromNetworkProfiles(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "IoTDevice",
                 "RemoveFromNetworkProfiles",

@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum CommandStatus
 {
-    Queued=1,Sent=2,Succeeded=3,Failed=4,TimedOut=5,Cancelled=6
+    Queued = 1, Sent = 2, Succeeded = 3, Failed = 4, TimedOut = 5, Cancelled = 6
 }
 
 /// <summary>

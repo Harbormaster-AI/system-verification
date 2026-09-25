@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface INetworkProfileService {
+public interface INetworkProfileService
+{
 
-    Task Create(NetworkProfile model , CancellationToken cancellationToken);
+    Task Create(NetworkProfile model, CancellationToken cancellationToken);
     Task<bool> Update(NetworkProfile model, CancellationToken cancellationToken);
     Task<NetworkProfile?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<NetworkProfile>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class NetworkProfileService : INetworkProfileService
 
     public async Task<bool> Update(NetworkProfile model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class NetworkProfileService : INetworkProfileService
         return true;
     }
 
-    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class NetworkProfileService : INetworkProfileService
 
             var child = await _serviceResolver.Get<IoTDeviceService>().Get(childRequest, cancellationToken);
             parent.Device = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class NetworkProfileService : INetworkProfileService
         return true;
     }
 
-    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class NetworkProfileService : INetworkProfileService
         try
         {
             parent.Device = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class NetworkProfileService : INetworkProfileService
         return true;
     }
 
-    public async Task<bool> AssignGateway(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignGateway(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class NetworkProfileService : INetworkProfileService
 
             var child = await _serviceResolver.Get<GatewayService>().Get(childRequest, cancellationToken);
             parent.Gateway = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class NetworkProfileService : INetworkProfileService
         return true;
     }
 
-    public async Task<bool> UnassignGateway(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignGateway(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class NetworkProfileService : INetworkProfileService
         try
         {
             parent.Gateway = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class NetworkProfileService : INetworkProfileService
         return true;
     }
 
-    public async Task<bool> AssignSimCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSimCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class NetworkProfileService : INetworkProfileService
 
             var child = await _serviceResolver.Get<SimCardService>().Get(childRequest, cancellationToken);
             parent.SimCard = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class NetworkProfileService : INetworkProfileService
         return true;
     }
 
-    public async Task<bool> UnassignSimCard(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSimCard(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class NetworkProfileService : INetworkProfileService
         try
         {
             parent.SimCard = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

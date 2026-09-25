@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IDeviceGroupService {
+public interface IDeviceGroupService
+{
 
-    Task Create(DeviceGroup model , CancellationToken cancellationToken);
+    Task Create(DeviceGroup model, CancellationToken cancellationToken);
     Task<bool> Update(DeviceGroup model, CancellationToken cancellationToken);
     Task<DeviceGroup?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DeviceGroup>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class DeviceGroupService : IDeviceGroupService
 
     public async Task<bool> Update(DeviceGroup model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class DeviceGroupService : IDeviceGroupService
         return true;
     }
 
-    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class DeviceGroupService : IDeviceGroupService
 
             var child = await _serviceResolver.Get<TenantService>().Get(childRequest, cancellationToken);
             parent.Tenant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class DeviceGroupService : IDeviceGroupService
         return true;
     }
 
-    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class DeviceGroupService : IDeviceGroupService
         try
         {
             parent.Tenant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,8 +176,10 @@ public class DeviceGroupService : IDeviceGroupService
     }
 
 
-    public async Task<bool> AddToDevices(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDevices(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceGroup",
                 "AddToDevices",
@@ -181,16 +187,18 @@ public class DeviceGroupService : IDeviceGroupService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDevices(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDevices(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceGroup",
                 "RemoveFromDevices",

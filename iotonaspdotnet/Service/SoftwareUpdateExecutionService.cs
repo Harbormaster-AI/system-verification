@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface ISoftwareUpdateExecutionService {
+public interface ISoftwareUpdateExecutionService
+{
 
-    Task Create(SoftwareUpdateExecution model , CancellationToken cancellationToken);
+    Task Create(SoftwareUpdateExecution model, CancellationToken cancellationToken);
     Task<bool> Update(SoftwareUpdateExecution model, CancellationToken cancellationToken);
     Task<SoftwareUpdateExecution?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SoftwareUpdateExecution>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class SoftwareUpdateExecutionService : ISoftwareUpdateExecutionService
 
     public async Task<bool> Update(SoftwareUpdateExecution model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class SoftwareUpdateExecutionService : ISoftwareUpdateExecutionService
         return true;
     }
 
-    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class SoftwareUpdateExecutionService : ISoftwareUpdateExecutionService
 
             var child = await _serviceResolver.Get<SoftwareUpdateCampaignService>().Get(childRequest, cancellationToken);
             parent.Campaign = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class SoftwareUpdateExecutionService : ISoftwareUpdateExecutionService
         return true;
     }
 
-    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCampaign(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class SoftwareUpdateExecutionService : ISoftwareUpdateExecutionService
         try
         {
             parent.Campaign = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,7 +176,8 @@ public class SoftwareUpdateExecutionService : ISoftwareUpdateExecutionService
         return true;
     }
 
-    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -190,7 +195,7 @@ public class SoftwareUpdateExecutionService : ISoftwareUpdateExecutionService
 
             var child = await _serviceResolver.Get<IoTDeviceService>().Get(childRequest, cancellationToken);
             parent.Device = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -202,7 +207,8 @@ public class SoftwareUpdateExecutionService : ISoftwareUpdateExecutionService
         return true;
     }
 
-    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -213,7 +219,7 @@ public class SoftwareUpdateExecutionService : ISoftwareUpdateExecutionService
         try
         {
             parent.Device = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

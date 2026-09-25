@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum ActuatorType
 {
-    Relay=1,Motor=2,Valve=3,LED=4,Buzzer=5,Display=6
+    Relay = 1, Motor = 2, Valve = 3, LED = 4, Buzzer = 5, Display = 6
 }
 
 /// <summary>

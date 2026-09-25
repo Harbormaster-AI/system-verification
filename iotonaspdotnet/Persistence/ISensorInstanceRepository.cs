@@ -11,7 +11,7 @@ public interface ISensorInstanceRepository
     Task UpdateAsync(SensorInstance sensorInstance, CancellationToken cancellationToken);
     Task DeleteAsync(SensorInstance sensorInstance, CancellationToken cancellationToken);
 
-    Task AddToTelemetryStreamsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTelemetryStreamsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTelemetryStreamsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTelemetryStreamsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

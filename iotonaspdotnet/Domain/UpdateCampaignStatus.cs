@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum UpdateCampaignStatus
 {
-    Planned=1,InProgress=2,Paused=3,Completed=4,Cancelled=5
+    Planned = 1, InProgress = 2, Paused = 3, Completed = 4, Cancelled = 5
 }
 
 /// <summary>

@@ -11,7 +11,7 @@ public interface ITelemetrySchemaRepository
     Task UpdateAsync(TelemetrySchema telemetrySchema, CancellationToken cancellationToken);
     Task DeleteAsync(TelemetrySchema telemetrySchema, CancellationToken cancellationToken);
 
-    Task AddToStreamsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromStreamsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToStreamsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromStreamsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

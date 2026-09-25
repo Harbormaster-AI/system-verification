@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum CertificateType
 {
-    X509=1,X509_CA=2,X509_SelfSigned=3
+    X509 = 1, X509_CA = 2, X509_SelfSigned = 3
 }
 
 /// <summary>

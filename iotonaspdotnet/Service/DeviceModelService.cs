@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IDeviceModelService {
+public interface IDeviceModelService
+{
 
-    Task Create(DeviceModel model , CancellationToken cancellationToken);
+    Task Create(DeviceModel model, CancellationToken cancellationToken);
     Task<bool> Update(DeviceModel model, CancellationToken cancellationToken);
     Task<DeviceModel?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DeviceModel>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class DeviceModelService : IDeviceModelService
 
     public async Task<bool> Update(DeviceModel model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -127,7 +129,8 @@ public class DeviceModelService : IDeviceModelService
         return true;
     }
 
-    public async Task<bool> AssignVendor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignVendor(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -145,7 +148,7 @@ public class DeviceModelService : IDeviceModelService
 
             var child = await _serviceResolver.Get<DeviceVendorService>().Get(childRequest, cancellationToken);
             parent.Vendor = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -157,7 +160,8 @@ public class DeviceModelService : IDeviceModelService
         return true;
     }
 
-    public async Task<bool> UnassignVendor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignVendor(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -168,7 +172,7 @@ public class DeviceModelService : IDeviceModelService
         try
         {
             parent.Vendor = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -180,7 +184,8 @@ public class DeviceModelService : IDeviceModelService
         return true;
     }
 
-    public async Task<bool> AssignTwinTemplate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTwinTemplate(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -198,7 +203,7 @@ public class DeviceModelService : IDeviceModelService
 
             var child = await _serviceResolver.Get<TwinTemplateService>().Get(childRequest, cancellationToken);
             parent.TwinTemplate = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -210,7 +215,8 @@ public class DeviceModelService : IDeviceModelService
         return true;
     }
 
-    public async Task<bool> UnassignTwinTemplate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTwinTemplate(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -221,7 +227,7 @@ public class DeviceModelService : IDeviceModelService
         try
         {
             parent.TwinTemplate = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -234,8 +240,10 @@ public class DeviceModelService : IDeviceModelService
     }
 
 
-    public async Task<bool> AddToHardwareModules(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToHardwareModules(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceModel",
                 "AddToHardwareModules",
@@ -243,16 +251,18 @@ public class DeviceModelService : IDeviceModelService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromHardwareModules(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromHardwareModules(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceModel",
                 "RemoveFromHardwareModules",
@@ -268,8 +278,10 @@ public class DeviceModelService : IDeviceModelService
         return true;
     }
 
-    public async Task<bool> AddToFirmwareReleases(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFirmwareReleases(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceModel",
                 "AddToFirmwareReleases",
@@ -277,16 +289,18 @@ public class DeviceModelService : IDeviceModelService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFirmwareReleases(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFirmwareReleases(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceModel",
                 "RemoveFromFirmwareReleases",
@@ -302,8 +316,10 @@ public class DeviceModelService : IDeviceModelService
         return true;
     }
 
-    public async Task<bool> AddToCommandDefinitions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCommandDefinitions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceModel",
                 "AddToCommandDefinitions",
@@ -311,16 +327,18 @@ public class DeviceModelService : IDeviceModelService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCommandDefinitions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCommandDefinitions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DeviceModel",
                 "RemoveFromCommandDefinitions",

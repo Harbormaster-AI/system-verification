@@ -27,9 +27,10 @@ public static class EdgeApplicationEndpoints
     private static async Task<IResult> Create(
         EdgeApplicationRequest request,
         IEdgeApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEdgeApplication( request );
+        var model = mapRequestToEdgeApplication(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class EdgeApplicationEndpoints
     private static async Task<IResult> Update(
         EdgeApplicationRequest request,
         IEdgeApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToEdgeApplication( request );
+        var model = mapRequestToEdgeApplication(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class EdgeApplicationEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IEdgeApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var edgeApplication = await service.Get(identifier, cancellationToken);
-        return edgeApplication is null ? Results.NotFound() : Results.Ok( edgeApplication );
+        return edgeApplication is null ? Results.NotFound() : Results.Ok(edgeApplication);
     }
 
 
     private static async Task<IResult> GetAll(
         IEdgeApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( EdgeApplicationResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(EdgeApplicationResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IEdgeApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class EdgeApplicationEndpoints
     private static async Task<IResult> AssignGateway(
         AssociationRequest request,
         IEdgeApplicationService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignGateway(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class EdgeApplicationEndpoints
     private static async Task<IResult> UnassignGateway(
     AssociationRequest request,
     IEdgeApplicationService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignGateway(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static EdgeApplication mapRequestToEdgeApplication( EdgeApplicationRequest request ) {
+    private static EdgeApplication mapRequestToEdgeApplication(EdgeApplicationRequest request)
+    {
         var model = new EdgeApplication
         {
             Id = request.Id,

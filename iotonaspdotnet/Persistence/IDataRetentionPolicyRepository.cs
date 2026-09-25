@@ -11,7 +11,7 @@ public interface IDataRetentionPolicyRepository
     Task UpdateAsync(DataRetentionPolicy dataRetentionPolicy, CancellationToken cancellationToken);
     Task DeleteAsync(DataRetentionPolicy dataRetentionPolicy, CancellationToken cancellationToken);
 
-    Task AddToStreamsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromStreamsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToStreamsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromStreamsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

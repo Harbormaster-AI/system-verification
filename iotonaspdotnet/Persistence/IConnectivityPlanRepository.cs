@@ -11,7 +11,7 @@ public interface IConnectivityPlanRepository
     Task UpdateAsync(ConnectivityPlan connectivityPlan, CancellationToken cancellationToken);
     Task DeleteAsync(ConnectivityPlan connectivityPlan, CancellationToken cancellationToken);
 
-    Task AddToSimCardsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSimCardsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSimCardsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSimCardsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

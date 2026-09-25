@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IRoomService {
+public interface IRoomService
+{
 
-    Task Create(Room model , CancellationToken cancellationToken);
+    Task Create(Room model, CancellationToken cancellationToken);
     Task<bool> Update(Room model, CancellationToken cancellationToken);
     Task<Room?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Room>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class RoomService : IRoomService
 
     public async Task<bool> Update(Room model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class RoomService : IRoomService
         return true;
     }
 
-    public async Task<bool> AssignFloor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFloor(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class RoomService : IRoomService
 
             var child = await _serviceResolver.Get<FloorService>().Get(childRequest, cancellationToken);
             parent.Floor = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class RoomService : IRoomService
         return true;
     }
 
-    public async Task<bool> UnassignFloor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFloor(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class RoomService : IRoomService
         try
         {
             parent.Floor = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class RoomService : IRoomService
     }
 
 
-    public async Task<bool> AddToDevices(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDevices(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Room",
                 "AddToDevices",
@@ -182,16 +188,18 @@ public class RoomService : IRoomService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDevices(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDevices(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Room",
                 "RemoveFromDevices",
@@ -207,8 +215,10 @@ public class RoomService : IRoomService
         return true;
     }
 
-    public async Task<bool> AddToGateways(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToGateways(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Room",
                 "AddToGateways",
@@ -216,16 +226,18 @@ public class RoomService : IRoomService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromGateways(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromGateways(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Room",
                 "RemoveFromGateways",

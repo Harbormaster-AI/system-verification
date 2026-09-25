@@ -11,7 +11,7 @@ public interface IDeviceGroupRepository
     Task UpdateAsync(DeviceGroup deviceGroup, CancellationToken cancellationToken);
     Task DeleteAsync(DeviceGroup deviceGroup, CancellationToken cancellationToken);
 
-    Task AddToDevicesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDevicesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDevicesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDevicesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

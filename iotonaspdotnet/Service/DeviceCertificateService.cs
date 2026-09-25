@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IDeviceCertificateService {
+public interface IDeviceCertificateService
+{
 
-    Task Create(DeviceCertificate model , CancellationToken cancellationToken);
+    Task Create(DeviceCertificate model, CancellationToken cancellationToken);
     Task<bool> Update(DeviceCertificate model, CancellationToken cancellationToken);
     Task<DeviceCertificate?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DeviceCertificate>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class DeviceCertificateService : IDeviceCertificateService
 
     public async Task<bool> Update(DeviceCertificate model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class DeviceCertificateService : IDeviceCertificateService
         return true;
     }
 
-    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class DeviceCertificateService : IDeviceCertificateService
 
             var child = await _serviceResolver.Get<IoTDeviceService>().Get(childRequest, cancellationToken);
             parent.Device = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class DeviceCertificateService : IDeviceCertificateService
         return true;
     }
 
-    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class DeviceCertificateService : IDeviceCertificateService
         try
         {
             parent.Device = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class DeviceCertificateService : IDeviceCertificateService
         return true;
     }
 
-    public async Task<bool> AssignGateway(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignGateway(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class DeviceCertificateService : IDeviceCertificateService
 
             var child = await _serviceResolver.Get<GatewayService>().Get(childRequest, cancellationToken);
             parent.Gateway = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class DeviceCertificateService : IDeviceCertificateService
         return true;
     }
 
-    public async Task<bool> UnassignGateway(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignGateway(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class DeviceCertificateService : IDeviceCertificateService
         try
         {
             parent.Gateway = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

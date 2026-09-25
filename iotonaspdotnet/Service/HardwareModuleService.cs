@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IHardwareModuleService {
+public interface IHardwareModuleService
+{
 
-    Task Create(HardwareModule model , CancellationToken cancellationToken);
+    Task Create(HardwareModule model, CancellationToken cancellationToken);
     Task<bool> Update(HardwareModule model, CancellationToken cancellationToken);
     Task<HardwareModule?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<HardwareModule>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class HardwareModuleService : IHardwareModuleService
 
     public async Task<bool> Update(HardwareModule model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class HardwareModuleService : IHardwareModuleService
         return true;
     }
 
-    public async Task<bool> AssignVendor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignVendor(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class HardwareModuleService : IHardwareModuleService
 
             var child = await _serviceResolver.Get<DeviceVendorService>().Get(childRequest, cancellationToken);
             parent.Vendor = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class HardwareModuleService : IHardwareModuleService
         return true;
     }
 
-    public async Task<bool> UnassignVendor(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignVendor(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class HardwareModuleService : IHardwareModuleService
         try
         {
             parent.Vendor = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

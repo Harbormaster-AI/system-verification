@@ -11,7 +11,7 @@ public interface ISimCardRepository
     Task UpdateAsync(SimCard simCard, CancellationToken cancellationToken);
     Task DeleteAsync(SimCard simCard, CancellationToken cancellationToken);
 
-    Task AddToNetworkProfilesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromNetworkProfilesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToNetworkProfilesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromNetworkProfilesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

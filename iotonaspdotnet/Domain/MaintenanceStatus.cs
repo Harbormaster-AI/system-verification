@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum MaintenanceStatus
 {
-    Open=1,InProgress=2,WaitingOnParts=3,Closed=4
+    Open = 1, InProgress = 2, WaitingOnParts = 3, Closed = 4
 }
 
 /// <summary>

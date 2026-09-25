@@ -11,9 +11,9 @@ public interface ICommandDefinitionRepository
     Task UpdateAsync(CommandDefinition commandDefinition, CancellationToken cancellationToken);
     Task DeleteAsync(CommandDefinition commandDefinition, CancellationToken cancellationToken);
 
-    Task AddToActuatorsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromActuatorsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCommandInvocationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCommandInvocationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToActuatorsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromActuatorsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCommandInvocationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCommandInvocationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

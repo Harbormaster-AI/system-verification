@@ -11,7 +11,7 @@ public interface ITenantUserRepository
     Task UpdateAsync(TenantUser tenantUser, CancellationToken cancellationToken);
     Task DeleteAsync(TenantUser tenantUser, CancellationToken cancellationToken);
 
-    Task AddToCommandInvocationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCommandInvocationsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCommandInvocationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCommandInvocationsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

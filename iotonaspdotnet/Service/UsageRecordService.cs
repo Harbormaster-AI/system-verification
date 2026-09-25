@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IUsageRecordService {
+public interface IUsageRecordService
+{
 
-    Task Create(UsageRecord model , CancellationToken cancellationToken);
+    Task Create(UsageRecord model, CancellationToken cancellationToken);
     Task<bool> Update(UsageRecord model, CancellationToken cancellationToken);
     Task<UsageRecord?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<UsageRecord>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class UsageRecordService : IUsageRecordService
 
     public async Task<bool> Update(UsageRecord model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class UsageRecordService : IUsageRecordService
         return true;
     }
 
-    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class UsageRecordService : IUsageRecordService
 
             var child = await _serviceResolver.Get<TenantService>().Get(childRequest, cancellationToken);
             parent.Tenant = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class UsageRecordService : IUsageRecordService
         return true;
     }
 
-    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTenant(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class UsageRecordService : IUsageRecordService
         try
         {
             parent.Tenant = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class UsageRecordService : IUsageRecordService
         return true;
     }
 
-    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class UsageRecordService : IUsageRecordService
 
             var child = await _serviceResolver.Get<IoTDeviceService>().Get(childRequest, cancellationToken);
             parent.Device = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class UsageRecordService : IUsageRecordService
         return true;
     }
 
-    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class UsageRecordService : IUsageRecordService
         try
         {
             parent.Device = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class UsageRecordService : IUsageRecordService
         return true;
     }
 
-    public async Task<bool> AssignConnectivityPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignConnectivityPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class UsageRecordService : IUsageRecordService
 
             var child = await _serviceResolver.Get<ConnectivityPlanService>().Get(childRequest, cancellationToken);
             parent.ConnectivityPlan = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class UsageRecordService : IUsageRecordService
         return true;
     }
 
-    public async Task<bool> UnassignConnectivityPlan(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignConnectivityPlan(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class UsageRecordService : IUsageRecordService
         try
         {
             parent.ConnectivityPlan = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

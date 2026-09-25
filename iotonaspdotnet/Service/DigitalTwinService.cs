@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IDigitalTwinService {
+public interface IDigitalTwinService
+{
 
-    Task Create(DigitalTwin model , CancellationToken cancellationToken);
+    Task Create(DigitalTwin model, CancellationToken cancellationToken);
     Task<bool> Update(DigitalTwin model, CancellationToken cancellationToken);
     Task<DigitalTwin?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<DigitalTwin>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class DigitalTwinService : IDigitalTwinService
 
     public async Task<bool> Update(DigitalTwin model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class DigitalTwinService : IDigitalTwinService
         return true;
     }
 
-    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class DigitalTwinService : IDigitalTwinService
 
             var child = await _serviceResolver.Get<IoTDeviceService>().Get(childRequest, cancellationToken);
             parent.Device = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class DigitalTwinService : IDigitalTwinService
         return true;
     }
 
-    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignDevice(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class DigitalTwinService : IDigitalTwinService
         try
         {
             parent.Device = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class DigitalTwinService : IDigitalTwinService
         return true;
     }
 
-    public async Task<bool> AssignGateway(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignGateway(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class DigitalTwinService : IDigitalTwinService
 
             var child = await _serviceResolver.Get<GatewayService>().Get(childRequest, cancellationToken);
             parent.Gateway = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class DigitalTwinService : IDigitalTwinService
         return true;
     }
 
-    public async Task<bool> UnassignGateway(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignGateway(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class DigitalTwinService : IDigitalTwinService
         try
         {
             parent.Gateway = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,7 +236,8 @@ public class DigitalTwinService : IDigitalTwinService
         return true;
     }
 
-    public async Task<bool> AssignTemplate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTemplate(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -248,7 +255,7 @@ public class DigitalTwinService : IDigitalTwinService
 
             var child = await _serviceResolver.Get<TwinTemplateService>().Get(childRequest, cancellationToken);
             parent.Template = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -260,7 +267,8 @@ public class DigitalTwinService : IDigitalTwinService
         return true;
     }
 
-    public async Task<bool> UnassignTemplate(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTemplate(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -271,7 +279,7 @@ public class DigitalTwinService : IDigitalTwinService
         try
         {
             parent.Template = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,8 +292,10 @@ public class DigitalTwinService : IDigitalTwinService
     }
 
 
-    public async Task<bool> AddToChangeEvents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToChangeEvents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DigitalTwin",
                 "AddToChangeEvents",
@@ -293,16 +303,18 @@ public class DigitalTwinService : IDigitalTwinService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromChangeEvents(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromChangeEvents(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "DigitalTwin",
                 "RemoveFromChangeEvents",

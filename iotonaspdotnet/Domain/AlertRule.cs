@@ -7,16 +7,18 @@ public class AlertRule
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- public virtual long? AlertruleId { get; set; } 
- public virtual string? Name { get; set; } 
- public virtual string? Expression { get; set; } 
-public virtual Tenant? Tenant { get; set; } 
-public virtual ICollection<TelemetryStream> Streams { get; set; } = new List<TelemetryStream>();
-public virtual ICollection<Alert> Alerts { get; set; } = new List<Alert>();
- public virtual AlertSeverity? Severity { get; set; } 
+    public virtual long? AlertruleId { get; set; }
+    public virtual string? Name { get; set; }
+    public virtual string? Expression { get; set; }
+    public virtual Tenant? Tenant { get; set; }
+    public virtual ICollection<TelemetryStream> Streams { get; set; } = new List<TelemetryStream>();
+    public virtual ICollection<Alert> Alerts { get; set; } = new List<Alert>();
+    public virtual AlertSeverity? Severity { get; set; }
 
-    public static AlertRule FromRequest(AlertRuleRequest request) {
-        return new AlertRule {
+    public static AlertRule FromRequest(AlertRuleRequest request)
+    {
+        return new AlertRule
+        {
             Id = request.Id,
             Name = request.Name,
             Expression = request.Expression,

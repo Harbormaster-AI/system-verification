@@ -29,9 +29,10 @@ public static class MaintenanceTicketEndpoints
     private static async Task<IResult> Create(
         MaintenanceTicketRequest request,
         IMaintenanceTicketService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMaintenanceTicket( request );
+        var model = mapRequestToMaintenanceTicket(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class MaintenanceTicketEndpoints
     private static async Task<IResult> Update(
         MaintenanceTicketRequest request,
         IMaintenanceTicketService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMaintenanceTicket( request );
+        var model = mapRequestToMaintenanceTicket(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class MaintenanceTicketEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMaintenanceTicketService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var maintenanceTicket = await service.Get(identifier, cancellationToken);
-        return maintenanceTicket is null ? Results.NotFound() : Results.Ok( maintenanceTicket );
+        return maintenanceTicket is null ? Results.NotFound() : Results.Ok(maintenanceTicket);
     }
 
 
     private static async Task<IResult> GetAll(
         IMaintenanceTicketService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MaintenanceTicketResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MaintenanceTicketResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMaintenanceTicketService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class MaintenanceTicketEndpoints
     private static async Task<IResult> AssignDevice(
         AssociationRequest request,
         IMaintenanceTicketService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDevice(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class MaintenanceTicketEndpoints
     private static async Task<IResult> UnassignDevice(
     AssociationRequest request,
     IMaintenanceTicketService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDevice(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class MaintenanceTicketEndpoints
     private static async Task<IResult> AssignTenant(
         AssociationRequest request,
         IMaintenanceTicketService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTenant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class MaintenanceTicketEndpoints
     private static async Task<IResult> UnassignTenant(
     AssociationRequest request,
     IMaintenanceTicketService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTenant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static MaintenanceTicket mapRequestToMaintenanceTicket( MaintenanceTicketRequest request ) {
+    private static MaintenanceTicket mapRequestToMaintenanceTicket(MaintenanceTicketRequest request)
+    {
         var model = new MaintenanceTicket
         {
             Id = request.Id,

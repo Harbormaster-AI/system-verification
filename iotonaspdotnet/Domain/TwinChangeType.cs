@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum TwinChangeType
 {
-    DesiredUpdated=1,ReportedUpdated=2,TagUpdated=3
+    DesiredUpdated = 1, ReportedUpdated = 2, TagUpdated = 3
 }
 
 /// <summary>

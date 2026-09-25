@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum DeploymentStatus
 {
-    Pending=1,Deploying=2,Running=3,Failed=4,Stopped=5
+    Pending = 1, Deploying = 2, Running = 3, Failed = 4, Stopped = 5
 }
 
 /// <summary>

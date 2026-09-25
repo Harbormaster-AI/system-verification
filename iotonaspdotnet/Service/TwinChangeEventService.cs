@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface ITwinChangeEventService {
+public interface ITwinChangeEventService
+{
 
-    Task Create(TwinChangeEvent model , CancellationToken cancellationToken);
+    Task Create(TwinChangeEvent model, CancellationToken cancellationToken);
     Task<bool> Update(TwinChangeEvent model, CancellationToken cancellationToken);
     Task<TwinChangeEvent?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TwinChangeEvent>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class TwinChangeEventService : ITwinChangeEventService
 
     public async Task<bool> Update(TwinChangeEvent model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class TwinChangeEventService : ITwinChangeEventService
         return true;
     }
 
-    public async Task<bool> AssignTwin(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTwin(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class TwinChangeEventService : ITwinChangeEventService
 
             var child = await _serviceResolver.Get<DigitalTwinService>().Get(childRequest, cancellationToken);
             parent.Twin = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class TwinChangeEventService : ITwinChangeEventService
         return true;
     }
 
-    public async Task<bool> UnassignTwin(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTwin(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class TwinChangeEventService : ITwinChangeEventService
         try
         {
             parent.Twin = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

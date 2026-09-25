@@ -11,7 +11,7 @@ public interface IActuatorInstanceRepository
     Task UpdateAsync(ActuatorInstance actuatorInstance, CancellationToken cancellationToken);
     Task DeleteAsync(ActuatorInstance actuatorInstance, CancellationToken cancellationToken);
 
-    Task AddToSupportedCommandsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSupportedCommandsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSupportedCommandsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSupportedCommandsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

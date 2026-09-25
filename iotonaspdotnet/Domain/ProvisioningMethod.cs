@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum ProvisioningMethod
 {
-    Manual=1,JITP=2,JITR=3,Bulk=4,ZeroTouch=5
+    Manual = 1, JITP = 2, JITR = 3, Bulk = 4, ZeroTouch = 5
 }
 
 /// <summary>

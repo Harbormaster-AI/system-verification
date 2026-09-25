@@ -31,9 +31,10 @@ public static class ProvisioningRecordEndpoints
     private static async Task<IResult> Create(
         ProvisioningRecordRequest request,
         IProvisioningRecordService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProvisioningRecord( request );
+        var model = mapRequestToProvisioningRecord(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class ProvisioningRecordEndpoints
     private static async Task<IResult> Update(
         ProvisioningRecordRequest request,
         IProvisioningRecordService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToProvisioningRecord( request );
+        var model = mapRequestToProvisioningRecord(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class ProvisioningRecordEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IProvisioningRecordService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var provisioningRecord = await service.Get(identifier, cancellationToken);
-        return provisioningRecord is null ? Results.NotFound() : Results.Ok( provisioningRecord );
+        return provisioningRecord is null ? Results.NotFound() : Results.Ok(provisioningRecord);
     }
 
 
     private static async Task<IResult> GetAll(
         IProvisioningRecordService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ProvisioningRecordResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ProvisioningRecordResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IProvisioningRecordService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class ProvisioningRecordEndpoints
     private static async Task<IResult> AssignDevice(
         AssociationRequest request,
         IProvisioningRecordService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDevice(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class ProvisioningRecordEndpoints
     private static async Task<IResult> UnassignDevice(
     AssociationRequest request,
     IProvisioningRecordService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDevice(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class ProvisioningRecordEndpoints
     private static async Task<IResult> AssignCertificate(
         AssociationRequest request,
         IProvisioningRecordService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCertificate(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class ProvisioningRecordEndpoints
     private static async Task<IResult> UnassignCertificate(
     AssociationRequest request,
     IProvisioningRecordService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCertificate(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class ProvisioningRecordEndpoints
     private static async Task<IResult> AssignTenant(
         AssociationRequest request,
         IProvisioningRecordService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTenant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class ProvisioningRecordEndpoints
     private static async Task<IResult> UnassignTenant(
     AssociationRequest request,
     IProvisioningRecordService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTenant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ProvisioningRecord mapRequestToProvisioningRecord( ProvisioningRecordRequest request ) {
+    private static ProvisioningRecord mapRequestToProvisioningRecord(ProvisioningRecordRequest request)
+    {
         var model = new ProvisioningRecord
         {
             Id = request.Id,

@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface ITelemetrySchemaService {
+public interface ITelemetrySchemaService
+{
 
-    Task Create(TelemetrySchema model , CancellationToken cancellationToken);
+    Task Create(TelemetrySchema model, CancellationToken cancellationToken);
     Task<bool> Update(TelemetrySchema model, CancellationToken cancellationToken);
     Task<TelemetrySchema?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TelemetrySchema>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class TelemetrySchemaService : ITelemetrySchemaService
 
     public async Task<bool> Update(TelemetrySchema model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,8 +120,10 @@ public class TelemetrySchemaService : ITelemetrySchemaService
     }
 
 
-    public async Task<bool> AddToStreams(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToStreams(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TelemetrySchema",
                 "AddToStreams",
@@ -127,16 +131,18 @@ public class TelemetrySchemaService : ITelemetrySchemaService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromStreams(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromStreams(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TelemetrySchema",
                 "RemoveFromStreams",

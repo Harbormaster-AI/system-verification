@@ -20,11 +20,11 @@ public static class RoomEndpoints
         group.MapPut("/assignFloor", AssignFloor);
         group.MapPut("/unassignFloor", UnassignFloor);
 
-    group.MapPut("/addToDevices", AddToDevices);
-    group.MapPut("/removeFromDevices", RemoveFromDevices);
+        group.MapPut("/addToDevices", AddToDevices);
+        group.MapPut("/removeFromDevices", RemoveFromDevices);
 
-    group.MapPut("/addToGateways", AddToGateways);
-    group.MapPut("/removeFromGateways", RemoveFromGateways);
+        group.MapPut("/addToGateways", AddToGateways);
+        group.MapPut("/removeFromGateways", RemoveFromGateways);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class RoomEndpoints
     private static async Task<IResult> Create(
         RoomRequest request,
         IRoomService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRoom( request );
+        var model = mapRequestToRoom(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class RoomEndpoints
     private static async Task<IResult> Update(
         RoomRequest request,
         IRoomService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRoom( request );
+        var model = mapRequestToRoom(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class RoomEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRoomService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var room = await service.Get(identifier, cancellationToken);
-        return room is null ? Results.NotFound() : Results.Ok( room );
+        return room is null ? Results.NotFound() : Results.Ok(room);
     }
 
 
     private static async Task<IResult> GetAll(
         IRoomService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RoomResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RoomResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRoomService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class RoomEndpoints
     private static async Task<IResult> AssignFloor(
         AssociationRequest request,
         IRoomService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignFloor(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class RoomEndpoints
     private static async Task<IResult> UnassignFloor(
     AssociationRequest request,
     IRoomService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignFloor(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class RoomEndpoints
     private static async Task<IResult> AddToDevices(
         MultipleAssociationRequest request,
         IRoomService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDevices(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class RoomEndpoints
     private static async Task<IResult> RemoveFromDevices(
         MultipleAssociationRequest request,
         IRoomService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDevices(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToGateways(
         MultipleAssociationRequest request,
         IRoomService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToGateways(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class RoomEndpoints
     private static async Task<IResult> RemoveFromGateways(
         MultipleAssociationRequest request,
         IRoomService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromGateways(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Room mapRequestToRoom( RoomRequest request ) {
+    private static Room mapRequestToRoom(RoomRequest request)
+    {
         var model = new Room
         {
             Id = request.Id,

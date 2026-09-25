@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface ITwinTemplateService {
+public interface ITwinTemplateService
+{
 
-    Task Create(TwinTemplate model , CancellationToken cancellationToken);
+    Task Create(TwinTemplate model, CancellationToken cancellationToken);
     Task<bool> Update(TwinTemplate model, CancellationToken cancellationToken);
     Task<TwinTemplate?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TwinTemplate>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class TwinTemplateService : ITwinTemplateService
 
     public async Task<bool> Update(TwinTemplate model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,8 +120,10 @@ public class TwinTemplateService : ITwinTemplateService
     }
 
 
-    public async Task<bool> AddToDeviceModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToDeviceModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TwinTemplate",
                 "AddToDeviceModels",
@@ -127,16 +131,18 @@ public class TwinTemplateService : ITwinTemplateService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromDeviceModels(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromDeviceModels(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TwinTemplate",
                 "RemoveFromDeviceModels",

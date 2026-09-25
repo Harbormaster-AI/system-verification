@@ -20,8 +20,8 @@ public static class DeviceGroupEndpoints
         group.MapPut("/assignTenant", AssignTenant);
         group.MapPut("/unassignTenant", UnassignTenant);
 
-    group.MapPut("/addToDevices", AddToDevices);
-    group.MapPut("/removeFromDevices", RemoveFromDevices);
+        group.MapPut("/addToDevices", AddToDevices);
+        group.MapPut("/removeFromDevices", RemoveFromDevices);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class DeviceGroupEndpoints
     private static async Task<IResult> Create(
         DeviceGroupRequest request,
         IDeviceGroupService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDeviceGroup( request );
+        var model = mapRequestToDeviceGroup(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class DeviceGroupEndpoints
     private static async Task<IResult> Update(
         DeviceGroupRequest request,
         IDeviceGroupService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToDeviceGroup( request );
+        var model = mapRequestToDeviceGroup(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class DeviceGroupEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IDeviceGroupService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var deviceGroup = await service.Get(identifier, cancellationToken);
-        return deviceGroup is null ? Results.NotFound() : Results.Ok( deviceGroup );
+        return deviceGroup is null ? Results.NotFound() : Results.Ok(deviceGroup);
     }
 
 
     private static async Task<IResult> GetAll(
         IDeviceGroupService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( DeviceGroupResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(DeviceGroupResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IDeviceGroupService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class DeviceGroupEndpoints
     private static async Task<IResult> AssignTenant(
         AssociationRequest request,
         IDeviceGroupService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTenant(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class DeviceGroupEndpoints
     private static async Task<IResult> UnassignTenant(
     AssociationRequest request,
     IDeviceGroupService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTenant(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class DeviceGroupEndpoints
     private static async Task<IResult> AddToDevices(
         MultipleAssociationRequest request,
         IDeviceGroupService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToDevices(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class DeviceGroupEndpoints
     private static async Task<IResult> RemoveFromDevices(
         MultipleAssociationRequest request,
         IDeviceGroupService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromDevices(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static DeviceGroup mapRequestToDeviceGroup( DeviceGroupRequest request ) {
+    private static DeviceGroup mapRequestToDeviceGroup(DeviceGroupRequest request)
+    {
         var model = new DeviceGroup
         {
             Id = request.Id,

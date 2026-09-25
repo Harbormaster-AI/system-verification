@@ -11,7 +11,7 @@ public interface ITwinTemplateRepository
     Task UpdateAsync(TwinTemplate twinTemplate, CancellationToken cancellationToken);
     Task DeleteAsync(TwinTemplate twinTemplate, CancellationToken cancellationToken);
 
-    Task AddToDeviceModelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromDeviceModelsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToDeviceModelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromDeviceModelsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -18,8 +18,8 @@ public static class TelemetrySchemaEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToStreams", AddToStreams);
-    group.MapPut("/removeFromStreams", RemoveFromStreams);
+        group.MapPut("/addToStreams", AddToStreams);
+        group.MapPut("/removeFromStreams", RemoveFromStreams);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class TelemetrySchemaEndpoints
     private static async Task<IResult> Create(
         TelemetrySchemaRequest request,
         ITelemetrySchemaService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTelemetrySchema( request );
+        var model = mapRequestToTelemetrySchema(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class TelemetrySchemaEndpoints
     private static async Task<IResult> Update(
         TelemetrySchemaRequest request,
         ITelemetrySchemaService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTelemetrySchema( request );
+        var model = mapRequestToTelemetrySchema(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class TelemetrySchemaEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITelemetrySchemaService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var telemetrySchema = await service.Get(identifier, cancellationToken);
-        return telemetrySchema is null ? Results.NotFound() : Results.Ok( telemetrySchema );
+        return telemetrySchema is null ? Results.NotFound() : Results.Ok(telemetrySchema);
     }
 
 
     private static async Task<IResult> GetAll(
         ITelemetrySchemaService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TelemetrySchemaResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TelemetrySchemaResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITelemetrySchemaService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class TelemetrySchemaEndpoints
     private static async Task<IResult> AddToStreams(
         MultipleAssociationRequest request,
         ITelemetrySchemaService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToStreams(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class TelemetrySchemaEndpoints
     private static async Task<IResult> RemoveFromStreams(
         MultipleAssociationRequest request,
         ITelemetrySchemaService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromStreams(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static TelemetrySchema mapRequestToTelemetrySchema( TelemetrySchemaRequest request ) {
+    private static TelemetrySchema mapRequestToTelemetrySchema(TelemetrySchemaRequest request)
+    {
         var model = new TelemetrySchema
         {
             Id = request.Id,

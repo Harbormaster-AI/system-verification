@@ -6,9 +6,10 @@ using iotonaspdotnet.Telemetry;
 
 namespace iotonaspdotnet.Service;
 
-public interface IFloorService {
+public interface IFloorService
+{
 
-    Task Create(Floor model , CancellationToken cancellationToken);
+    Task Create(Floor model, CancellationToken cancellationToken);
     Task<bool> Update(Floor model, CancellationToken cancellationToken);
     Task<Floor?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Floor>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class FloorService : IFloorService
 
     public async Task<bool> Update(Floor model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -118,7 +120,8 @@ public class FloorService : IFloorService
         return true;
     }
 
-    public async Task<bool> AssignBuilding(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBuilding(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -136,7 +139,7 @@ public class FloorService : IFloorService
 
             var child = await _serviceResolver.Get<BuildingService>().Get(childRequest, cancellationToken);
             parent.Building = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -148,7 +151,8 @@ public class FloorService : IFloorService
         return true;
     }
 
-    public async Task<bool> UnassignBuilding(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBuilding(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -159,7 +163,7 @@ public class FloorService : IFloorService
         try
         {
             parent.Building = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -172,8 +176,10 @@ public class FloorService : IFloorService
     }
 
 
-    public async Task<bool> AddToRooms(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRooms(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Floor",
                 "AddToRooms",
@@ -181,16 +187,18 @@ public class FloorService : IFloorService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRooms(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRooms(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Floor",
                 "RemoveFromRooms",

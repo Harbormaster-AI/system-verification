@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum ProvisioningStatus
 {
-    Pending=1,Enrolled=2,Failed=3,Revoked=4
+    Pending = 1, Enrolled = 2, Failed = 3, Revoked = 4
 }
 
 /// <summary>

@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum ConnectivityType
 {
-    WiFi=1,Ethernet=2,LTE=3,FiveG=4,NBIoT=5,LoRaWAN=6,Zigbee=7,BLE=8,Satellite=9
+    WiFi = 1, Ethernet = 2, LTE = 3, FiveG = 4, NBIoT = 5, LoRaWAN = 6, Zigbee = 7, BLE = 8, Satellite = 9
 }
 
 /// <summary>

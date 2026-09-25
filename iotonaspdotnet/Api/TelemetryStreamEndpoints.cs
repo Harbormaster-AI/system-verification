@@ -35,9 +35,10 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> Create(
         TelemetryStreamRequest request,
         ITelemetryStreamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTelemetryStream( request );
+        var model = mapRequestToTelemetryStream(request);
 
         try
         {
@@ -54,9 +55,10 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> Update(
         TelemetryStreamRequest request,
         ITelemetryStreamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTelemetryStream( request );
+        var model = mapRequestToTelemetryStream(request);
 
         try
         {
@@ -73,25 +75,28 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITelemetryStreamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var telemetryStream = await service.Get(identifier, cancellationToken);
-        return telemetryStream is null ? Results.NotFound() : Results.Ok( telemetryStream );
+        return telemetryStream is null ? Results.NotFound() : Results.Ok(telemetryStream);
     }
 
 
     private static async Task<IResult> GetAll(
         ITelemetryStreamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TelemetryStreamResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TelemetryStreamResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITelemetryStreamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -99,7 +104,8 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> AssignDevice(
         AssociationRequest request,
         ITelemetryStreamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDevice(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -107,7 +113,8 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> UnassignDevice(
     AssociationRequest request,
     ITelemetryStreamService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDevice(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -115,7 +122,8 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> AssignSensor(
         AssociationRequest request,
         ITelemetryStreamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSensor(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +131,8 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> UnassignSensor(
     AssociationRequest request,
     ITelemetryStreamService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSensor(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -131,7 +140,8 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> AssignSchema(
         AssociationRequest request,
         ITelemetryStreamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignSchema(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -139,7 +149,8 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> UnassignSchema(
     AssociationRequest request,
     ITelemetryStreamService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignSchema(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -147,7 +158,8 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> AssignMessagingEndpoint(
         AssociationRequest request,
         ITelemetryStreamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMessagingEndpoint(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -155,7 +167,8 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> UnassignMessagingEndpoint(
     AssociationRequest request,
     ITelemetryStreamService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMessagingEndpoint(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -163,7 +176,8 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> AssignRetentionPolicy(
         AssociationRequest request,
         ITelemetryStreamService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRetentionPolicy(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -171,13 +185,15 @@ public static class TelemetryStreamEndpoints
     private static async Task<IResult> UnassignRetentionPolicy(
     AssociationRequest request,
     ITelemetryStreamService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRetentionPolicy(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static TelemetryStream mapRequestToTelemetryStream( TelemetryStreamRequest request ) {
+    private static TelemetryStream mapRequestToTelemetryStream(TelemetryStreamRequest request)
+    {
         var model = new TelemetryStream
         {
             Id = request.Id,

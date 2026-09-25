@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum TelemetryEncoding
 {
-    JSON=1,CBOR=2,Protobuf=3,Avro=4,Binary=5
+    JSON = 1, CBOR = 2, Protobuf = 3, Avro = 4, Binary = 5
 }
 
 /// <summary>

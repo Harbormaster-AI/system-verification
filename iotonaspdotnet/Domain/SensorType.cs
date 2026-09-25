@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum SensorType
 {
-    Temperature=1,Humidity=2,Pressure=3,Accelerometer=4,Gyroscope=5,GPS=6,Light=7,CO2=8,VOC=9,Current=10,Voltage=11
+    Temperature = 1, Humidity = 2, Pressure = 3, Accelerometer = 4, Gyroscope = 5, GPS = 6, Light = 7, CO2 = 8, VOC = 9, Current = 10, Voltage = 11
 }
 
 /// <summary>

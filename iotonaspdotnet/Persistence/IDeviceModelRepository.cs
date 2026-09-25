@@ -11,11 +11,11 @@ public interface IDeviceModelRepository
     Task UpdateAsync(DeviceModel deviceModel, CancellationToken cancellationToken);
     Task DeleteAsync(DeviceModel deviceModel, CancellationToken cancellationToken);
 
-    Task AddToHardwareModulesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromHardwareModulesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToFirmwareReleasesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromFirmwareReleasesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCommandDefinitionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCommandDefinitionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToHardwareModulesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromHardwareModulesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToFirmwareReleasesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromFirmwareReleasesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCommandDefinitionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCommandDefinitionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

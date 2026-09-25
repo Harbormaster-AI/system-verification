@@ -20,8 +20,8 @@ public static class FloorEndpoints
         group.MapPut("/assignBuilding", AssignBuilding);
         group.MapPut("/unassignBuilding", UnassignBuilding);
 
-    group.MapPut("/addToRooms", AddToRooms);
-    group.MapPut("/removeFromRooms", RemoveFromRooms);
+        group.MapPut("/addToRooms", AddToRooms);
+        group.MapPut("/removeFromRooms", RemoveFromRooms);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class FloorEndpoints
     private static async Task<IResult> Create(
         FloorRequest request,
         IFloorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFloor( request );
+        var model = mapRequestToFloor(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class FloorEndpoints
     private static async Task<IResult> Update(
         FloorRequest request,
         IFloorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFloor( request );
+        var model = mapRequestToFloor(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class FloorEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IFloorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var floor = await service.Get(identifier, cancellationToken);
-        return floor is null ? Results.NotFound() : Results.Ok( floor );
+        return floor is null ? Results.NotFound() : Results.Ok(floor);
     }
 
 
     private static async Task<IResult> GetAll(
         IFloorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( FloorResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(FloorResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IFloorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class FloorEndpoints
     private static async Task<IResult> AssignBuilding(
         AssociationRequest request,
         IFloorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBuilding(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class FloorEndpoints
     private static async Task<IResult> UnassignBuilding(
     AssociationRequest request,
     IFloorService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBuilding(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class FloorEndpoints
     private static async Task<IResult> AddToRooms(
         MultipleAssociationRequest request,
         IFloorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRooms(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class FloorEndpoints
     private static async Task<IResult> RemoveFromRooms(
         MultipleAssociationRequest request,
         IFloorService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRooms(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Floor mapRequestToFloor( FloorRequest request ) {
+    private static Floor mapRequestToFloor(FloorRequest request)
+    {
         var model = new Floor
         {
             Id = request.Id,

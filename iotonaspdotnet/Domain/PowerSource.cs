@@ -36,7 +36,7 @@ namespace iotonaspdotnet.Domain;
 
 public enum PowerSource
 {
-    Battery=1,Mains=2,PoE=3,EnergyHarvesting=4,Solar=5
+    Battery = 1, Mains = 2, PoE = 3, EnergyHarvesting = 4, Solar = 5
 }
 
 /// <summary>
