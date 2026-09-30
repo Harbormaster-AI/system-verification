@@ -625,13 +625,18 @@ jobs:
             git config user.email "dev@harbormaster.net"
           
             git branch -M main
-          
-            gh repo create "$DESTINATION_DIRECTORY" \
-              --private \
-              --source=. \
-              --remote=destination \
-              --push
-          
+      
+            # Create the destination repository.
+            gh repo create "$DESTINATION_REPOSITORY" \
+            --private
+      
+            # Add the newly created repository as a second remote.
+            git remote add destination \
+            "https://x-access-token:${GH_TOKEN}@github.com/${DESTINATION_REPOSITORY}.git"
+      
+            # Push the already-committed generated system.
+            git push destination HEAD:main          
+
             echo "Generated system published to ${DESTINATION_REPOSITORY}:main"
           
             post_pass \
