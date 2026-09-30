@@ -275,7 +275,7 @@ jobs:
           
           echo "Starting $PACKAGE"
 
-          export JAVA_TOOL_OPTIONS="-Xmx4g"
+          export JAVA_TOOL_OPTIONS="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
   
           java \
             -Ddebug  \
