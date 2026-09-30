@@ -627,10 +627,8 @@ jobs:
           
             git branch -M main
           
-            # Remove the remote if this step is being retried.
             git remote remove destination 2>/dev/null || true
           
-            # Create the destination repository if it does not already exist.
             if gh repo view "$DESTINATION_REPOSITORY" >/dev/null 2>&1; then
           
               echo "Destination repository already exists: $DESTINATION_REPOSITORY"
@@ -640,18 +638,22 @@ jobs:
               echo "Creating destination repository: $DESTINATION_REPOSITORY"
             
               gh repo create "$DESTINATION_REPOSITORY" \
-               --private
+                --private
           
             fi
           
-            # Add the destination repository.
-            git remote add destination \
-              "https://x-access-token:${GH_TOKEN}@github.com/${DESTINATION_REPOSITORY}.git"
+            # Get the canonical repository URL from GitHub.
+            DESTINATION_URL=$(gh repo view "$DESTINATION_REPOSITORY" \
+              --json url \
+              --jq '.url')
           
-            # Publish the verified generated system.
+            echo "Destination URL: $DESTINATION_URL"
+          
+            git remote add destination "${DESTINATION_URL}.git"
+          
             git push destination HEAD:main
           
-            echo "Generated system published to ${DESTINATION_REPOSITORY}:main"
+            echo "Generated system published to ${DESTINATION_URL}:main"
           
             post_pass \
               "DELIVERY" \
@@ -661,7 +663,6 @@ jobs:
               "The generated system was published to repository ${DESTINATION_REPOSITORY} on main with no feature branch"
           
           fi
-
       ###############################################################################
       # Cleanup
       ###############################################################################
