@@ -621,43 +621,255 @@ jobs:
           if [ -n "$DESTINATION_REPOSITORY" ]; then
         
             set -e
-                    
-            git config user.name "Harbormaster"
-            git config user.email "dev@harbormaster.net"
-            
-            git branch -M main
-            
-            if gh repo view "$DESTINATION_REPOSITORY" >/dev/null 2>&1; then
-              echo "Destination repository already exists: $DESTINATION_REPOSITORY"
-            else
-              echo "Creating destination repository: $DESTINATION_REPOSITORY"
           
-              gh repo create "$DESTINATION_REPOSITORY" \
-                --private
+            API="https://api.github.com"
+            TOKEN="${{ inputs.gitHubToken }}"
+            SOURCE_DIR="${SOURCE_DIR:-.}"
+          
+            echo "Publishing generated system to GitHub..."
+          
+            # ------------------------------------------------------------
+            # 1. Determine authenticated GitHub user
+            # ------------------------------------------------------------
+          
+            GITHUB_OWNER=$(curl -fsS \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $TOKEN" \
+              "$API/user" \
+            | jq -r '.login')
+          
+            if [ -z "$GITHUB_OWNER" ] || [ "$GITHUB_OWNER" = "null" ]; then
+              echo "Unable to determine authenticated GitHub user."
+              exit 1
             fi
-            
-            DESTINATION_URL=$(gh repo view "$DESTINATION_REPOSITORY" \
-              --json url \
-              --jq '.url')
           
+            echo "GitHub owner: $GITHUB_OWNER"
+          
+            REPOSITORY="$GITHUB_OWNER/$DESTINATION_REPOSITORY"
+          
+            echo "Destination repository: $REPOSITORY"
+          
+            # ------------------------------------------------------------
+            # 2. Create destination repository if it does not exist
+            # ------------------------------------------------------------
+          
+            if curl -fsS \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $TOKEN" \
+              "$API/repos/$REPOSITORY" \
+              >/dev/null 2>&1; then
+          
+              echo "Destination repository already exists: $DESTINATION_REPOSITORY"
+          
+            else
+          
+              echo "Creating destination repository: $DESTINATION_REPOSITORY"
+            
+              curl -fsS \
+                -X POST \
+                -H "Accept: application/vnd.github+json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -H "Content-Type: application/json" \
+                "$API/user/repos" \
+                -d "$(jq -n \
+                  --arg name "$DESTINATION_REPOSITORY" \
+                    '{
+                      name: $name,
+                      private: true,
+                      auto_init: false
+                      }'
+                  )" \
+                >/dev/null
+          
+                echo "Destination repository created."
+          
+            fi
+          
+            # ------------------------------------------------------------
+            # 3. Verify that main does not already exist
+            #
+            #    We want the publication to create ONE initial commit.
+            #    Therefore, don't overwrite an existing main branch.
+            # ------------------------------------------------------------
+          
+            if curl -fsS \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $TOKEN" \
+              "$API/repos/$REPOSITORY/git/ref/heads/main" \
+              >/dev/null 2>&1; then
+          
+              echo "ERROR: Destination repository already contains a main branch."
+              echo "Publication aborted to avoid modifying an existing repository."
+            
+              exit 1
+            fi
+          
+            # ------------------------------------------------------------
+            # 4. Create temporary Git tree description
+            # ------------------------------------------------------------
+          
+            TREE_FILE=$(mktemp)
+            trap 'rm -f "$TREE_FILE"' EXIT
+          
+            echo "Creating Git blobs..."
+          
+            # Start an empty JSON array.
+            echo '[]' > "$TREE_FILE"
+          
+            # ------------------------------------------------------------
+            # 5. Create a Git blob for every generated file
+            # ------------------------------------------------------------
+          
+            while IFS= read -r -d '' FILE; do
+            
+              # Remove SOURCE_DIR prefix.
+              RELATIVE_PATH="${FILE#"$SOURCE_DIR"/}"
+              
+              # Normalize ./foo -> foo
+              RELATIVE_PATH="${RELATIVE_PATH#./}"
+              
+              echo "  $RELATIVE_PATH"
+              
+              # Encode file as base64.
+              CONTENT=$(base64 -w 0 "$FILE")
+              
+              BLOB_SHA=$(curl -fsS \
+                -X POST \
+                -H "Accept: application/vnd.github+json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -H "Content-Type: application/json" \
+                "$API/repos/$REPOSITORY/git/blobs" \
+                  -d "$(jq -n \
+                    --arg content "$CONTENT" \
+                    '{
+                        content: $content,
+                        encoding: "base64"
+                      }'
+                    )" \
+                  | jq -r '.sha')
+              
+              if [ -z "$BLOB_SHA" ] || [ "$BLOB_SHA" = "null" ]; then
+                echo "ERROR: Failed to create blob for $RELATIVE_PATH"
+                exit 1
+              fi
+              
+              # Add blob to Git tree.
+              jq \
+                --arg path "$RELATIVE_PATH" \
+                --arg sha "$BLOB_SHA" \
+                '. + [{
+                      path: $path,
+                      mode: "100644",
+                      type: "blob",
+                      sha: $sha
+                    }]' \
+                "$TREE_FILE" > "${TREE_FILE}.tmp"
+              
+              mv "${TREE_FILE}.tmp" "$TREE_FILE"
+          
+            done < <(
+              find "$SOURCE_DIR" \
+              -type f \
+              ! -path '*/.git/*' \
+              ! -path '*/target/*' \
+              ! -path '*/node_modules/*' \
+              ! -path '*/tmp/*' \
+              ! -path '*/log/*' \
+              ! -path '*/vendor/bundle/*' \
+              ! -name '*.hprof' \
+              -print0
+            )
+          
+            # ------------------------------------------------------------
+            # 6. Create Git tree
+            # ------------------------------------------------------------
+          
+            echo "Creating Git tree..."
+          
+            TREE_SHA=$(curl -fsS \
+              -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -H "Content-Type: application/json" \
+                "$API/repos/$REPOSITORY/git/trees" \
+                -d "$(jq -n \
+                  --slurpfile tree "$TREE_FILE" \
+                  '{tree: $tree[0]}'
+                )" \
+              | jq -r '.sha')
+            
+            if [ -z "$TREE_SHA" ] || [ "$TREE_SHA" = "null" ]; then
+              echo "ERROR: Failed to create Git tree."
+              exit 1
+            fi
+          
+            echo "Git tree created: $TREE_SHA"
+          
+            # ------------------------------------------------------------
+            # 7. Create the initial commit
+            # ------------------------------------------------------------
+          
+            echo "Creating initial commit..."
+          
+            COMMIT_SHA=$(curl -fsS \
+              -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -H "Content-Type: application/json" \
+                "$API/repos/$REPOSITORY/git/commits" \
+                -d "$(jq -n \
+                --arg message "Initial generated system" \
+                --arg tree "$TREE_SHA" \
+                '{
+              message: $message,
+              tree: $tree
+              }'
+                  )" \
+                  | jq -r '.sha')
+          
+            if [ -z "$COMMIT_SHA" ] || [ "$COMMIT_SHA" = "null" ]; then
+              echo "ERROR: Failed to create Git commit."
+              exit 1
+            fi
+          
+            echo "Initial commit created: $COMMIT_SHA"
+          
+            # ------------------------------------------------------------
+            # 8. Create main pointing to the initial commit
+            # ------------------------------------------------------------
+          
+            echo "Creating main branch..."
+          
+            curl -fsS \
+              -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -H "Content-Type: application/json" \
+              "$API/repos/$REPOSITORY/git/refs" \
+              -d "$(jq -n \
+                --arg sha "$COMMIT_SHA" \
+                '{
+                    ref: "refs/heads/main",
+                    sha: $sha
+                  }'
+                )" \
+            >/dev/null
+          
+            DESTINATION_URL="https://github.com/$REPOSITORY"
+          
+            echo "Generated system published successfully."
             echo "Destination URL: $DESTINATION_URL"
-            
-            git remote remove destination 2>/dev/null || true
-            git remote add destination "$DESTINATION_URL.git"
-          
-            git -c http.extraheader="Authorization: Bearer ${{ inputs.gitHubToken }}" \
-            push destination HEAD:main         
-            
-            echo "Generated system published to ${DESTINATION_REPOSITORY}:main"
+            echo "Branch: main"
+            echo "Initial commit: $COMMIT_SHA"
           
             post_pass \
               "DELIVERY" \
               "PUBLISH_SYSTEM" \
               "10" \
               "Generated system published to ${DESTINATION_REPOSITORY}." \
-              "The generated system was published to repository ${DESTINATION_REPOSITORY} on main with no feature branch"
-          
+              "The verified generated system was published as a Git repository with a single initial commit on main."            
           fi
+          
       ###############################################################################
       # Cleanup
       ###############################################################################
