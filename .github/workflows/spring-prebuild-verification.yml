@@ -50,12 +50,6 @@ on:
         required: true
         type: string
 
-      destinationRepository:
-        description: Where to finally commit the source code
-        required: false
-        default: ""
-        type: string
-
 env:
   RESULT_URL: ${{ inputs.resultUrl }}
   ACTION_TO_CALL: ${{ inputs.actionToCall }}
