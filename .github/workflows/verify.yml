@@ -629,7 +629,6 @@ jobs:
       dockerTag:                 ${{ inputs.dockerTag }}
       deployToCloud:             ${{ inputs.deployToCloud }}
       destinationRepository:     ${{ inputs.destinationRepository }}
-      gitHubToken: ${{ inputs.gitHubToken }}
 
 
   cloud:
