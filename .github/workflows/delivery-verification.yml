@@ -615,10 +615,10 @@ jobs:
       - name: Publish generated system
         if: success()
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ inputs.gitHubToken }}
           DESTINATION_REPOSITORY: ${{ inputs.destinationRepository }}
         run: |
-          if [ -n "DESTINATION_REPOSITORY" ]; then
+          if [ -n "$DESTINATION_REPOSITORY" ]; then
             set -e
             
             git config user.name "Harbormaster"
