@@ -619,24 +619,38 @@ jobs:
           DESTINATION_REPOSITORY: ${{ inputs.destinationRepository }}
         run: |
           if [ -n "$DESTINATION_REPOSITORY" ]; then
+        
             set -e
           
             git config user.name "Harbormaster"
             git config user.email "dev@harbormaster.net"
           
             git branch -M main
-      
-            # Create the destination repository.
-            gh repo create "$DESTINATION_REPOSITORY" \
-            --private
-      
-            # Add the newly created repository as a second remote.
+          
+            # Remove the remote if this step is being retried.
+            git remote remove destination 2>/dev/null || true
+          
+            # Create the destination repository if it does not already exist.
+            if gh repo view "$DESTINATION_REPOSITORY" >/dev/null 2>&1; then
+          
+              echo "Destination repository already exists: $DESTINATION_REPOSITORY"
+          
+            else
+          
+              echo "Creating destination repository: $DESTINATION_REPOSITORY"
+            
+              gh repo create "$DESTINATION_REPOSITORY" \
+               --private
+          
+            fi
+          
+            # Add the destination repository.
             git remote add destination \
-            "https://x-access-token:${GH_TOKEN}@github.com/${DESTINATION_REPOSITORY}.git"
-      
-            # Push the already-committed generated system.
-            git push destination HEAD:main          
-
+              "https://x-access-token:${GH_TOKEN}@github.com/${DESTINATION_REPOSITORY}.git"
+          
+            # Publish the verified generated system.
+            git push destination HEAD:main
+          
             echo "Generated system published to ${DESTINATION_REPOSITORY}:main"
           
             post_pass \
@@ -644,9 +658,9 @@ jobs:
               "PUBLISH_SYSTEM" \
               10 \
               "Generated system published to ${DESTINATION_REPOSITORY}." \
-              "The generated system was published to repository ${DESTINATION_REPOSITORY} on main with no feature branch "
+              "The generated system was published to repository ${DESTINATION_REPOSITORY} on main with no feature branch"
+          
           fi
-
 
       ###############################################################################
       # Cleanup
