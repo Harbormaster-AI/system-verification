@@ -620,20 +620,20 @@ jobs:
         run: |
           if [ -n "$DESTINATION_REPOSITORY" ]; then
             set -e
-            
+          
             git config user.name "Harbormaster"
             git config user.email "dev@harbormaster.net"
-            
+          
             git branch -M main
-            
+          
             gh repo create "$DESTINATION_DIRECTORY" \
               --private \
               --source=. \
               --remote=destination \
               --push
-            
+          
             echo "Generated system published to ${DESTINATION_REPOSITORY}:main"
-            
+          
             post_pass \
               "DELIVERY" \
               "PUBLISH_SYSTEM" \
@@ -641,6 +641,7 @@ jobs:
               "Generated system published to ${DESTINATION_REPOSITORY}." \
               "The generated system was published to repository ${DESTINATION_REPOSITORY} on main with no feature branch "
           fi
+
 
       ###############################################################################
       # Cleanup
