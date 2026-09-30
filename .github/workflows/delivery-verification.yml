@@ -627,38 +627,36 @@ jobs:
           
             git branch -M main
           
-            git remote remove destination 2>/dev/null || true
-          
             if gh repo view "$DESTINATION_REPOSITORY" >/dev/null 2>&1; then
-          
               echo "Destination repository already exists: $DESTINATION_REPOSITORY"
-          
             else
-          
               echo "Creating destination repository: $DESTINATION_REPOSITORY"
             
               gh repo create "$DESTINATION_REPOSITORY" \
                 --private
-          
             fi
           
-            # Get the canonical repository URL from GitHub.
             DESTINATION_URL=$(gh repo view "$DESTINATION_REPOSITORY" \
               --json url \
               --jq '.url')
           
             echo "Destination URL: $DESTINATION_URL"
+            
+            # Configure Git to use the same GitHub authentication
+            # already configured for gh.
+            gh auth setup-git
           
-            git remote add destination "${DESTINATION_URL}.git"
+            git remote remove destination 2>/dev/null || true
+            git remote add destination "$DESTINATION_URL.git"
           
             git push destination HEAD:main
           
-            echo "Generated system published to ${DESTINATION_URL}:main"
+            echo "Generated system published to ${DESTINATION_REPOSITORY}:main"
           
             post_pass \
               "DELIVERY" \
               "PUBLISH_SYSTEM" \
-              10 \
+              "10" \
               "Generated system published to ${DESTINATION_REPOSITORY}." \
               "The generated system was published to repository ${DESTINATION_REPOSITORY} on main with no feature branch"
           
