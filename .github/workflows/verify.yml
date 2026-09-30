@@ -178,6 +178,7 @@ jobs:
       appName: ${{ inputs.appName }}
       languageName: ${{ inputs.languageName }}
       languageVersion: ${{ inputs.languageVersion }}
+      destinationRepository:     ${{ inputs.destinationRepository }}
 
   spring-build:
 
