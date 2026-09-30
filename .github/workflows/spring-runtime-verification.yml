@@ -275,9 +275,11 @@ jobs:
           
           echo "Starting $PACKAGE"
 
-          export JAVA_TOOL_OPTIONS="-Xmx4g -XX:+HeapDumpOnOutOfMemoryError"
+          export JAVA_TOOL_OPTIONS="-Xmx4g"
   
           java \
+            -XX:+HeapDumpOnOutOfMemoryError \
+            -XX:HeapDumpPath=./heapdump.hprof \          
             -Ddebug  \
             -Dserver.port=8080 \
             -Dspring.datasource.url=jdbc:mysql://localhost:3307/harbormaster \
