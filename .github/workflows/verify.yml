@@ -460,7 +460,7 @@ jobs:
 
   rails-delivery:
 
-    if: ${{ contains(fromJSON('["rails","rubyonrails"]'), inputs.technology) }}
+    if: ${{ contains(fromJSON('["rails2","rubyonrails2"]'), inputs.technology) }}
 
     needs: rails-runtime
 
@@ -623,10 +623,8 @@ jobs:
   publish:
 
     if: >
-      always() &&
-      (
-        (needs.spring-runtime.result == 'success') || (needs.go-runtime.result == 'success') || (needs.aspdotnet-runtime.result == 'success')
-      )
+      always() 
+
     needs: [delivery]
 
     uses: ./.github/workflows/publish-verification.yml
