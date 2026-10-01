@@ -145,6 +145,12 @@ on:
         default: true
         type: boolean
 
+      destinationRepoOwner:
+        description: The owner of the final commit of the formatted source code
+        required: false
+        default: ""
+        type: string
+
       destinationRepository:
         description: Where to finally commit the source code
         required: false
@@ -607,7 +613,7 @@ jobs:
       
       )
 
-    needs: [spring-runtime, go-runtime, aspdotnet-runtime]
+    needs: [publish]
 
     uses: ./.github/workflows/delivery-verification.yml
 
@@ -628,6 +634,29 @@ jobs:
       deployToCloud:             ${{ inputs.deployToCloud }}
       destinationRepository:     ${{ inputs.destinationRepository }}
 
+  publish:
+
+    if: >
+      always() &&
+      (
+        (needs.spring-runtime.result == 'success') || (needs.go-runtime.result == 'success') || (needs.aspdotnet-runtime.result == 'success')
+        || (needs.angular-runtime.result == 'success') || (needs.apollo-runtime.result == 'success')
+        || (needs.django-runtime.result == 'success') || (needs.rails-runtime.result == 'success')
+      
+      )
+    needs: [spring-runtime, go-runtime, aspdotnet-runtime, angular-runtime, apollo-runtime, django-runtime, rails-runtime]
+
+    uses: ./.github/workflows/publish-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      gitHubToken: ${{ inputs.gitHubToken }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
+      appName:                   ${{ inputs.appName }}
+      destinationRepository:     ${{ inputs.destinationRepository }}
+      destinationRepoOwner:     ${{ inputs.destinationRepoOwner }}
 
   cloud:
 

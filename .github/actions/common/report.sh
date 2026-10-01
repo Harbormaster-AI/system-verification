@@ -206,3 +206,21 @@ post_terminate_cloud() {
         exit 1
     fi
 }
+
+post_terminate_publish() {
+
+    local EXIT_WORKFLOW="${1:-true}"
+
+    post_result \
+        "PUBLISH" \
+        "" \
+        "" \
+        0 \
+        "" \
+        "" \
+        "true"
+
+    if [ "$EXIT_WORKFLOW" = "true" ]; then
+        exit 1
+    fi
+}

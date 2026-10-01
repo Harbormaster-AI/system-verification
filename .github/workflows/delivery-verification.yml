@@ -86,11 +86,6 @@ on:
         default: true
         type: boolean
 
-      destinationRepository:
-        description: Where to finally commit the source code
-        required: false
-        default: ""
-        type: string
 
 env:
   RESULT_URL:                   ${{ inputs.resultUrl }}
