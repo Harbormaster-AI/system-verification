@@ -621,8 +621,7 @@ jobs:
 
   publish:
 
-    if: >
-      always() 
+    if: ${{ always() && needs.delivery.result == 'success' }}
 
     needs: [delivery]
 
