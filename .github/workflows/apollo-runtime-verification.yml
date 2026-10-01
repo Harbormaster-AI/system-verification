@@ -351,7 +351,7 @@ jobs:
 
           echo "APP_PID=${APP_PID}" >> "$GITHUB_ENV"
 
-          sleep 3
+          sleep 10
 
           if ps -p "${APP_PID}" > /dev/null 2>&1; then
 
@@ -397,6 +397,8 @@ jobs:
             "Waiting for Apollo application to respond." \
             ""
 
+          echo "Checking port 4000..."
+          ss -lntp | grep ':4000' || true
 
           for i in {1..30}; do
 
