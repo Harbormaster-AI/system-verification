@@ -626,9 +626,6 @@ jobs:
       always() &&
       (
         (needs.spring-runtime.result == 'success') || (needs.go-runtime.result == 'success') || (needs.aspdotnet-runtime.result == 'success')
-        || (needs.angular-runtime.result == 'success') || (needs.apollo-runtime.result == 'success')
-        || (needs.django-runtime.result == 'success') || (needs.rails-runtime.result == 'success')
-      
       )
     needs: [delivery]
 
