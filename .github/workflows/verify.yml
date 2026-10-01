@@ -314,7 +314,7 @@ jobs:
 
   angular-delivery:
 
-    if: ${{ contains(fromJSON('["angular"]'), inputs.technology) }}
+    if: ${{ contains(fromJSON('["angular2"]'), inputs.technology) }}
 
 
     needs: angular-runtime
@@ -386,7 +386,7 @@ jobs:
 
   django-delivery:
 
-    if: ${{ contains(fromJSON('["django"]'), inputs.technology) }}
+    if: ${{ contains(fromJSON('["django2"]'), inputs.technology) }}
 
 
     needs: django-runtime
@@ -517,8 +517,7 @@ jobs:
 
   apollo-delivery:
 
-    if: ${{ contains(fromJSON('["ApolloGraphQL","Apollo"]'), inputs.technology) }}
-
+    if: ${{ contains(fromJSON('["ApolloGraphQL2","Apollo2"]'), inputs.technology) }}
 
     needs: apollo-runtime
 
@@ -643,7 +642,7 @@ jobs:
 
     if: ${{ !always() && inputs.deployToCloud && needs.delivery.result == 'success' }}
 
-    needs: delivery
+    needs: publish
 
     uses: ./.github/workflows/cloud-verification.yml
     secrets: inherit
