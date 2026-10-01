@@ -143,6 +143,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ inputs.gitHubToken }}
         run: |
+          
+          source .github/actions/common/report.sh
+          
           set -e
           
           cd generated-system
