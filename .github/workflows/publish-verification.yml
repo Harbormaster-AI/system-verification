@@ -132,60 +132,49 @@ jobs:
               "EXTRACT_CODE" \
               30 \
               "Extracted code from formatted-source" \
-              ""  
-      
+              ""        
 
       ###############################################################################
       # Commit Formatted Source
       ###############################################################################
 
-      - name: Commit Formatted Source
-
+      - name: Publish Generated System
         shell: bash
-
+        env:
+          GITHUB_TOKEN: ${{ inputs.gitHubToken }}
         run: |
+          set -e
           
-          source .github/actions/common/report.sh
-                  
           cd generated-system
           
-  - name: Publish Generated System
-    shell: bash
-    env:
-      GITHUB_TOKEN: ${{ inputs.gitHubToken }}
-    run: |
-      set -e
-      
-      cd generated-system
-      
-      git init
-      
-      git config user.name "Harbormaster"
-      git config user.email "dev@harbormaster.net"
-      
-      git branch -M main
-      
-      git add .
-      
-      git commit -m "Initial generated system commit"
-      
-      git remote add origin \
-        "https://github.com/${{ inputs.destinationRepoOwner }}/${{ inputs.destinationRepository }}.git"
-      
-      echo "Destination: https://github.com/${{ inputs.destinationRepoOwner }}/${{ inputs.destinationRepository }}.git"
-      echo "Token present: ${GITHUB_TOKEN:+yes}"
-      
-      AUTH=$(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w 0)
-      
-      git -c http.extraheader="Authorization: Basic $AUTH" \
-        push origin main
-      
-      post_pass \
-          "PUBLISH" \
-          "COMMIT_CODE" \
-          60 \
-          "Successfully commit formatted source code" \
-          "COMMIT: Successfully commit formatted source code to ${{ inputs.destinationRepository }} for ${{ inputs.destinationRepoOwner }}"  
+          git init
+          
+          git config user.name "Harbormaster"
+          git config user.email "dev@harbormaster.net"
+          
+          git branch -M main
+          
+          git add .
+          
+          git commit -m "Initial generated system commit"
+          
+          git remote add origin \
+            "https://github.com/${{ inputs.destinationRepoOwner }}/${{ inputs.destinationRepository }}.git"
+          
+          echo "Destination: https://github.com/${{ inputs.destinationRepoOwner }}/${{ inputs.destinationRepository }}.git"
+          echo "Token present: ${GITHUB_TOKEN:+yes}"
+          
+          AUTH=$(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w 0)
+          
+          git -c http.extraheader="Authorization: Basic $AUTH" \
+            push origin main
+          
+          post_pass \
+              "PUBLISH" \
+              "COMMIT_CODE" \
+              60 \
+              "Successfully commit formatted source code" \
+              "COMMIT: Successfully commit formatted source code to ${{ inputs.destinationRepository }} for ${{ inputs.destinationRepoOwner }}"  
 
       ###############################################################################
       # Cleanup
