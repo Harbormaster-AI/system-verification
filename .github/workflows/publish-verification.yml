@@ -185,7 +185,7 @@ jobs:
           AUTH=$(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w 0)
           
           git -c http.extraheader="Authorization: Basic $AUTH" \
-            push origin main
+            push --force origin main
           
           post_pass \
               "PUBLISH" \
