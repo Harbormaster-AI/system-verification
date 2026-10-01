@@ -160,6 +160,9 @@ jobs:
           
           git commit -m "Initial generated system commit"
           
+          echo "Destination: https://github.com/${{ inputs.destinationRepoOwner }}/${{ inputs.destinationRepository }}.git"
+          echo "Token present: ${{ inputs.gitHubToken }}"
+          
           git remote add origin \
           "https://github.com/${{ inputs.destinationRepoOwner }}/${{ inputs.destinationRepository }}.git"
         
