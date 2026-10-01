@@ -579,17 +579,17 @@ jobs:
           
           tar \
             --exclude='.git' \
-            -czf formatted-source.tar.gz \
+            -czf /tmp/formatted-source.tar.gz \
             .
           
           echo "Formatted source packaged:"
-          ls -lh formatted-source.tar.gz
+          ls -lh /tmp/formatted-source.tar.gz
 
       - name: Upload Formatted Source Artifact
         uses: actions/upload-artifact@v4
         with:
           name: formatted-source
-          path: formatted-source.tar.gz
+          path: /tmp/formatted-source.tar.gz
           if-no-files-found: error
           retention-days: 1
 
