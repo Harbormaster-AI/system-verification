@@ -451,11 +451,13 @@ jobs:
           source .github/actions/common/report.sh
           
           # Language-agnostic container start.
-          # Spring apps can use DB env vars; other stacks ignore them.
+          # The system contained must support listening on a port. Default to SERVER_PORT, APP_PORT, or PORt.
+          # DB env vars should be acknowledged as well for backend blueprints
           docker run -d --name ${APP_NAME} -p 8080:8080 \
             --add-host=host.docker.internal:host-gateway \
             -e SERVER_PORT=8080 \
             -e APP_PORT=8080 \
+            -e PORT=8080 \
             -e SPRING_DATASOURCE_URL='jdbc:mysql://host.docker.internal:3306/harbormaster' \
             -e SPRING_DATASOURCE_USERNAME=root \
             -e SPRING_DATASOURCE_PASSWORD=root \
