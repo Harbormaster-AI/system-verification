@@ -71,7 +71,7 @@ env:
 
 jobs:
 
-  delivery-verification:
+  publish-source-to-repo:
 
     runs-on: ${{ inputs.runner }}
 
