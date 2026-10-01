@@ -147,6 +147,21 @@ jobs:
           
           cd generated-system
           
+          if gh repo view \
+            "${{ inputs.destinationRepoOwner }}/${{ inputs.destinationRepository }}" \
+            >/dev/null 2>&1; then
+          
+            echo "Destination repository already exists."
+          
+          else
+          
+            echo "Creating destination repository..."
+          
+            gh repo create \
+              "${{ inputs.destinationRepoOwner }}/${{ inputs.destinationRepository }}" \
+            --private          
+          fi
+          
           git init
           
           git config user.name "Harbormaster"
