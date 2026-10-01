@@ -451,8 +451,9 @@ jobs:
           source .github/actions/common/report.sh
           
           # Language-agnostic container start.
-          # The system contained must support listening on a port. Default to SERVER_PORT, APP_PORT, or PORt.
-          # DB env vars should be acknowledged as well for backend blueprints
+          # Using 8080:8080 on run, the Dockerfile must expose 8080.  Multiple port exposures are possible (eg: EXPOSE 4000 8080)
+          # The system contained must support listening on a port. Default to SERVER_PORT, APP_PORT, or PORT.
+          # Backend blueprints should acknowledge the DB env vars 
           docker run -d --name ${APP_NAME} -p 8080:8080 \
             --add-host=host.docker.internal:host-gateway \
             -e SERVER_PORT=8080 \
