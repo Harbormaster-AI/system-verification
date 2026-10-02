@@ -794,6 +794,7 @@ jobs:
           name: packaged-application
           path: ${{ env.APP_DIR }}/bin/
           if-no-files-found: error
+          retention-days: 1
 
       ###############################################################################
       # Terminate Verification
