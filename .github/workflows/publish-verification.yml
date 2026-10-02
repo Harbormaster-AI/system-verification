@@ -195,6 +195,26 @@ jobs:
               "COMMIT: Successfully commit formatted source code to ${{ inputs.destinationRepository }} for ${{ inputs.destinationRepoOwner }}"  
 
       ###############################################################################
+      # Delete the formatted source artifact
+      ###############################################################################
+
+      - name: Delete Formatted Source Artifact
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ARTIFACT_ID=$(gh api \
+            "/repos/${GITHUB_REPOSITORY}/actions/artifacts?name=formatted-source" \
+            --jq '.artifacts[] | select(.workflow_run.id == '${{ github.run_id }}') | .id' \
+            | head -1)
+          
+          if [ -n "$ARTIFACT_ID" ]; then
+            gh api \
+              --method DELETE \
+              "/repos/${GITHUB_REPOSITORY}/actions/artifacts/${ARTIFACT_ID}"
+          fi
+
+      ###############################################################################
       # Cleanup
       ###############################################################################
 
