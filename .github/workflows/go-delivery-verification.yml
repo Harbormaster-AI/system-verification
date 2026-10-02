@@ -339,9 +339,14 @@ jobs:
         run: |
           
           source .github/actions/common/report.sh
-          
-          docker run -d --name ${APP_NAME} -p 8080:8080 ${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}
-          
+        ####
+        # docker run -d --name ${APP_NAME} -p 8080:8080 ${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}
+        ####
+          docker run --rm --entrypoint /bin/sh ${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}
+          ls -l /app/bankingOnGolang
+          file /app/bankingOnGolang
+          ldd /app/bankingOnGolang
+  
           if [ $? -eq 0 ]; then
           
               post_pass \
