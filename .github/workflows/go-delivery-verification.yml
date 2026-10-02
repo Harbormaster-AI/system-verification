@@ -340,14 +340,20 @@ jobs:
           
           source .github/actions/common/report.sh
 
-          docker run --rm --entrypoint /bin/sh ${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }} -c '
-          echo "CONTAINER:"
-          echo "  hostname=$(hostname)"
-          echo "  pwd=$(pwd)"
-          echo "  root=$(ls -ld /)"
-          echo "  app=$(ls -ld /app 2>&1)"
-          echo "  app contents:"
-          ls -la /app 2>&1
+          docker run --rm --entrypoint /bin/sh \
+          "${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}" \
+          -c '
+          echo "=== FILE ==="
+          file /app/bankingOnGolang
+          
+          echo "=== LDD ==="
+          ldd /app/bankingOnGolang || true
+          
+          echo "=== INTERPRETER ==="
+          readelf -l /app/bankingOnGolang | grep interpreter || true
+          
+          echo "=== DIRECT EXECUTION ==="
+          /app/bankingOnGolang
           '
   
           if [ $? -eq 0 ]; then
