@@ -258,6 +258,29 @@ jobs:
       appName: ${{ inputs.appName }}
       languageVersion: ${{ inputs.languageVersion }}
 
+  go-delivery:
+
+    if: ${{ contains(fromJSON('["go","golang"]'), inputs.technology) }}
+
+    needs: go-build
+
+    uses: ./.github/workflows/go-delivery-verification.yml
+
+    with:
+      runner: ${{ inputs.runner }}
+      branch: ${{ inputs.branch }}
+      gitHubToken: ${{ inputs.gitHubToken }}
+      resultUrl: ${{ inputs.resultUrl }}
+      actionToCall: ${{ inputs.actionToCall }}
+      certificationIdentifier:   ${{ inputs.certificationIdentifier }}
+      appName:                   ${{ inputs.appName }}
+      dockerHost:                ${{ inputs.dockerHost }}
+      dockerOrg:                 ${{ inputs.dockerOrg }}
+      dockerRepository:          ${{ inputs.dockerRepository }}
+      dockerUsername:            ${{ inputs.dockerUsername }}
+      dockerPassword:            ${{ inputs.dockerPassword }}
+      dockerTag:                 ${{ inputs.dockerTag }}
+
   node-frontend-prebuild:
 
     if: (contains(fromJSON('["react","REACT","React"]'), inputs.technology) )
@@ -593,7 +616,7 @@ jobs:
     if: >
       always() &&
       (
-        (needs.spring-runtime.result == 'success') || (needs.go-runtime.result == 'success') || (needs.aspdotnet-runtime.result == 'success')
+        (needs.spring-runtime.result == 'success') || (needs.aspdotnet-runtime.result == 'success')
         || (needs.angular-runtime.result == 'success') || (needs.apollo-runtime.result == 'success')
         || (needs.django-runtime.result == 'success') || (needs.rails-runtime.result == 'success')
       
