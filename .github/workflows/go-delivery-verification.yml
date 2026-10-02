@@ -341,10 +341,10 @@ jobs:
           source .github/actions/common/report.sh
 
           docker run --rm --entrypoint /bin/sh ${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}
-          
-          ls -l /app/bankingOnGolang
-          file /app/bankingOnGolang
-          ldd /app/bankingOnGolang
+          pwd
+          ls -la
+          ls -la /app
+          find /app -maxdepth 2 -type f -ls
   
           if [ $? -eq 0 ]; then
           
