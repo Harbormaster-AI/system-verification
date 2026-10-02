@@ -93,6 +93,27 @@ jobs:
 
     runs-on: ${{ inputs.runner }}
 
+    services:
+
+      mysql:
+
+        image: mysql:8.4
+
+        env:
+
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: harbormaster
+
+        ports:
+
+          - 3306:3306
+
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+          
     steps:
 
       ###########################################################################
@@ -340,7 +361,26 @@ jobs:
           
           source .github/actions/common/report.sh
           
-          docker run -d --name ${APP_NAME} -p 8080:8080 ${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}
+          docker run -d --name ${APP_NAME} -p 8080:8080 \
+            --add-host=host.docker.internal:host-gateway \
+            -e SERVER_PORT=8080 \
+            -e APP_PORT=8080 \
+            -e PORT=8080 \
+            -e SPRING_DATASOURCE_URL='jdbc:mysql://host.docker.internal:3306/harbormaster' \
+            -e SPRING_DATASOURCE_USERNAME=root \
+            -e SPRING_DATASOURCE_PASSWORD=root \
+            -e SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver \
+            -e SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQL8Dialect \
+            -e hm.security.authentication=none \
+            -e DB_USER_NAME=root \
+            -e DB_PASSWORD=root \
+            -e DB_NAME=harbormaster \
+            -e DB_HOST=host.docker.internal \
+            -e DB_PORT=3306 \
+            -e DB_TYPE=mysql \
+            -e DB_ARGS='charset=utf8&parseTime=True&loc=Local' \
+            -e DB_DISABLE_FK_CONSTRAINTS=true \
+            ${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}
   
           if [ $? -eq 0 ]; then
           
