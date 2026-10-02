@@ -262,7 +262,7 @@ jobs:
 
     if: ${{ contains(fromJSON('["go","golang"]'), inputs.technology) }}
 
-    needs: go-build
+    needs: go-runtime
 
     uses: ./.github/workflows/go-delivery-verification.yml
 
