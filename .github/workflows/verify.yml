@@ -269,7 +269,6 @@ jobs:
     with:
       runner: ${{ inputs.runner }}
       branch: ${{ inputs.branch }}
-      gitHubToken: ${{ inputs.gitHubToken }}
       resultUrl: ${{ inputs.resultUrl }}
       actionToCall: ${{ inputs.actionToCall }}
       certificationIdentifier:   ${{ inputs.certificationIdentifier }}
@@ -644,7 +643,7 @@ jobs:
 
   publish:
 
-    if: ${{ always() && needs.delivery.result == 'success' }}
+    if: ${{ always() && (needs.delivery.result == 'success' || needs.go-delivery.result == 'success') }}
 
     needs: [delivery]
 
