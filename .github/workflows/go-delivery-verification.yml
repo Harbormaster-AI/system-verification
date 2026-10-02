@@ -340,11 +340,15 @@ jobs:
           
           source .github/actions/common/report.sh
 
-          docker run --rm --entrypoint /bin/sh ${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}
-          pwd
-          ls -la
-          ls -la /app
-          find /app -maxdepth 2 -type f -ls
+          docker run --rm --entrypoint /bin/sh ${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }} -c '
+          echo "CONTAINER:"
+          echo "  hostname=$(hostname)"
+          echo "  pwd=$(pwd)"
+          echo "  root=$(ls -ld /)"
+          echo "  app=$(ls -ld /app 2>&1)"
+          echo "  app contents:"
+          ls -la /app 2>&1
+          '
   
           if [ $? -eq 0 ]; then
           
