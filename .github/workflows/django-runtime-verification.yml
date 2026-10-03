@@ -202,47 +202,6 @@ jobs:
 
           fi
 
-      ###############################################################################
-      # Install Runtime Dependencies
-      ###############################################################################
-
-      - name: Install Runtime Dependencies
-        shell: bash
-        working-directory: ${{ env.APP_DIRECTORY }}
-        run: |
-          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
-          
-          if [ ! -f "requirements.txt" ]; then
-              post_fail \
-                "RUNTIME" \
-                "REQUIREMENTS_TXT" \
-                0 \
-                "requirements.txt not found."
-          
-              post_terminate_build
-          fi
-          
-          if python -m pip install --no-cache-dir -r requirements.txt \
-              > runtime-dependency-install.log 2>&1; then
-          
-            post_pass \
-                    "RUNTIME" \
-                    "PYTHON_DEPENDENCY_INSTALL" \
-                    20 \
-                    "Python runtime dependencies installed successfully."
-          else
-              cat runtime-dependency-install.log
-          
-              MESSAGE=$(tail -30 runtime-dependency-install.log | tr '\n' ' ')
-          
-              post_fail \
-                "RUNTIME" \
-                "PYTHON_DEPENDENCY_INSTALL" \
-                0 \
-                "${MESSAGE}"
-          
-              post_terminate_build
-          fi
 
       ###########################################################################
       # Start static web server
@@ -254,49 +213,47 @@ jobs:
       ###########################################################################
 
       - name: Start Django Application
-
         shell: bash
-
         run: |
-
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
-
+          
           echo "Starting Django application from:"
           echo "$APP_DIRECTORY"
-
+          
           cd "$APP_DIRECTORY"
-
-          python3 manage.py runserver 127.0.0.1:8080 \
+          
+          export PYTHONPATH="$(pwd)/..:${PYTHONPATH}"
+          
+          .venv/bin/python manage.py runserver 127.0.0.1:8080 \
             > runtime.log 2>&1 &
-
+          
           APP_PID=$!
-
+          
           echo "APP_PID=${APP_PID}" >> "$GITHUB_ENV"
-
+          
           sleep 3
-
+          
           if ps -p "${APP_PID}" > /dev/null 2>&1; then
-
+          
             post_pass \
               "RUNTIME" \
               "START_APPLICATION" \
               20 \
               "Django application started." \
               "START_APPLICATION: PID ${APP_PID}"
-
+          
           else
-
+          
             post_fail \
               "RUNTIME" \
               "START_APPLICATION" \
               0 \
               "Django application failed to start." \
               "$(cat runtime.log)"
-
+          
             post_terminate_runtime "RUNTIME"
-
+          
           fi
-
 
       ###########################################################################
       # Wait for application
