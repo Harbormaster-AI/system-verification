@@ -1,0 +1,46 @@
+{
+
+    "name": "RubyonRails",
+    "shortName": "Rails",
+    "description": "A server-side web MVC framework written in Rails.  A framework providing default structures for a database, web services, and web pages",
+    "summary": "A blueprint for generating the core capabilities of any Ruby on Rails application.  It includes the controllers, routes, models, and more.",
+    "iconUrl": "blueprints/rails-blueprint-header-image.png",
+    "infoPageUrl": "http://www.harbormaster.net/.rails.blueprint",
+    "version": "1.1",
+    "type": "FirstClass",
+    "appType": "webapp",
+    "releaseStatus": "production",
+    "techSourceType": "opensource",
+    "published": "true",
+    "derivedFrom": "common",
+    "majorTechnology" : "RubyOnRails",
+    "category": "backend_framework",
+    "level": "basic",
+    "primaryVendor": "Rails",
+    "designPattern": "CQRS",
+    "architectureStyle": "ModelViewController",
+    "useCases": "SaaS Platform,Marketplace Application,E-Commerce Platform,Customer Portal,Content Management Platform",
+    "architecturePreviewUrl": "blueprints/architecture.diagrams/ruby-on-rails-blueprint-system-diagram.png",
+    "metadata": "ruby on rails,ruby,active record,mvc,modular monolith,postgresql,redis,rest api,sidekiq,production ready",
+    "languages": {
+       "language": [
+        {
+          "name": "rails",
+          "version": "3.4.5"
+        },
+        {
+          "name": "javascript"
+        }
+      ]
+    },
+    "techStack": {
+      "techStackComponents": [
+        {
+          "tech": "RubyOnRails",
+          "description": "view templates ",
+          "appLayerType": "other"
+        }
+      ]
+    }
+
+}

@@ -1,0 +1,24 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of transaction found in  bankingonrails/test/controllers
+
+one:
+  bookingDate: 2020-10-15
+  valueDate: 2020-10-15
+  amount: "test value"
+  description: test string for description
+  Direction: 0
+  TransactionType: 0
+  Status: 0
+  Channel: 0
+
+two:
+  bookingDate: 2020-10-15
+  valueDate: 2020-10-15
+  amount: "test value"
+  description: test string for description
+  Direction: 0
+  TransactionType: 0
+  Status: 0
+  Channel: 0
+
+
