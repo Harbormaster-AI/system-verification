@@ -225,8 +225,7 @@ jobs:
 
           cd "$APP_DIRECTORY"
 
-          python3 -m http.server 8080 \
-            --bind 127.0.0.1 \
+          python3 manage.py runserver 127.0.0.1:8080 \
             > runtime.log 2>&1 &
 
           APP_PID=$!
