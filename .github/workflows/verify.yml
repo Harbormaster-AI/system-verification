@@ -482,7 +482,7 @@ jobs:
 
   rails-delivery:
 
-    if: ${{ contains(fromJSON('["rails2","rubyonrails2"]'), inputs.technology) }}
+    if: ${{ contains(fromJSON('["rails","rubyonrails"]'), inputs.technology) }}
 
     needs: rails-runtime
 
@@ -617,7 +617,7 @@ jobs:
       (
         (needs.spring-runtime.result == 'success') || (needs.aspdotnet-runtime.result == 'success')
         || (needs.angular-runtime.result == 'success') || (needs.apollo-runtime.result == 'success')
-        || (needs.django-runtime.result == 'success') || (needs.rails-runtime.result == 'success')
+        || (needs.django-runtime.result == 'success') 
       
       )
 
@@ -643,7 +643,7 @@ jobs:
 
   publish:
 
-    if: ${{ always() && (needs.delivery.result == 'success' || needs.go-delivery.result == 'success') }}
+    if: ${{ always() && (needs.delivery.result == 'success' || needs.go-delivery.result == 'success' || needs.rails-delivery.result == 'success' ) }}
 
     needs: [delivery, go-delivery]
 
