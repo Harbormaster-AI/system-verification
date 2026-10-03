@@ -202,6 +202,47 @@ jobs:
 
           fi
 
+      ###############################################################################
+      # Install Runtime Dependencies
+      ###############################################################################
+
+      - name: Install Runtime Dependencies
+        shell: bash
+        working-directory: ${{ env.APP_DIRECTORY }}
+        run: |
+          source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
+          
+          if [ ! -f "requirements.txt" ]; then
+              post_fail \
+                "RUNTIME" \
+                "REQUIREMENTS_TXT" \
+                0 \
+                "requirements.txt not found."
+          
+              post_terminate_build
+          fi
+          
+          if python -m pip install --no-cache-dir -r requirements.txt \
+              > runtime-dependency-install.log 2>&1; then
+          
+            post_pass \
+                    "RUNTIME" \
+                    "PYTHON_DEPENDENCY_INSTALL" \
+                    20 \
+                    "Python runtime dependencies installed successfully."
+          else
+              cat runtime-dependency-install.log
+          
+              MESSAGE=$(tail -30 runtime-dependency-install.log | tr '\n' ' ')
+          
+              post_fail \
+                "RUNTIME" \
+                "PYTHON_DEPENDENCY_INSTALL" \
+                0 \
+                "${MESSAGE}"
+          
+              post_terminate_build
+          fi
 
       ###########################################################################
       # Start static web server
