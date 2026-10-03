@@ -408,7 +408,7 @@ jobs:
 
   django-delivery:
 
-    if: ${{ contains(fromJSON('["django2"]'), inputs.technology) }}
+    if: ${{ contains(fromJSON('["django"]'), inputs.technology) }}
 
 
     needs: django-runtime
@@ -617,7 +617,6 @@ jobs:
       (
         (needs.spring-runtime.result == 'success') || (needs.aspdotnet-runtime.result == 'success')
         || (needs.angular-runtime.result == 'success') || (needs.apollo-runtime.result == 'success')
-        || (needs.django-runtime.result == 'success') 
       
       )
 
@@ -643,9 +642,9 @@ jobs:
 
   publish:
 
-    if: ${{ always() && (needs.delivery.result == 'success' || needs.go-delivery.result == 'success' || needs.rails-delivery.result == 'success' ) }}
+    if: ${{ always() && (needs.delivery.result == 'success' || needs.go-delivery.result == 'success' || needs.rails-delivery.result == 'success' || needs.django-delivery.result == 'success' ) }}
 
-    needs: [delivery, go-delivery, rails-delivery]
+    needs: [delivery, go-delivery, rails-delivery, django-delivery]
 
     uses: ./.github/workflows/publish-verification.yml
 
