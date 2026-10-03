@@ -1,0 +1,2 @@
+module ThirdPartyProviderHelper
+end
