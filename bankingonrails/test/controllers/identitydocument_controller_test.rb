@@ -15,18 +15,16 @@ class IdentityDocumentControllerTest < ActionDispatch::IntegrationTest
   test "should create identity_document" do
     assert_difference("IdentityDocument.count") do
       post identity_documents_url, params: { identity_document: {
-        document_number:"test string for documentNumber", 
-issuing_country:"test string for issuingCountry", 
-expiration_date:1.week.ago, 
-document_type:IdentityDocument.DocumentTypes[0]
- } }
+        document_number: "test string for documentNumber",
+        issuing_country: "test string for issuingCountry",
+        expiration_date: 1.week.ago,
+        document_type: IdentityDocument.DocumentTypes[0]
+      } }
     end
 
     assert_redirected_to identity_documents_url
   end
 
- 
-  
   test "should destroy identity_document" do
     assert_difference("IdentityDocument.count", -1) do
       delete identity_document_url(@identity_document)
@@ -34,7 +32,4 @@ document_type:IdentityDocument.DocumentTypes[0]
 
     assert_redirected_to identity_documents_url
   end
-  
 end
-
-
