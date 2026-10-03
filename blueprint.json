@@ -1,0 +1,60 @@
+{
+    "name": "Django",
+    "shortName": "Django",
+    "summary": "A blueprint to generate the common features of any robust Djaango system.",
+    "description": "A Python-based open-source web framework, which follows the model-view-template architectural pattern",
+    "iconUrl": "blueprints/django-blueprint-header-image.png",
+    "infoPageUrl": "http://www.harbormaster.net/django.blueprint",
+    "version": "1.0",
+    "type": "FirstClass",
+    "appType": "webapp",
+    "releaseStatus": "production",
+    "techSourceType": "opensource",
+    "derivedFrom": "python",
+    "published": "true",
+    "majorTechnology" : "Django",
+    "supportsDocker": "true",
+    "supportsKubernetes": "true",
+    "category": "backend_framework",
+    "level": "basic",
+    "primaryVendor": "Django",
+    "designPattern": "ModelViewTemplate",
+    "architectureStyle": "Layered",
+    "useCases": "Any Portal,Marketplace,Platform,Management System,E-Commerce,Blog,Knowledge Base,Multi-Tenant Saas,Dashboard",
+    "architecturePreviewUrl": "blueprints/architecture.diagrams/django-blueprint-system-diagram.png",
+    "metadata": "Django,Python,MVT,Active Record,Django REST Framework,PostgreSQL,Redis,Celery,Modular Monolith,Production Ready",
+    "languages": {
+        "language": [
+        {
+          "name": "python",
+          "version": "3.13"
+        },
+        {
+          "name": "javascript"
+        },
+        {
+          "name": "html5"
+        }
+      ]
+    },
+    "techStack": {
+      "techStackComponents": [
+        {
+          "tech": "Django",
+          "description": "use the Django web framework",
+          "appLayerType": "presentation"
+        },
+        {
+          "tech": "Python",
+          "description": "Python build",
+          "appLayerType": "build"
+        },
+        {
+          "tech": "Pytest",
+          "description": "Test utility",
+          "appLayerType": "test"
+        }
+      ]
+    }
+
+}

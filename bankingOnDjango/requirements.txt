@@ -1,0 +1,4 @@
+Django>=5.2,<6.0
+gunicorn>=23.0
+djangorestframework>=3.16
+mysqlclient>=2.2
