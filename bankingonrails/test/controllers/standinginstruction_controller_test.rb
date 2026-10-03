@@ -15,19 +15,17 @@ class StandingInstructionControllerTest < ActionDispatch::IntegrationTest
   test "should create standing_instruction" do
     assert_difference("StandingInstruction.count") do
       post standing_instructions_url, params: { standing_instruction: {
-        instruction_id:"test string for instructionId", 
-amount:"test value", 
-next_execution_date:1.week.ago, 
-frequency:StandingInstruction.Frequencys[0], 
-status:StandingInstruction.Statuss[0]
- } }
+        instruction_id: "test string for instructionId",
+        amount: "test value",
+        next_execution_date: 1.week.ago,
+        frequency: StandingInstruction.Frequencys[0],
+        status: StandingInstruction.Statuss[0]
+      } }
     end
 
     assert_redirected_to standing_instructions_url
   end
 
- 
-  
   test "should destroy standing_instruction" do
     assert_difference("StandingInstruction.count", -1) do
       delete standing_instruction_url(@standing_instruction)
@@ -35,7 +33,4 @@ status:StandingInstruction.Statuss[0]
 
     assert_redirected_to standing_instructions_url
   end
-  
 end
-
-
