@@ -294,19 +294,39 @@ jobs:
         working-directory: ${{ env.APP_DIRECTORY }}
         run: |
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
-
+          
           if [ ! -f "requirements.txt" ]; then
-              post_fail "BUILD" "REQUIREMENTS_TXT" 0 "requirements.txt not found."
+              post_fail \
+                "BUILD" \
+                "REQUIREMENTS_TXT" \
+                0 \
+                "requirements.txt not found."
+          
               post_terminate_build
           fi
-
-          python -m pip install --upgrade pip > pip-upgrade.log 2>&1
-
-          if python -m pip install --no-cache-dir -r requirements.txt > dependency-validation.log 2>&1; then
-              post_pass "BUILD" "PYTHON_DEPENDENCY_INSTALL" 10 "Python dependency installation completed successfully."
+          
+          python -m pip install --upgrade pip \
+            > pip-upgrade.log 2>&1
+          
+          python -m venv .venv
+          
+          if .venv/bin/python -m pip install --no-cache-dir -r requirements.txt \
+              > dependency-validation.log 2>&1; then
+          
+              post_pass \
+                "BUILD" \
+                "PYTHON_DEPENDENCY_INSTALL" \
+                10 \
+                "Python dependency installation completed successfully."
           else
-              MESSAGE=$(tail -30 dependency-validation.log | tr '' ' ')
-              post_fail "BUILD" "PYTHON_DEPENDENCY_INSTALL" 0 "${MESSAGE}"
+              MESSAGE=$(tail -30 dependency-validation.log | tr '\n' ' ')
+          
+              post_fail \
+                "BUILD" \
+                "PYTHON_DEPENDENCY_INSTALL" \
+                0 \
+                "${MESSAGE}"
+          
               post_terminate_build
           fi
 
