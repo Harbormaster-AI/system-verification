@@ -645,7 +645,7 @@ jobs:
 
     if: ${{ always() && (needs.delivery.result == 'success' || needs.go-delivery.result == 'success' || needs.rails-delivery.result == 'success' ) }}
 
-    needs: [delivery, go-delivery]
+    needs: [delivery, go-delivery, rails-delivery]
 
     uses: ./.github/workflows/publish-verification.yml
 
