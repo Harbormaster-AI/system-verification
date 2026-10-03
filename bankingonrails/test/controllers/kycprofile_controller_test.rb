@@ -15,17 +15,15 @@ class KycProfileControllerTest < ActionDispatch::IntegrationTest
   test "should create kyc_profile" do
     assert_difference("KycProfile.count") do
       post kyc_profiles_url, params: { kyc_profile: {
-        profile_id:"test string for profileId", 
-last_reviewed_on:1.week.ago, 
-status:KycProfile.Statuss[0]
- } }
+        profile_id: "test string for profileId",
+        last_reviewed_on: 1.week.ago,
+        status: KycProfile.Statuss[0]
+      } }
     end
 
     assert_redirected_to kyc_profiles_url
   end
 
- 
-  
   test "should destroy kyc_profile" do
     assert_difference("KycProfile.count", -1) do
       delete kyc_profile_url(@kyc_profile)
@@ -33,7 +31,4 @@ status:KycProfile.Statuss[0]
 
     assert_redirected_to kyc_profiles_url
   end
-  
 end
-
-
