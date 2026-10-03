@@ -15,18 +15,16 @@ class BankingProductControllerTest < ActionDispatch::IntegrationTest
   test "should create banking_product" do
     assert_difference("BankingProduct.count") do
       post banking_products_url, params: { banking_product: {
-        product_code:"test string for productCode", 
-name:"test string for name", 
-description:"test string for description", 
-product_category:BankingProduct.ProductCategorys[0]
- } }
+        product_code: "test string for productCode",
+        name: "test string for name",
+        description: "test string for description",
+        product_category: BankingProduct.ProductCategorys[0]
+      } }
     end
 
     assert_redirected_to banking_products_url
   end
 
- 
-  
   test "should destroy banking_product" do
     assert_difference("BankingProduct.count", -1) do
       delete banking_product_url(@banking_product)
@@ -34,7 +32,4 @@ product_category:BankingProduct.ProductCategorys[0]
 
     assert_redirected_to banking_products_url
   end
-  
 end
-
-
