@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+require "fileutils"
+
+APP_ROOT = File.expand_path("..", __dir__)
+
+Dir.chdir(APP_ROOT) do
+  puts "== Installing dependencies =="
+  system! "bundle check || bundle install"
+
+  puts "\n== Preparing database =="
+  system! "bin/rails db:prepare"
+
+  puts "\n== Removing stale server.pid =="
+  system! "rm -f tmp/pids/server.pid"
+
+  puts "\n== Done =="
+end

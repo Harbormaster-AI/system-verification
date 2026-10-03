@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of feeCharge found in  bankingonrails/test/controllers
+
+one:
+  feeCode: test string for feeCode
+  amount: "test value"
+  appliedOn: 2020-10-15
+  FeeType: 0
+
+two:
+  feeCode: test string for feeCode
+  amount: "test value"
+  appliedOn: 2020-10-15
+  FeeType: 0
+
+
