@@ -296,23 +296,13 @@ jobs:
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
           if [ ! -f "requirements.txt" ]; then
-              post_fail \
-                "BUILD" \
-                "REQUIREMENTS_TXT" \
-                0 \
-                "requirements.txt not found."
-          
+              post_fail "BUILD" "REQUIREMENTS_TXT" 0 "requirements.txt not found."
               post_terminate_build
           fi
           
-          python -m pip install --upgrade pip \
-            > pip-upgrade.log 2>&1
-          
           python -m venv .venv
           
-          if .venv/bin/python -m pip install --no-cache-dir -r requirements.txt \
-              > dependency-validation.log 2>&1; then
-          
+          if .venv/bin/python -m pip install --no-cache-dir -r requirements.txt > dependency-validation.log 2>&1; then
               post_pass \
                 "BUILD" \
                 "PYTHON_DEPENDENCY_INSTALL" \
@@ -338,19 +328,25 @@ jobs:
         working-directory: ${{ env.APP_DIRECTORY }}
         run: |
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
-
-          export PYTHONPATH="${GITHUB_WORKSPACE}:${PYTHONPATH}"
           
-          if python manage.py check > build.log 2>&1; then
+          if .venv/bin/python manage.py check > build.log 2>&1; then
               cat build.log
-
-              post_pass "BUILD" "DJANGO_BUILD" 40 "Django system check completed successfully."
+          
+              post_pass \
+                "BUILD" \
+                "DJANGO_BUILD" \
+                40 \
+                "Django system check completed successfully."
           else
               cat build.log
-              MESSAGE=$(tail -30 build.log | tr '' ' ')
-  
-              post_fail "BUILD" "DJANGO_BUILD" 0 "${MESSAGE}"
-  
+              MESSAGE=$(tail -30 build.log | tr '\n' ' ')
+          
+              post_fail \
+                "BUILD" \
+                "DJANGO_BUILD" \
+                0 \
+                "${MESSAGE}"
+          
               post_terminate_build
           fi
 
