@@ -1,0 +1,2 @@
+module FXTradeHelper
+end
