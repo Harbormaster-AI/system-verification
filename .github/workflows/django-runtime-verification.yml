@@ -251,6 +251,17 @@ jobs:
           
             post_terminate_runtime "RUNTIME"
           fi
+          
+          if [ ! -x ".venv/bin/python" ]; then
+            post_fail \
+              "BUILD" \
+              "PACKAGE_ARTIFACT" \
+              0 \
+              "Django runtime artifact is not executable." \
+              "PACKAGE_ARTIFACT: .venv/bin/python is not executable."
+            post_terminate_build
+          fi
+
 
       ###########################################################################
       # Start static web server
