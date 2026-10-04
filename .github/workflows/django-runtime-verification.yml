@@ -268,6 +268,8 @@ jobs:
           
           export PYTHONPATH="${GITHUB_WORKSPACE}:${PYTHONPATH}"
           
+          chmod +x .venv/bin/python
+          
           .venv/bin/python manage.py runserver 127.0.0.1:8000 \
             > runtime.log 2>&1 &
           
