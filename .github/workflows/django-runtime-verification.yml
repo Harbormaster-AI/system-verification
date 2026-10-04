@@ -265,12 +265,7 @@ jobs:
         shell: bash
         run: |
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
-          
-          echo "Starting Django application from:"
-          echo "$APP_DIRECTORY"
-          
-          cd "$APP_DIRECTORY"
-          
+                    
           export PYTHONPATH="$(pwd)/..:${PYTHONPATH}"
           
           .venv/bin/python manage.py runserver 127.0.0.1:8000 \

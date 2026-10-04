@@ -428,7 +428,7 @@ jobs:
       # Run Django Container
       #
       # Django is served by nginx on port 80 inside the container.
-      # Port 8080 is used on the GitHub runner.
+      # Port 8000 is used on the GitHub runner.
       ###########################################################################
 
       - name: Run Docker Container
@@ -441,7 +441,7 @@ jobs:
 
           docker run -d \
             --name ${APP_NAME} \
-            -p 8080:8000 \
+            -p 8000:8000 \
             ${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}
 
           if [ $? -eq 0 ]; then
@@ -484,14 +484,14 @@ jobs:
 
           for i in {1..30}; do
 
-              if curl -fs http://localhost:8080/ >/dev/null; then
+              if curl -fs http://localhost:8000/ >/dev/null; then
 
                   post_pass \
                     "DELIVERY" \
                     "CONTAINER_HEALTH" \
                     15 \
                     "Django container health check passed." \
-                    "CONTAINER_HEALTH: http://localhost:8080/ responded successfully."
+                    "CONTAINER_HEALTH: http://localhost:8000/ responded successfully."
 
                   exit 0
 
