@@ -374,7 +374,7 @@ jobs:
             --silent \
             --write-out "%{http_code}" \
             --output smoke.out \
-            http://127.0.0.1:8080/)
+            http://127.0.0.1:8000/)
 
           if [ "$RESPONSE" = "200" ]; then
 
