@@ -133,75 +133,124 @@ jobs:
         shell: bash
 
         run: |
-
+          
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
-
-          INDEX_FILE=$(find . \
+          
+          echo "Verifying Django runtime artifact..."
+          
+          ###########################################################################
+          # Locate Django application entry point
+          ###########################################################################
+          
+          MANAGE_FILE=$(find . \
             -type f \
-            -name "index.html" \
+            -name "manage.py" \
             | head -1)
-
-          if [ -z "$INDEX_FILE" ]; then
-
+          
+          if [ -z "$MANAGE_FILE" ]; then
+          
             post_fail \
               "RUNTIME" \
               "VERIFY_ARTIFACT" \
               0 \
-              "No Django application artifact found." \
-              "VERIFY_ARTIFACT: Unable to locate index.html."
-
+              "Django application artifact is invalid." \
+              "VERIFY_ARTIFACT: manage.py not found."
+          
             post_terminate_runtime "RUNTIME"
-
           fi
-
-          echo "INDEX_FILE=${INDEX_FILE}" >> "$GITHUB_ENV"
-
-          APP_DIRECTORY=$(dirname "$INDEX_FILE")
-
+          
+          APP_DIRECTORY=$(dirname "$MANAGE_FILE")
+          
+          echo "Django application directory:"
+          echo "$APP_DIRECTORY"
+          
           echo "APP_DIRECTORY=${APP_DIRECTORY}" >> "$GITHUB_ENV"
-
-          post_pass \
-            "RUNTIME" \
-            "VERIFY_ARTIFACT" \
-            10 \
-            "Django application artifact located." \
-            "VERIFY_ARTIFACT: ${INDEX_FILE}"
-
-
-      ###########################################################################
-      # Verify index.html
-      ###########################################################################
-
-      - name: Verify Application Entry Point
-
-        shell: bash
-
-        run: |
-
-          source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
-
-          if [ -s "$INDEX_FILE" ]; then
-
-            post_pass \
-              "RUNTIME" \
-              "INDEX_HTML" \
-              10 \
-              "Django application entry point verified." \
-              "INDEX_HTML: ${INDEX_FILE}"
-
-          else
-
+          
+          
+          ###########################################################################
+          # Verify requirements
+          ###########################################################################
+          
+          if [ ! -f "$APP_DIRECTORY/requirements.txt" ]; then
+          
             post_fail \
               "RUNTIME" \
-              "INDEX_HTML" \
+              "VERIFY_ARTIFACT" \
               0 \
-              "Django application entry point is empty." \
-              "INDEX_HTML: ${INDEX_FILE}"
-
+              "Django application artifact is incomplete." \
+              "VERIFY_ARTIFACT: requirements.txt not found."
+          
             post_terminate_runtime "RUNTIME"
-
           fi
-
+          
+          
+          ###########################################################################
+          # Verify packaged Python runtime
+          ###########################################################################
+          
+          if [ ! -x "$APP_DIRECTORY/.venv/bin/python" ]; then
+          
+            post_fail \
+              "RUNTIME" \
+              "VERIFY_ARTIFACT" \
+              0 \
+              "Django application artifact is incomplete." \
+              "VERIFY_ARTIFACT: .venv/bin/python not found."
+          
+            post_terminate_runtime "RUNTIME"
+          fi
+          
+          
+          ###########################################################################
+          # Verify Python runtime
+          ###########################################################################
+          
+          if ! "$APP_DIRECTORY/.venv/bin/python" --version > /dev/null 2>&1; then
+          
+            post_fail \
+              "RUNTIME" \
+              "VERIFY_ARTIFACT" \
+              0 \
+              "Packaged Python runtime is not executable." \
+              "VERIFY_ARTIFACT: .venv/bin/python could not execute."
+          
+            post_terminate_runtime "RUNTIME"
+          fi
+          
+          
+          ###########################################################################
+          # Verify Django can load the application
+          ###########################################################################
+          
+          cd "$APP_DIRECTORY"
+          
+          export PYTHONPATH="$(pwd)/..:${PYTHONPATH}"
+          
+          if "$APP_DIRECTORY/.venv/bin/python" manage.py check \
+              > artifact-check.log 2>&1; then
+          
+            post_pass \
+              "RUNTIME" \
+              "VERIFY_ARTIFACT" \
+              10 \
+              "Django application artifact verified." \
+              "VERIFY_ARTIFACT: manage.py, requirements.txt, packaged Python runtime, and Django application verified."
+          
+          else
+          
+            cat artifact-check.log
+          
+            MESSAGE=$(tail -30 artifact-check.log | tr '\n' ' ')
+          
+            post_fail \
+              "RUNTIME" \
+              "VERIFY_ARTIFACT" \
+              0 \
+              "Django application artifact failed verification." \
+              "VERIFY_ARTIFACT: ${MESSAGE}"
+          
+            post_terminate_runtime "RUNTIME"
+          fi
 
       ###########################################################################
       # Start static web server
