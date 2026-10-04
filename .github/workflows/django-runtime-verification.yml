@@ -265,8 +265,8 @@ jobs:
         shell: bash
         run: |
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
-                    
-          export PYTHONPATH="$(pwd)/..:${PYTHONPATH}"
+          
+          export PYTHONPATH="${GITHUB_WORKSPACE}:${PYTHONPATH}"
           
           .venv/bin/python manage.py runserver 127.0.0.1:8000 \
             > runtime.log 2>&1 &
