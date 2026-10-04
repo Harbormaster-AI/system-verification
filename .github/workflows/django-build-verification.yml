@@ -189,7 +189,7 @@ jobs:
           else
               post_fail "BUILD" "PYTHON_PACKAGE" 0 "mainsite/__init__.py not found."
           fi
-          
+
           post_result "BUILD" "EXPECTED_FILES" "PASSED" 0 "Expected files validation complete (${SCORE}/10)."
 
       ###############################################################################
@@ -379,10 +379,10 @@ jobs:
           fi
           
           ###############################################################################
-          # make the .venv/bin/python entirely executable
+          # make the .venv bin entirely executable
           ###############################################################################
           
-          chmod +x .venv/bin/python
+          chmod +x ".venv/bin/python"
 
       ###############################################################################
       # Upload Django Build Artifact
