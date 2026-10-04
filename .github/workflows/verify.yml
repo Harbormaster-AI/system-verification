@@ -651,6 +651,7 @@ jobs:
     with:
       runner: ${{ inputs.runner }}
       gitHubToken: ${{ inputs.gitHubToken }}
+      branch: ${{ inputs.branch }}
       resultUrl: ${{ inputs.resultUrl }}
       actionToCall: ${{ inputs.actionToCall }}
       certificationIdentifier:   ${{ inputs.certificationIdentifier }}

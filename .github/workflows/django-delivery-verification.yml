@@ -622,27 +622,6 @@ jobs:
 
 
       ###########################################################################
-      # Delete Verification Branch
-      ###########################################################################
-
-      - name: Delete Verification Branch
-
-        if: always()
-
-        env:
-
-          GH_TOKEN: ${{ inputs.gitHubToken }}
-
-        run: |
-
-          curl -L \
-            -X DELETE \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ inputs.gitHubToken }}" \
-            https://api.github.com/repos/${{ github.repository }}/git/refs/heads/${{ inputs.branch }}
-
-
-      ###########################################################################
       # Terminate Verification
       ###########################################################################
 
