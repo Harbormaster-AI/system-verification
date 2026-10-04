@@ -360,8 +360,7 @@ jobs:
 
           docker build \
             --progress=plain \
-            -t "${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}" \
-            "${APP_DIRECTORY}" 
+            -t "${{ inputs.dockerOrg }}/${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}" .
 
           if [ $? -eq 0 ]; then
 
