@@ -273,7 +273,7 @@ jobs:
           
           export PYTHONPATH="$(pwd)/..:${PYTHONPATH}"
           
-          .venv/bin/python manage.py runserver 127.0.0.1:8080 \
+          .venv/bin/python manage.py runserver 127.0.0.1:8000 \
             > runtime.log 2>&1 &
           
           APP_PID=$!
@@ -309,54 +309,54 @@ jobs:
       ###########################################################################
 
       - name: Wait For Startup
-
         shell: bash
-
         run: |
-
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
-
+          
           post_pass \
             "RUNTIME" \
             "WAITING_FOR_APP" \
             0 \
             "Waiting for Django application to respond." \
             ""
-
+          
+          RESPONSE="000"
+          
           for i in {1..30}; do
-
+          
             RESPONSE=$(curl \
               --silent \
+              --show-error \
               --write-out "%{http_code}" \
               --output /dev/null \
-              http://127.0.0.1:8000/)
-
-            if [ "$RESPONSE" = "200" ]; then
-
+              http://127.0.0.1:8000/ \
+              2>/dev/null || true)
+          
+            if [[ "$RESPONSE" =~ ^[23][0-9][0-9]$ ]]; then
+          
               post_pass \
                 "RUNTIME" \
                 "APPLICATION_STARTED" \
                 20 \
                 "Django application started successfully." \
                 "HTTP ${RESPONSE}"
-
+          
               exit 0
-
+          
             fi
-
+          
             sleep 2
-
+          
           done
-
+          
           post_fail \
             "RUNTIME" \
             "APPLICATION_STARTED" \
             0 \
             "Django application failed to respond." \
             "APPLICATION_STARTED: HTTP ${RESPONSE}"
-
+          
           post_terminate_runtime "RUNTIME"
-
 
       ###########################################################################
       # Smoke Test
