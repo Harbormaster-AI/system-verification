@@ -379,10 +379,10 @@ jobs:
           fi
           
           ###############################################################################
-          # make the .venv bin entirely executable
+          # make the .venv/bin/python entirely executable
           ###############################################################################
           
-          chmod +x .venv/bin/*
+          chmod +x .venv/bin/python
 
       ###############################################################################
       # Upload Django Build Artifact
