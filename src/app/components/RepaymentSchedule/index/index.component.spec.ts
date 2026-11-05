@@ -1,28 +1,25 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { IndexRepaymentScheduleComponent } from "./index.component";
+import { RepaymentScheduleService } from "../../../services/RepaymentSchedule.service";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { IndexRepaymentScheduleComponent } from './index.component';
-import { RepaymentScheduleService } from '../../../services/RepaymentSchedule.service';
-
-describe('IndexRepaymentScheduleComponent', () => {
+describe("IndexRepaymentScheduleComponent", () => {
   let component: IndexRepaymentScheduleComponent;
   let fixture: ComponentFixture<IndexRepaymentScheduleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        IndexRepaymentScheduleComponent
-      ],
+      declarations: [IndexRepaymentScheduleComponent],
       providers: [
         RepaymentScheduleService,
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate'),
-            navigateByUrl: jasmine.createSpy('navigateByUrl')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+            navigateByUrl: jasmine.createSpy("navigateByUrl"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IndexRepaymentScheduleComponent);
@@ -31,7 +28,7 @@ describe('IndexRepaymentScheduleComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

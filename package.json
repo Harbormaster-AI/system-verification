@@ -11,7 +11,6 @@
   "author": "Harbormaster Dev",
   "license": "ISC",
   "description": "",
-
   "dependencies": {
     "@angular/animations": "^22.0.0",
     "@angular/cdk": "^22.0.0",
@@ -24,9 +23,7 @@
     "@angular/platform-browser": "^22.0.0",
     "@angular/platform-browser-dynamic": "^22.0.0",
     "@angular/router": "^22.0.0",
-
     "@ng-bootstrap/ng-bootstrap": "^21.0.0",
-
     "bootstrap": "^5.3.8",
     "cors": "^2.8.5",
     "express": "^4.21.2",

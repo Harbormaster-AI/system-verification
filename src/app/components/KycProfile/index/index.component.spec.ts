@@ -1,28 +1,25 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { IndexKycProfileComponent } from "./index.component";
+import { KycProfileService } from "../../../services/KycProfile.service";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { IndexKycProfileComponent } from './index.component';
-import { KycProfileService } from '../../../services/KycProfile.service';
-
-describe('IndexKycProfileComponent', () => {
+describe("IndexKycProfileComponent", () => {
   let component: IndexKycProfileComponent;
   let fixture: ComponentFixture<IndexKycProfileComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        IndexKycProfileComponent
-      ],
+      declarations: [IndexKycProfileComponent],
       providers: [
         KycProfileService,
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate'),
-            navigateByUrl: jasmine.createSpy('navigateByUrl')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+            navigateByUrl: jasmine.createSpy("navigateByUrl"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IndexKycProfileComponent);
@@ -31,7 +28,7 @@ describe('IndexKycProfileComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

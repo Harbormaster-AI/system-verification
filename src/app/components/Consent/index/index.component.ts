@@ -1,39 +1,35 @@
-
-
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ConsentService } from '../../../services/Consent.service';
-import { Consent } from '../../../models/Consent';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { ConsentService } from "../../../services/Consent.service";
+import { Consent } from "../../../models/Consent";
 
 @Component({
-    selector: 'app-index-consent',
-    standalone: false,
-    templateUrl: './index.component.html',
-    styleUrls: ['./index.component.css']
+  selector: "app-index-consent",
+  standalone: false,
+  templateUrl: "./index.component.html",
+  styleUrls: ["./index.component.css"],
 })
 export class IndexConsentComponent implements OnInit {
+  consents: Consent[] = [];
 
-    consents: Consent[] = [];
+  constructor(
+    private router: Router,
+    private service: ConsentService,
+  ) {}
 
-    constructor(
-        private router: Router,
-        private service: ConsentService
-) {}
+  ngOnInit(): void {
+    this.getConsents();
+  }
 
-    ngOnInit(): void {
-        this.getConsents();
-}
-
-    getConsents(): void {
-        this.service.getConsents().subscribe((res) => {
-        this.consents = res;
+  getConsents(): void {
+    this.service.getConsents().subscribe((res) => {
+      this.consents = res;
     });
-}
+  }
 
-    deleteConsent(id: any): void {
-        this.service.deleteConsent(id)
-            .subscribe(() => {
-                this.getConsents();
-            });
-    }
+  deleteConsent(id: any): void {
+    this.service.deleteConsent(id).subscribe(() => {
+      this.getConsents();
+    });
+  }
 }
