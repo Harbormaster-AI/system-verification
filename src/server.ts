@@ -16,36 +16,36 @@ const app = express();
 const httpServer = http.createServer(app);
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    plugins: [
-        ApolloServerPluginDrainHttpServer({
-            httpServer
-        })
-    ]
+  typeDefs,
+  resolvers,
+  plugins: [
+    ApolloServerPluginDrainHttpServer({
+      httpServer,
+    }),
+  ],
 });
 
 await server.start();
 
 app.get("/health", (_req, res) => {
-    res.status(200).json({
-        status: "UP"
-    });
+  res.status(200).json({
+    status: "UP",
+  });
 });
 
 app.use(
-    "/",
-    cors(),
-    express.json(),
-    expressMiddleware(server, {
-        context: async () => ({
-            backend
-        })
-    })
+  "/",
+  cors(),
+  express.json(),
+  expressMiddleware(server, {
+    context: async () => ({
+      backend,
+    }),
+  }),
 );
 
 const port = Number(process.env.PORT) || 4000;
 
 httpServer.listen(port, () => {
-    console.log(`Apollo Server running at http://localhost:${port}/`);
+  console.log(`Apollo Server running at http://localhost:${port}/`);
 });
