@@ -1,0 +1,98 @@
+{
+    "name": "Axon4-Framework-Server",
+    "shortName": "Axon4",
+    "description": "Axon Framework is a Java framework for building scalable, event-driven applications using Domain-Driven Design (DDD), CQRS (Command Query Responsibility Segregation), and Event Sourcing patterns. It provides developers with a structured way to model complex business domains while reducing the infrastructure code typically required to implement distributed systems.\n\nAt its core, Axon Framework separates how a system handles commands (writes) from how it serves queries (reads), allowing each side to evolve independently and scale according to demand.",
+    "summary": "Axon Framework 4 and Axon Server, using CQRS with persistence options for event store and event sourcing",
+    "iconUrl": "blueprints/axon-framework-blueprint-header-image.png",
+    "infoPageUrl": "https://harbormaster.net/axon-tech-stack/",
+    "version": "1.2",
+    "type": "FirstClass",
+    "appType": "restfulapi",
+    "releaseStatus": "production",
+    "techSourceType": "commercial",
+    "derivedFrom": "Spring Boot 2.5,React",
+    "majorTechnology" : "SpringBoot",
+    "published": "true",
+    "supportsDocker": "true",
+    "supportsKubernetes": "true",
+    "category": "event_driven",
+    "designPattern": "CQRS",
+    "architectureStyle": "EventDrivenArchitecture",
+    "useCases": "Microservices, Event-based systems, Event-sourcing",
+    "primaryVendor": "AxonIQ",
+    "architecturePreviewUrl": "blueprints/architecture.diagrams/axon-blueprint-system-diagram.png",
+    "metadata": "cqrs, event source, domain driven design, saga, projection, microservice",
+    "languages": {
+      "language": [
+        {
+        "name": "java",
+        "version": "11"
+        },
+        {
+          "name": "kotlin"
+        },
+        {
+          "name": "javascript"
+        }
+      ]
+    },
+    "techStack": {
+      "techStackComponents": [
+        {
+          "tech": "React",
+          "description": "Javascript dynamic UI library",
+          "appLayerType": "frontend"
+        },
+        {
+          "tech": "AxonIQ",
+          "description": "event-store",
+          "appLayerType": "backend"
+        },
+        {
+          "tech": "SpringBoot",
+          "description": "restful API web services backend",
+          "appLayerType": "backend"
+        },
+        {
+          "tech": "RDBMS",
+          "description": "Storage options include H2, MySQL, Postgres, and MongoDB ",
+          "appLayerType": "data"
+        },
+        {
+          "tech": "MongoDB",
+          "description": "Distributed document database",
+          "appLayerType": "data"
+        },
+        {
+          "tech": "Junit",
+          "description": "test core persistence",
+          "appLayerType": "test"
+        },
+        {
+          "tech": "Maven",
+          "description": "build, package, commit to repo",
+          "appLayerType": "build"
+        },
+        {
+          "tech": "Github",
+          "description": "system repository",
+          "appLayerType": "repo"
+        },
+        {
+          "tech": "GithubAction",
+          "description": "ci/cd pipeline",
+          "appLayerType": "repo"
+        },
+        {
+          "tech": "Docker",
+          "description": "containment of system image",
+          "appLayerType": "containment"
+        },
+        {
+          "tech": "Kubernetes",
+          "description": "management of Docker image",
+          "appLayerType": "orchestration"
+        }
+      ]
+    }
+}
