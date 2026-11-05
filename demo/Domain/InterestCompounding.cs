@@ -36,7 +36,7 @@ namespace demo.Domain;
 
 public enum InterestCompounding
 {
-    Daily=1,Monthly=2,Quarterly=3,Annually=4
+    Daily = 1, Monthly = 2, Quarterly = 3, Annually = 4
 }
 
 /// <summary>

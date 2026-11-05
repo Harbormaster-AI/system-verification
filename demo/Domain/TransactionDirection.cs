@@ -36,7 +36,7 @@ namespace demo.Domain;
 
 public enum TransactionDirection
 {
-    Credit=1,Debit=2
+    Credit = 1, Debit = 2
 }
 
 /// <summary>
