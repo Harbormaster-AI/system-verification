@@ -8,17 +8,17 @@ import { HttpBackendAPI } from "./backend/http-api.js";
 const backend = new HttpBackendAPI();
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers
+  typeDefs,
+  resolvers,
 });
 
 const { url } = await startStandaloneServer(server, {
-    listen: {
-        port: Number(process.env.PORT) || 4000
-    },
-    context: async () => ({
-        backend
-    })
+  listen: {
+    port: Number(process.env.PORT) || 4000,
+  },
+  context: async () => ({
+    backend,
+  }),
 });
 
 console.log(`Apollo Server running at ${url}`);

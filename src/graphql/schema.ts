@@ -1,32 +1,31 @@
 import {
-    Bank,
-    Branch,
-    ATM,
-    Customer,
-    KycProfile,
-    IdentityDocument,
-    RiskAssessment,
-    ScreeningResult,
-    BankingProduct,
-    Account,
-    AccountStatement,
-    Transaction,
-    ExternalAccount,
-    FundsTransfer,
-    StandingInstruction,
-    PaymentCard,
-    LoanAccount,
-    RepaymentSchedule,
-    LoanPayment,
-    Collateral,
-    FeeCharge,
-    ExchangeRate,
-    FXTrade,
-    Dispute,
-    Consent,
-    ThirdPartyProvider,
+  Bank,
+  Branch,
+  ATM,
+  Customer,
+  KycProfile,
+  IdentityDocument,
+  RiskAssessment,
+  ScreeningResult,
+  BankingProduct,
+  Account,
+  AccountStatement,
+  Transaction,
+  ExternalAccount,
+  FundsTransfer,
+  StandingInstruction,
+  PaymentCard,
+  LoanAccount,
+  RepaymentSchedule,
+  LoanPayment,
+  Collateral,
+  FeeCharge,
+  ExchangeRate,
+  FXTrade,
+  Dispute,
+  Consent,
+  ThirdPartyProvider,
 } from "../backend/types.js";
-
 
 export const typeDefs = `
 type Query {
@@ -2090,4 +2089,3 @@ type Percentage {
         value: Float
 }
 `;
-

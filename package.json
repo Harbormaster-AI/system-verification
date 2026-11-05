@@ -12,7 +12,6 @@
     "start": "node dist/server.js",
     "dev": "tsx src/server.ts"
   },
-  
   "dependencies": {
     "@apollo/server": "5.5.1",
     "axios": "^1.11.0",
