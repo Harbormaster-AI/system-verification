@@ -1,0 +1,47 @@
+<div class="card">
+	<div class="card-header">
+		<h5 class="mb-0">{{ title }}</h5>
+	</div>
+
+	<div class="card-body">
+																	 																																																																															<mat-form-field appearance="outline">
+								<mat-label>terminalId</mat-label>
+								<input matInput ngDefaultControl placeholder="terminalId" name="aTM.terminalId" [(ngModel)]="aTM.terminalId">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																																																															<mat-form-field appearance="outline">
+								<mat-label>location</mat-label>
+								<input matInput ngDefaultControl placeholder="location" name="aTM.location" [(ngModel)]="aTM.location">
+								<mat-hint></mat-hint>
+							</mat-form-field>
+																																												<p>
+					 																																							 								 								<mat-form-field appearance="outline">
+					<mat-label>Branch</mat-label>
+					<mat-select placeholder="Branch"   [compareWith]="compareFn"  [(ngModel)]="aTM.Branch">
+						@for (branch of branchs; track branch.branchId) {
+							<mat-option name="aTM.Branch" ngDefaultControl
+							            [value]="branch.branchId">
+								{{branch.name}}
+							</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+																	<p>
+					 																																				<mat-form-field appearance="outline">
+						<mat-label>Status</mat-label>
+						<mat-select placeholder="Status" name="aTM.Status" [(ngModel)]="aTM.Status">
+							@for (ATMStatus of ATMStatuss; track ATMStatus) {
+								<mat-option ngDefaultControl [value]="ATMStatus">
+									{{ATMStatus}}
+								</mat-option>
+							}
+						</mat-select>
+					</mat-form-field>
+																																	<p>
+																 						 																	 						 																				 						 																	 						 										<button
+				(click)="updateATM(aTM.terminalId, aTM.location, aTM.Branch, aTM.Status)"
+							class="btn btn-primary">update
+		</button>
+	</div> <!-- panel body -->
+</div> <!-- panel panel-primary -->
