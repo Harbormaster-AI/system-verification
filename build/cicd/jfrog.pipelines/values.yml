@@ -1,0 +1,8 @@
+gitRepo:
+  gitProvider: 
+  path: /test-bank-backend-40
+  TestDBUrl: 
+  TestDBName: bankingbackend_test_db
+  TestDBPassword: 
+  TestDBDialect: org.hibernate.dialect.MySQL8Dialect 
+  TestDBDriver: com.mysql.cj.jdbc.Driver
