@@ -36,7 +36,7 @@ namespace demo.Domain;
 
 public enum CardStatus
 {
-    Active=1,Blocked=2,LostStolen=3,Expired=4,Closed=5
+    Active = 1, Blocked = 2, LostStolen = 3, Expired = 4, Closed = 5
 }
 
 /// <summary>

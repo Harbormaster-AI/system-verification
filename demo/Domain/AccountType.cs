@@ -36,7 +36,7 @@ namespace demo.Domain;
 
 public enum AccountType
 {
-    Checking=1,Savings=2,MoneyMarket=3,TimeDeposit=4
+    Checking = 1, Savings = 2, MoneyMarket = 3, TimeDeposit = 4
 }
 
 /// <summary>

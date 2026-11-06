@@ -36,7 +36,7 @@ namespace demo.Domain;
 
 public enum IdentityDocumentType
 {
-    Passport=1,NationalID=2,DriverLicense=3,ResidencePermit=4,BusinessRegistration=5,TaxCertificate=6
+    Passport = 1, NationalID = 2, DriverLicense = 3, ResidencePermit = 4, BusinessRegistration = 5, TaxCertificate = 6
 }
 
 /// <summary>
