@@ -331,7 +331,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "VERIFY_FILES" \
-            5 \
+            10 \
             "Spring Boot project files verified." \
             "Found ${JAVA_SOURCE_COUNT} Java source file(s)."
 
@@ -375,7 +375,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "VERIFY_DIRECTORIES" \
-            5 \
+            10 \
             "Spring Boot directory structure verified."
 
 
@@ -705,7 +705,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "STATIC_ANALYSIS" \
-            15 \
+            30 \
             "Spring Boot static analysis completed successfully." \
             "Checkstyle and SpotBugs completed successfully."
 
@@ -751,7 +751,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "DEPENDENCY_SECURITY" \
-            10 \
+            30 \
             "Spring Boot dependency security check completed successfully."
 
 

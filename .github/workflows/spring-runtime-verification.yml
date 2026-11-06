@@ -299,7 +299,7 @@ jobs:
               post_pass \
                   "RUNTIME" \
                   "START_APPLICATION" \
-                  30 \
+                  40 \
                   "Application started." \
                   "START_APPLICATION: PID ${APP_PID}"
           
@@ -345,6 +345,7 @@ jobs:
               
               echo "Runtime verification passed."
               cat /tmp/health.json
+
               exit 0
             fi
             
@@ -395,7 +396,7 @@ jobs:
               post_pass \
                   "RUNTIME" \
                   "SMOKE_TEST" \
-                  30 \
+                  50 \
                   "Smoke test passed." \
                   "$(cat smoke.out)"
 
