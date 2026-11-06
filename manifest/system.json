@@ -1,0 +1,15 @@
+{
+  "generator": {
+    "name": "Harbormaster",
+    "version": "2.1.0"
+  },
+  "blueprint": {
+    "name": "Axon4-Framework-Server",
+    "version": "1.2"
+  },
+  "domainModel": {
+    "name": "Banking Industry Domain Model",
+    "version": "1.0.0"
+  },
+  "generationId": "${systemIdentifier}"
+}
