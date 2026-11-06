@@ -28,6 +28,7 @@ post_result() {
     echo "Status: ${STATUS}"
     echo "Message: ${MESSAGE}"
     echo "Detail: ${DETAIL}"
+    echo "Terminate: ${TERMINATE}"
 
     local HTTP_STATUS
     local CURL_EXIT
@@ -154,8 +155,6 @@ post_terminate_build() {
 }
 
 post_terminate_runtime() {
-
-    local EXIT_WORKFLOW="${1:-true}"
 
     post_result \
         "RUNTIME" \
