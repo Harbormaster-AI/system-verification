@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,34 +23,30 @@
  */
 package com.globalbank.service;
 
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
-import org.springframework.beans.BeansException;
-
 /**
  * Base class for application business service.
+ *
  * <p>
+ *
  * @author hm.dev
  */
 @Component
 public class BaseService implements ApplicationContextAware {
- 
-	public BaseService() {	
-	}
-	
-	@Override
-    public void setApplicationContext(ApplicationContext ctx) throws BeansException {
-        applicationContext = ctx;
-    }    
 
-//************************************************************************
-// Protected / Private Methods
-//************************************************************************
-    protected static ApplicationContext applicationContext;
+  public BaseService() {}
 
+  @Override
+  public void setApplicationContext(ApplicationContext ctx) throws BeansException {
+    applicationContext = ctx;
+  }
+
+  // ************************************************************************
+  // Protected / Private Methods
+  // ************************************************************************
+  protected static ApplicationContext applicationContext;
 }
-
-
-
