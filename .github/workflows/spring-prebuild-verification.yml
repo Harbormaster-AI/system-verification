@@ -744,7 +744,7 @@ jobs:
               "Security Check" \
               "Trivy vulnerability scan failed: ${MESSAGE}"
           
-            post_terminate_build
+            post_terminate_prebuild
           fi
           
           echo "Trivy vulnerability scan passed."

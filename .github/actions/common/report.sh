@@ -122,7 +122,7 @@ post_terminate_prebuild() {
     local EXIT_WORKFLOW="${1:-true}"
 
     post_result \
-        "BUILD" \
+        "PRE_BUILD" \
         "" \
         "" \
         0 \
