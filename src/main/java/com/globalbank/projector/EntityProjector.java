@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -27,7 +27,7 @@ import java.util.UUID;
 
 public interface EntityProjector<T> {
 
-    public Class<T> getEntityClass();
+  public Class<T> getEntityClass();
 
-    public T find(UUID id);
+  public T find(UUID id);
 }
