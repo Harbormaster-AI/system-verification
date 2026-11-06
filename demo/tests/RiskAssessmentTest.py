@@ -1,5 +1,3 @@
-
-
 from django.test import TestCase
 
 from demo.models.RiskAssessment import RiskAssessment
@@ -7,34 +5,33 @@ from demo.delegates.RiskAssessmentDelegate import RiskAssessmentDelegate
 
 import datetime
 
- #======================================================================
-# 
+# ======================================================================
+#
 # Encapsulates data for model RiskAssessment
 #
 # @author your_name_here
 #
-#======================================================================
+# ======================================================================
 
-#======================================================================
+
+# ======================================================================
 # Class RiskAssessmentTest Declaration
-#======================================================================
-class RiskAssessmentTest (TestCase) :
-	def test_crud(self) :
-		risk_assessment = RiskAssessment()
-		risk_assessment.score = 22
-		risk_assessment.assessedOn = datetime.datetime.now()
-		risk_assessment.rating = "default rating field value"
-		
-		delegate = RiskAssessmentDelegate()
-		response_obj = delegate.create(risk_assessment)
-		
-		self.assertEqual(response_obj, delegate.get( response_obj.id ))
-	
-		all_obj = delegate.getAll()
-		self.assertEqual(all_obj.count(), 1 )		
-		delegate.delete(response_obj.id)
-		
-		all_obj = delegate.getAll()
-		self.assertEqual(all_obj.count(), 0 )		
+# ======================================================================
+class RiskAssessmentTest(TestCase):
+    def test_crud(self):
+        risk_assessment = RiskAssessment()
+        risk_assessment.score = 22
+        risk_assessment.assessedOn = datetime.datetime.now()
+        risk_assessment.rating = "default rating field value"
 
+        delegate = RiskAssessmentDelegate()
+        response_obj = delegate.create(risk_assessment)
 
+        self.assertEqual(response_obj, delegate.get(response_obj.id))
+
+        all_obj = delegate.getAll()
+        self.assertEqual(all_obj.count(), 1)
+        delegate.delete(response_obj.id)
+
+        all_obj = delegate.getAll()
+        self.assertEqual(all_obj.count(), 0)
