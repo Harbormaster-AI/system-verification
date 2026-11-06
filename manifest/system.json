@@ -1,0 +1,15 @@
+{
+  "generator": {
+    "name": "Harbormaster",
+    "version": "2.1.0"
+  },
+  "blueprint": {
+    "name": "Spring Boot 2.5",
+    "version": "2.9"
+  },
+  "domainModel": {
+    "name": "Banking Industry Domain Model",
+    "version": "1.0.0"
+  },
+  "generationId": "${systemIdentifier}"
+}
