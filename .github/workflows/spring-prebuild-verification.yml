@@ -332,7 +332,7 @@ jobs:
             "PRE_BUILD" \
             "VERIFY_FILES" \
             10 \
-            "Spring Boot project files verified." \
+            "Project files verified." \
             "Found ${JAVA_SOURCE_COUNT} Java source file(s)."
 
 
@@ -354,7 +354,7 @@ jobs:
               "PRE_BUILD" \
               "VERIFY_DIRECTORIES" \
               0 \
-              "Spring Boot src directory was not found."
+              "src directory was not found."
 
             post_terminate_prebuild
 
@@ -366,7 +366,7 @@ jobs:
               "PRE_BUILD" \
               "VERIFY_DIRECTORIES" \
               0 \
-              "Spring Boot src/main directory was not found."
+              "src/main directory was not found."
 
             post_terminate_prebuild
 
@@ -376,7 +376,7 @@ jobs:
             "PRE_BUILD" \
             "VERIFY_DIRECTORIES" \
             10 \
-            "Spring Boot directory structure verified."
+            "Directory structure verified."
 
 
       ###########################################################################
@@ -432,7 +432,7 @@ jobs:
             "PRE_BUILD" \
             "FORMAT_CODE" \
             15 \
-            "Spring Boot source formatting completed successfully." \
+            "Source formatting completed successfully." \
             "Spotless completed with no remaining formatting changes."
 
 
@@ -706,7 +706,7 @@ jobs:
             "PRE_BUILD" \
             "STATIC_ANALYSIS" \
             30 \
-            "Spring Boot static analysis completed successfully." \
+            "Static analysis completed successfully." \
             "Checkstyle and SpotBugs completed successfully."
 
         ###########################################################################
@@ -752,7 +752,7 @@ jobs:
             "PRE_BUILD" \
             "DEPENDENCY_SECURITY" \
             30 \
-            "Spring Boot dependency security check completed successfully."
+            "Dependency security check completed successfully."
 
 
       ###########################################################################
