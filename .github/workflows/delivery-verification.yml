@@ -227,7 +227,7 @@ jobs:
             post_fail \
               "DELIVERY" \
               "VERIFY_DOCKERFILE" \
-              5 \
+              0 \
               "Dockerfile not found." \
               "Expected Dockerfile at ./Dockerfile or ./${APP_NAME}/Dockerfile."
             
@@ -342,7 +342,7 @@ jobs:
               post_pass \
                   "DELIVERY" \
                   "DOCKER_BUILD" \
-                  15 \
+                  20 \
                   "Docker image built successfully." \
                   "DOCKER_BUILD: ${{ inputs.dockerRepository }}:${{ inputs.dockerTag }}"
           
@@ -520,7 +520,7 @@ jobs:
                   post_pass \
                       "DELIVERY" \
                       "CONTAINER_HEALTH" \
-                      15 \
+                      25 \
                       "Container health check passed." \
                       "CONTAINER_HEALTH: Application reported UP."
           
