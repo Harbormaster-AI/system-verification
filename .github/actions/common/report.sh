@@ -29,6 +29,7 @@ post_result() {
     echo "Message: ${MESSAGE}"
     echo "Detail: ${DETAIL}"
     echo "Terminate: ${TERMINATE}"
+    echo "CertificationIdentifier: ${CERTIFICATION_IDENTIFIER}"
 
     local HTTP_STATUS
     local CURL_EXIT
