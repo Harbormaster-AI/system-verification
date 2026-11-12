@@ -520,7 +520,7 @@ jobs:
               post_pass \
                   "BUILD" \
                   "GO_TEST" \
-                  1 \
+                  2 \
                   "Go test files located."
 
           else
@@ -544,7 +544,7 @@ jobs:
               post_pass \
                   "BUILD" \
                   "GO_PACKAGES" \
-                  1 \
+                  2 \
                   "internal/ or pkg/ directory exists."
 
           else

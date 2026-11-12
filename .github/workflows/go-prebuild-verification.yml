@@ -264,7 +264,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "FORMAT_CODE" \
-            15 \
+            20 \
             "Go source formatting completed successfully." \
             "All Go source files are gofmt compliant."
 
@@ -388,7 +388,7 @@ jobs:
             post_pass \
               "PRE_BUILD" \
               "COMMIT_FORMATTED_SOURCE" \
-              5 \
+              10 \
               "Formatted ASP.NET source committed successfully." \
               "Commit ${COMMIT_SHA} pushed to ${TARGET_BRANCH}."
 
@@ -494,7 +494,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "GO_VET" \
-            10 \
+            25 \
             "go vet completed successfully."
 
           echo "Installing staticcheck..."
@@ -523,7 +523,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "STATICCHECK" \
-            10 \
+            15 \
             "staticcheck completed successfully."
 
       ###########################################################################
@@ -568,7 +568,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "GO_VULNCHECK" \
-            5 \
+            15 \
             "Go vulnerability check completed successfully."
 
           #######################################################################
@@ -601,7 +601,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "GOSEC" \
-            5 \
+            15 \
             "gosec security analysis completed successfully."
 
       ###########################################################################
