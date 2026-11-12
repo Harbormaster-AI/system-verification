@@ -224,14 +224,19 @@ jobs:
       ###############################################################################
       # Setup .NET
       ###############################################################################
-
-      - name: Setup .NET
-
+      - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
-
+        env:
+          DOTNET_INSTALL_DIR: ${{ runner.temp }}/dotnet
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - name: Verify .NET installation
+        shell: bash
+        run: |
+          which dotnet
+          dotnet --version
+          dotnet --list-runtimes
 
       ###############################################################################
       # Verify .NET SDK
