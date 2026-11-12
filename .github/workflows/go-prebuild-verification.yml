@@ -182,7 +182,8 @@ jobs:
           source .github/actions/common/report.sh
 
           GO_VERSION="${{ inputs.languageVersion }}"
-
+          echo "Using Go ${GO_VERSION}"
+  
           if [ -f "${APP_DIR}/go.mod" ]; then
 
             PARSED_VERSION=$(
