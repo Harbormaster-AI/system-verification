@@ -327,7 +327,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "VERIFY_FILES" \
-            5 \
+            10 \
             "ASP.NET project files verified." \
             "Found ${PROJECT_COUNT} project file(s)."
 
@@ -359,7 +359,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "VERIFY_DIRECTORIES" \
-            5 \
+            10 \
             "ASP.NET directory structure verified."
 
 
@@ -410,7 +410,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "FORMAT_CODE" \
-            15 \
+            20 \
             "ASP.NET source formatting completed successfully." \
             "dotnet format completed with no remaining formatting changes."
 
@@ -535,7 +535,7 @@ jobs:
             post_pass \
               "PRE_BUILD" \
               "COMMIT_FORMATTED_SOURCE" \
-              5 \
+              10 \
               "Formatted ASP.NET source committed successfully." \
               "Commit ${COMMIT_SHA} pushed to ${TARGET_BRANCH}."
 
@@ -631,7 +631,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "STATIC_ANALYSIS" \
-            15 \
+            25 \
             "ASP.NET static analysis completed successfully." \
             "Compiler and analyzer warnings were treated as errors."
 
@@ -694,7 +694,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "NUGET_VULNERABILITY_CHECK" \
-            10 \
+            25 \
             "NuGet vulnerability check completed successfully."
 
 
