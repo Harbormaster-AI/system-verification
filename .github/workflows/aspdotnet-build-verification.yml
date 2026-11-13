@@ -759,12 +759,12 @@ jobs:
               if grep -R "<TargetFramework>net10.0</TargetFramework>" \
                   $PROJECTS > target-framework.log 2>&1; then
           
-                  SCORE=$((SCORE + 4))
+                  SCORE=$((SCORE + 3))
           
                   post_pass \
                       "BUILD" \
                       "TARGET_FRAMEWORK" \
-                      4 \
+                      3 \
                       "Generated project targets net10.0."
           
               else
@@ -922,7 +922,7 @@ jobs:
               post_pass \
                   "BUILD" \
                   "DOTNET_TEST" \
-                  20 \
+                  10 \
                   "ASP.NET automated tests completed successfully."
 
           else
@@ -1111,7 +1111,7 @@ jobs:
             post_pass \
               "BUILD" \
               "BUILD_ARTIFACT" \
-              20 \
+              10 \
               "ASP.NET 10 build artifact successfully validated." \
               "BUILD_ARTIFACT: ${FILE_COUNT} files (${TOTAL_SIZE})."
         
