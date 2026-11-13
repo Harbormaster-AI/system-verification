@@ -730,7 +730,13 @@ jobs:
           
           echo "Running Trivy vulnerability scan..."
           
-          if ! trivy fs . \
+          TRIVY_IGNORE_ARGS=()
+  
+          if [ -f .trivyignore.yaml ]; then
+            TRIVY_IGNORE_ARGS=(--ignorefile .trivyignore.yaml --show-suppressed)
+          fi
+          
+          if ! trivy fs "${TRIVY_IGNORE_ARGS[@]}" . \
               --scanners vuln \
               --severity HIGH,CRITICAL \
               --ignore-unfixed \
