@@ -27,9 +27,10 @@ public static class IdentityDocumentEndpoints
     private static async Task<IResult> Create(
         IdentityDocumentRequest request,
         IIdentityDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToIdentityDocument( request );
+        var model = mapRequestToIdentityDocument(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class IdentityDocumentEndpoints
     private static async Task<IResult> Update(
         IdentityDocumentRequest request,
         IIdentityDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToIdentityDocument( request );
+        var model = mapRequestToIdentityDocument(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class IdentityDocumentEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IIdentityDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var identityDocument = await service.Get(identifier, cancellationToken);
-        return identityDocument is null ? Results.NotFound() : Results.Ok( identityDocument );
+        return identityDocument is null ? Results.NotFound() : Results.Ok(identityDocument);
     }
 
 
     private static async Task<IResult> GetAll(
         IIdentityDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( IdentityDocumentResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(IdentityDocumentResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IIdentityDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class IdentityDocumentEndpoints
     private static async Task<IResult> AssignKycProfile(
         AssociationRequest request,
         IIdentityDocumentService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignKycProfile(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class IdentityDocumentEndpoints
     private static async Task<IResult> UnassignKycProfile(
     AssociationRequest request,
     IIdentityDocumentService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignKycProfile(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static IdentityDocument mapRequestToIdentityDocument( IdentityDocumentRequest request ) {
+    private static IdentityDocument mapRequestToIdentityDocument(IdentityDocumentRequest request)
+    {
         var model = new IdentityDocument
         {
             Id = request.Id,
