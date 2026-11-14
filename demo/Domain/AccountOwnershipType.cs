@@ -36,7 +36,7 @@ namespace demo.Domain;
 
 public enum AccountOwnershipType
 {
-    Sole=1,Joint=2,Corporate=3,Trust=4
+    Sole = 1, Joint = 2, Corporate = 3, Trust = 4
 }
 
 /// <summary>
