@@ -1,28 +1,25 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { IndexPaymentCardComponent } from "./index.component";
+import { PaymentCardService } from "../../../services/PaymentCard.service";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { IndexPaymentCardComponent } from './index.component';
-import { PaymentCardService } from '../../../services/PaymentCard.service';
-
-describe('IndexPaymentCardComponent', () => {
+describe("IndexPaymentCardComponent", () => {
   let component: IndexPaymentCardComponent;
   let fixture: ComponentFixture<IndexPaymentCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        IndexPaymentCardComponent
-      ],
+      declarations: [IndexPaymentCardComponent],
       providers: [
         PaymentCardService,
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate'),
-            navigateByUrl: jasmine.createSpy('navigateByUrl')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+            navigateByUrl: jasmine.createSpy("navigateByUrl"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IndexPaymentCardComponent);
@@ -31,7 +28,7 @@ describe('IndexPaymentCardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
