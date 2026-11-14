@@ -1,366 +1,389 @@
-
-import { Injectable } from '@angular/core';
-import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, switchMap } from 'rxjs';
-import {FXTrade} from '../models/FXTrade';
-    import {Customer} from '../models/Customer';
-    import {Bank} from '../models/Bank';
-    import {ExchangeRate} from '../models/ExchangeRate';
-    import {Account} from '../models/Account';
-    import {Transaction} from '../models/Transaction';
-import {CustomerService} from '../services/Customer.service';
-import {BankService} from '../services/Bank.service';
-import {ExchangeRateService} from '../services/ExchangeRate.service';
-import {AccountService} from '../services/Account.service';
-import {TransactionService} from '../services/Transaction.service';
-import { HelperBaseService } from './helperbase.service';
+import { Injectable } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { HttpClient } from "@angular/common/http";
+import { Observable, Subject, switchMap } from "rxjs";
+import { FXTrade } from "../models/FXTrade";
+import { Customer } from "../models/Customer";
+import { Bank } from "../models/Bank";
+import { ExchangeRate } from "../models/ExchangeRate";
+import { Account } from "../models/Account";
+import { Transaction } from "../models/Transaction";
+import { CustomerService } from "../services/Customer.service";
+import { BankService } from "../services/Bank.service";
+import { ExchangeRateService } from "../services/ExchangeRate.service";
+import { AccountService } from "../services/Account.service";
+import { TransactionService } from "../services/Transaction.service";
+import { HelperBaseService } from "./helperbase.service";
 
 @Injectable({
-	providedIn: 'root'
+  providedIn: "root",
 })
-
 export class FXTradeService extends HelperBaseService {
+  //********************************************************************
+  // general holder
+  //********************************************************************
+  fXTrade: FXTrade;
 
-	//********************************************************************
-	// general holder 
-	//********************************************************************
-	fXTrade : FXTrade;
+  //********************************************************************
+  // Catch all for the return value of a service call
+  //********************************************************************
+  result: any;
 
-	//********************************************************************
-	// Catch all for the return value of a service call
-	//********************************************************************
-	result: any;
+  //********************************************************************
+  // sole constructor, injected with the HttpClient
+  //********************************************************************
+  constructor(private http: HttpClient) {
+    super();
+  }
 
-	//********************************************************************
-	// sole constructor, injected with the HttpClient
-	//********************************************************************
-	constructor(private http: HttpClient) {
-		super();
-	}
+  //********************************************************************
+  // add a FXTrade
+  // returns the results untouched as a JSON representation
+  // delegates via URI
+  //********************************************************************
+  addFXTrade(
+    tradeReference,
+    tradeDate,
+    settlementDate,
+    amountSold,
+    amountBought,
+    rate,
+    Customer,
+    Bank,
+    ExchangeRate,
+    SourceAccount,
+    DestinationAccount,
+    Transaction,
+    Status,
+  ): Observable<any> {
+    const uri_ = this.apiUrl + "/FXTrade/create";
+    const obj = {
+      tradeReference: tradeReference,
+      tradeDate: tradeDate,
+      settlementDate: settlementDate,
+      amountSold: amountSold,
+      amountBought: amountBought,
+      rate: rate,
+      Customer: Customer != null && Customer.length > 0 ? Customer : null,
+      Bank: Bank != null && Bank.length > 0 ? Bank : null,
+      ExchangeRate:
+        ExchangeRate != null && ExchangeRate.length > 0 ? ExchangeRate : null,
+      SourceAccount:
+        SourceAccount != null && SourceAccount.length > 0
+          ? SourceAccount
+          : null,
+      DestinationAccount:
+        DestinationAccount != null && DestinationAccount.length > 0
+          ? DestinationAccount
+          : null,
+      Transaction:
+        Transaction != null && Transaction.length > 0 ? Transaction : null,
+      Status: Status,
+    };
 
-		//********************************************************************
-	// add a FXTrade
-	// returns the results untouched as a JSON representation
-	// delegates via URI
-	//********************************************************************
-	addFXTrade(tradeReference, tradeDate, settlementDate, amountSold, amountBought, rate, Customer, Bank, ExchangeRate, SourceAccount, DestinationAccount, Transaction, Status) : Observable<any> {
-		const uri_ = this.apiUrl + '/FXTrade/create';
-		const obj = {
-			      		tradeReference: tradeReference,
-      		tradeDate: tradeDate,
-      		settlementDate: settlementDate,
-      		amountSold: amountSold,
-      		amountBought: amountBought,
-      		rate: rate,
-      		Customer: Customer != null && Customer.length > 0 ? Customer : null,
-      		Bank: Bank != null && Bank.length > 0 ? Bank : null,
-      		ExchangeRate: ExchangeRate != null && ExchangeRate.length > 0 ? ExchangeRate : null,
-      		SourceAccount: SourceAccount != null && SourceAccount.length > 0 ? SourceAccount : null,
-      		DestinationAccount: DestinationAccount != null && DestinationAccount.length > 0 ? DestinationAccount : null,
-      		Transaction: Transaction != null && Transaction.length > 0 ? Transaction : null,
-			Status: Status
-		};
+    return this.http.post(uri_, obj);
+  }
 
-		return this.http.post(uri_, obj);
-	}
+  //********************************************************************
+  // update a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  updateFXTrade(
+    tradeReference,
+    tradeDate,
+    settlementDate,
+    amountSold,
+    amountBought,
+    rate,
+    Customer,
+    Bank,
+    ExchangeRate,
+    SourceAccount,
+    DestinationAccount,
+    Transaction,
+    Status,
+    id,
+  ): Observable<any> {
+    const uri_ = this.apiUrl + "/FXTrade/update/" + id;
+    const obj = {
+      tradeReference: tradeReference,
+      tradeDate: tradeDate,
+      settlementDate: settlementDate,
+      amountSold: amountSold,
+      amountBought: amountBought,
+      rate: rate,
+      Customer: Customer != null && Customer.length > 0 ? Customer : null,
+      Bank: Bank != null && Bank.length > 0 ? Bank : null,
+      ExchangeRate:
+        ExchangeRate != null && ExchangeRate.length > 0 ? ExchangeRate : null,
+      SourceAccount:
+        SourceAccount != null && SourceAccount.length > 0
+          ? SourceAccount
+          : null,
+      DestinationAccount:
+        DestinationAccount != null && DestinationAccount.length > 0
+          ? DestinationAccount
+          : null,
+      Transaction:
+        Transaction != null && Transaction.length > 0 ? Transaction : null,
+      Status: Status,
+    };
+    return this.http.post(uri_, obj);
+  }
 
-	//********************************************************************
-	// update a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-		updateFXTrade(tradeReference, tradeDate, settlementDate, amountSold, amountBought, rate, Customer, Bank, ExchangeRate, SourceAccount, DestinationAccount, Transaction, Status, id)  :  Observable<any>  {
-			const uri_ = this.apiUrl + '/FXTrade/update/' + id;
-		const obj = {
-				      		tradeReference: tradeReference,
-      		tradeDate: tradeDate,
-      		settlementDate: settlementDate,
-      		amountSold: amountSold,
-      		amountBought: amountBought,
-      		rate: rate,
-      		Customer: Customer != null && Customer.length > 0 ? Customer : null,
-      		Bank: Bank != null && Bank.length > 0 ? Bank : null,
-      		ExchangeRate: ExchangeRate != null && ExchangeRate.length > 0 ? ExchangeRate : null,
-      		SourceAccount: SourceAccount != null && SourceAccount.length > 0 ? SourceAccount : null,
-      		DestinationAccount: DestinationAccount != null && DestinationAccount.length > 0 ? DestinationAccount : null,
-      		Transaction: Transaction != null && Transaction.length > 0 ? Transaction : null,
-			Status: Status
-		};
-		return this.http.post(uri_, obj);
-	}
+  //********************************************************************
+  // delete a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  deleteFXTrade(id): Observable<any> {
+    const uri_ = this.apiUrl + "/FXTrade/delete/" + id;
 
-	//********************************************************************
-	// delete a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	deleteFXTrade(id)  : Observable<any> {
-		const uri_ = this.apiUrl + '/FXTrade/delete/' + id;
+    return this.http.get(uri_);
+  }
 
-		return this.http.get(uri_);
-	}
-	
-	//********************************************************************
-	// loads a FXTrade
-	// returns the results untouched as an Observable FXTrade
-	// FXTrade model
-	// delegates via URI
-	//********************************************************************
-	getFXTrade(id) : Observable<FXTrade> {
-		const uri_ = this.apiUrl + '/FXTrade/load/' + id;
+  //********************************************************************
+  // loads a FXTrade
+  // returns the results untouched as an Observable FXTrade
+  // FXTrade model
+  // delegates via URI
+  //********************************************************************
+  getFXTrade(id): Observable<FXTrade> {
+    const uri_ = this.apiUrl + "/FXTrade/load/" + id;
 
-		return this.http.get<FXTrade>(uri_);
-	}
-	
-	//********************************************************************
-	// gets all FXTrade
-	// returns the results untouched as JSON representation of an
-	// Observable array of FXTrade models
-	// delegates via URI
-	//********************************************************************
-	getFXTrades() : Observable<FXTrade[]> {
-		const uri_ = this.apiUrl + '/FXTrade/';
+    return this.http.get<FXTrade>(uri_);
+  }
 
-		return this
-			.http.get<FXTrade[]>(uri_);
-	}
-	
-		
-	//********************************************************************
-	// assigns a Customer on a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	assignCustomer( fXTradeId, _customerId ): Observable<any> {
+  //********************************************************************
+  // gets all FXTrade
+  // returns the results untouched as JSON representation of an
+  // Observable array of FXTrade models
+  // delegates via URI
+  //********************************************************************
+  getFXTrades(): Observable<FXTrade[]> {
+    const uri_ = this.apiUrl + "/FXTrade/";
 
-		// get the FXTrade from storage
-		this.loadHelper( fXTradeId );
+    return this.http.get<FXTrade[]>(uri_);
+  }
 
-		return new CustomerService(this.http).getCustomer(_customerId).pipe(
-			switchMap((tmp: Customer) => {
-				this.fXTrade.customer = tmp.customerId;
-				return this.saveHelper();
-			})
-		);
-}
+  //********************************************************************
+  // assigns a Customer on a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  assignCustomer(fXTradeId, _customerId): Observable<any> {
+    // get the FXTrade from storage
+    this.loadHelper(fXTradeId);
 
-	//********************************************************************
-	// unassigns a Customer on a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	unassignCustomer( fXTradeId ): Observable<any> {
+    return new CustomerService(this.http).getCustomer(_customerId).pipe(
+      switchMap((tmp: Customer) => {
+        this.fXTrade.customer = tmp.customerId;
+        return this.saveHelper();
+      }),
+    );
+  }
 
-		// get the FXTrade from storage
-		this.loadHelper( fXTradeId );
+  //********************************************************************
+  // unassigns a Customer on a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  unassignCustomer(fXTradeId): Observable<any> {
+    // get the FXTrade from storage
+    this.loadHelper(fXTradeId);
 
-	// assign Customer to null
-	this.fXTrade.customer = null;
+    // assign Customer to null
+    this.fXTrade.customer = null;
 
-	// save the FXTrade
-	return this.saveHelper();
-}
+    // save the FXTrade
+    return this.saveHelper();
+  }
 
-	
-	//********************************************************************
-	// assigns a Bank on a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	assignBank( fXTradeId, _bankId ): Observable<any> {
+  //********************************************************************
+  // assigns a Bank on a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  assignBank(fXTradeId, _bankId): Observable<any> {
+    // get the FXTrade from storage
+    this.loadHelper(fXTradeId);
 
-		// get the FXTrade from storage
-		this.loadHelper( fXTradeId );
+    return new BankService(this.http).getBank(_bankId).pipe(
+      switchMap((tmp: Bank) => {
+        this.fXTrade.bank = tmp.bankId;
+        return this.saveHelper();
+      }),
+    );
+  }
 
-		return new BankService(this.http).getBank(_bankId).pipe(
-			switchMap((tmp: Bank) => {
-				this.fXTrade.bank = tmp.bankId;
-				return this.saveHelper();
-			})
-		);
-}
+  //********************************************************************
+  // unassigns a Bank on a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  unassignBank(fXTradeId): Observable<any> {
+    // get the FXTrade from storage
+    this.loadHelper(fXTradeId);
 
-	//********************************************************************
-	// unassigns a Bank on a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	unassignBank( fXTradeId ): Observable<any> {
+    // assign Bank to null
+    this.fXTrade.bank = null;
 
-		// get the FXTrade from storage
-		this.loadHelper( fXTradeId );
+    // save the FXTrade
+    return this.saveHelper();
+  }
 
-	// assign Bank to null
-	this.fXTrade.bank = null;
+  //********************************************************************
+  // assigns a ExchangeRate on a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  assignExchangeRate(fXTradeId, _exchangeRateId): Observable<any> {
+    // get the FXTrade from storage
+    this.loadHelper(fXTradeId);
 
-	// save the FXTrade
-	return this.saveHelper();
-}
+    return new ExchangeRateService(this.http)
+      .getExchangeRate(_exchangeRateId)
+      .pipe(
+        switchMap((tmp: ExchangeRate) => {
+          this.fXTrade.exchangeRate = tmp.exchangeRateId;
+          return this.saveHelper();
+        }),
+      );
+  }
 
-	
-	//********************************************************************
-	// assigns a ExchangeRate on a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	assignExchangeRate( fXTradeId, _exchangeRateId ): Observable<any> {
+  //********************************************************************
+  // unassigns a ExchangeRate on a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  unassignExchangeRate(fXTradeId): Observable<any> {
+    // get the FXTrade from storage
+    this.loadHelper(fXTradeId);
 
-		// get the FXTrade from storage
-		this.loadHelper( fXTradeId );
+    // assign ExchangeRate to null
+    this.fXTrade.exchangeRate = null;
 
-		return new ExchangeRateService(this.http).getExchangeRate(_exchangeRateId).pipe(
-			switchMap((tmp: ExchangeRate) => {
-				this.fXTrade.exchangeRate = tmp.exchangeRateId;
-				return this.saveHelper();
-			})
-		);
-}
+    // save the FXTrade
+    return this.saveHelper();
+  }
 
-	//********************************************************************
-	// unassigns a ExchangeRate on a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	unassignExchangeRate( fXTradeId ): Observable<any> {
+  //********************************************************************
+  // assigns a SourceAccount on a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  assignSourceAccount(fXTradeId, _sourceAccountId): Observable<any> {
+    // get the FXTrade from storage
+    this.loadHelper(fXTradeId);
 
-		// get the FXTrade from storage
-		this.loadHelper( fXTradeId );
+    return new AccountService(this.http).getAccount(_sourceAccountId).pipe(
+      switchMap((tmp: Account) => {
+        this.fXTrade.sourceAccount = tmp.accountId;
+        return this.saveHelper();
+      }),
+    );
+  }
 
-	// assign ExchangeRate to null
-	this.fXTrade.exchangeRate = null;
+  //********************************************************************
+  // unassigns a SourceAccount on a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  unassignSourceAccount(fXTradeId): Observable<any> {
+    // get the FXTrade from storage
+    this.loadHelper(fXTradeId);
 
-	// save the FXTrade
-	return this.saveHelper();
-}
+    // assign SourceAccount to null
+    this.fXTrade.sourceAccount = null;
 
-	
-	//********************************************************************
-	// assigns a SourceAccount on a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	assignSourceAccount( fXTradeId, _sourceAccountId ): Observable<any> {
+    // save the FXTrade
+    return this.saveHelper();
+  }
 
-		// get the FXTrade from storage
-		this.loadHelper( fXTradeId );
+  //********************************************************************
+  // assigns a DestinationAccount on a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  assignDestinationAccount(fXTradeId, _destinationAccountId): Observable<any> {
+    // get the FXTrade from storage
+    this.loadHelper(fXTradeId);
 
-		return new AccountService(this.http).getAccount(_sourceAccountId).pipe(
-			switchMap((tmp: Account) => {
-				this.fXTrade.sourceAccount = tmp.accountId;
-				return this.saveHelper();
-			})
-		);
-}
+    return new AccountService(this.http).getAccount(_destinationAccountId).pipe(
+      switchMap((tmp: Account) => {
+        this.fXTrade.destinationAccount = tmp.accountId;
+        return this.saveHelper();
+      }),
+    );
+  }
 
-	//********************************************************************
-	// unassigns a SourceAccount on a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	unassignSourceAccount( fXTradeId ): Observable<any> {
+  //********************************************************************
+  // unassigns a DestinationAccount on a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  unassignDestinationAccount(fXTradeId): Observable<any> {
+    // get the FXTrade from storage
+    this.loadHelper(fXTradeId);
 
-		// get the FXTrade from storage
-		this.loadHelper( fXTradeId );
+    // assign DestinationAccount to null
+    this.fXTrade.destinationAccount = null;
 
-	// assign SourceAccount to null
-	this.fXTrade.sourceAccount = null;
+    // save the FXTrade
+    return this.saveHelper();
+  }
 
-	// save the FXTrade
-	return this.saveHelper();
-}
+  //********************************************************************
+  // assigns a Transaction on a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  assignTransaction(fXTradeId, _transactionId): Observable<any> {
+    // get the FXTrade from storage
+    this.loadHelper(fXTradeId);
 
-	
-	//********************************************************************
-	// assigns a DestinationAccount on a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	assignDestinationAccount( fXTradeId, _destinationAccountId ): Observable<any> {
+    return new TransactionService(this.http)
+      .getTransaction(_transactionId)
+      .pipe(
+        switchMap((tmp: Transaction) => {
+          this.fXTrade.transaction = tmp.transactionId;
+          return this.saveHelper();
+        }),
+      );
+  }
 
-		// get the FXTrade from storage
-		this.loadHelper( fXTradeId );
+  //********************************************************************
+  // unassigns a Transaction on a FXTrade
+  // returns an Observable
+  // delegates via URI
+  //********************************************************************
+  unassignTransaction(fXTradeId): Observable<any> {
+    // get the FXTrade from storage
+    this.loadHelper(fXTradeId);
 
-		return new AccountService(this.http).getAccount(_destinationAccountId).pipe(
-			switchMap((tmp: Account) => {
-				this.fXTrade.destinationAccount = tmp.accountId;
-				return this.saveHelper();
-			})
-		);
-}
+    // assign Transaction to null
+    this.fXTrade.transaction = null;
 
-	//********************************************************************
-	// unassigns a DestinationAccount on a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	unassignDestinationAccount( fXTradeId ): Observable<any> {
+    // save the FXTrade
+    return this.saveHelper();
+  }
 
-		// get the FXTrade from storage
-		this.loadHelper( fXTradeId );
+  //********************************************************************
+  // saveHelper - internal helper to save a FXTrade
+  //********************************************************************
+  saveHelper(): Observable<any> {
+    const uri_ = this.apiUrl + "/FXTrade/update/" + this.fXTrade;
 
-	// assign DestinationAccount to null
-	this.fXTrade.destinationAccount = null;
+    return this.http.post(uri_, this.fXTrade);
+  }
 
-	// save the FXTrade
-	return this.saveHelper();
-}
-
-	
-	//********************************************************************
-	// assigns a Transaction on a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	assignTransaction( fXTradeId, _transactionId ): Observable<any> {
-
-		// get the FXTrade from storage
-		this.loadHelper( fXTradeId );
-
-		return new TransactionService(this.http).getTransaction(_transactionId).pipe(
-			switchMap((tmp: Transaction) => {
-				this.fXTrade.transaction = tmp.transactionId;
-				return this.saveHelper();
-			})
-		);
-}
-
-	//********************************************************************
-	// unassigns a Transaction on a FXTrade
-	// returns an Observable
-	// delegates via URI
-	//********************************************************************
-	unassignTransaction( fXTradeId ): Observable<any> {
-
-		// get the FXTrade from storage
-		this.loadHelper( fXTradeId );
-
-	// assign Transaction to null
-	this.fXTrade.transaction = null;
-
-	// save the FXTrade
-	return this.saveHelper();
-}
-
-	
-	
-	//********************************************************************
-	// saveHelper - internal helper to save a FXTrade
-	//********************************************************************
-	saveHelper() : Observable<any> {
-
-		const uri_ = this.apiUrl + '/FXTrade/update/' + this.fXTrade;
-
-	return  this.http.post(uri_, this.fXTrade );
-}
-
-	//********************************************************************
-	// loadHelper - internal helper to load a FXTrade
-	//********************************************************************	
-	loadHelper( id ) {
-		this.getFXTrade(id)
-			.subscribe((res : FXTrade) => {
-				this.fXTrade = res;
-			});
-	}
+  //********************************************************************
+  // loadHelper - internal helper to load a FXTrade
+  //********************************************************************
+  loadHelper(id) {
+    this.getFXTrade(id).subscribe((res: FXTrade) => {
+      this.fXTrade = res;
+    });
+  }
 }
