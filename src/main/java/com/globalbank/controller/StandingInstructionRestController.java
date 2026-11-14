@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * StandingInstructionRestController as REST API
@@ -84,180 +81,188 @@ import com.globalbank.exception.*;
 @RequestMapping("/StandingInstruction")
 public class StandingInstructionRestController extends BaseSpringRestController {
 
-	public StandingInstructionRestController( StandingInstructionService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a StandingInstruction.  if not key provided, calls create, otherwise calls save
-     * @param		StandingInstruction	standingInstruction
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateStandingInstructionCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createStandingInstruction( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public StandingInstructionRestController(StandingInstructionService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a StandingInstruction. if not key provided, calls create, otherwise calls save
+   *
+   * @param StandingInstruction standingInstruction
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateStandingInstructionCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createStandingInstruction(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a StandingInstruction.  if no key provided, calls create, otherwise calls save
-     * @param		StandingInstruction standingInstruction
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateStandingInstructionCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateStandingInstructionCommand
-			// -----------------------------------------------
-			completableFuture = service.updateStandingInstruction(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "StandingInstructionController:update() - successfully update StandingInstruction - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a StandingInstruction entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteStandingInstructionCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	StandingInstructionService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted StandingInstruction with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a StandingInstruction using a UUID
-     * @param		UUID uuid 
-     * @return		StandingInstruction
-     */    
-    @GetMapping("/get")
-    public StandingInstruction get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	StandingInstruction entity = null;
-
-    	try {  
-    		entity = service.getStandingInstruction( new StandingInstructionFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load StandingInstruction using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a StandingInstruction. if no key provided, calls create, otherwise calls save
+   *
+   * @param StandingInstruction standingInstruction
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateStandingInstructionCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateStandingInstructionCommand
+      // -----------------------------------------------
+      completableFuture = service.updateStandingInstruction(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "StandingInstructionController:update() - successfully update StandingInstruction - "
+              + exc.getMessage());
     }
 
-    /**
-     * Handles loading all StandingInstruction business objects
-     * @return		Set<StandingInstruction>
-     */
-    @GetMapping("/")
-    public List<StandingInstruction> loadAll() {                
-    	List<StandingInstruction> standingInstructionList = null;
-        
-    	try {
-            // load the StandingInstruction
-            standingInstructionList = service.getAllStandingInstruction();
-            
-            if ( standingInstructionList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all StandingInstructions" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all StandingInstructions ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return standingInstructionList;
-                            
+  /**
+   * Handles deleting a StandingInstruction entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteStandingInstructionCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      StandingInstructionService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(
+          Level.WARNING, "Successfully deleted StandingInstruction with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Account on StandingInstruction
-     * @param		command AssignAccountToStandingInstructionCommand
-     */     
-	@PutMapping("/assignAccount")
-	public void assignAccount( @RequestBody AssignAccountToStandingInstructionCommand command ) {
-		try {
-			service.assignAccount( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Account on StandingInstruction
-     * @param		 command UnAssignAccountFromStandingInstructionCommand
-     */     
-	@PutMapping("/unAssignAccount")
-	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromStandingInstructionCommand command ) {
-		try {
-			service.unAssignAccount( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
-		}
-	}
-	
-    /**
-     * save Beneficiary on StandingInstruction
-     * @param		command AssignBeneficiaryToStandingInstructionCommand
-     */     
-	@PutMapping("/assignBeneficiary")
-	public void assignBeneficiary( @RequestBody AssignBeneficiaryToStandingInstructionCommand command ) {
-		try {
-			service.assignBeneficiary( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Beneficiary", exc );
-        }
-	}
+  /**
+   * Handles loading a StandingInstruction using a UUID
+   *
+   * @param UUID uuid
+   * @return StandingInstruction
+   */
+  @GetMapping("/get")
+  public StandingInstruction get(@RequestParam(required = true) IdentifierRequest identifier) {
+    StandingInstruction entity = null;
 
-    /**
-     * unassign Beneficiary on StandingInstruction
-     * @param		 command UnAssignBeneficiaryFromStandingInstructionCommand
-     */     
-	@PutMapping("/unAssignBeneficiary")
-	public void unAssignBeneficiary( @RequestBody(required=true)  UnAssignBeneficiaryFromStandingInstructionCommand command ) {
-		try {
-			service.unAssignBeneficiary( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Beneficiary", exc );
-		}
-	}
-	
+    try {
+      entity =
+          service.getStandingInstruction(
+              new StandingInstructionFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING, "failed to load StandingInstruction using Id " + identifier.getId());
+      return null;
+    }
 
+    return entity;
+  }
 
+  /**
+   * Handles loading all StandingInstruction business objects
+   *
+   * @return Set<StandingInstruction>
+   */
+  @GetMapping("/")
+  public List<StandingInstruction> loadAll() {
+    List<StandingInstruction> standingInstructionList = null;
 
+    try {
+      // load the StandingInstruction
+      standingInstructionList = service.getAllStandingInstruction();
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected StandingInstruction standingInstruction = null;
-	protected StandingInstructionService service = null;
-	private static final Logger LOGGER = Logger.getLogger(StandingInstructionRestController.class.getName());
-    
+      if (standingInstructionList != null)
+        LOGGER.log(Level.INFO, "successfully loaded all StandingInstructions");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all StandingInstructions ", exc);
+      return null;
+    }
+
+    return standingInstructionList;
+  }
+
+  /**
+   * save Account on StandingInstruction
+   *
+   * @param command AssignAccountToStandingInstructionCommand
+   */
+  @PutMapping("/assignAccount")
+  public void assignAccount(@RequestBody AssignAccountToStandingInstructionCommand command) {
+    try {
+      service.assignAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Account", exc);
+    }
+  }
+
+  /**
+   * unassign Account on StandingInstruction
+   *
+   * @param command UnAssignAccountFromStandingInstructionCommand
+   */
+  @PutMapping("/unAssignAccount")
+  public void unAssignAccount(
+      @RequestBody(required = true) UnAssignAccountFromStandingInstructionCommand command) {
+    try {
+      service.unAssignAccount(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Account", exc);
+    }
+  }
+
+  /**
+   * save Beneficiary on StandingInstruction
+   *
+   * @param command AssignBeneficiaryToStandingInstructionCommand
+   */
+  @PutMapping("/assignBeneficiary")
+  public void assignBeneficiary(
+      @RequestBody AssignBeneficiaryToStandingInstructionCommand command) {
+    try {
+      service.assignBeneficiary(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Beneficiary", exc);
+    }
+  }
+
+  /**
+   * unassign Beneficiary on StandingInstruction
+   *
+   * @param command UnAssignBeneficiaryFromStandingInstructionCommand
+   */
+  @PutMapping("/unAssignBeneficiary")
+  public void unAssignBeneficiary(
+      @RequestBody(required = true) UnAssignBeneficiaryFromStandingInstructionCommand command) {
+    try {
+      service.unAssignBeneficiary(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Beneficiary", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected StandingInstruction standingInstruction = null;
+  protected StandingInstructionService service = null;
+  private static final Logger LOGGER =
+      Logger.getLogger(StandingInstructionRestController.class.getName());
 }

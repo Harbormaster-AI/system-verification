@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * ATMRestController as REST API
@@ -84,152 +81,146 @@ import com.globalbank.exception.*;
 @RequestMapping("/ATM")
 public class ATMRestController extends BaseSpringRestController {
 
-	public ATMRestController( ATMService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a ATM.  if not key provided, calls create, otherwise calls save
-     * @param		ATM	aTM
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateATMCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createATM( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public ATMRestController(ATMService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a ATM. if not key provided, calls create, otherwise calls save
+   *
+   * @param ATM aTM
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(@RequestBody(required = true) CreateATMCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createATM(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a ATM.  if no key provided, calls create, otherwise calls save
-     * @param		ATM aTM
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateATMCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateATMCommand
-			// -----------------------------------------------
-			completableFuture = service.updateATM(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "ATMController:update() - successfully update ATM - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a ATM entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteATMCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	ATMService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted ATM with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a ATM using a UUID
-     * @param		UUID uuid 
-     * @return		ATM
-     */    
-    @GetMapping("/get")
-    public ATM get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	ATM entity = null;
-
-    	try {  
-    		entity = service.getATM( new ATMFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load ATM using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a ATM. if no key provided, calls create, otherwise calls save
+   *
+   * @param ATM aTM
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(@RequestBody(required = true) UpdateATMCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateATMCommand
+      // -----------------------------------------------
+      completableFuture = service.updateATM(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING, "ATMController:update() - successfully update ATM - " + exc.getMessage());
     }
 
-    /**
-     * Handles loading all ATM business objects
-     * @return		Set<ATM>
-     */
-    @GetMapping("/")
-    public List<ATM> loadAll() {                
-    	List<ATM> aTMList = null;
-        
-    	try {
-            // load the ATM
-            aTMList = service.getAllATM();
-            
-            if ( aTMList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all ATMs" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all ATMs ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return aTMList;
-                            
+  /**
+   * Handles deleting a ATM entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(@RequestBody(required = true) DeleteATMCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      ATMService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted ATM with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Branch on ATM
-     * @param		command AssignBranchToATMCommand
-     */     
-	@PutMapping("/assignBranch")
-	public void assignBranch( @RequestBody AssignBranchToATMCommand command ) {
-		try {
-			service.assignBranch( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Branch", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Branch on ATM
-     * @param		 command UnAssignBranchFromATMCommand
-     */     
-	@PutMapping("/unAssignBranch")
-	public void unAssignBranch( @RequestBody(required=true)  UnAssignBranchFromATMCommand command ) {
-		try {
-			service.unAssignBranch( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Branch", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a ATM using a UUID
+   *
+   * @param UUID uuid
+   * @return ATM
+   */
+  @GetMapping("/get")
+  public ATM get(@RequestParam(required = true) IdentifierRequest identifier) {
+    ATM entity = null;
 
+    try {
+      entity = service.getATM(new ATMFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load ATM using Id " + identifier.getId());
+      return null;
+    }
 
+    return entity;
+  }
 
+  /**
+   * Handles loading all ATM business objects
+   *
+   * @return Set<ATM>
+   */
+  @GetMapping("/")
+  public List<ATM> loadAll() {
+    List<ATM> aTMList = null;
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected ATM aTM = null;
-	protected ATMService service = null;
-	private static final Logger LOGGER = Logger.getLogger(ATMRestController.class.getName());
-    
+    try {
+      // load the ATM
+      aTMList = service.getAllATM();
+
+      if (aTMList != null) LOGGER.log(Level.INFO, "successfully loaded all ATMs");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all ATMs ", exc);
+      return null;
+    }
+
+    return aTMList;
+  }
+
+  /**
+   * save Branch on ATM
+   *
+   * @param command AssignBranchToATMCommand
+   */
+  @PutMapping("/assignBranch")
+  public void assignBranch(@RequestBody AssignBranchToATMCommand command) {
+    try {
+      service.assignBranch(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Branch", exc);
+    }
+  }
+
+  /**
+   * unassign Branch on ATM
+   *
+   * @param command UnAssignBranchFromATMCommand
+   */
+  @PutMapping("/unAssignBranch")
+  public void unAssignBranch(@RequestBody(required = true) UnAssignBranchFromATMCommand command) {
+    try {
+      service.unAssignBranch(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Branch", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected ATM aTM = null;
+  protected ATMService service = null;
+  private static final Logger LOGGER = Logger.getLogger(ATMRestController.class.getName());
 }

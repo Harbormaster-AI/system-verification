@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * IdentityDocumentRestController as REST API
@@ -84,152 +81,155 @@ import com.globalbank.exception.*;
 @RequestMapping("/IdentityDocument")
 public class IdentityDocumentRestController extends BaseSpringRestController {
 
-	public IdentityDocumentRestController( IdentityDocumentService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a IdentityDocument.  if not key provided, calls create, otherwise calls save
-     * @param		IdentityDocument	identityDocument
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateIdentityDocumentCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createIdentityDocument( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public IdentityDocumentRestController(IdentityDocumentService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a IdentityDocument. if not key provided, calls create, otherwise calls save
+   *
+   * @param IdentityDocument identityDocument
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateIdentityDocumentCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createIdentityDocument(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a IdentityDocument.  if no key provided, calls create, otherwise calls save
-     * @param		IdentityDocument identityDocument
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateIdentityDocumentCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateIdentityDocumentCommand
-			// -----------------------------------------------
-			completableFuture = service.updateIdentityDocument(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "IdentityDocumentController:update() - successfully update IdentityDocument - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a IdentityDocument entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteIdentityDocumentCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	IdentityDocumentService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted IdentityDocument with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a IdentityDocument using a UUID
-     * @param		UUID uuid 
-     * @return		IdentityDocument
-     */    
-    @GetMapping("/get")
-    public IdentityDocument get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	IdentityDocument entity = null;
-
-    	try {  
-    		entity = service.getIdentityDocument( new IdentityDocumentFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load IdentityDocument using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a IdentityDocument. if no key provided, calls create, otherwise calls save
+   *
+   * @param IdentityDocument identityDocument
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateIdentityDocumentCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateIdentityDocumentCommand
+      // -----------------------------------------------
+      completableFuture = service.updateIdentityDocument(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "IdentityDocumentController:update() - successfully update IdentityDocument - "
+              + exc.getMessage());
     }
 
-    /**
-     * Handles loading all IdentityDocument business objects
-     * @return		Set<IdentityDocument>
-     */
-    @GetMapping("/")
-    public List<IdentityDocument> loadAll() {                
-    	List<IdentityDocument> identityDocumentList = null;
-        
-    	try {
-            // load the IdentityDocument
-            identityDocumentList = service.getAllIdentityDocument();
-            
-            if ( identityDocumentList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all IdentityDocuments" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all IdentityDocuments ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return identityDocumentList;
-                            
+  /**
+   * Handles deleting a IdentityDocument entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteIdentityDocumentCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      IdentityDocumentService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(
+          Level.WARNING, "Successfully deleted IdentityDocument with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save KycProfile on IdentityDocument
-     * @param		command AssignKycProfileToIdentityDocumentCommand
-     */     
-	@PutMapping("/assignKycProfile")
-	public void assignKycProfile( @RequestBody AssignKycProfileToIdentityDocumentCommand command ) {
-		try {
-			service.assignKycProfile( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign KycProfile", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign KycProfile on IdentityDocument
-     * @param		 command UnAssignKycProfileFromIdentityDocumentCommand
-     */     
-	@PutMapping("/unAssignKycProfile")
-	public void unAssignKycProfile( @RequestBody(required=true)  UnAssignKycProfileFromIdentityDocumentCommand command ) {
-		try {
-			service.unAssignKycProfile( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign KycProfile", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a IdentityDocument using a UUID
+   *
+   * @param UUID uuid
+   * @return IdentityDocument
+   */
+  @GetMapping("/get")
+  public IdentityDocument get(@RequestParam(required = true) IdentifierRequest identifier) {
+    IdentityDocument entity = null;
 
+    try {
+      entity = service.getIdentityDocument(new IdentityDocumentFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load IdentityDocument using Id " + identifier.getId());
+      return null;
+    }
 
+    return entity;
+  }
 
+  /**
+   * Handles loading all IdentityDocument business objects
+   *
+   * @return Set<IdentityDocument>
+   */
+  @GetMapping("/")
+  public List<IdentityDocument> loadAll() {
+    List<IdentityDocument> identityDocumentList = null;
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected IdentityDocument identityDocument = null;
-	protected IdentityDocumentService service = null;
-	private static final Logger LOGGER = Logger.getLogger(IdentityDocumentRestController.class.getName());
-    
+    try {
+      // load the IdentityDocument
+      identityDocumentList = service.getAllIdentityDocument();
+
+      if (identityDocumentList != null)
+        LOGGER.log(Level.INFO, "successfully loaded all IdentityDocuments");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all IdentityDocuments ", exc);
+      return null;
+    }
+
+    return identityDocumentList;
+  }
+
+  /**
+   * save KycProfile on IdentityDocument
+   *
+   * @param command AssignKycProfileToIdentityDocumentCommand
+   */
+  @PutMapping("/assignKycProfile")
+  public void assignKycProfile(@RequestBody AssignKycProfileToIdentityDocumentCommand command) {
+    try {
+      service.assignKycProfile(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign KycProfile", exc);
+    }
+  }
+
+  /**
+   * unassign KycProfile on IdentityDocument
+   *
+   * @param command UnAssignKycProfileFromIdentityDocumentCommand
+   */
+  @PutMapping("/unAssignKycProfile")
+  public void unAssignKycProfile(
+      @RequestBody(required = true) UnAssignKycProfileFromIdentityDocumentCommand command) {
+    try {
+      service.unAssignKycProfile(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign KycProfile", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected IdentityDocument identityDocument = null;
+  protected IdentityDocumentService service = null;
+  private static final Logger LOGGER =
+      Logger.getLogger(IdentityDocumentRestController.class.getName());
 }

@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * TransactionRestController as REST API
@@ -84,292 +81,297 @@ import com.globalbank.exception.*;
 @RequestMapping("/Transaction")
 public class TransactionRestController extends BaseSpringRestController {
 
-	public TransactionRestController( TransactionService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a Transaction.  if not key provided, calls create, otherwise calls save
-     * @param		Transaction	transaction
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateTransactionCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createTransaction( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public TransactionRestController(TransactionService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a Transaction. if not key provided, calls create, otherwise calls save
+   *
+   * @param Transaction transaction
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateTransactionCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createTransaction(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a Transaction.  if no key provided, calls create, otherwise calls save
-     * @param		Transaction transaction
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateTransactionCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateTransactionCommand
-			// -----------------------------------------------
-			completableFuture = service.updateTransaction(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "TransactionController:update() - successfully update Transaction - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a Transaction entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteTransactionCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	TransactionService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted Transaction with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a Transaction using a UUID
-     * @param		UUID uuid 
-     * @return		Transaction
-     */    
-    @GetMapping("/get")
-    public Transaction get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	Transaction entity = null;
-
-    	try {  
-    		entity = service.getTransaction( new TransactionFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load Transaction using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a Transaction. if no key provided, calls create, otherwise calls save
+   *
+   * @param Transaction transaction
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateTransactionCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateTransactionCommand
+      // -----------------------------------------------
+      completableFuture = service.updateTransaction(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "TransactionController:update() - successfully update Transaction - " + exc.getMessage());
     }
 
-    /**
-     * Handles loading all Transaction business objects
-     * @return		Set<Transaction>
-     */
-    @GetMapping("/")
-    public List<Transaction> loadAll() {                
-    	List<Transaction> transactionList = null;
-        
-    	try {
-            // load the Transaction
-            transactionList = service.getAllTransaction();
-            
-            if ( transactionList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all Transactions" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all Transactions ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return transactionList;
-                            
+  /**
+   * Handles deleting a Transaction entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteTransactionCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      TransactionService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted Transaction with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Account on Transaction
-     * @param		command AssignAccountToTransactionCommand
-     */     
-	@PutMapping("/assignAccount")
-	public void assignAccount( @RequestBody AssignAccountToTransactionCommand command ) {
-		try {
-			service.assignAccount( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Account on Transaction
-     * @param		 command UnAssignAccountFromTransactionCommand
-     */     
-	@PutMapping("/unAssignAccount")
-	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromTransactionCommand command ) {
-		try {
-			service.unAssignAccount( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
-		}
-	}
-	
-    /**
-     * save ExternalCounterparty on Transaction
-     * @param		command AssignExternalCounterpartyToTransactionCommand
-     */     
-	@PutMapping("/assignExternalCounterparty")
-	public void assignExternalCounterparty( @RequestBody AssignExternalCounterpartyToTransactionCommand command ) {
-		try {
-			service.assignExternalCounterparty( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign ExternalCounterparty", exc );
-        }
-	}
+  /**
+   * Handles loading a Transaction using a UUID
+   *
+   * @param UUID uuid
+   * @return Transaction
+   */
+  @GetMapping("/get")
+  public Transaction get(@RequestParam(required = true) IdentifierRequest identifier) {
+    Transaction entity = null;
 
-    /**
-     * unassign ExternalCounterparty on Transaction
-     * @param		 command UnAssignExternalCounterpartyFromTransactionCommand
-     */     
-	@PutMapping("/unAssignExternalCounterparty")
-	public void unAssignExternalCounterparty( @RequestBody(required=true)  UnAssignExternalCounterpartyFromTransactionCommand command ) {
-		try {
-			service.unAssignExternalCounterparty( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign ExternalCounterparty", exc );
-		}
-	}
-	
-    /**
-     * save PaymentCard on Transaction
-     * @param		command AssignPaymentCardToTransactionCommand
-     */     
-	@PutMapping("/assignPaymentCard")
-	public void assignPaymentCard( @RequestBody AssignPaymentCardToTransactionCommand command ) {
-		try {
-			service.assignPaymentCard( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign PaymentCard", exc );
-        }
-	}
+    try {
+      entity = service.getTransaction(new TransactionFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load Transaction using Id " + identifier.getId());
+      return null;
+    }
 
-    /**
-     * unassign PaymentCard on Transaction
-     * @param		 command UnAssignPaymentCardFromTransactionCommand
-     */     
-	@PutMapping("/unAssignPaymentCard")
-	public void unAssignPaymentCard( @RequestBody(required=true)  UnAssignPaymentCardFromTransactionCommand command ) {
-		try {
-			service.unAssignPaymentCard( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign PaymentCard", exc );
-		}
-	}
-	
-    /**
-     * save FundsTransfer on Transaction
-     * @param		command AssignFundsTransferToTransactionCommand
-     */     
-	@PutMapping("/assignFundsTransfer")
-	public void assignFundsTransfer( @RequestBody AssignFundsTransferToTransactionCommand command ) {
-		try {
-			service.assignFundsTransfer( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign FundsTransfer", exc );
-        }
-	}
+    return entity;
+  }
 
-    /**
-     * unassign FundsTransfer on Transaction
-     * @param		 command UnAssignFundsTransferFromTransactionCommand
-     */     
-	@PutMapping("/unAssignFundsTransfer")
-	public void unAssignFundsTransfer( @RequestBody(required=true)  UnAssignFundsTransferFromTransactionCommand command ) {
-		try {
-			service.unAssignFundsTransfer( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign FundsTransfer", exc );
-		}
-	}
-	
-    /**
-     * save FxTrade on Transaction
-     * @param		command AssignFxTradeToTransactionCommand
-     */     
-	@PutMapping("/assignFxTrade")
-	public void assignFxTrade( @RequestBody AssignFxTradeToTransactionCommand command ) {
-		try {
-			service.assignFxTrade( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign FxTrade", exc );
-        }
-	}
+  /**
+   * Handles loading all Transaction business objects
+   *
+   * @return Set<Transaction>
+   */
+  @GetMapping("/")
+  public List<Transaction> loadAll() {
+    List<Transaction> transactionList = null;
 
-    /**
-     * unassign FxTrade on Transaction
-     * @param		 command UnAssignFxTradeFromTransactionCommand
-     */     
-	@PutMapping("/unAssignFxTrade")
-	public void unAssignFxTrade( @RequestBody(required=true)  UnAssignFxTradeFromTransactionCommand command ) {
-		try {
-			service.unAssignFxTrade( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign FxTrade", exc );
-		}
-	}
-	
-    /**
-     * save Dispute on Transaction
-     * @param		command AssignDisputeToTransactionCommand
-     */     
-	@PutMapping("/assignDispute")
-	public void assignDispute( @RequestBody AssignDisputeToTransactionCommand command ) {
-		try {
-			service.assignDispute( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Dispute", exc );
-        }
-	}
+    try {
+      // load the Transaction
+      transactionList = service.getAllTransaction();
 
-    /**
-     * unassign Dispute on Transaction
-     * @param		 command UnAssignDisputeFromTransactionCommand
-     */     
-	@PutMapping("/unAssignDispute")
-	public void unAssignDispute( @RequestBody(required=true)  UnAssignDisputeFromTransactionCommand command ) {
-		try {
-			service.unAssignDispute( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Dispute", exc );
-		}
-	}
-	
+      if (transactionList != null) LOGGER.log(Level.INFO, "successfully loaded all Transactions");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all Transactions ", exc);
+      return null;
+    }
 
+    return transactionList;
+  }
 
+  /**
+   * save Account on Transaction
+   *
+   * @param command AssignAccountToTransactionCommand
+   */
+  @PutMapping("/assignAccount")
+  public void assignAccount(@RequestBody AssignAccountToTransactionCommand command) {
+    try {
+      service.assignAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Account", exc);
+    }
+  }
 
+  /**
+   * unassign Account on Transaction
+   *
+   * @param command UnAssignAccountFromTransactionCommand
+   */
+  @PutMapping("/unAssignAccount")
+  public void unAssignAccount(
+      @RequestBody(required = true) UnAssignAccountFromTransactionCommand command) {
+    try {
+      service.unAssignAccount(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Account", exc);
+    }
+  }
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected Transaction transaction = null;
-	protected TransactionService service = null;
-	private static final Logger LOGGER = Logger.getLogger(TransactionRestController.class.getName());
-    
+  /**
+   * save ExternalCounterparty on Transaction
+   *
+   * @param command AssignExternalCounterpartyToTransactionCommand
+   */
+  @PutMapping("/assignExternalCounterparty")
+  public void assignExternalCounterparty(
+      @RequestBody AssignExternalCounterpartyToTransactionCommand command) {
+    try {
+      service.assignExternalCounterparty(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign ExternalCounterparty", exc);
+    }
+  }
+
+  /**
+   * unassign ExternalCounterparty on Transaction
+   *
+   * @param command UnAssignExternalCounterpartyFromTransactionCommand
+   */
+  @PutMapping("/unAssignExternalCounterparty")
+  public void unAssignExternalCounterparty(
+      @RequestBody(required = true) UnAssignExternalCounterpartyFromTransactionCommand command) {
+    try {
+      service.unAssignExternalCounterparty(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign ExternalCounterparty", exc);
+    }
+  }
+
+  /**
+   * save PaymentCard on Transaction
+   *
+   * @param command AssignPaymentCardToTransactionCommand
+   */
+  @PutMapping("/assignPaymentCard")
+  public void assignPaymentCard(@RequestBody AssignPaymentCardToTransactionCommand command) {
+    try {
+      service.assignPaymentCard(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign PaymentCard", exc);
+    }
+  }
+
+  /**
+   * unassign PaymentCard on Transaction
+   *
+   * @param command UnAssignPaymentCardFromTransactionCommand
+   */
+  @PutMapping("/unAssignPaymentCard")
+  public void unAssignPaymentCard(
+      @RequestBody(required = true) UnAssignPaymentCardFromTransactionCommand command) {
+    try {
+      service.unAssignPaymentCard(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign PaymentCard", exc);
+    }
+  }
+
+  /**
+   * save FundsTransfer on Transaction
+   *
+   * @param command AssignFundsTransferToTransactionCommand
+   */
+  @PutMapping("/assignFundsTransfer")
+  public void assignFundsTransfer(@RequestBody AssignFundsTransferToTransactionCommand command) {
+    try {
+      service.assignFundsTransfer(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign FundsTransfer", exc);
+    }
+  }
+
+  /**
+   * unassign FundsTransfer on Transaction
+   *
+   * @param command UnAssignFundsTransferFromTransactionCommand
+   */
+  @PutMapping("/unAssignFundsTransfer")
+  public void unAssignFundsTransfer(
+      @RequestBody(required = true) UnAssignFundsTransferFromTransactionCommand command) {
+    try {
+      service.unAssignFundsTransfer(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign FundsTransfer", exc);
+    }
+  }
+
+  /**
+   * save FxTrade on Transaction
+   *
+   * @param command AssignFxTradeToTransactionCommand
+   */
+  @PutMapping("/assignFxTrade")
+  public void assignFxTrade(@RequestBody AssignFxTradeToTransactionCommand command) {
+    try {
+      service.assignFxTrade(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign FxTrade", exc);
+    }
+  }
+
+  /**
+   * unassign FxTrade on Transaction
+   *
+   * @param command UnAssignFxTradeFromTransactionCommand
+   */
+  @PutMapping("/unAssignFxTrade")
+  public void unAssignFxTrade(
+      @RequestBody(required = true) UnAssignFxTradeFromTransactionCommand command) {
+    try {
+      service.unAssignFxTrade(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign FxTrade", exc);
+    }
+  }
+
+  /**
+   * save Dispute on Transaction
+   *
+   * @param command AssignDisputeToTransactionCommand
+   */
+  @PutMapping("/assignDispute")
+  public void assignDispute(@RequestBody AssignDisputeToTransactionCommand command) {
+    try {
+      service.assignDispute(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Dispute", exc);
+    }
+  }
+
+  /**
+   * unassign Dispute on Transaction
+   *
+   * @param command UnAssignDisputeFromTransactionCommand
+   */
+  @PutMapping("/unAssignDispute")
+  public void unAssignDispute(
+      @RequestBody(required = true) UnAssignDisputeFromTransactionCommand command) {
+    try {
+      service.unAssignDispute(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Dispute", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected Transaction transaction = null;
+  protected TransactionService service = null;
+  private static final Logger LOGGER = Logger.getLogger(TransactionRestController.class.getName());
 }

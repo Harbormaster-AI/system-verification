@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * RepaymentScheduleRestController as REST API
@@ -84,180 +81,185 @@ import com.globalbank.exception.*;
 @RequestMapping("/RepaymentSchedule")
 public class RepaymentScheduleRestController extends BaseSpringRestController {
 
-	public RepaymentScheduleRestController( RepaymentScheduleService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a RepaymentSchedule.  if not key provided, calls create, otherwise calls save
-     * @param		RepaymentSchedule	repaymentSchedule
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateRepaymentScheduleCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createRepaymentSchedule( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public RepaymentScheduleRestController(RepaymentScheduleService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a RepaymentSchedule. if not key provided, calls create, otherwise calls save
+   *
+   * @param RepaymentSchedule repaymentSchedule
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateRepaymentScheduleCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createRepaymentSchedule(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a RepaymentSchedule.  if no key provided, calls create, otherwise calls save
-     * @param		RepaymentSchedule repaymentSchedule
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateRepaymentScheduleCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateRepaymentScheduleCommand
-			// -----------------------------------------------
-			completableFuture = service.updateRepaymentSchedule(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "RepaymentScheduleController:update() - successfully update RepaymentSchedule - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a RepaymentSchedule entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteRepaymentScheduleCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	RepaymentScheduleService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted RepaymentSchedule with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a RepaymentSchedule using a UUID
-     * @param		UUID uuid 
-     * @return		RepaymentSchedule
-     */    
-    @GetMapping("/get")
-    public RepaymentSchedule get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	RepaymentSchedule entity = null;
-
-    	try {  
-    		entity = service.getRepaymentSchedule( new RepaymentScheduleFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load RepaymentSchedule using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a RepaymentSchedule. if no key provided, calls create, otherwise calls save
+   *
+   * @param RepaymentSchedule repaymentSchedule
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateRepaymentScheduleCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateRepaymentScheduleCommand
+      // -----------------------------------------------
+      completableFuture = service.updateRepaymentSchedule(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "RepaymentScheduleController:update() - successfully update RepaymentSchedule - "
+              + exc.getMessage());
     }
 
-    /**
-     * Handles loading all RepaymentSchedule business objects
-     * @return		Set<RepaymentSchedule>
-     */
-    @GetMapping("/")
-    public List<RepaymentSchedule> loadAll() {                
-    	List<RepaymentSchedule> repaymentScheduleList = null;
-        
-    	try {
-            // load the RepaymentSchedule
-            repaymentScheduleList = service.getAllRepaymentSchedule();
-            
-            if ( repaymentScheduleList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all RepaymentSchedules" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all RepaymentSchedules ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return repaymentScheduleList;
-                            
+  /**
+   * Handles deleting a RepaymentSchedule entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteRepaymentScheduleCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      RepaymentScheduleService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(
+          Level.WARNING, "Successfully deleted RepaymentSchedule with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save LoanAccount on RepaymentSchedule
-     * @param		command AssignLoanAccountToRepaymentScheduleCommand
-     */     
-	@PutMapping("/assignLoanAccount")
-	public void assignLoanAccount( @RequestBody AssignLoanAccountToRepaymentScheduleCommand command ) {
-		try {
-			service.assignLoanAccount( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign LoanAccount", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign LoanAccount on RepaymentSchedule
-     * @param		 command UnAssignLoanAccountFromRepaymentScheduleCommand
-     */     
-	@PutMapping("/unAssignLoanAccount")
-	public void unAssignLoanAccount( @RequestBody(required=true)  UnAssignLoanAccountFromRepaymentScheduleCommand command ) {
-		try {
-			service.unAssignLoanAccount( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign LoanAccount", exc );
-		}
-	}
-	
-    /**
-     * save Payment on RepaymentSchedule
-     * @param		command AssignPaymentToRepaymentScheduleCommand
-     */     
-	@PutMapping("/assignPayment")
-	public void assignPayment( @RequestBody AssignPaymentToRepaymentScheduleCommand command ) {
-		try {
-			service.assignPayment( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Payment", exc );
-        }
-	}
+  /**
+   * Handles loading a RepaymentSchedule using a UUID
+   *
+   * @param UUID uuid
+   * @return RepaymentSchedule
+   */
+  @GetMapping("/get")
+  public RepaymentSchedule get(@RequestParam(required = true) IdentifierRequest identifier) {
+    RepaymentSchedule entity = null;
 
-    /**
-     * unassign Payment on RepaymentSchedule
-     * @param		 command UnAssignPaymentFromRepaymentScheduleCommand
-     */     
-	@PutMapping("/unAssignPayment")
-	public void unAssignPayment( @RequestBody(required=true)  UnAssignPaymentFromRepaymentScheduleCommand command ) {
-		try {
-			service.unAssignPayment( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Payment", exc );
-		}
-	}
-	
+    try {
+      entity =
+          service.getRepaymentSchedule(new RepaymentScheduleFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load RepaymentSchedule using Id " + identifier.getId());
+      return null;
+    }
 
+    return entity;
+  }
 
+  /**
+   * Handles loading all RepaymentSchedule business objects
+   *
+   * @return Set<RepaymentSchedule>
+   */
+  @GetMapping("/")
+  public List<RepaymentSchedule> loadAll() {
+    List<RepaymentSchedule> repaymentScheduleList = null;
 
+    try {
+      // load the RepaymentSchedule
+      repaymentScheduleList = service.getAllRepaymentSchedule();
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected RepaymentSchedule repaymentSchedule = null;
-	protected RepaymentScheduleService service = null;
-	private static final Logger LOGGER = Logger.getLogger(RepaymentScheduleRestController.class.getName());
-    
+      if (repaymentScheduleList != null)
+        LOGGER.log(Level.INFO, "successfully loaded all RepaymentSchedules");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all RepaymentSchedules ", exc);
+      return null;
+    }
+
+    return repaymentScheduleList;
+  }
+
+  /**
+   * save LoanAccount on RepaymentSchedule
+   *
+   * @param command AssignLoanAccountToRepaymentScheduleCommand
+   */
+  @PutMapping("/assignLoanAccount")
+  public void assignLoanAccount(@RequestBody AssignLoanAccountToRepaymentScheduleCommand command) {
+    try {
+      service.assignLoanAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign LoanAccount", exc);
+    }
+  }
+
+  /**
+   * unassign LoanAccount on RepaymentSchedule
+   *
+   * @param command UnAssignLoanAccountFromRepaymentScheduleCommand
+   */
+  @PutMapping("/unAssignLoanAccount")
+  public void unAssignLoanAccount(
+      @RequestBody(required = true) UnAssignLoanAccountFromRepaymentScheduleCommand command) {
+    try {
+      service.unAssignLoanAccount(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign LoanAccount", exc);
+    }
+  }
+
+  /**
+   * save Payment on RepaymentSchedule
+   *
+   * @param command AssignPaymentToRepaymentScheduleCommand
+   */
+  @PutMapping("/assignPayment")
+  public void assignPayment(@RequestBody AssignPaymentToRepaymentScheduleCommand command) {
+    try {
+      service.assignPayment(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Payment", exc);
+    }
+  }
+
+  /**
+   * unassign Payment on RepaymentSchedule
+   *
+   * @param command UnAssignPaymentFromRepaymentScheduleCommand
+   */
+  @PutMapping("/unAssignPayment")
+  public void unAssignPayment(
+      @RequestBody(required = true) UnAssignPaymentFromRepaymentScheduleCommand command) {
+    try {
+      service.unAssignPayment(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Payment", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected RepaymentSchedule repaymentSchedule = null;
+  protected RepaymentScheduleService service = null;
+  private static final Logger LOGGER =
+      Logger.getLogger(RepaymentScheduleRestController.class.getName());
 }

@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * ExchangeRateRestController as REST API
@@ -84,181 +81,182 @@ import com.globalbank.exception.*;
 @RequestMapping("/ExchangeRate")
 public class ExchangeRateRestController extends BaseSpringRestController {
 
-	public ExchangeRateRestController( ExchangeRateService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a ExchangeRate.  if not key provided, calls create, otherwise calls save
-     * @param		ExchangeRate	exchangeRate
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateExchangeRateCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createExchangeRate( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public ExchangeRateRestController(ExchangeRateService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a ExchangeRate. if not key provided, calls create, otherwise calls save
+   *
+   * @param ExchangeRate exchangeRate
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateExchangeRateCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createExchangeRate(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a ExchangeRate.  if no key provided, calls create, otherwise calls save
-     * @param		ExchangeRate exchangeRate
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateExchangeRateCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateExchangeRateCommand
-			// -----------------------------------------------
-			completableFuture = service.updateExchangeRate(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "ExchangeRateController:update() - successfully update ExchangeRate - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a ExchangeRate entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteExchangeRateCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	ExchangeRateService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted ExchangeRate with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a ExchangeRate using a UUID
-     * @param		UUID uuid 
-     * @return		ExchangeRate
-     */    
-    @GetMapping("/get")
-    public ExchangeRate get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	ExchangeRate entity = null;
-
-    	try {  
-    		entity = service.getExchangeRate( new ExchangeRateFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load ExchangeRate using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a ExchangeRate. if no key provided, calls create, otherwise calls save
+   *
+   * @param ExchangeRate exchangeRate
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateExchangeRateCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateExchangeRateCommand
+      // -----------------------------------------------
+      completableFuture = service.updateExchangeRate(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "ExchangeRateController:update() - successfully update ExchangeRate - "
+              + exc.getMessage());
     }
 
-    /**
-     * Handles loading all ExchangeRate business objects
-     * @return		Set<ExchangeRate>
-     */
-    @GetMapping("/")
-    public List<ExchangeRate> loadAll() {                
-    	List<ExchangeRate> exchangeRateList = null;
-        
-    	try {
-            // load the ExchangeRate
-            exchangeRateList = service.getAllExchangeRate();
-            
-            if ( exchangeRateList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all ExchangeRates" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all ExchangeRates ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return exchangeRateList;
-                            
+  /**
+   * Handles deleting a ExchangeRate entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteExchangeRateCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      ExchangeRateService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted ExchangeRate with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Bank on ExchangeRate
-     * @param		command AssignBankToExchangeRateCommand
-     */     
-	@PutMapping("/assignBank")
-	public void assignBank( @RequestBody AssignBankToExchangeRateCommand command ) {
-		try {
-			service.assignBank( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Bank", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Bank on ExchangeRate
-     * @param		 command UnAssignBankFromExchangeRateCommand
-     */     
-	@PutMapping("/unAssignBank")
-	public void unAssignBank( @RequestBody(required=true)  UnAssignBankFromExchangeRateCommand command ) {
-		try {
-			service.unAssignBank( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Bank", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a ExchangeRate using a UUID
+   *
+   * @param UUID uuid
+   * @return ExchangeRate
+   */
+  @GetMapping("/get")
+  public ExchangeRate get(@RequestParam(required = true) IdentifierRequest identifier) {
+    ExchangeRate entity = null;
 
-    /**
-     * save FxTrades on ExchangeRate
-     * @param		command AssignFxTradesToExchangeRateCommand
-     */     
-	@PutMapping("/addToFxTrades")
-	public void addToFxTrades( @RequestBody(required=true) AssignFxTradesToExchangeRateCommand command ) {
-		try {
-			service.addToFxTrades( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set FxTrades", exc );
-		}
-	}
+    try {
+      entity = service.getExchangeRate(new ExchangeRateFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load ExchangeRate using Id " + identifier.getId());
+      return null;
+    }
 
-    /**
-     * remove FxTrades on ExchangeRate
-     * @param		command RemoveFxTradesFromExchangeRateCommand
-     */     	
-	@PutMapping("/removeFromFxTrades")
-	public void removeFromFxTrades( 	@RequestBody(required=true) RemoveFxTradesFromExchangeRateCommand command )
-	{		
-		try {
-			service.removeFromFxTrades( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set FxTrades", exc );
-		}
-	}
+    return entity;
+  }
 
+  /**
+   * Handles loading all ExchangeRate business objects
+   *
+   * @return Set<ExchangeRate>
+   */
+  @GetMapping("/")
+  public List<ExchangeRate> loadAll() {
+    List<ExchangeRate> exchangeRateList = null;
 
+    try {
+      // load the ExchangeRate
+      exchangeRateList = service.getAllExchangeRate();
 
+      if (exchangeRateList != null) LOGGER.log(Level.INFO, "successfully loaded all ExchangeRates");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all ExchangeRates ", exc);
+      return null;
+    }
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected ExchangeRate exchangeRate = null;
-	protected ExchangeRateService service = null;
-	private static final Logger LOGGER = Logger.getLogger(ExchangeRateRestController.class.getName());
-    
+    return exchangeRateList;
+  }
+
+  /**
+   * save Bank on ExchangeRate
+   *
+   * @param command AssignBankToExchangeRateCommand
+   */
+  @PutMapping("/assignBank")
+  public void assignBank(@RequestBody AssignBankToExchangeRateCommand command) {
+    try {
+      service.assignBank(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Bank", exc);
+    }
+  }
+
+  /**
+   * unassign Bank on ExchangeRate
+   *
+   * @param command UnAssignBankFromExchangeRateCommand
+   */
+  @PutMapping("/unAssignBank")
+  public void unAssignBank(
+      @RequestBody(required = true) UnAssignBankFromExchangeRateCommand command) {
+    try {
+      service.unAssignBank(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Bank", exc);
+    }
+  }
+
+  /**
+   * save FxTrades on ExchangeRate
+   *
+   * @param command AssignFxTradesToExchangeRateCommand
+   */
+  @PutMapping("/addToFxTrades")
+  public void addToFxTrades(
+      @RequestBody(required = true) AssignFxTradesToExchangeRateCommand command) {
+    try {
+      service.addToFxTrades(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set FxTrades", exc);
+    }
+  }
+
+  /**
+   * remove FxTrades on ExchangeRate
+   *
+   * @param command RemoveFxTradesFromExchangeRateCommand
+   */
+  @PutMapping("/removeFromFxTrades")
+  public void removeFromFxTrades(
+      @RequestBody(required = true) RemoveFxTradesFromExchangeRateCommand command) {
+    try {
+      service.removeFromFxTrades(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set FxTrades", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected ExchangeRate exchangeRate = null;
+  protected ExchangeRateService service = null;
+  private static final Logger LOGGER = Logger.getLogger(ExchangeRateRestController.class.getName());
 }

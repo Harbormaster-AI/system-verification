@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * FXTradeRestController as REST API
@@ -84,292 +81,296 @@ import com.globalbank.exception.*;
 @RequestMapping("/FXTrade")
 public class FXTradeRestController extends BaseSpringRestController {
 
-	public FXTradeRestController( FXTradeService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a FXTrade.  if not key provided, calls create, otherwise calls save
-     * @param		FXTrade	fXTrade
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateFXTradeCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createFXTrade( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public FXTradeRestController(FXTradeService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a FXTrade. if not key provided, calls create, otherwise calls save
+   *
+   * @param FXTrade fXTrade
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateFXTradeCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createFXTrade(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a FXTrade.  if no key provided, calls create, otherwise calls save
-     * @param		FXTrade fXTrade
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateFXTradeCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateFXTradeCommand
-			// -----------------------------------------------
-			completableFuture = service.updateFXTrade(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "FXTradeController:update() - successfully update FXTrade - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a FXTrade entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteFXTradeCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	FXTradeService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted FXTrade with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a FXTrade using a UUID
-     * @param		UUID uuid 
-     * @return		FXTrade
-     */    
-    @GetMapping("/get")
-    public FXTrade get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	FXTrade entity = null;
-
-    	try {  
-    		entity = service.getFXTrade( new FXTradeFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load FXTrade using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a FXTrade. if no key provided, calls create, otherwise calls save
+   *
+   * @param FXTrade fXTrade
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateFXTradeCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateFXTradeCommand
+      // -----------------------------------------------
+      completableFuture = service.updateFXTrade(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "FXTradeController:update() - successfully update FXTrade - " + exc.getMessage());
     }
 
-    /**
-     * Handles loading all FXTrade business objects
-     * @return		Set<FXTrade>
-     */
-    @GetMapping("/")
-    public List<FXTrade> loadAll() {                
-    	List<FXTrade> fXTradeList = null;
-        
-    	try {
-            // load the FXTrade
-            fXTradeList = service.getAllFXTrade();
-            
-            if ( fXTradeList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all FXTrades" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all FXTrades ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return fXTradeList;
-                            
+  /**
+   * Handles deleting a FXTrade entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteFXTradeCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      FXTradeService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted FXTrade with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Customer on FXTrade
-     * @param		command AssignCustomerToFXTradeCommand
-     */     
-	@PutMapping("/assignCustomer")
-	public void assignCustomer( @RequestBody AssignCustomerToFXTradeCommand command ) {
-		try {
-			service.assignCustomer( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Customer", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Customer on FXTrade
-     * @param		 command UnAssignCustomerFromFXTradeCommand
-     */     
-	@PutMapping("/unAssignCustomer")
-	public void unAssignCustomer( @RequestBody(required=true)  UnAssignCustomerFromFXTradeCommand command ) {
-		try {
-			service.unAssignCustomer( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Customer", exc );
-		}
-	}
-	
-    /**
-     * save Bank on FXTrade
-     * @param		command AssignBankToFXTradeCommand
-     */     
-	@PutMapping("/assignBank")
-	public void assignBank( @RequestBody AssignBankToFXTradeCommand command ) {
-		try {
-			service.assignBank( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Bank", exc );
-        }
-	}
+  /**
+   * Handles loading a FXTrade using a UUID
+   *
+   * @param UUID uuid
+   * @return FXTrade
+   */
+  @GetMapping("/get")
+  public FXTrade get(@RequestParam(required = true) IdentifierRequest identifier) {
+    FXTrade entity = null;
 
-    /**
-     * unassign Bank on FXTrade
-     * @param		 command UnAssignBankFromFXTradeCommand
-     */     
-	@PutMapping("/unAssignBank")
-	public void unAssignBank( @RequestBody(required=true)  UnAssignBankFromFXTradeCommand command ) {
-		try {
-			service.unAssignBank( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Bank", exc );
-		}
-	}
-	
-    /**
-     * save ExchangeRate on FXTrade
-     * @param		command AssignExchangeRateToFXTradeCommand
-     */     
-	@PutMapping("/assignExchangeRate")
-	public void assignExchangeRate( @RequestBody AssignExchangeRateToFXTradeCommand command ) {
-		try {
-			service.assignExchangeRate( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign ExchangeRate", exc );
-        }
-	}
+    try {
+      entity = service.getFXTrade(new FXTradeFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load FXTrade using Id " + identifier.getId());
+      return null;
+    }
 
-    /**
-     * unassign ExchangeRate on FXTrade
-     * @param		 command UnAssignExchangeRateFromFXTradeCommand
-     */     
-	@PutMapping("/unAssignExchangeRate")
-	public void unAssignExchangeRate( @RequestBody(required=true)  UnAssignExchangeRateFromFXTradeCommand command ) {
-		try {
-			service.unAssignExchangeRate( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign ExchangeRate", exc );
-		}
-	}
-	
-    /**
-     * save SourceAccount on FXTrade
-     * @param		command AssignSourceAccountToFXTradeCommand
-     */     
-	@PutMapping("/assignSourceAccount")
-	public void assignSourceAccount( @RequestBody AssignSourceAccountToFXTradeCommand command ) {
-		try {
-			service.assignSourceAccount( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign SourceAccount", exc );
-        }
-	}
+    return entity;
+  }
 
-    /**
-     * unassign SourceAccount on FXTrade
-     * @param		 command UnAssignSourceAccountFromFXTradeCommand
-     */     
-	@PutMapping("/unAssignSourceAccount")
-	public void unAssignSourceAccount( @RequestBody(required=true)  UnAssignSourceAccountFromFXTradeCommand command ) {
-		try {
-			service.unAssignSourceAccount( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign SourceAccount", exc );
-		}
-	}
-	
-    /**
-     * save DestinationAccount on FXTrade
-     * @param		command AssignDestinationAccountToFXTradeCommand
-     */     
-	@PutMapping("/assignDestinationAccount")
-	public void assignDestinationAccount( @RequestBody AssignDestinationAccountToFXTradeCommand command ) {
-		try {
-			service.assignDestinationAccount( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign DestinationAccount", exc );
-        }
-	}
+  /**
+   * Handles loading all FXTrade business objects
+   *
+   * @return Set<FXTrade>
+   */
+  @GetMapping("/")
+  public List<FXTrade> loadAll() {
+    List<FXTrade> fXTradeList = null;
 
-    /**
-     * unassign DestinationAccount on FXTrade
-     * @param		 command UnAssignDestinationAccountFromFXTradeCommand
-     */     
-	@PutMapping("/unAssignDestinationAccount")
-	public void unAssignDestinationAccount( @RequestBody(required=true)  UnAssignDestinationAccountFromFXTradeCommand command ) {
-		try {
-			service.unAssignDestinationAccount( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign DestinationAccount", exc );
-		}
-	}
-	
-    /**
-     * save Transaction on FXTrade
-     * @param		command AssignTransactionToFXTradeCommand
-     */     
-	@PutMapping("/assignTransaction")
-	public void assignTransaction( @RequestBody AssignTransactionToFXTradeCommand command ) {
-		try {
-			service.assignTransaction( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Transaction", exc );
-        }
-	}
+    try {
+      // load the FXTrade
+      fXTradeList = service.getAllFXTrade();
 
-    /**
-     * unassign Transaction on FXTrade
-     * @param		 command UnAssignTransactionFromFXTradeCommand
-     */     
-	@PutMapping("/unAssignTransaction")
-	public void unAssignTransaction( @RequestBody(required=true)  UnAssignTransactionFromFXTradeCommand command ) {
-		try {
-			service.unAssignTransaction( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Transaction", exc );
-		}
-	}
-	
+      if (fXTradeList != null) LOGGER.log(Level.INFO, "successfully loaded all FXTrades");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all FXTrades ", exc);
+      return null;
+    }
 
+    return fXTradeList;
+  }
 
+  /**
+   * save Customer on FXTrade
+   *
+   * @param command AssignCustomerToFXTradeCommand
+   */
+  @PutMapping("/assignCustomer")
+  public void assignCustomer(@RequestBody AssignCustomerToFXTradeCommand command) {
+    try {
+      service.assignCustomer(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Customer", exc);
+    }
+  }
 
+  /**
+   * unassign Customer on FXTrade
+   *
+   * @param command UnAssignCustomerFromFXTradeCommand
+   */
+  @PutMapping("/unAssignCustomer")
+  public void unAssignCustomer(
+      @RequestBody(required = true) UnAssignCustomerFromFXTradeCommand command) {
+    try {
+      service.unAssignCustomer(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Customer", exc);
+    }
+  }
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected FXTrade fXTrade = null;
-	protected FXTradeService service = null;
-	private static final Logger LOGGER = Logger.getLogger(FXTradeRestController.class.getName());
-    
+  /**
+   * save Bank on FXTrade
+   *
+   * @param command AssignBankToFXTradeCommand
+   */
+  @PutMapping("/assignBank")
+  public void assignBank(@RequestBody AssignBankToFXTradeCommand command) {
+    try {
+      service.assignBank(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Bank", exc);
+    }
+  }
+
+  /**
+   * unassign Bank on FXTrade
+   *
+   * @param command UnAssignBankFromFXTradeCommand
+   */
+  @PutMapping("/unAssignBank")
+  public void unAssignBank(@RequestBody(required = true) UnAssignBankFromFXTradeCommand command) {
+    try {
+      service.unAssignBank(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Bank", exc);
+    }
+  }
+
+  /**
+   * save ExchangeRate on FXTrade
+   *
+   * @param command AssignExchangeRateToFXTradeCommand
+   */
+  @PutMapping("/assignExchangeRate")
+  public void assignExchangeRate(@RequestBody AssignExchangeRateToFXTradeCommand command) {
+    try {
+      service.assignExchangeRate(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign ExchangeRate", exc);
+    }
+  }
+
+  /**
+   * unassign ExchangeRate on FXTrade
+   *
+   * @param command UnAssignExchangeRateFromFXTradeCommand
+   */
+  @PutMapping("/unAssignExchangeRate")
+  public void unAssignExchangeRate(
+      @RequestBody(required = true) UnAssignExchangeRateFromFXTradeCommand command) {
+    try {
+      service.unAssignExchangeRate(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign ExchangeRate", exc);
+    }
+  }
+
+  /**
+   * save SourceAccount on FXTrade
+   *
+   * @param command AssignSourceAccountToFXTradeCommand
+   */
+  @PutMapping("/assignSourceAccount")
+  public void assignSourceAccount(@RequestBody AssignSourceAccountToFXTradeCommand command) {
+    try {
+      service.assignSourceAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign SourceAccount", exc);
+    }
+  }
+
+  /**
+   * unassign SourceAccount on FXTrade
+   *
+   * @param command UnAssignSourceAccountFromFXTradeCommand
+   */
+  @PutMapping("/unAssignSourceAccount")
+  public void unAssignSourceAccount(
+      @RequestBody(required = true) UnAssignSourceAccountFromFXTradeCommand command) {
+    try {
+      service.unAssignSourceAccount(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign SourceAccount", exc);
+    }
+  }
+
+  /**
+   * save DestinationAccount on FXTrade
+   *
+   * @param command AssignDestinationAccountToFXTradeCommand
+   */
+  @PutMapping("/assignDestinationAccount")
+  public void assignDestinationAccount(
+      @RequestBody AssignDestinationAccountToFXTradeCommand command) {
+    try {
+      service.assignDestinationAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign DestinationAccount", exc);
+    }
+  }
+
+  /**
+   * unassign DestinationAccount on FXTrade
+   *
+   * @param command UnAssignDestinationAccountFromFXTradeCommand
+   */
+  @PutMapping("/unAssignDestinationAccount")
+  public void unAssignDestinationAccount(
+      @RequestBody(required = true) UnAssignDestinationAccountFromFXTradeCommand command) {
+    try {
+      service.unAssignDestinationAccount(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign DestinationAccount", exc);
+    }
+  }
+
+  /**
+   * save Transaction on FXTrade
+   *
+   * @param command AssignTransactionToFXTradeCommand
+   */
+  @PutMapping("/assignTransaction")
+  public void assignTransaction(@RequestBody AssignTransactionToFXTradeCommand command) {
+    try {
+      service.assignTransaction(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Transaction", exc);
+    }
+  }
+
+  /**
+   * unassign Transaction on FXTrade
+   *
+   * @param command UnAssignTransactionFromFXTradeCommand
+   */
+  @PutMapping("/unAssignTransaction")
+  public void unAssignTransaction(
+      @RequestBody(required = true) UnAssignTransactionFromFXTradeCommand command) {
+    try {
+      service.unAssignTransaction(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Transaction", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected FXTrade fXTrade = null;
+  protected FXTradeService service = null;
+  private static final Logger LOGGER = Logger.getLogger(FXTradeRestController.class.getName());
 }

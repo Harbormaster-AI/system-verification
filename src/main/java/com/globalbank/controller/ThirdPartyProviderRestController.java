@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * ThirdPartyProviderRestController as REST API
@@ -84,181 +81,186 @@ import com.globalbank.exception.*;
 @RequestMapping("/ThirdPartyProvider")
 public class ThirdPartyProviderRestController extends BaseSpringRestController {
 
-	public ThirdPartyProviderRestController( ThirdPartyProviderService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a ThirdPartyProvider.  if not key provided, calls create, otherwise calls save
-     * @param		ThirdPartyProvider	thirdPartyProvider
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateThirdPartyProviderCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createThirdPartyProvider( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public ThirdPartyProviderRestController(ThirdPartyProviderService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a ThirdPartyProvider. if not key provided, calls create, otherwise calls save
+   *
+   * @param ThirdPartyProvider thirdPartyProvider
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateThirdPartyProviderCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createThirdPartyProvider(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a ThirdPartyProvider.  if no key provided, calls create, otherwise calls save
-     * @param		ThirdPartyProvider thirdPartyProvider
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateThirdPartyProviderCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateThirdPartyProviderCommand
-			// -----------------------------------------------
-			completableFuture = service.updateThirdPartyProvider(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "ThirdPartyProviderController:update() - successfully update ThirdPartyProvider - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a ThirdPartyProvider entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteThirdPartyProviderCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	ThirdPartyProviderService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted ThirdPartyProvider with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a ThirdPartyProvider using a UUID
-     * @param		UUID uuid 
-     * @return		ThirdPartyProvider
-     */    
-    @GetMapping("/get")
-    public ThirdPartyProvider get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	ThirdPartyProvider entity = null;
-
-    	try {  
-    		entity = service.getThirdPartyProvider( new ThirdPartyProviderFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load ThirdPartyProvider using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a ThirdPartyProvider. if no key provided, calls create, otherwise calls save
+   *
+   * @param ThirdPartyProvider thirdPartyProvider
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateThirdPartyProviderCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateThirdPartyProviderCommand
+      // -----------------------------------------------
+      completableFuture = service.updateThirdPartyProvider(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "ThirdPartyProviderController:update() - successfully update ThirdPartyProvider - "
+              + exc.getMessage());
     }
 
-    /**
-     * Handles loading all ThirdPartyProvider business objects
-     * @return		Set<ThirdPartyProvider>
-     */
-    @GetMapping("/")
-    public List<ThirdPartyProvider> loadAll() {                
-    	List<ThirdPartyProvider> thirdPartyProviderList = null;
-        
-    	try {
-            // load the ThirdPartyProvider
-            thirdPartyProviderList = service.getAllThirdPartyProvider();
-            
-            if ( thirdPartyProviderList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all ThirdPartyProviders" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all ThirdPartyProviders ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return thirdPartyProviderList;
-                            
+  /**
+   * Handles deleting a ThirdPartyProvider entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteThirdPartyProviderCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      ThirdPartyProviderService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(
+          Level.WARNING, "Successfully deleted ThirdPartyProvider with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Bank on ThirdPartyProvider
-     * @param		command AssignBankToThirdPartyProviderCommand
-     */     
-	@PutMapping("/assignBank")
-	public void assignBank( @RequestBody AssignBankToThirdPartyProviderCommand command ) {
-		try {
-			service.assignBank( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Bank", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Bank on ThirdPartyProvider
-     * @param		 command UnAssignBankFromThirdPartyProviderCommand
-     */     
-	@PutMapping("/unAssignBank")
-	public void unAssignBank( @RequestBody(required=true)  UnAssignBankFromThirdPartyProviderCommand command ) {
-		try {
-			service.unAssignBank( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Bank", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a ThirdPartyProvider using a UUID
+   *
+   * @param UUID uuid
+   * @return ThirdPartyProvider
+   */
+  @GetMapping("/get")
+  public ThirdPartyProvider get(@RequestParam(required = true) IdentifierRequest identifier) {
+    ThirdPartyProvider entity = null;
 
-    /**
-     * save Consents on ThirdPartyProvider
-     * @param		command AssignConsentsToThirdPartyProviderCommand
-     */     
-	@PutMapping("/addToConsents")
-	public void addToConsents( @RequestBody(required=true) AssignConsentsToThirdPartyProviderCommand command ) {
-		try {
-			service.addToConsents( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set Consents", exc );
-		}
-	}
+    try {
+      entity =
+          service.getThirdPartyProvider(new ThirdPartyProviderFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load ThirdPartyProvider using Id " + identifier.getId());
+      return null;
+    }
 
-    /**
-     * remove Consents on ThirdPartyProvider
-     * @param		command RemoveConsentsFromThirdPartyProviderCommand
-     */     	
-	@PutMapping("/removeFromConsents")
-	public void removeFromConsents( 	@RequestBody(required=true) RemoveConsentsFromThirdPartyProviderCommand command )
-	{		
-		try {
-			service.removeFromConsents( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set Consents", exc );
-		}
-	}
+    return entity;
+  }
 
+  /**
+   * Handles loading all ThirdPartyProvider business objects
+   *
+   * @return Set<ThirdPartyProvider>
+   */
+  @GetMapping("/")
+  public List<ThirdPartyProvider> loadAll() {
+    List<ThirdPartyProvider> thirdPartyProviderList = null;
 
+    try {
+      // load the ThirdPartyProvider
+      thirdPartyProviderList = service.getAllThirdPartyProvider();
 
+      if (thirdPartyProviderList != null)
+        LOGGER.log(Level.INFO, "successfully loaded all ThirdPartyProviders");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all ThirdPartyProviders ", exc);
+      return null;
+    }
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected ThirdPartyProvider thirdPartyProvider = null;
-	protected ThirdPartyProviderService service = null;
-	private static final Logger LOGGER = Logger.getLogger(ThirdPartyProviderRestController.class.getName());
-    
+    return thirdPartyProviderList;
+  }
+
+  /**
+   * save Bank on ThirdPartyProvider
+   *
+   * @param command AssignBankToThirdPartyProviderCommand
+   */
+  @PutMapping("/assignBank")
+  public void assignBank(@RequestBody AssignBankToThirdPartyProviderCommand command) {
+    try {
+      service.assignBank(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Bank", exc);
+    }
+  }
+
+  /**
+   * unassign Bank on ThirdPartyProvider
+   *
+   * @param command UnAssignBankFromThirdPartyProviderCommand
+   */
+  @PutMapping("/unAssignBank")
+  public void unAssignBank(
+      @RequestBody(required = true) UnAssignBankFromThirdPartyProviderCommand command) {
+    try {
+      service.unAssignBank(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Bank", exc);
+    }
+  }
+
+  /**
+   * save Consents on ThirdPartyProvider
+   *
+   * @param command AssignConsentsToThirdPartyProviderCommand
+   */
+  @PutMapping("/addToConsents")
+  public void addToConsents(
+      @RequestBody(required = true) AssignConsentsToThirdPartyProviderCommand command) {
+    try {
+      service.addToConsents(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set Consents", exc);
+    }
+  }
+
+  /**
+   * remove Consents on ThirdPartyProvider
+   *
+   * @param command RemoveConsentsFromThirdPartyProviderCommand
+   */
+  @PutMapping("/removeFromConsents")
+  public void removeFromConsents(
+      @RequestBody(required = true) RemoveConsentsFromThirdPartyProviderCommand command) {
+    try {
+      service.removeFromConsents(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set Consents", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected ThirdPartyProvider thirdPartyProvider = null;
+  protected ThirdPartyProviderService service = null;
+  private static final Logger LOGGER =
+      Logger.getLogger(ThirdPartyProviderRestController.class.getName());
 }

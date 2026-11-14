@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * BankingProductRestController as REST API
@@ -84,239 +81,244 @@ import com.globalbank.exception.*;
 @RequestMapping("/BankingProduct")
 public class BankingProductRestController extends BaseSpringRestController {
 
-	public BankingProductRestController( BankingProductService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a BankingProduct.  if not key provided, calls create, otherwise calls save
-     * @param		BankingProduct	bankingProduct
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateBankingProductCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createBankingProduct( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public BankingProductRestController(BankingProductService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a BankingProduct. if not key provided, calls create, otherwise calls save
+   *
+   * @param BankingProduct bankingProduct
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateBankingProductCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createBankingProduct(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a BankingProduct.  if no key provided, calls create, otherwise calls save
-     * @param		BankingProduct bankingProduct
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateBankingProductCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateBankingProductCommand
-			// -----------------------------------------------
-			completableFuture = service.updateBankingProduct(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "BankingProductController:update() - successfully update BankingProduct - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a BankingProduct entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteBankingProductCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	BankingProductService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted BankingProduct with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a BankingProduct using a UUID
-     * @param		UUID uuid 
-     * @return		BankingProduct
-     */    
-    @GetMapping("/get")
-    public BankingProduct get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	BankingProduct entity = null;
-
-    	try {  
-    		entity = service.getBankingProduct( new BankingProductFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load BankingProduct using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a BankingProduct. if no key provided, calls create, otherwise calls save
+   *
+   * @param BankingProduct bankingProduct
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateBankingProductCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateBankingProductCommand
+      // -----------------------------------------------
+      completableFuture = service.updateBankingProduct(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "BankingProductController:update() - successfully update BankingProduct - "
+              + exc.getMessage());
     }
 
-    /**
-     * Handles loading all BankingProduct business objects
-     * @return		Set<BankingProduct>
-     */
-    @GetMapping("/")
-    public List<BankingProduct> loadAll() {                
-    	List<BankingProduct> bankingProductList = null;
-        
-    	try {
-            // load the BankingProduct
-            bankingProductList = service.getAllBankingProduct();
-            
-            if ( bankingProductList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all BankingProducts" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all BankingProducts ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return bankingProductList;
-                            
+  /**
+   * Handles deleting a BankingProduct entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteBankingProductCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      BankingProductService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted BankingProduct with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Bank on BankingProduct
-     * @param		command AssignBankToBankingProductCommand
-     */     
-	@PutMapping("/assignBank")
-	public void assignBank( @RequestBody AssignBankToBankingProductCommand command ) {
-		try {
-			service.assignBank( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Bank", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Bank on BankingProduct
-     * @param		 command UnAssignBankFromBankingProductCommand
-     */     
-	@PutMapping("/unAssignBank")
-	public void unAssignBank( @RequestBody(required=true)  UnAssignBankFromBankingProductCommand command ) {
-		try {
-			service.unAssignBank( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Bank", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a BankingProduct using a UUID
+   *
+   * @param UUID uuid
+   * @return BankingProduct
+   */
+  @GetMapping("/get")
+  public BankingProduct get(@RequestParam(required = true) IdentifierRequest identifier) {
+    BankingProduct entity = null;
 
-    /**
-     * save Accounts on BankingProduct
-     * @param		command AssignAccountsToBankingProductCommand
-     */     
-	@PutMapping("/addToAccounts")
-	public void addToAccounts( @RequestBody(required=true) AssignAccountsToBankingProductCommand command ) {
-		try {
-			service.addToAccounts( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set Accounts", exc );
-		}
-	}
+    try {
+      entity = service.getBankingProduct(new BankingProductFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load BankingProduct using Id " + identifier.getId());
+      return null;
+    }
 
-    /**
-     * remove Accounts on BankingProduct
-     * @param		command RemoveAccountsFromBankingProductCommand
-     */     	
-	@PutMapping("/removeFromAccounts")
-	public void removeFromAccounts( 	@RequestBody(required=true) RemoveAccountsFromBankingProductCommand command )
-	{		
-		try {
-			service.removeFromAccounts( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set Accounts", exc );
-		}
-	}
+    return entity;
+  }
 
-    /**
-     * save LoanAccounts on BankingProduct
-     * @param		command AssignLoanAccountsToBankingProductCommand
-     */     
-	@PutMapping("/addToLoanAccounts")
-	public void addToLoanAccounts( @RequestBody(required=true) AssignLoanAccountsToBankingProductCommand command ) {
-		try {
-			service.addToLoanAccounts( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set LoanAccounts", exc );
-		}
-	}
+  /**
+   * Handles loading all BankingProduct business objects
+   *
+   * @return Set<BankingProduct>
+   */
+  @GetMapping("/")
+  public List<BankingProduct> loadAll() {
+    List<BankingProduct> bankingProductList = null;
 
-    /**
-     * remove LoanAccounts on BankingProduct
-     * @param		command RemoveLoanAccountsFromBankingProductCommand
-     */     	
-	@PutMapping("/removeFromLoanAccounts")
-	public void removeFromLoanAccounts( 	@RequestBody(required=true) RemoveLoanAccountsFromBankingProductCommand command )
-	{		
-		try {
-			service.removeFromLoanAccounts( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set LoanAccounts", exc );
-		}
-	}
+    try {
+      // load the BankingProduct
+      bankingProductList = service.getAllBankingProduct();
 
-    /**
-     * save PaymentCards on BankingProduct
-     * @param		command AssignPaymentCardsToBankingProductCommand
-     */     
-	@PutMapping("/addToPaymentCards")
-	public void addToPaymentCards( @RequestBody(required=true) AssignPaymentCardsToBankingProductCommand command ) {
-		try {
-			service.addToPaymentCards( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set PaymentCards", exc );
-		}
-	}
+      if (bankingProductList != null)
+        LOGGER.log(Level.INFO, "successfully loaded all BankingProducts");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all BankingProducts ", exc);
+      return null;
+    }
 
-    /**
-     * remove PaymentCards on BankingProduct
-     * @param		command RemovePaymentCardsFromBankingProductCommand
-     */     	
-	@PutMapping("/removeFromPaymentCards")
-	public void removeFromPaymentCards( 	@RequestBody(required=true) RemovePaymentCardsFromBankingProductCommand command )
-	{		
-		try {
-			service.removeFromPaymentCards( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set PaymentCards", exc );
-		}
-	}
+    return bankingProductList;
+  }
 
+  /**
+   * save Bank on BankingProduct
+   *
+   * @param command AssignBankToBankingProductCommand
+   */
+  @PutMapping("/assignBank")
+  public void assignBank(@RequestBody AssignBankToBankingProductCommand command) {
+    try {
+      service.assignBank(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Bank", exc);
+    }
+  }
 
+  /**
+   * unassign Bank on BankingProduct
+   *
+   * @param command UnAssignBankFromBankingProductCommand
+   */
+  @PutMapping("/unAssignBank")
+  public void unAssignBank(
+      @RequestBody(required = true) UnAssignBankFromBankingProductCommand command) {
+    try {
+      service.unAssignBank(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Bank", exc);
+    }
+  }
 
+  /**
+   * save Accounts on BankingProduct
+   *
+   * @param command AssignAccountsToBankingProductCommand
+   */
+  @PutMapping("/addToAccounts")
+  public void addToAccounts(
+      @RequestBody(required = true) AssignAccountsToBankingProductCommand command) {
+    try {
+      service.addToAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set Accounts", exc);
+    }
+  }
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected BankingProduct bankingProduct = null;
-	protected BankingProductService service = null;
-	private static final Logger LOGGER = Logger.getLogger(BankingProductRestController.class.getName());
-    
+  /**
+   * remove Accounts on BankingProduct
+   *
+   * @param command RemoveAccountsFromBankingProductCommand
+   */
+  @PutMapping("/removeFromAccounts")
+  public void removeFromAccounts(
+      @RequestBody(required = true) RemoveAccountsFromBankingProductCommand command) {
+    try {
+      service.removeFromAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set Accounts", exc);
+    }
+  }
+
+  /**
+   * save LoanAccounts on BankingProduct
+   *
+   * @param command AssignLoanAccountsToBankingProductCommand
+   */
+  @PutMapping("/addToLoanAccounts")
+  public void addToLoanAccounts(
+      @RequestBody(required = true) AssignLoanAccountsToBankingProductCommand command) {
+    try {
+      service.addToLoanAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set LoanAccounts", exc);
+    }
+  }
+
+  /**
+   * remove LoanAccounts on BankingProduct
+   *
+   * @param command RemoveLoanAccountsFromBankingProductCommand
+   */
+  @PutMapping("/removeFromLoanAccounts")
+  public void removeFromLoanAccounts(
+      @RequestBody(required = true) RemoveLoanAccountsFromBankingProductCommand command) {
+    try {
+      service.removeFromLoanAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set LoanAccounts", exc);
+    }
+  }
+
+  /**
+   * save PaymentCards on BankingProduct
+   *
+   * @param command AssignPaymentCardsToBankingProductCommand
+   */
+  @PutMapping("/addToPaymentCards")
+  public void addToPaymentCards(
+      @RequestBody(required = true) AssignPaymentCardsToBankingProductCommand command) {
+    try {
+      service.addToPaymentCards(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set PaymentCards", exc);
+    }
+  }
+
+  /**
+   * remove PaymentCards on BankingProduct
+   *
+   * @param command RemovePaymentCardsFromBankingProductCommand
+   */
+  @PutMapping("/removeFromPaymentCards")
+  public void removeFromPaymentCards(
+      @RequestBody(required = true) RemovePaymentCardsFromBankingProductCommand command) {
+    try {
+      service.removeFromPaymentCards(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set PaymentCards", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected BankingProduct bankingProduct = null;
+  protected BankingProductService service = null;
+  private static final Logger LOGGER =
+      Logger.getLogger(BankingProductRestController.class.getName());
 }

@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * CustomerRestController as REST API
@@ -84,384 +81,387 @@ import com.globalbank.exception.*;
 @RequestMapping("/Customer")
 public class CustomerRestController extends BaseSpringRestController {
 
-	public CustomerRestController( CustomerService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a Customer.  if not key provided, calls create, otherwise calls save
-     * @param		Customer	customer
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateCustomerCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createCustomer( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public CustomerRestController(CustomerService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a Customer. if not key provided, calls create, otherwise calls save
+   *
+   * @param Customer customer
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateCustomerCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createCustomer(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a Customer.  if no key provided, calls create, otherwise calls save
-     * @param		Customer customer
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateCustomerCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateCustomerCommand
-			// -----------------------------------------------
-			completableFuture = service.updateCustomer(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "CustomerController:update() - successfully update Customer - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a Customer entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteCustomerCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	CustomerService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted Customer with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a Customer using a UUID
-     * @param		UUID uuid 
-     * @return		Customer
-     */    
-    @GetMapping("/get")
-    public Customer get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	Customer entity = null;
-
-    	try {  
-    		entity = service.getCustomer( new CustomerFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load Customer using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a Customer. if no key provided, calls create, otherwise calls save
+   *
+   * @param Customer customer
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateCustomerCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateCustomerCommand
+      // -----------------------------------------------
+      completableFuture = service.updateCustomer(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "CustomerController:update() - successfully update Customer - " + exc.getMessage());
     }
 
-    /**
-     * Handles loading all Customer business objects
-     * @return		Set<Customer>
-     */
-    @GetMapping("/")
-    public List<Customer> loadAll() {                
-    	List<Customer> customerList = null;
-        
-    	try {
-            // load the Customer
-            customerList = service.getAllCustomer();
-            
-            if ( customerList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all Customers" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all Customers ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return customerList;
-                            
+  /**
+   * Handles deleting a Customer entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteCustomerCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      CustomerService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted Customer with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Bank on Customer
-     * @param		command AssignBankToCustomerCommand
-     */     
-	@PutMapping("/assignBank")
-	public void assignBank( @RequestBody AssignBankToCustomerCommand command ) {
-		try {
-			service.assignBank( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Bank", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Bank on Customer
-     * @param		 command UnAssignBankFromCustomerCommand
-     */     
-	@PutMapping("/unAssignBank")
-	public void unAssignBank( @RequestBody(required=true)  UnAssignBankFromCustomerCommand command ) {
-		try {
-			service.unAssignBank( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Bank", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a Customer using a UUID
+   *
+   * @param UUID uuid
+   * @return Customer
+   */
+  @GetMapping("/get")
+  public Customer get(@RequestParam(required = true) IdentifierRequest identifier) {
+    Customer entity = null;
 
-    /**
-     * save Accounts on Customer
-     * @param		command AssignAccountsToCustomerCommand
-     */     
-	@PutMapping("/addToAccounts")
-	public void addToAccounts( @RequestBody(required=true) AssignAccountsToCustomerCommand command ) {
-		try {
-			service.addToAccounts( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set Accounts", exc );
-		}
-	}
+    try {
+      entity = service.getCustomer(new CustomerFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load Customer using Id " + identifier.getId());
+      return null;
+    }
 
-    /**
-     * remove Accounts on Customer
-     * @param		command RemoveAccountsFromCustomerCommand
-     */     	
-	@PutMapping("/removeFromAccounts")
-	public void removeFromAccounts( 	@RequestBody(required=true) RemoveAccountsFromCustomerCommand command )
-	{		
-		try {
-			service.removeFromAccounts( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set Accounts", exc );
-		}
-	}
+    return entity;
+  }
 
-    /**
-     * save LoanAccounts on Customer
-     * @param		command AssignLoanAccountsToCustomerCommand
-     */     
-	@PutMapping("/addToLoanAccounts")
-	public void addToLoanAccounts( @RequestBody(required=true) AssignLoanAccountsToCustomerCommand command ) {
-		try {
-			service.addToLoanAccounts( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set LoanAccounts", exc );
-		}
-	}
+  /**
+   * Handles loading all Customer business objects
+   *
+   * @return Set<Customer>
+   */
+  @GetMapping("/")
+  public List<Customer> loadAll() {
+    List<Customer> customerList = null;
 
-    /**
-     * remove LoanAccounts on Customer
-     * @param		command RemoveLoanAccountsFromCustomerCommand
-     */     	
-	@PutMapping("/removeFromLoanAccounts")
-	public void removeFromLoanAccounts( 	@RequestBody(required=true) RemoveLoanAccountsFromCustomerCommand command )
-	{		
-		try {
-			service.removeFromLoanAccounts( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set LoanAccounts", exc );
-		}
-	}
+    try {
+      // load the Customer
+      customerList = service.getAllCustomer();
 
-    /**
-     * save PaymentCards on Customer
-     * @param		command AssignPaymentCardsToCustomerCommand
-     */     
-	@PutMapping("/addToPaymentCards")
-	public void addToPaymentCards( @RequestBody(required=true) AssignPaymentCardsToCustomerCommand command ) {
-		try {
-			service.addToPaymentCards( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set PaymentCards", exc );
-		}
-	}
+      if (customerList != null) LOGGER.log(Level.INFO, "successfully loaded all Customers");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all Customers ", exc);
+      return null;
+    }
 
-    /**
-     * remove PaymentCards on Customer
-     * @param		command RemovePaymentCardsFromCustomerCommand
-     */     	
-	@PutMapping("/removeFromPaymentCards")
-	public void removeFromPaymentCards( 	@RequestBody(required=true) RemovePaymentCardsFromCustomerCommand command )
-	{		
-		try {
-			service.removeFromPaymentCards( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set PaymentCards", exc );
-		}
-	}
+    return customerList;
+  }
 
-    /**
-     * save ExternalAccounts on Customer
-     * @param		command AssignExternalAccountsToCustomerCommand
-     */     
-	@PutMapping("/addToExternalAccounts")
-	public void addToExternalAccounts( @RequestBody(required=true) AssignExternalAccountsToCustomerCommand command ) {
-		try {
-			service.addToExternalAccounts( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set ExternalAccounts", exc );
-		}
-	}
+  /**
+   * save Bank on Customer
+   *
+   * @param command AssignBankToCustomerCommand
+   */
+  @PutMapping("/assignBank")
+  public void assignBank(@RequestBody AssignBankToCustomerCommand command) {
+    try {
+      service.assignBank(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Bank", exc);
+    }
+  }
 
-    /**
-     * remove ExternalAccounts on Customer
-     * @param		command RemoveExternalAccountsFromCustomerCommand
-     */     	
-	@PutMapping("/removeFromExternalAccounts")
-	public void removeFromExternalAccounts( 	@RequestBody(required=true) RemoveExternalAccountsFromCustomerCommand command )
-	{		
-		try {
-			service.removeFromExternalAccounts( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set ExternalAccounts", exc );
-		}
-	}
+  /**
+   * unassign Bank on Customer
+   *
+   * @param command UnAssignBankFromCustomerCommand
+   */
+  @PutMapping("/unAssignBank")
+  public void unAssignBank(@RequestBody(required = true) UnAssignBankFromCustomerCommand command) {
+    try {
+      service.unAssignBank(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Bank", exc);
+    }
+  }
 
-    /**
-     * save FundsTransfers on Customer
-     * @param		command AssignFundsTransfersToCustomerCommand
-     */     
-	@PutMapping("/addToFundsTransfers")
-	public void addToFundsTransfers( @RequestBody(required=true) AssignFundsTransfersToCustomerCommand command ) {
-		try {
-			service.addToFundsTransfers( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set FundsTransfers", exc );
-		}
-	}
+  /**
+   * save Accounts on Customer
+   *
+   * @param command AssignAccountsToCustomerCommand
+   */
+  @PutMapping("/addToAccounts")
+  public void addToAccounts(@RequestBody(required = true) AssignAccountsToCustomerCommand command) {
+    try {
+      service.addToAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set Accounts", exc);
+    }
+  }
 
-    /**
-     * remove FundsTransfers on Customer
-     * @param		command RemoveFundsTransfersFromCustomerCommand
-     */     	
-	@PutMapping("/removeFromFundsTransfers")
-	public void removeFromFundsTransfers( 	@RequestBody(required=true) RemoveFundsTransfersFromCustomerCommand command )
-	{		
-		try {
-			service.removeFromFundsTransfers( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set FundsTransfers", exc );
-		}
-	}
+  /**
+   * remove Accounts on Customer
+   *
+   * @param command RemoveAccountsFromCustomerCommand
+   */
+  @PutMapping("/removeFromAccounts")
+  public void removeFromAccounts(
+      @RequestBody(required = true) RemoveAccountsFromCustomerCommand command) {
+    try {
+      service.removeFromAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set Accounts", exc);
+    }
+  }
 
-    /**
-     * save Disputes on Customer
-     * @param		command AssignDisputesToCustomerCommand
-     */     
-	@PutMapping("/addToDisputes")
-	public void addToDisputes( @RequestBody(required=true) AssignDisputesToCustomerCommand command ) {
-		try {
-			service.addToDisputes( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set Disputes", exc );
-		}
-	}
+  /**
+   * save LoanAccounts on Customer
+   *
+   * @param command AssignLoanAccountsToCustomerCommand
+   */
+  @PutMapping("/addToLoanAccounts")
+  public void addToLoanAccounts(
+      @RequestBody(required = true) AssignLoanAccountsToCustomerCommand command) {
+    try {
+      service.addToLoanAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set LoanAccounts", exc);
+    }
+  }
 
-    /**
-     * remove Disputes on Customer
-     * @param		command RemoveDisputesFromCustomerCommand
-     */     	
-	@PutMapping("/removeFromDisputes")
-	public void removeFromDisputes( 	@RequestBody(required=true) RemoveDisputesFromCustomerCommand command )
-	{		
-		try {
-			service.removeFromDisputes( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set Disputes", exc );
-		}
-	}
+  /**
+   * remove LoanAccounts on Customer
+   *
+   * @param command RemoveLoanAccountsFromCustomerCommand
+   */
+  @PutMapping("/removeFromLoanAccounts")
+  public void removeFromLoanAccounts(
+      @RequestBody(required = true) RemoveLoanAccountsFromCustomerCommand command) {
+    try {
+      service.removeFromLoanAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set LoanAccounts", exc);
+    }
+  }
 
-    /**
-     * save KycProfiles on Customer
-     * @param		command AssignKycProfilesToCustomerCommand
-     */     
-	@PutMapping("/addToKycProfiles")
-	public void addToKycProfiles( @RequestBody(required=true) AssignKycProfilesToCustomerCommand command ) {
-		try {
-			service.addToKycProfiles( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set KycProfiles", exc );
-		}
-	}
+  /**
+   * save PaymentCards on Customer
+   *
+   * @param command AssignPaymentCardsToCustomerCommand
+   */
+  @PutMapping("/addToPaymentCards")
+  public void addToPaymentCards(
+      @RequestBody(required = true) AssignPaymentCardsToCustomerCommand command) {
+    try {
+      service.addToPaymentCards(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set PaymentCards", exc);
+    }
+  }
 
-    /**
-     * remove KycProfiles on Customer
-     * @param		command RemoveKycProfilesFromCustomerCommand
-     */     	
-	@PutMapping("/removeFromKycProfiles")
-	public void removeFromKycProfiles( 	@RequestBody(required=true) RemoveKycProfilesFromCustomerCommand command )
-	{		
-		try {
-			service.removeFromKycProfiles( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set KycProfiles", exc );
-		}
-	}
+  /**
+   * remove PaymentCards on Customer
+   *
+   * @param command RemovePaymentCardsFromCustomerCommand
+   */
+  @PutMapping("/removeFromPaymentCards")
+  public void removeFromPaymentCards(
+      @RequestBody(required = true) RemovePaymentCardsFromCustomerCommand command) {
+    try {
+      service.removeFromPaymentCards(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set PaymentCards", exc);
+    }
+  }
 
-    /**
-     * save Consents on Customer
-     * @param		command AssignConsentsToCustomerCommand
-     */     
-	@PutMapping("/addToConsents")
-	public void addToConsents( @RequestBody(required=true) AssignConsentsToCustomerCommand command ) {
-		try {
-			service.addToConsents( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set Consents", exc );
-		}
-	}
+  /**
+   * save ExternalAccounts on Customer
+   *
+   * @param command AssignExternalAccountsToCustomerCommand
+   */
+  @PutMapping("/addToExternalAccounts")
+  public void addToExternalAccounts(
+      @RequestBody(required = true) AssignExternalAccountsToCustomerCommand command) {
+    try {
+      service.addToExternalAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set ExternalAccounts", exc);
+    }
+  }
 
-    /**
-     * remove Consents on Customer
-     * @param		command RemoveConsentsFromCustomerCommand
-     */     	
-	@PutMapping("/removeFromConsents")
-	public void removeFromConsents( 	@RequestBody(required=true) RemoveConsentsFromCustomerCommand command )
-	{		
-		try {
-			service.removeFromConsents( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set Consents", exc );
-		}
-	}
+  /**
+   * remove ExternalAccounts on Customer
+   *
+   * @param command RemoveExternalAccountsFromCustomerCommand
+   */
+  @PutMapping("/removeFromExternalAccounts")
+  public void removeFromExternalAccounts(
+      @RequestBody(required = true) RemoveExternalAccountsFromCustomerCommand command) {
+    try {
+      service.removeFromExternalAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set ExternalAccounts", exc);
+    }
+  }
 
+  /**
+   * save FundsTransfers on Customer
+   *
+   * @param command AssignFundsTransfersToCustomerCommand
+   */
+  @PutMapping("/addToFundsTransfers")
+  public void addToFundsTransfers(
+      @RequestBody(required = true) AssignFundsTransfersToCustomerCommand command) {
+    try {
+      service.addToFundsTransfers(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set FundsTransfers", exc);
+    }
+  }
 
+  /**
+   * remove FundsTransfers on Customer
+   *
+   * @param command RemoveFundsTransfersFromCustomerCommand
+   */
+  @PutMapping("/removeFromFundsTransfers")
+  public void removeFromFundsTransfers(
+      @RequestBody(required = true) RemoveFundsTransfersFromCustomerCommand command) {
+    try {
+      service.removeFromFundsTransfers(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set FundsTransfers", exc);
+    }
+  }
 
+  /**
+   * save Disputes on Customer
+   *
+   * @param command AssignDisputesToCustomerCommand
+   */
+  @PutMapping("/addToDisputes")
+  public void addToDisputes(@RequestBody(required = true) AssignDisputesToCustomerCommand command) {
+    try {
+      service.addToDisputes(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set Disputes", exc);
+    }
+  }
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected Customer customer = null;
-	protected CustomerService service = null;
-	private static final Logger LOGGER = Logger.getLogger(CustomerRestController.class.getName());
-    
+  /**
+   * remove Disputes on Customer
+   *
+   * @param command RemoveDisputesFromCustomerCommand
+   */
+  @PutMapping("/removeFromDisputes")
+  public void removeFromDisputes(
+      @RequestBody(required = true) RemoveDisputesFromCustomerCommand command) {
+    try {
+      service.removeFromDisputes(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set Disputes", exc);
+    }
+  }
+
+  /**
+   * save KycProfiles on Customer
+   *
+   * @param command AssignKycProfilesToCustomerCommand
+   */
+  @PutMapping("/addToKycProfiles")
+  public void addToKycProfiles(
+      @RequestBody(required = true) AssignKycProfilesToCustomerCommand command) {
+    try {
+      service.addToKycProfiles(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set KycProfiles", exc);
+    }
+  }
+
+  /**
+   * remove KycProfiles on Customer
+   *
+   * @param command RemoveKycProfilesFromCustomerCommand
+   */
+  @PutMapping("/removeFromKycProfiles")
+  public void removeFromKycProfiles(
+      @RequestBody(required = true) RemoveKycProfilesFromCustomerCommand command) {
+    try {
+      service.removeFromKycProfiles(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set KycProfiles", exc);
+    }
+  }
+
+  /**
+   * save Consents on Customer
+   *
+   * @param command AssignConsentsToCustomerCommand
+   */
+  @PutMapping("/addToConsents")
+  public void addToConsents(@RequestBody(required = true) AssignConsentsToCustomerCommand command) {
+    try {
+      service.addToConsents(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set Consents", exc);
+    }
+  }
+
+  /**
+   * remove Consents on Customer
+   *
+   * @param command RemoveConsentsFromCustomerCommand
+   */
+  @PutMapping("/removeFromConsents")
+  public void removeFromConsents(
+      @RequestBody(required = true) RemoveConsentsFromCustomerCommand command) {
+    try {
+      service.removeFromConsents(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set Consents", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected Customer customer = null;
+  protected CustomerService service = null;
+  private static final Logger LOGGER = Logger.getLogger(CustomerRestController.class.getName());
 }

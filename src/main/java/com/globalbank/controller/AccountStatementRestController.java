@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * AccountStatementRestController as REST API
@@ -84,152 +81,155 @@ import com.globalbank.exception.*;
 @RequestMapping("/AccountStatement")
 public class AccountStatementRestController extends BaseSpringRestController {
 
-	public AccountStatementRestController( AccountStatementService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a AccountStatement.  if not key provided, calls create, otherwise calls save
-     * @param		AccountStatement	accountStatement
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateAccountStatementCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createAccountStatement( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public AccountStatementRestController(AccountStatementService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a AccountStatement. if not key provided, calls create, otherwise calls save
+   *
+   * @param AccountStatement accountStatement
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateAccountStatementCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createAccountStatement(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a AccountStatement.  if no key provided, calls create, otherwise calls save
-     * @param		AccountStatement accountStatement
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateAccountStatementCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateAccountStatementCommand
-			// -----------------------------------------------
-			completableFuture = service.updateAccountStatement(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "AccountStatementController:update() - successfully update AccountStatement - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a AccountStatement entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteAccountStatementCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	AccountStatementService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted AccountStatement with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a AccountStatement using a UUID
-     * @param		UUID uuid 
-     * @return		AccountStatement
-     */    
-    @GetMapping("/get")
-    public AccountStatement get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	AccountStatement entity = null;
-
-    	try {  
-    		entity = service.getAccountStatement( new AccountStatementFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load AccountStatement using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a AccountStatement. if no key provided, calls create, otherwise calls save
+   *
+   * @param AccountStatement accountStatement
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateAccountStatementCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateAccountStatementCommand
+      // -----------------------------------------------
+      completableFuture = service.updateAccountStatement(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "AccountStatementController:update() - successfully update AccountStatement - "
+              + exc.getMessage());
     }
 
-    /**
-     * Handles loading all AccountStatement business objects
-     * @return		Set<AccountStatement>
-     */
-    @GetMapping("/")
-    public List<AccountStatement> loadAll() {                
-    	List<AccountStatement> accountStatementList = null;
-        
-    	try {
-            // load the AccountStatement
-            accountStatementList = service.getAllAccountStatement();
-            
-            if ( accountStatementList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all AccountStatements" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all AccountStatements ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return accountStatementList;
-                            
+  /**
+   * Handles deleting a AccountStatement entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteAccountStatementCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      AccountStatementService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(
+          Level.WARNING, "Successfully deleted AccountStatement with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Account on AccountStatement
-     * @param		command AssignAccountToAccountStatementCommand
-     */     
-	@PutMapping("/assignAccount")
-	public void assignAccount( @RequestBody AssignAccountToAccountStatementCommand command ) {
-		try {
-			service.assignAccount( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Account on AccountStatement
-     * @param		 command UnAssignAccountFromAccountStatementCommand
-     */     
-	@PutMapping("/unAssignAccount")
-	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromAccountStatementCommand command ) {
-		try {
-			service.unAssignAccount( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a AccountStatement using a UUID
+   *
+   * @param UUID uuid
+   * @return AccountStatement
+   */
+  @GetMapping("/get")
+  public AccountStatement get(@RequestParam(required = true) IdentifierRequest identifier) {
+    AccountStatement entity = null;
 
+    try {
+      entity = service.getAccountStatement(new AccountStatementFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load AccountStatement using Id " + identifier.getId());
+      return null;
+    }
 
+    return entity;
+  }
 
+  /**
+   * Handles loading all AccountStatement business objects
+   *
+   * @return Set<AccountStatement>
+   */
+  @GetMapping("/")
+  public List<AccountStatement> loadAll() {
+    List<AccountStatement> accountStatementList = null;
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected AccountStatement accountStatement = null;
-	protected AccountStatementService service = null;
-	private static final Logger LOGGER = Logger.getLogger(AccountStatementRestController.class.getName());
-    
+    try {
+      // load the AccountStatement
+      accountStatementList = service.getAllAccountStatement();
+
+      if (accountStatementList != null)
+        LOGGER.log(Level.INFO, "successfully loaded all AccountStatements");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all AccountStatements ", exc);
+      return null;
+    }
+
+    return accountStatementList;
+  }
+
+  /**
+   * save Account on AccountStatement
+   *
+   * @param command AssignAccountToAccountStatementCommand
+   */
+  @PutMapping("/assignAccount")
+  public void assignAccount(@RequestBody AssignAccountToAccountStatementCommand command) {
+    try {
+      service.assignAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Account", exc);
+    }
+  }
+
+  /**
+   * unassign Account on AccountStatement
+   *
+   * @param command UnAssignAccountFromAccountStatementCommand
+   */
+  @PutMapping("/unAssignAccount")
+  public void unAssignAccount(
+      @RequestBody(required = true) UnAssignAccountFromAccountStatementCommand command) {
+    try {
+      service.unAssignAccount(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Account", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected AccountStatement accountStatement = null;
+  protected AccountStatementService service = null;
+  private static final Logger LOGGER =
+      Logger.getLogger(AccountStatementRestController.class.getName());
 }

@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,9 +23,6 @@
  */
 package com.globalbank.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.common.caching.Cache;
 import org.axonframework.common.caching.WeakReferenceCache;
@@ -34,193 +31,190 @@ import org.axonframework.eventhandling.EventBus;
 import org.axonframework.messaging.Message;
 import org.axonframework.messaging.interceptors.LoggingInterceptor;
 import org.axonframework.queryhandling.QueryBus;
-import org.axonframework.serialization.Serializer;
-import org.axonframework.serialization.json.JacksonSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 public class AxonConfig {
 
-	@Bean
-	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2)
-		          .select()                                  
-		          .apis(RequestHandlerSelectors.any())              
-		          .paths(PathSelectors.any())                          
-		          .build(); 
-	}
-	
-    @Bean
-    public LoggingInterceptor<Message<?>> loggingInterceptor() {
-        return new LoggingInterceptor<>();
-    }
+  @Bean
+  public Docket api() {
+    return new Docket(DocumentationType.SWAGGER_2)
+        .select()
+        .apis(RequestHandlerSelectors.any())
+        .paths(PathSelectors.any())
+        .build();
+  }
 
-    @Autowired
-    public void configureLoggingInterceptorFor(CommandBus commandBus,
-                                               LoggingInterceptor<Message<?>> loggingInterceptor) {
-        commandBus.registerDispatchInterceptor(loggingInterceptor);
-        commandBus.registerHandlerInterceptor(loggingInterceptor);
-    }
+  @Bean
+  public LoggingInterceptor<Message<?>> loggingInterceptor() {
+    return new LoggingInterceptor<>();
+  }
 
-    @Autowired
-    public void configureLoggingInterceptorFor(EventBus eventBus, LoggingInterceptor<Message<?>> loggingInterceptor) {
-        eventBus.registerDispatchInterceptor(loggingInterceptor);
-    }
+  @Autowired
+  public void configureLoggingInterceptorFor(
+      CommandBus commandBus, LoggingInterceptor<Message<?>> loggingInterceptor) {
+    commandBus.registerDispatchInterceptor(loggingInterceptor);
+    commandBus.registerHandlerInterceptor(loggingInterceptor);
+  }
 
-    @Autowired
-    public void configureLoggingInterceptorFor(EventProcessingConfigurer eventProcessingConfigurer,
-                                               LoggingInterceptor<Message<?>> loggingInterceptor) {
-        eventProcessingConfigurer.registerDefaultHandlerInterceptor((config, processorName) -> loggingInterceptor);
-    }
+  @Autowired
+  public void configureLoggingInterceptorFor(
+      EventBus eventBus, LoggingInterceptor<Message<?>> loggingInterceptor) {
+    eventBus.registerDispatchInterceptor(loggingInterceptor);
+  }
 
-    @Autowired
-    public void configureLoggingInterceptorFor(QueryBus queryBus, LoggingInterceptor<Message<?>> loggingInterceptor) {
-        queryBus.registerDispatchInterceptor(loggingInterceptor);
-        queryBus.registerHandlerInterceptor(loggingInterceptor);
-    }
+  @Autowired
+  public void configureLoggingInterceptorFor(
+      EventProcessingConfigurer eventProcessingConfigurer,
+      LoggingInterceptor<Message<?>> loggingInterceptor) {
+    eventProcessingConfigurer.registerDefaultHandlerInterceptor(
+        (config, processorName) -> loggingInterceptor);
+  }
 
-    // ------------------------------------------------
-    // create a cache for each command type
-    // ------------------------------------------------
-    
-    @Bean
-    public Cache bankCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Autowired
+  public void configureLoggingInterceptorFor(
+      QueryBus queryBus, LoggingInterceptor<Message<?>> loggingInterceptor) {
+    queryBus.registerDispatchInterceptor(loggingInterceptor);
+    queryBus.registerHandlerInterceptor(loggingInterceptor);
+  }
 
-    @Bean
-    public Cache branchCache() {    	
-        return new WeakReferenceCache();
-    }
+  // ------------------------------------------------
+  // create a cache for each command type
+  // ------------------------------------------------
 
-    @Bean
-    public Cache aTMCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache bankCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache customerCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache branchCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache kycProfileCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache aTMCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache identityDocumentCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache customerCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache riskAssessmentCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache kycProfileCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache screeningResultCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache identityDocumentCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache bankingProductCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache riskAssessmentCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache accountCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache screeningResultCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache accountStatementCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache bankingProductCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache transactionCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache accountCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache externalAccountCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache accountStatementCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache fundsTransferCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache transactionCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache standingInstructionCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache externalAccountCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache paymentCardCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache fundsTransferCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache loanAccountCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache standingInstructionCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache repaymentScheduleCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache paymentCardCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache loanPaymentCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache loanAccountCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache collateralCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache repaymentScheduleCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache feeChargeCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache loanPaymentCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache exchangeRateCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache collateralCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache fXTradeCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache feeChargeCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache disputeCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache exchangeRateCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache consentCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache fXTradeCache() {
+    return new WeakReferenceCache();
+  }
 
-    @Bean
-    public Cache thirdPartyProviderCache() {    	
-        return new WeakReferenceCache();
-    }
+  @Bean
+  public Cache disputeCache() {
+    return new WeakReferenceCache();
+  }
 
+  @Bean
+  public Cache consentCache() {
+    return new WeakReferenceCache();
+  }
 
+  @Bean
+  public Cache thirdPartyProviderCache() {
+    return new WeakReferenceCache();
+  }
 }

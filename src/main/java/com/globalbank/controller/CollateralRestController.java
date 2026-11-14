@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * CollateralRestController as REST API
@@ -84,152 +81,151 @@ import com.globalbank.exception.*;
 @RequestMapping("/Collateral")
 public class CollateralRestController extends BaseSpringRestController {
 
-	public CollateralRestController( CollateralService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a Collateral.  if not key provided, calls create, otherwise calls save
-     * @param		Collateral	collateral
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateCollateralCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createCollateral( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public CollateralRestController(CollateralService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a Collateral. if not key provided, calls create, otherwise calls save
+   *
+   * @param Collateral collateral
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateCollateralCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createCollateral(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a Collateral.  if no key provided, calls create, otherwise calls save
-     * @param		Collateral collateral
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateCollateralCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateCollateralCommand
-			// -----------------------------------------------
-			completableFuture = service.updateCollateral(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "CollateralController:update() - successfully update Collateral - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a Collateral entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteCollateralCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	CollateralService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted Collateral with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a Collateral using a UUID
-     * @param		UUID uuid 
-     * @return		Collateral
-     */    
-    @GetMapping("/get")
-    public Collateral get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	Collateral entity = null;
-
-    	try {  
-    		entity = service.getCollateral( new CollateralFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load Collateral using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a Collateral. if no key provided, calls create, otherwise calls save
+   *
+   * @param Collateral collateral
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateCollateralCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateCollateralCommand
+      // -----------------------------------------------
+      completableFuture = service.updateCollateral(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "CollateralController:update() - successfully update Collateral - " + exc.getMessage());
     }
 
-    /**
-     * Handles loading all Collateral business objects
-     * @return		Set<Collateral>
-     */
-    @GetMapping("/")
-    public List<Collateral> loadAll() {                
-    	List<Collateral> collateralList = null;
-        
-    	try {
-            // load the Collateral
-            collateralList = service.getAllCollateral();
-            
-            if ( collateralList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all Collaterals" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all Collaterals ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return collateralList;
-                            
+  /**
+   * Handles deleting a Collateral entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteCollateralCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      CollateralService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted Collateral with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save LoanAccount on Collateral
-     * @param		command AssignLoanAccountToCollateralCommand
-     */     
-	@PutMapping("/assignLoanAccount")
-	public void assignLoanAccount( @RequestBody AssignLoanAccountToCollateralCommand command ) {
-		try {
-			service.assignLoanAccount( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign LoanAccount", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign LoanAccount on Collateral
-     * @param		 command UnAssignLoanAccountFromCollateralCommand
-     */     
-	@PutMapping("/unAssignLoanAccount")
-	public void unAssignLoanAccount( @RequestBody(required=true)  UnAssignLoanAccountFromCollateralCommand command ) {
-		try {
-			service.unAssignLoanAccount( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign LoanAccount", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a Collateral using a UUID
+   *
+   * @param UUID uuid
+   * @return Collateral
+   */
+  @GetMapping("/get")
+  public Collateral get(@RequestParam(required = true) IdentifierRequest identifier) {
+    Collateral entity = null;
 
+    try {
+      entity = service.getCollateral(new CollateralFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load Collateral using Id " + identifier.getId());
+      return null;
+    }
 
+    return entity;
+  }
 
+  /**
+   * Handles loading all Collateral business objects
+   *
+   * @return Set<Collateral>
+   */
+  @GetMapping("/")
+  public List<Collateral> loadAll() {
+    List<Collateral> collateralList = null;
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected Collateral collateral = null;
-	protected CollateralService service = null;
-	private static final Logger LOGGER = Logger.getLogger(CollateralRestController.class.getName());
-    
+    try {
+      // load the Collateral
+      collateralList = service.getAllCollateral();
+
+      if (collateralList != null) LOGGER.log(Level.INFO, "successfully loaded all Collaterals");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all Collaterals ", exc);
+      return null;
+    }
+
+    return collateralList;
+  }
+
+  /**
+   * save LoanAccount on Collateral
+   *
+   * @param command AssignLoanAccountToCollateralCommand
+   */
+  @PutMapping("/assignLoanAccount")
+  public void assignLoanAccount(@RequestBody AssignLoanAccountToCollateralCommand command) {
+    try {
+      service.assignLoanAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign LoanAccount", exc);
+    }
+  }
+
+  /**
+   * unassign LoanAccount on Collateral
+   *
+   * @param command UnAssignLoanAccountFromCollateralCommand
+   */
+  @PutMapping("/unAssignLoanAccount")
+  public void unAssignLoanAccount(
+      @RequestBody(required = true) UnAssignLoanAccountFromCollateralCommand command) {
+    try {
+      service.unAssignLoanAccount(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign LoanAccount", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected Collateral collateral = null;
+  protected CollateralService service = null;
+  private static final Logger LOGGER = Logger.getLogger(CollateralRestController.class.getName());
 }

@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * BranchRestController as REST API
@@ -84,239 +81,234 @@ import com.globalbank.exception.*;
 @RequestMapping("/Branch")
 public class BranchRestController extends BaseSpringRestController {
 
-	public BranchRestController( BranchService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a Branch.  if not key provided, calls create, otherwise calls save
-     * @param		Branch	branch
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateBranchCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createBranch( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public BranchRestController(BranchService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a Branch. if not key provided, calls create, otherwise calls save
+   *
+   * @param Branch branch
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(@RequestBody(required = true) CreateBranchCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createBranch(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a Branch.  if no key provided, calls create, otherwise calls save
-     * @param		Branch branch
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateBranchCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateBranchCommand
-			// -----------------------------------------------
-			completableFuture = service.updateBranch(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "BranchController:update() - successfully update Branch - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a Branch entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteBranchCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	BranchService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted Branch with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a Branch using a UUID
-     * @param		UUID uuid 
-     * @return		Branch
-     */    
-    @GetMapping("/get")
-    public Branch get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	Branch entity = null;
-
-    	try {  
-    		entity = service.getBranch( new BranchFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load Branch using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a Branch. if no key provided, calls create, otherwise calls save
+   *
+   * @param Branch branch
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(@RequestBody(required = true) UpdateBranchCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateBranchCommand
+      // -----------------------------------------------
+      completableFuture = service.updateBranch(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "BranchController:update() - successfully update Branch - " + exc.getMessage());
     }
 
-    /**
-     * Handles loading all Branch business objects
-     * @return		Set<Branch>
-     */
-    @GetMapping("/")
-    public List<Branch> loadAll() {                
-    	List<Branch> branchList = null;
-        
-    	try {
-            // load the Branch
-            branchList = service.getAllBranch();
-            
-            if ( branchList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all Branchs" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all Branchs ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return branchList;
-                            
+  /**
+   * Handles deleting a Branch entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(@RequestBody(required = true) DeleteBranchCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      BranchService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted Branch with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Bank on Branch
-     * @param		command AssignBankToBranchCommand
-     */     
-	@PutMapping("/assignBank")
-	public void assignBank( @RequestBody AssignBankToBranchCommand command ) {
-		try {
-			service.assignBank( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Bank", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Bank on Branch
-     * @param		 command UnAssignBankFromBranchCommand
-     */     
-	@PutMapping("/unAssignBank")
-	public void unAssignBank( @RequestBody(required=true)  UnAssignBankFromBranchCommand command ) {
-		try {
-			service.unAssignBank( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Bank", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a Branch using a UUID
+   *
+   * @param UUID uuid
+   * @return Branch
+   */
+  @GetMapping("/get")
+  public Branch get(@RequestParam(required = true) IdentifierRequest identifier) {
+    Branch entity = null;
 
-    /**
-     * save Accounts on Branch
-     * @param		command AssignAccountsToBranchCommand
-     */     
-	@PutMapping("/addToAccounts")
-	public void addToAccounts( @RequestBody(required=true) AssignAccountsToBranchCommand command ) {
-		try {
-			service.addToAccounts( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set Accounts", exc );
-		}
-	}
+    try {
+      entity = service.getBranch(new BranchFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load Branch using Id " + identifier.getId());
+      return null;
+    }
 
-    /**
-     * remove Accounts on Branch
-     * @param		command RemoveAccountsFromBranchCommand
-     */     	
-	@PutMapping("/removeFromAccounts")
-	public void removeFromAccounts( 	@RequestBody(required=true) RemoveAccountsFromBranchCommand command )
-	{		
-		try {
-			service.removeFromAccounts( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set Accounts", exc );
-		}
-	}
+    return entity;
+  }
 
-    /**
-     * save LoanAccounts on Branch
-     * @param		command AssignLoanAccountsToBranchCommand
-     */     
-	@PutMapping("/addToLoanAccounts")
-	public void addToLoanAccounts( @RequestBody(required=true) AssignLoanAccountsToBranchCommand command ) {
-		try {
-			service.addToLoanAccounts( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set LoanAccounts", exc );
-		}
-	}
+  /**
+   * Handles loading all Branch business objects
+   *
+   * @return Set<Branch>
+   */
+  @GetMapping("/")
+  public List<Branch> loadAll() {
+    List<Branch> branchList = null;
 
-    /**
-     * remove LoanAccounts on Branch
-     * @param		command RemoveLoanAccountsFromBranchCommand
-     */     	
-	@PutMapping("/removeFromLoanAccounts")
-	public void removeFromLoanAccounts( 	@RequestBody(required=true) RemoveLoanAccountsFromBranchCommand command )
-	{		
-		try {
-			service.removeFromLoanAccounts( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set LoanAccounts", exc );
-		}
-	}
+    try {
+      // load the Branch
+      branchList = service.getAllBranch();
 
-    /**
-     * save Atms on Branch
-     * @param		command AssignAtmsToBranchCommand
-     */     
-	@PutMapping("/addToAtms")
-	public void addToAtms( @RequestBody(required=true) AssignAtmsToBranchCommand command ) {
-		try {
-			service.addToAtms( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set Atms", exc );
-		}
-	}
+      if (branchList != null) LOGGER.log(Level.INFO, "successfully loaded all Branchs");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all Branchs ", exc);
+      return null;
+    }
 
-    /**
-     * remove Atms on Branch
-     * @param		command RemoveAtmsFromBranchCommand
-     */     	
-	@PutMapping("/removeFromAtms")
-	public void removeFromAtms( 	@RequestBody(required=true) RemoveAtmsFromBranchCommand command )
-	{		
-		try {
-			service.removeFromAtms( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set Atms", exc );
-		}
-	}
+    return branchList;
+  }
 
+  /**
+   * save Bank on Branch
+   *
+   * @param command AssignBankToBranchCommand
+   */
+  @PutMapping("/assignBank")
+  public void assignBank(@RequestBody AssignBankToBranchCommand command) {
+    try {
+      service.assignBank(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Bank", exc);
+    }
+  }
 
+  /**
+   * unassign Bank on Branch
+   *
+   * @param command UnAssignBankFromBranchCommand
+   */
+  @PutMapping("/unAssignBank")
+  public void unAssignBank(@RequestBody(required = true) UnAssignBankFromBranchCommand command) {
+    try {
+      service.unAssignBank(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Bank", exc);
+    }
+  }
 
+  /**
+   * save Accounts on Branch
+   *
+   * @param command AssignAccountsToBranchCommand
+   */
+  @PutMapping("/addToAccounts")
+  public void addToAccounts(@RequestBody(required = true) AssignAccountsToBranchCommand command) {
+    try {
+      service.addToAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set Accounts", exc);
+    }
+  }
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected Branch branch = null;
-	protected BranchService service = null;
-	private static final Logger LOGGER = Logger.getLogger(BranchRestController.class.getName());
-    
+  /**
+   * remove Accounts on Branch
+   *
+   * @param command RemoveAccountsFromBranchCommand
+   */
+  @PutMapping("/removeFromAccounts")
+  public void removeFromAccounts(
+      @RequestBody(required = true) RemoveAccountsFromBranchCommand command) {
+    try {
+      service.removeFromAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set Accounts", exc);
+    }
+  }
+
+  /**
+   * save LoanAccounts on Branch
+   *
+   * @param command AssignLoanAccountsToBranchCommand
+   */
+  @PutMapping("/addToLoanAccounts")
+  public void addToLoanAccounts(
+      @RequestBody(required = true) AssignLoanAccountsToBranchCommand command) {
+    try {
+      service.addToLoanAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set LoanAccounts", exc);
+    }
+  }
+
+  /**
+   * remove LoanAccounts on Branch
+   *
+   * @param command RemoveLoanAccountsFromBranchCommand
+   */
+  @PutMapping("/removeFromLoanAccounts")
+  public void removeFromLoanAccounts(
+      @RequestBody(required = true) RemoveLoanAccountsFromBranchCommand command) {
+    try {
+      service.removeFromLoanAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set LoanAccounts", exc);
+    }
+  }
+
+  /**
+   * save Atms on Branch
+   *
+   * @param command AssignAtmsToBranchCommand
+   */
+  @PutMapping("/addToAtms")
+  public void addToAtms(@RequestBody(required = true) AssignAtmsToBranchCommand command) {
+    try {
+      service.addToAtms(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set Atms", exc);
+    }
+  }
+
+  /**
+   * remove Atms on Branch
+   *
+   * @param command RemoveAtmsFromBranchCommand
+   */
+  @PutMapping("/removeFromAtms")
+  public void removeFromAtms(@RequestBody(required = true) RemoveAtmsFromBranchCommand command) {
+    try {
+      service.removeFromAtms(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set Atms", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected Branch branch = null;
+  protected BranchService service = null;
+  private static final Logger LOGGER = Logger.getLogger(BranchRestController.class.getName());
 }

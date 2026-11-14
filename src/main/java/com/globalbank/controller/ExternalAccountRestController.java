@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * ExternalAccountRestController as REST API
@@ -84,181 +81,184 @@ import com.globalbank.exception.*;
 @RequestMapping("/ExternalAccount")
 public class ExternalAccountRestController extends BaseSpringRestController {
 
-	public ExternalAccountRestController( ExternalAccountService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a ExternalAccount.  if not key provided, calls create, otherwise calls save
-     * @param		ExternalAccount	externalAccount
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateExternalAccountCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createExternalAccount( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public ExternalAccountRestController(ExternalAccountService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a ExternalAccount. if not key provided, calls create, otherwise calls save
+   *
+   * @param ExternalAccount externalAccount
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateExternalAccountCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createExternalAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a ExternalAccount.  if no key provided, calls create, otherwise calls save
-     * @param		ExternalAccount externalAccount
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateExternalAccountCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateExternalAccountCommand
-			// -----------------------------------------------
-			completableFuture = service.updateExternalAccount(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "ExternalAccountController:update() - successfully update ExternalAccount - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a ExternalAccount entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteExternalAccountCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	ExternalAccountService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted ExternalAccount with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a ExternalAccount using a UUID
-     * @param		UUID uuid 
-     * @return		ExternalAccount
-     */    
-    @GetMapping("/get")
-    public ExternalAccount get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	ExternalAccount entity = null;
-
-    	try {  
-    		entity = service.getExternalAccount( new ExternalAccountFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load ExternalAccount using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a ExternalAccount. if no key provided, calls create, otherwise calls save
+   *
+   * @param ExternalAccount externalAccount
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateExternalAccountCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateExternalAccountCommand
+      // -----------------------------------------------
+      completableFuture = service.updateExternalAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "ExternalAccountController:update() - successfully update ExternalAccount - "
+              + exc.getMessage());
     }
 
-    /**
-     * Handles loading all ExternalAccount business objects
-     * @return		Set<ExternalAccount>
-     */
-    @GetMapping("/")
-    public List<ExternalAccount> loadAll() {                
-    	List<ExternalAccount> externalAccountList = null;
-        
-    	try {
-            // load the ExternalAccount
-            externalAccountList = service.getAllExternalAccount();
-            
-            if ( externalAccountList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all ExternalAccounts" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all ExternalAccounts ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return externalAccountList;
-                            
+  /**
+   * Handles deleting a ExternalAccount entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteExternalAccountCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      ExternalAccountService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted ExternalAccount with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Customer on ExternalAccount
-     * @param		command AssignCustomerToExternalAccountCommand
-     */     
-	@PutMapping("/assignCustomer")
-	public void assignCustomer( @RequestBody AssignCustomerToExternalAccountCommand command ) {
-		try {
-			service.assignCustomer( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Customer", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Customer on ExternalAccount
-     * @param		 command UnAssignCustomerFromExternalAccountCommand
-     */     
-	@PutMapping("/unAssignCustomer")
-	public void unAssignCustomer( @RequestBody(required=true)  UnAssignCustomerFromExternalAccountCommand command ) {
-		try {
-			service.unAssignCustomer( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Customer", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a ExternalAccount using a UUID
+   *
+   * @param UUID uuid
+   * @return ExternalAccount
+   */
+  @GetMapping("/get")
+  public ExternalAccount get(@RequestParam(required = true) IdentifierRequest identifier) {
+    ExternalAccount entity = null;
 
-    /**
-     * save Transactions on ExternalAccount
-     * @param		command AssignTransactionsToExternalAccountCommand
-     */     
-	@PutMapping("/addToTransactions")
-	public void addToTransactions( @RequestBody(required=true) AssignTransactionsToExternalAccountCommand command ) {
-		try {
-			service.addToTransactions( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set Transactions", exc );
-		}
-	}
+    try {
+      entity = service.getExternalAccount(new ExternalAccountFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load ExternalAccount using Id " + identifier.getId());
+      return null;
+    }
 
-    /**
-     * remove Transactions on ExternalAccount
-     * @param		command RemoveTransactionsFromExternalAccountCommand
-     */     	
-	@PutMapping("/removeFromTransactions")
-	public void removeFromTransactions( 	@RequestBody(required=true) RemoveTransactionsFromExternalAccountCommand command )
-	{		
-		try {
-			service.removeFromTransactions( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set Transactions", exc );
-		}
-	}
+    return entity;
+  }
 
+  /**
+   * Handles loading all ExternalAccount business objects
+   *
+   * @return Set<ExternalAccount>
+   */
+  @GetMapping("/")
+  public List<ExternalAccount> loadAll() {
+    List<ExternalAccount> externalAccountList = null;
 
+    try {
+      // load the ExternalAccount
+      externalAccountList = service.getAllExternalAccount();
 
+      if (externalAccountList != null)
+        LOGGER.log(Level.INFO, "successfully loaded all ExternalAccounts");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all ExternalAccounts ", exc);
+      return null;
+    }
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected ExternalAccount externalAccount = null;
-	protected ExternalAccountService service = null;
-	private static final Logger LOGGER = Logger.getLogger(ExternalAccountRestController.class.getName());
-    
+    return externalAccountList;
+  }
+
+  /**
+   * save Customer on ExternalAccount
+   *
+   * @param command AssignCustomerToExternalAccountCommand
+   */
+  @PutMapping("/assignCustomer")
+  public void assignCustomer(@RequestBody AssignCustomerToExternalAccountCommand command) {
+    try {
+      service.assignCustomer(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Customer", exc);
+    }
+  }
+
+  /**
+   * unassign Customer on ExternalAccount
+   *
+   * @param command UnAssignCustomerFromExternalAccountCommand
+   */
+  @PutMapping("/unAssignCustomer")
+  public void unAssignCustomer(
+      @RequestBody(required = true) UnAssignCustomerFromExternalAccountCommand command) {
+    try {
+      service.unAssignCustomer(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Customer", exc);
+    }
+  }
+
+  /**
+   * save Transactions on ExternalAccount
+   *
+   * @param command AssignTransactionsToExternalAccountCommand
+   */
+  @PutMapping("/addToTransactions")
+  public void addToTransactions(
+      @RequestBody(required = true) AssignTransactionsToExternalAccountCommand command) {
+    try {
+      service.addToTransactions(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set Transactions", exc);
+    }
+  }
+
+  /**
+   * remove Transactions on ExternalAccount
+   *
+   * @param command RemoveTransactionsFromExternalAccountCommand
+   */
+  @PutMapping("/removeFromTransactions")
+  public void removeFromTransactions(
+      @RequestBody(required = true) RemoveTransactionsFromExternalAccountCommand command) {
+    try {
+      service.removeFromTransactions(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set Transactions", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected ExternalAccount externalAccount = null;
+  protected ExternalAccountService service = null;
+  private static final Logger LOGGER =
+      Logger.getLogger(ExternalAccountRestController.class.getName());
 }

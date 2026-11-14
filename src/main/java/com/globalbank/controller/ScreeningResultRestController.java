@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * ScreeningResultRestController as REST API
@@ -84,152 +81,154 @@ import com.globalbank.exception.*;
 @RequestMapping("/ScreeningResult")
 public class ScreeningResultRestController extends BaseSpringRestController {
 
-	public ScreeningResultRestController( ScreeningResultService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a ScreeningResult.  if not key provided, calls create, otherwise calls save
-     * @param		ScreeningResult	screeningResult
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateScreeningResultCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createScreeningResult( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public ScreeningResultRestController(ScreeningResultService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a ScreeningResult. if not key provided, calls create, otherwise calls save
+   *
+   * @param ScreeningResult screeningResult
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateScreeningResultCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createScreeningResult(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a ScreeningResult.  if no key provided, calls create, otherwise calls save
-     * @param		ScreeningResult screeningResult
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateScreeningResultCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateScreeningResultCommand
-			// -----------------------------------------------
-			completableFuture = service.updateScreeningResult(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "ScreeningResultController:update() - successfully update ScreeningResult - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a ScreeningResult entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteScreeningResultCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	ScreeningResultService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted ScreeningResult with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a ScreeningResult using a UUID
-     * @param		UUID uuid 
-     * @return		ScreeningResult
-     */    
-    @GetMapping("/get")
-    public ScreeningResult get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	ScreeningResult entity = null;
-
-    	try {  
-    		entity = service.getScreeningResult( new ScreeningResultFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load ScreeningResult using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a ScreeningResult. if no key provided, calls create, otherwise calls save
+   *
+   * @param ScreeningResult screeningResult
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateScreeningResultCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateScreeningResultCommand
+      // -----------------------------------------------
+      completableFuture = service.updateScreeningResult(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "ScreeningResultController:update() - successfully update ScreeningResult - "
+              + exc.getMessage());
     }
 
-    /**
-     * Handles loading all ScreeningResult business objects
-     * @return		Set<ScreeningResult>
-     */
-    @GetMapping("/")
-    public List<ScreeningResult> loadAll() {                
-    	List<ScreeningResult> screeningResultList = null;
-        
-    	try {
-            // load the ScreeningResult
-            screeningResultList = service.getAllScreeningResult();
-            
-            if ( screeningResultList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all ScreeningResults" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all ScreeningResults ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return screeningResultList;
-                            
+  /**
+   * Handles deleting a ScreeningResult entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteScreeningResultCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      ScreeningResultService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted ScreeningResult with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save KycProfile on ScreeningResult
-     * @param		command AssignKycProfileToScreeningResultCommand
-     */     
-	@PutMapping("/assignKycProfile")
-	public void assignKycProfile( @RequestBody AssignKycProfileToScreeningResultCommand command ) {
-		try {
-			service.assignKycProfile( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign KycProfile", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign KycProfile on ScreeningResult
-     * @param		 command UnAssignKycProfileFromScreeningResultCommand
-     */     
-	@PutMapping("/unAssignKycProfile")
-	public void unAssignKycProfile( @RequestBody(required=true)  UnAssignKycProfileFromScreeningResultCommand command ) {
-		try {
-			service.unAssignKycProfile( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign KycProfile", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a ScreeningResult using a UUID
+   *
+   * @param UUID uuid
+   * @return ScreeningResult
+   */
+  @GetMapping("/get")
+  public ScreeningResult get(@RequestParam(required = true) IdentifierRequest identifier) {
+    ScreeningResult entity = null;
 
+    try {
+      entity = service.getScreeningResult(new ScreeningResultFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load ScreeningResult using Id " + identifier.getId());
+      return null;
+    }
 
+    return entity;
+  }
 
+  /**
+   * Handles loading all ScreeningResult business objects
+   *
+   * @return Set<ScreeningResult>
+   */
+  @GetMapping("/")
+  public List<ScreeningResult> loadAll() {
+    List<ScreeningResult> screeningResultList = null;
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected ScreeningResult screeningResult = null;
-	protected ScreeningResultService service = null;
-	private static final Logger LOGGER = Logger.getLogger(ScreeningResultRestController.class.getName());
-    
+    try {
+      // load the ScreeningResult
+      screeningResultList = service.getAllScreeningResult();
+
+      if (screeningResultList != null)
+        LOGGER.log(Level.INFO, "successfully loaded all ScreeningResults");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all ScreeningResults ", exc);
+      return null;
+    }
+
+    return screeningResultList;
+  }
+
+  /**
+   * save KycProfile on ScreeningResult
+   *
+   * @param command AssignKycProfileToScreeningResultCommand
+   */
+  @PutMapping("/assignKycProfile")
+  public void assignKycProfile(@RequestBody AssignKycProfileToScreeningResultCommand command) {
+    try {
+      service.assignKycProfile(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign KycProfile", exc);
+    }
+  }
+
+  /**
+   * unassign KycProfile on ScreeningResult
+   *
+   * @param command UnAssignKycProfileFromScreeningResultCommand
+   */
+  @PutMapping("/unAssignKycProfile")
+  public void unAssignKycProfile(
+      @RequestBody(required = true) UnAssignKycProfileFromScreeningResultCommand command) {
+    try {
+      service.unAssignKycProfile(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign KycProfile", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected ScreeningResult screeningResult = null;
+  protected ScreeningResultService service = null;
+  private static final Logger LOGGER =
+      Logger.getLogger(ScreeningResultRestController.class.getName());
 }

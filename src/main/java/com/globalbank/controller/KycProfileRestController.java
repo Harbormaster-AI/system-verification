@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * KycProfileRestController as REST API
@@ -84,239 +81,241 @@ import com.globalbank.exception.*;
 @RequestMapping("/KycProfile")
 public class KycProfileRestController extends BaseSpringRestController {
 
-	public KycProfileRestController( KycProfileService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a KycProfile.  if not key provided, calls create, otherwise calls save
-     * @param		KycProfile	kycProfile
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateKycProfileCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createKycProfile( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public KycProfileRestController(KycProfileService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a KycProfile. if not key provided, calls create, otherwise calls save
+   *
+   * @param KycProfile kycProfile
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateKycProfileCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createKycProfile(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a KycProfile.  if no key provided, calls create, otherwise calls save
-     * @param		KycProfile kycProfile
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateKycProfileCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateKycProfileCommand
-			// -----------------------------------------------
-			completableFuture = service.updateKycProfile(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "KycProfileController:update() - successfully update KycProfile - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a KycProfile entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteKycProfileCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	KycProfileService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted KycProfile with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a KycProfile using a UUID
-     * @param		UUID uuid 
-     * @return		KycProfile
-     */    
-    @GetMapping("/get")
-    public KycProfile get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	KycProfile entity = null;
-
-    	try {  
-    		entity = service.getKycProfile( new KycProfileFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load KycProfile using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a KycProfile. if no key provided, calls create, otherwise calls save
+   *
+   * @param KycProfile kycProfile
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateKycProfileCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateKycProfileCommand
+      // -----------------------------------------------
+      completableFuture = service.updateKycProfile(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "KycProfileController:update() - successfully update KycProfile - " + exc.getMessage());
     }
 
-    /**
-     * Handles loading all KycProfile business objects
-     * @return		Set<KycProfile>
-     */
-    @GetMapping("/")
-    public List<KycProfile> loadAll() {                
-    	List<KycProfile> kycProfileList = null;
-        
-    	try {
-            // load the KycProfile
-            kycProfileList = service.getAllKycProfile();
-            
-            if ( kycProfileList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all KycProfiles" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all KycProfiles ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return kycProfileList;
-                            
+  /**
+   * Handles deleting a KycProfile entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteKycProfileCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      KycProfileService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted KycProfile with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Customer on KycProfile
-     * @param		command AssignCustomerToKycProfileCommand
-     */     
-	@PutMapping("/assignCustomer")
-	public void assignCustomer( @RequestBody AssignCustomerToKycProfileCommand command ) {
-		try {
-			service.assignCustomer( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Customer", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Customer on KycProfile
-     * @param		 command UnAssignCustomerFromKycProfileCommand
-     */     
-	@PutMapping("/unAssignCustomer")
-	public void unAssignCustomer( @RequestBody(required=true)  UnAssignCustomerFromKycProfileCommand command ) {
-		try {
-			service.unAssignCustomer( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Customer", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a KycProfile using a UUID
+   *
+   * @param UUID uuid
+   * @return KycProfile
+   */
+  @GetMapping("/get")
+  public KycProfile get(@RequestParam(required = true) IdentifierRequest identifier) {
+    KycProfile entity = null;
 
-    /**
-     * save IdentityDocuments on KycProfile
-     * @param		command AssignIdentityDocumentsToKycProfileCommand
-     */     
-	@PutMapping("/addToIdentityDocuments")
-	public void addToIdentityDocuments( @RequestBody(required=true) AssignIdentityDocumentsToKycProfileCommand command ) {
-		try {
-			service.addToIdentityDocuments( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set IdentityDocuments", exc );
-		}
-	}
+    try {
+      entity = service.getKycProfile(new KycProfileFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load KycProfile using Id " + identifier.getId());
+      return null;
+    }
 
-    /**
-     * remove IdentityDocuments on KycProfile
-     * @param		command RemoveIdentityDocumentsFromKycProfileCommand
-     */     	
-	@PutMapping("/removeFromIdentityDocuments")
-	public void removeFromIdentityDocuments( 	@RequestBody(required=true) RemoveIdentityDocumentsFromKycProfileCommand command )
-	{		
-		try {
-			service.removeFromIdentityDocuments( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set IdentityDocuments", exc );
-		}
-	}
+    return entity;
+  }
 
-    /**
-     * save RiskAssessments on KycProfile
-     * @param		command AssignRiskAssessmentsToKycProfileCommand
-     */     
-	@PutMapping("/addToRiskAssessments")
-	public void addToRiskAssessments( @RequestBody(required=true) AssignRiskAssessmentsToKycProfileCommand command ) {
-		try {
-			service.addToRiskAssessments( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set RiskAssessments", exc );
-		}
-	}
+  /**
+   * Handles loading all KycProfile business objects
+   *
+   * @return Set<KycProfile>
+   */
+  @GetMapping("/")
+  public List<KycProfile> loadAll() {
+    List<KycProfile> kycProfileList = null;
 
-    /**
-     * remove RiskAssessments on KycProfile
-     * @param		command RemoveRiskAssessmentsFromKycProfileCommand
-     */     	
-	@PutMapping("/removeFromRiskAssessments")
-	public void removeFromRiskAssessments( 	@RequestBody(required=true) RemoveRiskAssessmentsFromKycProfileCommand command )
-	{		
-		try {
-			service.removeFromRiskAssessments( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set RiskAssessments", exc );
-		}
-	}
+    try {
+      // load the KycProfile
+      kycProfileList = service.getAllKycProfile();
 
-    /**
-     * save Screenings on KycProfile
-     * @param		command AssignScreeningsToKycProfileCommand
-     */     
-	@PutMapping("/addToScreenings")
-	public void addToScreenings( @RequestBody(required=true) AssignScreeningsToKycProfileCommand command ) {
-		try {
-			service.addToScreenings( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set Screenings", exc );
-		}
-	}
+      if (kycProfileList != null) LOGGER.log(Level.INFO, "successfully loaded all KycProfiles");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all KycProfiles ", exc);
+      return null;
+    }
 
-    /**
-     * remove Screenings on KycProfile
-     * @param		command RemoveScreeningsFromKycProfileCommand
-     */     	
-	@PutMapping("/removeFromScreenings")
-	public void removeFromScreenings( 	@RequestBody(required=true) RemoveScreeningsFromKycProfileCommand command )
-	{		
-		try {
-			service.removeFromScreenings( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set Screenings", exc );
-		}
-	}
+    return kycProfileList;
+  }
 
+  /**
+   * save Customer on KycProfile
+   *
+   * @param command AssignCustomerToKycProfileCommand
+   */
+  @PutMapping("/assignCustomer")
+  public void assignCustomer(@RequestBody AssignCustomerToKycProfileCommand command) {
+    try {
+      service.assignCustomer(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Customer", exc);
+    }
+  }
 
+  /**
+   * unassign Customer on KycProfile
+   *
+   * @param command UnAssignCustomerFromKycProfileCommand
+   */
+  @PutMapping("/unAssignCustomer")
+  public void unAssignCustomer(
+      @RequestBody(required = true) UnAssignCustomerFromKycProfileCommand command) {
+    try {
+      service.unAssignCustomer(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Customer", exc);
+    }
+  }
 
+  /**
+   * save IdentityDocuments on KycProfile
+   *
+   * @param command AssignIdentityDocumentsToKycProfileCommand
+   */
+  @PutMapping("/addToIdentityDocuments")
+  public void addToIdentityDocuments(
+      @RequestBody(required = true) AssignIdentityDocumentsToKycProfileCommand command) {
+    try {
+      service.addToIdentityDocuments(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set IdentityDocuments", exc);
+    }
+  }
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected KycProfile kycProfile = null;
-	protected KycProfileService service = null;
-	private static final Logger LOGGER = Logger.getLogger(KycProfileRestController.class.getName());
-    
+  /**
+   * remove IdentityDocuments on KycProfile
+   *
+   * @param command RemoveIdentityDocumentsFromKycProfileCommand
+   */
+  @PutMapping("/removeFromIdentityDocuments")
+  public void removeFromIdentityDocuments(
+      @RequestBody(required = true) RemoveIdentityDocumentsFromKycProfileCommand command) {
+    try {
+      service.removeFromIdentityDocuments(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set IdentityDocuments", exc);
+    }
+  }
+
+  /**
+   * save RiskAssessments on KycProfile
+   *
+   * @param command AssignRiskAssessmentsToKycProfileCommand
+   */
+  @PutMapping("/addToRiskAssessments")
+  public void addToRiskAssessments(
+      @RequestBody(required = true) AssignRiskAssessmentsToKycProfileCommand command) {
+    try {
+      service.addToRiskAssessments(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set RiskAssessments", exc);
+    }
+  }
+
+  /**
+   * remove RiskAssessments on KycProfile
+   *
+   * @param command RemoveRiskAssessmentsFromKycProfileCommand
+   */
+  @PutMapping("/removeFromRiskAssessments")
+  public void removeFromRiskAssessments(
+      @RequestBody(required = true) RemoveRiskAssessmentsFromKycProfileCommand command) {
+    try {
+      service.removeFromRiskAssessments(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set RiskAssessments", exc);
+    }
+  }
+
+  /**
+   * save Screenings on KycProfile
+   *
+   * @param command AssignScreeningsToKycProfileCommand
+   */
+  @PutMapping("/addToScreenings")
+  public void addToScreenings(
+      @RequestBody(required = true) AssignScreeningsToKycProfileCommand command) {
+    try {
+      service.addToScreenings(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set Screenings", exc);
+    }
+  }
+
+  /**
+   * remove Screenings on KycProfile
+   *
+   * @param command RemoveScreeningsFromKycProfileCommand
+   */
+  @PutMapping("/removeFromScreenings")
+  public void removeFromScreenings(
+      @RequestBody(required = true) RemoveScreeningsFromKycProfileCommand command) {
+    try {
+      service.removeFromScreenings(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set Screenings", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected KycProfile kycProfile = null;
+  protected KycProfileService service = null;
+  private static final Logger LOGGER = Logger.getLogger(KycProfileRestController.class.getName());
 }

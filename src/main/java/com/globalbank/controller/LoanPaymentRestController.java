@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * LoanPaymentRestController as REST API
@@ -84,180 +81,180 @@ import com.globalbank.exception.*;
 @RequestMapping("/LoanPayment")
 public class LoanPaymentRestController extends BaseSpringRestController {
 
-	public LoanPaymentRestController( LoanPaymentService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a LoanPayment.  if not key provided, calls create, otherwise calls save
-     * @param		LoanPayment	loanPayment
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateLoanPaymentCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createLoanPayment( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public LoanPaymentRestController(LoanPaymentService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a LoanPayment. if not key provided, calls create, otherwise calls save
+   *
+   * @param LoanPayment loanPayment
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateLoanPaymentCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createLoanPayment(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a LoanPayment.  if no key provided, calls create, otherwise calls save
-     * @param		LoanPayment loanPayment
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateLoanPaymentCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateLoanPaymentCommand
-			// -----------------------------------------------
-			completableFuture = service.updateLoanPayment(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "LoanPaymentController:update() - successfully update LoanPayment - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a LoanPayment entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteLoanPaymentCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	LoanPaymentService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted LoanPayment with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a LoanPayment using a UUID
-     * @param		UUID uuid 
-     * @return		LoanPayment
-     */    
-    @GetMapping("/get")
-    public LoanPayment get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	LoanPayment entity = null;
-
-    	try {  
-    		entity = service.getLoanPayment( new LoanPaymentFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load LoanPayment using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a LoanPayment. if no key provided, calls create, otherwise calls save
+   *
+   * @param LoanPayment loanPayment
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateLoanPaymentCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateLoanPaymentCommand
+      // -----------------------------------------------
+      completableFuture = service.updateLoanPayment(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "LoanPaymentController:update() - successfully update LoanPayment - " + exc.getMessage());
     }
 
-    /**
-     * Handles loading all LoanPayment business objects
-     * @return		Set<LoanPayment>
-     */
-    @GetMapping("/")
-    public List<LoanPayment> loadAll() {                
-    	List<LoanPayment> loanPaymentList = null;
-        
-    	try {
-            // load the LoanPayment
-            loanPaymentList = service.getAllLoanPayment();
-            
-            if ( loanPaymentList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all LoanPayments" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all LoanPayments ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return loanPaymentList;
-                            
+  /**
+   * Handles deleting a LoanPayment entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteLoanPaymentCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      LoanPaymentService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted LoanPayment with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save LoanAccount on LoanPayment
-     * @param		command AssignLoanAccountToLoanPaymentCommand
-     */     
-	@PutMapping("/assignLoanAccount")
-	public void assignLoanAccount( @RequestBody AssignLoanAccountToLoanPaymentCommand command ) {
-		try {
-			service.assignLoanAccount( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign LoanAccount", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign LoanAccount on LoanPayment
-     * @param		 command UnAssignLoanAccountFromLoanPaymentCommand
-     */     
-	@PutMapping("/unAssignLoanAccount")
-	public void unAssignLoanAccount( @RequestBody(required=true)  UnAssignLoanAccountFromLoanPaymentCommand command ) {
-		try {
-			service.unAssignLoanAccount( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign LoanAccount", exc );
-		}
-	}
-	
-    /**
-     * save Transaction on LoanPayment
-     * @param		command AssignTransactionToLoanPaymentCommand
-     */     
-	@PutMapping("/assignTransaction")
-	public void assignTransaction( @RequestBody AssignTransactionToLoanPaymentCommand command ) {
-		try {
-			service.assignTransaction( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Transaction", exc );
-        }
-	}
+  /**
+   * Handles loading a LoanPayment using a UUID
+   *
+   * @param UUID uuid
+   * @return LoanPayment
+   */
+  @GetMapping("/get")
+  public LoanPayment get(@RequestParam(required = true) IdentifierRequest identifier) {
+    LoanPayment entity = null;
 
-    /**
-     * unassign Transaction on LoanPayment
-     * @param		 command UnAssignTransactionFromLoanPaymentCommand
-     */     
-	@PutMapping("/unAssignTransaction")
-	public void unAssignTransaction( @RequestBody(required=true)  UnAssignTransactionFromLoanPaymentCommand command ) {
-		try {
-			service.unAssignTransaction( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Transaction", exc );
-		}
-	}
-	
+    try {
+      entity = service.getLoanPayment(new LoanPaymentFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load LoanPayment using Id " + identifier.getId());
+      return null;
+    }
 
+    return entity;
+  }
 
+  /**
+   * Handles loading all LoanPayment business objects
+   *
+   * @return Set<LoanPayment>
+   */
+  @GetMapping("/")
+  public List<LoanPayment> loadAll() {
+    List<LoanPayment> loanPaymentList = null;
 
+    try {
+      // load the LoanPayment
+      loanPaymentList = service.getAllLoanPayment();
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected LoanPayment loanPayment = null;
-	protected LoanPaymentService service = null;
-	private static final Logger LOGGER = Logger.getLogger(LoanPaymentRestController.class.getName());
-    
+      if (loanPaymentList != null) LOGGER.log(Level.INFO, "successfully loaded all LoanPayments");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all LoanPayments ", exc);
+      return null;
+    }
+
+    return loanPaymentList;
+  }
+
+  /**
+   * save LoanAccount on LoanPayment
+   *
+   * @param command AssignLoanAccountToLoanPaymentCommand
+   */
+  @PutMapping("/assignLoanAccount")
+  public void assignLoanAccount(@RequestBody AssignLoanAccountToLoanPaymentCommand command) {
+    try {
+      service.assignLoanAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign LoanAccount", exc);
+    }
+  }
+
+  /**
+   * unassign LoanAccount on LoanPayment
+   *
+   * @param command UnAssignLoanAccountFromLoanPaymentCommand
+   */
+  @PutMapping("/unAssignLoanAccount")
+  public void unAssignLoanAccount(
+      @RequestBody(required = true) UnAssignLoanAccountFromLoanPaymentCommand command) {
+    try {
+      service.unAssignLoanAccount(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign LoanAccount", exc);
+    }
+  }
+
+  /**
+   * save Transaction on LoanPayment
+   *
+   * @param command AssignTransactionToLoanPaymentCommand
+   */
+  @PutMapping("/assignTransaction")
+  public void assignTransaction(@RequestBody AssignTransactionToLoanPaymentCommand command) {
+    try {
+      service.assignTransaction(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Transaction", exc);
+    }
+  }
+
+  /**
+   * unassign Transaction on LoanPayment
+   *
+   * @param command UnAssignTransactionFromLoanPaymentCommand
+   */
+  @PutMapping("/unAssignTransaction")
+  public void unAssignTransaction(
+      @RequestBody(required = true) UnAssignTransactionFromLoanPaymentCommand command) {
+    try {
+      service.unAssignTransaction(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Transaction", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected LoanPayment loanPayment = null;
+  protected LoanPaymentService service = null;
+  private static final Logger LOGGER = Logger.getLogger(LoanPaymentRestController.class.getName());
 }

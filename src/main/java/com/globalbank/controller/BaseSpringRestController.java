@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,15 +23,9 @@
  */
 package com.globalbank.controller;
 
-/** 
+/**
  * Base class of all application Spring Controller classes.
  *
  * @author your_name_here
  */
-public class BaseSpringRestController
-{
-
-}
-
-
-
+public class BaseSpringRestController {}

@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -28,77 +28,73 @@ import java.util.logging.*;
 /**
  * Base class for application Test classes.
  *
- * @author    your_name_here
+ * @author your_name_here
  */
-public class BaseTest
-{
-	/**
-	 * hidden
-	 */
-	protected BaseTest() {
-	}
-	
-	public static void runTheTest( Handler logHandler ) 
-    {
-         try {
-		    new BankTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new BranchTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new ATMTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new CustomerTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new KycProfileTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new IdentityDocumentTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new RiskAssessmentTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new ScreeningResultTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new BankingProductTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new AccountTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new AccountStatementTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new TransactionTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new ExternalAccountTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new FundsTransferTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new StandingInstructionTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new PaymentCardTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new LoanAccountTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new RepaymentScheduleTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new LoanPaymentTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new CollateralTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new FeeChargeTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new ExchangeRateTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new FXTradeTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new DisputeTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new ConsentTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-		    new ThirdPartyProviderTest().setHandler(logHandler).startTest();
-			Thread.sleep(TIME_TO_WAIT);
-        } catch( Throwable exc ) {
-        	exc.printStackTrace();
-        }
+public class BaseTest {
+  /** hidden */
+  protected BaseTest() {}
+
+  public static void runTheTest(Handler logHandler) {
+    try {
+      new BankTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new BranchTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new ATMTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new CustomerTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new KycProfileTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new IdentityDocumentTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new RiskAssessmentTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new ScreeningResultTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new BankingProductTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new AccountTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new AccountStatementTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new TransactionTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new ExternalAccountTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new FundsTransferTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new StandingInstructionTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new PaymentCardTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new LoanAccountTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new RepaymentScheduleTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new LoanPaymentTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new CollateralTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new FeeChargeTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new ExchangeRateTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new FXTradeTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new DisputeTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new ConsentTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+      new ThirdPartyProviderTest().setHandler(logHandler).startTest();
+      Thread.sleep(TIME_TO_WAIT);
+    } catch (Throwable exc) {
+      exc.printStackTrace();
     }
-	//-----------------------------------------------------
-	// attributes
-	//-----------------------------------------------------
-	private static final Integer TIME_TO_WAIT = 5000; //milliseconds
+  }
+
+  // -----------------------------------------------------
+  // attributes
+  // -----------------------------------------------------
+  private static final Integer TIME_TO_WAIT = 5000; // milliseconds
 }

@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * RiskAssessmentRestController as REST API
@@ -84,152 +81,154 @@ import com.globalbank.exception.*;
 @RequestMapping("/RiskAssessment")
 public class RiskAssessmentRestController extends BaseSpringRestController {
 
-	public RiskAssessmentRestController( RiskAssessmentService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a RiskAssessment.  if not key provided, calls create, otherwise calls save
-     * @param		RiskAssessment	riskAssessment
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateRiskAssessmentCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createRiskAssessment( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public RiskAssessmentRestController(RiskAssessmentService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a RiskAssessment. if not key provided, calls create, otherwise calls save
+   *
+   * @param RiskAssessment riskAssessment
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateRiskAssessmentCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createRiskAssessment(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a RiskAssessment.  if no key provided, calls create, otherwise calls save
-     * @param		RiskAssessment riskAssessment
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateRiskAssessmentCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateRiskAssessmentCommand
-			// -----------------------------------------------
-			completableFuture = service.updateRiskAssessment(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "RiskAssessmentController:update() - successfully update RiskAssessment - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a RiskAssessment entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteRiskAssessmentCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	RiskAssessmentService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted RiskAssessment with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a RiskAssessment using a UUID
-     * @param		UUID uuid 
-     * @return		RiskAssessment
-     */    
-    @GetMapping("/get")
-    public RiskAssessment get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	RiskAssessment entity = null;
-
-    	try {  
-    		entity = service.getRiskAssessment( new RiskAssessmentFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load RiskAssessment using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a RiskAssessment. if no key provided, calls create, otherwise calls save
+   *
+   * @param RiskAssessment riskAssessment
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateRiskAssessmentCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateRiskAssessmentCommand
+      // -----------------------------------------------
+      completableFuture = service.updateRiskAssessment(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "RiskAssessmentController:update() - successfully update RiskAssessment - "
+              + exc.getMessage());
     }
 
-    /**
-     * Handles loading all RiskAssessment business objects
-     * @return		Set<RiskAssessment>
-     */
-    @GetMapping("/")
-    public List<RiskAssessment> loadAll() {                
-    	List<RiskAssessment> riskAssessmentList = null;
-        
-    	try {
-            // load the RiskAssessment
-            riskAssessmentList = service.getAllRiskAssessment();
-            
-            if ( riskAssessmentList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all RiskAssessments" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all RiskAssessments ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return riskAssessmentList;
-                            
+  /**
+   * Handles deleting a RiskAssessment entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteRiskAssessmentCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      RiskAssessmentService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted RiskAssessment with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save KycProfile on RiskAssessment
-     * @param		command AssignKycProfileToRiskAssessmentCommand
-     */     
-	@PutMapping("/assignKycProfile")
-	public void assignKycProfile( @RequestBody AssignKycProfileToRiskAssessmentCommand command ) {
-		try {
-			service.assignKycProfile( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign KycProfile", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign KycProfile on RiskAssessment
-     * @param		 command UnAssignKycProfileFromRiskAssessmentCommand
-     */     
-	@PutMapping("/unAssignKycProfile")
-	public void unAssignKycProfile( @RequestBody(required=true)  UnAssignKycProfileFromRiskAssessmentCommand command ) {
-		try {
-			service.unAssignKycProfile( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign KycProfile", exc );
-		}
-	}
-	
+  /**
+   * Handles loading a RiskAssessment using a UUID
+   *
+   * @param UUID uuid
+   * @return RiskAssessment
+   */
+  @GetMapping("/get")
+  public RiskAssessment get(@RequestParam(required = true) IdentifierRequest identifier) {
+    RiskAssessment entity = null;
 
+    try {
+      entity = service.getRiskAssessment(new RiskAssessmentFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load RiskAssessment using Id " + identifier.getId());
+      return null;
+    }
 
+    return entity;
+  }
 
+  /**
+   * Handles loading all RiskAssessment business objects
+   *
+   * @return Set<RiskAssessment>
+   */
+  @GetMapping("/")
+  public List<RiskAssessment> loadAll() {
+    List<RiskAssessment> riskAssessmentList = null;
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected RiskAssessment riskAssessment = null;
-	protected RiskAssessmentService service = null;
-	private static final Logger LOGGER = Logger.getLogger(RiskAssessmentRestController.class.getName());
-    
+    try {
+      // load the RiskAssessment
+      riskAssessmentList = service.getAllRiskAssessment();
+
+      if (riskAssessmentList != null)
+        LOGGER.log(Level.INFO, "successfully loaded all RiskAssessments");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all RiskAssessments ", exc);
+      return null;
+    }
+
+    return riskAssessmentList;
+  }
+
+  /**
+   * save KycProfile on RiskAssessment
+   *
+   * @param command AssignKycProfileToRiskAssessmentCommand
+   */
+  @PutMapping("/assignKycProfile")
+  public void assignKycProfile(@RequestBody AssignKycProfileToRiskAssessmentCommand command) {
+    try {
+      service.assignKycProfile(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign KycProfile", exc);
+    }
+  }
+
+  /**
+   * unassign KycProfile on RiskAssessment
+   *
+   * @param command UnAssignKycProfileFromRiskAssessmentCommand
+   */
+  @PutMapping("/unAssignKycProfile")
+  public void unAssignKycProfile(
+      @RequestBody(required = true) UnAssignKycProfileFromRiskAssessmentCommand command) {
+    try {
+      service.unAssignKycProfile(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign KycProfile", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected RiskAssessment riskAssessment = null;
+  protected RiskAssessmentService service = null;
+  private static final Logger LOGGER =
+      Logger.getLogger(RiskAssessmentRestController.class.getName());
 }

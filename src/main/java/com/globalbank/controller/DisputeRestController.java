@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * DisputeRestController as REST API
@@ -84,236 +81,238 @@ import com.globalbank.exception.*;
 @RequestMapping("/Dispute")
 public class DisputeRestController extends BaseSpringRestController {
 
-	public DisputeRestController( DisputeService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a Dispute.  if not key provided, calls create, otherwise calls save
-     * @param		Dispute	dispute
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateDisputeCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createDispute( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public DisputeRestController(DisputeService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a Dispute. if not key provided, calls create, otherwise calls save
+   *
+   * @param Dispute dispute
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateDisputeCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createDispute(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a Dispute.  if no key provided, calls create, otherwise calls save
-     * @param		Dispute dispute
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateDisputeCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateDisputeCommand
-			// -----------------------------------------------
-			completableFuture = service.updateDispute(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "DisputeController:update() - successfully update Dispute - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a Dispute entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteDisputeCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	DisputeService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted Dispute with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a Dispute using a UUID
-     * @param		UUID uuid 
-     * @return		Dispute
-     */    
-    @GetMapping("/get")
-    public Dispute get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	Dispute entity = null;
-
-    	try {  
-    		entity = service.getDispute( new DisputeFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load Dispute using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a Dispute. if no key provided, calls create, otherwise calls save
+   *
+   * @param Dispute dispute
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateDisputeCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateDisputeCommand
+      // -----------------------------------------------
+      completableFuture = service.updateDispute(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "DisputeController:update() - successfully update Dispute - " + exc.getMessage());
     }
 
-    /**
-     * Handles loading all Dispute business objects
-     * @return		Set<Dispute>
-     */
-    @GetMapping("/")
-    public List<Dispute> loadAll() {                
-    	List<Dispute> disputeList = null;
-        
-    	try {
-            // load the Dispute
-            disputeList = service.getAllDispute();
-            
-            if ( disputeList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all Disputes" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all Disputes ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return disputeList;
-                            
+  /**
+   * Handles deleting a Dispute entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteDisputeCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      DisputeService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted Dispute with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Transaction on Dispute
-     * @param		command AssignTransactionToDisputeCommand
-     */     
-	@PutMapping("/assignTransaction")
-	public void assignTransaction( @RequestBody AssignTransactionToDisputeCommand command ) {
-		try {
-			service.assignTransaction( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Transaction", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Transaction on Dispute
-     * @param		 command UnAssignTransactionFromDisputeCommand
-     */     
-	@PutMapping("/unAssignTransaction")
-	public void unAssignTransaction( @RequestBody(required=true)  UnAssignTransactionFromDisputeCommand command ) {
-		try {
-			service.unAssignTransaction( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Transaction", exc );
-		}
-	}
-	
-    /**
-     * save Customer on Dispute
-     * @param		command AssignCustomerToDisputeCommand
-     */     
-	@PutMapping("/assignCustomer")
-	public void assignCustomer( @RequestBody AssignCustomerToDisputeCommand command ) {
-		try {
-			service.assignCustomer( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Customer", exc );
-        }
-	}
+  /**
+   * Handles loading a Dispute using a UUID
+   *
+   * @param UUID uuid
+   * @return Dispute
+   */
+  @GetMapping("/get")
+  public Dispute get(@RequestParam(required = true) IdentifierRequest identifier) {
+    Dispute entity = null;
 
-    /**
-     * unassign Customer on Dispute
-     * @param		 command UnAssignCustomerFromDisputeCommand
-     */     
-	@PutMapping("/unAssignCustomer")
-	public void unAssignCustomer( @RequestBody(required=true)  UnAssignCustomerFromDisputeCommand command ) {
-		try {
-			service.unAssignCustomer( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Customer", exc );
-		}
-	}
-	
-    /**
-     * save Account on Dispute
-     * @param		command AssignAccountToDisputeCommand
-     */     
-	@PutMapping("/assignAccount")
-	public void assignAccount( @RequestBody AssignAccountToDisputeCommand command ) {
-		try {
-			service.assignAccount( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
-        }
-	}
+    try {
+      entity = service.getDispute(new DisputeFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load Dispute using Id " + identifier.getId());
+      return null;
+    }
 
-    /**
-     * unassign Account on Dispute
-     * @param		 command UnAssignAccountFromDisputeCommand
-     */     
-	@PutMapping("/unAssignAccount")
-	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromDisputeCommand command ) {
-		try {
-			service.unAssignAccount( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
-		}
-	}
-	
-    /**
-     * save PaymentCard on Dispute
-     * @param		command AssignPaymentCardToDisputeCommand
-     */     
-	@PutMapping("/assignPaymentCard")
-	public void assignPaymentCard( @RequestBody AssignPaymentCardToDisputeCommand command ) {
-		try {
-			service.assignPaymentCard( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign PaymentCard", exc );
-        }
-	}
+    return entity;
+  }
 
-    /**
-     * unassign PaymentCard on Dispute
-     * @param		 command UnAssignPaymentCardFromDisputeCommand
-     */     
-	@PutMapping("/unAssignPaymentCard")
-	public void unAssignPaymentCard( @RequestBody(required=true)  UnAssignPaymentCardFromDisputeCommand command ) {
-		try {
-			service.unAssignPaymentCard( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign PaymentCard", exc );
-		}
-	}
-	
+  /**
+   * Handles loading all Dispute business objects
+   *
+   * @return Set<Dispute>
+   */
+  @GetMapping("/")
+  public List<Dispute> loadAll() {
+    List<Dispute> disputeList = null;
 
+    try {
+      // load the Dispute
+      disputeList = service.getAllDispute();
 
+      if (disputeList != null) LOGGER.log(Level.INFO, "successfully loaded all Disputes");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all Disputes ", exc);
+      return null;
+    }
 
+    return disputeList;
+  }
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected Dispute dispute = null;
-	protected DisputeService service = null;
-	private static final Logger LOGGER = Logger.getLogger(DisputeRestController.class.getName());
-    
+  /**
+   * save Transaction on Dispute
+   *
+   * @param command AssignTransactionToDisputeCommand
+   */
+  @PutMapping("/assignTransaction")
+  public void assignTransaction(@RequestBody AssignTransactionToDisputeCommand command) {
+    try {
+      service.assignTransaction(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Transaction", exc);
+    }
+  }
+
+  /**
+   * unassign Transaction on Dispute
+   *
+   * @param command UnAssignTransactionFromDisputeCommand
+   */
+  @PutMapping("/unAssignTransaction")
+  public void unAssignTransaction(
+      @RequestBody(required = true) UnAssignTransactionFromDisputeCommand command) {
+    try {
+      service.unAssignTransaction(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Transaction", exc);
+    }
+  }
+
+  /**
+   * save Customer on Dispute
+   *
+   * @param command AssignCustomerToDisputeCommand
+   */
+  @PutMapping("/assignCustomer")
+  public void assignCustomer(@RequestBody AssignCustomerToDisputeCommand command) {
+    try {
+      service.assignCustomer(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Customer", exc);
+    }
+  }
+
+  /**
+   * unassign Customer on Dispute
+   *
+   * @param command UnAssignCustomerFromDisputeCommand
+   */
+  @PutMapping("/unAssignCustomer")
+  public void unAssignCustomer(
+      @RequestBody(required = true) UnAssignCustomerFromDisputeCommand command) {
+    try {
+      service.unAssignCustomer(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Customer", exc);
+    }
+  }
+
+  /**
+   * save Account on Dispute
+   *
+   * @param command AssignAccountToDisputeCommand
+   */
+  @PutMapping("/assignAccount")
+  public void assignAccount(@RequestBody AssignAccountToDisputeCommand command) {
+    try {
+      service.assignAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Account", exc);
+    }
+  }
+
+  /**
+   * unassign Account on Dispute
+   *
+   * @param command UnAssignAccountFromDisputeCommand
+   */
+  @PutMapping("/unAssignAccount")
+  public void unAssignAccount(
+      @RequestBody(required = true) UnAssignAccountFromDisputeCommand command) {
+    try {
+      service.unAssignAccount(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Account", exc);
+    }
+  }
+
+  /**
+   * save PaymentCard on Dispute
+   *
+   * @param command AssignPaymentCardToDisputeCommand
+   */
+  @PutMapping("/assignPaymentCard")
+  public void assignPaymentCard(@RequestBody AssignPaymentCardToDisputeCommand command) {
+    try {
+      service.assignPaymentCard(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign PaymentCard", exc);
+    }
+  }
+
+  /**
+   * unassign PaymentCard on Dispute
+   *
+   * @param command UnAssignPaymentCardFromDisputeCommand
+   */
+  @PutMapping("/unAssignPaymentCard")
+  public void unAssignPaymentCard(
+      @RequestBody(required = true) UnAssignPaymentCardFromDisputeCommand command) {
+    try {
+      service.unAssignPaymentCard(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign PaymentCard", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected Dispute dispute = null;
+  protected DisputeService service = null;
+  private static final Logger LOGGER = Logger.getLogger(DisputeRestController.class.getName());
 }

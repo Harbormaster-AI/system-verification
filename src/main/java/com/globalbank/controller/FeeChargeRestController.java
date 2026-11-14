@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * FeeChargeRestController as REST API
@@ -84,180 +81,180 @@ import com.globalbank.exception.*;
 @RequestMapping("/FeeCharge")
 public class FeeChargeRestController extends BaseSpringRestController {
 
-	public FeeChargeRestController( FeeChargeService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a FeeCharge.  if not key provided, calls create, otherwise calls save
-     * @param		FeeCharge	feeCharge
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateFeeChargeCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createFeeCharge( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public FeeChargeRestController(FeeChargeService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a FeeCharge. if not key provided, calls create, otherwise calls save
+   *
+   * @param FeeCharge feeCharge
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateFeeChargeCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createFeeCharge(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a FeeCharge.  if no key provided, calls create, otherwise calls save
-     * @param		FeeCharge feeCharge
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateFeeChargeCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateFeeChargeCommand
-			// -----------------------------------------------
-			completableFuture = service.updateFeeCharge(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "FeeChargeController:update() - successfully update FeeCharge - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a FeeCharge entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteFeeChargeCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	FeeChargeService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted FeeCharge with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a FeeCharge using a UUID
-     * @param		UUID uuid 
-     * @return		FeeCharge
-     */    
-    @GetMapping("/get")
-    public FeeCharge get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	FeeCharge entity = null;
-
-    	try {  
-    		entity = service.getFeeCharge( new FeeChargeFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load FeeCharge using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a FeeCharge. if no key provided, calls create, otherwise calls save
+   *
+   * @param FeeCharge feeCharge
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateFeeChargeCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateFeeChargeCommand
+      // -----------------------------------------------
+      completableFuture = service.updateFeeCharge(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "FeeChargeController:update() - successfully update FeeCharge - " + exc.getMessage());
     }
 
-    /**
-     * Handles loading all FeeCharge business objects
-     * @return		Set<FeeCharge>
-     */
-    @GetMapping("/")
-    public List<FeeCharge> loadAll() {                
-    	List<FeeCharge> feeChargeList = null;
-        
-    	try {
-            // load the FeeCharge
-            feeChargeList = service.getAllFeeCharge();
-            
-            if ( feeChargeList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all FeeCharges" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all FeeCharges ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return feeChargeList;
-                            
+  /**
+   * Handles deleting a FeeCharge entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteFeeChargeCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      FeeChargeService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted FeeCharge with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Account on FeeCharge
-     * @param		command AssignAccountToFeeChargeCommand
-     */     
-	@PutMapping("/assignAccount")
-	public void assignAccount( @RequestBody AssignAccountToFeeChargeCommand command ) {
-		try {
-			service.assignAccount( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Account", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Account on FeeCharge
-     * @param		 command UnAssignAccountFromFeeChargeCommand
-     */     
-	@PutMapping("/unAssignAccount")
-	public void unAssignAccount( @RequestBody(required=true)  UnAssignAccountFromFeeChargeCommand command ) {
-		try {
-			service.unAssignAccount( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Account", exc );
-		}
-	}
-	
-    /**
-     * save LoanAccount on FeeCharge
-     * @param		command AssignLoanAccountToFeeChargeCommand
-     */     
-	@PutMapping("/assignLoanAccount")
-	public void assignLoanAccount( @RequestBody AssignLoanAccountToFeeChargeCommand command ) {
-		try {
-			service.assignLoanAccount( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign LoanAccount", exc );
-        }
-	}
+  /**
+   * Handles loading a FeeCharge using a UUID
+   *
+   * @param UUID uuid
+   * @return FeeCharge
+   */
+  @GetMapping("/get")
+  public FeeCharge get(@RequestParam(required = true) IdentifierRequest identifier) {
+    FeeCharge entity = null;
 
-    /**
-     * unassign LoanAccount on FeeCharge
-     * @param		 command UnAssignLoanAccountFromFeeChargeCommand
-     */     
-	@PutMapping("/unAssignLoanAccount")
-	public void unAssignLoanAccount( @RequestBody(required=true)  UnAssignLoanAccountFromFeeChargeCommand command ) {
-		try {
-			service.unAssignLoanAccount( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign LoanAccount", exc );
-		}
-	}
-	
+    try {
+      entity = service.getFeeCharge(new FeeChargeFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load FeeCharge using Id " + identifier.getId());
+      return null;
+    }
 
+    return entity;
+  }
 
+  /**
+   * Handles loading all FeeCharge business objects
+   *
+   * @return Set<FeeCharge>
+   */
+  @GetMapping("/")
+  public List<FeeCharge> loadAll() {
+    List<FeeCharge> feeChargeList = null;
 
+    try {
+      // load the FeeCharge
+      feeChargeList = service.getAllFeeCharge();
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected FeeCharge feeCharge = null;
-	protected FeeChargeService service = null;
-	private static final Logger LOGGER = Logger.getLogger(FeeChargeRestController.class.getName());
-    
+      if (feeChargeList != null) LOGGER.log(Level.INFO, "successfully loaded all FeeCharges");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all FeeCharges ", exc);
+      return null;
+    }
+
+    return feeChargeList;
+  }
+
+  /**
+   * save Account on FeeCharge
+   *
+   * @param command AssignAccountToFeeChargeCommand
+   */
+  @PutMapping("/assignAccount")
+  public void assignAccount(@RequestBody AssignAccountToFeeChargeCommand command) {
+    try {
+      service.assignAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Account", exc);
+    }
+  }
+
+  /**
+   * unassign Account on FeeCharge
+   *
+   * @param command UnAssignAccountFromFeeChargeCommand
+   */
+  @PutMapping("/unAssignAccount")
+  public void unAssignAccount(
+      @RequestBody(required = true) UnAssignAccountFromFeeChargeCommand command) {
+    try {
+      service.unAssignAccount(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Account", exc);
+    }
+  }
+
+  /**
+   * save LoanAccount on FeeCharge
+   *
+   * @param command AssignLoanAccountToFeeChargeCommand
+   */
+  @PutMapping("/assignLoanAccount")
+  public void assignLoanAccount(@RequestBody AssignLoanAccountToFeeChargeCommand command) {
+    try {
+      service.assignLoanAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign LoanAccount", exc);
+    }
+  }
+
+  /**
+   * unassign LoanAccount on FeeCharge
+   *
+   * @param command UnAssignLoanAccountFromFeeChargeCommand
+   */
+  @PutMapping("/unAssignLoanAccount")
+  public void unAssignLoanAccount(
+      @RequestBody(required = true) UnAssignLoanAccountFromFeeChargeCommand command) {
+    try {
+      service.unAssignLoanAccount(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign LoanAccount", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected FeeCharge feeCharge = null;
+  protected FeeChargeService service = null;
+  private static final Logger LOGGER = Logger.getLogger(FeeChargeRestController.class.getName());
 }

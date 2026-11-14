@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -24,43 +24,40 @@
 package com.globalbank.subscriber;
 
 import org.axonframework.queryhandling.QueryGateway;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
  * Base class for subscribers
+ *
  * <p>
+ *
  * @author your_name_here
  */
 @Component
 public class BaseSubscriber implements ApplicationContextAware {
- 
-	public BaseSubscriber() {	
-	}
-	
-	@Override
-    public void setApplicationContext(ApplicationContext ctx) throws BeansException {
-        applicationContext = ctx;
-    }
 
-//************************************************************************
-// Protected / Private Methods
-//************************************************************************
-    protected QueryGateway getQueryGateway() { return queryGateway; }
+  public BaseSubscriber() {}
 
-    // -------------------------------------------------
-    // attributes
-    // -------------------------------------------------
+  @Override
+  public void setApplicationContext(ApplicationContext ctx) throws BeansException {
+    applicationContext = ctx;
+  }
 
-    protected static ApplicationContext applicationContext;
-    @Autowired
-    protected QueryGateway queryGateway;
+  // ************************************************************************
+  // Protected / Private Methods
+  // ************************************************************************
+  protected QueryGateway getQueryGateway() {
+    return queryGateway;
+  }
 
+  // -------------------------------------------------
+  // attributes
+  // -------------------------------------------------
+
+  protected static ApplicationContext applicationContext;
+  @Autowired protected QueryGateway queryGateway;
 }
-
-
-

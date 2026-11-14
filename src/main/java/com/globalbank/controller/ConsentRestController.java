@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * ConsentRestController as REST API
@@ -84,237 +81,239 @@ import com.globalbank.exception.*;
 @RequestMapping("/Consent")
 public class ConsentRestController extends BaseSpringRestController {
 
-	public ConsentRestController( ConsentService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a Consent.  if not key provided, calls create, otherwise calls save
-     * @param		Consent	consent
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateConsentCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createConsent( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public ConsentRestController(ConsentService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a Consent. if not key provided, calls create, otherwise calls save
+   *
+   * @param Consent consent
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateConsentCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createConsent(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a Consent.  if no key provided, calls create, otherwise calls save
-     * @param		Consent consent
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateConsentCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateConsentCommand
-			// -----------------------------------------------
-			completableFuture = service.updateConsent(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "ConsentController:update() - successfully update Consent - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a Consent entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteConsentCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	ConsentService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted Consent with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a Consent using a UUID
-     * @param		UUID uuid 
-     * @return		Consent
-     */    
-    @GetMapping("/get")
-    public Consent get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	Consent entity = null;
-
-    	try {  
-    		entity = service.getConsent( new ConsentFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load Consent using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a Consent. if no key provided, calls create, otherwise calls save
+   *
+   * @param Consent consent
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateConsentCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateConsentCommand
+      // -----------------------------------------------
+      completableFuture = service.updateConsent(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "ConsentController:update() - successfully update Consent - " + exc.getMessage());
     }
 
-    /**
-     * Handles loading all Consent business objects
-     * @return		Set<Consent>
-     */
-    @GetMapping("/")
-    public List<Consent> loadAll() {                
-    	List<Consent> consentList = null;
-        
-    	try {
-            // load the Consent
-            consentList = service.getAllConsent();
-            
-            if ( consentList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all Consents" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all Consents ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return consentList;
-                            
+  /**
+   * Handles deleting a Consent entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteConsentCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      ConsentService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted Consent with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Customer on Consent
-     * @param		command AssignCustomerToConsentCommand
-     */     
-	@PutMapping("/assignCustomer")
-	public void assignCustomer( @RequestBody AssignCustomerToConsentCommand command ) {
-		try {
-			service.assignCustomer( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Customer", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Customer on Consent
-     * @param		 command UnAssignCustomerFromConsentCommand
-     */     
-	@PutMapping("/unAssignCustomer")
-	public void unAssignCustomer( @RequestBody(required=true)  UnAssignCustomerFromConsentCommand command ) {
-		try {
-			service.unAssignCustomer( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Customer", exc );
-		}
-	}
-	
-    /**
-     * save Bank on Consent
-     * @param		command AssignBankToConsentCommand
-     */     
-	@PutMapping("/assignBank")
-	public void assignBank( @RequestBody AssignBankToConsentCommand command ) {
-		try {
-			service.assignBank( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Bank", exc );
-        }
-	}
+  /**
+   * Handles loading a Consent using a UUID
+   *
+   * @param UUID uuid
+   * @return Consent
+   */
+  @GetMapping("/get")
+  public Consent get(@RequestParam(required = true) IdentifierRequest identifier) {
+    Consent entity = null;
 
-    /**
-     * unassign Bank on Consent
-     * @param		 command UnAssignBankFromConsentCommand
-     */     
-	@PutMapping("/unAssignBank")
-	public void unAssignBank( @RequestBody(required=true)  UnAssignBankFromConsentCommand command ) {
-		try {
-			service.unAssignBank( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Bank", exc );
-		}
-	}
-	
-    /**
-     * save ThirdPartyProvider on Consent
-     * @param		command AssignThirdPartyProviderToConsentCommand
-     */     
-	@PutMapping("/assignThirdPartyProvider")
-	public void assignThirdPartyProvider( @RequestBody AssignThirdPartyProviderToConsentCommand command ) {
-		try {
-			service.assignThirdPartyProvider( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign ThirdPartyProvider", exc );
-        }
-	}
+    try {
+      entity = service.getConsent(new ConsentFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load Consent using Id " + identifier.getId());
+      return null;
+    }
 
-    /**
-     * unassign ThirdPartyProvider on Consent
-     * @param		 command UnAssignThirdPartyProviderFromConsentCommand
-     */     
-	@PutMapping("/unAssignThirdPartyProvider")
-	public void unAssignThirdPartyProvider( @RequestBody(required=true)  UnAssignThirdPartyProviderFromConsentCommand command ) {
-		try {
-			service.unAssignThirdPartyProvider( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign ThirdPartyProvider", exc );
-		}
-	}
-	
+    return entity;
+  }
 
-    /**
-     * save AuthorizedAccounts on Consent
-     * @param		command AssignAuthorizedAccountsToConsentCommand
-     */     
-	@PutMapping("/addToAuthorizedAccounts")
-	public void addToAuthorizedAccounts( @RequestBody(required=true) AssignAuthorizedAccountsToConsentCommand command ) {
-		try {
-			service.addToAuthorizedAccounts( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set AuthorizedAccounts", exc );
-		}
-	}
+  /**
+   * Handles loading all Consent business objects
+   *
+   * @return Set<Consent>
+   */
+  @GetMapping("/")
+  public List<Consent> loadAll() {
+    List<Consent> consentList = null;
 
-    /**
-     * remove AuthorizedAccounts on Consent
-     * @param		command RemoveAuthorizedAccountsFromConsentCommand
-     */     	
-	@PutMapping("/removeFromAuthorizedAccounts")
-	public void removeFromAuthorizedAccounts( 	@RequestBody(required=true) RemoveAuthorizedAccountsFromConsentCommand command )
-	{		
-		try {
-			service.removeFromAuthorizedAccounts( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set AuthorizedAccounts", exc );
-		}
-	}
+    try {
+      // load the Consent
+      consentList = service.getAllConsent();
 
+      if (consentList != null) LOGGER.log(Level.INFO, "successfully loaded all Consents");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all Consents ", exc);
+      return null;
+    }
 
+    return consentList;
+  }
 
+  /**
+   * save Customer on Consent
+   *
+   * @param command AssignCustomerToConsentCommand
+   */
+  @PutMapping("/assignCustomer")
+  public void assignCustomer(@RequestBody AssignCustomerToConsentCommand command) {
+    try {
+      service.assignCustomer(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Customer", exc);
+    }
+  }
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected Consent consent = null;
-	protected ConsentService service = null;
-	private static final Logger LOGGER = Logger.getLogger(ConsentRestController.class.getName());
-    
+  /**
+   * unassign Customer on Consent
+   *
+   * @param command UnAssignCustomerFromConsentCommand
+   */
+  @PutMapping("/unAssignCustomer")
+  public void unAssignCustomer(
+      @RequestBody(required = true) UnAssignCustomerFromConsentCommand command) {
+    try {
+      service.unAssignCustomer(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Customer", exc);
+    }
+  }
+
+  /**
+   * save Bank on Consent
+   *
+   * @param command AssignBankToConsentCommand
+   */
+  @PutMapping("/assignBank")
+  public void assignBank(@RequestBody AssignBankToConsentCommand command) {
+    try {
+      service.assignBank(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Bank", exc);
+    }
+  }
+
+  /**
+   * unassign Bank on Consent
+   *
+   * @param command UnAssignBankFromConsentCommand
+   */
+  @PutMapping("/unAssignBank")
+  public void unAssignBank(@RequestBody(required = true) UnAssignBankFromConsentCommand command) {
+    try {
+      service.unAssignBank(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Bank", exc);
+    }
+  }
+
+  /**
+   * save ThirdPartyProvider on Consent
+   *
+   * @param command AssignThirdPartyProviderToConsentCommand
+   */
+  @PutMapping("/assignThirdPartyProvider")
+  public void assignThirdPartyProvider(
+      @RequestBody AssignThirdPartyProviderToConsentCommand command) {
+    try {
+      service.assignThirdPartyProvider(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign ThirdPartyProvider", exc);
+    }
+  }
+
+  /**
+   * unassign ThirdPartyProvider on Consent
+   *
+   * @param command UnAssignThirdPartyProviderFromConsentCommand
+   */
+  @PutMapping("/unAssignThirdPartyProvider")
+  public void unAssignThirdPartyProvider(
+      @RequestBody(required = true) UnAssignThirdPartyProviderFromConsentCommand command) {
+    try {
+      service.unAssignThirdPartyProvider(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign ThirdPartyProvider", exc);
+    }
+  }
+
+  /**
+   * save AuthorizedAccounts on Consent
+   *
+   * @param command AssignAuthorizedAccountsToConsentCommand
+   */
+  @PutMapping("/addToAuthorizedAccounts")
+  public void addToAuthorizedAccounts(
+      @RequestBody(required = true) AssignAuthorizedAccountsToConsentCommand command) {
+    try {
+      service.addToAuthorizedAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set AuthorizedAccounts", exc);
+    }
+  }
+
+  /**
+   * remove AuthorizedAccounts on Consent
+   *
+   * @param command RemoveAuthorizedAccountsFromConsentCommand
+   */
+  @PutMapping("/removeFromAuthorizedAccounts")
+  public void removeFromAuthorizedAccounts(
+      @RequestBody(required = true) RemoveAuthorizedAccountsFromConsentCommand command) {
+    try {
+      service.removeFromAuthorizedAccounts(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set AuthorizedAccounts", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected Consent consent = null;
+  protected ConsentService service = null;
+  private static final Logger LOGGER = Logger.getLogger(ConsentRestController.class.getName());
 }

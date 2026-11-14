@@ -12,7 +12,7 @@
  ********************************************************
  *  Confidential
  *
- * 2026 
+ * 2026
  * All Rights Reserved.
  *
  * This file is subject to the terms and conditions defined in
@@ -23,18 +23,15 @@
  */
 package com.globalbank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import com.globalbank.api.*;
+import com.globalbank.entity.*;
+import com.globalbank.exception.*;
+import com.globalbank.service.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.globalbank.api.*;
-import com.globalbank.service.*;
-import com.globalbank.entity.*;
-import com.globalbank.exception.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * LoanAccountRestController as REST API
@@ -84,353 +81,359 @@ import com.globalbank.exception.*;
 @RequestMapping("/LoanAccount")
 public class LoanAccountRestController extends BaseSpringRestController {
 
-	public LoanAccountRestController( LoanAccountService service ) {
-		this.service = service;
-	}
-	
-    /**
-     * Handles create a LoanAccount.  if not key provided, calls create, otherwise calls save
-     * @param		LoanAccount	loanAccount
-     * @return		CompletableFuture<UUID> 
-     */
-	@PostMapping("/create")
-    public CompletableFuture<UUID> create( @RequestBody(required=true) CreateLoanAccountCommand command ) {
-		CompletableFuture<UUID> completableFuture = null;
-		try {       
-        	
-			completableFuture = service.createLoanAccount( command );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage(), exc );        	
-        }
-		
-		return completableFuture;
+  public LoanAccountRestController(LoanAccountService service) {
+    this.service = service;
+  }
+
+  /**
+   * Handles create a LoanAccount. if not key provided, calls create, otherwise calls save
+   *
+   * @param LoanAccount loanAccount
+   * @return CompletableFuture<UUID>
+   */
+  @PostMapping("/create")
+  public CompletableFuture<UUID> create(
+      @RequestBody(required = true) CreateLoanAccountCommand command) {
+    CompletableFuture<UUID> completableFuture = null;
+    try {
+
+      completableFuture = service.createLoanAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage(), exc);
     }
 
-    /**
-     * Handles updating a LoanAccount.  if no key provided, calls create, otherwise calls save
-     * @param		LoanAccount loanAccount
-     * @return		CompletableFuture<Void>
-     */
-	@PutMapping("/update")
-    public CompletableFuture<Void> update( @RequestBody(required=true) UpdateLoanAccountCommand command ) {
-		CompletableFuture<Void> completableFuture = null;
-		try {                        	        
-			// -----------------------------------------------
-			// delegate the UpdateLoanAccountCommand
-			// -----------------------------------------------
-			completableFuture = service.updateLoanAccount(command);
-	    }
-	    catch( Throwable exc ) {
-	    	LOGGER.log( Level.WARNING, "LoanAccountController:update() - successfully update LoanAccount - " + exc.getMessage());        	
-	    }		
-		
-		return completableFuture;
-	}
- 
-    /**
-     * Handles deleting a LoanAccount entity
-     * @param		command ${class.getDeleteCommandAlias()}
-     * @return		CompletableFuture<Void>
-     */
-    @DeleteMapping("/delete")    
-    public CompletableFuture<Void> delete( @RequestBody(required=true) DeleteLoanAccountCommand command ) {                
-    	CompletableFuture<Void> completableFuture = null;
-    	try {
-        	LoanAccountService delegate = service;
+    return completableFuture;
+  }
 
-        	completableFuture = delegate.delete( command );
-    		LOGGER.log( Level.WARNING, "Successfully deleted LoanAccount with key " + command.getId() );
-        }
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, exc.getMessage() );
-        }
-        
-        return completableFuture;
-	}        
-	
-    /**
-     * Handles loading a LoanAccount using a UUID
-     * @param		UUID uuid 
-     * @return		LoanAccount
-     */    
-    @GetMapping("/get")
-    public LoanAccount get( @RequestParam(required=true) IdentifierRequest identifier ) {
-    	LoanAccount entity = null;
-
-    	try {  
-    		entity = service.getLoanAccount( new LoanAccountFetchOneSummary( identifier.getId() ) );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING, "failed to load LoanAccount using Id " + identifier.getId() );
-            return null;
-        }
-
-        return entity;
+  /**
+   * Handles updating a LoanAccount. if no key provided, calls create, otherwise calls save
+   *
+   * @param LoanAccount loanAccount
+   * @return CompletableFuture<Void>
+   */
+  @PutMapping("/update")
+  public CompletableFuture<Void> update(
+      @RequestBody(required = true) UpdateLoanAccountCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      // -----------------------------------------------
+      // delegate the UpdateLoanAccountCommand
+      // -----------------------------------------------
+      completableFuture = service.updateLoanAccount(command);
+    } catch (Throwable exc) {
+      LOGGER.log(
+          Level.WARNING,
+          "LoanAccountController:update() - successfully update LoanAccount - " + exc.getMessage());
     }
 
-    /**
-     * Handles loading all LoanAccount business objects
-     * @return		Set<LoanAccount>
-     */
-    @GetMapping("/")
-    public List<LoanAccount> loadAll() {                
-    	List<LoanAccount> loanAccountList = null;
-        
-    	try {
-            // load the LoanAccount
-            loanAccountList = service.getAllLoanAccount();
-            
-            if ( loanAccountList != null )
-                LOGGER.log( Level.INFO,  "successfully loaded all LoanAccounts" );
-        }
-        catch( Throwable exc ) {
-            LOGGER.log( Level.WARNING,  "failed to load all LoanAccounts ", exc );
-        	return null;
-        }
+    return completableFuture;
+  }
 
-        return loanAccountList;
-                            
+  /**
+   * Handles deleting a LoanAccount entity
+   *
+   * @param command ${class.getDeleteCommandAlias()}
+   * @return CompletableFuture<Void>
+   */
+  @DeleteMapping("/delete")
+  public CompletableFuture<Void> delete(
+      @RequestBody(required = true) DeleteLoanAccountCommand command) {
+    CompletableFuture<Void> completableFuture = null;
+    try {
+      LoanAccountService delegate = service;
+
+      completableFuture = delegate.delete(command);
+      LOGGER.log(Level.WARNING, "Successfully deleted LoanAccount with key " + command.getId());
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, exc.getMessage());
     }
 
-    /**
-     * save Bank on LoanAccount
-     * @param		command AssignBankToLoanAccountCommand
-     */     
-	@PutMapping("/assignBank")
-	public void assignBank( @RequestBody AssignBankToLoanAccountCommand command ) {
-		try {
-			service.assignBank( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Bank", exc );
-        }
-	}
+    return completableFuture;
+  }
 
-    /**
-     * unassign Bank on LoanAccount
-     * @param		 command UnAssignBankFromLoanAccountCommand
-     */     
-	@PutMapping("/unAssignBank")
-	public void unAssignBank( @RequestBody(required=true)  UnAssignBankFromLoanAccountCommand command ) {
-		try {
-			service.unAssignBank( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Bank", exc );
-		}
-	}
-	
-    /**
-     * save Branch on LoanAccount
-     * @param		command AssignBranchToLoanAccountCommand
-     */     
-	@PutMapping("/assignBranch")
-	public void assignBranch( @RequestBody AssignBranchToLoanAccountCommand command ) {
-		try {
-			service.assignBranch( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Branch", exc );
-        }
-	}
+  /**
+   * Handles loading a LoanAccount using a UUID
+   *
+   * @param UUID uuid
+   * @return LoanAccount
+   */
+  @GetMapping("/get")
+  public LoanAccount get(@RequestParam(required = true) IdentifierRequest identifier) {
+    LoanAccount entity = null;
 
-    /**
-     * unassign Branch on LoanAccount
-     * @param		 command UnAssignBranchFromLoanAccountCommand
-     */     
-	@PutMapping("/unAssignBranch")
-	public void unAssignBranch( @RequestBody(required=true)  UnAssignBranchFromLoanAccountCommand command ) {
-		try {
-			service.unAssignBranch( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Branch", exc );
-		}
-	}
-	
-    /**
-     * save Product on LoanAccount
-     * @param		command AssignProductToLoanAccountCommand
-     */     
-	@PutMapping("/assignProduct")
-	public void assignProduct( @RequestBody AssignProductToLoanAccountCommand command ) {
-		try {
-			service.assignProduct( command );   
-		}
-        catch( Throwable exc ) {
-        	LOGGER.log( Level.WARNING, "Failed to assign Product", exc );
-        }
-	}
+    try {
+      entity = service.getLoanAccount(new LoanAccountFetchOneSummary(identifier.getId()));
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load LoanAccount using Id " + identifier.getId());
+      return null;
+    }
 
-    /**
-     * unassign Product on LoanAccount
-     * @param		 command UnAssignProductFromLoanAccountCommand
-     */     
-	@PutMapping("/unAssignProduct")
-	public void unAssignProduct( @RequestBody(required=true)  UnAssignProductFromLoanAccountCommand command ) {
-		try {
-			service.unAssignProduct( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to unassign Product", exc );
-		}
-	}
-	
+    return entity;
+  }
 
-    /**
-     * save Borrowers on LoanAccount
-     * @param		command AssignBorrowersToLoanAccountCommand
-     */     
-	@PutMapping("/addToBorrowers")
-	public void addToBorrowers( @RequestBody(required=true) AssignBorrowersToLoanAccountCommand command ) {
-		try {
-			service.addToBorrowers( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set Borrowers", exc );
-		}
-	}
+  /**
+   * Handles loading all LoanAccount business objects
+   *
+   * @return Set<LoanAccount>
+   */
+  @GetMapping("/")
+  public List<LoanAccount> loadAll() {
+    List<LoanAccount> loanAccountList = null;
 
-    /**
-     * remove Borrowers on LoanAccount
-     * @param		command RemoveBorrowersFromLoanAccountCommand
-     */     	
-	@PutMapping("/removeFromBorrowers")
-	public void removeFromBorrowers( 	@RequestBody(required=true) RemoveBorrowersFromLoanAccountCommand command )
-	{		
-		try {
-			service.removeFromBorrowers( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set Borrowers", exc );
-		}
-	}
+    try {
+      // load the LoanAccount
+      loanAccountList = service.getAllLoanAccount();
 
-    /**
-     * save RepaymentSchedule on LoanAccount
-     * @param		command AssignRepaymentScheduleToLoanAccountCommand
-     */     
-	@PutMapping("/addToRepaymentSchedule")
-	public void addToRepaymentSchedule( @RequestBody(required=true) AssignRepaymentScheduleToLoanAccountCommand command ) {
-		try {
-			service.addToRepaymentSchedule( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set RepaymentSchedule", exc );
-		}
-	}
+      if (loanAccountList != null) LOGGER.log(Level.INFO, "successfully loaded all LoanAccounts");
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "failed to load all LoanAccounts ", exc);
+      return null;
+    }
 
-    /**
-     * remove RepaymentSchedule on LoanAccount
-     * @param		command RemoveRepaymentScheduleFromLoanAccountCommand
-     */     	
-	@PutMapping("/removeFromRepaymentSchedule")
-	public void removeFromRepaymentSchedule( 	@RequestBody(required=true) RemoveRepaymentScheduleFromLoanAccountCommand command )
-	{		
-		try {
-			service.removeFromRepaymentSchedule( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set RepaymentSchedule", exc );
-		}
-	}
+    return loanAccountList;
+  }
 
-    /**
-     * save Payments on LoanAccount
-     * @param		command AssignPaymentsToLoanAccountCommand
-     */     
-	@PutMapping("/addToPayments")
-	public void addToPayments( @RequestBody(required=true) AssignPaymentsToLoanAccountCommand command ) {
-		try {
-			service.addToPayments( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set Payments", exc );
-		}
-	}
+  /**
+   * save Bank on LoanAccount
+   *
+   * @param command AssignBankToLoanAccountCommand
+   */
+  @PutMapping("/assignBank")
+  public void assignBank(@RequestBody AssignBankToLoanAccountCommand command) {
+    try {
+      service.assignBank(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Bank", exc);
+    }
+  }
 
-    /**
-     * remove Payments on LoanAccount
-     * @param		command RemovePaymentsFromLoanAccountCommand
-     */     	
-	@PutMapping("/removeFromPayments")
-	public void removeFromPayments( 	@RequestBody(required=true) RemovePaymentsFromLoanAccountCommand command )
-	{		
-		try {
-			service.removeFromPayments( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set Payments", exc );
-		}
-	}
+  /**
+   * unassign Bank on LoanAccount
+   *
+   * @param command UnAssignBankFromLoanAccountCommand
+   */
+  @PutMapping("/unAssignBank")
+  public void unAssignBank(
+      @RequestBody(required = true) UnAssignBankFromLoanAccountCommand command) {
+    try {
+      service.unAssignBank(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Bank", exc);
+    }
+  }
 
-    /**
-     * save Collateral on LoanAccount
-     * @param		command AssignCollateralToLoanAccountCommand
-     */     
-	@PutMapping("/addToCollateral")
-	public void addToCollateral( @RequestBody(required=true) AssignCollateralToLoanAccountCommand command ) {
-		try {
-			service.addToCollateral( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set Collateral", exc );
-		}
-	}
+  /**
+   * save Branch on LoanAccount
+   *
+   * @param command AssignBranchToLoanAccountCommand
+   */
+  @PutMapping("/assignBranch")
+  public void assignBranch(@RequestBody AssignBranchToLoanAccountCommand command) {
+    try {
+      service.assignBranch(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Branch", exc);
+    }
+  }
 
-    /**
-     * remove Collateral on LoanAccount
-     * @param		command RemoveCollateralFromLoanAccountCommand
-     */     	
-	@PutMapping("/removeFromCollateral")
-	public void removeFromCollateral( 	@RequestBody(required=true) RemoveCollateralFromLoanAccountCommand command )
-	{		
-		try {
-			service.removeFromCollateral( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set Collateral", exc );
-		}
-	}
+  /**
+   * unassign Branch on LoanAccount
+   *
+   * @param command UnAssignBranchFromLoanAccountCommand
+   */
+  @PutMapping("/unAssignBranch")
+  public void unAssignBranch(
+      @RequestBody(required = true) UnAssignBranchFromLoanAccountCommand command) {
+    try {
+      service.unAssignBranch(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Branch", exc);
+    }
+  }
 
-    /**
-     * save FeeCharges on LoanAccount
-     * @param		command AssignFeeChargesToLoanAccountCommand
-     */     
-	@PutMapping("/addToFeeCharges")
-	public void addToFeeCharges( @RequestBody(required=true) AssignFeeChargesToLoanAccountCommand command ) {
-		try {
-			service.addToFeeCharges( command );   
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to add to Set FeeCharges", exc );
-		}
-	}
+  /**
+   * save Product on LoanAccount
+   *
+   * @param command AssignProductToLoanAccountCommand
+   */
+  @PutMapping("/assignProduct")
+  public void assignProduct(@RequestBody AssignProductToLoanAccountCommand command) {
+    try {
+      service.assignProduct(command);
+    } catch (Throwable exc) {
+      LOGGER.log(Level.WARNING, "Failed to assign Product", exc);
+    }
+  }
 
-    /**
-     * remove FeeCharges on LoanAccount
-     * @param		command RemoveFeeChargesFromLoanAccountCommand
-     */     	
-	@PutMapping("/removeFromFeeCharges")
-	public void removeFromFeeCharges( 	@RequestBody(required=true) RemoveFeeChargesFromLoanAccountCommand command )
-	{		
-		try {
-			service.removeFromFeeCharges( command );
-		}
-		catch( Exception exc ) {
-			LOGGER.log( Level.WARNING, "Failed to remove from Set FeeCharges", exc );
-		}
-	}
+  /**
+   * unassign Product on LoanAccount
+   *
+   * @param command UnAssignProductFromLoanAccountCommand
+   */
+  @PutMapping("/unAssignProduct")
+  public void unAssignProduct(
+      @RequestBody(required = true) UnAssignProductFromLoanAccountCommand command) {
+    try {
+      service.unAssignProduct(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to unassign Product", exc);
+    }
+  }
 
+  /**
+   * save Borrowers on LoanAccount
+   *
+   * @param command AssignBorrowersToLoanAccountCommand
+   */
+  @PutMapping("/addToBorrowers")
+  public void addToBorrowers(
+      @RequestBody(required = true) AssignBorrowersToLoanAccountCommand command) {
+    try {
+      service.addToBorrowers(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set Borrowers", exc);
+    }
+  }
 
+  /**
+   * remove Borrowers on LoanAccount
+   *
+   * @param command RemoveBorrowersFromLoanAccountCommand
+   */
+  @PutMapping("/removeFromBorrowers")
+  public void removeFromBorrowers(
+      @RequestBody(required = true) RemoveBorrowersFromLoanAccountCommand command) {
+    try {
+      service.removeFromBorrowers(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set Borrowers", exc);
+    }
+  }
 
+  /**
+   * save RepaymentSchedule on LoanAccount
+   *
+   * @param command AssignRepaymentScheduleToLoanAccountCommand
+   */
+  @PutMapping("/addToRepaymentSchedule")
+  public void addToRepaymentSchedule(
+      @RequestBody(required = true) AssignRepaymentScheduleToLoanAccountCommand command) {
+    try {
+      service.addToRepaymentSchedule(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set RepaymentSchedule", exc);
+    }
+  }
 
-//************************************************************************    
-// Attributes
-//************************************************************************
-    protected LoanAccount loanAccount = null;
-	protected LoanAccountService service = null;
-	private static final Logger LOGGER = Logger.getLogger(LoanAccountRestController.class.getName());
-    
+  /**
+   * remove RepaymentSchedule on LoanAccount
+   *
+   * @param command RemoveRepaymentScheduleFromLoanAccountCommand
+   */
+  @PutMapping("/removeFromRepaymentSchedule")
+  public void removeFromRepaymentSchedule(
+      @RequestBody(required = true) RemoveRepaymentScheduleFromLoanAccountCommand command) {
+    try {
+      service.removeFromRepaymentSchedule(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set RepaymentSchedule", exc);
+    }
+  }
+
+  /**
+   * save Payments on LoanAccount
+   *
+   * @param command AssignPaymentsToLoanAccountCommand
+   */
+  @PutMapping("/addToPayments")
+  public void addToPayments(
+      @RequestBody(required = true) AssignPaymentsToLoanAccountCommand command) {
+    try {
+      service.addToPayments(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set Payments", exc);
+    }
+  }
+
+  /**
+   * remove Payments on LoanAccount
+   *
+   * @param command RemovePaymentsFromLoanAccountCommand
+   */
+  @PutMapping("/removeFromPayments")
+  public void removeFromPayments(
+      @RequestBody(required = true) RemovePaymentsFromLoanAccountCommand command) {
+    try {
+      service.removeFromPayments(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set Payments", exc);
+    }
+  }
+
+  /**
+   * save Collateral on LoanAccount
+   *
+   * @param command AssignCollateralToLoanAccountCommand
+   */
+  @PutMapping("/addToCollateral")
+  public void addToCollateral(
+      @RequestBody(required = true) AssignCollateralToLoanAccountCommand command) {
+    try {
+      service.addToCollateral(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set Collateral", exc);
+    }
+  }
+
+  /**
+   * remove Collateral on LoanAccount
+   *
+   * @param command RemoveCollateralFromLoanAccountCommand
+   */
+  @PutMapping("/removeFromCollateral")
+  public void removeFromCollateral(
+      @RequestBody(required = true) RemoveCollateralFromLoanAccountCommand command) {
+    try {
+      service.removeFromCollateral(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set Collateral", exc);
+    }
+  }
+
+  /**
+   * save FeeCharges on LoanAccount
+   *
+   * @param command AssignFeeChargesToLoanAccountCommand
+   */
+  @PutMapping("/addToFeeCharges")
+  public void addToFeeCharges(
+      @RequestBody(required = true) AssignFeeChargesToLoanAccountCommand command) {
+    try {
+      service.addToFeeCharges(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to add to Set FeeCharges", exc);
+    }
+  }
+
+  /**
+   * remove FeeCharges on LoanAccount
+   *
+   * @param command RemoveFeeChargesFromLoanAccountCommand
+   */
+  @PutMapping("/removeFromFeeCharges")
+  public void removeFromFeeCharges(
+      @RequestBody(required = true) RemoveFeeChargesFromLoanAccountCommand command) {
+    try {
+      service.removeFromFeeCharges(command);
+    } catch (Exception exc) {
+      LOGGER.log(Level.WARNING, "Failed to remove from Set FeeCharges", exc);
+    }
+  }
+
+  // ************************************************************************
+  // Attributes
+  // ************************************************************************
+  protected LoanAccount loanAccount = null;
+  protected LoanAccountService service = null;
+  private static final Logger LOGGER = Logger.getLogger(LoanAccountRestController.class.getName());
 }
