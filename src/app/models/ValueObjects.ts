@@ -1,70 +1,68 @@
-
 import Decimal from "decimal.js";
 // -----------------------------------------
 // Money
 // -----------------------------------------
 declare global {
-    interface Money {
-    amount: Decimal
-    currency: string
-    }
+  interface Money {
+    amount: Decimal;
+    currency: string;
+  }
 }
 
 // -----------------------------------------
 // Address
 // -----------------------------------------
 declare global {
-    interface Address {
-    street: string
-    city: string
-    state: string
-    postalCode: string
-    country: string
-    }
+  interface Address {
+    street: string;
+    city: string;
+    state: string;
+    postalCode: string;
+    country: string;
+  }
 }
 
 // -----------------------------------------
 // AccountNumber
 // -----------------------------------------
 declare global {
-    interface AccountNumber {
-    value: string
-    }
+  interface AccountNumber {
+    value: string;
+  }
 }
 
 // -----------------------------------------
 // IBAN
 // -----------------------------------------
 declare global {
-    interface IBAN {
-    value: string
-    }
+  interface IBAN {
+    value: string;
+  }
 }
 
 // -----------------------------------------
 // BIC
 // -----------------------------------------
 declare global {
-    interface BIC {
-    value: string
-    }
+  interface BIC {
+    value: string;
+  }
 }
 
 // -----------------------------------------
 // CardPAN
 // -----------------------------------------
 declare global {
-    interface CardPAN {
-    value: string
-    }
+  interface CardPAN {
+    value: string;
+  }
 }
 
 // -----------------------------------------
 // Percentage
 // -----------------------------------------
 declare global {
-    interface Percentage {
-    value: Decimal
-    }
+  interface Percentage {
+    value: Decimal;
+  }
 }
-
