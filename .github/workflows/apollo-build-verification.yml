@@ -547,10 +547,6 @@ jobs:
 
           SCORE=0
 
-          npm uninstall -g tsc
-          npm install -g typescript@5.9.3
-          echo tsc --version
-          
           ###########################################################################
           # Validate TypeScript configuration
           ###########################################################################
