@@ -1,0 +1,2 @@
+module ExternalAccountHelper
+end

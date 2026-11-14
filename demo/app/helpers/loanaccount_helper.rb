@@ -1,0 +1,2 @@
+module LoanAccountHelper
+end

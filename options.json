@@ -1,0 +1,55 @@
+{
+  "name": "ruby",
+  "options": [
+    {
+      "name": "maxThreadCount",
+      "value": "5",
+      "required": "true",
+      "description": "maximum thread count",
+      "type": "input"
+    },
+    {
+      "name": "dbName",
+      "value": "test",
+      "required": "true",
+      "description": "database name",
+      "type": "input"
+    },
+    {
+      "name": "dbEngine",
+      "value": "postgres",
+      "selections": "postgres,mysql,sqlLite,oracle,sqlserver,db2",
+      "required": "true",
+      "description": "database engine",
+      "type": "select"
+    },
+    {
+      "name": "host",
+      "value": "localhost",
+      "required": "true",
+      "description": "database host",
+      "type": "input"
+    },
+    {
+      "name": "port",
+      "value": "5432",
+      "required": "true",
+      "description": "database port",
+      "type": "input"
+    },
+    {
+      "name": "user",
+      "value": "postgres",
+      "required": "true",
+      "description": "database user name",
+      "type": "input"
+    },
+    {
+      "name": "password",
+      "value": "postgres",
+      "required": "true",
+      "description": "database user password",
+      "type": "input"
+    }
+  ]
+}
