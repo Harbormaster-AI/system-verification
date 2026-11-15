@@ -567,7 +567,7 @@ jobs:
               post_pass \
                   "BUILD" \
                   "RAILS_INIT" \
-                  20 \
+                  30 \
                   "Rails application initialized successfully."
 
           else
@@ -596,7 +596,7 @@ jobs:
               post_pass \
                   "BUILD" \
                   "RAILS_VERSION" \
-                  20 \
+                  30 \
                   "Rails is available."
 
           else
