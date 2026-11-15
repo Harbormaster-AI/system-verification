@@ -27,9 +27,10 @@ public static class ScreeningResultEndpoints
     private static async Task<IResult> Create(
         ScreeningResultRequest request,
         IScreeningResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToScreeningResult( request );
+        var model = mapRequestToScreeningResult(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class ScreeningResultEndpoints
     private static async Task<IResult> Update(
         ScreeningResultRequest request,
         IScreeningResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToScreeningResult( request );
+        var model = mapRequestToScreeningResult(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class ScreeningResultEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IScreeningResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var screeningResult = await service.Get(identifier, cancellationToken);
-        return screeningResult is null ? Results.NotFound() : Results.Ok( screeningResult );
+        return screeningResult is null ? Results.NotFound() : Results.Ok(screeningResult);
     }
 
 
     private static async Task<IResult> GetAll(
         IScreeningResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( ScreeningResultResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(ScreeningResultResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IScreeningResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class ScreeningResultEndpoints
     private static async Task<IResult> AssignKycProfile(
         AssociationRequest request,
         IScreeningResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignKycProfile(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class ScreeningResultEndpoints
     private static async Task<IResult> UnassignKycProfile(
     AssociationRequest request,
     IScreeningResultService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignKycProfile(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static ScreeningResult mapRequestToScreeningResult( ScreeningResultRequest request ) {
+    private static ScreeningResult mapRequestToScreeningResult(ScreeningResultRequest request)
+    {
         var model = new ScreeningResult
         {
             Id = request.Id,

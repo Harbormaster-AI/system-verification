@@ -29,9 +29,10 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> Create(
         RepaymentScheduleRequest request,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRepaymentSchedule( request );
+        var model = mapRequestToRepaymentSchedule(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> Update(
         RepaymentScheduleRequest request,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRepaymentSchedule( request );
+        var model = mapRequestToRepaymentSchedule(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var repaymentSchedule = await service.Get(identifier, cancellationToken);
-        return repaymentSchedule is null ? Results.NotFound() : Results.Ok( repaymentSchedule );
+        return repaymentSchedule is null ? Results.NotFound() : Results.Ok(repaymentSchedule);
     }
 
 
     private static async Task<IResult> GetAll(
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RepaymentScheduleResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RepaymentScheduleResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> AssignLoanAccount(
         AssociationRequest request,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLoanAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> UnassignLoanAccount(
     AssociationRequest request,
     IRepaymentScheduleService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLoanAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> AssignPayment(
         AssociationRequest request,
         IRepaymentScheduleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPayment(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class RepaymentScheduleEndpoints
     private static async Task<IResult> UnassignPayment(
     AssociationRequest request,
     IRepaymentScheduleService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPayment(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static RepaymentSchedule mapRequestToRepaymentSchedule( RepaymentScheduleRequest request ) {
+    private static RepaymentSchedule mapRequestToRepaymentSchedule(RepaymentScheduleRequest request)
+    {
         var model = new RepaymentSchedule
         {
             Id = request.Id,
