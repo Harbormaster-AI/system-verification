@@ -1,0 +1,45 @@
+
+<%= form_with model: @component_, local: true do |form| %>
+ 
+  <% if @component_.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@component_.errors.count, "error") %> prohibited
+        this component_ from being saved:
+      </h2>
+      <ul>
+        <% @component_.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :partNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :partNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :ComponentCategory, { class: 'form-label'} %><br>
+   <%= form.select :ComponentCategory, Component_.ComponentCategorys.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :SerializationMethod, { class: 'form-label'} %><br>
+   <%= form.select :SerializationMethod, Component_.SerializationMethods.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

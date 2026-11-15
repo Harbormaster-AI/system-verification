@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+    	<title>aerospaceonrails</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+	    <%= csrf_meta_tags %>
+    	<%= csp_meta_tag %>
+	
+	    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+  	</head>
+
+	<body>
+	
+	  	<div class="jumbotron text-center">
+			<h1>aerospaceonrails</h1>
+  		</div>
+ 
+    	<div class="container">
+	   	
+	   		<div class="row">
+	    
+	     		<div class="col-lg-2">
+		   			<%= button_to 'AerospaceManufacturers', aerospaceManufacturers_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AircraftPrograms', aircraftPrograms_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AircraftFamilys', aircraftFamilys_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AircraftModels', aircraftModels_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'EngineTypes', engineTypes_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AircraftVariants', aircraftVariants_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AvionicsSuites', avionicsSuites_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'APUs', aPUs_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'LandingGears', landingGears_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AircraftOptions', aircraftOptions_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AircraftPackages', aircraftPackages_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Suppliers', suppliers_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Component_s', component_s_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Plants', plants_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ProductionLines', productionLines_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'WorkCenters', workCenters_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ProductionOrders', productionOrders_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'BuildSchedules', buildSchedules_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Warehouses', warehouses_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'InventoryItems', inventoryItems_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Operator_s', operator_s_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AircraftOrders', aircraftOrders_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Quotes', quotes_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'PurchaseAgreements', purchaseAgreements_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Aircrafts', aircrafts_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Registrations', registrations_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Warrantys', warrantys_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'CabinLayouts', cabinLayouts_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'MROFacilitys', mROFacilitys_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'MaintenanceAppointments', maintenanceAppointments_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'MaintenanceWorkOrders', maintenanceWorkOrders_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AirworthinessDirectives', airworthinessDirectives_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ServiceBulletins', serviceBulletins_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ConnectedAircrafts', connectedAircrafts_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'FlightHealthEvents', flightHealthEvents_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'SoftwareLoads', softwareLoads_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'TypeCertificates', typeCertificates_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ProductionCertificates', productionCertificates_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'SalesRegions', salesRegions_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'SalesCampaigns', salesCampaigns_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+	     		</div>
+
+        		<!-- Page Content -->
+        		<div class="col-lg-10">
+					<%= yield %>
+        		</div>
+
+      		</div>   
+		
+		</div>
+		
+  </body>
+
+</html>

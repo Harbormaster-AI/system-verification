@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of connectedAircraft found in  aerospaceonrails/test/controllers
+
+one:
+  communicationsProvider: test string for communicationsProvider
+  ConnectivityStatus: 0
+
+two:
+  communicationsProvider: test string for communicationsProvider
+  ConnectivityStatus: 0
+
+

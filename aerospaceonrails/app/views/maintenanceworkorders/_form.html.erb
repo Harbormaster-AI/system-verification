@@ -1,0 +1,41 @@
+
+<%= form_with model: @maintenanceWorkOrder, local: true do |form| %>
+ 
+  <% if @maintenanceWorkOrder.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@maintenanceWorkOrder.errors.count, "error") %> prohibited
+        this maintenanceWorkOrder from being saved:
+      </h2>
+      <ul>
+        <% @maintenanceWorkOrder.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :workOrderNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :workOrderNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, MaintenanceWorkOrder.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

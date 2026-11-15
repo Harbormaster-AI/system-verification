@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of purchaseAgreement found in  aerospaceonrails/test/controllers
+
+one:
+  agreementNumber: test string for agreementNumber
+  effectiveDate: 2020-10-15
+
+two:
+  agreementNumber: test string for agreementNumber
+  effectiveDate: 2020-10-15
+
+

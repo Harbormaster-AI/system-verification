@@ -1,0 +1,41 @@
+
+<%= form_with model: @connectedAircraft, local: true do |form| %>
+ 
+  <% if @connectedAircraft.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@connectedAircraft.errors.count, "error") %> prohibited
+        this connectedAircraft from being saved:
+      </h2>
+      <ul>
+        <% @connectedAircraft.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :communicationsProvider, { class: 'form-label'} %><br>
+	<%= form.text_field :communicationsProvider, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :ConnectivityStatus, { class: 'form-label'} %><br>
+   <%= form.select :ConnectivityStatus, ConnectedAircraft.ConnectivityStatuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

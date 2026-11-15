@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of buildSchedule found in  aerospaceonrails/test/controllers
+
+one:
+  scheduleNumber: test string for scheduleNumber
+  Status: 0
+
+two:
+  scheduleNumber: test string for scheduleNumber
+  Status: 0
+
+

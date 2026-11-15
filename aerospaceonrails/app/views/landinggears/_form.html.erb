@@ -1,0 +1,39 @@
+
+<%= form_with model: @landingGear, local: true do |form| %>
+ 
+  <% if @landingGear.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@landingGear.errors.count, "error") %> prohibited
+        this landingGear from being saved:
+      </h2>
+      <ul>
+        <% @landingGear.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :supplierPartNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :supplierPartNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :GearType, { class: 'form-label'} %><br>
+   <%= form.select :GearType, LandingGear.GearTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

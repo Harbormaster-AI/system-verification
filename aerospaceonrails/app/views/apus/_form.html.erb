@@ -1,0 +1,35 @@
+
+<%= form_with model: @aPU, local: true do |form| %>
+ 
+  <% if @aPU.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@aPU.errors.count, "error") %> prohibited
+        this aPU from being saved:
+      </h2>
+      <ul>
+        <% @aPU.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :model_, { class: 'form-label'} %><br>
+	<%= form.text_field :model_, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

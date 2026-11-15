@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of productionOrder found in  aerospaceonrails/test/controllers
+
+one:
+  orderNumber: test string for orderNumber
+  Status: 0
+
+two:
+  orderNumber: test string for orderNumber
+  Status: 0
+
+

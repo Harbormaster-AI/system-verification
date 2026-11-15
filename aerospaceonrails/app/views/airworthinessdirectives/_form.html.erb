@@ -1,0 +1,37 @@
+
+<%= form_with model: @airworthinessDirective, local: true do |form| %>
+ 
+  <% if @airworthinessDirective.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@airworthinessDirective.errors.count, "error") %> prohibited
+        this airworthinessDirective from being saved:
+      </h2>
+      <ul>
+        <% @airworthinessDirective.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :directiveNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :directiveNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :title, { class: 'form-label'} %><br>
+	<%= form.text_field :title, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

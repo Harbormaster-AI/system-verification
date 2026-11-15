@@ -1,0 +1,43 @@
+
+<%= form_with model: @aircraftOption, local: true do |form| %>
+ 
+  <% if @aircraftOption.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@aircraftOption.errors.count, "error") %> prohibited
+        this aircraftOption from being saved:
+      </h2>
+      <ul>
+        <% @aircraftOption.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :code, { class: 'form-label'} %><br>
+	<%= form.text_field :code, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :OptionCategory, { class: 'form-label'} %><br>
+   <%= form.select :OptionCategory, AircraftOption.OptionCategorys.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

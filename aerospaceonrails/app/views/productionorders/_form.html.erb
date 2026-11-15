@@ -1,0 +1,41 @@
+
+<%= form_with model: @productionOrder, local: true do |form| %>
+ 
+  <% if @productionOrder.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@productionOrder.errors.count, "error") %> prohibited
+        this productionOrder from being saved:
+      </h2>
+      <ul>
+        <% @productionOrder.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :orderNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :orderNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, ProductionOrder.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

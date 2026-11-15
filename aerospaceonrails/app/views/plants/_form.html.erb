@@ -1,0 +1,45 @@
+
+<%= form_with model: @plant, local: true do |form| %>
+ 
+  <% if @plant.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@plant.errors.count, "error") %> prohibited
+        this plant from being saved:
+      </h2>
+      <ul>
+        <% @plant.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :plantCode, { class: 'form-label'} %><br>
+	<%= form.text_field :plantCode, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :address, { class: 'form-label'} %><br>
+	<%= form.text_field :address, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

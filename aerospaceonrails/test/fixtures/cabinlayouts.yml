@@ -1,0 +1,14 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of cabinLayout found in  aerospaceonrails/test/controllers
+
+one:
+  layoutCode: test string for layoutCode
+  totalSeats: 100
+  classLayout: test string for classLayout
+
+two:
+  layoutCode: test string for layoutCode
+  totalSeats: 100
+  classLayout: test string for classLayout
+
+

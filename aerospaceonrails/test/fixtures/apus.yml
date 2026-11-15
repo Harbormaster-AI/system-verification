@@ -1,0 +1,10 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of aPU found in  aerospaceonrails/test/controllers
+
+one:
+  model_: test string for model_
+
+two:
+  model_: test string for model_
+
+

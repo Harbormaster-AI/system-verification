@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of aircraft found in  aerospaceonrails/test/controllers
+
+one:
+  msn: "test value"
+  deliveryDate: 2020-10-15
+
+two:
+  msn: "test value"
+  deliveryDate: 2020-10-15
+
+

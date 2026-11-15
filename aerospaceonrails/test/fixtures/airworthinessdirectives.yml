@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of airworthinessDirective found in  aerospaceonrails/test/controllers
+
+one:
+  directiveNumber: test string for directiveNumber
+  title: test string for title
+
+two:
+  directiveNumber: test string for directiveNumber
+  title: test string for title
+
+

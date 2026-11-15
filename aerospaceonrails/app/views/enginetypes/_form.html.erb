@@ -1,0 +1,43 @@
+
+<%= form_with model: @engineType, local: true do |form| %>
+ 
+  <% if @engineType.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@engineType.errors.count, "error") %> prohibited
+        this engineType from being saved:
+      </h2>
+      <ul>
+        <% @engineType.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :engineModelCode, { class: 'form-label'} %><br>
+	<%= form.text_field :engineModelCode, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :maxThrustKn, { class: 'form-label'} %><br>
+	<%= form.text_field :maxThrustKn, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Category, { class: 'form-label'} %><br>
+   <%= form.select :Category, EngineType.Categorys.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

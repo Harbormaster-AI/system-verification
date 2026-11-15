@@ -1,0 +1,41 @@
+
+<%= form_with model: @maintenanceAppointment, local: true do |form| %>
+ 
+  <% if @maintenanceAppointment.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@maintenanceAppointment.errors.count, "error") %> prohibited
+        this maintenanceAppointment from being saved:
+      </h2>
+      <ul>
+        <% @maintenanceAppointment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :appointmentDate, { class: 'form-label'} %><br>
+    <%= form.date_field :appointmentDate, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, MaintenanceAppointment.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

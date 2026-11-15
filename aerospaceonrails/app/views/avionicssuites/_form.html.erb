@@ -1,0 +1,41 @@
+
+<%= form_with model: @avionicsSuite, local: true do |form| %>
+ 
+  <% if @avionicsSuite.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@avionicsSuite.errors.count, "error") %> prohibited
+        this avionicsSuite from being saved:
+      </h2>
+      <ul>
+        <% @avionicsSuite.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :suiteName, { class: 'form-label'} %><br>
+	<%= form.text_field :suiteName, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :softwareBaseline, { class: 'form-label'} %><br>
+	<%= form.text_field :softwareBaseline, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

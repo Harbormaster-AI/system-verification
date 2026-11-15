@@ -1,0 +1,37 @@
+
+<%= form_with model: @workCenter, local: true do |form| %>
+ 
+  <% if @workCenter.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@workCenter.errors.count, "error") %> prohibited
+        this workCenter from being saved:
+      </h2>
+      <ul>
+        <% @workCenter.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :capability, { class: 'form-label'} %><br>
+	<%= form.text_field :capability, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

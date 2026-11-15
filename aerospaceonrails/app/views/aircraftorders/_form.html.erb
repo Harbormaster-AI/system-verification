@@ -1,0 +1,47 @@
+
+<%= form_with model: @aircraftOrder, local: true do |form| %>
+ 
+  <% if @aircraftOrder.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@aircraftOrder.errors.count, "error") %> prohibited
+        this aircraftOrder from being saved:
+      </h2>
+      <ul>
+        <% @aircraftOrder.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :orderNumber, { class: 'form-label'} %><br>
+	<%= form.text_field :orderNumber, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :totalAmount, { class: 'form-label'} %><br>
+	<%= form.text_field :totalAmount, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, AircraftOrder.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

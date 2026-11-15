@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of serviceBulletin found in  aerospaceonrails/test/controllers
+
+one:
+  bulletinNumber: test string for bulletinNumber
+  Category: 0
+
+two:
+  bulletinNumber: test string for bulletinNumber
+  Category: 0
+
+

@@ -1,0 +1,2 @@
+module ServiceBulletinHelper
+end

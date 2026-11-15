@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of warranty found in  aerospaceonrails/test/controllers
+
+one:
+  coverageMonths: 100
+  WarrantyType: 0
+
+two:
+  coverageMonths: 100
+  WarrantyType: 0
+
+

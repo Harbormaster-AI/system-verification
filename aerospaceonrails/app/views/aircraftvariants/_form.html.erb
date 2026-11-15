@@ -1,0 +1,55 @@
+
+<%= form_with model: @aircraftVariant, local: true do |form| %>
+ 
+  <% if @aircraftVariant.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@aircraftVariant.errors.count, "error") %> prohibited
+        this aircraftVariant from being saved:
+      </h2>
+      <ul>
+        <% @aircraftVariant.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :variantCode, { class: 'form-label'} %><br>
+	<%= form.text_field :variantCode, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :rangeNm, { class: 'form-label'} %><br>
+	<%= form.text_field :rangeNm, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :maxTakeoffWeightKg, { class: 'form-label'} %><br>
+	<%= form.text_field :maxTakeoffWeightKg, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

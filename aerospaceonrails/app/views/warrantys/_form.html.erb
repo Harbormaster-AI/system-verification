@@ -1,0 +1,37 @@
+
+<%= form_with model: @warranty, local: true do |form| %>
+ 
+  <% if @warranty.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@warranty.errors.count, "error") %> prohibited
+        this warranty from being saved:
+      </h2>
+      <ul>
+        <% @warranty.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :coverageMonths, { class: 'form-label'} %><br>
+	<%= form.text_field :coverageMonths, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :WarrantyType, { class: 'form-label'} %><br>
+   <%= form.select :WarrantyType, Warranty.WarrantyTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

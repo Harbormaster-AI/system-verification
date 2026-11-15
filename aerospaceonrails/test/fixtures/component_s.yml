@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of component_ found in  aerospaceonrails/test/controllers
+
+one:
+  partNumber: test string for partNumber
+  name: test string for name
+  ComponentCategory: 0
+  SerializationMethod: 0
+
+two:
+  partNumber: test string for partNumber
+  name: test string for name
+  ComponentCategory: 0
+  SerializationMethod: 0
+
+

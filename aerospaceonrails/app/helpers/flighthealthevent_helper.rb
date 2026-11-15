@@ -1,0 +1,2 @@
+module FlightHealthEventHelper
+end

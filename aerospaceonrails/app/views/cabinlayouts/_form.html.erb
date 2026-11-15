@@ -1,0 +1,45 @@
+
+<%= form_with model: @cabinLayout, local: true do |form| %>
+ 
+  <% if @cabinLayout.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@cabinLayout.errors.count, "error") %> prohibited
+        this cabinLayout from being saved:
+      </h2>
+      <ul>
+        <% @cabinLayout.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :layoutCode, { class: 'form-label'} %><br>
+	<%= form.text_field :layoutCode, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :totalSeats, { class: 'form-label'} %><br>
+	<%= form.text_field :totalSeats, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :classLayout, { class: 'form-label'} %><br>
+	<%= form.text_field :classLayout, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

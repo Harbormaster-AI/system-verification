@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of avionicsSuite found in  aerospaceonrails/test/controllers
+
+one:
+  suiteName: test string for suiteName
+  softwareBaseline: test string for softwareBaseline
+
+two:
+  suiteName: test string for suiteName
+  softwareBaseline: test string for softwareBaseline
+
+
