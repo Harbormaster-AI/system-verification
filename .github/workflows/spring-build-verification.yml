@@ -423,7 +423,7 @@ jobs:
                   post_pass \
                       "BUILD" \
                       "MAVEN_VALIDATE" \
-                      10 \
+                      20 \
                       "Maven validate completed successfully."
 
               else
@@ -466,7 +466,7 @@ jobs:
                   post_pass \
                       "BUILD" \
                       "GRADLE_VALIDATE" \
-                      10 \
+                      20 \
                       "Gradle validation completed successfully."
 
               else
@@ -522,7 +522,7 @@ jobs:
                   post_pass \
                       "BUILD" \
                       "MAVEN_DEPENDENCY_ANALYZE" \
-                      10 \
+                      20 \
                       "Dependency analysis completed successfully."
 
               else
@@ -564,7 +564,7 @@ jobs:
                   post_pass \
                       "BUILD" \
                       "GRADLE_DEPENDENCY_VERIFY" \
-                      10 \
+                      20 \
                       "Dependency verification completed successfully."
 
               else

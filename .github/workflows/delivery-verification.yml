@@ -172,13 +172,6 @@ jobs:
           
           source .github/actions/common/report.sh
           
-          post_pass \
-                        "DELIVERY" \
-                        "STARTING_DELIVERY" \
-                        0 \
-                        "Delivery verification starting..." \
-                        "" 
-
       ###########################################################################
       #   Download pre-built artifact
       ###########################################################################
@@ -248,13 +241,6 @@ jobs:
         run: |
           
           source .github/actions/common/report.sh
-          
-            post_pass \
-                "DELIVERY" \
-                "SETTING_UP_DOCKER" \
-                0 \
-                "Setting up Docker..." \
-                ""
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -270,13 +256,6 @@ jobs:
         run: |
           
           source .github/actions/common/report.sh
-          
-            post_pass \
-                "DELIVERY" \
-                "DOCKER_LOGIN" \
-                0 \
-                "Logging into Docker..." \
-                ""
 
       - name: Log in to Docker Hub
         id: docker_login
@@ -409,21 +388,11 @@ jobs:
         run: |
           source .github/actions/common/report.sh
 
-          post_pass \
-              "DELIVERY" \
-              "WAITING_FOR_MYSQL" \
-              0 \
-              "Waiting for MySQL to start." \
-              ""
+          echo "Waiting for MySQL to start." 
 
           for i in {1..60}; do
               if bash -c "</dev/tcp/127.0.0.1/3307" >/dev/null 2>&1; then
-                  post_pass \
-                      "DELIVERY" \
-                      "MYSQL_READY" \
-                      0 \
-                      "MySQL is ready." \
-                      "MySQL service is accepting connections."
+                  echo "MySQL service is accepting connections."
                   exit 0
               fi
               sleep 2
@@ -639,12 +608,8 @@ jobs:
 
           docker logout ${{ inputs.dockerHost }}
           
-          post_pass \
-              "DELIVERY" \
-              "CLEANUP" \
-              0 \
-              "Container stopped and removed locally." \
-              "CLEANUP: Docker resources cleaned up."
+          echo "Container stopped and removed locally."
+          echo "CLEANUP: Docker resources cleaned up."
 
 
       ###############################################################################
