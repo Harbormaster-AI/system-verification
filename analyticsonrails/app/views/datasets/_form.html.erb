@@ -1,0 +1,67 @@
+
+<%= form_with model: @dataSet, local: true do |form| %>
+ 
+  <% if @dataSet.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@dataSet.errors.count, "error") %> prohibited
+        this dataSet from being saved:
+      </h2>
+      <ul>
+        <% @dataSet.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :schemaVersion, { class: 'form-label'} %><br>
+	<%= form.text_field :schemaVersion, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :refreshSchedule, { class: 'form-label'} %><br>
+	<%= form.text_field :refreshSchedule, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.check_box :Sensitive, {class: "form-check-input"} %>
+    <%= form.label :Sensitive, { class: 'form-label'} %><br>	
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :DataFormat, { class: 'form-label'} %><br>
+   <%= form.select :DataFormat, DataSet.DataFormats.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

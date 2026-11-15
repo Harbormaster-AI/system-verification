@@ -1,0 +1,49 @@
+
+<%= form_with model: @anomaly, local: true do |form| %>
+ 
+  <% if @anomaly.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@anomaly.errors.count, "error") %> prohibited
+        this anomaly from being saved:
+      </h2>
+      <ul>
+        <% @anomaly.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :occurredAt, { class: 'form-label'} %><br>
+    <%= form.date_field :occurredAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :details, { class: 'form-label'} %><br>
+	<%= form.text_field :details, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :AnomalyType, { class: 'form-label'} %><br>
+   <%= form.select :AnomalyType, Anomaly.AnomalyTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Severity, { class: 'form-label'} %><br>
+   <%= form.select :Severity, Anomaly.Severitys.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

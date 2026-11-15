@@ -1,0 +1,47 @@
+
+<%= form_with model: @notebook, local: true do |form| %>
+ 
+  <% if @notebook.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@notebook.errors.count, "error") %> prohibited
+        this notebook from being saved:
+      </h2>
+      <ul>
+        <% @notebook.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :title, { class: 'form-label'} %><br>
+	<%= form.text_field :title, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :repository, { class: 'form-label'} %><br>
+	<%= form.text_field :repository, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Language, { class: 'form-label'} %><br>
+   <%= form.select :Language, Notebook.Languages.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

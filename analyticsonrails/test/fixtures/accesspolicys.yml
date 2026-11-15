@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of accessPolicy found in  analyticsonrails/test/controllers
+
+one:
+  name: test string for name
+  subjectName: test string for subjectName
+  AccessLevel: 0
+  SubjectType: 0
+
+two:
+  name: test string for name
+  subjectName: test string for subjectName
+  AccessLevel: 0
+  SubjectType: 0
+
+

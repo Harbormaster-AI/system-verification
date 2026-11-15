@@ -1,0 +1,63 @@
+
+<%= form_with model: @analyticsWorkspace, local: true do |form| %>
+ 
+  <% if @analyticsWorkspace.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@analyticsWorkspace.errors.count, "error") %> prohibited
+        this analyticsWorkspace from being saved:
+      </h2>
+      <ul>
+        <% @analyticsWorkspace.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :businessDomain, { class: 'form-label'} %><br>
+	<%= form.text_field :businessDomain, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :ownerTeam, { class: 'form-label'} %><br>
+	<%= form.text_field :ownerTeam, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :GovernanceTier, { class: 'form-label'} %><br>
+   <%= form.select :GovernanceTier, AnalyticsWorkspace.GovernanceTiers.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

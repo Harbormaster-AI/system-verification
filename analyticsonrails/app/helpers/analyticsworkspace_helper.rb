@@ -1,0 +1,2 @@
+module AnalyticsWorkspaceHelper
+end

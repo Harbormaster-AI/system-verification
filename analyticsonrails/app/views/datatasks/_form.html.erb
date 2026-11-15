@@ -1,0 +1,49 @@
+
+<%= form_with model: @dataTask, local: true do |form| %>
+ 
+  <% if @dataTask.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@dataTask.errors.count, "error") %> prohibited
+        this dataTask from being saved:
+      </h2>
+      <ul>
+        <% @dataTask.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :command, { class: 'form-label'} %><br>
+	<%= form.text_field :command, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :retries, { class: 'form-label'} %><br>
+	<%= form.text_field :retries, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :TaskType, { class: 'form-label'} %><br>
+   <%= form.select :TaskType, DataTask.TaskTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

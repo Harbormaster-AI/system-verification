@@ -1,0 +1,51 @@
+
+<%= form_with model: @qualityRule, local: true do |form| %>
+ 
+  <% if @qualityRule.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@qualityRule.errors.count, "error") %> prohibited
+        this qualityRule from being saved:
+      </h2>
+      <ul>
+        <% @qualityRule.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :threshold, { class: 'form-label'} %><br>
+	<%= form.text_field :threshold, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :targetField, { class: 'form-label'} %><br>
+	<%= form.text_field :targetField, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Dimension, { class: 'form-label'} %><br>
+   <%= form.select :Dimension, QualityRule.Dimensions.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Operator_, { class: 'form-label'} %><br>
+   <%= form.select :Operator_, QualityRule.Operator_s.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

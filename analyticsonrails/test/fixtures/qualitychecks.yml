@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of qualityCheck found in  analyticsonrails/test/controllers
+
+one:
+  checkedAt: 2020-10-15
+  observedValue: "test value"
+  sampleSize: 100
+  Status: 0
+
+two:
+  checkedAt: 2020-10-15
+  observedValue: "test value"
+  sampleSize: 100
+  Status: 0
+
+

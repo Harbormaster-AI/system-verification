@@ -1,0 +1,49 @@
+
+<%= form_with model: @businessGlossaryTerm, local: true do |form| %>
+ 
+  <% if @businessGlossaryTerm.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@businessGlossaryTerm.errors.count, "error") %> prohibited
+        this businessGlossaryTerm from being saved:
+      </h2>
+      <ul>
+        <% @businessGlossaryTerm.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :term, { class: 'form-label'} %><br>
+	<%= form.text_field :term, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :definition, { class: 'form-label'} %><br>
+	<%= form.text_field :definition, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :steward, { class: 'form-label'} %><br>
+	<%= form.text_field :steward, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

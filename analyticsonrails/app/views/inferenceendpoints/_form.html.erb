@@ -1,0 +1,49 @@
+
+<%= form_with model: @inferenceEndpoint, local: true do |form| %>
+ 
+  <% if @inferenceEndpoint.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@inferenceEndpoint.errors.count, "error") %> prohibited
+        this inferenceEndpoint from being saved:
+      </h2>
+      <ul>
+        <% @inferenceEndpoint.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :endpointUrl, { class: 'form-label'} %><br>
+	<%= form.text_field :endpointUrl, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :trafficShare, { class: 'form-label'} %><br>
+	<%= form.text_field :trafficShare, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Mode, { class: 'form-label'} %><br>
+   <%= form.select :Mode, InferenceEndpoint.Modes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

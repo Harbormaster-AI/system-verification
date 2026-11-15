@@ -1,0 +1,49 @@
+
+<%= form_with model: @semanticModel, local: true do |form| %>
+ 
+  <% if @semanticModel.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@semanticModel.errors.count, "error") %> prohibited
+        this semanticModel from being saved:
+      </h2>
+      <ul>
+        <% @semanticModel.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :version, { class: 'form-label'} %><br>
+	<%= form.text_field :version, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :grain, { class: 'form-label'} %><br>
+	<%= form.text_field :grain, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

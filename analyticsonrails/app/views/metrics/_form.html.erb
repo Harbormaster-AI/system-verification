@@ -1,0 +1,53 @@
+
+<%= form_with model: @metric, local: true do |form| %>
+ 
+  <% if @metric.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@metric.errors.count, "error") %> prohibited
+        this metric from being saved:
+      </h2>
+      <ul>
+        <% @metric.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :expression, { class: 'form-label'} %><br>
+	<%= form.text_field :expression, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :unit, { class: 'form-label'} %><br>
+	<%= form.text_field :unit, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :MetricType, { class: 'form-label'} %><br>
+   <%= form.select :MetricType, Metric.MetricTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

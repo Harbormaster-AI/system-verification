@@ -1,0 +1,45 @@
+
+<%= form_with model: @dimension, local: true do |form| %>
+ 
+  <% if @dimension.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@dimension.errors.count, "error") %> prohibited
+        this dimension from being saved:
+      </h2>
+      <ul>
+        <% @dimension.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.check_box :typeTime, {class: "form-check-input"} %>
+    <%= form.label :typeTime, { class: 'form-label'} %><br>	
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :DimensionType, { class: 'form-label'} %><br>
+   <%= form.select :DimensionType, Dimension.DimensionTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

@@ -1,0 +1,53 @@
+
+<%= form_with model: @dashboard, local: true do |form| %>
+ 
+  <% if @dashboard.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@dashboard.errors.count, "error") %> prohibited
+        this dashboard from being saved:
+      </h2>
+      <ul>
+        <% @dashboard.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :title, { class: 'form-label'} %><br>
+	<%= form.text_field :title, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :theme, { class: 'form-label'} %><br>
+	<%= form.text_field :theme, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, Dashboard.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

@@ -1,0 +1,14 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# if you change the one: value, be sure to change its reference in the setup method of report found in  analyticsonrails/test/controllers
+
+one:
+  title: test string for title
+  audience: test string for audience
+  Status: 0
+
+two:
+  title: test string for title
+  audience: test string for audience
+  Status: 0
+
+

@@ -1,0 +1,2 @@
+module SemanticModelHelper
+end

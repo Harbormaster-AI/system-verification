@@ -1,0 +1,2 @@
+module InferenceEndpointHelper
+end

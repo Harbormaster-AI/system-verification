@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+    	<title>analyticsonrails</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+	    <%= csrf_meta_tags %>
+    	<%= csp_meta_tag %>
+	
+	    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+  	</head>
+
+	<body>
+	
+	  	<div class="jumbotron text-center">
+			<h1>analyticsonrails</h1>
+  		</div>
+ 
+    	<div class="container">
+	   	
+	   		<div class="row">
+	    
+	     		<div class="col-lg-2">
+		   			<%= button_to 'AnalyticsWorkspaces', analyticsWorkspaces_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'DataSources', dataSources_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'DataSets', dataSets_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'DataPipelines', dataPipelines_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'DataTasks', dataTasks_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'SemanticModels', semanticModels_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Dimensions', dimensions_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Measures', measures_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Metrics', metrics_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Reports', reports_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Dashboards', dashboards_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Visualizations', visualizations_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Notebooks', notebooks_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'BIQuerys', bIQuerys_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Experiments', experiments_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'TrainingRuns', trainingRuns_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'RunMetrics', runMetrics_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'RunParameters', runParameters_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Model_s', model_s_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'ModelVersions', modelVersions_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'EvaluationMetrics', evaluationMetrics_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'FeatureSets', featureSets_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Features', features_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'InferenceEndpoints', inferenceEndpoints_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Predictions', predictions_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Forecasts', forecasts_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'TimeSeriess', timeSeriess_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Anomalys', anomalys_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'QualityRules', qualityRules_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'QualityChecks', qualityChecks_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'LineageNodes', lineageNodes_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Tags', tags_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'AccessPolicys', accessPolicys_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Alerts', alerts_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'Subscribers', subscribers_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'BusinessGlossaryTerms', businessGlossaryTerms_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'RecommendationScenarios', recommendationScenarios_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'FraudScenarios', fraudScenarios_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+		   			<%= button_to 'FraudSignals', fraudSignals_path, :method => :get,  :class => "btn btn-primary btn-lg"%>
+	     		</div>
+
+        		<!-- Page Content -->
+        		<div class="col-lg-10">
+					<%= yield %>
+        		</div>
+
+      		</div>   
+		
+		</div>
+		
+  </body>
+
+</html>

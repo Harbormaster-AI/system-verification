@@ -1,0 +1,51 @@
+
+<%= form_with model: @featureSet, local: true do |form| %>
+ 
+  <% if @featureSet.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@featureSet.errors.count, "error") %> prohibited
+        this featureSet from being saved:
+      </h2>
+      <ul>
+        <% @featureSet.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :refreshSchedule, { class: 'form-label'} %><br>
+	<%= form.text_field :refreshSchedule, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :StoreType, { class: 'form-label'} %><br>
+   <%= form.select :StoreType, FeatureSet.StoreTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

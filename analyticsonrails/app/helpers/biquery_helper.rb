@@ -1,0 +1,2 @@
+module BIQueryHelper
+end

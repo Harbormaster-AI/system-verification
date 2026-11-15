@@ -1,0 +1,47 @@
+
+<%= form_with model: @recommendationScenario, local: true do |form| %>
+ 
+  <% if @recommendationScenario.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@recommendationScenario.errors.count, "error") %> prohibited
+        this recommendationScenario from being saved:
+      </h2>
+      <ul>
+        <% @recommendationScenario.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :objective, { class: 'form-label'} %><br>
+	<%= form.text_field :objective, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :RecommendationType, { class: 'form-label'} %><br>
+   <%= form.select :RecommendationType, RecommendationScenario.RecommendationTypes.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

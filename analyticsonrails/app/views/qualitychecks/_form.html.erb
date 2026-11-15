@@ -1,0 +1,47 @@
+
+<%= form_with model: @qualityCheck, local: true do |form| %>
+ 
+  <% if @qualityCheck.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@qualityCheck.errors.count, "error") %> prohibited
+        this qualityCheck from being saved:
+      </h2>
+      <ul>
+        <% @qualityCheck.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :checkedAt, { class: 'form-label'} %><br>
+    <%= form.date_field :checkedAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :observedValue, { class: 'form-label'} %><br>
+	<%= form.text_field :observedValue, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :sampleSize, { class: 'form-label'} %><br>
+	<%= form.text_field :sampleSize, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, QualityCheck.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

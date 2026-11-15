@@ -1,0 +1,45 @@
+
+<%= form_with model: @timeSeries, local: true do |form| %>
+ 
+  <% if @timeSeries.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@timeSeries.errors.count, "error") %> prohibited
+        this timeSeries from being saved:
+      </h2>
+      <ul>
+        <% @timeSeries.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :timezone, { class: 'form-label'} %><br>
+	<%= form.text_field :timezone, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Granularity, { class: 'form-label'} %><br>
+   <%= form.select :Granularity, TimeSeries.Granularitys.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

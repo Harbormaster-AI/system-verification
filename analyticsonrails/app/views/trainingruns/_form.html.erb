@@ -1,0 +1,55 @@
+
+<%= form_with model: @trainingRun, local: true do |form| %>
+ 
+  <% if @trainingRun.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@trainingRun.errors.count, "error") %> prohibited
+        this trainingRun from being saved:
+      </h2>
+      <ul>
+        <% @trainingRun.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :runLabel, { class: 'form-label'} %><br>
+	<%= form.text_field :runLabel, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :startedAt, { class: 'form-label'} %><br>
+    <%= form.date_field :startedAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :completedAt, { class: 'form-label'} %><br>
+    <%= form.date_field :completedAt, { class: 'form-label'} %>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :Status, { class: 'form-label'} %><br>
+   <%= form.select :Status, TrainingRun.Statuss.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>

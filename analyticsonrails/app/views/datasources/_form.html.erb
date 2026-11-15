@@ -1,0 +1,53 @@
+
+<%= form_with model: @dataSource, local: true do |form| %>
+ 
+  <% if @dataSource.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@dataSource.errors.count, "error") %> prohibited
+        this dataSource from being saved:
+      </h2>
+      <ul>
+        <% @dataSource.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="card">
+    <div class="card-body">
+
+  <p>
+    <%= form.label :name, { class: 'form-label'} %><br>
+	<%= form.text_field :name, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.label :connection, { class: 'form-label'} %><br>
+	<%= form.text_field :connection, { class: 'form-label'} %>
+  </p>			
+  <p>
+    <%= form.check_box :Streaming, {class: "form-check-input"} %>
+    <%= form.label :Streaming, { class: 'form-label'} %><br>	
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+  </p>			
+  <p>
+   <%= form.label :SourceType, { class: 'form-label'} %><br>
+   <%= form.select :SourceType, DataSource.SourceTypes.keys, { class: 'form-control'} %>
+  </p>			
+  <p>
+   <%= form.label :Format, { class: 'form-label'} %><br>
+   <%= form.select :Format, DataSource.Formats.keys, { class: 'form-control'} %>
+  </p>			
+
+      <%= form.submit %>
+    
+    </div>
+  
+  </div> 
+<% end %>
