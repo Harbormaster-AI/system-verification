@@ -1,28 +1,25 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { IndexBankComponent } from "./index.component";
+import { BankService } from "../../../services/Bank.service";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { IndexBankComponent } from './index.component';
-import { BankService } from '../../../services/Bank.service';
-
-describe('IndexBankComponent', () => {
+describe("IndexBankComponent", () => {
   let component: IndexBankComponent;
   let fixture: ComponentFixture<IndexBankComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        IndexBankComponent
-      ],
+      declarations: [IndexBankComponent],
       providers: [
         BankService,
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate'),
-            navigateByUrl: jasmine.createSpy('navigateByUrl')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+            navigateByUrl: jasmine.createSpy("navigateByUrl"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IndexBankComponent);
@@ -31,7 +28,7 @@ describe('IndexBankComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,37 +1,32 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { EditPaymentCardComponent } from "./edit.component";
+import { PaymentCardService } from "../../../services/PaymentCard.service";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EditPaymentCardComponent } from './edit.component';
-import { PaymentCardService } from '../../../services/PaymentCard.service';
-
-describe('EditPaymentCardComponent', () => {
+describe("EditPaymentCardComponent", () => {
   let component: EditPaymentCardComponent;
   let fixture: ComponentFixture<EditPaymentCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule
-      ],
-      declarations: [
-        EditPaymentCardComponent
-      ],
+      imports: [ReactiveFormsModule],
+      declarations: [EditPaymentCardComponent],
       providers: [
         PaymentCardService,
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ id: '1' })
-          }
+            params: of({ id: "1" }),
+          },
         },
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EditPaymentCardComponent);
@@ -39,7 +34,7 @@ describe('EditPaymentCardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
