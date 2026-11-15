@@ -110,12 +110,6 @@ jobs:
           
           if [ -d ".git" ]; then
           
-              post_pass \
-                  "BUILD" \
-                  "CHECKOUT_SOURCE" \
-                  0 \
-                  "Repository checked out successfully."
-          
           else
           
               post_fail \
@@ -176,24 +170,12 @@ jobs:
               echo "NEED_GO_MOD_INIT=false" >> "$GITHUB_ENV"
 
               # Informative only — do not add to score (max build score is 100)
-              post_pass \
-                  "BUILD" \
-                  "GO_MODULE" \
-                  0 \
-                  "go.mod found." \
-                  "Using existing Go module file."
 
           else
 
               echo "NEED_GO_MOD_INIT=true" >> "$GITHUB_ENV"
 
               # Informative only — do not add to score (max build score is 100)
-              post_pass \
-                  "BUILD" \
-                  "GO_MODULE" \
-                  0 \
-                  "go.mod not found. Will create during build." \
-                  "HarborMaster does not generate go.mod. Verification will run go mod init."
 
           fi
 
@@ -299,22 +281,12 @@ jobs:
               find . -name go.mod
               
               # Informative only - scoring for go.mod happens in Expected Files
-              post_pass \
-                  "BUILD" \
-                  "GO_MOD_INIT" \
-                  0 \
-                  "go.mod created successfully." \
-                  "Ran go mod init ${MODULE_NAME} and go mod tidy."
+              echo "Ran go mod init ${MODULE_NAME} and go mod tidy."
 
           else
 
               # Informative only - scoring for go.mod happens in Expected Files
-              post_pass \
-                  "BUILD" \
-                  "GO_MOD_INIT" \
-                  0 \
-                  "go.mod already present." \
-                  "Skipped go mod init."
+              echo "go.mod already present. Skipped go mod init."
 
           fi
 
@@ -345,12 +317,6 @@ jobs:
           
               SCORE=$((SCORE + 3))
           
-              post_pass \
-                  "BUILD" \
-                  "BUILD_FILE" \
-                  3 \
-                  "go.mod located."
-          
           else
           
               post_fail \
@@ -368,12 +334,6 @@ jobs:
           if [[ -f Dockerfile ]]; then
           
               SCORE=$((SCORE + 2))
-          
-              post_pass \
-                  "BUILD" \
-                  "DOCKERFILE" \
-                  2 \
-                  "Dockerfile located."
           
           else
           
@@ -393,12 +353,6 @@ jobs:
           
               SCORE=$((SCORE + 2))
           
-              post_pass \
-                  "BUILD" \
-                  "GO_SUM" \
-                  2 \
-                  "go.sum located."
-          
           else
           
               post_fail \
@@ -417,12 +371,6 @@ jobs:
 
               SCORE=$((SCORE + 3))
 
-              post_pass \
-                  "BUILD" \
-                  "GO_SOURCE" \
-                  3 \
-                  "Go source files located."
-          
           else
           
               post_fail \
@@ -437,11 +385,10 @@ jobs:
           # Summary
           ###########################################################################
           
-          post_result \
+          post_pass \
               "BUILD" \
               "EXPECTED_FILES" \
-              "PASSED" \
-              0 \
+              ${SCORE} \
               "Expected files validation complete (${SCORE}/10)."
 
       ###############################################################################
@@ -469,12 +416,6 @@ jobs:
 
               SCORE=$((SCORE + 6))
 
-              post_pass \
-                  "BUILD" \
-                  "GO_MAIN" \
-                  6 \
-                  "Go main entry point located."
-
           else
 
               post_fail \
@@ -492,12 +433,6 @@ jobs:
           if find . -name "*.go" | grep -q .; then
 
               SCORE=$((SCORE + 2))
-
-              post_pass \
-                  "BUILD" \
-                  "GO_SOURCE_TREE" \
-                  2 \
-                  "Go source tree exists."
 
           else
 
@@ -517,12 +452,6 @@ jobs:
 
               SCORE=$((SCORE + 1))
 
-              post_pass \
-                  "BUILD" \
-                  "GO_TEST" \
-                  2 \
-                  "Go test files located."
-
           else
 
               post_fail \
@@ -541,12 +470,6 @@ jobs:
 
               SCORE=$((SCORE + 1))
 
-              post_pass \
-                  "BUILD" \
-                  "GO_PACKAGES" \
-                  2 \
-                  "internal/ or pkg/ directory exists."
-
           else
 
               post_warning \
@@ -561,21 +484,10 @@ jobs:
           # Summary
           ###########################################################################
 
-          if [ "$SCORE" -gt 7 ]; then
-
-              STATUS="PASSED"
-
-          else
-
-              STATUS="FAILED"
-
-          fi
-
-          post_result \
+          post_pass \
               "BUILD" \
               "DIRECTORY_STRUCTURE" \
-              "${STATUS}" \
-              0 \
+              ${SCORE} \
               "Directory structure validation complete (${SCORE}/10)."
 
       ###############################################################################

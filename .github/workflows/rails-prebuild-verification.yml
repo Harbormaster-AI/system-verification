@@ -123,12 +123,6 @@ jobs:
 
           if [ -d ".git" ]; then
 
-            post_pass \
-              "PRE_BUILD" \
-              "CHECKOUT_SOURCE" \
-              0 \
-              "Repository checked out successfully."
-
           else
 
             post_fail \
@@ -288,7 +282,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "VERIFY_FILES" \
-            5 \
+            10 \
             "Rails application files verified." \
             "Gemfile, Gemfile.lock, and Rails configuration files were found."
 
@@ -403,13 +397,6 @@ jobs:
           git diff --cached --name-status
 
           if git diff --cached --quiet; then
-
-            post_pass \
-              "PRE_BUILD" \
-              "COMMIT_FORMATTED_SOURCE" \
-              0 \
-              "No formatted source changes require committing." \
-              "No Ruby source changes were produced by formatting."
 
             exit 0
 

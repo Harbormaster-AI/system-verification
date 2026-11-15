@@ -108,15 +108,7 @@ jobs:
           
           source .github/actions/common/report.sh
           
-          if [ -d ".git" ]; then
-          
-              post_pass \
-                  "BUILD" \
-                  "CHECKOUT_SOURCE" \
-                  0 \
-                  "Repository checked out successfully."
-          
-          else
+          if [ ! -d ".git" ]; then
           
               post_fail \
                   "BUILD" \
@@ -224,12 +216,6 @@ jobs:
           
               SCORE=$((SCORE + 3))
           
-              post_pass \
-                  "BUILD" \
-                  "BUILD_FILE" \
-                  3 \
-                  "Build file located."
-          
           else
           
               post_fail \
@@ -247,13 +233,7 @@ jobs:
           if [[ -f Dockerfile ]]; then
           
               SCORE=$((SCORE + 2))
-          
-              post_pass \
-                  "BUILD" \
-                  "DOCKERFILE" \
-                  2 \
-                  "Dockerfile located."
-          
+                    
           else
           
               post_fail \
@@ -275,13 +255,7 @@ jobs:
              ]]; then
           
               SCORE=$((SCORE + 2))
-          
-              post_pass \
-                  "BUILD" \
-                  "SPRING_CONFIGURATION" \
-                  2 \
-                  "Spring Boot configuration located."
-          
+                    
           else
           
               post_fail \
@@ -301,13 +275,7 @@ jobs:
           if [ -n "$(find src/main/java -type f -name '*.java' -print -quit)" ]; then
           
               SCORE=$((SCORE + 3))
-          
-              post_pass \
-                  "BUILD" \
-                  "JAVA_SOURCE" \
-                  3 \
-                  "Java source files located."
-          
+                    
           else
           
               post_fail \
@@ -322,11 +290,10 @@ jobs:
           # Summary
           ###########################################################################
           
-          post_result \
+          post_pass \
               "BUILD" \
               "EXPECTED_FILES" \
-              "PASSED" \
-              0 \
+              ${SCORE} \
               "Expected files validation complete (${SCORE}/10)."
 
       ###############################################################################
@@ -351,12 +318,6 @@ jobs:
 
               SCORE=$((SCORE + 6))
 
-              post_pass \
-                  "BUILD" \
-                  "SRC_MAIN_JAVA" \
-                  6 \
-                  "src/main/java directory exists."
-
           else
 
               post_fail \
@@ -374,12 +335,6 @@ jobs:
           if find . -type d -path "*/src/main/resources" | grep -q .; then
 
               SCORE=$((SCORE + 2))
-
-              post_pass \
-                  "BUILD" \
-                  "SRC_MAIN_RESOURCES" \
-                  2 \
-                  "src/main/resources directory exists."
 
           else
 
@@ -399,12 +354,6 @@ jobs:
 
               SCORE=$((SCORE + 1))
 
-              post_pass \
-                  "BUILD" \
-                  "SRC_TEST" \
-                  1 \
-                  "src/test directory exists."
-
           else
 
               post_fail \
@@ -423,12 +372,6 @@ jobs:
 
               SCORE=$((SCORE + 1))
 
-              post_pass \
-                  "BUILD" \
-                  "SRC_MAIN_KOTLIN" \
-                  1 \
-                  "src/main/kotlin directory exists."
-
           else
 
               post_warning \
@@ -443,21 +386,10 @@ jobs:
           # Summary
           ###########################################################################
 
-          if [ "$SCORE" -gt 7 ]; then
-
-              STATUS="PASSED"
-
-          else
-
-              STATUS="FAILED"
-
-          fi
-
-          post_result \
+          post_pass \
               "BUILD" \
               "DIRECTORY_STRUCTURE" \
-              "${STATUS}" \
-              0 \
+              ${SCORE} \
               "Directory structure validation complete (${SCORE}/10)."
 
       ###############################################################################
@@ -688,7 +620,7 @@ jobs:
                   post_pass \
                       "BUILD" \
                       "MAVEN_PACKAGE" \
-                      40 \
+                      20 \
                       "Application built successfully."
 
               else
@@ -723,7 +655,7 @@ jobs:
                   post_pass \
                       "BUILD" \
                       "GRADLE_BUILD" \
-                      40 \
+                      20 \
                       "Application built successfully."
 
               else

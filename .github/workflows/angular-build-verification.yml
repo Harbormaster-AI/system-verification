@@ -100,12 +100,6 @@ jobs:
 
           if [ -d ".git" ]; then
 
-              post_pass \
-                  "BUILD" \
-                  "CHECKOUT_SOURCE" \
-                  0 \
-                  "Repository checked out successfully."
-
           else
 
               post_fail \
@@ -188,12 +182,6 @@ jobs:
 
               SCORE=$((SCORE + 3))
 
-              post_pass \
-                  "BUILD" \
-                  "PACKAGE_JSON" \
-                  3 \
-                  "package.json located."
-
           else
 
               post_fail \
@@ -212,12 +200,6 @@ jobs:
           if [ -f "angular.json" ]; then
 
               SCORE=$((SCORE + 2))
-
-              post_pass \
-                  "BUILD" \
-                  "ANGULAR_JSON" \
-                  2 \
-                  "angular.json located."
 
           else
 
@@ -238,11 +220,6 @@ jobs:
 
               SCORE=$((SCORE + 1))
 
-              post_pass \
-                  "BUILD" \
-                  "TSCONFIG" \
-                  1 \
-                  "tsconfig.json located."
 
           else
 
@@ -263,12 +240,6 @@ jobs:
 
               SCORE=$((SCORE + 1))
 
-              post_pass \
-                  "BUILD" \
-                  "MAIN_TS" \
-                  1 \
-                  "Angular bootstrap source located."
-
           else
 
               post_fail \
@@ -287,12 +258,6 @@ jobs:
           if [ -f "src/index.html" ]; then
 
               SCORE=$((SCORE + 1))
-
-              post_pass \
-                  "BUILD" \
-                  "INDEX_HTML" \
-                  1 \
-                  "Angular index.html located."
 
           else
 
@@ -313,12 +278,6 @@ jobs:
 
               SCORE=$((SCORE + 2))
 
-              post_pass \
-                  "BUILD" \
-                  "APPLICATION_CONFIGURATION" \
-                  2 \
-                  "Angular application configuration located."
-
           else
 
               post_fail \
@@ -333,12 +292,17 @@ jobs:
           ###########################################################################
           # Summary
           ###########################################################################
+          if [ "$SCORE" -ge 7 ]; then
+              STATUS="PASSED"
+          else
+              STATUS="FAILED"
+          fi
 
           post_result \
               "BUILD" \
               "EXPECTED_FILES" \
-              "PASSED" \
-              0 \
+              "${STATUS}" \
+              ${SCORE} \
               "Expected files validation complete (${SCORE}/10)."
 
 
@@ -365,12 +329,6 @@ jobs:
 
               SCORE=$((SCORE + 2))
 
-              post_pass \
-                  "BUILD" \
-                  "SRC_DIRECTORY" \
-                  2 \
-                  "src directory exists."
-
           else
 
               post_fail \
@@ -389,12 +347,6 @@ jobs:
           if [ -d "src/app" ]; then
 
               SCORE=$((SCORE + 3))
-
-              post_pass \
-                  "BUILD" \
-                  "APP_DIRECTORY" \
-                  3 \
-                  "src/app directory exists."
 
           else
 
@@ -415,12 +367,6 @@ jobs:
 
               SCORE=$((SCORE + 2))
 
-              post_pass \
-                  "BUILD" \
-                  "COMPONENTS_DIRECTORY" \
-                  2 \
-                  "Angular components directory exists."
-
           else
 
               post_fail \
@@ -439,12 +385,6 @@ jobs:
           if [ -d "src/app/models" ]; then
 
               SCORE=$((SCORE + 1))
-
-              post_pass \
-                  "BUILD" \
-                  "MODELS_DIRECTORY" \
-                  1 \
-                  "Angular models directory exists."
 
           else
 
@@ -465,12 +405,6 @@ jobs:
 
               SCORE=$((SCORE + 1))
 
-              post_pass \
-                  "BUILD" \
-                  "SERVICES_DIRECTORY" \
-                  1 \
-                  "Angular services directory exists."
-
           else
 
               post_warning \
@@ -489,12 +423,6 @@ jobs:
           if [ -d "src/environments" ]; then
 
               SCORE=$((SCORE + 1))
-
-              post_pass \
-                  "BUILD" \
-                  "ENVIRONMENTS_DIRECTORY" \
-                  1 \
-                  "Angular environments directory exists."
 
           else
 

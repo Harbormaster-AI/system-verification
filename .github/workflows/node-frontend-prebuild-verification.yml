@@ -138,12 +138,6 @@ jobs:
 
           if [ -d ".git" ]; then
 
-            post_pass \
-              "PRE_BUILD" \
-              "CHECKOUT_SOURCE" \
-              0 \
-              "Repository checked out successfully."
-
           else
 
             post_fail \
@@ -344,14 +338,12 @@ jobs:
 
               post_terminate_prebuild
 
-              ;;
-
           esac
 
           post_pass \
             "PRE_BUILD" \
             "VERIFY_FILES" \
-            5 \
+            10 \
             "Frontend project files verified." \
             "${TECHNOLOGY} project structure is valid."
 
@@ -384,7 +376,7 @@ jobs:
             post_pass \
               "PRE_BUILD" \
               "VERIFY_DIRECTORIES" \
-              5 \
+              10 \
               "Frontend directory structure verified."
           
           fi
@@ -478,13 +470,6 @@ jobs:
           git diff --cached --name-status
 
           if git diff --cached --quiet; then
-
-            post_pass \
-              "PRE_BUILD" \
-              "COMMIT_FORMATTED_SOURCE" \
-              0 \
-              "No formatted source changes require committing." \
-              "No source changes were produced by formatting."
 
             exit 0
 
@@ -700,7 +685,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "STATIC_ANALYSIS" \
-            15 \
+            30 \
             "Frontend static analysis completed successfully." \
             "Linting and TypeScript analysis completed."
 
@@ -753,7 +738,7 @@ jobs:
             post_pass \
               "PRE_BUILD" \
               "SECURITY_CHECK" \
-              10 \
+              30 \
               "Frontend security check completed successfully." \
               "Trivy found no HIGH or CRITICAL vulnerabilities."
 
