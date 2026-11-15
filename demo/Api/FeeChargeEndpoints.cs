@@ -29,9 +29,10 @@ public static class FeeChargeEndpoints
     private static async Task<IResult> Create(
         FeeChargeRequest request,
         IFeeChargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFeeCharge( request );
+        var model = mapRequestToFeeCharge(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class FeeChargeEndpoints
     private static async Task<IResult> Update(
         FeeChargeRequest request,
         IFeeChargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFeeCharge( request );
+        var model = mapRequestToFeeCharge(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class FeeChargeEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IFeeChargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var feeCharge = await service.Get(identifier, cancellationToken);
-        return feeCharge is null ? Results.NotFound() : Results.Ok( feeCharge );
+        return feeCharge is null ? Results.NotFound() : Results.Ok(feeCharge);
     }
 
 
     private static async Task<IResult> GetAll(
         IFeeChargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( FeeChargeResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(FeeChargeResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IFeeChargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class FeeChargeEndpoints
     private static async Task<IResult> AssignAccount(
         AssociationRequest request,
         IFeeChargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class FeeChargeEndpoints
     private static async Task<IResult> UnassignAccount(
     AssociationRequest request,
     IFeeChargeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class FeeChargeEndpoints
     private static async Task<IResult> AssignLoanAccount(
         AssociationRequest request,
         IFeeChargeService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLoanAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class FeeChargeEndpoints
     private static async Task<IResult> UnassignLoanAccount(
     AssociationRequest request,
     IFeeChargeService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLoanAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static FeeCharge mapRequestToFeeCharge( FeeChargeRequest request ) {
+    private static FeeCharge mapRequestToFeeCharge(FeeChargeRequest request)
+    {
         var model = new FeeCharge
         {
             Id = request.Id,

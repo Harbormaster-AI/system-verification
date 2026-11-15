@@ -36,7 +36,7 @@ namespace demo.Domain;
 
 public enum KycStatus
 {
-    Pending=1,Verified=2,Rejected=3,Expired=4
+    Pending = 1, Verified = 2, Rejected = 3, Expired = 4
 }
 
 /// <summary>
