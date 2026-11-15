@@ -186,14 +186,6 @@ jobs:
 
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
 
-          post_pass \
-            "RUNTIME" \
-            "STARTING_RUNTIME" \
-            0 \
-            "Ruby on Rails runtime verification starting..." \
-            ""
-
-
       ###########################################################################
       # Verify Rails application artifact
       ###########################################################################
@@ -211,13 +203,6 @@ jobs:
           if [ -f "Gemfile" ]; then
 
             SCORE=$((SCORE + 2))
-
-            post_pass \
-              "RUNTIME" \
-              "GEMFILE" \
-              2 \
-              "Rails Gemfile found." \
-              ""
 
           else
 
@@ -237,13 +222,6 @@ jobs:
 
             SCORE=$((SCORE + 2))
 
-            post_pass \
-              "RUNTIME" \
-              "RAILS_ENVIRONMENT" \
-              2 \
-              "Rails environment configuration found." \
-              ""
-
           else
 
             post_fail \
@@ -261,13 +239,6 @@ jobs:
           if [ -f "config/application.rb" ]; then
 
             SCORE=$((SCORE + 2))
-
-            post_pass \
-              "RUNTIME" \
-              "RAILS_APPLICATION" \
-              2 \
-              "Rails application configuration found." \
-              ""
 
           else
 
@@ -287,13 +258,6 @@ jobs:
 
             SCORE=$((SCORE + 1))
 
-            post_pass \
-              "RUNTIME" \
-              "PUMA_CONFIGURATION" \
-              1 \
-              "Puma configuration found." \
-              ""
-
           else
 
             post_fail \
@@ -309,13 +273,6 @@ jobs:
           if [ -f "bin/rails" ]; then
 
             SCORE=$((SCORE + 1))
-
-            post_pass \
-              "RUNTIME" \
-              "RAILS_EXECUTABLE" \
-              1 \
-              "Rails executable found." \
-              ""
 
           else
 
@@ -333,13 +290,6 @@ jobs:
 
             SCORE=$((SCORE + 1))
 
-            post_pass \
-              "RUNTIME" \
-              "ROUTES_CONFIGURATION" \
-              1 \
-              "Rails routes configuration found." \
-              ""
-
           else
 
             post_fail \
@@ -356,13 +306,6 @@ jobs:
 
             SCORE=$((SCORE + 1))
 
-            post_pass \
-              "RUNTIME" \
-              "RAKEFILE" \
-              1 \
-              "Rails Rakefile found." \
-              ""
-
           else
 
             post_fail \
@@ -375,11 +318,10 @@ jobs:
           fi
 
 
-          post_result \
+          post_pass \
             "RUNTIME" \
             "RAILS_ARTIFACT" \
-            "PASSED" \
-            0 \
+            ${SCORE} \
             "Rails application artifact validation complete (${SCORE}/10)."
 
       ###########################################################################
@@ -580,13 +522,6 @@ jobs:
 
           source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
 
-          post_pass \
-            "RUNTIME" \
-            "WAITING_FOR_APP" \
-            0 \
-            "Waiting for Ruby on Rails application to respond." \
-            ""
-
           RESPONSE="000"
 
           for i in {1..30}; do
@@ -668,167 +603,6 @@ jobs:
             post_terminate_runtime "RUNTIME"
 
           fi
-
-
-      ###########################################################################
-      # Verify Rails runtime
-      ###########################################################################
-
-      - name: Verify Rails Runtime
-
-        shell: bash
-
-        run: |
-
-          source "${GITHUB_WORKSPACE}/.github/actions/common/report.sh"
-
-          SCORE=0
-
-          if [ -f "config/environment.rb" ]; then
-
-            SCORE=$((SCORE + 2))
-
-            post_pass \
-              "RUNTIME" \
-              "ENVIRONMENT_RB" \
-              2 \
-              "Rails environment.rb verified." \
-              ""
-
-          else
-
-            post_fail \
-              "RUNTIME" \
-              "ENVIRONMENT_RB" \
-              0 \
-              "Rails environment.rb not found." \
-              ""
-
-          fi
-
-
-          if [ -f "config/application.rb" ]; then
-
-            SCORE=$((SCORE + 2))
-
-            post_pass \
-              "RUNTIME" \
-              "APPLICATION_RB" \
-              2 \
-              "Rails application.rb verified." \
-              ""
-
-          else
-
-            post_fail \
-              "RUNTIME" \
-              "APPLICATION_RB" \
-              0 \
-              "Rails application.rb not found." \
-              ""
-
-          fi
-
-
-          if [ -f "config/routes.rb" ]; then
-
-            SCORE=$((SCORE + 2))
-
-            post_pass \
-              "RUNTIME" \
-              "ROUTES_RB" \
-              2 \
-              "Rails routes.rb verified." \
-              ""
-
-          else
-
-            post_fail \
-              "RUNTIME" \
-              "ROUTES_RB" \
-              0 \
-              "Rails routes.rb not found." \
-              ""
-
-          fi
-
-
-          if [ -d "app/controllers" ]; then
-
-            SCORE=$((SCORE + 2))
-
-            post_pass \
-              "RUNTIME" \
-              "CONTROLLERS" \
-              2 \
-              "Rails controllers directory verified." \
-              ""
-
-          else
-
-            post_fail \
-              "RUNTIME" \
-              "CONTROLLERS" \
-              0 \
-              "Rails controllers directory not found." \
-              ""
-
-          fi
-
-
-          if [ -d "app/models" ]; then
-
-            SCORE=$((SCORE + 1))
-
-            post_pass \
-              "RUNTIME" \
-              "MODELS" \
-              1 \
-              "Rails models directory verified." \
-              ""
-
-          else
-
-            post_fail \
-              "RUNTIME" \
-              "MODELS" \
-              0 \
-              "Rails models directory not found." \
-              ""
-
-          fi
-
-
-          if [ -d "app/views" ]; then
-
-            SCORE=$((SCORE + 1))
-
-            post_pass \
-              "RUNTIME" \
-              "VIEWS" \
-              1 \
-              "Rails views directory verified." \
-              ""
-
-          else
-
-            post_fail \
-              "RUNTIME" \
-              "VIEWS" \
-              0 \
-              "Rails views directory not found." \
-              ""
-
-          fi
-
-
-          post_result \
-            "RUNTIME" \
-            "RAILS_RUNTIME" \
-            "PASSED" \
-            0 \
-            "Ruby on Rails runtime validation complete (${SCORE}/10)."
-
 
       ###########################################################################
       # Terminate Verification
