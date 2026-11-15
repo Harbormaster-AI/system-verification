@@ -37,9 +37,10 @@ public static class TransactionEndpoints
     private static async Task<IResult> Create(
         TransactionRequest request,
         ITransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTransaction( request );
+        var model = mapRequestToTransaction(request);
 
         try
         {
@@ -56,9 +57,10 @@ public static class TransactionEndpoints
     private static async Task<IResult> Update(
         TransactionRequest request,
         ITransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTransaction( request );
+        var model = mapRequestToTransaction(request);
 
         try
         {
@@ -75,25 +77,28 @@ public static class TransactionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var transaction = await service.Get(identifier, cancellationToken);
-        return transaction is null ? Results.NotFound() : Results.Ok( transaction );
+        return transaction is null ? Results.NotFound() : Results.Ok(transaction);
     }
 
 
     private static async Task<IResult> GetAll(
         ITransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TransactionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TransactionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +106,8 @@ public static class TransactionEndpoints
     private static async Task<IResult> AssignAccount(
         AssociationRequest request,
         ITransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +115,8 @@ public static class TransactionEndpoints
     private static async Task<IResult> UnassignAccount(
     AssociationRequest request,
     ITransactionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,7 +124,8 @@ public static class TransactionEndpoints
     private static async Task<IResult> AssignExternalCounterparty(
         AssociationRequest request,
         ITransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignExternalCounterparty(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -125,7 +133,8 @@ public static class TransactionEndpoints
     private static async Task<IResult> UnassignExternalCounterparty(
     AssociationRequest request,
     ITransactionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignExternalCounterparty(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -133,7 +142,8 @@ public static class TransactionEndpoints
     private static async Task<IResult> AssignPaymentCard(
         AssociationRequest request,
         ITransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPaymentCard(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -141,7 +151,8 @@ public static class TransactionEndpoints
     private static async Task<IResult> UnassignPaymentCard(
     AssociationRequest request,
     ITransactionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPaymentCard(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -149,7 +160,8 @@ public static class TransactionEndpoints
     private static async Task<IResult> AssignFundsTransfer(
         AssociationRequest request,
         ITransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignFundsTransfer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -157,7 +169,8 @@ public static class TransactionEndpoints
     private static async Task<IResult> UnassignFundsTransfer(
     AssociationRequest request,
     ITransactionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignFundsTransfer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -165,7 +178,8 @@ public static class TransactionEndpoints
     private static async Task<IResult> AssignFxTrade(
         AssociationRequest request,
         ITransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignFxTrade(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -173,7 +187,8 @@ public static class TransactionEndpoints
     private static async Task<IResult> UnassignFxTrade(
     AssociationRequest request,
     ITransactionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignFxTrade(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -181,7 +196,8 @@ public static class TransactionEndpoints
     private static async Task<IResult> AssignDispute(
         AssociationRequest request,
         ITransactionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignDispute(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -189,13 +205,15 @@ public static class TransactionEndpoints
     private static async Task<IResult> UnassignDispute(
     AssociationRequest request,
     ITransactionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignDispute(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Transaction mapRequestToTransaction( TransactionRequest request ) {
+    private static Transaction mapRequestToTransaction(TransactionRequest request)
+    {
         var model = new Transaction
         {
             Id = request.Id,
