@@ -36,7 +36,7 @@ namespace demo.Domain;
 
 public enum CardNetwork
 {
-    Visa=1,Mastercard=2,Amex=3,Discover=4,UnionPay=5,Other=6
+    Visa = 1, Mastercard = 2, Amex = 3, Discover = 4, UnionPay = 5, Other = 6
 }
 
 /// <summary>
