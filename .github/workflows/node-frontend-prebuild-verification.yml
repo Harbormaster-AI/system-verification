@@ -438,80 +438,66 @@ jobs:
       - name: Commit Formatted Source
         shell: bash
         run: |
-
           source .github/actions/common/report.sh
-
+          
           echo "Checking for formatted source changes..."
-
+          
           git status --short
-
+          
           git add -- .
-
+          
           echo "Files staged for commit:"
-
           git diff --cached --name-status
-
+          
+          # Nothing to commit
           if git diff --cached --quiet; then
-
+            echo "No formatting changes detected."
             exit 0
-
           fi
-
+          
           git config user.name "HarborMaster Verification"
           git config user.email "dev@harbormaster.net"
-
+          
           TARGET_BRANCH="${{ inputs.branch }}"
-
+          
           if [ -z "${TARGET_BRANCH}" ]; then
             TARGET_BRANCH="${GITHUB_REF_NAME}"
           fi
-
+          
           echo "Target branch: ${TARGET_BRANCH}"
-
-          git fetch origin "${TARGET_BRANCH}"
-
-          git checkout -B "${TARGET_BRANCH}" \
-            "origin/${TARGET_BRANCH}"
-
-          git add -- .
-
-          echo "Final staged files:"
-
-          git diff --cached --name-status
-
+          
+          # Commit the formatted changes on the current HEAD
           if ! git commit \
               -m "chore: format generated ${TECHNOLOGY} source"; then
-
+          
             post_fail \
               "PRE_BUILD" \
               "COMMIT_FORMATTED_SOURCE" \
               0 \
               "Failed to commit formatted ${TECHNOLOGY} source."
-
+          
             post_terminate_prebuild
-
+            exit 1
           fi
-
+          
           COMMIT_SHA=$(git rev-parse HEAD)
-
+          
           echo "Created commit: ${COMMIT_SHA}"
-
-          if ! git push origin \
-              "HEAD:${TARGET_BRANCH}"; then
-
-
-          else
-
+          
+          if ! git push origin "HEAD:${TARGET_BRANCH}"; then
+          
             post_fail \
               "PRE_BUILD" \
               "COMMIT_FORMATTED_SOURCE" \
               0 \
               "Failed to push formatted ${TECHNOLOGY} source." \
               "GitHub rejected the push to ${TARGET_BRANCH}."
-
+          
             post_terminate_prebuild
-
+            exit 1
           fi
+          
+          echo "Formatted source committed and pushed successfully."
 
       ###############################################################################
       # Package and Upload formatted source
