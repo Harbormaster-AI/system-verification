@@ -1,0 +1,5 @@
+@demo.Api_HostAddress = 
+
+GET {{demo.Api_HostAddress}}/
+Accept: application/json
+
