@@ -423,7 +423,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "FORMAT_CODE" \
-            15 \
+            20 \
             "Source formatting completed successfully." \
             "Spotless completed with no remaining formatting changes."
 
@@ -531,12 +531,9 @@ jobs:
           if git push origin \
               "HEAD:${TARGET_BRANCH}"; then
 
-            post_pass \
-              "PRE_BUILD" \
-              "COMMIT_FORMATTED_SOURCE" \
-              5 \
-              "Formatted Spring Boot source committed successfully." \
-              "Commit ${COMMIT_SHA} pushed to ${TARGET_BRANCH}."
+        
+          echo "Formatted Spring Boot source committed successfully."
+          echo "Commit ${COMMIT_SHA} pushed to ${TARGET_BRANCH}."
 
           else
 
