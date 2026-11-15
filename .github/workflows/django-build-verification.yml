@@ -76,8 +76,8 @@ jobs:
         run: |
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
 
-          if [ -d ".git" ]; then
-          else
+          if [ ! -d ".git" ]; then
+
               post_fail "BUILD" "CHECKOUT_SOURCE" 0 "Repository checkout failed."
               post_terminate_build
           fi

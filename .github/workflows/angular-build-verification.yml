@@ -98,9 +98,7 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          if [ -d ".git" ]; then
-
-          else
+          if [ ! -d ".git" ]; then
 
               post_fail \
                   "BUILD" \

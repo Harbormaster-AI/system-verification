@@ -99,15 +99,7 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          if [ -d ".git" ]; then
-
-              post_pass \
-                  "BUILD" \
-                  "CHECKOUT_SOURCE" \
-                  0 \
-                  "Repository checked out successfully."
-
-          else
+          if [ ! -d ".git" ]; then
 
               post_fail \
                   "BUILD" \
