@@ -146,13 +146,6 @@ jobs:
         run: |
           
           source .github/actions/common/report.sh
-          
-          post_pass \
-                        "RUNTIME" \
-                        "STARTING_RUNTIME" \
-                        0 \
-                        "Runtime verification starting..." \
-                        "" 
 
       ###########################################################################
       #   Locate the executable.
@@ -213,24 +206,15 @@ jobs:
           
           source .github/actions/common/report.sh
 
-          post_pass \
-              "RUNTIME" \
-              "WAITING_FOR_MYSQL" \
-              0 \
-              "Waiting for MySQL to start." \
-              ""
-
+          echo "Waiting for MySQL to start."
+              
           for i in {1..30}; do
 
               if mysqladmin ping -h 127.0.0.1 -P 3307 -uroot -proot --silent 2>/dev/null; then
 
                   # Informative setup step — do not add to score (max runtime score is 100)
-                  post_pass \
-                      "RUNTIME" \
-                      "MYSQL_READY" \
-                      0 \
-                      "MySQL is ready." \
-                      "MySQL service is accepting connections."
+                  echo "MySQL is ready."
+                  echo "MySQL service is accepting connections."
 
                   exit 0
 
@@ -292,12 +276,8 @@ jobs:
           sed -i 's/^[[:space:]]*//' .env
 
           # Informative setup step — do not add to score (max runtime score is 100)
-          post_pass \
-              "RUNTIME" \
-              "CONFIGURE_DATABASE" \
-              0 \
-              "Database environment configured." \
-              "Runtime workflow set DB connection via environment variables (not by editing project secrets)."
+          echo "Database environment configured."
+          echo "Runtime workflow set DB connection via environment variables (not by editing project secrets)."
 
       ###########################################################################
       #   Launch Go application
@@ -379,12 +359,6 @@ jobs:
           
           source .github/actions/common/report.sh
 
-          post_pass \
-              "RUNTIME" \
-              "WAITING_FOR_APP" \
-              0 \
-              "Waiting for system to start." \
-              ""
           
           for i in {1..60}; do
           
