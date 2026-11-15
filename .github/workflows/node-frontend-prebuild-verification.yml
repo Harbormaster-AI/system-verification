@@ -338,14 +338,6 @@ jobs:
 
           esac
 
-          post_pass \
-            "PRE_BUILD" \
-            "VERIFY_FILES" \
-            10 \
-            "Frontend project files verified." \
-            "${TECHNOLOGY} project structure is valid."
-
-
       ###########################################################################
       # Verify Directories
       ###########################################################################
@@ -368,15 +360,7 @@ jobs:
               "Expected ./src."
           
             post_terminate_prebuild
-          
-          else
-        
-            post_pass \
-              "PRE_BUILD" \
-              "VERIFY_DIRECTORIES" \
-              10 \
-              "Frontend directory structure verified."
-          
+                    
           fi
 
 
@@ -442,7 +426,7 @@ jobs:
           post_pass \
             "PRE_BUILD" \
             "FORMAT_CODE" \
-            15 \
+            30 \
             "Frontend source formatting completed successfully." \
             "Prettier completed with no remaining formatting changes."
 
@@ -512,15 +496,9 @@ jobs:
 
           echo "Created commit: ${COMMIT_SHA}"
 
-          if git push origin \
+          if ! git push origin \
               "HEAD:${TARGET_BRANCH}"; then
 
-            post_pass \
-              "PRE_BUILD" \
-              "COMMIT_FORMATTED_SOURCE" \
-              5 \
-              "Formatted ${TECHNOLOGY} source committed successfully." \
-              "Commit ${COMMIT_SHA} pushed to ${TARGET_BRANCH}."
 
           else
 
@@ -736,7 +714,7 @@ jobs:
             post_pass \
               "PRE_BUILD" \
               "SECURITY_CHECK" \
-              30 \
+              40 \
               "Frontend security check completed successfully." \
               "Trivy found no HIGH or CRITICAL vulnerabilities."
 
