@@ -116,14 +116,6 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          post_pass \
-            "RUNTIME" \
-            "STARTING_RUNTIME" \
-            0 \
-            "Angular runtime verification starting..." \
-            ""
-
-
       ###########################################################################
       # Locate Angular application
       ###########################################################################
@@ -270,13 +262,6 @@ jobs:
 
           source .github/actions/common/report.sh
 
-          post_pass \
-            "RUNTIME" \
-            "WAITING_FOR_APP" \
-            0 \
-            "Waiting for Angular application to respond." \
-            ""
-
           for i in {1..30}; do
 
             RESPONSE=$(curl \
@@ -337,7 +322,7 @@ jobs:
               "SMOKE_TEST" \
               30 \
               "Angular smoke test passed." \
-              "$(cat smoke.out)"
+              ""
 
           else
 
