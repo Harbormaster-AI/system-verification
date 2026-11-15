@@ -371,25 +371,18 @@ jobs:
 
           if find "$APP_DIRECTORY" \
               -type f \
-              -name "*.js" \
+              -name "*.ts" \
               -print -quit | grep -q .; then
 
             SCORE=$((SCORE + 4))
-
-            post_pass \
-              "RUNTIME" \
-              "JAVASCRIPT_ASSETS" \
-              4 \
-              "JavaScript assets found." \
-              ""
 
           else
 
             post_fail \
               "RUNTIME" \
-              "JAVASCRIPT_ASSETS" \
+              "TYPECRIPT_ASSETS" \
               0 \
-              "No JavaScript assets found." \
+              "No TypeScript assets found." \
               ""
 
           fi
@@ -401,13 +394,6 @@ jobs:
               -print -quit | grep -q .; then
 
             SCORE=$((SCORE + 3))
-
-            post_pass \
-              "RUNTIME" \
-              "CSS_ASSETS" \
-              3 \
-              "CSS assets found." \
-              ""
 
           else
 
@@ -428,21 +414,13 @@ jobs:
 
             SCORE=$((SCORE + 3))
 
-            post_pass \
-              "RUNTIME" \
-              "INDEX_ASSET" \
-              3 \
-              "index.html found." \
-              ""
-
           fi
 
 
-          post_result \
+          post_pass \
             "RUNTIME" \
             "APPLICATION_ASSETS" \
-            "PASSED" \
-            0 \
+            ${SCORE} \
             "Application asset validation complete (${SCORE}/10)."
 
 

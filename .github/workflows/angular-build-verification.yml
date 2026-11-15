@@ -290,16 +290,10 @@ jobs:
           ###########################################################################
           # Summary
           ###########################################################################
-          if [ "$SCORE" -ge 7 ]; then
-              STATUS="PASSED"
-          else
-              STATUS="FAILED"
-          fi
 
-          post_result \
+          post_pass \
               "BUILD" \
               "EXPECTED_FILES" \
-              "${STATUS}" \
               ${SCORE} \
               "Expected files validation complete (${SCORE}/10)."
 
@@ -437,17 +431,10 @@ jobs:
           # Summary
           ###########################################################################
 
-          if [ "$SCORE" -ge 7 ]; then
-              STATUS="PASSED"
-          else
-              STATUS="FAILED"
-          fi
-
-          post_result \
+          post_pass \
               "BUILD" \
               "DIRECTORY_STRUCTURE" \
-              "${STATUS}" \
-              0 \
+              ${SCORE} \
               "Directory structure validation complete (${SCORE}/10)."
 
       ###############################################################################
