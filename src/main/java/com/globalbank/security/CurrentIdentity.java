@@ -4,17 +4,15 @@ import java.util.Collection;
 
 public interface CurrentIdentity {
 
-    public boolean isAuthenticated();
+  public boolean isAuthenticated();
 
-    public String getSubject();
+  public String getSubject();
 
-    public String getUsername();
+  public String getUsername();
 
-    public String getOrganizationId();
+  public String getOrganizationId();
 
-    public Collection<String> getAuthorities();
+  public Collection<String> getAuthorities();
 
-    public boolean hasAuthority(String authority);
-
-
+  public boolean hasAuthority(String authority);
 }
