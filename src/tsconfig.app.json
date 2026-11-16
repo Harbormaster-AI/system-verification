@@ -4,13 +4,7 @@
     "outDir": "../out-tsc/app",
     "types": []
   },
-  "files": [
-    "main.ts"
-  ],
-  "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "**/*.spec.ts"
-  ]
+  "files": ["main.ts"],
+  "include": ["**/*.ts"],
+  "exclude": ["**/*.spec.ts"]
 }
