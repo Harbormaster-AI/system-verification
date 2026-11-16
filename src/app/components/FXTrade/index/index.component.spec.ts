@@ -1,28 +1,25 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { IndexFXTradeComponent } from "./index.component";
+import { FXTradeService } from "../../../services/FXTrade.service";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { IndexFXTradeComponent } from './index.component';
-import { FXTradeService } from '../../../services/FXTrade.service';
-
-describe('IndexFXTradeComponent', () => {
+describe("IndexFXTradeComponent", () => {
   let component: IndexFXTradeComponent;
   let fixture: ComponentFixture<IndexFXTradeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        IndexFXTradeComponent
-      ],
+      declarations: [IndexFXTradeComponent],
       providers: [
         FXTradeService,
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate'),
-            navigateByUrl: jasmine.createSpy('navigateByUrl')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+            navigateByUrl: jasmine.createSpy("navigateByUrl"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IndexFXTradeComponent);
@@ -31,7 +28,7 @@ describe('IndexFXTradeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

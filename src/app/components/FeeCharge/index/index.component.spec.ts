@@ -1,28 +1,25 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { IndexFeeChargeComponent } from "./index.component";
+import { FeeChargeService } from "../../../services/FeeCharge.service";
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { IndexFeeChargeComponent } from './index.component';
-import { FeeChargeService } from '../../../services/FeeCharge.service';
-
-describe('IndexFeeChargeComponent', () => {
+describe("IndexFeeChargeComponent", () => {
   let component: IndexFeeChargeComponent;
   let fixture: ComponentFixture<IndexFeeChargeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        IndexFeeChargeComponent
-      ],
+      declarations: [IndexFeeChargeComponent],
       providers: [
         FeeChargeService,
         {
           provide: Router,
           useValue: {
-            navigate: jasmine.createSpy('navigate'),
-            navigateByUrl: jasmine.createSpy('navigateByUrl')
-          }
-        }
-      ]
+            navigate: jasmine.createSpy("navigate"),
+            navigateByUrl: jasmine.createSpy("navigateByUrl"),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IndexFeeChargeComponent);
@@ -31,7 +28,7 @@ describe('IndexFeeChargeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
