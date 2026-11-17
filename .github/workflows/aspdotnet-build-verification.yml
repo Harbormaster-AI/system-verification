@@ -146,26 +146,17 @@ jobs:
           
           source ${GITHUB_WORKSPACE}/.github/actions/common/report.sh
           
-          if [ -d ".git" ] || [ -d "../.git" ]; then
+          if [ ! -d ".git" ] && [ ! -d "../.git" ]; then
           
-              post_pass \
-                  "BUILD" \
-                  "CHECKOUT_SOURCE" \
-                  0 \
-                  "Repository checked out successfully."
+            post_fail \
+            "BUILD" \
+            "CHECKOUT_SOURCE" \
+            0 \
+            "Repository checkout failed."
+            
+            post_terminate_build
           
-          else
-          
-              post_fail \
-                  "BUILD" \
-                  "CHECKOUT_SOURCE" \
-                  0 \
-                  "Repository checkout failed."
-          
-              post_terminate_build
-          
-          fi
-      
+          fi      
 
       ###############################################################################
       # Determine .NET SDK Version
