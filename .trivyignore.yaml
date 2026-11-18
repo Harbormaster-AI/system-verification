@@ -1,0 +1,6 @@
+vulnerabilities:
+  - id: CVE-2026-47884
+    statement: "Not applicable: Harbormaster does not generate XsltView functionality."
+
+  - id: CVE-2026-47890
+    statement: "Not applicable: Harbormaster does not generate SSE view rendering."
