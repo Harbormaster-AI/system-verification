@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="treasuryonaspdotnet/treasuryonaspdotnet.Api.csproj" />
+  <Project Path="treasuryonaspdotnet/Tests/treasuryonaspdotnet.Tests.csproj" />
+</Solution>

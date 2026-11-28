@@ -1,0 +1,5 @@
+@treasuryonaspdotnet.Api_HostAddress = http://localhost:5076
+
+GET {{treasuryonaspdotnet.Api_HostAddress}}/
+Accept: application/json
+
