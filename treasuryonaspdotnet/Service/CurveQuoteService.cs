@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ICurveQuoteService {
+public interface ICurveQuoteService
+{
 
-    Task Create(CurveQuote model , CancellationToken cancellationToken);
+    Task Create(CurveQuote model, CancellationToken cancellationToken);
     Task<bool> Update(CurveQuote model, CancellationToken cancellationToken);
     Task<CurveQuote?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CurveQuote>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class CurveQuoteService : ICurveQuoteService
 
     public async Task<bool> Update(CurveQuote model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,7 +118,8 @@ public class CurveQuoteService : ICurveQuoteService
         return true;
     }
 
-    public async Task<bool> AssignYieldCurve(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignYieldCurve(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -134,7 +137,7 @@ public class CurveQuoteService : ICurveQuoteService
 
             var child = await _serviceResolver.Get<YieldCurveService>().Get(childRequest, cancellationToken);
             parent.YieldCurve = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -146,7 +149,8 @@ public class CurveQuoteService : ICurveQuoteService
         return true;
     }
 
-    public async Task<bool> UnassignYieldCurve(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignYieldCurve(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -157,7 +161,7 @@ public class CurveQuoteService : ICurveQuoteService
         try
         {
             parent.YieldCurve = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

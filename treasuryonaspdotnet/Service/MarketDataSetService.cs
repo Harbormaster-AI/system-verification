@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IMarketDataSetService {
+public interface IMarketDataSetService
+{
 
-    Task Create(MarketDataSet model , CancellationToken cancellationToken);
+    Task Create(MarketDataSet model, CancellationToken cancellationToken);
     Task<bool> Update(MarketDataSet model, CancellationToken cancellationToken);
     Task<MarketDataSet?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<MarketDataSet>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class MarketDataSetService : IMarketDataSetService
 
     public async Task<bool> Update(MarketDataSet model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,8 +125,10 @@ public class MarketDataSetService : IMarketDataSetService
     }
 
 
-    public async Task<bool> AddToYieldCurves(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToYieldCurves(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MarketDataSet",
                 "AddToYieldCurves",
@@ -132,16 +136,18 @@ public class MarketDataSetService : IMarketDataSetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromYieldCurves(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromYieldCurves(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MarketDataSet",
                 "RemoveFromYieldCurves",
@@ -157,8 +163,10 @@ public class MarketDataSetService : IMarketDataSetService
         return true;
     }
 
-    public async Task<bool> AddToFxRates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToFxRates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MarketDataSet",
                 "AddToFxRates",
@@ -166,16 +174,18 @@ public class MarketDataSetService : IMarketDataSetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromFxRates(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromFxRates(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MarketDataSet",
                 "RemoveFromFxRates",
@@ -191,8 +201,10 @@ public class MarketDataSetService : IMarketDataSetService
         return true;
     }
 
-    public async Task<bool> AddToVolSurfaces(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToVolSurfaces(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MarketDataSet",
                 "AddToVolSurfaces",
@@ -200,16 +212,18 @@ public class MarketDataSetService : IMarketDataSetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromVolSurfaces(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromVolSurfaces(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MarketDataSet",
                 "RemoveFromVolSurfaces",
@@ -225,8 +239,10 @@ public class MarketDataSetService : IMarketDataSetService
         return true;
     }
 
-    public async Task<bool> AddToStressScenarios(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToStressScenarios(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MarketDataSet",
                 "AddToStressScenarios",
@@ -234,16 +250,18 @@ public class MarketDataSetService : IMarketDataSetService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromStressScenarios(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromStressScenarios(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MarketDataSet",
                 "RemoveFromStressScenarios",

@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ITransferPricingRuleService {
+public interface ITransferPricingRuleService
+{
 
-    Task Create(TransferPricingRule model , CancellationToken cancellationToken);
+    Task Create(TransferPricingRule model, CancellationToken cancellationToken);
     Task<bool> Update(TransferPricingRule model, CancellationToken cancellationToken);
     Task<TransferPricingRule?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TransferPricingRule>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class TransferPricingRuleService : ITransferPricingRuleService
 
     public async Task<bool> Update(TransferPricingRule model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class TransferPricingRuleService : ITransferPricingRuleService
         return true;
     }
 
-    public async Task<bool> AssignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class TransferPricingRuleService : ITransferPricingRuleService
 
             var child = await _serviceResolver.Get<TreasuryUnitService>().Get(childRequest, cancellationToken);
             parent.TreasuryUnit = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class TransferPricingRuleService : ITransferPricingRuleService
         return true;
     }
 
-    public async Task<bool> UnassignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class TransferPricingRuleService : ITransferPricingRuleService
         try
         {
             parent.TreasuryUnit = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class TransferPricingRuleService : ITransferPricingRuleService
     }
 
 
-    public async Task<bool> AddToAppliedDeals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAppliedDeals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TransferPricingRule",
                 "AddToAppliedDeals",
@@ -184,16 +190,18 @@ public class TransferPricingRuleService : ITransferPricingRuleService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAppliedDeals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAppliedDeals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TransferPricingRule",
                 "RemoveFromAppliedDeals",

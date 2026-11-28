@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum RiskReportType
 {
-    PV=1,Sensitivity=2,VaR=3,Liquidity=4
+    PV = 1, Sensitivity = 2, VaR = 3, Liquidity = 4
 }
 
 /// <summary>

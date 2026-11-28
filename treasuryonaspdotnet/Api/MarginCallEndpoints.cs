@@ -24,8 +24,8 @@ public static class MarginCallEndpoints
         group.MapPut("/assignCounterparty", AssignCounterparty);
         group.MapPut("/unassignCounterparty", UnassignCounterparty);
 
-    group.MapPut("/addToCashFlows", AddToCashFlows);
-    group.MapPut("/removeFromCashFlows", RemoveFromCashFlows);
+        group.MapPut("/addToCashFlows", AddToCashFlows);
+        group.MapPut("/removeFromCashFlows", RemoveFromCashFlows);
 
 
         return app;
@@ -34,9 +34,10 @@ public static class MarginCallEndpoints
     private static async Task<IResult> Create(
         MarginCallRequest request,
         IMarginCallService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMarginCall( request );
+        var model = mapRequestToMarginCall(request);
 
         try
         {
@@ -53,9 +54,10 @@ public static class MarginCallEndpoints
     private static async Task<IResult> Update(
         MarginCallRequest request,
         IMarginCallService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMarginCall( request );
+        var model = mapRequestToMarginCall(request);
 
         try
         {
@@ -72,25 +74,28 @@ public static class MarginCallEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMarginCallService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var marginCall = await service.Get(identifier, cancellationToken);
-        return marginCall is null ? Results.NotFound() : Results.Ok( marginCall );
+        return marginCall is null ? Results.NotFound() : Results.Ok(marginCall);
     }
 
 
     private static async Task<IResult> GetAll(
         IMarginCallService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MarginCallResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MarginCallResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMarginCallService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -98,7 +103,8 @@ public static class MarginCallEndpoints
     private static async Task<IResult> AssignCollateralAgreement(
         AssociationRequest request,
         IMarginCallService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCollateralAgreement(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -106,7 +112,8 @@ public static class MarginCallEndpoints
     private static async Task<IResult> UnassignCollateralAgreement(
     AssociationRequest request,
     IMarginCallService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCollateralAgreement(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class MarginCallEndpoints
     private static async Task<IResult> AssignCollateralAccount(
         AssociationRequest request,
         IMarginCallService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCollateralAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -122,7 +130,8 @@ public static class MarginCallEndpoints
     private static async Task<IResult> UnassignCollateralAccount(
     AssociationRequest request,
     IMarginCallService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCollateralAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -130,7 +139,8 @@ public static class MarginCallEndpoints
     private static async Task<IResult> AssignCounterparty(
         AssociationRequest request,
         IMarginCallService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCounterparty(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -138,7 +148,8 @@ public static class MarginCallEndpoints
     private static async Task<IResult> UnassignCounterparty(
     AssociationRequest request,
     IMarginCallService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCounterparty(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -147,7 +158,8 @@ public static class MarginCallEndpoints
     private static async Task<IResult> AddToCashFlows(
         MultipleAssociationRequest request,
         IMarginCallService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCashFlows(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class MarginCallEndpoints
     private static async Task<IResult> RemoveFromCashFlows(
         MultipleAssociationRequest request,
         IMarginCallService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCashFlows(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static MarginCall mapRequestToMarginCall( MarginCallRequest request ) {
+    private static MarginCall mapRequestToMarginCall(MarginCallRequest request)
+    {
         var model = new MarginCall
         {
             Id = request.Id,

@@ -31,9 +31,10 @@ public static class AccountingEntryEndpoints
     private static async Task<IResult> Create(
         AccountingEntryRequest request,
         IAccountingEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAccountingEntry( request );
+        var model = mapRequestToAccountingEntry(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class AccountingEntryEndpoints
     private static async Task<IResult> Update(
         AccountingEntryRequest request,
         IAccountingEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToAccountingEntry( request );
+        var model = mapRequestToAccountingEntry(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class AccountingEntryEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IAccountingEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var accountingEntry = await service.Get(identifier, cancellationToken);
-        return accountingEntry is null ? Results.NotFound() : Results.Ok( accountingEntry );
+        return accountingEntry is null ? Results.NotFound() : Results.Ok(accountingEntry);
     }
 
 
     private static async Task<IResult> GetAll(
         IAccountingEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( AccountingEntryResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(AccountingEntryResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IAccountingEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class AccountingEntryEndpoints
     private static async Task<IResult> AssignTrade(
         AssociationRequest request,
         IAccountingEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTrade(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class AccountingEntryEndpoints
     private static async Task<IResult> UnassignTrade(
     AssociationRequest request,
     IAccountingEntryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTrade(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class AccountingEntryEndpoints
     private static async Task<IResult> AssignHedgeRelationship(
         AssociationRequest request,
         IAccountingEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignHedgeRelationship(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class AccountingEntryEndpoints
     private static async Task<IResult> UnassignHedgeRelationship(
     AssociationRequest request,
     IAccountingEntryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignHedgeRelationship(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class AccountingEntryEndpoints
     private static async Task<IResult> AssignPortfolio(
         AssociationRequest request,
         IAccountingEntryService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPortfolio(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class AccountingEntryEndpoints
     private static async Task<IResult> UnassignPortfolio(
     AssociationRequest request,
     IAccountingEntryService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPortfolio(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static AccountingEntry mapRequestToAccountingEntry( AccountingEntryRequest request ) {
+    private static AccountingEntry mapRequestToAccountingEntry(AccountingEntryRequest request)
+    {
         var model = new AccountingEntry
         {
             Id = request.Id,

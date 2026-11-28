@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum CollateralType
 {
-    Cash=1,GovernmentBond=2,CorporateBond=3,Equity=4,Other=5
+    Cash = 1, GovernmentBond = 2, CorporateBond = 3, Equity = 4, Other = 5
 }
 
 /// <summary>

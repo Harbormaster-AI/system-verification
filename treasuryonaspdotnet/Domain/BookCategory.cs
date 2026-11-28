@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum BookCategory
 {
-    Treasury=1,ALM=2,LiquidityBuffer=3
+    Treasury = 1, ALM = 2, LiquidityBuffer = 3
 }
 
 /// <summary>

@@ -20,8 +20,8 @@ public static class TransferPricingRuleEndpoints
         group.MapPut("/assignTreasuryUnit", AssignTreasuryUnit);
         group.MapPut("/unassignTreasuryUnit", UnassignTreasuryUnit);
 
-    group.MapPut("/addToAppliedDeals", AddToAppliedDeals);
-    group.MapPut("/removeFromAppliedDeals", RemoveFromAppliedDeals);
+        group.MapPut("/addToAppliedDeals", AddToAppliedDeals);
+        group.MapPut("/removeFromAppliedDeals", RemoveFromAppliedDeals);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class TransferPricingRuleEndpoints
     private static async Task<IResult> Create(
         TransferPricingRuleRequest request,
         ITransferPricingRuleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTransferPricingRule( request );
+        var model = mapRequestToTransferPricingRule(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class TransferPricingRuleEndpoints
     private static async Task<IResult> Update(
         TransferPricingRuleRequest request,
         ITransferPricingRuleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTransferPricingRule( request );
+        var model = mapRequestToTransferPricingRule(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class TransferPricingRuleEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITransferPricingRuleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var transferPricingRule = await service.Get(identifier, cancellationToken);
-        return transferPricingRule is null ? Results.NotFound() : Results.Ok( transferPricingRule );
+        return transferPricingRule is null ? Results.NotFound() : Results.Ok(transferPricingRule);
     }
 
 
     private static async Task<IResult> GetAll(
         ITransferPricingRuleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TransferPricingRuleResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TransferPricingRuleResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITransferPricingRuleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class TransferPricingRuleEndpoints
     private static async Task<IResult> AssignTreasuryUnit(
         AssociationRequest request,
         ITransferPricingRuleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTreasuryUnit(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class TransferPricingRuleEndpoints
     private static async Task<IResult> UnassignTreasuryUnit(
     AssociationRequest request,
     ITransferPricingRuleService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTreasuryUnit(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class TransferPricingRuleEndpoints
     private static async Task<IResult> AddToAppliedDeals(
         MultipleAssociationRequest request,
         ITransferPricingRuleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAppliedDeals(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class TransferPricingRuleEndpoints
     private static async Task<IResult> RemoveFromAppliedDeals(
         MultipleAssociationRequest request,
         ITransferPricingRuleService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAppliedDeals(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static TransferPricingRule mapRequestToTransferPricingRule( TransferPricingRuleRequest request ) {
+    private static TransferPricingRule mapRequestToTransferPricingRule(TransferPricingRuleRequest request)
+    {
         var model = new TransferPricingRule
         {
             Id = request.Id,

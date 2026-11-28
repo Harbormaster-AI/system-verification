@@ -27,9 +27,10 @@ public static class CurveQuoteEndpoints
     private static async Task<IResult> Create(
         CurveQuoteRequest request,
         ICurveQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCurveQuote( request );
+        var model = mapRequestToCurveQuote(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class CurveQuoteEndpoints
     private static async Task<IResult> Update(
         CurveQuoteRequest request,
         ICurveQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCurveQuote( request );
+        var model = mapRequestToCurveQuote(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class CurveQuoteEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICurveQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var curveQuote = await service.Get(identifier, cancellationToken);
-        return curveQuote is null ? Results.NotFound() : Results.Ok( curveQuote );
+        return curveQuote is null ? Results.NotFound() : Results.Ok(curveQuote);
     }
 
 
     private static async Task<IResult> GetAll(
         ICurveQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CurveQuoteResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CurveQuoteResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICurveQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class CurveQuoteEndpoints
     private static async Task<IResult> AssignYieldCurve(
         AssociationRequest request,
         ICurveQuoteService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignYieldCurve(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class CurveQuoteEndpoints
     private static async Task<IResult> UnassignYieldCurve(
     AssociationRequest request,
     ICurveQuoteService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignYieldCurve(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static CurveQuote mapRequestToCurveQuote( CurveQuoteRequest request ) {
+    private static CurveQuote mapRequestToCurveQuote(CurveQuoteRequest request)
+    {
         var model = new CurveQuote
         {
             Id = request.Id,

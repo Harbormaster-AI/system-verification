@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum FundingInstrumentType
 {
-    CommercialPaper=1,SeniorUnsecured=2,CoveredBond=3,Securitization=4
+    CommercialPaper = 1, SeniorUnsecured = 2, CoveredBond = 3, Securitization = 4
 }
 
 /// <summary>

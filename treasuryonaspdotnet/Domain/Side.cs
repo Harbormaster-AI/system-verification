@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum Side
 {
-    Buy=1,Sell=2
+    Buy = 1, Sell = 2
 }
 
 /// <summary>

@@ -18,23 +18,23 @@ public static class CounterpartyEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToNettingAgreements", AddToNettingAgreements);
-    group.MapPut("/removeFromNettingAgreements", RemoveFromNettingAgreements);
+        group.MapPut("/addToNettingAgreements", AddToNettingAgreements);
+        group.MapPut("/removeFromNettingAgreements", RemoveFromNettingAgreements);
 
-    group.MapPut("/addToTrades", AddToTrades);
-    group.MapPut("/removeFromTrades", RemoveFromTrades);
+        group.MapPut("/addToTrades", AddToTrades);
+        group.MapPut("/removeFromTrades", RemoveFromTrades);
 
-    group.MapPut("/addToCollateralAgreements", AddToCollateralAgreements);
-    group.MapPut("/removeFromCollateralAgreements", RemoveFromCollateralAgreements);
+        group.MapPut("/addToCollateralAgreements", AddToCollateralAgreements);
+        group.MapPut("/removeFromCollateralAgreements", RemoveFromCollateralAgreements);
 
-    group.MapPut("/addToLimits", AddToLimits);
-    group.MapPut("/removeFromLimits", RemoveFromLimits);
+        group.MapPut("/addToLimits", AddToLimits);
+        group.MapPut("/removeFromLimits", RemoveFromLimits);
 
-    group.MapPut("/addToMarginCalls", AddToMarginCalls);
-    group.MapPut("/removeFromMarginCalls", RemoveFromMarginCalls);
+        group.MapPut("/addToMarginCalls", AddToMarginCalls);
+        group.MapPut("/removeFromMarginCalls", RemoveFromMarginCalls);
 
-    group.MapPut("/addToSettlementInstructions", AddToSettlementInstructions);
-    group.MapPut("/removeFromSettlementInstructions", RemoveFromSettlementInstructions);
+        group.MapPut("/addToSettlementInstructions", AddToSettlementInstructions);
+        group.MapPut("/removeFromSettlementInstructions", RemoveFromSettlementInstructions);
 
 
         return app;
@@ -43,9 +43,10 @@ public static class CounterpartyEndpoints
     private static async Task<IResult> Create(
         CounterpartyRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCounterparty( request );
+        var model = mapRequestToCounterparty(request);
 
         try
         {
@@ -62,9 +63,10 @@ public static class CounterpartyEndpoints
     private static async Task<IResult> Update(
         CounterpartyRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCounterparty( request );
+        var model = mapRequestToCounterparty(request);
 
         try
         {
@@ -81,25 +83,28 @@ public static class CounterpartyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var counterparty = await service.Get(identifier, cancellationToken);
-        return counterparty is null ? Results.NotFound() : Results.Ok( counterparty );
+        return counterparty is null ? Results.NotFound() : Results.Ok(counterparty);
     }
 
 
     private static async Task<IResult> GetAll(
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CounterpartyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CounterpartyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +113,8 @@ public static class CounterpartyEndpoints
     private static async Task<IResult> AddToNettingAgreements(
         MultipleAssociationRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToNettingAgreements(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -116,14 +122,16 @@ public static class CounterpartyEndpoints
     private static async Task<IResult> RemoveFromNettingAgreements(
         MultipleAssociationRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromNettingAgreements(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToTrades(
         MultipleAssociationRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTrades(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -131,14 +139,16 @@ public static class CounterpartyEndpoints
     private static async Task<IResult> RemoveFromTrades(
         MultipleAssociationRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTrades(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToCollateralAgreements(
         MultipleAssociationRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCollateralAgreements(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -146,14 +156,16 @@ public static class CounterpartyEndpoints
     private static async Task<IResult> RemoveFromCollateralAgreements(
         MultipleAssociationRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCollateralAgreements(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToLimits(
         MultipleAssociationRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLimits(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -161,14 +173,16 @@ public static class CounterpartyEndpoints
     private static async Task<IResult> RemoveFromLimits(
         MultipleAssociationRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLimits(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToMarginCalls(
         MultipleAssociationRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToMarginCalls(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -176,14 +190,16 @@ public static class CounterpartyEndpoints
     private static async Task<IResult> RemoveFromMarginCalls(
         MultipleAssociationRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromMarginCalls(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToSettlementInstructions(
         MultipleAssociationRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToSettlementInstructions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -191,11 +207,13 @@ public static class CounterpartyEndpoints
     private static async Task<IResult> RemoveFromSettlementInstructions(
         MultipleAssociationRequest request,
         ICounterpartyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromSettlementInstructions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Counterparty mapRequestToCounterparty( CounterpartyRequest request ) {
+    private static Counterparty mapRequestToCounterparty(CounterpartyRequest request)
+    {
         var model = new Counterparty
         {
             Id = request.Id,

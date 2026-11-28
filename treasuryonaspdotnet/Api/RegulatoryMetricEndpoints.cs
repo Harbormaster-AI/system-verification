@@ -29,9 +29,10 @@ public static class RegulatoryMetricEndpoints
     private static async Task<IResult> Create(
         RegulatoryMetricRequest request,
         IRegulatoryMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRegulatoryMetric( request );
+        var model = mapRequestToRegulatoryMetric(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class RegulatoryMetricEndpoints
     private static async Task<IResult> Update(
         RegulatoryMetricRequest request,
         IRegulatoryMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRegulatoryMetric( request );
+        var model = mapRequestToRegulatoryMetric(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class RegulatoryMetricEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRegulatoryMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var regulatoryMetric = await service.Get(identifier, cancellationToken);
-        return regulatoryMetric is null ? Results.NotFound() : Results.Ok( regulatoryMetric );
+        return regulatoryMetric is null ? Results.NotFound() : Results.Ok(regulatoryMetric);
     }
 
 
     private static async Task<IResult> GetAll(
         IRegulatoryMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RegulatoryMetricResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RegulatoryMetricResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRegulatoryMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class RegulatoryMetricEndpoints
     private static async Task<IResult> AssignRiskReport(
         AssociationRequest request,
         IRegulatoryMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRiskReport(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class RegulatoryMetricEndpoints
     private static async Task<IResult> UnassignRiskReport(
     AssociationRequest request,
     IRegulatoryMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRiskReport(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class RegulatoryMetricEndpoints
     private static async Task<IResult> AssignLiquidityBuffer(
         AssociationRequest request,
         IRegulatoryMetricService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignLiquidityBuffer(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class RegulatoryMetricEndpoints
     private static async Task<IResult> UnassignLiquidityBuffer(
     AssociationRequest request,
     IRegulatoryMetricService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignLiquidityBuffer(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static RegulatoryMetric mapRequestToRegulatoryMetric( RegulatoryMetricRequest request ) {
+    private static RegulatoryMetric mapRequestToRegulatoryMetric(RegulatoryMetricRequest request)
+    {
         var model = new RegulatoryMetric
         {
             Id = request.Id,

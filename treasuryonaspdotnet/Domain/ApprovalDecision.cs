@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum ApprovalDecision
 {
-    Approved=1,Rejected=2,Conditional=3
+    Approved = 1, Rejected = 2, Conditional = 3
 }
 
 /// <summary>

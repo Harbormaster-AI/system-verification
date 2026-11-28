@@ -11,7 +11,7 @@ public interface IIssuanceRepository
     Task UpdateAsync(Issuance issuance, CancellationToken cancellationToken);
     Task DeleteAsync(Issuance issuance, CancellationToken cancellationToken);
 
-    Task AddToCashFlowsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCashFlowsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCashFlowsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCashFlowsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -9,16 +9,18 @@ public class BusinessCalendar : IValidatableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Location { get; set; } 
-public virtual ICollection<Holiday> Holidays { get; set; } = new List<Holiday>();
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Location { get; set; }
+    public virtual ICollection<Holiday> Holidays { get; set; } = new List<Holiday>();
 
-    public static BusinessCalendar FromRequest(BusinessCalendarRequest request) {
-        return new BusinessCalendar {
+    public static BusinessCalendar FromRequest(BusinessCalendarRequest request)
+    {
+        return new BusinessCalendar
+        {
             Id = request.Id,
             Name = request.Name,
             Location = request.Location,

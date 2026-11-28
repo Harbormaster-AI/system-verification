@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum CashFlowType
 {
-    Interest=1,Principal=2,Fee=3,Margin=4,Settlement=5,Coupon=6,Dividend=7,Tax=8,Other=9
+    Interest = 1, Principal = 2, Fee = 3, Margin = 4, Settlement = 5, Coupon = 6, Dividend = 7, Tax = 8, Other = 9
 }
 
 /// <summary>

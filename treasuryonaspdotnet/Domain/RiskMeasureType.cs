@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum RiskMeasureType
 {
-    PV=1,DV01=2,Duration=3,VaR=4,StressLoss=5,Gap=6,LCR=7,NSFR=8
+    PV = 1, DV01 = 2, Duration = 3, VaR = 4, StressLoss = 5, Gap = 6, LCR = 7, NSFR = 8
 }
 
 /// <summary>

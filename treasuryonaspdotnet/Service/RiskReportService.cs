@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IRiskReportService {
+public interface IRiskReportService
+{
 
-    Task Create(RiskReport model , CancellationToken cancellationToken);
+    Task Create(RiskReport model, CancellationToken cancellationToken);
     Task<bool> Update(RiskReport model, CancellationToken cancellationToken);
     Task<RiskReport?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<RiskReport>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class RiskReportService : IRiskReportService
 
     public async Task<bool> Update(RiskReport model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class RiskReportService : IRiskReportService
         return true;
     }
 
-    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class RiskReportService : IRiskReportService
 
             var child = await _serviceResolver.Get<PortfolioService>().Get(childRequest, cancellationToken);
             parent.Portfolio = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class RiskReportService : IRiskReportService
         return true;
     }
 
-    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class RiskReportService : IRiskReportService
         try
         {
             parent.Portfolio = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class RiskReportService : IRiskReportService
     }
 
 
-    public async Task<bool> AddToPositions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPositions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RiskReport",
                 "AddToPositions",
@@ -184,16 +190,18 @@ public class RiskReportService : IRiskReportService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPositions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPositions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RiskReport",
                 "RemoveFromPositions",
@@ -209,8 +217,10 @@ public class RiskReportService : IRiskReportService
         return true;
     }
 
-    public async Task<bool> AddToRegulatoryMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRegulatoryMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RiskReport",
                 "AddToRegulatoryMetrics",
@@ -218,16 +228,18 @@ public class RiskReportService : IRiskReportService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRegulatoryMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRegulatoryMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "RiskReport",
                 "RemoveFromRegulatoryMetrics",

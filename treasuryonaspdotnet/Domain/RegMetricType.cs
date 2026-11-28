@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum RegMetricType
 {
-    LCR=1,NSFR=2,LiquidityGap=3,CounterbalancingCapacity=4,HQLA=5
+    LCR = 1, NSFR = 2, LiquidityGap = 3, CounterbalancingCapacity = 4, HQLA = 5
 }
 
 /// <summary>

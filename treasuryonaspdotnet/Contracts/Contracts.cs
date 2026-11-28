@@ -25,25 +25,29 @@ public class MultipleAssociationRequest
     public List<Guid> ChildIds { get; set; } = new();
 }
 
-public class TreasuryUnitRequest {
+public class TreasuryUnitRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Region { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string BookingLocation { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string BaseCurrency { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Region { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string BookingLocation { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string BaseCurrency { get; set; }
 }
 
-public class TreasuryUnitResponse : TreasuryUnitRequest {
-    public static TreasuryUnitResponse FromModel(TreasuryUnit model) {
-        return new TreasuryUnitResponse {
+public class TreasuryUnitResponse : TreasuryUnitRequest
+{
+    public static TreasuryUnitResponse FromModel(TreasuryUnit model)
+    {
+        return new TreasuryUnitResponse
+        {
             Id = model.Id,
             Name = model.Name,
             Region = model.Region,
@@ -53,17 +57,21 @@ public class TreasuryUnitResponse : TreasuryUnitRequest {
     }
 }
 
-public class TradingBookRequest {
+public class TradingBookRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- public virtual BookCategory? BookCategory { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    public virtual BookCategory? BookCategory { get; set; }
 }
 
-public class TradingBookResponse : TradingBookRequest {
-    public static TradingBookResponse FromModel(TradingBook model) {
-        return new TradingBookResponse {
+public class TradingBookResponse : TradingBookRequest
+{
+    public static TradingBookResponse FromModel(TradingBook model)
+    {
+        return new TradingBookResponse
+        {
             Id = model.Id,
             Name = model.Name,
             BookCategory = model.BookCategory,
@@ -71,22 +79,26 @@ public class TradingBookResponse : TradingBookRequest {
     }
 }
 
-public class PortfolioRequest {
+public class PortfolioRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Strategy { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string BaseCurrency { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Strategy { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string BaseCurrency { get; set; }
 }
 
-public class PortfolioResponse : PortfolioRequest {
-    public static PortfolioResponse FromModel(Portfolio model) {
-        return new PortfolioResponse {
+public class PortfolioResponse : PortfolioRequest
+{
+    public static PortfolioResponse FromModel(Portfolio model)
+    {
+        return new PortfolioResponse
+        {
             Id = model.Id,
             Name = model.Name,
             Strategy = model.Strategy,
@@ -95,27 +107,31 @@ public class PortfolioResponse : PortfolioRequest {
     }
 }
 
-public class CounterpartyRequest {
+public class CounterpartyRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string LegalName { get; set; } 
- [Required]
-public required virtual LegalEntityIdentifier Lei { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Sector { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string DomicileCountry { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string CreditRating { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string LegalName { get; set; }
+    [Required]
+    public required virtual LegalEntityIdentifier Lei { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Sector { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string DomicileCountry { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string CreditRating { get; set; }
 }
 
-public class CounterpartyResponse : CounterpartyRequest {
-    public static CounterpartyResponse FromModel(Counterparty model) {
-        return new CounterpartyResponse {
+public class CounterpartyResponse : CounterpartyRequest
+{
+    public static CounterpartyResponse FromModel(Counterparty model)
+    {
+        return new CounterpartyResponse
+        {
             Id = model.Id,
             LegalName = model.LegalName,
             Lei = model.Lei,
@@ -126,19 +142,23 @@ public class CounterpartyResponse : CounterpartyRequest {
     }
 }
 
-public class NettingAgreementRequest {
+public class NettingAgreementRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual DateOnly AgreementDate { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string GoverningLaw { get; set; } 
- public virtual NettingAgreementType? AgreementType { get; set; } 
+    [Required]
+    public required virtual DateOnly AgreementDate { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string GoverningLaw { get; set; }
+    public virtual NettingAgreementType? AgreementType { get; set; }
 }
 
-public class NettingAgreementResponse : NettingAgreementRequest {
-    public static NettingAgreementResponse FromModel(NettingAgreement model) {
-        return new NettingAgreementResponse {
+public class NettingAgreementResponse : NettingAgreementRequest
+{
+    public static NettingAgreementResponse FromModel(NettingAgreement model)
+    {
+        return new NettingAgreementResponse
+        {
             Id = model.Id,
             AgreementDate = model.AgreementDate,
             GoverningLaw = model.GoverningLaw,
@@ -147,24 +167,28 @@ public class NettingAgreementResponse : NettingAgreementRequest {
     }
 }
 
-public class CollateralAgreementRequest {
+public class CollateralAgreementRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual Money Threshold { get; set; } 
- [Required]
-public required virtual Money MinimumTransferAmount { get; set; } 
- [Required]
-public required virtual Money IndependentAmount { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string MarginFrequency { get; set; } 
- public virtual CollateralAgreementType? AgreementType { get; set; } 
- public virtual CollateralType? EligibleCollateral { get; set; } 
+    [Required]
+    public required virtual Money Threshold { get; set; }
+    [Required]
+    public required virtual Money MinimumTransferAmount { get; set; }
+    [Required]
+    public required virtual Money IndependentAmount { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string MarginFrequency { get; set; }
+    public virtual CollateralAgreementType? AgreementType { get; set; }
+    public virtual CollateralType? EligibleCollateral { get; set; }
 }
 
-public class CollateralAgreementResponse : CollateralAgreementRequest {
-    public static CollateralAgreementResponse FromModel(CollateralAgreement model) {
-        return new CollateralAgreementResponse {
+public class CollateralAgreementResponse : CollateralAgreementRequest
+{
+    public static CollateralAgreementResponse FromModel(CollateralAgreement model)
+    {
+        return new CollateralAgreementResponse
+        {
             Id = model.Id,
             Threshold = model.Threshold,
             MinimumTransferAmount = model.MinimumTransferAmount,
@@ -176,20 +200,24 @@ public class CollateralAgreementResponse : CollateralAgreementRequest {
     }
 }
 
-public class CollateralAccountRequest {
+public class CollateralAccountRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string AccountName { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string CustodyLocation { get; set; } 
- public virtual CollateralType? CollateralType { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string AccountName { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string CustodyLocation { get; set; }
+    public virtual CollateralType? CollateralType { get; set; }
 }
 
-public class CollateralAccountResponse : CollateralAccountRequest {
-    public static CollateralAccountResponse FromModel(CollateralAccount model) {
-        return new CollateralAccountResponse {
+public class CollateralAccountResponse : CollateralAccountRequest
+{
+    public static CollateralAccountResponse FromModel(CollateralAccount model)
+    {
+        return new CollateralAccountResponse
+        {
             Id = model.Id,
             AccountName = model.AccountName,
             CustodyLocation = model.CustodyLocation,
@@ -198,19 +226,23 @@ public class CollateralAccountResponse : CollateralAccountRequest {
     }
 }
 
-public class MarginCallRequest {
+public class MarginCallRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual DateOnly CallDate { get; set; } 
- [Required]
-public required virtual Money RequiredAmount { get; set; } 
- public virtual MarginDirection? Direction { get; set; } 
- public virtual MarginStatus? Status { get; set; } 
+    [Required]
+    public required virtual DateOnly CallDate { get; set; }
+    [Required]
+    public required virtual Money RequiredAmount { get; set; }
+    public virtual MarginDirection? Direction { get; set; }
+    public virtual MarginStatus? Status { get; set; }
 }
 
-public class MarginCallResponse : MarginCallRequest {
-    public static MarginCallResponse FromModel(MarginCall model) {
-        return new MarginCallResponse {
+public class MarginCallResponse : MarginCallRequest
+{
+    public static MarginCallResponse FromModel(MarginCall model)
+    {
+        return new MarginCallResponse
+        {
             Id = model.Id,
             CallDate = model.CallDate,
             RequiredAmount = model.RequiredAmount,
@@ -220,23 +252,27 @@ public class MarginCallResponse : MarginCallRequest {
     }
 }
 
-public class BankAccountRequest {
+public class BankAccountRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string AccountName { get; set; } 
- [Required]
-public required virtual AccountIdentifier AccountIdentifier { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Currency { get; set; } 
- [Required]
-public required virtual BIC BankBic { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string AccountName { get; set; }
+    [Required]
+    public required virtual AccountIdentifier AccountIdentifier { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Currency { get; set; }
+    [Required]
+    public required virtual BIC BankBic { get; set; }
 }
 
-public class BankAccountResponse : BankAccountRequest {
-    public static BankAccountResponse FromModel(BankAccount model) {
-        return new BankAccountResponse {
+public class BankAccountResponse : BankAccountRequest
+{
+    public static BankAccountResponse FromModel(BankAccount model)
+    {
+        return new BankAccountResponse
+        {
             Id = model.Id,
             AccountName = model.AccountName,
             AccountIdentifier = model.AccountIdentifier,
@@ -246,21 +282,25 @@ public class BankAccountResponse : BankAccountRequest {
     }
 }
 
-public class CashPositionRequest {
+public class CashPositionRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual DateOnly PositionDate { get; set; } 
- [Required]
-public required virtual Money OpeningBalance { get; set; } 
- [Required]
-public required virtual Money ClosingBalance { get; set; } 
- [Required]
-public required virtual Money AvailableBalance { get; set; } 
+    [Required]
+    public required virtual DateOnly PositionDate { get; set; }
+    [Required]
+    public required virtual Money OpeningBalance { get; set; }
+    [Required]
+    public required virtual Money ClosingBalance { get; set; }
+    [Required]
+    public required virtual Money AvailableBalance { get; set; }
 }
 
-public class CashPositionResponse : CashPositionRequest {
-    public static CashPositionResponse FromModel(CashPosition model) {
-        return new CashPositionResponse {
+public class CashPositionResponse : CashPositionRequest
+{
+    public static CashPositionResponse FromModel(CashPosition model)
+    {
+        return new CashPositionResponse
+        {
             Id = model.Id,
             PositionDate = model.PositionDate,
             OpeningBalance = model.OpeningBalance,
@@ -270,21 +310,25 @@ public class CashPositionResponse : CashPositionRequest {
     }
 }
 
-public class CashFlowRequest {
+public class CashFlowRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual DateOnly FlowDate { get; set; } 
- [Required]
-public required virtual Money Amount { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Description { get; set; } 
- public virtual CashFlowType? FlowType { get; set; } 
+    [Required]
+    public required virtual DateOnly FlowDate { get; set; }
+    [Required]
+    public required virtual Money Amount { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Description { get; set; }
+    public virtual CashFlowType? FlowType { get; set; }
 }
 
-public class CashFlowResponse : CashFlowRequest {
-    public static CashFlowResponse FromModel(CashFlow model) {
-        return new CashFlowResponse {
+public class CashFlowResponse : CashFlowRequest
+{
+    public static CashFlowResponse FromModel(CashFlow model)
+    {
+        return new CashFlowResponse
+        {
             Id = model.Id,
             FlowDate = model.FlowDate,
             Amount = model.Amount,
@@ -294,30 +338,34 @@ public class CashFlowResponse : CashFlowRequest {
     }
 }
 
-public class TradeRequest {
+public class TradeRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string TradeNumber { get; set; } 
- [Required]
-public required virtual DateOnly TradeDate { get; set; } 
- [Required]
-public required virtual DateOnly ValueDate { get; set; } 
- [Required]
-public required virtual DateOnly MaturityDate { get; set; } 
- [Required]
-public required virtual Money Notional { get; set; } 
- [Required]
-public required virtual Rate FixedRate { get; set; } 
- public virtual InstrumentType? InstrumentType { get; set; } 
- public virtual Side? Side { get; set; } 
- public virtual TradeStatus? Status { get; set; } 
- public virtual ClearingStatus? ClearingStatus { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string TradeNumber { get; set; }
+    [Required]
+    public required virtual DateOnly TradeDate { get; set; }
+    [Required]
+    public required virtual DateOnly ValueDate { get; set; }
+    [Required]
+    public required virtual DateOnly MaturityDate { get; set; }
+    [Required]
+    public required virtual Money Notional { get; set; }
+    [Required]
+    public required virtual Rate FixedRate { get; set; }
+    public virtual InstrumentType? InstrumentType { get; set; }
+    public virtual Side? Side { get; set; }
+    public virtual TradeStatus? Status { get; set; }
+    public virtual ClearingStatus? ClearingStatus { get; set; }
 }
 
-public class TradeResponse : TradeRequest {
-    public static TradeResponse FromModel(Trade model) {
-        return new TradeResponse {
+public class TradeResponse : TradeRequest
+{
+    public static TradeResponse FromModel(Trade model)
+    {
+        return new TradeResponse
+        {
             Id = model.Id,
             TradeNumber = model.TradeNumber,
             TradeDate = model.TradeDate,
@@ -333,23 +381,27 @@ public class TradeResponse : TradeRequest {
     }
 }
 
-public class SettlementInstructionRequest {
+public class SettlementInstructionRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string PaymentSystem { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string SettlementCurrency { get; set; } 
- [Required]
-public required virtual AccountIdentifier BeneficiaryAccount { get; set; } 
- [Required]
-public required virtual BIC IntermediaryBankBic { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string PaymentSystem { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string SettlementCurrency { get; set; }
+    [Required]
+    public required virtual AccountIdentifier BeneficiaryAccount { get; set; }
+    [Required]
+    public required virtual BIC IntermediaryBankBic { get; set; }
 }
 
-public class SettlementInstructionResponse : SettlementInstructionRequest {
-    public static SettlementInstructionResponse FromModel(SettlementInstruction model) {
-        return new SettlementInstructionResponse {
+public class SettlementInstructionResponse : SettlementInstructionRequest
+{
+    public static SettlementInstructionResponse FromModel(SettlementInstruction model)
+    {
+        return new SettlementInstructionResponse
+        {
             Id = model.Id,
             PaymentSystem = model.PaymentSystem,
             SettlementCurrency = model.SettlementCurrency,
@@ -359,22 +411,26 @@ public class SettlementInstructionResponse : SettlementInstructionRequest {
     }
 }
 
-public class FundingProgramRequest {
+public class FundingProgramRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string ProgramName { get; set; } 
- [Required]
-public required virtual Money LimitAmount { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Rating { get; set; } 
- public virtual FundingInstrumentType? InstrumentFamily { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string ProgramName { get; set; }
+    [Required]
+    public required virtual Money LimitAmount { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Rating { get; set; }
+    public virtual FundingInstrumentType? InstrumentFamily { get; set; }
 }
 
-public class FundingProgramResponse : FundingProgramRequest {
-    public static FundingProgramResponse FromModel(FundingProgram model) {
-        return new FundingProgramResponse {
+public class FundingProgramResponse : FundingProgramRequest
+{
+    public static FundingProgramResponse FromModel(FundingProgram model)
+    {
+        return new FundingProgramResponse
+        {
             Id = model.Id,
             ProgramName = model.ProgramName,
             LimitAmount = model.LimitAmount,
@@ -384,28 +440,32 @@ public class FundingProgramResponse : FundingProgramRequest {
     }
 }
 
-public class IssuanceRequest {
+public class IssuanceRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string IssueName { get; set; } 
- [Required]
-public required virtual ISIN Isin { get; set; } 
- [Required]
-public required virtual DateOnly IssueDate { get; set; } 
- [Required]
-public required virtual DateOnly MaturityDate { get; set; } 
- [Required]
-public required virtual Rate CouponRate { get; set; } 
- [Required]
-public required virtual Money Amount { get; set; } 
- public virtual InstrumentType? InstrumentType { get; set; } 
- public virtual IssuanceStatus? Status { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string IssueName { get; set; }
+    [Required]
+    public required virtual ISIN Isin { get; set; }
+    [Required]
+    public required virtual DateOnly IssueDate { get; set; }
+    [Required]
+    public required virtual DateOnly MaturityDate { get; set; }
+    [Required]
+    public required virtual Rate CouponRate { get; set; }
+    [Required]
+    public required virtual Money Amount { get; set; }
+    public virtual InstrumentType? InstrumentType { get; set; }
+    public virtual IssuanceStatus? Status { get; set; }
 }
 
-public class IssuanceResponse : IssuanceRequest {
-    public static IssuanceResponse FromModel(Issuance model) {
-        return new IssuanceResponse {
+public class IssuanceResponse : IssuanceRequest
+{
+    public static IssuanceResponse FromModel(Issuance model)
+    {
+        return new IssuanceResponse
+        {
             Id = model.Id,
             IssueName = model.IssueName,
             Isin = model.Isin,
@@ -419,22 +479,26 @@ public class IssuanceResponse : IssuanceRequest {
     }
 }
 
-public class PositionRequest {
+public class PositionRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual DateOnly AsOfDate { get; set; } 
- [Required]
-public required virtual decimal Quantity { get; set; } 
- [Required]
-public required virtual Money MarketValue { get; set; } 
- [Required]
-public required virtual Money Pnl { get; set; } 
- public virtual PositionType? PositionType { get; set; } 
+    [Required]
+    public required virtual DateOnly AsOfDate { get; set; }
+    [Required]
+    public required virtual decimal Quantity { get; set; }
+    [Required]
+    public required virtual Money MarketValue { get; set; }
+    [Required]
+    public required virtual Money Pnl { get; set; }
+    public virtual PositionType? PositionType { get; set; }
 }
 
-public class PositionResponse : PositionRequest {
-    public static PositionResponse FromModel(Position model) {
-        return new PositionResponse {
+public class PositionResponse : PositionRequest
+{
+    public static PositionResponse FromModel(Position model)
+    {
+        return new PositionResponse
+        {
             Id = model.Id,
             AsOfDate = model.AsOfDate,
             Quantity = model.Quantity,
@@ -445,25 +509,29 @@ public class PositionResponse : PositionRequest {
     }
 }
 
-public class RiskLimitRequest {
+public class RiskLimitRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- [Required]
-public required virtual decimal Threshold { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Currency { get; set; } 
- [Required]
-public required virtual DateOnly EffectiveDate { get; set; } 
- public virtual LimitType? LimitType { get; set; } 
- public virtual RiskMeasureType? Measure { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    [Required]
+    public required virtual decimal Threshold { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Currency { get; set; }
+    [Required]
+    public required virtual DateOnly EffectiveDate { get; set; }
+    public virtual LimitType? LimitType { get; set; }
+    public virtual RiskMeasureType? Measure { get; set; }
 }
 
-public class RiskLimitResponse : RiskLimitRequest {
-    public static RiskLimitResponse FromModel(RiskLimit model) {
-        return new RiskLimitResponse {
+public class RiskLimitResponse : RiskLimitRequest
+{
+    public static RiskLimitResponse FromModel(RiskLimit model)
+    {
+        return new RiskLimitResponse
+        {
             Id = model.Id,
             Name = model.Name,
             Threshold = model.Threshold,
@@ -475,21 +543,25 @@ public class RiskLimitResponse : RiskLimitRequest {
     }
 }
 
-public class LimitBreachRequest {
+public class LimitBreachRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual DateOnly BreachDate { get; set; } 
- [Required]
-public required virtual decimal ObservedValue { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Severity { get; set; } 
- public virtual LimitBreachStatus? Status { get; set; } 
+    [Required]
+    public required virtual DateOnly BreachDate { get; set; }
+    [Required]
+    public required virtual decimal ObservedValue { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Severity { get; set; }
+    public virtual LimitBreachStatus? Status { get; set; }
 }
 
-public class LimitBreachResponse : LimitBreachRequest {
-    public static LimitBreachResponse FromModel(LimitBreach model) {
-        return new LimitBreachResponse {
+public class LimitBreachResponse : LimitBreachRequest
+{
+    public static LimitBreachResponse FromModel(LimitBreach model)
+    {
+        return new LimitBreachResponse
+        {
             Id = model.Id,
             BreachDate = model.BreachDate,
             ObservedValue = model.ObservedValue,
@@ -499,22 +571,26 @@ public class LimitBreachResponse : LimitBreachRequest {
     }
 }
 
-public class ApprovalRequest {
+public class ApprovalRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string ApproverName { get; set; } 
- [Required]
-public required virtual DateOnly ApprovalDate { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Notes { get; set; } 
- public virtual ApprovalDecision? Decision { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string ApproverName { get; set; }
+    [Required]
+    public required virtual DateOnly ApprovalDate { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Notes { get; set; }
+    public virtual ApprovalDecision? Decision { get; set; }
 }
 
-public class ApprovalResponse : ApprovalRequest {
-    public static ApprovalResponse FromModel(Approval model) {
-        return new ApprovalResponse {
+public class ApprovalResponse : ApprovalRequest
+{
+    public static ApprovalResponse FromModel(Approval model)
+    {
+        return new ApprovalResponse
+        {
             Id = model.Id,
             ApproverName = model.ApproverName,
             ApprovalDate = model.ApprovalDate,
@@ -524,22 +600,26 @@ public class ApprovalResponse : ApprovalRequest {
     }
 }
 
-public class TreasuryPolicyRequest {
+public class TreasuryPolicyRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Version { get; set; } 
- [Required]
-public required virtual DateOnly EffectiveFrom { get; set; } 
- public virtual PolicyArea? Area { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Version { get; set; }
+    [Required]
+    public required virtual DateOnly EffectiveFrom { get; set; }
+    public virtual PolicyArea? Area { get; set; }
 }
 
-public class TreasuryPolicyResponse : TreasuryPolicyRequest {
-    public static TreasuryPolicyResponse FromModel(TreasuryPolicy model) {
-        return new TreasuryPolicyResponse {
+public class TreasuryPolicyResponse : TreasuryPolicyRequest
+{
+    public static TreasuryPolicyResponse FromModel(TreasuryPolicy model)
+    {
+        return new TreasuryPolicyResponse
+        {
             Id = model.Id,
             Name = model.Name,
             Version = model.Version,
@@ -549,18 +629,22 @@ public class TreasuryPolicyResponse : TreasuryPolicyRequest {
     }
 }
 
-public class MarketDataSetRequest {
+public class MarketDataSetRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- [Required]
-public required virtual DateOnly ValuationDate { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    [Required]
+    public required virtual DateOnly ValuationDate { get; set; }
 }
 
-public class MarketDataSetResponse : MarketDataSetRequest {
-    public static MarketDataSetResponse FromModel(MarketDataSet model) {
-        return new MarketDataSetResponse {
+public class MarketDataSetResponse : MarketDataSetRequest
+{
+    public static MarketDataSetResponse FromModel(MarketDataSet model)
+    {
+        return new MarketDataSetResponse
+        {
             Id = model.Id,
             Name = model.Name,
             ValuationDate = model.ValuationDate,
@@ -568,21 +652,25 @@ public class MarketDataSetResponse : MarketDataSetRequest {
     }
 }
 
-public class YieldCurveRequest {
+public class YieldCurveRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Currency { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string BuildMethod { get; set; } 
- public virtual CurveType? CurveType { get; set; } 
- public virtual DayCountConvention? DayCount { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Currency { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string BuildMethod { get; set; }
+    public virtual CurveType? CurveType { get; set; }
+    public virtual DayCountConvention? DayCount { get; set; }
 }
 
-public class YieldCurveResponse : YieldCurveRequest {
-    public static YieldCurveResponse FromModel(YieldCurve model) {
-        return new YieldCurveResponse {
+public class YieldCurveResponse : YieldCurveRequest
+{
+    public static YieldCurveResponse FromModel(YieldCurve model)
+    {
+        return new YieldCurveResponse
+        {
             Id = model.Id,
             Currency = model.Currency,
             BuildMethod = model.BuildMethod,
@@ -592,17 +680,21 @@ public class YieldCurveResponse : YieldCurveRequest {
     }
 }
 
-public class CurveQuoteRequest {
+public class CurveQuoteRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual Tenor Tenor { get; set; } 
- [Required]
-public required virtual Rate Rate { get; set; } 
+    [Required]
+    public required virtual Tenor Tenor { get; set; }
+    [Required]
+    public required virtual Rate Rate { get; set; }
 }
 
-public class CurveQuoteResponse : CurveQuoteRequest {
-    public static CurveQuoteResponse FromModel(CurveQuote model) {
-        return new CurveQuoteResponse {
+public class CurveQuoteResponse : CurveQuoteRequest
+{
+    public static CurveQuoteResponse FromModel(CurveQuote model)
+    {
+        return new CurveQuoteResponse
+        {
             Id = model.Id,
             Tenor = model.Tenor,
             Rate = model.Rate,
@@ -610,21 +702,25 @@ public class CurveQuoteResponse : CurveQuoteRequest {
     }
 }
 
-public class FXRateRequest {
+public class FXRateRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string BaseCurrency { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string QuoteCurrency { get; set; } 
- [Required]
-public required virtual decimal Rate { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string BaseCurrency { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string QuoteCurrency { get; set; }
+    [Required]
+    public required virtual decimal Rate { get; set; }
 }
 
-public class FXRateResponse : FXRateRequest {
-    public static FXRateResponse FromModel(FXRate model) {
-        return new FXRateResponse {
+public class FXRateResponse : FXRateRequest
+{
+    public static FXRateResponse FromModel(FXRate model)
+    {
+        return new FXRateResponse
+        {
             Id = model.Id,
             BaseCurrency = model.BaseCurrency,
             QuoteCurrency = model.QuoteCurrency,
@@ -633,20 +729,24 @@ public class FXRateResponse : FXRateRequest {
     }
 }
 
-public class VolSurfaceRequest {
+public class VolSurfaceRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string AssetClass { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Currency { get; set; } 
- public virtual PricingModel? Model { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string AssetClass { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Currency { get; set; }
+    public virtual PricingModel? Model { get; set; }
 }
 
-public class VolSurfaceResponse : VolSurfaceRequest {
-    public static VolSurfaceResponse FromModel(VolSurface model) {
-        return new VolSurfaceResponse {
+public class VolSurfaceResponse : VolSurfaceRequest
+{
+    public static VolSurfaceResponse FromModel(VolSurface model)
+    {
+        return new VolSurfaceResponse
+        {
             Id = model.Id,
             AssetClass = model.AssetClass,
             Currency = model.Currency,
@@ -655,17 +755,21 @@ public class VolSurfaceResponse : VolSurfaceRequest {
     }
 }
 
-public class RiskReportRequest {
+public class RiskReportRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual DateOnly ReportDate { get; set; } 
- public virtual RiskReportType? ReportType { get; set; } 
- public virtual ReportStatus? Status { get; set; } 
+    [Required]
+    public required virtual DateOnly ReportDate { get; set; }
+    public virtual RiskReportType? ReportType { get; set; }
+    public virtual ReportStatus? Status { get; set; }
 }
 
-public class RiskReportResponse : RiskReportRequest {
-    public static RiskReportResponse FromModel(RiskReport model) {
-        return new RiskReportResponse {
+public class RiskReportResponse : RiskReportRequest
+{
+    public static RiskReportResponse FromModel(RiskReport model)
+    {
+        return new RiskReportResponse
+        {
             Id = model.Id,
             ReportDate = model.ReportDate,
             ReportType = model.ReportType,
@@ -674,20 +778,24 @@ public class RiskReportResponse : RiskReportRequest {
     }
 }
 
-public class RegulatoryMetricRequest {
+public class RegulatoryMetricRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual decimal Value { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Currency { get; set; } 
- public virtual RegMetricType? MetricType { get; set; } 
- public virtual LiquidityHorizon? Horizon { get; set; } 
+    [Required]
+    public required virtual decimal Value { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Currency { get; set; }
+    public virtual RegMetricType? MetricType { get; set; }
+    public virtual LiquidityHorizon? Horizon { get; set; }
 }
 
-public class RegulatoryMetricResponse : RegulatoryMetricRequest {
-    public static RegulatoryMetricResponse FromModel(RegulatoryMetric model) {
-        return new RegulatoryMetricResponse {
+public class RegulatoryMetricResponse : RegulatoryMetricRequest
+{
+    public static RegulatoryMetricResponse FromModel(RegulatoryMetric model)
+    {
+        return new RegulatoryMetricResponse
+        {
             Id = model.Id,
             Value = model.Value,
             Currency = model.Currency,
@@ -697,19 +805,23 @@ public class RegulatoryMetricResponse : RegulatoryMetricRequest {
     }
 }
 
-public class LiquidityBufferRequest {
+public class LiquidityBufferRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- [Required]
-public required virtual Money MarketValue { get; set; } 
- public virtual HQLAClass? HqlaClass { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    [Required]
+    public required virtual Money MarketValue { get; set; }
+    public virtual HQLAClass? HqlaClass { get; set; }
 }
 
-public class LiquidityBufferResponse : LiquidityBufferRequest {
-    public static LiquidityBufferResponse FromModel(LiquidityBuffer model) {
-        return new LiquidityBufferResponse {
+public class LiquidityBufferResponse : LiquidityBufferRequest
+{
+    public static LiquidityBufferResponse FromModel(LiquidityBuffer model)
+    {
+        return new LiquidityBufferResponse
+        {
             Id = model.Id,
             Name = model.Name,
             MarketValue = model.MarketValue,
@@ -718,21 +830,25 @@ public class LiquidityBufferResponse : LiquidityBufferRequest {
     }
 }
 
-public class BufferAssetRequest {
+public class BufferAssetRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string SecurityName { get; set; } 
- [Required]
-public required virtual ISIN Isin { get; set; } 
- [Required]
-public required virtual Money MarketValue { get; set; } 
- public virtual HQLAClass? HqlaClass { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string SecurityName { get; set; }
+    [Required]
+    public required virtual ISIN Isin { get; set; }
+    [Required]
+    public required virtual Money MarketValue { get; set; }
+    public virtual HQLAClass? HqlaClass { get; set; }
 }
 
-public class BufferAssetResponse : BufferAssetRequest {
-    public static BufferAssetResponse FromModel(BufferAsset model) {
-        return new BufferAssetResponse {
+public class BufferAssetResponse : BufferAssetRequest
+{
+    public static BufferAssetResponse FromModel(BufferAsset model)
+    {
+        return new BufferAssetResponse
+        {
             Id = model.Id,
             SecurityName = model.SecurityName,
             Isin = model.Isin,
@@ -742,22 +858,26 @@ public class BufferAssetResponse : BufferAssetRequest {
     }
 }
 
-public class TransferPricingRuleRequest {
+public class TransferPricingRuleRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- [Required]
-public required virtual Rate Spread { get; set; } 
- [Required]
-public required virtual DateOnly EffectiveFrom { get; set; } 
- public virtual TransferPricingMethod? Method { get; set; } 
- public virtual CurveType? CurveType { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    [Required]
+    public required virtual Rate Spread { get; set; }
+    [Required]
+    public required virtual DateOnly EffectiveFrom { get; set; }
+    public virtual TransferPricingMethod? Method { get; set; }
+    public virtual CurveType? CurveType { get; set; }
 }
 
-public class TransferPricingRuleResponse : TransferPricingRuleRequest {
-    public static TransferPricingRuleResponse FromModel(TransferPricingRule model) {
-        return new TransferPricingRuleResponse {
+public class TransferPricingRuleResponse : TransferPricingRuleRequest
+{
+    public static TransferPricingRuleResponse FromModel(TransferPricingRule model)
+    {
+        return new TransferPricingRuleResponse
+        {
             Id = model.Id,
             Name = model.Name,
             Spread = model.Spread,
@@ -768,29 +888,33 @@ public class TransferPricingRuleResponse : TransferPricingRuleRequest {
     }
 }
 
-public class InternalDealRequest {
+public class InternalDealRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string DealNumber { get; set; } 
- [Required]
-public required virtual DateOnly TradeDate { get; set; } 
- [Required]
-public required virtual DateOnly ValueDate { get; set; } 
- [Required]
-public required virtual DateOnly MaturityDate { get; set; } 
- [Required]
-public required virtual Rate Rate { get; set; } 
- [Required]
-public required virtual Money Notional { get; set; } 
- public virtual InstrumentType? Product { get; set; } 
- public virtual Side? Side { get; set; } 
- public virtual TradeStatus? Status { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string DealNumber { get; set; }
+    [Required]
+    public required virtual DateOnly TradeDate { get; set; }
+    [Required]
+    public required virtual DateOnly ValueDate { get; set; }
+    [Required]
+    public required virtual DateOnly MaturityDate { get; set; }
+    [Required]
+    public required virtual Rate Rate { get; set; }
+    [Required]
+    public required virtual Money Notional { get; set; }
+    public virtual InstrumentType? Product { get; set; }
+    public virtual Side? Side { get; set; }
+    public virtual TradeStatus? Status { get; set; }
 }
 
-public class InternalDealResponse : InternalDealRequest {
-    public static InternalDealResponse FromModel(InternalDeal model) {
-        return new InternalDealResponse {
+public class InternalDealResponse : InternalDealRequest
+{
+    public static InternalDealResponse FromModel(InternalDeal model)
+    {
+        return new InternalDealResponse
+        {
             Id = model.Id,
             DealNumber = model.DealNumber,
             TradeDate = model.TradeDate,
@@ -805,20 +929,24 @@ public class InternalDealResponse : InternalDealRequest {
     }
 }
 
-public class HedgeRelationshipRequest {
+public class HedgeRelationshipRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Objective { get; set; } 
- public virtual HedgeDesignationStatus? DesignationStatus { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Objective { get; set; }
+    public virtual HedgeDesignationStatus? DesignationStatus { get; set; }
 }
 
-public class HedgeRelationshipResponse : HedgeRelationshipRequest {
-    public static HedgeRelationshipResponse FromModel(HedgeRelationship model) {
-        return new HedgeRelationshipResponse {
+public class HedgeRelationshipResponse : HedgeRelationshipRequest
+{
+    public static HedgeRelationshipResponse FromModel(HedgeRelationship model)
+    {
+        return new HedgeRelationshipResponse
+        {
             Id = model.Id,
             Name = model.Name,
             Objective = model.Objective,
@@ -827,25 +955,29 @@ public class HedgeRelationshipResponse : HedgeRelationshipRequest {
     }
 }
 
-public class AccountingEntryRequest {
+public class AccountingEntryRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual DateOnly PostingDate { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Account { get; set; } 
- [Required]
-public required virtual Money Amount { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Narrative { get; set; } 
- [Required]
-public required virtual AccountingTreatment Treatment { get; set; } 
+    [Required]
+    public required virtual DateOnly PostingDate { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Account { get; set; }
+    [Required]
+    public required virtual Money Amount { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Narrative { get; set; }
+    [Required]
+    public required virtual AccountingTreatment Treatment { get; set; }
 }
 
-public class AccountingEntryResponse : AccountingEntryRequest {
-    public static AccountingEntryResponse FromModel(AccountingEntry model) {
-        return new AccountingEntryResponse {
+public class AccountingEntryResponse : AccountingEntryRequest
+{
+    public static AccountingEntryResponse FromModel(AccountingEntry model)
+    {
+        return new AccountingEntryResponse
+        {
             Id = model.Id,
             PostingDate = model.PostingDate,
             Account = model.Account,
@@ -856,20 +988,24 @@ public class AccountingEntryResponse : AccountingEntryRequest {
     }
 }
 
-public class StressScenarioRequest {
+public class StressScenarioRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Severity { get; set; } 
- public virtual LiquidityHorizon? Horizon { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Severity { get; set; }
+    public virtual LiquidityHorizon? Horizon { get; set; }
 }
 
-public class StressScenarioResponse : StressScenarioRequest {
-    public static StressScenarioResponse FromModel(StressScenario model) {
-        return new StressScenarioResponse {
+public class StressScenarioResponse : StressScenarioRequest
+{
+    public static StressScenarioResponse FromModel(StressScenario model)
+    {
+        return new StressScenarioResponse
+        {
             Id = model.Id,
             Name = model.Name,
             Severity = model.Severity,
@@ -878,19 +1014,23 @@ public class StressScenarioResponse : StressScenarioRequest {
     }
 }
 
-public class StressResultRequest {
+public class StressResultRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual decimal Value { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Currency { get; set; } 
- public virtual RiskMeasureType? Measure { get; set; } 
+    [Required]
+    public required virtual decimal Value { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Currency { get; set; }
+    public virtual RiskMeasureType? Measure { get; set; }
 }
 
-public class StressResultResponse : StressResultRequest {
-    public static StressResultResponse FromModel(StressResult model) {
-        return new StressResultResponse {
+public class StressResultResponse : StressResultRequest
+{
+    public static StressResultResponse FromModel(StressResult model)
+    {
+        return new StressResultResponse
+        {
             Id = model.Id,
             Value = model.Value,
             Currency = model.Currency,
@@ -899,19 +1039,23 @@ public class StressResultResponse : StressResultRequest {
     }
 }
 
-public class BusinessCalendarRequest {
+public class BusinessCalendarRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Location { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Location { get; set; }
 }
 
-public class BusinessCalendarResponse : BusinessCalendarRequest {
-    public static BusinessCalendarResponse FromModel(BusinessCalendar model) {
-        return new BusinessCalendarResponse {
+public class BusinessCalendarResponse : BusinessCalendarRequest
+{
+    public static BusinessCalendarResponse FromModel(BusinessCalendar model)
+    {
+        return new BusinessCalendarResponse
+        {
             Id = model.Id,
             Name = model.Name,
             Location = model.Location,
@@ -919,18 +1063,22 @@ public class BusinessCalendarResponse : BusinessCalendarRequest {
     }
 }
 
-public class HolidayRequest {
+public class HolidayRequest
+{
     public Guid Id { get; set; } = Guid.NewGuid();
- [Required]
-public required virtual DateOnly Date { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Description { get; set; } 
+    [Required]
+    public required virtual DateOnly Date { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Description { get; set; }
 }
 
-public class HolidayResponse : HolidayRequest {
-    public static HolidayResponse FromModel(Holiday model) {
-        return new HolidayResponse {
+public class HolidayResponse : HolidayRequest
+{
+    public static HolidayResponse FromModel(Holiday model)
+    {
+        return new HolidayResponse
+        {
             Id = model.Id,
             Date = model.Date,
             Description = model.Description,

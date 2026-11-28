@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum ClearingStatus
 {
-    Bilateral=1,Cleared=2
+    Bilateral = 1, Cleared = 2
 }
 
 /// <summary>

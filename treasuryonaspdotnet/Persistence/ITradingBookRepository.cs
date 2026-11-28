@@ -11,11 +11,11 @@ public interface ITradingBookRepository
     Task UpdateAsync(TradingBook tradingBook, CancellationToken cancellationToken);
     Task DeleteAsync(TradingBook tradingBook, CancellationToken cancellationToken);
 
-    Task AddToPortfoliosAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPortfoliosAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToLimitsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLimitsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTradesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTradesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPortfoliosAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPortfoliosAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLimitsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLimitsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTradesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTradesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

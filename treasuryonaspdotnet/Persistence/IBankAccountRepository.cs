@@ -11,11 +11,11 @@ public interface IBankAccountRepository
     Task UpdateAsync(BankAccount bankAccount, CancellationToken cancellationToken);
     Task DeleteAsync(BankAccount bankAccount, CancellationToken cancellationToken);
 
-    Task AddToCashPositionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCashPositionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCashFlowsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCashFlowsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToSettlementInstructionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSettlementInstructionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCashPositionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCashPositionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCashFlowsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCashFlowsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSettlementInstructionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSettlementInstructionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

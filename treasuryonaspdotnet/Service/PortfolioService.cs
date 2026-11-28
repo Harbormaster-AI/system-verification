@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IPortfolioService {
+public interface IPortfolioService
+{
 
-    Task Create(Portfolio model , CancellationToken cancellationToken);
+    Task Create(Portfolio model, CancellationToken cancellationToken);
     Task<bool> Update(Portfolio model, CancellationToken cancellationToken);
     Task<Portfolio?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Portfolio>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class PortfolioService : IPortfolioService
 
     public async Task<bool> Update(Portfolio model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -127,7 +129,8 @@ public class PortfolioService : IPortfolioService
         return true;
     }
 
-    public async Task<bool> AssignTradingBook(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTradingBook(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -145,7 +148,7 @@ public class PortfolioService : IPortfolioService
 
             var child = await _serviceResolver.Get<TradingBookService>().Get(childRequest, cancellationToken);
             parent.TradingBook = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -157,7 +160,8 @@ public class PortfolioService : IPortfolioService
         return true;
     }
 
-    public async Task<bool> UnassignTradingBook(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTradingBook(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -168,7 +172,7 @@ public class PortfolioService : IPortfolioService
         try
         {
             parent.TradingBook = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -181,8 +185,10 @@ public class PortfolioService : IPortfolioService
     }
 
 
-    public async Task<bool> AddToPositions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPositions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Portfolio",
                 "AddToPositions",
@@ -190,16 +196,18 @@ public class PortfolioService : IPortfolioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPositions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPositions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Portfolio",
                 "RemoveFromPositions",
@@ -215,8 +223,10 @@ public class PortfolioService : IPortfolioService
         return true;
     }
 
-    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Portfolio",
                 "AddToTrades",
@@ -224,16 +234,18 @@ public class PortfolioService : IPortfolioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Portfolio",
                 "RemoveFromTrades",
@@ -249,8 +261,10 @@ public class PortfolioService : IPortfolioService
         return true;
     }
 
-    public async Task<bool> AddToRiskReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRiskReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Portfolio",
                 "AddToRiskReports",
@@ -258,16 +272,18 @@ public class PortfolioService : IPortfolioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRiskReports(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRiskReports(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Portfolio",
                 "RemoveFromRiskReports",
@@ -283,8 +299,10 @@ public class PortfolioService : IPortfolioService
         return true;
     }
 
-    public async Task<bool> AddToRiskLimits(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRiskLimits(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Portfolio",
                 "AddToRiskLimits",
@@ -292,16 +310,18 @@ public class PortfolioService : IPortfolioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRiskLimits(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRiskLimits(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Portfolio",
                 "RemoveFromRiskLimits",
@@ -317,8 +337,10 @@ public class PortfolioService : IPortfolioService
         return true;
     }
 
-    public async Task<bool> AddToLiquidityBuffers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLiquidityBuffers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Portfolio",
                 "AddToLiquidityBuffers",
@@ -326,16 +348,18 @@ public class PortfolioService : IPortfolioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLiquidityBuffers(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLiquidityBuffers(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Portfolio",
                 "RemoveFromLiquidityBuffers",

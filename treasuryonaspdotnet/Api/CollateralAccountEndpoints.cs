@@ -20,11 +20,11 @@ public static class CollateralAccountEndpoints
         group.MapPut("/assignCollateralAgreement", AssignCollateralAgreement);
         group.MapPut("/unassignCollateralAgreement", UnassignCollateralAgreement);
 
-    group.MapPut("/addToTrades", AddToTrades);
-    group.MapPut("/removeFromTrades", RemoveFromTrades);
+        group.MapPut("/addToTrades", AddToTrades);
+        group.MapPut("/removeFromTrades", RemoveFromTrades);
 
-    group.MapPut("/addToMarginCalls", AddToMarginCalls);
-    group.MapPut("/removeFromMarginCalls", RemoveFromMarginCalls);
+        group.MapPut("/addToMarginCalls", AddToMarginCalls);
+        group.MapPut("/removeFromMarginCalls", RemoveFromMarginCalls);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class CollateralAccountEndpoints
     private static async Task<IResult> Create(
         CollateralAccountRequest request,
         ICollateralAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCollateralAccount( request );
+        var model = mapRequestToCollateralAccount(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class CollateralAccountEndpoints
     private static async Task<IResult> Update(
         CollateralAccountRequest request,
         ICollateralAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCollateralAccount( request );
+        var model = mapRequestToCollateralAccount(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class CollateralAccountEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICollateralAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var collateralAccount = await service.Get(identifier, cancellationToken);
-        return collateralAccount is null ? Results.NotFound() : Results.Ok( collateralAccount );
+        return collateralAccount is null ? Results.NotFound() : Results.Ok(collateralAccount);
     }
 
 
     private static async Task<IResult> GetAll(
         ICollateralAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CollateralAccountResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CollateralAccountResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICollateralAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class CollateralAccountEndpoints
     private static async Task<IResult> AssignCollateralAgreement(
         AssociationRequest request,
         ICollateralAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCollateralAgreement(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class CollateralAccountEndpoints
     private static async Task<IResult> UnassignCollateralAgreement(
     AssociationRequest request,
     ICollateralAccountService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCollateralAgreement(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class CollateralAccountEndpoints
     private static async Task<IResult> AddToTrades(
         MultipleAssociationRequest request,
         ICollateralAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTrades(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class CollateralAccountEndpoints
     private static async Task<IResult> RemoveFromTrades(
         MultipleAssociationRequest request,
         ICollateralAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTrades(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToMarginCalls(
         MultipleAssociationRequest request,
         ICollateralAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToMarginCalls(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class CollateralAccountEndpoints
     private static async Task<IResult> RemoveFromMarginCalls(
         MultipleAssociationRequest request,
         ICollateralAccountService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromMarginCalls(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static CollateralAccount mapRequestToCollateralAccount( CollateralAccountRequest request ) {
+    private static CollateralAccount mapRequestToCollateralAccount(CollateralAccountRequest request)
+    {
         var model = new CollateralAccount
         {
             Id = request.Id,

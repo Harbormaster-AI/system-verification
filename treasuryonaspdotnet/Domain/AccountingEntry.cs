@@ -9,24 +9,26 @@ public class AccountingEntry : IValidatableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- [Required]
-public required virtual DateOnly PostingDate { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Account { get; set; } 
- [Required]
-public required virtual Money Amount { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Narrative { get; set; } 
- [Required]
-public required virtual AccountingTreatment Treatment { get; set; } 
-public virtual Trade? Trade { get; set; } 
-public virtual HedgeRelationship? HedgeRelationship { get; set; } 
-public virtual Portfolio? Portfolio { get; set; } 
+    [Required]
+    public required virtual DateOnly PostingDate { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Account { get; set; }
+    [Required]
+    public required virtual Money Amount { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Narrative { get; set; }
+    [Required]
+    public required virtual AccountingTreatment Treatment { get; set; }
+    public virtual Trade? Trade { get; set; }
+    public virtual HedgeRelationship? HedgeRelationship { get; set; }
+    public virtual Portfolio? Portfolio { get; set; }
 
-    public static AccountingEntry FromRequest(AccountingEntryRequest request) {
-        return new AccountingEntry {
+    public static AccountingEntry FromRequest(AccountingEntryRequest request)
+    {
+        return new AccountingEntry
+        {
             Id = request.Id,
             PostingDate = request.PostingDate,
             Account = request.Account,

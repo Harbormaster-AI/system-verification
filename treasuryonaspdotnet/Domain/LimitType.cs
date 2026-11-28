@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum LimitType
 {
-    Counterparty=1,Market=2,Liquidity=3,Tenor=4,StopLoss=5,Concentration=6
+    Counterparty = 1, Market = 2, Liquidity = 3, Tenor = 4, StopLoss = 5, Concentration = 6
 }
 
 /// <summary>

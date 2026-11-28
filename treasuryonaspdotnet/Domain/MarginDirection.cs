@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum MarginDirection
 {
-    Call=1,Return=2
+    Call = 1, Return = 2
 }
 
 /// <summary>

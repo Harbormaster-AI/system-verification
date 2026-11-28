@@ -18,17 +18,17 @@ public static class MarketDataSetEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToYieldCurves", AddToYieldCurves);
-    group.MapPut("/removeFromYieldCurves", RemoveFromYieldCurves);
+        group.MapPut("/addToYieldCurves", AddToYieldCurves);
+        group.MapPut("/removeFromYieldCurves", RemoveFromYieldCurves);
 
-    group.MapPut("/addToFxRates", AddToFxRates);
-    group.MapPut("/removeFromFxRates", RemoveFromFxRates);
+        group.MapPut("/addToFxRates", AddToFxRates);
+        group.MapPut("/removeFromFxRates", RemoveFromFxRates);
 
-    group.MapPut("/addToVolSurfaces", AddToVolSurfaces);
-    group.MapPut("/removeFromVolSurfaces", RemoveFromVolSurfaces);
+        group.MapPut("/addToVolSurfaces", AddToVolSurfaces);
+        group.MapPut("/removeFromVolSurfaces", RemoveFromVolSurfaces);
 
-    group.MapPut("/addToStressScenarios", AddToStressScenarios);
-    group.MapPut("/removeFromStressScenarios", RemoveFromStressScenarios);
+        group.MapPut("/addToStressScenarios", AddToStressScenarios);
+        group.MapPut("/removeFromStressScenarios", RemoveFromStressScenarios);
 
 
         return app;
@@ -37,9 +37,10 @@ public static class MarketDataSetEndpoints
     private static async Task<IResult> Create(
         MarketDataSetRequest request,
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMarketDataSet( request );
+        var model = mapRequestToMarketDataSet(request);
 
         try
         {
@@ -56,9 +57,10 @@ public static class MarketDataSetEndpoints
     private static async Task<IResult> Update(
         MarketDataSetRequest request,
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToMarketDataSet( request );
+        var model = mapRequestToMarketDataSet(request);
 
         try
         {
@@ -75,25 +77,28 @@ public static class MarketDataSetEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var marketDataSet = await service.Get(identifier, cancellationToken);
-        return marketDataSet is null ? Results.NotFound() : Results.Ok( marketDataSet );
+        return marketDataSet is null ? Results.NotFound() : Results.Ok(marketDataSet);
     }
 
 
     private static async Task<IResult> GetAll(
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( MarketDataSetResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(MarketDataSetResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +107,8 @@ public static class MarketDataSetEndpoints
     private static async Task<IResult> AddToYieldCurves(
         MultipleAssociationRequest request,
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToYieldCurves(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -110,14 +116,16 @@ public static class MarketDataSetEndpoints
     private static async Task<IResult> RemoveFromYieldCurves(
         MultipleAssociationRequest request,
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromYieldCurves(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToFxRates(
         MultipleAssociationRequest request,
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToFxRates(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -125,14 +133,16 @@ public static class MarketDataSetEndpoints
     private static async Task<IResult> RemoveFromFxRates(
         MultipleAssociationRequest request,
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromFxRates(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToVolSurfaces(
         MultipleAssociationRequest request,
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToVolSurfaces(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -140,14 +150,16 @@ public static class MarketDataSetEndpoints
     private static async Task<IResult> RemoveFromVolSurfaces(
         MultipleAssociationRequest request,
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromVolSurfaces(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToStressScenarios(
         MultipleAssociationRequest request,
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToStressScenarios(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -155,11 +167,13 @@ public static class MarketDataSetEndpoints
     private static async Task<IResult> RemoveFromStressScenarios(
         MultipleAssociationRequest request,
         IMarketDataSetService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromStressScenarios(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static MarketDataSet mapRequestToMarketDataSet( MarketDataSetRequest request ) {
+    private static MarketDataSet mapRequestToMarketDataSet(MarketDataSetRequest request)
+    {
         var model = new MarketDataSet
         {
             Id = request.Id,

@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum HedgeDesignationStatus
 {
-    Proposed=1,Documented=2,Effective=3,Discontinued=4
+    Proposed = 1, Documented = 2, Effective = 3, Discontinued = 4
 }
 
 /// <summary>

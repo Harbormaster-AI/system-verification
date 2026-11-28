@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum DayCountConvention
 {
-    ACT360=1,ACT365=2,Thirty360=3
+    ACT360 = 1, ACT365 = 2, Thirty360 = 3
 }
 
 /// <summary>

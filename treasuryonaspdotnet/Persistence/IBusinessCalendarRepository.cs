@@ -11,7 +11,7 @@ public interface IBusinessCalendarRepository
     Task UpdateAsync(BusinessCalendar businessCalendar, CancellationToken cancellationToken);
     Task DeleteAsync(BusinessCalendar businessCalendar, CancellationToken cancellationToken);
 
-    Task AddToHolidaysAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromHolidaysAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToHolidaysAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromHolidaysAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

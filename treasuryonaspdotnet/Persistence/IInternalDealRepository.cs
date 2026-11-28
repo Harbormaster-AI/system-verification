@@ -11,7 +11,7 @@ public interface IInternalDealRepository
     Task UpdateAsync(InternalDeal internalDeal, CancellationToken cancellationToken);
     Task DeleteAsync(InternalDeal internalDeal, CancellationToken cancellationToken);
 
-    Task AddToCashFlowsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCashFlowsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCashFlowsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCashFlowsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

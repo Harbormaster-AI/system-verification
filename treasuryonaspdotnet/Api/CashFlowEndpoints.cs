@@ -33,9 +33,10 @@ public static class CashFlowEndpoints
     private static async Task<IResult> Create(
         CashFlowRequest request,
         ICashFlowService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCashFlow( request );
+        var model = mapRequestToCashFlow(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class CashFlowEndpoints
     private static async Task<IResult> Update(
         CashFlowRequest request,
         ICashFlowService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCashFlow( request );
+        var model = mapRequestToCashFlow(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class CashFlowEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICashFlowService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var cashFlow = await service.Get(identifier, cancellationToken);
-        return cashFlow is null ? Results.NotFound() : Results.Ok( cashFlow );
+        return cashFlow is null ? Results.NotFound() : Results.Ok(cashFlow);
     }
 
 
     private static async Task<IResult> GetAll(
         ICashFlowService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CashFlowResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CashFlowResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICashFlowService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class CashFlowEndpoints
     private static async Task<IResult> AssignTrade(
         AssociationRequest request,
         ICashFlowService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTrade(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class CashFlowEndpoints
     private static async Task<IResult> UnassignTrade(
     AssociationRequest request,
     ICashFlowService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTrade(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -113,7 +120,8 @@ public static class CashFlowEndpoints
     private static async Task<IResult> AssignCashPosition(
         AssociationRequest request,
         ICashFlowService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCashPosition(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -121,7 +129,8 @@ public static class CashFlowEndpoints
     private static async Task<IResult> UnassignCashPosition(
     AssociationRequest request,
     ICashFlowService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCashPosition(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class CashFlowEndpoints
     private static async Task<IResult> AssignMarginCall(
         AssociationRequest request,
         ICashFlowService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMarginCall(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -137,7 +147,8 @@ public static class CashFlowEndpoints
     private static async Task<IResult> UnassignMarginCall(
     AssociationRequest request,
     ICashFlowService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMarginCall(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -145,7 +156,8 @@ public static class CashFlowEndpoints
     private static async Task<IResult> AssignBankAccount(
         AssociationRequest request,
         ICashFlowService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBankAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -153,13 +165,15 @@ public static class CashFlowEndpoints
     private static async Task<IResult> UnassignBankAccount(
     AssociationRequest request,
     ICashFlowService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBankAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static CashFlow mapRequestToCashFlow( CashFlowRequest request ) {
+    private static CashFlow mapRequestToCashFlow(CashFlowRequest request)
+    {
         var model = new CashFlow
         {
             Id = request.Id,

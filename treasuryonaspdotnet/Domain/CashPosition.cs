@@ -9,19 +9,21 @@ public class CashPosition : IValidatableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- [Required]
-public required virtual DateOnly PositionDate { get; set; } 
- [Required]
-public required virtual Money OpeningBalance { get; set; } 
- [Required]
-public required virtual Money ClosingBalance { get; set; } 
- [Required]
-public required virtual Money AvailableBalance { get; set; } 
-public virtual BankAccount? BankAccount { get; set; } 
-public virtual ICollection<CashFlow> CashFlows { get; set; } = new List<CashFlow>();
+    [Required]
+    public required virtual DateOnly PositionDate { get; set; }
+    [Required]
+    public required virtual Money OpeningBalance { get; set; }
+    [Required]
+    public required virtual Money ClosingBalance { get; set; }
+    [Required]
+    public required virtual Money AvailableBalance { get; set; }
+    public virtual BankAccount? BankAccount { get; set; }
+    public virtual ICollection<CashFlow> CashFlows { get; set; } = new List<CashFlow>();
 
-    public static CashPosition FromRequest(CashPositionRequest request) {
-        return new CashPosition {
+    public static CashPosition FromRequest(CashPositionRequest request)
+    {
+        return new CashPosition
+        {
             Id = request.Id,
             PositionDate = request.PositionDate,
             OpeningBalance = request.OpeningBalance,

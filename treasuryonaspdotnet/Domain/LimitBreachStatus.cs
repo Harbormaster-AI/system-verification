@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum LimitBreachStatus
 {
-    Open=1,Mitigated=2,Closed=3
+    Open = 1, Mitigated = 2, Closed = 3
 }
 
 /// <summary>

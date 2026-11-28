@@ -11,9 +11,9 @@ public interface ICollateralAgreementRepository
     Task UpdateAsync(CollateralAgreement collateralAgreement, CancellationToken cancellationToken);
     Task DeleteAsync(CollateralAgreement collateralAgreement, CancellationToken cancellationToken);
 
-    Task AddToMarginCallsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromMarginCallsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCollateralAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCollateralAccountsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToMarginCallsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromMarginCallsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCollateralAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCollateralAccountsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

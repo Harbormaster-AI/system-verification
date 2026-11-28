@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IBufferAssetService {
+public interface IBufferAssetService
+{
 
-    Task Create(BufferAsset model , CancellationToken cancellationToken);
+    Task Create(BufferAsset model, CancellationToken cancellationToken);
     Task<bool> Update(BufferAsset model, CancellationToken cancellationToken);
     Task<BufferAsset?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BufferAsset>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class BufferAssetService : IBufferAssetService
 
     public async Task<bool> Update(BufferAsset model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class BufferAssetService : IBufferAssetService
         return true;
     }
 
-    public async Task<bool> AssignLiquidityBuffer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLiquidityBuffer(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class BufferAssetService : IBufferAssetService
 
             var child = await _serviceResolver.Get<LiquidityBufferService>().Get(childRequest, cancellationToken);
             parent.LiquidityBuffer = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class BufferAssetService : IBufferAssetService
         return true;
     }
 
-    public async Task<bool> UnassignLiquidityBuffer(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLiquidityBuffer(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class BufferAssetService : IBufferAssetService
         try
         {
             parent.LiquidityBuffer = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,7 +177,8 @@ public class BufferAssetService : IBufferAssetService
         return true;
     }
 
-    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -191,7 +196,7 @@ public class BufferAssetService : IBufferAssetService
 
             var child = await _serviceResolver.Get<PortfolioService>().Get(childRequest, cancellationToken);
             parent.Portfolio = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -203,7 +208,8 @@ public class BufferAssetService : IBufferAssetService
         return true;
     }
 
-    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -214,7 +220,7 @@ public class BufferAssetService : IBufferAssetService
         try
         {
             parent.Portfolio = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

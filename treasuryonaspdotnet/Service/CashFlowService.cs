@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ICashFlowService {
+public interface ICashFlowService
+{
 
-    Task Create(CashFlow model , CancellationToken cancellationToken);
+    Task Create(CashFlow model, CancellationToken cancellationToken);
     Task<bool> Update(CashFlow model, CancellationToken cancellationToken);
     Task<CashFlow?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CashFlow>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class CashFlowService : ICashFlowService
 
     public async Task<bool> Update(CashFlow model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class CashFlowService : ICashFlowService
         return true;
     }
 
-    public async Task<bool> AssignTrade(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTrade(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class CashFlowService : ICashFlowService
 
             var child = await _serviceResolver.Get<TradeService>().Get(childRequest, cancellationToken);
             parent.Trade = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class CashFlowService : ICashFlowService
         return true;
     }
 
-    public async Task<bool> UnassignTrade(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTrade(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class CashFlowService : ICashFlowService
         try
         {
             parent.Trade = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class CashFlowService : ICashFlowService
         return true;
     }
 
-    public async Task<bool> AssignCashPosition(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCashPosition(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class CashFlowService : ICashFlowService
 
             var child = await _serviceResolver.Get<CashPositionService>().Get(childRequest, cancellationToken);
             parent.CashPosition = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class CashFlowService : ICashFlowService
         return true;
     }
 
-    public async Task<bool> UnassignCashPosition(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCashPosition(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class CashFlowService : ICashFlowService
         try
         {
             parent.CashPosition = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,7 +236,8 @@ public class CashFlowService : ICashFlowService
         return true;
     }
 
-    public async Task<bool> AssignMarginCall(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMarginCall(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -248,7 +255,7 @@ public class CashFlowService : ICashFlowService
 
             var child = await _serviceResolver.Get<MarginCallService>().Get(childRequest, cancellationToken);
             parent.MarginCall = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -260,7 +267,8 @@ public class CashFlowService : ICashFlowService
         return true;
     }
 
-    public async Task<bool> UnassignMarginCall(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMarginCall(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -271,7 +279,7 @@ public class CashFlowService : ICashFlowService
         try
         {
             parent.MarginCall = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -283,7 +291,8 @@ public class CashFlowService : ICashFlowService
         return true;
     }
 
-    public async Task<bool> AssignBankAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBankAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -301,7 +310,7 @@ public class CashFlowService : ICashFlowService
 
             var child = await _serviceResolver.Get<BankAccountService>().Get(childRequest, cancellationToken);
             parent.BankAccount = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -313,7 +322,8 @@ public class CashFlowService : ICashFlowService
         return true;
     }
 
-    public async Task<bool> UnassignBankAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBankAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -324,7 +334,7 @@ public class CashFlowService : ICashFlowService
         try
         {
             parent.BankAccount = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

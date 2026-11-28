@@ -20,8 +20,8 @@ public static class FundingProgramEndpoints
         group.MapPut("/assignTreasuryUnit", AssignTreasuryUnit);
         group.MapPut("/unassignTreasuryUnit", UnassignTreasuryUnit);
 
-    group.MapPut("/addToIssuances", AddToIssuances);
-    group.MapPut("/removeFromIssuances", RemoveFromIssuances);
+        group.MapPut("/addToIssuances", AddToIssuances);
+        group.MapPut("/removeFromIssuances", RemoveFromIssuances);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class FundingProgramEndpoints
     private static async Task<IResult> Create(
         FundingProgramRequest request,
         IFundingProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFundingProgram( request );
+        var model = mapRequestToFundingProgram(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class FundingProgramEndpoints
     private static async Task<IResult> Update(
         FundingProgramRequest request,
         IFundingProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToFundingProgram( request );
+        var model = mapRequestToFundingProgram(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class FundingProgramEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IFundingProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var fundingProgram = await service.Get(identifier, cancellationToken);
-        return fundingProgram is null ? Results.NotFound() : Results.Ok( fundingProgram );
+        return fundingProgram is null ? Results.NotFound() : Results.Ok(fundingProgram);
     }
 
 
     private static async Task<IResult> GetAll(
         IFundingProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( FundingProgramResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(FundingProgramResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IFundingProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class FundingProgramEndpoints
     private static async Task<IResult> AssignTreasuryUnit(
         AssociationRequest request,
         IFundingProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTreasuryUnit(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class FundingProgramEndpoints
     private static async Task<IResult> UnassignTreasuryUnit(
     AssociationRequest request,
     IFundingProgramService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTreasuryUnit(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class FundingProgramEndpoints
     private static async Task<IResult> AddToIssuances(
         MultipleAssociationRequest request,
         IFundingProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToIssuances(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class FundingProgramEndpoints
     private static async Task<IResult> RemoveFromIssuances(
         MultipleAssociationRequest request,
         IFundingProgramService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromIssuances(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static FundingProgram mapRequestToFundingProgram( FundingProgramRequest request ) {
+    private static FundingProgram mapRequestToFundingProgram(FundingProgramRequest request)
+    {
         var model = new FundingProgram
         {
             Id = request.Id,

@@ -20,20 +20,20 @@ public static class PortfolioEndpoints
         group.MapPut("/assignTradingBook", AssignTradingBook);
         group.MapPut("/unassignTradingBook", UnassignTradingBook);
 
-    group.MapPut("/addToPositions", AddToPositions);
-    group.MapPut("/removeFromPositions", RemoveFromPositions);
+        group.MapPut("/addToPositions", AddToPositions);
+        group.MapPut("/removeFromPositions", RemoveFromPositions);
 
-    group.MapPut("/addToTrades", AddToTrades);
-    group.MapPut("/removeFromTrades", RemoveFromTrades);
+        group.MapPut("/addToTrades", AddToTrades);
+        group.MapPut("/removeFromTrades", RemoveFromTrades);
 
-    group.MapPut("/addToRiskReports", AddToRiskReports);
-    group.MapPut("/removeFromRiskReports", RemoveFromRiskReports);
+        group.MapPut("/addToRiskReports", AddToRiskReports);
+        group.MapPut("/removeFromRiskReports", RemoveFromRiskReports);
 
-    group.MapPut("/addToRiskLimits", AddToRiskLimits);
-    group.MapPut("/removeFromRiskLimits", RemoveFromRiskLimits);
+        group.MapPut("/addToRiskLimits", AddToRiskLimits);
+        group.MapPut("/removeFromRiskLimits", RemoveFromRiskLimits);
 
-    group.MapPut("/addToLiquidityBuffers", AddToLiquidityBuffers);
-    group.MapPut("/removeFromLiquidityBuffers", RemoveFromLiquidityBuffers);
+        group.MapPut("/addToLiquidityBuffers", AddToLiquidityBuffers);
+        group.MapPut("/removeFromLiquidityBuffers", RemoveFromLiquidityBuffers);
 
 
         return app;
@@ -42,9 +42,10 @@ public static class PortfolioEndpoints
     private static async Task<IResult> Create(
         PortfolioRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPortfolio( request );
+        var model = mapRequestToPortfolio(request);
 
         try
         {
@@ -61,9 +62,10 @@ public static class PortfolioEndpoints
     private static async Task<IResult> Update(
         PortfolioRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToPortfolio( request );
+        var model = mapRequestToPortfolio(request);
 
         try
         {
@@ -80,25 +82,28 @@ public static class PortfolioEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var portfolio = await service.Get(identifier, cancellationToken);
-        return portfolio is null ? Results.NotFound() : Results.Ok( portfolio );
+        return portfolio is null ? Results.NotFound() : Results.Ok(portfolio);
     }
 
 
     private static async Task<IResult> GetAll(
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( PortfolioResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(PortfolioResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -106,7 +111,8 @@ public static class PortfolioEndpoints
     private static async Task<IResult> AssignTradingBook(
         AssociationRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTradingBook(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +120,8 @@ public static class PortfolioEndpoints
     private static async Task<IResult> UnassignTradingBook(
     AssociationRequest request,
     IPortfolioService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTradingBook(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -123,7 +130,8 @@ public static class PortfolioEndpoints
     private static async Task<IResult> AddToPositions(
         MultipleAssociationRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPositions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -131,14 +139,16 @@ public static class PortfolioEndpoints
     private static async Task<IResult> RemoveFromPositions(
         MultipleAssociationRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPositions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToTrades(
         MultipleAssociationRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTrades(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -146,14 +156,16 @@ public static class PortfolioEndpoints
     private static async Task<IResult> RemoveFromTrades(
         MultipleAssociationRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTrades(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRiskReports(
         MultipleAssociationRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRiskReports(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -161,14 +173,16 @@ public static class PortfolioEndpoints
     private static async Task<IResult> RemoveFromRiskReports(
         MultipleAssociationRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRiskReports(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRiskLimits(
         MultipleAssociationRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRiskLimits(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -176,14 +190,16 @@ public static class PortfolioEndpoints
     private static async Task<IResult> RemoveFromRiskLimits(
         MultipleAssociationRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRiskLimits(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToLiquidityBuffers(
         MultipleAssociationRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLiquidityBuffers(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -191,11 +207,13 @@ public static class PortfolioEndpoints
     private static async Task<IResult> RemoveFromLiquidityBuffers(
         MultipleAssociationRequest request,
         IPortfolioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLiquidityBuffers(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Portfolio mapRequestToPortfolio( PortfolioRequest request ) {
+    private static Portfolio mapRequestToPortfolio(PortfolioRequest request)
+    {
         var model = new Portfolio
         {
             Id = request.Id,

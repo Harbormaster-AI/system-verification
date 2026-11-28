@@ -22,8 +22,8 @@ public static class IssuanceEndpoints
         group.MapPut("/assignPortfolio", AssignPortfolio);
         group.MapPut("/unassignPortfolio", UnassignPortfolio);
 
-    group.MapPut("/addToCashFlows", AddToCashFlows);
-    group.MapPut("/removeFromCashFlows", RemoveFromCashFlows);
+        group.MapPut("/addToCashFlows", AddToCashFlows);
+        group.MapPut("/removeFromCashFlows", RemoveFromCashFlows);
 
 
         return app;
@@ -32,9 +32,10 @@ public static class IssuanceEndpoints
     private static async Task<IResult> Create(
         IssuanceRequest request,
         IIssuanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToIssuance( request );
+        var model = mapRequestToIssuance(request);
 
         try
         {
@@ -51,9 +52,10 @@ public static class IssuanceEndpoints
     private static async Task<IResult> Update(
         IssuanceRequest request,
         IIssuanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToIssuance( request );
+        var model = mapRequestToIssuance(request);
 
         try
         {
@@ -70,25 +72,28 @@ public static class IssuanceEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IIssuanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var issuance = await service.Get(identifier, cancellationToken);
-        return issuance is null ? Results.NotFound() : Results.Ok( issuance );
+        return issuance is null ? Results.NotFound() : Results.Ok(issuance);
     }
 
 
     private static async Task<IResult> GetAll(
         IIssuanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( IssuanceResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(IssuanceResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IIssuanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class IssuanceEndpoints
     private static async Task<IResult> AssignFundingProgram(
         AssociationRequest request,
         IIssuanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignFundingProgram(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +110,8 @@ public static class IssuanceEndpoints
     private static async Task<IResult> UnassignFundingProgram(
     AssociationRequest request,
     IIssuanceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignFundingProgram(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +119,8 @@ public static class IssuanceEndpoints
     private static async Task<IResult> AssignPortfolio(
         AssociationRequest request,
         IIssuanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPortfolio(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +128,8 @@ public static class IssuanceEndpoints
     private static async Task<IResult> UnassignPortfolio(
     AssociationRequest request,
     IIssuanceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPortfolio(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class IssuanceEndpoints
     private static async Task<IResult> AddToCashFlows(
         MultipleAssociationRequest request,
         IIssuanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCashFlows(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class IssuanceEndpoints
     private static async Task<IResult> RemoveFromCashFlows(
         MultipleAssociationRequest request,
         IIssuanceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCashFlows(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static Issuance mapRequestToIssuance( IssuanceRequest request ) {
+    private static Issuance mapRequestToIssuance(IssuanceRequest request)
+    {
         var model = new Issuance
         {
             Id = request.Id,

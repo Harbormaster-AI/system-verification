@@ -9,15 +9,17 @@ public class Holiday : IValidatableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- [Required]
-public required virtual DateOnly Date { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Description { get; set; } 
-public virtual BusinessCalendar? Calendar { get; set; } 
+    [Required]
+    public required virtual DateOnly Date { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Description { get; set; }
+    public virtual BusinessCalendar? Calendar { get; set; }
 
-    public static Holiday FromRequest(HolidayRequest request) {
-        return new Holiday {
+    public static Holiday FromRequest(HolidayRequest request)
+    {
+        return new Holiday
+        {
             Id = request.Id,
             Date = request.Date,
             Description = request.Description,

@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IMarginCallService {
+public interface IMarginCallService
+{
 
-    Task Create(MarginCall model , CancellationToken cancellationToken);
+    Task Create(MarginCall model, CancellationToken cancellationToken);
     Task<bool> Update(MarginCall model, CancellationToken cancellationToken);
     Task<MarginCall?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<MarginCall>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class MarginCallService : IMarginCallService
 
     public async Task<bool> Update(MarginCall model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class MarginCallService : IMarginCallService
         return true;
     }
 
-    public async Task<bool> AssignCollateralAgreement(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCollateralAgreement(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class MarginCallService : IMarginCallService
 
             var child = await _serviceResolver.Get<CollateralAgreementService>().Get(childRequest, cancellationToken);
             parent.CollateralAgreement = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class MarginCallService : IMarginCallService
         return true;
     }
 
-    public async Task<bool> UnassignCollateralAgreement(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCollateralAgreement(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class MarginCallService : IMarginCallService
         try
         {
             parent.CollateralAgreement = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -177,7 +181,8 @@ public class MarginCallService : IMarginCallService
         return true;
     }
 
-    public async Task<bool> AssignCollateralAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCollateralAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -195,7 +200,7 @@ public class MarginCallService : IMarginCallService
 
             var child = await _serviceResolver.Get<CollateralAccountService>().Get(childRequest, cancellationToken);
             parent.CollateralAccount = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -207,7 +212,8 @@ public class MarginCallService : IMarginCallService
         return true;
     }
 
-    public async Task<bool> UnassignCollateralAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCollateralAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -218,7 +224,7 @@ public class MarginCallService : IMarginCallService
         try
         {
             parent.CollateralAccount = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -230,7 +236,8 @@ public class MarginCallService : IMarginCallService
         return true;
     }
 
-    public async Task<bool> AssignCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -248,7 +255,7 @@ public class MarginCallService : IMarginCallService
 
             var child = await _serviceResolver.Get<CounterpartyService>().Get(childRequest, cancellationToken);
             parent.Counterparty = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -260,7 +267,8 @@ public class MarginCallService : IMarginCallService
         return true;
     }
 
-    public async Task<bool> UnassignCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -271,7 +279,7 @@ public class MarginCallService : IMarginCallService
         try
         {
             parent.Counterparty = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -284,8 +292,10 @@ public class MarginCallService : IMarginCallService
     }
 
 
-    public async Task<bool> AddToCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MarginCall",
                 "AddToCashFlows",
@@ -293,16 +303,18 @@ public class MarginCallService : IMarginCallService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "MarginCall",
                 "RemoveFromCashFlows",

@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IHolidayService {
+public interface IHolidayService
+{
 
-    Task Create(Holiday model , CancellationToken cancellationToken);
+    Task Create(Holiday model, CancellationToken cancellationToken);
     Task<bool> Update(Holiday model, CancellationToken cancellationToken);
     Task<Holiday?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Holiday>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class HolidayService : IHolidayService
 
     public async Task<bool> Update(Holiday model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -116,7 +118,8 @@ public class HolidayService : IHolidayService
         return true;
     }
 
-    public async Task<bool> AssignCalendar(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCalendar(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -134,7 +137,7 @@ public class HolidayService : IHolidayService
 
             var child = await _serviceResolver.Get<BusinessCalendarService>().Get(childRequest, cancellationToken);
             parent.Calendar = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -146,7 +149,8 @@ public class HolidayService : IHolidayService
         return true;
     }
 
-    public async Task<bool> UnassignCalendar(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCalendar(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -157,7 +161,7 @@ public class HolidayService : IHolidayService
         try
         {
             parent.Calendar = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

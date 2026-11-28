@@ -11,9 +11,9 @@ public interface ILiquidityBufferRepository
     Task UpdateAsync(LiquidityBuffer liquidityBuffer, CancellationToken cancellationToken);
     Task DeleteAsync(LiquidityBuffer liquidityBuffer, CancellationToken cancellationToken);
 
-    Task AddToAssetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAssetsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToRegulatoryMetricsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRegulatoryMetricsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAssetsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAssetsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRegulatoryMetricsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRegulatoryMetricsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

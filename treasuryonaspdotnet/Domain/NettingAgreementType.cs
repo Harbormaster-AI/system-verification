@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum NettingAgreementType
 {
-    ISDA=1,GMRA=2,GMSLA=3,Bilateral=4
+    ISDA = 1, GMRA = 2, GMSLA = 3, Bilateral = 4
 }
 
 /// <summary>

@@ -11,7 +11,7 @@ public interface ITransferPricingRuleRepository
     Task UpdateAsync(TransferPricingRule transferPricingRule, CancellationToken cancellationToken);
     Task DeleteAsync(TransferPricingRule transferPricingRule, CancellationToken cancellationToken);
 
-    Task AddToAppliedDealsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAppliedDealsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAppliedDealsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAppliedDealsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

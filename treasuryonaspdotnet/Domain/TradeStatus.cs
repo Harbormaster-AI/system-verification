@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum TradeStatus
 {
-    New=1,Confirmed=2,Settled=3,Amended=4,Cancelled=5
+    New = 1, Confirmed = 2, Settled = 3, Amended = 4, Cancelled = 5
 }
 
 /// <summary>

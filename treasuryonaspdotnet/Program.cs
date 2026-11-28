@@ -61,7 +61,7 @@ else
 
     dbArgs = builder.Configuration["DB_ARGS"] ?? "";
 
-    }
+}
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -70,7 +70,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
     if (!string.IsNullOrWhiteSpace(dbArgs))
     {
-//        connectionString += dbArgs.Trim().Trim(';') + ";";
+        //        connectionString += dbArgs.Trim().Trim(';') + ";";
     }
 
     if (dbEngine.Equals("mysql", StringComparison.OrdinalIgnoreCase))
@@ -129,81 +129,81 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     // etc.
 });
 
-    builder.Services.AddScoped<ITreasuryUnitRepository, TreasuryUnitRepository>();
-    builder.Services.AddScoped<ITradingBookRepository, TradingBookRepository>();
-    builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
-    builder.Services.AddScoped<ICounterpartyRepository, CounterpartyRepository>();
-    builder.Services.AddScoped<INettingAgreementRepository, NettingAgreementRepository>();
-    builder.Services.AddScoped<ICollateralAgreementRepository, CollateralAgreementRepository>();
-    builder.Services.AddScoped<ICollateralAccountRepository, CollateralAccountRepository>();
-    builder.Services.AddScoped<IMarginCallRepository, MarginCallRepository>();
-    builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
-    builder.Services.AddScoped<ICashPositionRepository, CashPositionRepository>();
-    builder.Services.AddScoped<ICashFlowRepository, CashFlowRepository>();
-    builder.Services.AddScoped<ITradeRepository, TradeRepository>();
-    builder.Services.AddScoped<ISettlementInstructionRepository, SettlementInstructionRepository>();
-    builder.Services.AddScoped<IFundingProgramRepository, FundingProgramRepository>();
-    builder.Services.AddScoped<IIssuanceRepository, IssuanceRepository>();
-    builder.Services.AddScoped<IPositionRepository, PositionRepository>();
-    builder.Services.AddScoped<IRiskLimitRepository, RiskLimitRepository>();
-    builder.Services.AddScoped<ILimitBreachRepository, LimitBreachRepository>();
-    builder.Services.AddScoped<IApprovalRepository, ApprovalRepository>();
-    builder.Services.AddScoped<ITreasuryPolicyRepository, TreasuryPolicyRepository>();
-    builder.Services.AddScoped<IMarketDataSetRepository, MarketDataSetRepository>();
-    builder.Services.AddScoped<IYieldCurveRepository, YieldCurveRepository>();
-    builder.Services.AddScoped<ICurveQuoteRepository, CurveQuoteRepository>();
-    builder.Services.AddScoped<IFXRateRepository, FXRateRepository>();
-    builder.Services.AddScoped<IVolSurfaceRepository, VolSurfaceRepository>();
-    builder.Services.AddScoped<IRiskReportRepository, RiskReportRepository>();
-    builder.Services.AddScoped<IRegulatoryMetricRepository, RegulatoryMetricRepository>();
-    builder.Services.AddScoped<ILiquidityBufferRepository, LiquidityBufferRepository>();
-    builder.Services.AddScoped<IBufferAssetRepository, BufferAssetRepository>();
-    builder.Services.AddScoped<ITransferPricingRuleRepository, TransferPricingRuleRepository>();
-    builder.Services.AddScoped<IInternalDealRepository, InternalDealRepository>();
-    builder.Services.AddScoped<IHedgeRelationshipRepository, HedgeRelationshipRepository>();
-    builder.Services.AddScoped<IAccountingEntryRepository, AccountingEntryRepository>();
-    builder.Services.AddScoped<IStressScenarioRepository, StressScenarioRepository>();
-    builder.Services.AddScoped<IStressResultRepository, StressResultRepository>();
-    builder.Services.AddScoped<IBusinessCalendarRepository, BusinessCalendarRepository>();
-    builder.Services.AddScoped<IHolidayRepository, HolidayRepository>();
+builder.Services.AddScoped<ITreasuryUnitRepository, TreasuryUnitRepository>();
+builder.Services.AddScoped<ITradingBookRepository, TradingBookRepository>();
+builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+builder.Services.AddScoped<ICounterpartyRepository, CounterpartyRepository>();
+builder.Services.AddScoped<INettingAgreementRepository, NettingAgreementRepository>();
+builder.Services.AddScoped<ICollateralAgreementRepository, CollateralAgreementRepository>();
+builder.Services.AddScoped<ICollateralAccountRepository, CollateralAccountRepository>();
+builder.Services.AddScoped<IMarginCallRepository, MarginCallRepository>();
+builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
+builder.Services.AddScoped<ICashPositionRepository, CashPositionRepository>();
+builder.Services.AddScoped<ICashFlowRepository, CashFlowRepository>();
+builder.Services.AddScoped<ITradeRepository, TradeRepository>();
+builder.Services.AddScoped<ISettlementInstructionRepository, SettlementInstructionRepository>();
+builder.Services.AddScoped<IFundingProgramRepository, FundingProgramRepository>();
+builder.Services.AddScoped<IIssuanceRepository, IssuanceRepository>();
+builder.Services.AddScoped<IPositionRepository, PositionRepository>();
+builder.Services.AddScoped<IRiskLimitRepository, RiskLimitRepository>();
+builder.Services.AddScoped<ILimitBreachRepository, LimitBreachRepository>();
+builder.Services.AddScoped<IApprovalRepository, ApprovalRepository>();
+builder.Services.AddScoped<ITreasuryPolicyRepository, TreasuryPolicyRepository>();
+builder.Services.AddScoped<IMarketDataSetRepository, MarketDataSetRepository>();
+builder.Services.AddScoped<IYieldCurveRepository, YieldCurveRepository>();
+builder.Services.AddScoped<ICurveQuoteRepository, CurveQuoteRepository>();
+builder.Services.AddScoped<IFXRateRepository, FXRateRepository>();
+builder.Services.AddScoped<IVolSurfaceRepository, VolSurfaceRepository>();
+builder.Services.AddScoped<IRiskReportRepository, RiskReportRepository>();
+builder.Services.AddScoped<IRegulatoryMetricRepository, RegulatoryMetricRepository>();
+builder.Services.AddScoped<ILiquidityBufferRepository, LiquidityBufferRepository>();
+builder.Services.AddScoped<IBufferAssetRepository, BufferAssetRepository>();
+builder.Services.AddScoped<ITransferPricingRuleRepository, TransferPricingRuleRepository>();
+builder.Services.AddScoped<IInternalDealRepository, InternalDealRepository>();
+builder.Services.AddScoped<IHedgeRelationshipRepository, HedgeRelationshipRepository>();
+builder.Services.AddScoped<IAccountingEntryRepository, AccountingEntryRepository>();
+builder.Services.AddScoped<IStressScenarioRepository, StressScenarioRepository>();
+builder.Services.AddScoped<IStressResultRepository, StressResultRepository>();
+builder.Services.AddScoped<IBusinessCalendarRepository, BusinessCalendarRepository>();
+builder.Services.AddScoped<IHolidayRepository, HolidayRepository>();
 
-    builder.Services.AddScoped<ITreasuryUnitService, TreasuryUnitService>();
-    builder.Services.AddScoped<ITradingBookService, TradingBookService>();
-    builder.Services.AddScoped<IPortfolioService, PortfolioService>();
-    builder.Services.AddScoped<ICounterpartyService, CounterpartyService>();
-    builder.Services.AddScoped<INettingAgreementService, NettingAgreementService>();
-    builder.Services.AddScoped<ICollateralAgreementService, CollateralAgreementService>();
-    builder.Services.AddScoped<ICollateralAccountService, CollateralAccountService>();
-    builder.Services.AddScoped<IMarginCallService, MarginCallService>();
-    builder.Services.AddScoped<IBankAccountService, BankAccountService>();
-    builder.Services.AddScoped<ICashPositionService, CashPositionService>();
-    builder.Services.AddScoped<ICashFlowService, CashFlowService>();
-    builder.Services.AddScoped<ITradeService, TradeService>();
-    builder.Services.AddScoped<ISettlementInstructionService, SettlementInstructionService>();
-    builder.Services.AddScoped<IFundingProgramService, FundingProgramService>();
-    builder.Services.AddScoped<IIssuanceService, IssuanceService>();
-    builder.Services.AddScoped<IPositionService, PositionService>();
-    builder.Services.AddScoped<IRiskLimitService, RiskLimitService>();
-    builder.Services.AddScoped<ILimitBreachService, LimitBreachService>();
-    builder.Services.AddScoped<IApprovalService, ApprovalService>();
-    builder.Services.AddScoped<ITreasuryPolicyService, TreasuryPolicyService>();
-    builder.Services.AddScoped<IMarketDataSetService, MarketDataSetService>();
-    builder.Services.AddScoped<IYieldCurveService, YieldCurveService>();
-    builder.Services.AddScoped<ICurveQuoteService, CurveQuoteService>();
-    builder.Services.AddScoped<IFXRateService, FXRateService>();
-    builder.Services.AddScoped<IVolSurfaceService, VolSurfaceService>();
-    builder.Services.AddScoped<IRiskReportService, RiskReportService>();
-    builder.Services.AddScoped<IRegulatoryMetricService, RegulatoryMetricService>();
-    builder.Services.AddScoped<ILiquidityBufferService, LiquidityBufferService>();
-    builder.Services.AddScoped<IBufferAssetService, BufferAssetService>();
-    builder.Services.AddScoped<ITransferPricingRuleService, TransferPricingRuleService>();
-    builder.Services.AddScoped<IInternalDealService, InternalDealService>();
-    builder.Services.AddScoped<IHedgeRelationshipService, HedgeRelationshipService>();
-    builder.Services.AddScoped<IAccountingEntryService, AccountingEntryService>();
-    builder.Services.AddScoped<IStressScenarioService, StressScenarioService>();
-    builder.Services.AddScoped<IStressResultService, StressResultService>();
-    builder.Services.AddScoped<IBusinessCalendarService, BusinessCalendarService>();
-    builder.Services.AddScoped<IHolidayService, HolidayService>();
+builder.Services.AddScoped<ITreasuryUnitService, TreasuryUnitService>();
+builder.Services.AddScoped<ITradingBookService, TradingBookService>();
+builder.Services.AddScoped<IPortfolioService, PortfolioService>();
+builder.Services.AddScoped<ICounterpartyService, CounterpartyService>();
+builder.Services.AddScoped<INettingAgreementService, NettingAgreementService>();
+builder.Services.AddScoped<ICollateralAgreementService, CollateralAgreementService>();
+builder.Services.AddScoped<ICollateralAccountService, CollateralAccountService>();
+builder.Services.AddScoped<IMarginCallService, MarginCallService>();
+builder.Services.AddScoped<IBankAccountService, BankAccountService>();
+builder.Services.AddScoped<ICashPositionService, CashPositionService>();
+builder.Services.AddScoped<ICashFlowService, CashFlowService>();
+builder.Services.AddScoped<ITradeService, TradeService>();
+builder.Services.AddScoped<ISettlementInstructionService, SettlementInstructionService>();
+builder.Services.AddScoped<IFundingProgramService, FundingProgramService>();
+builder.Services.AddScoped<IIssuanceService, IssuanceService>();
+builder.Services.AddScoped<IPositionService, PositionService>();
+builder.Services.AddScoped<IRiskLimitService, RiskLimitService>();
+builder.Services.AddScoped<ILimitBreachService, LimitBreachService>();
+builder.Services.AddScoped<IApprovalService, ApprovalService>();
+builder.Services.AddScoped<ITreasuryPolicyService, TreasuryPolicyService>();
+builder.Services.AddScoped<IMarketDataSetService, MarketDataSetService>();
+builder.Services.AddScoped<IYieldCurveService, YieldCurveService>();
+builder.Services.AddScoped<ICurveQuoteService, CurveQuoteService>();
+builder.Services.AddScoped<IFXRateService, FXRateService>();
+builder.Services.AddScoped<IVolSurfaceService, VolSurfaceService>();
+builder.Services.AddScoped<IRiskReportService, RiskReportService>();
+builder.Services.AddScoped<IRegulatoryMetricService, RegulatoryMetricService>();
+builder.Services.AddScoped<ILiquidityBufferService, LiquidityBufferService>();
+builder.Services.AddScoped<IBufferAssetService, BufferAssetService>();
+builder.Services.AddScoped<ITransferPricingRuleService, TransferPricingRuleService>();
+builder.Services.AddScoped<IInternalDealService, InternalDealService>();
+builder.Services.AddScoped<IHedgeRelationshipService, HedgeRelationshipService>();
+builder.Services.AddScoped<IAccountingEntryService, AccountingEntryService>();
+builder.Services.AddScoped<IStressScenarioService, StressScenarioService>();
+builder.Services.AddScoped<IStressResultService, StressResultService>();
+builder.Services.AddScoped<IBusinessCalendarService, BusinessCalendarService>();
+builder.Services.AddScoped<IHolidayService, HolidayService>();
 
 // apply the service resolver
 builder.Services.AddScoped<IServiceResolver, ServiceResolver>();
@@ -261,43 +261,43 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-    app.MapTreasuryUnitEndpoints();
-    app.MapTradingBookEndpoints();
-    app.MapPortfolioEndpoints();
-    app.MapCounterpartyEndpoints();
-    app.MapNettingAgreementEndpoints();
-    app.MapCollateralAgreementEndpoints();
-    app.MapCollateralAccountEndpoints();
-    app.MapMarginCallEndpoints();
-    app.MapBankAccountEndpoints();
-    app.MapCashPositionEndpoints();
-    app.MapCashFlowEndpoints();
-    app.MapTradeEndpoints();
-    app.MapSettlementInstructionEndpoints();
-    app.MapFundingProgramEndpoints();
-    app.MapIssuanceEndpoints();
-    app.MapPositionEndpoints();
-    app.MapRiskLimitEndpoints();
-    app.MapLimitBreachEndpoints();
-    app.MapApprovalEndpoints();
-    app.MapTreasuryPolicyEndpoints();
-    app.MapMarketDataSetEndpoints();
-    app.MapYieldCurveEndpoints();
-    app.MapCurveQuoteEndpoints();
-    app.MapFXRateEndpoints();
-    app.MapVolSurfaceEndpoints();
-    app.MapRiskReportEndpoints();
-    app.MapRegulatoryMetricEndpoints();
-    app.MapLiquidityBufferEndpoints();
-    app.MapBufferAssetEndpoints();
-    app.MapTransferPricingRuleEndpoints();
-    app.MapInternalDealEndpoints();
-    app.MapHedgeRelationshipEndpoints();
-    app.MapAccountingEntryEndpoints();
-    app.MapStressScenarioEndpoints();
-    app.MapStressResultEndpoints();
-    app.MapBusinessCalendarEndpoints();
-    app.MapHolidayEndpoints();
+app.MapTreasuryUnitEndpoints();
+app.MapTradingBookEndpoints();
+app.MapPortfolioEndpoints();
+app.MapCounterpartyEndpoints();
+app.MapNettingAgreementEndpoints();
+app.MapCollateralAgreementEndpoints();
+app.MapCollateralAccountEndpoints();
+app.MapMarginCallEndpoints();
+app.MapBankAccountEndpoints();
+app.MapCashPositionEndpoints();
+app.MapCashFlowEndpoints();
+app.MapTradeEndpoints();
+app.MapSettlementInstructionEndpoints();
+app.MapFundingProgramEndpoints();
+app.MapIssuanceEndpoints();
+app.MapPositionEndpoints();
+app.MapRiskLimitEndpoints();
+app.MapLimitBreachEndpoints();
+app.MapApprovalEndpoints();
+app.MapTreasuryPolicyEndpoints();
+app.MapMarketDataSetEndpoints();
+app.MapYieldCurveEndpoints();
+app.MapCurveQuoteEndpoints();
+app.MapFXRateEndpoints();
+app.MapVolSurfaceEndpoints();
+app.MapRiskReportEndpoints();
+app.MapRegulatoryMetricEndpoints();
+app.MapLiquidityBufferEndpoints();
+app.MapBufferAssetEndpoints();
+app.MapTransferPricingRuleEndpoints();
+app.MapInternalDealEndpoints();
+app.MapHedgeRelationshipEndpoints();
+app.MapAccountingEntryEndpoints();
+app.MapStressScenarioEndpoints();
+app.MapStressResultEndpoints();
+app.MapBusinessCalendarEndpoints();
+app.MapHolidayEndpoints();
 
 app.Run();
 

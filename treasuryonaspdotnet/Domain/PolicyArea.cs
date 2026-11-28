@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum PolicyArea
 {
-    LiquidityRisk=1,MarketRisk=2,Funding=3,Collateral=4,Hedging=5,TransferPricing=6
+    LiquidityRisk = 1, MarketRisk = 2, Funding = 3, Collateral = 4, Hedging = 5, TransferPricing = 6
 }
 
 /// <summary>

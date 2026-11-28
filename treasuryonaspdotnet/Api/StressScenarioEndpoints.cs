@@ -20,8 +20,8 @@ public static class StressScenarioEndpoints
         group.MapPut("/assignMarketDataSet", AssignMarketDataSet);
         group.MapPut("/unassignMarketDataSet", UnassignMarketDataSet);
 
-    group.MapPut("/addToStressResults", AddToStressResults);
-    group.MapPut("/removeFromStressResults", RemoveFromStressResults);
+        group.MapPut("/addToStressResults", AddToStressResults);
+        group.MapPut("/removeFromStressResults", RemoveFromStressResults);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class StressScenarioEndpoints
     private static async Task<IResult> Create(
         StressScenarioRequest request,
         IStressScenarioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToStressScenario( request );
+        var model = mapRequestToStressScenario(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class StressScenarioEndpoints
     private static async Task<IResult> Update(
         StressScenarioRequest request,
         IStressScenarioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToStressScenario( request );
+        var model = mapRequestToStressScenario(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class StressScenarioEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IStressScenarioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var stressScenario = await service.Get(identifier, cancellationToken);
-        return stressScenario is null ? Results.NotFound() : Results.Ok( stressScenario );
+        return stressScenario is null ? Results.NotFound() : Results.Ok(stressScenario);
     }
 
 
     private static async Task<IResult> GetAll(
         IStressScenarioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( StressScenarioResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(StressScenarioResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IStressScenarioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class StressScenarioEndpoints
     private static async Task<IResult> AssignMarketDataSet(
         AssociationRequest request,
         IStressScenarioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMarketDataSet(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class StressScenarioEndpoints
     private static async Task<IResult> UnassignMarketDataSet(
     AssociationRequest request,
     IStressScenarioService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMarketDataSet(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class StressScenarioEndpoints
     private static async Task<IResult> AddToStressResults(
         MultipleAssociationRequest request,
         IStressScenarioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToStressResults(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class StressScenarioEndpoints
     private static async Task<IResult> RemoveFromStressResults(
         MultipleAssociationRequest request,
         IStressScenarioService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromStressResults(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static StressScenario mapRequestToStressScenario( StressScenarioRequest request ) {
+    private static StressScenario mapRequestToStressScenario(StressScenarioRequest request)
+    {
         var model = new StressScenario
         {
             Id = request.Id,

@@ -18,8 +18,8 @@ public static class BusinessCalendarEndpoints
         group.MapPost("/delete", Delete);
 
 
-    group.MapPut("/addToHolidays", AddToHolidays);
-    group.MapPut("/removeFromHolidays", RemoveFromHolidays);
+        group.MapPut("/addToHolidays", AddToHolidays);
+        group.MapPut("/removeFromHolidays", RemoveFromHolidays);
 
 
         return app;
@@ -28,9 +28,10 @@ public static class BusinessCalendarEndpoints
     private static async Task<IResult> Create(
         BusinessCalendarRequest request,
         IBusinessCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBusinessCalendar( request );
+        var model = mapRequestToBusinessCalendar(request);
 
         try
         {
@@ -47,9 +48,10 @@ public static class BusinessCalendarEndpoints
     private static async Task<IResult> Update(
         BusinessCalendarRequest request,
         IBusinessCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToBusinessCalendar( request );
+        var model = mapRequestToBusinessCalendar(request);
 
         try
         {
@@ -66,25 +68,28 @@ public static class BusinessCalendarEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IBusinessCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var businessCalendar = await service.Get(identifier, cancellationToken);
-        return businessCalendar is null ? Results.NotFound() : Results.Ok( businessCalendar );
+        return businessCalendar is null ? Results.NotFound() : Results.Ok(businessCalendar);
     }
 
 
     private static async Task<IResult> GetAll(
         IBusinessCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( BusinessCalendarResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(BusinessCalendarResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IBusinessCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class BusinessCalendarEndpoints
     private static async Task<IResult> AddToHolidays(
         MultipleAssociationRequest request,
         IBusinessCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToHolidays(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -101,11 +107,13 @@ public static class BusinessCalendarEndpoints
     private static async Task<IResult> RemoveFromHolidays(
         MultipleAssociationRequest request,
         IBusinessCalendarService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromHolidays(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static BusinessCalendar mapRequestToBusinessCalendar( BusinessCalendarRequest request ) {
+    private static BusinessCalendar mapRequestToBusinessCalendar(BusinessCalendarRequest request)
+    {
         var model = new BusinessCalendar
         {
             Id = request.Id,

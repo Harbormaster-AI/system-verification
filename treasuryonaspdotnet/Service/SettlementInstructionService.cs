@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ISettlementInstructionService {
+public interface ISettlementInstructionService
+{
 
-    Task Create(SettlementInstruction model , CancellationToken cancellationToken);
+    Task Create(SettlementInstruction model, CancellationToken cancellationToken);
     Task<bool> Update(SettlementInstruction model, CancellationToken cancellationToken);
     Task<SettlementInstruction?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<SettlementInstruction>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class SettlementInstructionService : ISettlementInstructionService
 
     public async Task<bool> Update(SettlementInstruction model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class SettlementInstructionService : ISettlementInstructionService
         return true;
     }
 
-    public async Task<bool> AssignTrade(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTrade(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class SettlementInstructionService : ISettlementInstructionService
 
             var child = await _serviceResolver.Get<TradeService>().Get(childRequest, cancellationToken);
             parent.Trade = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class SettlementInstructionService : ISettlementInstructionService
         return true;
     }
 
-    public async Task<bool> UnassignTrade(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTrade(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class SettlementInstructionService : ISettlementInstructionService
         try
         {
             parent.Trade = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class SettlementInstructionService : ISettlementInstructionService
         return true;
     }
 
-    public async Task<bool> AssignCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class SettlementInstructionService : ISettlementInstructionService
 
             var child = await _serviceResolver.Get<CounterpartyService>().Get(childRequest, cancellationToken);
             parent.Counterparty = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class SettlementInstructionService : ISettlementInstructionService
         return true;
     }
 
-    public async Task<bool> UnassignCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class SettlementInstructionService : ISettlementInstructionService
         try
         {
             parent.Counterparty = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class SettlementInstructionService : ISettlementInstructionService
         return true;
     }
 
-    public async Task<bool> AssignBankAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBankAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class SettlementInstructionService : ISettlementInstructionService
 
             var child = await _serviceResolver.Get<BankAccountService>().Get(childRequest, cancellationToken);
             parent.BankAccount = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class SettlementInstructionService : ISettlementInstructionService
         return true;
     }
 
-    public async Task<bool> UnassignBankAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBankAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class SettlementInstructionService : ISettlementInstructionService
         try
         {
             parent.BankAccount = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

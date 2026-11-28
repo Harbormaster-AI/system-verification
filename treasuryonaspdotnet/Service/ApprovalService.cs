@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IApprovalService {
+public interface IApprovalService
+{
 
-    Task Create(Approval model , CancellationToken cancellationToken);
+    Task Create(Approval model, CancellationToken cancellationToken);
     Task<bool> Update(Approval model, CancellationToken cancellationToken);
     Task<Approval?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Approval>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class ApprovalService : IApprovalService
 
     public async Task<bool> Update(Approval model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class ApprovalService : IApprovalService
         return true;
     }
 
-    public async Task<bool> AssignRiskLimit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRiskLimit(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class ApprovalService : IApprovalService
 
             var child = await _serviceResolver.Get<RiskLimitService>().Get(childRequest, cancellationToken);
             parent.RiskLimit = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class ApprovalService : IApprovalService
         return true;
     }
 
-    public async Task<bool> UnassignRiskLimit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRiskLimit(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class ApprovalService : IApprovalService
         try
         {
             parent.RiskLimit = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class ApprovalService : IApprovalService
         return true;
     }
 
-    public async Task<bool> AssignLimitBreach(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignLimitBreach(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class ApprovalService : IApprovalService
 
             var child = await _serviceResolver.Get<LimitBreachService>().Get(childRequest, cancellationToken);
             parent.LimitBreach = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class ApprovalService : IApprovalService
         return true;
     }
 
-    public async Task<bool> UnassignLimitBreach(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignLimitBreach(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class ApprovalService : IApprovalService
         try
         {
             parent.LimitBreach = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,7 +234,8 @@ public class ApprovalService : IApprovalService
         return true;
     }
 
-    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -246,7 +253,7 @@ public class ApprovalService : IApprovalService
 
             var child = await _serviceResolver.Get<TreasuryPolicyService>().Get(childRequest, cancellationToken);
             parent.Policy = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -258,7 +265,8 @@ public class ApprovalService : IApprovalService
         return true;
     }
 
-    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPolicy(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -269,7 +277,7 @@ public class ApprovalService : IApprovalService
         try
         {
             parent.Policy = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

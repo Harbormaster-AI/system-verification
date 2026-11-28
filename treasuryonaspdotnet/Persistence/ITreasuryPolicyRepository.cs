@@ -11,9 +11,9 @@ public interface ITreasuryPolicyRepository
     Task UpdateAsync(TreasuryPolicy treasuryPolicy, CancellationToken cancellationToken);
     Task DeleteAsync(TreasuryPolicy treasuryPolicy, CancellationToken cancellationToken);
 
-    Task AddToLimitsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLimitsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToApprovalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromApprovalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLimitsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLimitsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToApprovalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromApprovalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

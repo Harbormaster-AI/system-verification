@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum LiquidityHorizon
 {
-    Intraday=1,Overnight=2,OneWeek=3,OneMonth=4,ThreeMonths=5,OneYear=6
+    Intraday = 1, Overnight = 2, OneWeek = 3, OneMonth = 4, ThreeMonths = 5, OneYear = 6
 }
 
 /// <summary>

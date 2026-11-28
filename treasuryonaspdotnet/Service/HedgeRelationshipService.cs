@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IHedgeRelationshipService {
+public interface IHedgeRelationshipService
+{
 
-    Task Create(HedgeRelationship model , CancellationToken cancellationToken);
+    Task Create(HedgeRelationship model, CancellationToken cancellationToken);
     Task<bool> Update(HedgeRelationship model, CancellationToken cancellationToken);
     Task<HedgeRelationship?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<HedgeRelationship>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class HedgeRelationshipService : IHedgeRelationshipService
 
     public async Task<bool> Update(HedgeRelationship model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class HedgeRelationshipService : IHedgeRelationshipService
         return true;
     }
 
-    public async Task<bool> AssignHedgedItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignHedgedItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class HedgeRelationshipService : IHedgeRelationshipService
 
             var child = await _serviceResolver.Get<TradeService>().Get(childRequest, cancellationToken);
             parent.HedgedItem = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class HedgeRelationshipService : IHedgeRelationshipService
         return true;
     }
 
-    public async Task<bool> UnassignHedgedItem(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignHedgedItem(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class HedgeRelationshipService : IHedgeRelationshipService
         try
         {
             parent.HedgedItem = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,7 +178,8 @@ public class HedgeRelationshipService : IHedgeRelationshipService
         return true;
     }
 
-    public async Task<bool> AssignHedgingInstrument(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignHedgingInstrument(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -192,7 +197,7 @@ public class HedgeRelationshipService : IHedgeRelationshipService
 
             var child = await _serviceResolver.Get<TradeService>().Get(childRequest, cancellationToken);
             parent.HedgingInstrument = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -204,7 +209,8 @@ public class HedgeRelationshipService : IHedgeRelationshipService
         return true;
     }
 
-    public async Task<bool> UnassignHedgingInstrument(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignHedgingInstrument(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -215,7 +221,7 @@ public class HedgeRelationshipService : IHedgeRelationshipService
         try
         {
             parent.HedgingInstrument = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -228,8 +234,10 @@ public class HedgeRelationshipService : IHedgeRelationshipService
     }
 
 
-    public async Task<bool> AddToAccountingEntries(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAccountingEntries(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "HedgeRelationship",
                 "AddToAccountingEntries",
@@ -237,16 +245,18 @@ public class HedgeRelationshipService : IHedgeRelationshipService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAccountingEntries(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAccountingEntries(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "HedgeRelationship",
                 "RemoveFromAccountingEntries",

@@ -26,8 +26,8 @@ public static class InternalDealEndpoints
         group.MapPut("/assignPortfolio", AssignPortfolio);
         group.MapPut("/unassignPortfolio", UnassignPortfolio);
 
-    group.MapPut("/addToCashFlows", AddToCashFlows);
-    group.MapPut("/removeFromCashFlows", RemoveFromCashFlows);
+        group.MapPut("/addToCashFlows", AddToCashFlows);
+        group.MapPut("/removeFromCashFlows", RemoveFromCashFlows);
 
 
         return app;
@@ -36,9 +36,10 @@ public static class InternalDealEndpoints
     private static async Task<IResult> Create(
         InternalDealRequest request,
         IInternalDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInternalDeal( request );
+        var model = mapRequestToInternalDeal(request);
 
         try
         {
@@ -55,9 +56,10 @@ public static class InternalDealEndpoints
     private static async Task<IResult> Update(
         InternalDealRequest request,
         IInternalDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToInternalDeal( request );
+        var model = mapRequestToInternalDeal(request);
 
         try
         {
@@ -74,25 +76,28 @@ public static class InternalDealEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IInternalDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var internalDeal = await service.Get(identifier, cancellationToken);
-        return internalDeal is null ? Results.NotFound() : Results.Ok( internalDeal );
+        return internalDeal is null ? Results.NotFound() : Results.Ok(internalDeal);
     }
 
 
     private static async Task<IResult> GetAll(
         IInternalDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( InternalDealResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(InternalDealResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IInternalDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -100,7 +105,8 @@ public static class InternalDealEndpoints
     private static async Task<IResult> AssignTransferPricingRule(
         AssociationRequest request,
         IInternalDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTransferPricingRule(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -108,7 +114,8 @@ public static class InternalDealEndpoints
     private static async Task<IResult> UnassignTransferPricingRule(
     AssociationRequest request,
     IInternalDealService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTransferPricingRule(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -116,7 +123,8 @@ public static class InternalDealEndpoints
     private static async Task<IResult> AssignFromUnit(
         AssociationRequest request,
         IInternalDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignFromUnit(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -124,7 +132,8 @@ public static class InternalDealEndpoints
     private static async Task<IResult> UnassignFromUnit(
     AssociationRequest request,
     IInternalDealService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignFromUnit(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -132,7 +141,8 @@ public static class InternalDealEndpoints
     private static async Task<IResult> AssignToUnit(
         AssociationRequest request,
         IInternalDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignToUnit(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -140,7 +150,8 @@ public static class InternalDealEndpoints
     private static async Task<IResult> UnassignToUnit(
     AssociationRequest request,
     IInternalDealService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignToUnit(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -148,7 +159,8 @@ public static class InternalDealEndpoints
     private static async Task<IResult> AssignPortfolio(
         AssociationRequest request,
         IInternalDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPortfolio(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -156,7 +168,8 @@ public static class InternalDealEndpoints
     private static async Task<IResult> UnassignPortfolio(
     AssociationRequest request,
     IInternalDealService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPortfolio(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -165,7 +178,8 @@ public static class InternalDealEndpoints
     private static async Task<IResult> AddToCashFlows(
         MultipleAssociationRequest request,
         IInternalDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCashFlows(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -173,11 +187,13 @@ public static class InternalDealEndpoints
     private static async Task<IResult> RemoveFromCashFlows(
         MultipleAssociationRequest request,
         IInternalDealService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCashFlows(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static InternalDeal mapRequestToInternalDeal( InternalDealRequest request ) {
+    private static InternalDeal mapRequestToInternalDeal(InternalDealRequest request)
+    {
         var model = new InternalDeal
         {
             Id = request.Id,

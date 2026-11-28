@@ -9,19 +9,21 @@ public class YieldCurve : IValidatableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Currency { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string BuildMethod { get; set; } 
-public virtual MarketDataSet? MarketDataSet { get; set; } 
-public virtual ICollection<CurveQuote> Quotes { get; set; } = new List<CurveQuote>();
- public virtual CurveType? CurveType { get; set; } 
- public virtual DayCountConvention? DayCount { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Currency { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string BuildMethod { get; set; }
+    public virtual MarketDataSet? MarketDataSet { get; set; }
+    public virtual ICollection<CurveQuote> Quotes { get; set; } = new List<CurveQuote>();
+    public virtual CurveType? CurveType { get; set; }
+    public virtual DayCountConvention? DayCount { get; set; }
 
-    public static YieldCurve FromRequest(YieldCurveRequest request) {
-        return new YieldCurve {
+    public static YieldCurve FromRequest(YieldCurveRequest request)
+    {
+        return new YieldCurve
+        {
             Id = request.Id,
             Currency = request.Currency,
             BuildMethod = request.BuildMethod,

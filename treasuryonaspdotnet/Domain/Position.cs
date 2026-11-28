@@ -9,20 +9,22 @@ public class Position : IValidatableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- [Required]
-public required virtual DateOnly AsOfDate { get; set; } 
- [Required]
-public required virtual decimal Quantity { get; set; } 
- [Required]
-public required virtual Money MarketValue { get; set; } 
- [Required]
-public required virtual Money Pnl { get; set; } 
-public virtual Portfolio? Portfolio { get; set; } 
-public virtual Trade? Trade { get; set; } 
- public virtual PositionType? PositionType { get; set; } 
+    [Required]
+    public required virtual DateOnly AsOfDate { get; set; }
+    [Required]
+    public required virtual decimal Quantity { get; set; }
+    [Required]
+    public required virtual Money MarketValue { get; set; }
+    [Required]
+    public required virtual Money Pnl { get; set; }
+    public virtual Portfolio? Portfolio { get; set; }
+    public virtual Trade? Trade { get; set; }
+    public virtual PositionType? PositionType { get; set; }
 
-    public static Position FromRequest(PositionRequest request) {
-        return new Position {
+    public static Position FromRequest(PositionRequest request)
+    {
+        return new Position
+        {
             Id = request.Id,
             AsOfDate = request.AsOfDate,
             Quantity = request.Quantity,

@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IInternalDealService {
+public interface IInternalDealService
+{
 
-    Task Create(InternalDeal model , CancellationToken cancellationToken);
+    Task Create(InternalDeal model, CancellationToken cancellationToken);
     Task<bool> Update(InternalDeal model, CancellationToken cancellationToken);
     Task<InternalDeal?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<InternalDeal>> GetAll(CancellationToken cancellationToken);
@@ -69,7 +70,8 @@ public class InternalDealService : IInternalDealService
 
     public async Task<bool> Update(InternalDeal model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -131,7 +133,8 @@ public class InternalDealService : IInternalDealService
         return true;
     }
 
-    public async Task<bool> AssignTransferPricingRule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTransferPricingRule(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -149,7 +152,7 @@ public class InternalDealService : IInternalDealService
 
             var child = await _serviceResolver.Get<TransferPricingRuleService>().Get(childRequest, cancellationToken);
             parent.TransferPricingRule = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -161,7 +164,8 @@ public class InternalDealService : IInternalDealService
         return true;
     }
 
-    public async Task<bool> UnassignTransferPricingRule(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTransferPricingRule(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -172,7 +176,7 @@ public class InternalDealService : IInternalDealService
         try
         {
             parent.TransferPricingRule = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -184,7 +188,8 @@ public class InternalDealService : IInternalDealService
         return true;
     }
 
-    public async Task<bool> AssignFromUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFromUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -202,7 +207,7 @@ public class InternalDealService : IInternalDealService
 
             var child = await _serviceResolver.Get<TreasuryUnitService>().Get(childRequest, cancellationToken);
             parent.FromUnit = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -214,7 +219,8 @@ public class InternalDealService : IInternalDealService
         return true;
     }
 
-    public async Task<bool> UnassignFromUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFromUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -225,7 +231,7 @@ public class InternalDealService : IInternalDealService
         try
         {
             parent.FromUnit = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -237,7 +243,8 @@ public class InternalDealService : IInternalDealService
         return true;
     }
 
-    public async Task<bool> AssignToUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignToUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -255,7 +262,7 @@ public class InternalDealService : IInternalDealService
 
             var child = await _serviceResolver.Get<TreasuryUnitService>().Get(childRequest, cancellationToken);
             parent.ToUnit = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -267,7 +274,8 @@ public class InternalDealService : IInternalDealService
         return true;
     }
 
-    public async Task<bool> UnassignToUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignToUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -278,7 +286,7 @@ public class InternalDealService : IInternalDealService
         try
         {
             parent.ToUnit = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -290,7 +298,8 @@ public class InternalDealService : IInternalDealService
         return true;
     }
 
-    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -308,7 +317,7 @@ public class InternalDealService : IInternalDealService
 
             var child = await _serviceResolver.Get<PortfolioService>().Get(childRequest, cancellationToken);
             parent.Portfolio = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -320,7 +329,8 @@ public class InternalDealService : IInternalDealService
         return true;
     }
 
-    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -331,7 +341,7 @@ public class InternalDealService : IInternalDealService
         try
         {
             parent.Portfolio = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -344,8 +354,10 @@ public class InternalDealService : IInternalDealService
     }
 
 
-    public async Task<bool> AddToCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InternalDeal",
                 "AddToCashFlows",
@@ -353,16 +365,18 @@ public class InternalDealService : IInternalDealService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "InternalDeal",
                 "RemoveFromCashFlows",

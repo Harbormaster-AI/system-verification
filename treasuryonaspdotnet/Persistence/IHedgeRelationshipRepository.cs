@@ -11,7 +11,7 @@ public interface IHedgeRelationshipRepository
     Task UpdateAsync(HedgeRelationship hedgeRelationship, CancellationToken cancellationToken);
     Task DeleteAsync(HedgeRelationship hedgeRelationship, CancellationToken cancellationToken);
 
-    Task AddToAccountingEntriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromAccountingEntriesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToAccountingEntriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromAccountingEntriesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

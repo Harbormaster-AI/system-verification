@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum TransferPricingMethod
 {
-    MatchedMaturity=1,PoolRate=2,ProductAverage=3
+    MatchedMaturity = 1, PoolRate = 2, ProductAverage = 3
 }
 
 /// <summary>

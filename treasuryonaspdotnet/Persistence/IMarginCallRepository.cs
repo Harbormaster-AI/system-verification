@@ -11,7 +11,7 @@ public interface IMarginCallRepository
     Task UpdateAsync(MarginCall marginCall, CancellationToken cancellationToken);
     Task DeleteAsync(MarginCall marginCall, CancellationToken cancellationToken);
 
-    Task AddToCashFlowsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCashFlowsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCashFlowsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCashFlowsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

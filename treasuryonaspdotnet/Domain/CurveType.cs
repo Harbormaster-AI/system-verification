@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum CurveType
 {
-    OIS=1,IBOR=2,Government=3
+    OIS = 1, IBOR = 2, Government = 3
 }
 
 /// <summary>

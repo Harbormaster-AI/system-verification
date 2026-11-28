@@ -20,11 +20,11 @@ public static class TreasuryPolicyEndpoints
         group.MapPut("/assignTreasuryUnit", AssignTreasuryUnit);
         group.MapPut("/unassignTreasuryUnit", UnassignTreasuryUnit);
 
-    group.MapPut("/addToLimits", AddToLimits);
-    group.MapPut("/removeFromLimits", RemoveFromLimits);
+        group.MapPut("/addToLimits", AddToLimits);
+        group.MapPut("/removeFromLimits", RemoveFromLimits);
 
-    group.MapPut("/addToApprovals", AddToApprovals);
-    group.MapPut("/removeFromApprovals", RemoveFromApprovals);
+        group.MapPut("/addToApprovals", AddToApprovals);
+        group.MapPut("/removeFromApprovals", RemoveFromApprovals);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class TreasuryPolicyEndpoints
     private static async Task<IResult> Create(
         TreasuryPolicyRequest request,
         ITreasuryPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTreasuryPolicy( request );
+        var model = mapRequestToTreasuryPolicy(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class TreasuryPolicyEndpoints
     private static async Task<IResult> Update(
         TreasuryPolicyRequest request,
         ITreasuryPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToTreasuryPolicy( request );
+        var model = mapRequestToTreasuryPolicy(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class TreasuryPolicyEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ITreasuryPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var treasuryPolicy = await service.Get(identifier, cancellationToken);
-        return treasuryPolicy is null ? Results.NotFound() : Results.Ok( treasuryPolicy );
+        return treasuryPolicy is null ? Results.NotFound() : Results.Ok(treasuryPolicy);
     }
 
 
     private static async Task<IResult> GetAll(
         ITreasuryPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( TreasuryPolicyResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(TreasuryPolicyResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ITreasuryPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class TreasuryPolicyEndpoints
     private static async Task<IResult> AssignTreasuryUnit(
         AssociationRequest request,
         ITreasuryPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTreasuryUnit(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class TreasuryPolicyEndpoints
     private static async Task<IResult> UnassignTreasuryUnit(
     AssociationRequest request,
     ITreasuryPolicyService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTreasuryUnit(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class TreasuryPolicyEndpoints
     private static async Task<IResult> AddToLimits(
         MultipleAssociationRequest request,
         ITreasuryPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToLimits(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class TreasuryPolicyEndpoints
     private static async Task<IResult> RemoveFromLimits(
         MultipleAssociationRequest request,
         ITreasuryPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromLimits(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToApprovals(
         MultipleAssociationRequest request,
         ITreasuryPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToApprovals(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class TreasuryPolicyEndpoints
     private static async Task<IResult> RemoveFromApprovals(
         MultipleAssociationRequest request,
         ITreasuryPolicyService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromApprovals(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static TreasuryPolicy mapRequestToTreasuryPolicy( TreasuryPolicyRequest request ) {
+    private static TreasuryPolicy mapRequestToTreasuryPolicy(TreasuryPolicyRequest request)
+    {
         var model = new TreasuryPolicy
         {
             Id = request.Id,

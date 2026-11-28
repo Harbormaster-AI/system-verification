@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IBusinessCalendarService {
+public interface IBusinessCalendarService
+{
 
-    Task Create(BusinessCalendar model , CancellationToken cancellationToken);
+    Task Create(BusinessCalendar model, CancellationToken cancellationToken);
     Task<bool> Update(BusinessCalendar model, CancellationToken cancellationToken);
     Task<BusinessCalendar?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BusinessCalendar>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class BusinessCalendarService : IBusinessCalendarService
 
     public async Task<bool> Update(BusinessCalendar model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,8 +119,10 @@ public class BusinessCalendarService : IBusinessCalendarService
     }
 
 
-    public async Task<bool> AddToHolidays(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToHolidays(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessCalendar",
                 "AddToHolidays",
@@ -126,16 +130,18 @@ public class BusinessCalendarService : IBusinessCalendarService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromHolidays(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromHolidays(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BusinessCalendar",
                 "RemoveFromHolidays",

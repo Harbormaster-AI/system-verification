@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum InstrumentType
 {
-    InterbankDeposit=1,TimeDeposit=2,CommercialPaper=3,CertificateOfDeposit=4,Repo=5,ReverseRepo=6,GovernmentBond=7,CorporateBond=8,FXSpot=9,FXForward=10,FXSwap=11,FRA=12,InterestRateSwap=13,CrossCurrencySwap=14,Option=15
+    InterbankDeposit = 1, TimeDeposit = 2, CommercialPaper = 3, CertificateOfDeposit = 4, Repo = 5, ReverseRepo = 6, GovernmentBond = 7, CorporateBond = 8, FXSpot = 9, FXForward = 10, FXSwap = 11, FRA = 12, InterestRateSwap = 13, CrossCurrencySwap = 14, Option = 15
 }
 
 /// <summary>

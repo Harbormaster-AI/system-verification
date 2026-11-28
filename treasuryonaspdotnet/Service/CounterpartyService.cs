@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ICounterpartyService {
+public interface ICounterpartyService
+{
 
-    Task Create(Counterparty model , CancellationToken cancellationToken);
+    Task Create(Counterparty model, CancellationToken cancellationToken);
     Task<bool> Update(Counterparty model, CancellationToken cancellationToken);
     Task<Counterparty?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Counterparty>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class CounterpartyService : ICounterpartyService
 
     public async Task<bool> Update(Counterparty model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -130,8 +132,10 @@ public class CounterpartyService : ICounterpartyService
     }
 
 
-    public async Task<bool> AddToNettingAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToNettingAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Counterparty",
                 "AddToNettingAgreements",
@@ -139,16 +143,18 @@ public class CounterpartyService : ICounterpartyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromNettingAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromNettingAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Counterparty",
                 "RemoveFromNettingAgreements",
@@ -164,8 +170,10 @@ public class CounterpartyService : ICounterpartyService
         return true;
     }
 
-    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Counterparty",
                 "AddToTrades",
@@ -173,16 +181,18 @@ public class CounterpartyService : ICounterpartyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Counterparty",
                 "RemoveFromTrades",
@@ -198,8 +208,10 @@ public class CounterpartyService : ICounterpartyService
         return true;
     }
 
-    public async Task<bool> AddToCollateralAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCollateralAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Counterparty",
                 "AddToCollateralAgreements",
@@ -207,16 +219,18 @@ public class CounterpartyService : ICounterpartyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCollateralAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCollateralAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Counterparty",
                 "RemoveFromCollateralAgreements",
@@ -232,8 +246,10 @@ public class CounterpartyService : ICounterpartyService
         return true;
     }
 
-    public async Task<bool> AddToLimits(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLimits(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Counterparty",
                 "AddToLimits",
@@ -241,16 +257,18 @@ public class CounterpartyService : ICounterpartyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLimits(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLimits(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Counterparty",
                 "RemoveFromLimits",
@@ -266,8 +284,10 @@ public class CounterpartyService : ICounterpartyService
         return true;
     }
 
-    public async Task<bool> AddToMarginCalls(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToMarginCalls(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Counterparty",
                 "AddToMarginCalls",
@@ -275,16 +295,18 @@ public class CounterpartyService : ICounterpartyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromMarginCalls(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromMarginCalls(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Counterparty",
                 "RemoveFromMarginCalls",
@@ -300,8 +322,10 @@ public class CounterpartyService : ICounterpartyService
         return true;
     }
 
-    public async Task<bool> AddToSettlementInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSettlementInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Counterparty",
                 "AddToSettlementInstructions",
@@ -309,16 +333,18 @@ public class CounterpartyService : ICounterpartyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSettlementInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSettlementInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Counterparty",
                 "RemoveFromSettlementInstructions",

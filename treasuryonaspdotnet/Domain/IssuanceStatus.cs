@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum IssuanceStatus
 {
-    Announced=1,Priced=2,Issued=3,Matured=4,Cancelled=5
+    Announced = 1, Priced = 2, Issued = 3, Matured = 4, Cancelled = 5
 }
 
 /// <summary>

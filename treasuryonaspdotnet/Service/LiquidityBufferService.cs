@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ILiquidityBufferService {
+public interface ILiquidityBufferService
+{
 
-    Task Create(LiquidityBuffer model , CancellationToken cancellationToken);
+    Task Create(LiquidityBuffer model, CancellationToken cancellationToken);
     Task<bool> Update(LiquidityBuffer model, CancellationToken cancellationToken);
     Task<LiquidityBuffer?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<LiquidityBuffer>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class LiquidityBufferService : ILiquidityBufferService
 
     public async Task<bool> Update(LiquidityBuffer model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class LiquidityBufferService : ILiquidityBufferService
         return true;
     }
 
-    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class LiquidityBufferService : ILiquidityBufferService
 
             var child = await _serviceResolver.Get<PortfolioService>().Get(childRequest, cancellationToken);
             parent.Portfolio = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class LiquidityBufferService : ILiquidityBufferService
         return true;
     }
 
-    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class LiquidityBufferService : ILiquidityBufferService
         try
         {
             parent.Portfolio = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class LiquidityBufferService : ILiquidityBufferService
     }
 
 
-    public async Task<bool> AddToAssets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToAssets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LiquidityBuffer",
                 "AddToAssets",
@@ -184,16 +190,18 @@ public class LiquidityBufferService : ILiquidityBufferService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromAssets(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromAssets(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LiquidityBuffer",
                 "RemoveFromAssets",
@@ -209,8 +217,10 @@ public class LiquidityBufferService : ILiquidityBufferService
         return true;
     }
 
-    public async Task<bool> AddToRegulatoryMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToRegulatoryMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LiquidityBuffer",
                 "AddToRegulatoryMetrics",
@@ -218,16 +228,18 @@ public class LiquidityBufferService : ILiquidityBufferService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromRegulatoryMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromRegulatoryMetrics(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LiquidityBuffer",
                 "RemoveFromRegulatoryMetrics",

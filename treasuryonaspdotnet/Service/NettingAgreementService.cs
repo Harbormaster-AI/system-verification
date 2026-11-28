@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface INettingAgreementService {
+public interface INettingAgreementService
+{
 
-    Task Create(NettingAgreement model , CancellationToken cancellationToken);
+    Task Create(NettingAgreement model, CancellationToken cancellationToken);
     Task<bool> Update(NettingAgreement model, CancellationToken cancellationToken);
     Task<NettingAgreement?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<NettingAgreement>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class NettingAgreementService : INettingAgreementService
 
     public async Task<bool> Update(NettingAgreement model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -121,7 +123,8 @@ public class NettingAgreementService : INettingAgreementService
         return true;
     }
 
-    public async Task<bool> AssignCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -139,7 +142,7 @@ public class NettingAgreementService : INettingAgreementService
 
             var child = await _serviceResolver.Get<CounterpartyService>().Get(childRequest, cancellationToken);
             parent.Counterparty = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -151,7 +154,8 @@ public class NettingAgreementService : INettingAgreementService
         return true;
     }
 
-    public async Task<bool> UnassignCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -162,7 +166,7 @@ public class NettingAgreementService : INettingAgreementService
         try
         {
             parent.Counterparty = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,8 +179,10 @@ public class NettingAgreementService : INettingAgreementService
     }
 
 
-    public async Task<bool> AddToCollateralAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCollateralAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "NettingAgreement",
                 "AddToCollateralAgreements",
@@ -184,16 +190,18 @@ public class NettingAgreementService : INettingAgreementService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCollateralAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCollateralAgreements(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "NettingAgreement",
                 "RemoveFromCollateralAgreements",
@@ -209,8 +217,10 @@ public class NettingAgreementService : INettingAgreementService
         return true;
     }
 
-    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "NettingAgreement",
                 "AddToTrades",
@@ -218,16 +228,18 @@ public class NettingAgreementService : INettingAgreementService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "NettingAgreement",
                 "RemoveFromTrades",

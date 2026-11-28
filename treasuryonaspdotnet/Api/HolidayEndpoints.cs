@@ -27,9 +27,10 @@ public static class HolidayEndpoints
     private static async Task<IResult> Create(
         HolidayRequest request,
         IHolidayService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToHoliday( request );
+        var model = mapRequestToHoliday(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class HolidayEndpoints
     private static async Task<IResult> Update(
         HolidayRequest request,
         IHolidayService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToHoliday( request );
+        var model = mapRequestToHoliday(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class HolidayEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IHolidayService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var holiday = await service.Get(identifier, cancellationToken);
-        return holiday is null ? Results.NotFound() : Results.Ok( holiday );
+        return holiday is null ? Results.NotFound() : Results.Ok(holiday);
     }
 
 
     private static async Task<IResult> GetAll(
         IHolidayService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( HolidayResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(HolidayResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IHolidayService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class HolidayEndpoints
     private static async Task<IResult> AssignCalendar(
         AssociationRequest request,
         IHolidayService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCalendar(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class HolidayEndpoints
     private static async Task<IResult> UnassignCalendar(
     AssociationRequest request,
     IHolidayService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCalendar(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static Holiday mapRequestToHoliday( HolidayRequest request ) {
+    private static Holiday mapRequestToHoliday(HolidayRequest request)
+    {
         var model = new Holiday
         {
             Id = request.Id,

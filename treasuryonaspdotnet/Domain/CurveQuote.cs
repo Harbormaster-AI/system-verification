@@ -9,14 +9,16 @@ public class CurveQuote : IValidatableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- [Required]
-public required virtual Tenor Tenor { get; set; } 
- [Required]
-public required virtual Rate Rate { get; set; } 
-public virtual YieldCurve? YieldCurve { get; set; } 
+    [Required]
+    public required virtual Tenor Tenor { get; set; }
+    [Required]
+    public required virtual Rate Rate { get; set; }
+    public virtual YieldCurve? YieldCurve { get; set; }
 
-    public static CurveQuote FromRequest(CurveQuoteRequest request) {
-        return new CurveQuote {
+    public static CurveQuote FromRequest(CurveQuoteRequest request)
+    {
+        return new CurveQuote
+        {
             Id = request.Id,
             Tenor = request.Tenor,
             Rate = request.Rate,

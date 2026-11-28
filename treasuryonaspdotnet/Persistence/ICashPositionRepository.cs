@@ -11,7 +11,7 @@ public interface ICashPositionRepository
     Task UpdateAsync(CashPosition cashPosition, CancellationToken cancellationToken);
     Task DeleteAsync(CashPosition cashPosition, CancellationToken cancellationToken);
 
-    Task AddToCashFlowsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCashFlowsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCashFlowsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCashFlowsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

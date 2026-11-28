@@ -29,9 +29,10 @@ public static class StressResultEndpoints
     private static async Task<IResult> Create(
         StressResultRequest request,
         IStressResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToStressResult( request );
+        var model = mapRequestToStressResult(request);
 
         try
         {
@@ -48,9 +49,10 @@ public static class StressResultEndpoints
     private static async Task<IResult> Update(
         StressResultRequest request,
         IStressResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToStressResult( request );
+        var model = mapRequestToStressResult(request);
 
         try
         {
@@ -67,25 +69,28 @@ public static class StressResultEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IStressResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var stressResult = await service.Get(identifier, cancellationToken);
-        return stressResult is null ? Results.NotFound() : Results.Ok( stressResult );
+        return stressResult is null ? Results.NotFound() : Results.Ok(stressResult);
     }
 
 
     private static async Task<IResult> GetAll(
         IStressResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( StressResultResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(StressResultResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IStressResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -93,7 +98,8 @@ public static class StressResultEndpoints
     private static async Task<IResult> AssignStressScenario(
         AssociationRequest request,
         IStressResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignStressScenario(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -101,7 +107,8 @@ public static class StressResultEndpoints
     private static async Task<IResult> UnassignStressScenario(
     AssociationRequest request,
     IStressResultService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignStressScenario(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -109,7 +116,8 @@ public static class StressResultEndpoints
     private static async Task<IResult> AssignPortfolio(
         AssociationRequest request,
         IStressResultService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPortfolio(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -117,13 +125,15 @@ public static class StressResultEndpoints
     private static async Task<IResult> UnassignPortfolio(
     AssociationRequest request,
     IStressResultService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPortfolio(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static StressResult mapRequestToStressResult( StressResultRequest request ) {
+    private static StressResult mapRequestToStressResult(StressResultRequest request)
+    {
         var model = new StressResult
         {
             Id = request.Id,

@@ -20,8 +20,8 @@ public static class CashPositionEndpoints
         group.MapPut("/assignBankAccount", AssignBankAccount);
         group.MapPut("/unassignBankAccount", UnassignBankAccount);
 
-    group.MapPut("/addToCashFlows", AddToCashFlows);
-    group.MapPut("/removeFromCashFlows", RemoveFromCashFlows);
+        group.MapPut("/addToCashFlows", AddToCashFlows);
+        group.MapPut("/removeFromCashFlows", RemoveFromCashFlows);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class CashPositionEndpoints
     private static async Task<IResult> Create(
         CashPositionRequest request,
         ICashPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCashPosition( request );
+        var model = mapRequestToCashPosition(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class CashPositionEndpoints
     private static async Task<IResult> Update(
         CashPositionRequest request,
         ICashPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToCashPosition( request );
+        var model = mapRequestToCashPosition(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class CashPositionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ICashPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var cashPosition = await service.Get(identifier, cancellationToken);
-        return cashPosition is null ? Results.NotFound() : Results.Ok( cashPosition );
+        return cashPosition is null ? Results.NotFound() : Results.Ok(cashPosition);
     }
 
 
     private static async Task<IResult> GetAll(
         ICashPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( CashPositionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(CashPositionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ICashPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class CashPositionEndpoints
     private static async Task<IResult> AssignBankAccount(
         AssociationRequest request,
         ICashPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBankAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class CashPositionEndpoints
     private static async Task<IResult> UnassignBankAccount(
     AssociationRequest request,
     ICashPositionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBankAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class CashPositionEndpoints
     private static async Task<IResult> AddToCashFlows(
         MultipleAssociationRequest request,
         ICashPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCashFlows(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class CashPositionEndpoints
     private static async Task<IResult> RemoveFromCashFlows(
         MultipleAssociationRequest request,
         ICashPositionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCashFlows(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static CashPosition mapRequestToCashPosition( CashPositionRequest request ) {
+    private static CashPosition mapRequestToCashPosition(CashPositionRequest request)
+    {
         var model = new CashPosition
         {
             Id = request.Id,

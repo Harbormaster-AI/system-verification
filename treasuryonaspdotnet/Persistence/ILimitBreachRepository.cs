@@ -11,7 +11,7 @@ public interface ILimitBreachRepository
     Task UpdateAsync(LimitBreach limitBreach, CancellationToken cancellationToken);
     Task DeleteAsync(LimitBreach limitBreach, CancellationToken cancellationToken);
 
-    Task AddToApprovalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromApprovalsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToApprovalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromApprovalsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IVolSurfaceService {
+public interface IVolSurfaceService
+{
 
-    Task Create(VolSurface model , CancellationToken cancellationToken);
+    Task Create(VolSurface model, CancellationToken cancellationToken);
     Task<bool> Update(VolSurface model, CancellationToken cancellationToken);
     Task<VolSurface?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<VolSurface>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class VolSurfaceService : IVolSurfaceService
 
     public async Task<bool> Update(VolSurface model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class VolSurfaceService : IVolSurfaceService
         return true;
     }
 
-    public async Task<bool> AssignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class VolSurfaceService : IVolSurfaceService
 
             var child = await _serviceResolver.Get<MarketDataSetService>().Get(childRequest, cancellationToken);
             parent.MarketDataSet = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class VolSurfaceService : IVolSurfaceService
         return true;
     }
 
-    public async Task<bool> UnassignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class VolSurfaceService : IVolSurfaceService
         try
         {
             parent.MarketDataSet = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

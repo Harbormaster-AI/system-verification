@@ -11,9 +11,9 @@ public interface INettingAgreementRepository
     Task UpdateAsync(NettingAgreement nettingAgreement, CancellationToken cancellationToken);
     Task DeleteAsync(NettingAgreement nettingAgreement, CancellationToken cancellationToken);
 
-    Task AddToCollateralAgreementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCollateralAgreementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTradesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTradesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCollateralAgreementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCollateralAgreementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTradesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTradesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

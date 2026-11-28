@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ITreasuryUnitService {
+public interface ITreasuryUnitService
+{
 
-    Task Create(TreasuryUnit model , CancellationToken cancellationToken);
+    Task Create(TreasuryUnit model, CancellationToken cancellationToken);
     Task<bool> Update(TreasuryUnit model, CancellationToken cancellationToken);
     Task<TreasuryUnit?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TreasuryUnit>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class TreasuryUnitService : ITreasuryUnitService
 
     public async Task<bool> Update(TreasuryUnit model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -129,8 +131,10 @@ public class TreasuryUnitService : ITreasuryUnitService
     }
 
 
-    public async Task<bool> AddToTradingBooks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTradingBooks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryUnit",
                 "AddToTradingBooks",
@@ -138,16 +142,18 @@ public class TreasuryUnitService : ITreasuryUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTradingBooks(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTradingBooks(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryUnit",
                 "RemoveFromTradingBooks",
@@ -163,8 +169,10 @@ public class TreasuryUnitService : ITreasuryUnitService
         return true;
     }
 
-    public async Task<bool> AddToBankAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToBankAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryUnit",
                 "AddToBankAccounts",
@@ -172,16 +180,18 @@ public class TreasuryUnitService : ITreasuryUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromBankAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromBankAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryUnit",
                 "RemoveFromBankAccounts",
@@ -197,8 +207,10 @@ public class TreasuryUnitService : ITreasuryUnitService
         return true;
     }
 
-    public async Task<bool> AddToPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryUnit",
                 "AddToPolicies",
@@ -206,16 +218,18 @@ public class TreasuryUnitService : ITreasuryUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPolicies(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryUnit",
                 "RemoveFromPolicies",
@@ -231,8 +245,10 @@ public class TreasuryUnitService : ITreasuryUnitService
         return true;
     }
 
-    public async Task<bool> AddToTransferPricingRules(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTransferPricingRules(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryUnit",
                 "AddToTransferPricingRules",
@@ -240,16 +256,18 @@ public class TreasuryUnitService : ITreasuryUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTransferPricingRules(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTransferPricingRules(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryUnit",
                 "RemoveFromTransferPricingRules",
@@ -265,8 +283,10 @@ public class TreasuryUnitService : ITreasuryUnitService
         return true;
     }
 
-    public async Task<bool> AddToInternalDealsOut(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInternalDealsOut(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryUnit",
                 "AddToInternalDealsOut",
@@ -274,16 +294,18 @@ public class TreasuryUnitService : ITreasuryUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInternalDealsOut(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInternalDealsOut(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryUnit",
                 "RemoveFromInternalDealsOut",
@@ -299,8 +321,10 @@ public class TreasuryUnitService : ITreasuryUnitService
         return true;
     }
 
-    public async Task<bool> AddToInternalDealsIn(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToInternalDealsIn(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryUnit",
                 "AddToInternalDealsIn",
@@ -308,16 +332,18 @@ public class TreasuryUnitService : ITreasuryUnitService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromInternalDealsIn(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromInternalDealsIn(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryUnit",
                 "RemoveFromInternalDealsIn",

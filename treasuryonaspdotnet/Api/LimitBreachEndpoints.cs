@@ -22,8 +22,8 @@ public static class LimitBreachEndpoints
         group.MapPut("/assignPortfolio", AssignPortfolio);
         group.MapPut("/unassignPortfolio", UnassignPortfolio);
 
-    group.MapPut("/addToApprovals", AddToApprovals);
-    group.MapPut("/removeFromApprovals", RemoveFromApprovals);
+        group.MapPut("/addToApprovals", AddToApprovals);
+        group.MapPut("/removeFromApprovals", RemoveFromApprovals);
 
 
         return app;
@@ -32,9 +32,10 @@ public static class LimitBreachEndpoints
     private static async Task<IResult> Create(
         LimitBreachRequest request,
         ILimitBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLimitBreach( request );
+        var model = mapRequestToLimitBreach(request);
 
         try
         {
@@ -51,9 +52,10 @@ public static class LimitBreachEndpoints
     private static async Task<IResult> Update(
         LimitBreachRequest request,
         ILimitBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToLimitBreach( request );
+        var model = mapRequestToLimitBreach(request);
 
         try
         {
@@ -70,25 +72,28 @@ public static class LimitBreachEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ILimitBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var limitBreach = await service.Get(identifier, cancellationToken);
-        return limitBreach is null ? Results.NotFound() : Results.Ok( limitBreach );
+        return limitBreach is null ? Results.NotFound() : Results.Ok(limitBreach);
     }
 
 
     private static async Task<IResult> GetAll(
         ILimitBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( LimitBreachResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(LimitBreachResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ILimitBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class LimitBreachEndpoints
     private static async Task<IResult> AssignRiskLimit(
         AssociationRequest request,
         ILimitBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignRiskLimit(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +110,8 @@ public static class LimitBreachEndpoints
     private static async Task<IResult> UnassignRiskLimit(
     AssociationRequest request,
     ILimitBreachService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignRiskLimit(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +119,8 @@ public static class LimitBreachEndpoints
     private static async Task<IResult> AssignPortfolio(
         AssociationRequest request,
         ILimitBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPortfolio(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +128,8 @@ public static class LimitBreachEndpoints
     private static async Task<IResult> UnassignPortfolio(
     AssociationRequest request,
     ILimitBreachService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPortfolio(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class LimitBreachEndpoints
     private static async Task<IResult> AddToApprovals(
         MultipleAssociationRequest request,
         ILimitBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToApprovals(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class LimitBreachEndpoints
     private static async Task<IResult> RemoveFromApprovals(
         MultipleAssociationRequest request,
         ILimitBreachService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromApprovals(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static LimitBreach mapRequestToLimitBreach( LimitBreachRequest request ) {
+    private static LimitBreach mapRequestToLimitBreach(LimitBreachRequest request)
+    {
         var model = new LimitBreach
         {
             Id = request.Id,

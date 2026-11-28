@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ICashPositionService {
+public interface ICashPositionService
+{
 
-    Task Create(CashPosition model , CancellationToken cancellationToken);
+    Task Create(CashPosition model, CancellationToken cancellationToken);
     Task<bool> Update(CashPosition model, CancellationToken cancellationToken);
     Task<CashPosition?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CashPosition>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class CashPositionService : ICashPositionService
 
     public async Task<bool> Update(CashPosition model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class CashPositionService : ICashPositionService
         return true;
     }
 
-    public async Task<bool> AssignBankAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignBankAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class CashPositionService : ICashPositionService
 
             var child = await _serviceResolver.Get<BankAccountService>().Get(childRequest, cancellationToken);
             parent.BankAccount = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class CashPositionService : ICashPositionService
         return true;
     }
 
-    public async Task<bool> UnassignBankAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignBankAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class CashPositionService : ICashPositionService
         try
         {
             parent.BankAccount = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,8 +178,10 @@ public class CashPositionService : ICashPositionService
     }
 
 
-    public async Task<bool> AddToCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CashPosition",
                 "AddToCashFlows",
@@ -183,16 +189,18 @@ public class CashPositionService : ICashPositionService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CashPosition",
                 "RemoveFromCashFlows",

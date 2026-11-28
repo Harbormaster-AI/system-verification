@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ITradingBookService {
+public interface ITradingBookService
+{
 
-    Task Create(TradingBook model , CancellationToken cancellationToken);
+    Task Create(TradingBook model, CancellationToken cancellationToken);
     Task<bool> Update(TradingBook model, CancellationToken cancellationToken);
     Task<TradingBook?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TradingBook>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class TradingBookService : ITradingBookService
 
     public async Task<bool> Update(TradingBook model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class TradingBookService : ITradingBookService
         return true;
     }
 
-    public async Task<bool> AssignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class TradingBookService : ITradingBookService
 
             var child = await _serviceResolver.Get<TreasuryUnitService>().Get(childRequest, cancellationToken);
             parent.TreasuryUnit = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class TradingBookService : ITradingBookService
         return true;
     }
 
-    public async Task<bool> UnassignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class TradingBookService : ITradingBookService
         try
         {
             parent.TreasuryUnit = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,8 +180,10 @@ public class TradingBookService : ITradingBookService
     }
 
 
-    public async Task<bool> AddToPortfolios(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToPortfolios(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TradingBook",
                 "AddToPortfolios",
@@ -185,16 +191,18 @@ public class TradingBookService : ITradingBookService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromPortfolios(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromPortfolios(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TradingBook",
                 "RemoveFromPortfolios",
@@ -210,8 +218,10 @@ public class TradingBookService : ITradingBookService
         return true;
     }
 
-    public async Task<bool> AddToLimits(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLimits(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TradingBook",
                 "AddToLimits",
@@ -219,16 +229,18 @@ public class TradingBookService : ITradingBookService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLimits(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLimits(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TradingBook",
                 "RemoveFromLimits",
@@ -244,8 +256,10 @@ public class TradingBookService : ITradingBookService
         return true;
     }
 
-    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TradingBook",
                 "AddToTrades",
@@ -253,16 +267,18 @@ public class TradingBookService : ITradingBookService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromTrades(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TradingBook",
                 "RemoveFromTrades",

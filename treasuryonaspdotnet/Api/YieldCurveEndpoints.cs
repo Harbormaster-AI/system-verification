@@ -20,8 +20,8 @@ public static class YieldCurveEndpoints
         group.MapPut("/assignMarketDataSet", AssignMarketDataSet);
         group.MapPut("/unassignMarketDataSet", UnassignMarketDataSet);
 
-    group.MapPut("/addToQuotes", AddToQuotes);
-    group.MapPut("/removeFromQuotes", RemoveFromQuotes);
+        group.MapPut("/addToQuotes", AddToQuotes);
+        group.MapPut("/removeFromQuotes", RemoveFromQuotes);
 
 
         return app;
@@ -30,9 +30,10 @@ public static class YieldCurveEndpoints
     private static async Task<IResult> Create(
         YieldCurveRequest request,
         IYieldCurveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToYieldCurve( request );
+        var model = mapRequestToYieldCurve(request);
 
         try
         {
@@ -49,9 +50,10 @@ public static class YieldCurveEndpoints
     private static async Task<IResult> Update(
         YieldCurveRequest request,
         IYieldCurveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToYieldCurve( request );
+        var model = mapRequestToYieldCurve(request);
 
         try
         {
@@ -68,25 +70,28 @@ public static class YieldCurveEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IYieldCurveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var yieldCurve = await service.Get(identifier, cancellationToken);
-        return yieldCurve is null ? Results.NotFound() : Results.Ok( yieldCurve );
+        return yieldCurve is null ? Results.NotFound() : Results.Ok(yieldCurve);
     }
 
 
     private static async Task<IResult> GetAll(
         IYieldCurveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( YieldCurveResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(YieldCurveResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IYieldCurveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -94,7 +99,8 @@ public static class YieldCurveEndpoints
     private static async Task<IResult> AssignMarketDataSet(
         AssociationRequest request,
         IYieldCurveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMarketDataSet(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -102,7 +108,8 @@ public static class YieldCurveEndpoints
     private static async Task<IResult> UnassignMarketDataSet(
     AssociationRequest request,
     IYieldCurveService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMarketDataSet(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class YieldCurveEndpoints
     private static async Task<IResult> AddToQuotes(
         MultipleAssociationRequest request,
         IYieldCurveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToQuotes(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -119,11 +127,13 @@ public static class YieldCurveEndpoints
     private static async Task<IResult> RemoveFromQuotes(
         MultipleAssociationRequest request,
         IYieldCurveService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromQuotes(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static YieldCurve mapRequestToYieldCurve( YieldCurveRequest request ) {
+    private static YieldCurve mapRequestToYieldCurve(YieldCurveRequest request)
+    {
         var model = new YieldCurve
         {
             Id = request.Id,

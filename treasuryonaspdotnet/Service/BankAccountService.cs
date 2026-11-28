@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IBankAccountService {
+public interface IBankAccountService
+{
 
-    Task Create(BankAccount model , CancellationToken cancellationToken);
+    Task Create(BankAccount model, CancellationToken cancellationToken);
     Task<bool> Update(BankAccount model, CancellationToken cancellationToken);
     Task<BankAccount?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<BankAccount>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class BankAccountService : IBankAccountService
 
     public async Task<bool> Update(BankAccount model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -124,7 +126,8 @@ public class BankAccountService : IBankAccountService
         return true;
     }
 
-    public async Task<bool> AssignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -142,7 +145,7 @@ public class BankAccountService : IBankAccountService
 
             var child = await _serviceResolver.Get<TreasuryUnitService>().Get(childRequest, cancellationToken);
             parent.TreasuryUnit = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -154,7 +157,8 @@ public class BankAccountService : IBankAccountService
         return true;
     }
 
-    public async Task<bool> UnassignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -165,7 +169,7 @@ public class BankAccountService : IBankAccountService
         try
         {
             parent.TreasuryUnit = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -178,8 +182,10 @@ public class BankAccountService : IBankAccountService
     }
 
 
-    public async Task<bool> AddToCashPositions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCashPositions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BankAccount",
                 "AddToCashPositions",
@@ -187,16 +193,18 @@ public class BankAccountService : IBankAccountService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCashPositions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCashPositions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BankAccount",
                 "RemoveFromCashPositions",
@@ -212,8 +220,10 @@ public class BankAccountService : IBankAccountService
         return true;
     }
 
-    public async Task<bool> AddToCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BankAccount",
                 "AddToCashFlows",
@@ -221,16 +231,18 @@ public class BankAccountService : IBankAccountService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BankAccount",
                 "RemoveFromCashFlows",
@@ -246,8 +258,10 @@ public class BankAccountService : IBankAccountService
         return true;
     }
 
-    public async Task<bool> AddToSettlementInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToSettlementInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BankAccount",
                 "AddToSettlementInstructions",
@@ -255,16 +269,18 @@ public class BankAccountService : IBankAccountService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromSettlementInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromSettlementInstructions(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "BankAccount",
                 "RemoveFromSettlementInstructions",

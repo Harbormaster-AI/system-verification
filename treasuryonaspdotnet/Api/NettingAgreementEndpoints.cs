@@ -20,11 +20,11 @@ public static class NettingAgreementEndpoints
         group.MapPut("/assignCounterparty", AssignCounterparty);
         group.MapPut("/unassignCounterparty", UnassignCounterparty);
 
-    group.MapPut("/addToCollateralAgreements", AddToCollateralAgreements);
-    group.MapPut("/removeFromCollateralAgreements", RemoveFromCollateralAgreements);
+        group.MapPut("/addToCollateralAgreements", AddToCollateralAgreements);
+        group.MapPut("/removeFromCollateralAgreements", RemoveFromCollateralAgreements);
 
-    group.MapPut("/addToTrades", AddToTrades);
-    group.MapPut("/removeFromTrades", RemoveFromTrades);
+        group.MapPut("/addToTrades", AddToTrades);
+        group.MapPut("/removeFromTrades", RemoveFromTrades);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class NettingAgreementEndpoints
     private static async Task<IResult> Create(
         NettingAgreementRequest request,
         INettingAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToNettingAgreement( request );
+        var model = mapRequestToNettingAgreement(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class NettingAgreementEndpoints
     private static async Task<IResult> Update(
         NettingAgreementRequest request,
         INettingAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToNettingAgreement( request );
+        var model = mapRequestToNettingAgreement(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class NettingAgreementEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         INettingAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var nettingAgreement = await service.Get(identifier, cancellationToken);
-        return nettingAgreement is null ? Results.NotFound() : Results.Ok( nettingAgreement );
+        return nettingAgreement is null ? Results.NotFound() : Results.Ok(nettingAgreement);
     }
 
 
     private static async Task<IResult> GetAll(
         INettingAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( NettingAgreementResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(NettingAgreementResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         INettingAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class NettingAgreementEndpoints
     private static async Task<IResult> AssignCounterparty(
         AssociationRequest request,
         INettingAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCounterparty(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class NettingAgreementEndpoints
     private static async Task<IResult> UnassignCounterparty(
     AssociationRequest request,
     INettingAgreementService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCounterparty(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class NettingAgreementEndpoints
     private static async Task<IResult> AddToCollateralAgreements(
         MultipleAssociationRequest request,
         INettingAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToCollateralAgreements(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class NettingAgreementEndpoints
     private static async Task<IResult> RemoveFromCollateralAgreements(
         MultipleAssociationRequest request,
         INettingAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromCollateralAgreements(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToTrades(
         MultipleAssociationRequest request,
         INettingAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToTrades(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class NettingAgreementEndpoints
     private static async Task<IResult> RemoveFromTrades(
         MultipleAssociationRequest request,
         INettingAgreementService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromTrades(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static NettingAgreement mapRequestToNettingAgreement( NettingAgreementRequest request ) {
+    private static NettingAgreement mapRequestToNettingAgreement(NettingAgreementRequest request)
+    {
         var model = new NettingAgreement
         {
             Id = request.Id,

@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IIssuanceService {
+public interface IIssuanceService
+{
 
-    Task Create(Issuance model , CancellationToken cancellationToken);
+    Task Create(Issuance model, CancellationToken cancellationToken);
     Task<bool> Update(Issuance model, CancellationToken cancellationToken);
     Task<Issuance?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Issuance>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class IssuanceService : IIssuanceService
 
     public async Task<bool> Update(Issuance model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class IssuanceService : IIssuanceService
         return true;
     }
 
-    public async Task<bool> AssignFundingProgram(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignFundingProgram(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class IssuanceService : IIssuanceService
 
             var child = await _serviceResolver.Get<FundingProgramService>().Get(childRequest, cancellationToken);
             parent.FundingProgram = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class IssuanceService : IIssuanceService
         return true;
     }
 
-    public async Task<bool> UnassignFundingProgram(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignFundingProgram(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class IssuanceService : IIssuanceService
         try
         {
             parent.FundingProgram = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,7 +183,8 @@ public class IssuanceService : IIssuanceService
         return true;
     }
 
-    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,7 +202,7 @@ public class IssuanceService : IIssuanceService
 
             var child = await _serviceResolver.Get<PortfolioService>().Get(childRequest, cancellationToken);
             parent.Portfolio = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class IssuanceService : IIssuanceService
         return true;
     }
 
-    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class IssuanceService : IIssuanceService
         try
         {
             parent.Portfolio = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -233,8 +239,10 @@ public class IssuanceService : IIssuanceService
     }
 
 
-    public async Task<bool> AddToCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Issuance",
                 "AddToCashFlows",
@@ -242,16 +250,18 @@ public class IssuanceService : IIssuanceService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Issuance",
                 "RemoveFromCashFlows",

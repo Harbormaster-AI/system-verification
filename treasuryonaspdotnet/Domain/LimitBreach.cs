@@ -9,20 +9,22 @@ public class LimitBreach : IValidatableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- [Required]
-public required virtual DateOnly BreachDate { get; set; } 
- [Required]
-public required virtual decimal ObservedValue { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Severity { get; set; } 
-public virtual RiskLimit? RiskLimit { get; set; } 
-public virtual Portfolio? Portfolio { get; set; } 
-public virtual ICollection<Approval> Approvals { get; set; } = new List<Approval>();
- public virtual LimitBreachStatus? Status { get; set; } 
+    [Required]
+    public required virtual DateOnly BreachDate { get; set; }
+    [Required]
+    public required virtual decimal ObservedValue { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Severity { get; set; }
+    public virtual RiskLimit? RiskLimit { get; set; }
+    public virtual Portfolio? Portfolio { get; set; }
+    public virtual ICollection<Approval> Approvals { get; set; } = new List<Approval>();
+    public virtual LimitBreachStatus? Status { get; set; }
 
-    public static LimitBreach FromRequest(LimitBreachRequest request) {
-        return new LimitBreach {
+    public static LimitBreach FromRequest(LimitBreachRequest request)
+    {
+        return new LimitBreach
+        {
             Id = request.Id,
             BreachDate = request.BreachDate,
             ObservedValue = request.ObservedValue,

@@ -11,7 +11,7 @@ public interface IFundingProgramRepository
     Task UpdateAsync(FundingProgram fundingProgram, CancellationToken cancellationToken);
     Task DeleteAsync(FundingProgram fundingProgram, CancellationToken cancellationToken);
 
-    Task AddToIssuancesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromIssuancesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToIssuancesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromIssuancesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

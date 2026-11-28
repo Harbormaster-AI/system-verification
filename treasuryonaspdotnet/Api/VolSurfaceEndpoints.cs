@@ -27,9 +27,10 @@ public static class VolSurfaceEndpoints
     private static async Task<IResult> Create(
         VolSurfaceRequest request,
         IVolSurfaceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToVolSurface( request );
+        var model = mapRequestToVolSurface(request);
 
         try
         {
@@ -46,9 +47,10 @@ public static class VolSurfaceEndpoints
     private static async Task<IResult> Update(
         VolSurfaceRequest request,
         IVolSurfaceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToVolSurface( request );
+        var model = mapRequestToVolSurface(request);
 
         try
         {
@@ -65,25 +67,28 @@ public static class VolSurfaceEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IVolSurfaceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var volSurface = await service.Get(identifier, cancellationToken);
-        return volSurface is null ? Results.NotFound() : Results.Ok( volSurface );
+        return volSurface is null ? Results.NotFound() : Results.Ok(volSurface);
     }
 
 
     private static async Task<IResult> GetAll(
         IVolSurfaceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( VolSurfaceResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(VolSurfaceResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IVolSurfaceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -91,7 +96,8 @@ public static class VolSurfaceEndpoints
     private static async Task<IResult> AssignMarketDataSet(
         AssociationRequest request,
         IVolSurfaceService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignMarketDataSet(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -99,13 +105,15 @@ public static class VolSurfaceEndpoints
     private static async Task<IResult> UnassignMarketDataSet(
     AssociationRequest request,
     IVolSurfaceService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignMarketDataSet(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static VolSurface mapRequestToVolSurface( VolSurfaceRequest request ) {
+    private static VolSurface mapRequestToVolSurface(VolSurfaceRequest request)
+    {
         var model = new VolSurface
         {
             Id = request.Id,

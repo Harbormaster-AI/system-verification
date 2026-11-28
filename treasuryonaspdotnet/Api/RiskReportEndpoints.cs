@@ -20,11 +20,11 @@ public static class RiskReportEndpoints
         group.MapPut("/assignPortfolio", AssignPortfolio);
         group.MapPut("/unassignPortfolio", UnassignPortfolio);
 
-    group.MapPut("/addToPositions", AddToPositions);
-    group.MapPut("/removeFromPositions", RemoveFromPositions);
+        group.MapPut("/addToPositions", AddToPositions);
+        group.MapPut("/removeFromPositions", RemoveFromPositions);
 
-    group.MapPut("/addToRegulatoryMetrics", AddToRegulatoryMetrics);
-    group.MapPut("/removeFromRegulatoryMetrics", RemoveFromRegulatoryMetrics);
+        group.MapPut("/addToRegulatoryMetrics", AddToRegulatoryMetrics);
+        group.MapPut("/removeFromRegulatoryMetrics", RemoveFromRegulatoryMetrics);
 
 
         return app;
@@ -33,9 +33,10 @@ public static class RiskReportEndpoints
     private static async Task<IResult> Create(
         RiskReportRequest request,
         IRiskReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRiskReport( request );
+        var model = mapRequestToRiskReport(request);
 
         try
         {
@@ -52,9 +53,10 @@ public static class RiskReportEndpoints
     private static async Task<IResult> Update(
         RiskReportRequest request,
         IRiskReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToRiskReport( request );
+        var model = mapRequestToRiskReport(request);
 
         try
         {
@@ -71,25 +73,28 @@ public static class RiskReportEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IRiskReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var riskReport = await service.Get(identifier, cancellationToken);
-        return riskReport is null ? Results.NotFound() : Results.Ok( riskReport );
+        return riskReport is null ? Results.NotFound() : Results.Ok(riskReport);
     }
 
 
     private static async Task<IResult> GetAll(
         IRiskReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( RiskReportResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(RiskReportResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IRiskReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -97,7 +102,8 @@ public static class RiskReportEndpoints
     private static async Task<IResult> AssignPortfolio(
         AssociationRequest request,
         IRiskReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignPortfolio(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -105,7 +111,8 @@ public static class RiskReportEndpoints
     private static async Task<IResult> UnassignPortfolio(
     AssociationRequest request,
     IRiskReportService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignPortfolio(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -114,7 +121,8 @@ public static class RiskReportEndpoints
     private static async Task<IResult> AddToPositions(
         MultipleAssociationRequest request,
         IRiskReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToPositions(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -122,14 +130,16 @@ public static class RiskReportEndpoints
     private static async Task<IResult> RemoveFromPositions(
         MultipleAssociationRequest request,
         IRiskReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromPositions(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
     private static async Task<IResult> AddToRegulatoryMetrics(
         MultipleAssociationRequest request,
         IRiskReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToRegulatoryMetrics(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class RiskReportEndpoints
     private static async Task<IResult> RemoveFromRegulatoryMetrics(
         MultipleAssociationRequest request,
         IRiskReportService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromRegulatoryMetrics(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static RiskReport mapRequestToRiskReport( RiskReportRequest request ) {
+    private static RiskReport mapRequestToRiskReport(RiskReportRequest request)
+    {
         var model = new RiskReport
         {
             Id = request.Id,

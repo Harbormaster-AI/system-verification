@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IFXRateService {
+public interface IFXRateService
+{
 
-    Task Create(FXRate model , CancellationToken cancellationToken);
+    Task Create(FXRate model, CancellationToken cancellationToken);
     Task<bool> Update(FXRate model, CancellationToken cancellationToken);
     Task<FXRate?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<FXRate>> GetAll(CancellationToken cancellationToken);
@@ -61,7 +62,8 @@ public class FXRateService : IFXRateService
 
     public async Task<bool> Update(FXRate model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -117,7 +119,8 @@ public class FXRateService : IFXRateService
         return true;
     }
 
-    public async Task<bool> AssignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -135,7 +138,7 @@ public class FXRateService : IFXRateService
 
             var child = await _serviceResolver.Get<MarketDataSetService>().Get(childRequest, cancellationToken);
             parent.MarketDataSet = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -147,7 +150,8 @@ public class FXRateService : IFXRateService
         return true;
     }
 
-    public async Task<bool> UnassignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -158,7 +162,7 @@ public class FXRateService : IFXRateService
         try
         {
             parent.MarketDataSet = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

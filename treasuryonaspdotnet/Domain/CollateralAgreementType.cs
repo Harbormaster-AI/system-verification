@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum CollateralAgreementType
 {
-    CSA=1,OSLA=2,Bilateral=3
+    CSA = 1, OSLA = 2, Bilateral = 3
 }
 
 /// <summary>

@@ -11,17 +11,17 @@ public interface ICounterpartyRepository
     Task UpdateAsync(Counterparty counterparty, CancellationToken cancellationToken);
     Task DeleteAsync(Counterparty counterparty, CancellationToken cancellationToken);
 
-    Task AddToNettingAgreementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromNettingAgreementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToTradesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromTradesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToCollateralAgreementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCollateralAgreementsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToLimitsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromLimitsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToMarginCallsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromMarginCallsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToSettlementInstructionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromSettlementInstructionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToNettingAgreementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromNettingAgreementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToTradesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromTradesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCollateralAgreementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCollateralAgreementsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToLimitsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromLimitsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToMarginCallsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromMarginCallsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToSettlementInstructionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromSettlementInstructionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

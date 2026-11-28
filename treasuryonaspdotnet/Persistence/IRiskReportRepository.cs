@@ -11,9 +11,9 @@ public interface IRiskReportRepository
     Task UpdateAsync(RiskReport riskReport, CancellationToken cancellationToken);
     Task DeleteAsync(RiskReport riskReport, CancellationToken cancellationToken);
 
-    Task AddToPositionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromPositionsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task AddToRegulatoryMetricsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromRegulatoryMetricsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToPositionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromPositionsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToRegulatoryMetricsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromRegulatoryMetricsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

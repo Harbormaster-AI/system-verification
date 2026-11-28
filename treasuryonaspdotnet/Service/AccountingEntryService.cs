@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IAccountingEntryService {
+public interface IAccountingEntryService
+{
 
-    Task Create(AccountingEntry model , CancellationToken cancellationToken);
+    Task Create(AccountingEntry model, CancellationToken cancellationToken);
     Task<bool> Update(AccountingEntry model, CancellationToken cancellationToken);
     Task<AccountingEntry?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<AccountingEntry>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class AccountingEntryService : IAccountingEntryService
 
     public async Task<bool> Update(AccountingEntry model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -123,7 +125,8 @@ public class AccountingEntryService : IAccountingEntryService
         return true;
     }
 
-    public async Task<bool> AssignTrade(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTrade(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -141,7 +144,7 @@ public class AccountingEntryService : IAccountingEntryService
 
             var child = await _serviceResolver.Get<TradeService>().Get(childRequest, cancellationToken);
             parent.Trade = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -153,7 +156,8 @@ public class AccountingEntryService : IAccountingEntryService
         return true;
     }
 
-    public async Task<bool> UnassignTrade(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTrade(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -164,7 +168,7 @@ public class AccountingEntryService : IAccountingEntryService
         try
         {
             parent.Trade = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,7 +180,8 @@ public class AccountingEntryService : IAccountingEntryService
         return true;
     }
 
-    public async Task<bool> AssignHedgeRelationship(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignHedgeRelationship(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -194,7 +199,7 @@ public class AccountingEntryService : IAccountingEntryService
 
             var child = await _serviceResolver.Get<HedgeRelationshipService>().Get(childRequest, cancellationToken);
             parent.HedgeRelationship = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -206,7 +211,8 @@ public class AccountingEntryService : IAccountingEntryService
         return true;
     }
 
-    public async Task<bool> UnassignHedgeRelationship(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignHedgeRelationship(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -217,7 +223,7 @@ public class AccountingEntryService : IAccountingEntryService
         try
         {
             parent.HedgeRelationship = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,7 +235,8 @@ public class AccountingEntryService : IAccountingEntryService
         return true;
     }
 
-    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -247,7 +254,7 @@ public class AccountingEntryService : IAccountingEntryService
 
             var child = await _serviceResolver.Get<PortfolioService>().Get(childRequest, cancellationToken);
             parent.Portfolio = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -259,7 +266,8 @@ public class AccountingEntryService : IAccountingEntryService
         return true;
     }
 
-    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -270,7 +278,7 @@ public class AccountingEntryService : IAccountingEntryService
         try
         {
             parent.Portfolio = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {

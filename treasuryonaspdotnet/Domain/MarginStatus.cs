@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum MarginStatus
 {
-    Issued=1,Agreed=2,Disputed=3,Settled=4,Cancelled=5
+    Issued = 1, Agreed = 2, Disputed = 3, Settled = 4, Cancelled = 5
 }
 
 /// <summary>

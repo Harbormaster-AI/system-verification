@@ -22,8 +22,8 @@ public static class HedgeRelationshipEndpoints
         group.MapPut("/assignHedgingInstrument", AssignHedgingInstrument);
         group.MapPut("/unassignHedgingInstrument", UnassignHedgingInstrument);
 
-    group.MapPut("/addToAccountingEntries", AddToAccountingEntries);
-    group.MapPut("/removeFromAccountingEntries", RemoveFromAccountingEntries);
+        group.MapPut("/addToAccountingEntries", AddToAccountingEntries);
+        group.MapPut("/removeFromAccountingEntries", RemoveFromAccountingEntries);
 
 
         return app;
@@ -32,9 +32,10 @@ public static class HedgeRelationshipEndpoints
     private static async Task<IResult> Create(
         HedgeRelationshipRequest request,
         IHedgeRelationshipService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToHedgeRelationship( request );
+        var model = mapRequestToHedgeRelationship(request);
 
         try
         {
@@ -51,9 +52,10 @@ public static class HedgeRelationshipEndpoints
     private static async Task<IResult> Update(
         HedgeRelationshipRequest request,
         IHedgeRelationshipService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToHedgeRelationship( request );
+        var model = mapRequestToHedgeRelationship(request);
 
         try
         {
@@ -70,25 +72,28 @@ public static class HedgeRelationshipEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         IHedgeRelationshipService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var hedgeRelationship = await service.Get(identifier, cancellationToken);
-        return hedgeRelationship is null ? Results.NotFound() : Results.Ok( hedgeRelationship );
+        return hedgeRelationship is null ? Results.NotFound() : Results.Ok(hedgeRelationship);
     }
 
 
     private static async Task<IResult> GetAll(
         IHedgeRelationshipService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( HedgeRelationshipResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(HedgeRelationshipResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         IHedgeRelationshipService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -96,7 +101,8 @@ public static class HedgeRelationshipEndpoints
     private static async Task<IResult> AssignHedgedItem(
         AssociationRequest request,
         IHedgeRelationshipService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignHedgedItem(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -104,7 +110,8 @@ public static class HedgeRelationshipEndpoints
     private static async Task<IResult> UnassignHedgedItem(
     AssociationRequest request,
     IHedgeRelationshipService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignHedgedItem(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -112,7 +119,8 @@ public static class HedgeRelationshipEndpoints
     private static async Task<IResult> AssignHedgingInstrument(
         AssociationRequest request,
         IHedgeRelationshipService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignHedgingInstrument(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -120,7 +128,8 @@ public static class HedgeRelationshipEndpoints
     private static async Task<IResult> UnassignHedgingInstrument(
     AssociationRequest request,
     IHedgeRelationshipService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignHedgingInstrument(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -129,7 +138,8 @@ public static class HedgeRelationshipEndpoints
     private static async Task<IResult> AddToAccountingEntries(
         MultipleAssociationRequest request,
         IHedgeRelationshipService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var addTo = await service.AddToAccountingEntries(request, cancellationToken);
         return addTo ? Results.NoContent() : Results.NotFound();
     }
@@ -137,11 +147,13 @@ public static class HedgeRelationshipEndpoints
     private static async Task<IResult> RemoveFromAccountingEntries(
         MultipleAssociationRequest request,
         IHedgeRelationshipService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var removeFrom = await service.RemoveFromAccountingEntries(request, cancellationToken);
         return removeFrom ? Results.NoContent() : Results.NotFound();
     }
-    private static HedgeRelationship mapRequestToHedgeRelationship( HedgeRelationshipRequest request ) {
+    private static HedgeRelationship mapRequestToHedgeRelationship(HedgeRelationshipRequest request)
+    {
         var model = new HedgeRelationship
         {
             Id = request.Id,

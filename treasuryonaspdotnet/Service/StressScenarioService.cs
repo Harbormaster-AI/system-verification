@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IStressScenarioService {
+public interface IStressScenarioService
+{
 
-    Task Create(StressScenario model , CancellationToken cancellationToken);
+    Task Create(StressScenario model, CancellationToken cancellationToken);
     Task<bool> Update(StressScenario model, CancellationToken cancellationToken);
     Task<StressScenario?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<StressScenario>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class StressScenarioService : IStressScenarioService
 
     public async Task<bool> Update(StressScenario model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -119,7 +121,8 @@ public class StressScenarioService : IStressScenarioService
         return true;
     }
 
-    public async Task<bool> AssignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -137,7 +140,7 @@ public class StressScenarioService : IStressScenarioService
 
             var child = await _serviceResolver.Get<MarketDataSetService>().Get(childRequest, cancellationToken);
             parent.MarketDataSet = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -149,7 +152,8 @@ public class StressScenarioService : IStressScenarioService
         return true;
     }
 
-    public async Task<bool> UnassignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -160,7 +164,7 @@ public class StressScenarioService : IStressScenarioService
         try
         {
             parent.MarketDataSet = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -173,8 +177,10 @@ public class StressScenarioService : IStressScenarioService
     }
 
 
-    public async Task<bool> AddToStressResults(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToStressResults(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StressScenario",
                 "AddToStressResults",
@@ -182,16 +188,18 @@ public class StressScenarioService : IStressScenarioService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromStressResults(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromStressResults(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "StressScenario",
                 "RemoveFromStressResults",

@@ -9,17 +9,19 @@ public class VolSurface : IValidatableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string AssetClass { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Currency { get; set; } 
-public virtual MarketDataSet? MarketDataSet { get; set; } 
- public virtual PricingModel? Model { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string AssetClass { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Currency { get; set; }
+    public virtual MarketDataSet? MarketDataSet { get; set; }
+    public virtual PricingModel? Model { get; set; }
 
-    public static VolSurface FromRequest(VolSurfaceRequest request) {
-        return new VolSurface {
+    public static VolSurface FromRequest(VolSurfaceRequest request)
+    {
+        return new VolSurface
+        {
             Id = request.Id,
             AssetClass = request.AssetClass,
             Currency = request.Currency,

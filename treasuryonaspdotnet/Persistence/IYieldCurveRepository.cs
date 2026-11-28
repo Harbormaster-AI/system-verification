@@ -11,7 +11,7 @@ public interface IYieldCurveRepository
     Task UpdateAsync(YieldCurve yieldCurve, CancellationToken cancellationToken);
     Task DeleteAsync(YieldCurve yieldCurve, CancellationToken cancellationToken);
 
-    Task AddToQuotesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromQuotesAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToQuotesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromQuotesAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

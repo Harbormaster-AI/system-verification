@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum HQLAClass
 {
-    Level1=1,Level2A=2,Level2B=3
+    Level1 = 1, Level2A = 2, Level2B = 3
 }
 
 /// <summary>

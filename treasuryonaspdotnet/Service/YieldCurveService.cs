@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface IYieldCurveService {
+public interface IYieldCurveService
+{
 
-    Task Create(YieldCurve model , CancellationToken cancellationToken);
+    Task Create(YieldCurve model, CancellationToken cancellationToken);
     Task<bool> Update(YieldCurve model, CancellationToken cancellationToken);
     Task<YieldCurve?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<YieldCurve>> GetAll(CancellationToken cancellationToken);
@@ -63,7 +64,8 @@ public class YieldCurveService : IYieldCurveService
 
     public async Task<bool> Update(YieldCurve model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -120,7 +122,8 @@ public class YieldCurveService : IYieldCurveService
         return true;
     }
 
-    public async Task<bool> AssignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -138,7 +141,7 @@ public class YieldCurveService : IYieldCurveService
 
             var child = await _serviceResolver.Get<MarketDataSetService>().Get(childRequest, cancellationToken);
             parent.MarketDataSet = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -150,7 +153,8 @@ public class YieldCurveService : IYieldCurveService
         return true;
     }
 
-    public async Task<bool> UnassignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignMarketDataSet(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -161,7 +165,7 @@ public class YieldCurveService : IYieldCurveService
         try
         {
             parent.MarketDataSet = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -174,8 +178,10 @@ public class YieldCurveService : IYieldCurveService
     }
 
 
-    public async Task<bool> AddToQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "YieldCurve",
                 "AddToQuotes",
@@ -183,16 +189,18 @@ public class YieldCurveService : IYieldCurveService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromQuotes(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "YieldCurve",
                 "RemoveFromQuotes",

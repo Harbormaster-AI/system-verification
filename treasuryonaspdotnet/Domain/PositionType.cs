@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum PositionType
 {
-    Asset=1,Liability=2,OffBalance=3
+    Asset = 1, Liability = 2, OffBalance = 3
 }
 
 /// <summary>

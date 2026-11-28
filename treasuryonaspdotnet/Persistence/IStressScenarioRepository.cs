@@ -11,7 +11,7 @@ public interface IStressScenarioRepository
     Task UpdateAsync(StressScenario stressScenario, CancellationToken cancellationToken);
     Task DeleteAsync(StressScenario stressScenario, CancellationToken cancellationToken);
 
-    Task AddToStressResultsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromStressResultsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToStressResultsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromStressResultsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }

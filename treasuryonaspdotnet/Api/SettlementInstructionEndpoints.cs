@@ -31,9 +31,10 @@ public static class SettlementInstructionEndpoints
     private static async Task<IResult> Create(
         SettlementInstructionRequest request,
         ISettlementInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSettlementInstruction( request );
+        var model = mapRequestToSettlementInstruction(request);
 
         try
         {
@@ -50,9 +51,10 @@ public static class SettlementInstructionEndpoints
     private static async Task<IResult> Update(
         SettlementInstructionRequest request,
         ISettlementInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
-        var model = mapRequestToSettlementInstruction( request );
+        var model = mapRequestToSettlementInstruction(request);
 
         try
         {
@@ -69,25 +71,28 @@ public static class SettlementInstructionEndpoints
     private static async Task<IResult> Get(
         IdentifierRequest identifier,
         ISettlementInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var settlementInstruction = await service.Get(identifier, cancellationToken);
-        return settlementInstruction is null ? Results.NotFound() : Results.Ok( settlementInstruction );
+        return settlementInstruction is null ? Results.NotFound() : Results.Ok(settlementInstruction);
     }
 
 
     private static async Task<IResult> GetAll(
         ISettlementInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
 
         var all = await service.GetAll(cancellationToken);
-        return Results.Ok( all.Select( SettlementInstructionResponse.FromModel ) );
-        }
+        return Results.Ok(all.Select(SettlementInstructionResponse.FromModel));
+    }
 
     private static async Task<IResult> Delete(
         IdentifierRequest identifier,
         ISettlementInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var deleted = await service.Delete(identifier, cancellationToken);
         return deleted ? Results.NoContent() : Results.NotFound();
     }
@@ -95,7 +100,8 @@ public static class SettlementInstructionEndpoints
     private static async Task<IResult> AssignTrade(
         AssociationRequest request,
         ISettlementInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignTrade(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -103,7 +109,8 @@ public static class SettlementInstructionEndpoints
     private static async Task<IResult> UnassignTrade(
     AssociationRequest request,
     ISettlementInstructionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignTrade(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -111,7 +118,8 @@ public static class SettlementInstructionEndpoints
     private static async Task<IResult> AssignCounterparty(
         AssociationRequest request,
         ISettlementInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignCounterparty(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -119,7 +127,8 @@ public static class SettlementInstructionEndpoints
     private static async Task<IResult> UnassignCounterparty(
     AssociationRequest request,
     ISettlementInstructionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignCounterparty(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
@@ -127,7 +136,8 @@ public static class SettlementInstructionEndpoints
     private static async Task<IResult> AssignBankAccount(
         AssociationRequest request,
         ISettlementInstructionService service,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         var assigned = await service.AssignBankAccount(request, cancellationToken);
         return assigned ? Results.NoContent() : Results.NotFound();
     }
@@ -135,13 +145,15 @@ public static class SettlementInstructionEndpoints
     private static async Task<IResult> UnassignBankAccount(
     AssociationRequest request,
     ISettlementInstructionService service,
-    CancellationToken cancellationToken) {
+    CancellationToken cancellationToken)
+    {
         var unassigned = await service.UnassignBankAccount(request, cancellationToken);
         return unassigned ? Results.NoContent() : Results.NotFound();
     }
 
 
-    private static SettlementInstruction mapRequestToSettlementInstruction( SettlementInstructionRequest request ) {
+    private static SettlementInstruction mapRequestToSettlementInstruction(SettlementInstructionRequest request)
+    {
         var model = new SettlementInstruction
         {
             Id = request.Id,

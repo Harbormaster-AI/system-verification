@@ -9,27 +9,29 @@ public class Issuance : IValidatableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string IssueName { get; set; } 
- [Required]
-public required virtual ISIN Isin { get; set; } 
- [Required]
-public required virtual DateOnly IssueDate { get; set; } 
- [Required]
-public required virtual DateOnly MaturityDate { get; set; } 
- [Required]
-public required virtual Rate CouponRate { get; set; } 
- [Required]
-public required virtual Money Amount { get; set; } 
-public virtual FundingProgram? FundingProgram { get; set; } 
-public virtual ICollection<CashFlow> CashFlows { get; set; } = new List<CashFlow>();
-public virtual Portfolio? Portfolio { get; set; } 
- public virtual InstrumentType? InstrumentType { get; set; } 
- public virtual IssuanceStatus? Status { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string IssueName { get; set; }
+    [Required]
+    public required virtual ISIN Isin { get; set; }
+    [Required]
+    public required virtual DateOnly IssueDate { get; set; }
+    [Required]
+    public required virtual DateOnly MaturityDate { get; set; }
+    [Required]
+    public required virtual Rate CouponRate { get; set; }
+    [Required]
+    public required virtual Money Amount { get; set; }
+    public virtual FundingProgram? FundingProgram { get; set; }
+    public virtual ICollection<CashFlow> CashFlows { get; set; } = new List<CashFlow>();
+    public virtual Portfolio? Portfolio { get; set; }
+    public virtual InstrumentType? InstrumentType { get; set; }
+    public virtual IssuanceStatus? Status { get; set; }
 
-    public static Issuance FromRequest(IssuanceRequest request) {
-        return new Issuance {
+    public static Issuance FromRequest(IssuanceRequest request)
+    {
+        return new Issuance
+        {
             Id = request.Id,
             IssueName = request.IssueName,
             Isin = request.Isin,

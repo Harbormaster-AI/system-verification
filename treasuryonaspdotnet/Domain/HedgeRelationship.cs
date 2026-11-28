@@ -9,19 +9,21 @@ public class HedgeRelationship : IValidatableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Name { get; set; } 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string Objective { get; set; } 
-public virtual Trade? HedgedItem { get; set; } 
-public virtual Trade? HedgingInstrument { get; set; } 
-public virtual ICollection<AccountingEntry> AccountingEntries { get; set; } = new List<AccountingEntry>();
- public virtual HedgeDesignationStatus? DesignationStatus { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Name { get; set; }
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string Objective { get; set; }
+    public virtual Trade? HedgedItem { get; set; }
+    public virtual Trade? HedgingInstrument { get; set; }
+    public virtual ICollection<AccountingEntry> AccountingEntries { get; set; } = new List<AccountingEntry>();
+    public virtual HedgeDesignationStatus? DesignationStatus { get; set; }
 
-    public static HedgeRelationship FromRequest(HedgeRelationshipRequest request) {
-        return new HedgeRelationship {
+    public static HedgeRelationship FromRequest(HedgeRelationshipRequest request)
+    {
+        return new HedgeRelationship
+        {
             Id = request.Id,
             Name = request.Name,
             Objective = request.Objective,

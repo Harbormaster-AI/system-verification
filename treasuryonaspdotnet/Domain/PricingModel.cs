@@ -36,7 +36,7 @@ namespace treasuryonaspdotnet.Domain;
 
 public enum PricingModel
 {
-    Discounting=1,Black76=2,LocalVol=3
+    Discounting = 1, Black76 = 2, LocalVol = 3
 }
 
 /// <summary>

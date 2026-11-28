@@ -9,19 +9,21 @@ public class BufferAsset : IValidatableObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
- [Required]
-[Length(0, int.MaxValue)]
-public required virtual string SecurityName { get; set; } 
- [Required]
-public required virtual ISIN Isin { get; set; } 
- [Required]
-public required virtual Money MarketValue { get; set; } 
-public virtual LiquidityBuffer? LiquidityBuffer { get; set; } 
-public virtual Portfolio? Portfolio { get; set; } 
- public virtual HQLAClass? HqlaClass { get; set; } 
+    [Required]
+    [Length(0, int.MaxValue)]
+    public required virtual string SecurityName { get; set; }
+    [Required]
+    public required virtual ISIN Isin { get; set; }
+    [Required]
+    public required virtual Money MarketValue { get; set; }
+    public virtual LiquidityBuffer? LiquidityBuffer { get; set; }
+    public virtual Portfolio? Portfolio { get; set; }
+    public virtual HQLAClass? HqlaClass { get; set; }
 
-    public static BufferAsset FromRequest(BufferAssetRequest request) {
-        return new BufferAsset {
+    public static BufferAsset FromRequest(BufferAssetRequest request)
+    {
+        return new BufferAsset
+        {
             Id = request.Id,
             SecurityName = request.SecurityName,
             Isin = request.Isin,

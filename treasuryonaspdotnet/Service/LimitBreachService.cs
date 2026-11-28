@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ILimitBreachService {
+public interface ILimitBreachService
+{
 
-    Task Create(LimitBreach model , CancellationToken cancellationToken);
+    Task Create(LimitBreach model, CancellationToken cancellationToken);
     Task<bool> Update(LimitBreach model, CancellationToken cancellationToken);
     Task<LimitBreach?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<LimitBreach>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class LimitBreachService : ILimitBreachService
 
     public async Task<bool> Update(LimitBreach model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class LimitBreachService : ILimitBreachService
         return true;
     }
 
-    public async Task<bool> AssignRiskLimit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignRiskLimit(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class LimitBreachService : ILimitBreachService
 
             var child = await _serviceResolver.Get<RiskLimitService>().Get(childRequest, cancellationToken);
             parent.RiskLimit = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class LimitBreachService : ILimitBreachService
         return true;
     }
 
-    public async Task<bool> UnassignRiskLimit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignRiskLimit(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class LimitBreachService : ILimitBreachService
         try
         {
             parent.RiskLimit = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -175,7 +179,8 @@ public class LimitBreachService : ILimitBreachService
         return true;
     }
 
-    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -193,7 +198,7 @@ public class LimitBreachService : ILimitBreachService
 
             var child = await _serviceResolver.Get<PortfolioService>().Get(childRequest, cancellationToken);
             parent.Portfolio = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -205,7 +210,8 @@ public class LimitBreachService : ILimitBreachService
         return true;
     }
 
-    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -216,7 +222,7 @@ public class LimitBreachService : ILimitBreachService
         try
         {
             parent.Portfolio = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -229,8 +235,10 @@ public class LimitBreachService : ILimitBreachService
     }
 
 
-    public async Task<bool> AddToApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LimitBreach",
                 "AddToApprovals",
@@ -238,16 +246,18 @@ public class LimitBreachService : ILimitBreachService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "LimitBreach",
                 "RemoveFromApprovals",

@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ITreasuryPolicyService {
+public interface ITreasuryPolicyService
+{
 
-    Task Create(TreasuryPolicy model , CancellationToken cancellationToken);
+    Task Create(TreasuryPolicy model, CancellationToken cancellationToken);
     Task<bool> Update(TreasuryPolicy model, CancellationToken cancellationToken);
     Task<TreasuryPolicy?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<TreasuryPolicy>> GetAll(CancellationToken cancellationToken);
@@ -65,7 +66,8 @@ public class TreasuryPolicyService : ITreasuryPolicyService
 
     public async Task<bool> Update(TreasuryPolicy model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -122,7 +124,8 @@ public class TreasuryPolicyService : ITreasuryPolicyService
         return true;
     }
 
-    public async Task<bool> AssignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -140,7 +143,7 @@ public class TreasuryPolicyService : ITreasuryPolicyService
 
             var child = await _serviceResolver.Get<TreasuryUnitService>().Get(childRequest, cancellationToken);
             parent.TreasuryUnit = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -152,7 +155,8 @@ public class TreasuryPolicyService : ITreasuryPolicyService
         return true;
     }
 
-    public async Task<bool> UnassignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignTreasuryUnit(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -163,7 +167,7 @@ public class TreasuryPolicyService : ITreasuryPolicyService
         try
         {
             parent.TreasuryUnit = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -176,8 +180,10 @@ public class TreasuryPolicyService : ITreasuryPolicyService
     }
 
 
-    public async Task<bool> AddToLimits(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToLimits(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryPolicy",
                 "AddToLimits",
@@ -185,16 +191,18 @@ public class TreasuryPolicyService : ITreasuryPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromLimits(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromLimits(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryPolicy",
                 "RemoveFromLimits",
@@ -210,8 +218,10 @@ public class TreasuryPolicyService : ITreasuryPolicyService
         return true;
     }
 
-    public async Task<bool> AddToApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryPolicy",
                 "AddToApprovals",
@@ -219,16 +229,18 @@ public class TreasuryPolicyService : ITreasuryPolicyService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromApprovals(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "TreasuryPolicy",
                 "RemoveFromApprovals",

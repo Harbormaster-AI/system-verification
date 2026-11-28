@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ITradeService {
+public interface ITradeService
+{
 
-    Task Create(Trade model , CancellationToken cancellationToken);
+    Task Create(Trade model, CancellationToken cancellationToken);
     Task<bool> Update(Trade model, CancellationToken cancellationToken);
     Task<Trade?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<Trade>> GetAll(CancellationToken cancellationToken);
@@ -71,7 +72,8 @@ public class TradeService : ITradeService
 
     public async Task<bool> Update(Trade model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -134,7 +136,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> AssignCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -152,7 +155,7 @@ public class TradeService : ITradeService
 
             var child = await _serviceResolver.Get<CounterpartyService>().Get(childRequest, cancellationToken);
             parent.Counterparty = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -164,7 +167,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> UnassignCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -175,7 +179,7 @@ public class TradeService : ITradeService
         try
         {
             parent.Counterparty = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -187,7 +191,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -205,7 +210,7 @@ public class TradeService : ITradeService
 
             var child = await _serviceResolver.Get<PortfolioService>().Get(childRequest, cancellationToken);
             parent.Portfolio = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -217,7 +222,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignPortfolio(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -228,7 +234,7 @@ public class TradeService : ITradeService
         try
         {
             parent.Portfolio = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -240,7 +246,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> AssignSettlementInstruction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignSettlementInstruction(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -258,7 +265,7 @@ public class TradeService : ITradeService
 
             var child = await _serviceResolver.Get<SettlementInstructionService>().Get(childRequest, cancellationToken);
             parent.SettlementInstruction = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -270,7 +277,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> UnassignSettlementInstruction(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignSettlementInstruction(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -281,7 +289,7 @@ public class TradeService : ITradeService
         try
         {
             parent.SettlementInstruction = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -293,7 +301,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> AssignCollateralAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCollateralAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -311,7 +320,7 @@ public class TradeService : ITradeService
 
             var child = await _serviceResolver.Get<CollateralAccountService>().Get(childRequest, cancellationToken);
             parent.CollateralAccount = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -323,7 +332,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> UnassignCollateralAccount(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCollateralAccount(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -334,7 +344,7 @@ public class TradeService : ITradeService
         try
         {
             parent.CollateralAccount = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -346,7 +356,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> AssignHedgeRelationship(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignHedgeRelationship(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -364,7 +375,7 @@ public class TradeService : ITradeService
 
             var child = await _serviceResolver.Get<HedgeRelationshipService>().Get(childRequest, cancellationToken);
             parent.HedgeRelationship = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -376,7 +387,8 @@ public class TradeService : ITradeService
         return true;
     }
 
-    public async Task<bool> UnassignHedgeRelationship(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignHedgeRelationship(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -387,7 +399,7 @@ public class TradeService : ITradeService
         try
         {
             parent.HedgeRelationship = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -400,8 +412,10 @@ public class TradeService : ITradeService
     }
 
 
-    public async Task<bool> AddToCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Trade",
                 "AddToCashFlows",
@@ -409,16 +423,18 @@ public class TradeService : ITradeService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCashFlows(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "Trade",
                 "RemoveFromCashFlows",

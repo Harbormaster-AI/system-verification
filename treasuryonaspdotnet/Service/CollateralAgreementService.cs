@@ -6,9 +6,10 @@ using treasuryonaspdotnet.Telemetry;
 
 namespace treasuryonaspdotnet.Service;
 
-public interface ICollateralAgreementService {
+public interface ICollateralAgreementService
+{
 
-    Task Create(CollateralAgreement model , CancellationToken cancellationToken);
+    Task Create(CollateralAgreement model, CancellationToken cancellationToken);
     Task<bool> Update(CollateralAgreement model, CancellationToken cancellationToken);
     Task<CollateralAgreement?> Get(IdentifierRequest identifier, CancellationToken cancellationToken);
     Task<IReadOnlyList<CollateralAgreement>> GetAll(CancellationToken cancellationToken);
@@ -67,7 +68,8 @@ public class CollateralAgreementService : ICollateralAgreementService
 
     public async Task<bool> Update(CollateralAgreement model, CancellationToken cancellationToken)
     {
-        try {
+        try
+        {
             var existing = await _repository.GetByIdAsync(model.Id, cancellationToken);
             if (existing is null)
             {
@@ -126,7 +128,8 @@ public class CollateralAgreementService : ICollateralAgreementService
         return true;
     }
 
-    public async Task<bool> AssignNettingAgreement(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignNettingAgreement(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -144,7 +147,7 @@ public class CollateralAgreementService : ICollateralAgreementService
 
             var child = await _serviceResolver.Get<NettingAgreementService>().Get(childRequest, cancellationToken);
             parent.NettingAgreement = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -156,7 +159,8 @@ public class CollateralAgreementService : ICollateralAgreementService
         return true;
     }
 
-    public async Task<bool> UnassignNettingAgreement(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignNettingAgreement(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -167,7 +171,7 @@ public class CollateralAgreementService : ICollateralAgreementService
         try
         {
             parent.NettingAgreement = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -179,7 +183,8 @@ public class CollateralAgreementService : ICollateralAgreementService
         return true;
     }
 
-    public async Task<bool> AssignCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> AssignCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
 
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
@@ -197,7 +202,7 @@ public class CollateralAgreementService : ICollateralAgreementService
 
             var child = await _serviceResolver.Get<CounterpartyService>().Get(childRequest, cancellationToken);
             parent.Counterparty = child;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -209,7 +214,8 @@ public class CollateralAgreementService : ICollateralAgreementService
         return true;
     }
 
-    public async Task<bool> UnassignCounterparty(AssociationRequest request, CancellationToken cancellationToken) {
+    public async Task<bool> UnassignCounterparty(AssociationRequest request, CancellationToken cancellationToken)
+    {
         var parent = await _repository.GetByIdAsync(request.ParentId, cancellationToken);
         if (parent is null)
         {
@@ -220,7 +226,7 @@ public class CollateralAgreementService : ICollateralAgreementService
         try
         {
             parent.Counterparty = null;
-            await Update( parent, cancellationToken );
+            await Update(parent, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -233,8 +239,10 @@ public class CollateralAgreementService : ICollateralAgreementService
     }
 
 
-    public async Task<bool> AddToMarginCalls(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToMarginCalls(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CollateralAgreement",
                 "AddToMarginCalls",
@@ -242,16 +250,18 @@ public class CollateralAgreementService : ICollateralAgreementService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromMarginCalls(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromMarginCalls(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CollateralAgreement",
                 "RemoveFromMarginCalls",
@@ -267,8 +277,10 @@ public class CollateralAgreementService : ICollateralAgreementService
         return true;
     }
 
-    public async Task<bool> AddToCollateralAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> AddToCollateralAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CollateralAgreement",
                 "AddToCollateralAccounts",
@@ -276,16 +288,18 @@ public class CollateralAgreementService : ICollateralAgreementService
         }
         catch (Exception ex)
         {
-           _logger.LogError(
-                   ex,
-                   "Unexpected error while creating Transaction.");
+            _logger.LogError(
+                    ex,
+                    "Unexpected error while creating Transaction.");
             return false;
         }
         return true;
     }
 
-    public async Task<bool> RemoveFromCollateralAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken) {
-        try {
+    public async Task<bool> RemoveFromCollateralAccounts(MultipleAssociationRequest request, CancellationToken cancellationToken)
+    {
+        try
+        {
             await _telemetry.Execute(
                 "CollateralAgreement",
                 "RemoveFromCollateralAccounts",

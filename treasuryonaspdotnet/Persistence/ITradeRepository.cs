@@ -11,7 +11,7 @@ public interface ITradeRepository
     Task UpdateAsync(Trade trade, CancellationToken cancellationToken);
     Task DeleteAsync(Trade trade, CancellationToken cancellationToken);
 
-    Task AddToCashFlowsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
-    Task RemoveFromCashFlowsAsync( MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task AddToCashFlowsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
+    Task RemoveFromCashFlowsAsync(MultipleAssociationRequest request, CancellationToken cancellationToken);
 
 }
